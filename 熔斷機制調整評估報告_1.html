@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>機制調整評估報告 — 移除3000倍熔斷與絕對值熔斷</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0f2744;
+    --blue:       #1a4a8a;
+    --blue-mid:   #2563c4;
+    --blue-light: #dbeafe;
+    --blue-pale:  #eff6ff;
+    --green:      #15643a;
+    --green-light:#dcfce7;
+    --red:        #991b1b;
+    --red-light:  #fee2e2;
+    --amber:      #92400e;
+    --amber-light:#fef3c7;
+    --gray-900:   #111827;
+    --gray-600:   #4b5563;
+    --gray-300:   #d1d5db;
+    --gray-100:   #f3f4f6;
+    --white:      #ffffff;
+    --ink:        #1a1a2e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: #f8f9fc;
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 240px;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-logo {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .label {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .sidebar-logo .title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.4;
+  }
+  .nav-section {
+    padding: 0 12px;
+    margin-bottom: 4px;
+  }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    padding: 8px 12px 4px;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .nav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+  .nav-link.active { background: var(--blue-mid); color: white; font-weight: 500; }
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+  .sidebar-verdict {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+  }
+  .sidebar-verdict .v-label { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .sidebar-verdict .v-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 50%, #0f2744 100%);
+    padding: 72px 64px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,196,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: #60a5fa; }
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+  .hero h1 em { font-style: normal; color: #60a5fa; }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item { }
+  .hero-meta-item .key {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .hero-meta-item .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ── CONTENT ── */
+  .content { padding: 0 64px 80px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding-top: 64px;
+    max-width: 860px;
+  }
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue-mid);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 8px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--blue-light);
+    line-height: 1.3;
+  }
+  .section h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 32px 0 12px;
+  }
+  .section p {
+    color: var(--gray-600);
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .section p strong { color: var(--ink); }
+  .section ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  .section ul li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--gray-600);
+    font-size: 14px;
+    line-height: 1.75;
+    margin-bottom: 6px;
+  }
+  .section ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue-mid);
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    border-left: 4px solid;
+  }
+  .callout.green  { background: var(--green-light);  border-color: var(--green);  color: var(--green); }
+  .callout.blue   { background: var(--blue-pale);    border-color: var(--blue-mid); color: var(--blue); }
+  .callout.amber  { background: var(--amber-light);  border-color: #d97706; color: var(--amber); }
+  .callout.red    { background: var(--red-light);    border-color: var(--red);    color: var(--red); }
+  .callout .callout-title {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.75;
+  }
+  .callout p { margin: 0; color: inherit; font-size: 14px; }
+
+  /* ── SUMMARY CARDS ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 28px 0;
+  }
+  .stat-card {
+    background: white;
+    border: 1px solid var(--gray-300);
+    border-radius: 12px;
+    padding: 20px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .stat-card.blue::before  { background: var(--blue-mid); }
+  .stat-card.green::before { background: var(--green); }
+  .stat-card.amber::before { background: #d97706; }
+  .stat-card.red::before   { background: var(--red); }
+  .stat-card .s-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .stat-card .s-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card.blue  .s-value { color: var(--blue-mid); }
+  .stat-card.green .s-value { color: var(--green); }
+  .stat-card.amber .s-value { color: #d97706; }
+  .stat-card.red   .s-value { color: var(--red); }
+  .stat-card .s-sub {
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+    border: 1px solid var(--gray-300);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead tr {
+    background: var(--navy);
+  }
+  thead th {
+    padding: 12px 14px;
+    text-align: left;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  thead th.right { text-align: right; }
+  tbody tr { border-bottom: 1px solid var(--gray-100); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--gray-100); }
+  tbody tr:hover { background: var(--blue-pale); transition: background 0.15s; }
+  td {
+    padding: 11px 14px;
+    color: var(--gray-600);
+    vertical-align: middle;
+  }
+  td.right { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  td.bold  { font-weight: 700; color: var(--ink); }
+  td.red   { color: var(--red); font-weight: 700; }
+  td.green { color: var(--green); font-weight: 700; }
+  td.blue  { color: var(--blue-mid); font-weight: 700; }
+  td.mono  { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
+  tr.total td { background: var(--navy) !important; color: white !important; font-weight: 700; font-family: inherit; }
+  tr.total td.mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── VERDICT BOX ── */
+  .verdict {
+    background: var(--navy);
+    border-radius: 14px;
+    padding: 32px 36px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,196,0.3) 0%, transparent 70%);
+  }
+  .verdict .v-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .verdict h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 14px;
+  }
+  .verdict p { color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.75; margin-bottom: 0; }
+  .verdict p strong { color: white; }
+
+  /* ── COMPARE TABLE ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .compare-card {
+    background: white;
+    border: 1px solid var(--gray-300);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .compare-card .cc-header {
+    padding: 14px 18px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+  }
+  .compare-card.remove .cc-header { background: var(--red); }
+  .compare-card.keep   .cc-header { background: var(--green); }
+  .compare-card .cc-body { padding: 16px 18px; }
+  .compare-card .cc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13.5px;
+  }
+  .compare-card .cc-row:last-child { border-bottom: none; }
+  .compare-card .cc-row .ck { color: var(--gray-600); }
+  .compare-card .cc-row .cv { font-weight: 600; color: var(--ink); text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .compare-card .cc-verdict {
+    margin: 12px 0 0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .compare-card.remove .cc-verdict { background: var(--red-light); color: var(--red); }
+  .compare-card.keep   .cc-verdict { background: var(--green-light); color: var(--green); }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--gray-900);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #e2e8f0;
+    line-height: 2;
+  }
+  .formula-box .fl { color: #94a3b8; font-size: 11px; margin-bottom: 4px; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Noto Sans TC', sans-serif; }
+  .formula-box .fh { color: #60a5fa; font-weight: 600; }
+  .formula-box .fa { color: #f472b6; font-weight: 600; }
+  .formula-box .fc { color: #34d399; }
+
+  /* ── SECTION DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--blue-light), transparent);
+    margin: 64px 0 0;
+  }
+
+  /* ── PRINT BUTTON ── */
+  .print-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 12px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+    font-family: 'Noto Sans TC', sans-serif;
+    z-index: 200;
+  }
+  .print-btn:hover { background: var(--blue); transform: translateY(-2px); }
+
+  /* ── NAV ACTIVE HIGHLIGHT ── */
+  @media print {
+    .sidebar, .print-btn { display: none; }
+    .main { margin-left: 0; }
+    .hero { padding: 40px; }
+    .content { padding: 0 40px 40px; }
+    .section { padding-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="label">內部評估報告</div>
+    <div class="title">熔斷機制<br>調整分析</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">報告內容</div>
+    <a class="nav-link active" href="#exec">
+      <span class="nav-dot"></span>執行摘要
+    </a>
+    <a class="nav-link" href="#mechanism">
+      <span class="nav-dot"></span>現行機制說明
+    </a>
+    <a class="nav-link" href="#mech2">
+      <span class="nav-dot"></span>機制 2 數據分析
+    </a>
+    <a class="nav-link" href="#mech3">
+      <span class="nav-dot"></span>機制 3 數據分析
+    </a>
+    <a class="nav-link" href="#pool">
+      <span class="nav-dot"></span>水池穩健性評估
+    </a>
+    <a class="nav-link" href="#benefit">
+      <span class="nav-dot"></span>移除後效益
+    </a>
+    <a class="nav-link" href="#mitigation">
+      <span class="nav-dot"></span>風險緩解措施
+    </a>
+    <a class="nav-link" href="#conclusion">
+      <span class="nav-dot"></span>結論與建議
+    </a>
+  </div>
+
+  <div class="sidebar-verdict">
+    <div class="v-label">最終建議</div>
+    <div class="v-text">移除機制 2<br>調整機制 3 閾值</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow"><span></span>機密 · 內部使用</div>
+    <h1>移除 <em>3000 倍熔斷</em>，<br>調整絕對值熔斷閾值</h1>
+    <p class="hero-sub">基於 2026/01/26 ～ 2026/04/07 完整熔斷 Log 資料與 RTP 影響試算表，評估現行三項風險控管機制，提出移除 3000 倍熔斷、並將絕對值熔斷調整為最大押注 × 1000 倍的優化方案。</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="key">報告日期</div>
+        <div class="val">2026-05</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="key">資料期間</div>
+        <div class="val">1/26 ～ 4/7（約 70 天）</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="key">文件性質</div>
+        <div class="val">決策評估 · 機密</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- EXEC SUMMARY -->
+    <section class="section" id="exec">
+      <div class="section-number">Section 00</div>
+      <h2>執行摘要</h2>
+
+      <div class="summary-grid">
+        <div class="stat-card red">
+          <div class="s-label">機制2 觸發次數</div>
+          <div class="s-value">31</div>
+          <div class="s-sub">約 70 天（修正 BuyType=2 後）</div>
+        </div>
+        <div class="stat-card green">
+          <div class="s-label">機制2 最大單筆</div>
+          <div class="s-value">$381</div>
+          <div class="s-sub">USD，水池可完全承接</div>
+        </div>
+        <div class="stat-card green">
+          <div class="s-label">機制3 新閾值（PHP）</div>
+          <div class="s-value">150萬</div>
+          <div class="s-sub">最大押注 1,500 × 1,000 倍</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="s-label">4/28 案例新閾值下</div>
+          <div class="s-value">不觸發</div>
+          <div class="s-sub">892,000 &lt; 新閾值 1,500,000</div>
+        </div>
+      </div>
+
+      <div class="callout green">
+        <div class="callout-title">✓ 核心結論</div>
+        <p><strong>建議移除機制 2（3000 倍熔斷），並將機制 3（絕對值熔斷）閾值調整為「各幣別最大押注段 × 1000 倍」。</strong>機制 2 約 70 天觸發 31 次，合計僅 USD $2,754，水池可完全取代。機制 3 調高閾值後，最大押注的正常高倍獎勵不再被熔斷，同時保留對真正異常極端值的最後防線。</p>
+      </div>
+
+      <div class="compare-grid" style="margin-top:28px">
+        <div class="compare-card remove">
+          <div class="cc-header">⊗ 機制 2 — 建議移除</div>
+          <div class="cc-body">
+            <div class="cc-row"><span class="ck">觸發次數（70天）</span><span class="cv">31 筆</span></div>
+            <div class="cc-row"><span class="ck">最大單筆 USD</span><span class="cv">$381</span></div>
+            <div class="cc-row"><span class="ck">70天合計 USD</span><span class="cv">$2,754</span></div>
+            <div class="cc-row"><span class="ck">水池可承接</span><span class="cv">✓ 是</span></div>
+            <div class="cc-verdict">建議移除 — 水池可完全取代</div>
+          </div>
+        </div>
+        <div class="compare-card keep">
+          <div class="cc-header">↑ 機制 3 — 建議調整閾值</div>
+          <div class="cc-body">
+            <div class="cc-row"><span class="ck">觸發次數（4月）</span><span class="cv">1 筆</span></div>
+            <div class="cc-row"><span class="ck">觸發金額 USD</span><span class="cv">$25,509</span></div>
+            <div class="cc-row"><span class="ck">新閾值（PHP）</span><span class="cv">1,500,000</span></div>
+            <div class="cc-row"><span class="ck">4/28案例新閾值下</span><span class="cv">✗ 不觸發</span></div>
+            <div class="cc-verdict">調高閾值 = 最大押注 × 1,000 倍</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MECHANISMS -->
+    <section class="section" id="mechanism">
+      <div class="section-number">Section 01</div>
+      <h2>現行三項風險控管機制說明</h2>
+
+      <h3>1.1　機制 1：水池熔斷機制（建議保留）</h3>
+      <p>每筆遊戲的 GGR（Bet－Win 差值）會先確認水池是否有足夠餘額給付獎項：</p>
+      <ul>
+        <li>水池餘額充足 → 正常派彩，GGR 為負值時從水池扣除</li>
+        <li>水池餘額不足 → 獎項熔斷為 No Win，保護單月現金流</li>
+        <li>GGR 為正值時，金額自動灌回水池</li>
+        <li>每月定期更新水池，並設有 Baby Fund 確保初始玩家體驗，同時保障每月營收為正值</li>
+      </ul>
+
+      <h3>1.2　機制 2：3000 倍熔斷機制（建議移除）</h3>
+      <p>當贏分超過押注的 3000 倍時觸發：</p>
+      <ul>
+        <li>系統重新隨機 3 次，若 3 次結果皆 > 3000 倍，最終獎項改為 No Win</li>
+        <li>設計目的：防範小押注高倍數造成的極端單筆損失</li>
+      </ul>
+
+      <h3>1.3　機制 3：絕對值熔斷機制（建議移除）</h3>
+      <ul>
+        <li>各幣別設有各自的絕對值上限，獎項金額超過後直接改為 No Win，無重新隨機機制</li>
+        <li>設計目的：防範高額單筆支出</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MECH 2 -->
+    <section class="section" id="mech2">
+      <div class="section-number">Section 02</div>
+      <h2>機制 2（3000 倍熔斷）實際觸發數據分析</h2>
+
+      <h3>2.1　押注換算說明（重要前提）</h3>
+      <p>原始 Log 數值需依以下規則換算，<strong>BuyType 不同計算方式有別</strong>：</p>
+
+      <div class="formula-box">
+        <div class="fl">BuyType = 0（一般玩法）</div>
+        <span class="fh">實際獲獎倍數</span> = <span class="fc">data.Win ÷ data.Bet</span> &nbsp;&nbsp;（直接讀取 Odds 欄位）<br>
+        <span class="fh">單位押注</span> = <span class="fc">data.Bet ÷ 10,000</span>
+
+        <br><br>
+        <div class="fl">BuyType = 2（Buy Bonus）— 關鍵差異</div>
+        <span class="fa">實際獲獎倍數</span> = <span class="fc">data.Win ÷ data.Bet × 100</span> &nbsp;&nbsp;⚠️ Bet 含 100 倍買入成本<br>
+        <span class="fa">單位押注</span> = <span class="fc">data.Bet ÷ 10,000 ÷ 100</span>
+      </div>
+
+      <div class="callout amber">
+        <div class="callout-title">⚠️ Log 計算差異說明</div>
+        <p>原始 Log 的「比較倍數」欄位以 <code>data.Odds</code> 判斷，導致 BuyType=2 的案例實際獲獎倍數被低估 100 倍。Log 中顯示「比較倍數=30」的 BuyType=2 案例，實際倍數可能高達數千至數萬倍，應全數納入超過 3000 倍的統計中。</p>
+      </div>
+
+      <h3>2.2　修正後觸發總覽</h3>
+      <p>修正 BuyType=2 計算方式後，觀測期間（約 70 天）內實際超過 3000 倍的事件共計 <strong>31 筆</strong>（原 Log 僅標示 3 筆），最大單筆獎金 <strong>USD $381</strong>，31 筆合計 <strong>USD $2,754</strong>。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>遊戲</th>
+              <th class="right">觸發筆數</th>
+              <th class="right">最高實際倍數</th>
+              <th class="right">最大單筆（USD）</th>
+              <th class="right">合計（USD）</th>
+              <th>主要幣別</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="bold">AztecsTreasure</td><td class="right red">14 筆</td><td class="right mono">57,800x</td><td class="right mono">$381</td><td class="right mono">$1,381</td><td>PHP</td></tr>
+            <tr><td class="bold">GoldenWest</td><td class="right">5 筆</td><td class="right mono">16,520x</td><td class="right mono">$295</td><td class="right mono">$639</td><td>PHP</td></tr>
+            <tr><td class="bold">AnubisRising</td><td class="right">4 筆</td><td class="right mono">13,330x</td><td class="right mono">$173</td><td class="right mono">$201</td><td>PHP / BDT</td></tr>
+            <tr><td class="bold">ThunderOfZeus</td><td class="right">3 筆</td><td class="right mono">5,820x</td><td class="right mono">$1</td><td class="right mono">$3</td><td>LKR</td></tr>
+            <tr><td class="bold">GummyBonanza</td><td class="right">2 筆</td><td class="right mono">5,934x</td><td class="right mono">$106</td><td class="right mono">$182</td><td>PHP</td></tr>
+            <tr><td class="bold">WizardsAlchemy</td><td class="right">2 筆</td><td class="right mono">3,314x</td><td class="right mono">$178</td><td class="right mono">$255</td><td>PHP / BDT</td></tr>
+            <tr><td class="bold">FatToad</td><td class="right">1 筆</td><td class="right mono">5,197x</td><td class="right mono">$93</td><td class="right mono">$93</td><td>PHP</td></tr>
+            <tr class="total">
+              <td class="bold">合計</td>
+              <td class="right mono">31 筆</td>
+              <td class="right mono">57,800x</td>
+              <td class="right mono">$381</td>
+              <td class="right mono">$2,754</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout green">
+        <div class="callout-title">✓ 關鍵發現</div>
+        <p>31 筆事件最大單筆僅 <strong>USD $381</strong>，最小不足 $1（LKR 幣別）。70 天合計總損失僅 <strong>USD $2,754</strong>，平均每天約 $39。即使全部由水池承接，對水池餘額影響極微，財務風險完全可控。</p>
+      </div>
+
+      <h3>2.3　完整 31 筆明細</h3>
+      <p>以下為全部實際超過 3000 倍的觸發事件，依獎金高低排序（BT = BuyType）：</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>遊戲</th>
+              <th>BT</th>
+              <th>幣別</th>
+              <th class="right">實際倍數</th>
+              <th class="right">Win（USD）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono red">57,800x</td><td class="right mono red">$380.54</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">42,620x</td><td class="right mono">$380.54</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">42,470x</td><td class="right mono">$379.20</td></tr>
+            <tr><td>02/14</td><td class="bold">GoldenWest</td><td class="mono">2</td><td>PHP</td><td class="right mono">16,520x</td><td class="right mono">$295.00</td></tr>
+            <tr><td>02/14</td><td class="bold">AnubisRising</td><td class="mono">2</td><td>PHP</td><td class="right mono">13,330x</td><td class="right mono">$11.90</td></tr>
+            <tr><td>02/14</td><td class="bold">GoldenWest</td><td class="mono">2</td><td>PHP</td><td class="right mono">8,700x</td><td class="right mono">$155.36</td></tr>
+            <tr><td>02/14</td><td class="bold">AnubisRising</td><td class="mono">2</td><td>PHP</td><td class="right mono">10,620x</td><td class="right mono">$9.48</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">21,020x</td><td class="right mono">$75.07</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">12,800x</td><td class="right mono">$114.29</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">9,570x</td><td class="right mono">$85.45</td></tr>
+            <tr><td>02/14</td><td class="bold">GoldenWest</td><td class="mono">2</td><td>PHP</td><td class="right mono">6,460x</td><td class="right mono">$57.68</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">6,580x</td><td class="right mono">$23.50</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">6,310x</td><td class="right mono">$22.54</td></tr>
+            <tr><td>02/14</td><td class="bold">AnubisRising</td><td class="mono">2</td><td>PHP</td><td class="right mono">7,620x</td><td class="right mono">$6.80</td></tr>
+            <tr><td>02/18</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">7,990x</td><td class="right mono">$28.54</td></tr>
+            <tr><td>02/18</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">7,790x</td><td class="right mono">$4.17</td></tr>
+            <tr><td>02/18</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">7,590x</td><td class="right mono">$27.11</td></tr>
+            <tr><td>02/11</td><td class="bold">GummyBonanza</td><td class="mono">0</td><td>PHP</td><td class="right mono">5,934x</td><td class="right mono">$105.96</td></tr>
+            <tr><td>02/12</td><td class="bold">ThunderOfZeus</td><td class="mono">2</td><td>LKR</td><td class="right mono">5,820x</td><td class="right mono">$0.97</td></tr>
+            <tr><td>02/13</td><td class="bold">FatToad</td><td class="mono">2</td><td>PHP</td><td class="right mono">5,197x</td><td class="right mono">$92.80</td></tr>
+            <tr><td>02/14</td><td class="bold">GoldenWest</td><td class="mono">2</td><td>PHP</td><td class="right mono">5,370x</td><td class="right mono">$95.89</td></tr>
+            <tr><td>02/12</td><td class="bold">ThunderOfZeus</td><td class="mono">2</td><td>LKR</td><td class="right mono">5,440x</td><td class="right mono">$0.91</td></tr>
+            <tr><td>02/15</td><td class="bold">GummyBonanza</td><td class="mono">2</td><td>PHP</td><td class="right mono">4,268x</td><td class="right mono">$76.21</td></tr>
+            <tr><td>02/20</td><td class="bold">AnubisRising</td><td class="mono">0</td><td>BDT</td><td class="right mono">4,192x</td><td class="right mono">$173.22</td></tr>
+            <tr><td>02/12</td><td class="bold">ThunderOfZeus</td><td class="mono">2</td><td>LKR</td><td class="right mono">4,640x</td><td class="right mono">$0.77</td></tr>
+            <tr><td>02/14</td><td class="bold">GoldenWest</td><td class="mono">2</td><td>PHP</td><td class="right mono">3,960x</td><td class="right mono">$35.36</td></tr>
+            <tr><td>02/22</td><td class="bold">WizardsAlchemy</td><td class="mono">2</td><td>PHP</td><td class="right mono">3,314x</td><td class="right mono">$177.51</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">3,280x</td><td class="right mono">$11.71</td></tr>
+            <tr><td>02/21</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">3,160x</td><td class="right mono">$11.29</td></tr>
+            <tr><td>02/18</td><td class="bold">AztecsTreasure</td><td class="mono">2</td><td>PHP</td><td class="right mono">3,130x</td><td class="right mono">$11.18</td></tr>
+            <tr><td>02/22</td><td class="bold">WizardsAlchemy</td><td class="mono">0</td><td>BDT</td><td class="right mono">3,125x</td><td class="right mono">$77.48</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout blue">
+        <div class="callout-title">📌 分類說明</div>
+        <p><strong>BT=0（一般玩法）共 3 筆</strong>：GummyBonanza $106、AnubisRising $173、WizardsAlchemy $77。<br>
+        <strong>BT=2（Buy Bonus）共 28 筆</strong>：原 Log 因 BuyType=2 倍數計算差異未被正確標記，修正後全數納入統計。所有案例皆為極小單位押注觸發超高倍數。</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MECH 3 -->
+    <section class="section" id="mech3">
+      <div class="section-number">Section 03</div>
+      <h2>機制 3（絕對值熔斷）調整方案分析</h2>
+
+      <h3>3.1　政策調整：由「關閉」改為「調高閾值」</h3>
+      <p>機制 3 的處理方式由原本評估的「完全關閉」調整為「<strong>將閾值提升至各幣別最大押注段 × 1000 倍</strong>」，確保正常的最大押注在任何倍數下都不會觸發絕對值熔斷，同時保留對異常極端值的最後防線。</p>
+
+      <div class="callout blue">
+        <div class="callout-title">📐 調整邏輯</div>
+        <p>
+          <strong>新閾值 = 各幣別最大押注段 × 1,000 倍</strong><br><br>
+          以 PHP 為例：最大押注段已提升至 1,500 → 新絕對值熔斷 = 1,500 × 1,000 = <strong>1,500,000 PHP</strong>（≈ USD $25,500）<br><br>
+          4/28 觸發案例（押注 1,000 × 892x = <strong>892,000 PHP</strong>）在新閾值下將<strong>不再觸發熔斷</strong>，因為 892,000 &lt; 新閾值 1,500,000。
+        </p>
+      </div>
+
+      <h3>3.2　各幣別新絕對值熔斷數值（主要幣別）</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>幣別</th><th class="right">最大押注段</th><th class="right">新絕對值熔斷</th><th class="right">換算 USD</th><th class="right">遊戲比值</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="bold blue">PHP</td><td class="right mono">1,500</td><td class="right mono bold">1,500,000</td><td class="right mono">$25,500</td><td class="right mono">1.00</td></tr>
+            <tr><td class="bold">USD</td><td class="right mono">20</td><td class="right mono">20,000</td><td class="right mono">$340</td><td class="right mono">0.20</td></tr>
+            <tr><td class="bold blue">THB</td><td class="right mono">1,000</td><td class="right mono bold">1,000,000</td><td class="right mono">$17,000</td><td class="right mono">1.00</td></tr>
+            <tr><td class="bold">BDT</td><td class="right mono">3,000</td><td class="right mono">3,000,000</td><td class="right mono">$51,000</td><td class="right mono">1.00</td></tr>
+            <tr><td class="bold">LKR</td><td class="right mono">7,500</td><td class="right mono">7,500,000</td><td class="right mono">$127,500</td><td class="right mono">5.00</td></tr>
+            <tr><td class="bold">MYR</td><td class="right mono">100</td><td class="right mono">100,000</td><td class="right mono">$1,700</td><td class="right mono">0.20</td></tr>
+            <tr><td class="bold">SGD</td><td class="right mono">20</td><td class="right mono">20,000</td><td class="right mono">$340</td><td class="right mono">0.20</td></tr>
+            <tr><td class="bold">HKD</td><td class="right mono">200</td><td class="right mono">200,000</td><td class="right mono">$3,400</td><td class="right mono">1.00</td></tr>
+            <tr><td class="bold">TWD</td><td class="right mono">800</td><td class="right mono">800,000</td><td class="right mono">$13,600</td><td class="right mono">1.00</td></tr>
+            <tr><td class="bold">INR</td><td class="right mono">1,500</td><td class="right mono">1,500,000</td><td class="right mono">$25,500</td><td class="right mono">5.00</td></tr>
+            <tr><td class="bold">JPY</td><td class="right mono">3,000</td><td class="right mono">3,000,000</td><td class="right mono">$51,000</td><td class="right mono">10.00</td></tr>
+            <tr><td class="bold">KRW</td><td class="right mono">30,000</td><td class="right mono">30,000,000</td><td class="right mono">$510,000</td><td class="right mono">50.00</td></tr>
+            <tr><td class="bold">CNY</td><td class="right mono">100</td><td class="right mono">100,000</td><td class="right mono">$1,700</td><td class="right mono">1.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.3　4/28 觸發事件重新驗證</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>項目</th><th>舊閾值情境</th><th>新閾值情境</th></tr></thead>
+          <tbody>
+            <tr><td class="bold">觸發日期</td><td>2026/04/28</td><td>2026/04/28</td></tr>
+            <tr><td class="bold">遊戲 / 幣別</td><td>海盜女王 / PHP</td><td>海盜女王 / PHP</td></tr>
+            <tr><td class="bold">押注 × 倍數</td><td>1,000 × 892x</td><td>1,000 × 892x</td></tr>
+            <tr><td class="bold">實際獎金</td><td>PHP 892,000</td><td>PHP 892,000</td></tr>
+            <tr><td class="bold">絕對值熔斷閾值</td><td class="red">舊值（較低）</td><td class="green bold">1,500,000 PHP（新值）</td></tr>
+            <tr><td class="bold">是否觸發熔斷</td><td class="red bold">✓ 觸發 → No Win</td><td class="green bold">✗ 不觸發 → 正常派彩</td></tr>
+            <tr><td class="bold">結論</td><td>玩家獎勵被熔斷</td><td class="green">玩家獲得正當獎勵，RTP 正常化</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout green">
+        <div class="callout-title">✓ 關鍵發現</div>
+        <p>4/28 案例的獎金 PHP 892,000 低於新閾值 1,500,000，在新方案下將<strong>正常派彩，不再觸發熔斷</strong>。這正是調整的核心目標：最大押注的正常大倍數獎勵不應被熔斷。</p>
+      </div>
+
+      <h3>3.4　GummyBonanza 倍數區間 RTP 分析</h3>
+      <p>各倍數區間對 RTP 的貢獻，說明高倍數區間 RTP 佔比極低，新閾值開放的正常獎勵區間對整體 RTP 影響可控：</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>倍數區間</th>
+              <th class="right">Gummy（No Extra）</th>
+              <th class="right">Gummy（Extra）</th>
+              <th class="right">總計（No Extra）</th>
+              <th class="right">總計（Extra）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>&gt; 20,000</td><td class="right mono">0.0171%</td><td class="right mono">0.0171%</td><td class="right mono">0.0240%</td><td class="right mono">0.0240%</td></tr>
+            <tr><td>10,000 ～ 20,000</td><td class="right mono">0.0574%</td><td class="right mono">0.0745%</td><td class="right mono">0.0438%</td><td class="right mono">0.0678%</td></tr>
+            <tr><td>5,000 ～ 10,000</td><td class="right mono">0.0714%</td><td class="right mono">0.1459%</td><td class="right mono">0.1114%</td><td class="right mono">0.1792%</td></tr>
+            <tr><td>2,000 ～ 5,000</td><td class="right mono">0.1873%</td><td class="right mono">0.3332%</td><td class="right mono">0.3857%</td><td class="right mono">0.5649%</td></tr>
+            <tr><td>1,000 ～ 2,000</td><td class="right mono">0.4547%</td><td class="right mono">0.7879%</td><td class="right mono">0.7532%</td><td class="right mono">1.3181%</td></tr>
+            <tr><td>800 ～ 1,000</td><td class="right mono">0.2940%</td><td class="right mono">1.0819%</td><td class="right mono">0.5495%</td><td class="right mono">1.8676%</td></tr>
+            <tr><td>500 ～ 800</td><td class="right mono">1.1546%</td><td class="right mono">2.2365%</td><td class="right mono">1.9284%</td><td class="right mono">3.7960%</td></tr>
+            <tr><td>300 ～ 500</td><td class="right mono">2.3493%</td><td class="right mono">4.5858%</td><td class="right mono">4.2457%</td><td class="right mono">8.0417%</td></tr>
+            <tr><td class="bold red">200 ～ 300</td><td class="right mono bold">2.8325%</td><td class="right mono bold">7.4183%</td><td class="right mono bold">5.0805%</td><td class="right mono bold red">13.1222%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout blue">
+        <div class="callout-title">📌 說明</div>
+        <p>200～300 倍區間的 RTP 佔比最高（含 Extra 達 13.12%），代表的是常見押注下的正常大獎，並非極端異常值。新閾值的設計確保 <strong>最大押注 × 1000 倍以下的獎項完全不受絕對值熔斷影響</strong>，真正需要保護的「異常極端值」才會觸發熔斷，符合原始設計目的。</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- POOL -->
+    <section class="section" id="pool">
+      <div class="section-number">Section 04</div>
+      <h2>水池機制穩健性評估</h2>
+
+      <h3>4.1　水池見底事件分析</h3>
+      <p>4 月份水池熔斷事件共出現約 <strong>5 次</strong>，集中於 <strong>AWS111 線路</strong>，原因為該線路初始水池設定金額偏低。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>項目</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td class="bold">發生線路</td><td>AWS111（單一線路）</td></tr>
+            <tr><td class="bold">4 月觸發次數</td><td>約 5 次</td></tr>
+            <tr><td class="bold">集中情況</td><td>4 次集中於同一日</td></tr>
+            <tr><td class="bold">根本原因</td><td>水池初始設定金額偏低（非機制設計缺陷）</td></tr>
+            <tr><td class="bold">其他線路狀況</td><td>完全未出現水池趨近於 0 的情況</td></tr>
+            <tr><td class="bold">修正措施</td><td>4/15 定期更新時調整各線路初始值</td></tr>
+            <tr><td class="bold">修正後結果</td><td class="green">此後未再發生任何線路水池歸零事件</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout green">
+        <div class="callout-title">✓ 重要結論</div>
+        <p>AWS111 水池見底為<strong>參數設定問題，而非機制本身缺陷</strong>。4/15 修正後已驗證有效，後續所有線路水池運行正常。此事件不影響移除機制 2、3 的可行性評估。</p>
+      </div>
+
+      <h3>4.2　水池承接能力回測</h3>
+      <p>假設機制 2、3 均不存在時，水池是否仍能承接所有歷史觸發事件：</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>事件</th><th class="right">需水池承接金額（USD）</th><th>當時水池狀態</th><th>結論</th></tr></thead>
+          <tbody>
+            <tr><td class="bold">3000倍熔斷 31 筆合計</td><td class="right mono">≈ $2,754</td><td>水池餘額充足</td><td class="green">✓ 可完全承接</td></tr>
+            <tr><td class="bold">絕對值熔斷（4/28）</td><td class="right mono">$25,509</td><td>> $140,000 餘額</td><td class="green">✓ 可完全承接</td></tr>
+            <tr><td class="bold">歷史最大獎項（1/9）</td><td class="right mono">約 $23,200</td><td>當時機制尚未完整</td><td class="blue">↗ 已調整 Bet List</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.3　Baby Fund 與每月初始化保障</h3>
+      <ul>
+        <li>每月水池更新時設有 Baby Fund，確保初始玩家不會因水池空乏而遭遇過多 No Win</li>
+        <li>Baby Fund 機制同時確保每月營收基準為正值</li>
+        <li>各線路 USD 設定值已於 4/15 全面校正，初始水位充足</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- BENEFIT -->
+    <section class="section" id="benefit">
+      <div class="section-number">Section 05</div>
+      <h2>移除機制 2、3 的正面效益</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>效益類別</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="bold blue">倍數排行榜功能可行性</td>
+              <td>後續規劃推出倍數排行榜，需能真實開出高倍數記錄；3000 倍熔斷直接阻斷 3000 倍以上獎項，導致排行榜數據失真，無法作為宣傳素材使用</td>
+            </tr>
+            <tr>
+              <td class="bold blue">高押注玩家體驗改善</td>
+              <td>4/23 已重新調整 Bet List 並提升押注上限，但熔斷機制限制了大押注的正當獎勵上限，玩家體驗受損</td>
+            </tr>
+            <tr>
+              <td class="bold blue">RTP 正常化</td>
+              <td>機制 3 對高押注等級的 RTP 影響達 5～13%（以 1000 THB 為例），移除後 RTP 回歸正常設計值，提升遊戲公平性</td>
+            </tr>
+            <tr>
+              <td class="bold blue">系統維護簡化</td>
+              <td>減少三層機制並存的邏輯複雜度，降低未來版本迭代時規則衝突的風險，提升工程維護效率</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MITIGATION -->
+    <section class="section" id="mitigation">
+      <div class="section-number">Section 06</div>
+      <h2>移除後的風險緩解措施</h2>
+
+      <h3>6.1　水池健康度監控強化</h3>
+      <ul>
+        <li>建立水池低水位預警系統，當任一線路水池餘額低於 Baby Fund 設定值的 N 倍時，自動通知維運團隊</li>
+        <li>參考 AWS111 事件教訓，確保各線路初始值設定合理，納入定期稽核項目</li>
+      </ul>
+
+      <h3>6.2　大獎事件觀測機制</h3>
+      <ul>
+        <li>移除熔斷後，建議針對單筆獎金超過特定閾值（例如 USD $5,000）的事件建立即時告警</li>
+        <li>初期（移除後 1～3 個月）加強水池餘額日報監控，確認水池承接能力符合預期</li>
+      </ul>
+
+      <h3>6.3　Bet List 管理</h3>
+      <ul>
+        <li>維持現行 4/23 調整後的押注上限設定，透過合理的押注範圍控制單筆最大理論損失</li>
+        <li>若後續發現特定遊戲出現異常高倍數頻率，可針對個別遊戲調整參數，而非依賴全域熔斷機制</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONCLUSION -->
+    <section class="section" id="conclusion">
+      <div class="section-number">Section 07</div>
+      <h2>結論與建議</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>評估項目</th>
+              <th>機制 2（3000 倍熔斷）</th>
+              <th>機制 3（絕對值熔斷）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="bold">觀測期觸發次數</td><td>31 次（約 70 天）</td><td>1 次（4 月）</td></tr>
+            <tr><td class="bold">最大單筆金額（USD）</td><td class="mono">$381</td><td class="mono">$25,509</td></tr>
+            <tr><td class="bold">水池承接可行性</td><td class="green">✓ 完全可承接</td><td class="green">✓ 完全可承接</td></tr>
+            <tr><td class="bold">對玩家體驗影響</td><td>限制大倍數獎項開出</td><td>高押注 RTP 壓縮 5～13%</td></tr>
+            <tr><td class="bold">對產品規劃影響</td><td>阻礙倍數排行榜推出</td><td>降低高押注產品競爭力</td></tr>
+            <tr class="total">
+              <td>建議</td>
+              <td>移除</td>
+              <td>調高閾值至最大押注 × 1000 倍</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="verdict">
+        <div class="v-label">最終建議</div>
+        <h3>移除機制 2；調整機制 3 閾值至最大押注 × 1000 倍</h3>
+        <p><strong>機制 2（3000 倍熔斷）：移除。</strong>約 70 天觸發 31 次，合計僅 USD $2,754，水池機制可完全取代，且保留反而阻礙倍數排行榜推出。</p>
+        <p style="margin-top:12px"><strong>機制 3（絕對值熔斷）：調高閾值。</strong>設定為各幣別最大押注 × 1,000 倍（PHP：1,500,000、THB：1,000,000…），確保最大押注的正常大獎不被熔斷，同時保留對真正異常極端值的最後防線。</p>
+        <p style="margin-top:12px">配套措施：同步建立水池低水位預警機制，確保 AWS111 類型問題提前發現。</p>
+      </div>
+
+      <p style="color:var(--gray-600);font-size:13px;margin-top:24px;">
+        附件：原始熔斷 Log 資料（1/26～2/23、3/25～4/7）、絕對值熔斷 RTP 影響試算表
+      </p>
+    </section>
+
+  </div><!-- /content -->
+</main>
+
+<button class="print-btn" onclick="window.print()">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  列印 / 匯出 PDF
+</button>
+
+<script>
+// Active nav highlight on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
