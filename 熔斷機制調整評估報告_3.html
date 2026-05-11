@@ -630,7 +630,7 @@
           <div class="cc-body">
             <div class="cc-row"><span class="ck">觸發次數（4月）</span><span class="cv">1 筆</span></div>
             <div class="cc-row"><span class="ck">觸發金額 USD</span><span class="cv">$25,509</span></div>
-            <div class="cc-row"><span class="ck">新閾值（PHP）</span><span class="cv">1,500,000</span></div>
+            <div class="cc-row"><span class="ck">新閾值（THB）</span><span class="cv">1,000,000</span></div>
             <div class="cc-row"><span class="ck">4/28案例新閾值下</span><span class="cv">✗ 不觸發</span></div>
             <div class="cc-verdict">調高閾值 = 最大押注 × 1,000 倍</div>
           </div>
@@ -665,7 +665,7 @@
       <ul>
         <li>各幣別設有各自的絕對值上限，獎項金額超過後直接改為 No Win，無重新隨機機制</li>
         <li>設計目的：防範高額單筆支出</li>
-        <li><strong>調整方案：</strong>閾值提升至各幣別最大押注段 × 1,000 倍，確保最大押注的正常高倍獎勵不受熔斷限制</li>
+        <li><strong>調整方案：</strong>閾值提升至各幣別最大押注段 × 1,000 倍，確保最大押注的正常高倍獎勵熔斷機率下降</li>
       </ul>
     </section>
 
@@ -801,7 +801,7 @@
       <h2>機制 3（絕對值熔斷）調整方案分析</h2>
 
       <h3>3.1　政策調整：由「關閉」改為「調高閾值」</h3>
-      <p>機制 3 的處理方式由原本評估的「完全關閉」調整為「<strong>將閾值提升至各幣別最大押注段 × 1000 倍</strong>」，確保正常的最大押注在任何倍數下都不會觸發絕對值熔斷，同時保留對異常極端值的最後防線。</p>
+      <p>機制 3 的處理方式由原本評估的「完全關閉」調整為「<strong>將閾值提升至各幣別最大押注段 × 1000 倍</strong>」，確保最大押注在低於100的玩家，獎項都不會觸發絕對值熔斷，同時保留對異常極端值的最後防線。</p>
 
       <div class="callout blue">
         <div class="callout-title">📐 調整邏輯</div>
