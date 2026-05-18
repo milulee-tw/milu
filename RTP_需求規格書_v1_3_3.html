@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTP 動態設定系統｜需求規格書 v1.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0D1117;
+  --bg2:       #161B22;
+  --bg3:       #1C2128;
+  --bg4:       #22272E;
+  --border:    rgba(255,255,255,.08);
+  --border2:   rgba(255,255,255,.14);
+  --text:      #E6EDF3;
+  --text2:     #8B949E;
+  --text3:     #484F58;
+  --blue:      #58A6FF;
+  --blue-dim:  rgba(88,166,255,.12);
+  --teal:      #3ECFB2;
+  --teal-dim:  rgba(62,207,178,.12);
+  --amber:     #F5C842;
+  --amber-dim: rgba(245,200,66,.12);
+  --purple:    #C084FC;
+  --purple-dim:rgba(192,132,252,.12);
+  --pink:      #F472B6;
+  --pink-dim:  rgba(244,114,182,.12);
+  --green:     #3FB950;
+  --green-dim: rgba(63,185,80,.12);
+  --red:       #F85149;
+  --red-dim:   rgba(248,81,73,.12);
+  --orange:    #FF8C42;
+  --orange-dim:rgba(255,140,66,.12);
+  --r:         8px;
+  --r-sm:      5px;
+  --mono:      'IBM Plex Mono', monospace;
+  --sans:      'Noto Sans TC', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.75;
+}
+
+/* ── Layout ── */
+.wrap { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar {
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  position: sticky; top: 0; height: 100vh;
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+.sb-brand {
+  padding: 22px 18px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.sb-brand-title { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+.sb-brand-sub { font-size: 11px; color: var(--text2); margin-top: 3px; }
+.sb-brand-ver {
+  display: inline-block; margin-top: 8px;
+  font-size: 10px; font-family: var(--mono);
+  color: var(--blue); background: var(--blue-dim);
+  padding: 2px 8px; border-radius: 10px;
+}
+
+.sb-nav { padding: 12px 0; flex: 1; }
+.sb-group {
+  font-size: 10px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text3);
+  padding: 10px 18px 4px;
+}
+.sb-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 18px; font-size: 12.5px;
+  color: var(--text2); text-decoration: none;
+  cursor: pointer; border-left: 2px solid transparent;
+  transition: all .14s;
+}
+.sb-item:hover { color: var(--text); background: var(--bg3); }
+.sb-item.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-dim); }
+.sb-item.active.ab { color: var(--purple); border-left-color: var(--purple); background: var(--purple-dim); }
+.sb-num { font-size: 10px; font-family: var(--mono); color: var(--text3); min-width: 22px; }
+
+/* ── Main ── */
+.main { max-width: 100%; overflow-x: hidden; }
+
+/* ── Hero ── */
+.hero {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 52px 56px 44px;
+  position: relative; overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; right: -100px; top: -100px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(88,166,255,.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--blue);
+  font-family: var(--mono); margin-bottom: 14px;
+}
+.hero-title { font-size: 30px; font-weight: 700; color: var(--text); line-height: 1.25; margin-bottom: 6px; letter-spacing: -.02em; }
+.hero-sub { font-size: 16px; font-weight: 300; color: var(--text2); margin-bottom: 28px; }
+.hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-tag {
+  font-size: 11px; padding: 4px 12px; border-radius: 20px;
+  font-weight: 500; letter-spacing: .03em;
+}
+.hero-tag.blue  { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(88,166,255,.25); }
+.hero-tag.teal  { background: var(--teal-dim);   color: var(--teal);   border: 1px solid rgba(62,207,178,.25); }
+.hero-tag.amber { background: var(--amber-dim);  color: var(--amber);  border: 1px solid rgba(245,200,66,.25); }
+.hero-tag.purple{ background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(192,132,252,.25); }
+
+/* ── Content ── */
+.content { padding: 0 56px 80px; }
+
+/* ── Section ── */
+.sec { padding-top: 52px; scroll-margin-top: 20px; }
+.sec-hd {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding-bottom: 16px; margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.sec-num {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  padding: 3px 9px; border-radius: var(--r-sm); margin-top: 5px; flex-shrink: 0;
+}
+.sec-num.blue   { color: var(--blue);   background: var(--blue-dim); }
+.sec-num.purple { color: var(--purple); background: var(--purple-dim); }
+.sec-title { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -.015em; line-height: 1.3; }
+.sec-desc  { font-size: 13px; color: var(--text2); margin-top: 3px; }
+
+.divider { height: 1px; background: var(--border); margin: 48px 0 0; }
+
+/* ── Sub ── */
+.sub { margin-bottom: 28px; }
+.sub-title {
+  font-size: 14px; font-weight: 700; color: var(--text);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.sub-title::before {
+  content: ''; display: inline-block;
+  width: 3px; height: 13px; border-radius: 2px;
+  background: var(--blue);
+}
+.sub-title.purple::before { background: var(--purple); }
+
+p.body { font-size: 13.5px; color: var(--text2); line-height: 1.8; margin-bottom: 12px; }
+
+/* ── Table ── */
+.tbl {
+  width: 100%; border-collapse: collapse;
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; font-size: 13px; margin-bottom: 16px;
+}
+.tbl th {
+  background: var(--bg3); color: var(--text2);
+  padding: 9px 14px; text-align: left;
+  font-size: 11px; font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; white-space: nowrap;
+  border-bottom: 1px solid var(--border2);
+}
+.tbl td {
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+  vertical-align: top; line-height: 1.65; color: var(--text2);
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: rgba(255,255,255,.02); }
+.tbl td strong { color: var(--text); font-weight: 500; }
+.tbl td code {
+  font-family: var(--mono); font-size: 11px;
+  background: var(--bg4); color: var(--teal);
+  padding: 1px 5px; border-radius: 3px;
+}
+
+/* ── Callout ── */
+.callout {
+  display: flex; gap: 12px; padding: 13px 16px;
+  border-radius: var(--r); margin-bottom: 16px;
+  font-size: 13px; line-height: 1.7;
+}
+.callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.c-info    { background: var(--blue-dim);   border-left: 3px solid var(--blue);   color: #93C5FD; }
+.c-warn    { background: var(--amber-dim);  border-left: 3px solid var(--amber);  color: #FDE68A; }
+.c-success { background: var(--green-dim);  border-left: 3px solid var(--green);  color: #86EFAC; }
+.c-danger  { background: var(--red-dim);    border-left: 3px solid var(--red);    color: #FCA5A5; }
+.c-purple  { background: var(--purple-dim); border-left: 3px solid var(--purple); color: #E9D5FF; }
+
+/* ── Req list ── */
+.req-list { list-style: none; padding: 0; margin-bottom: 14px; }
+.req-list li {
+  padding: 7px 0 7px 20px; position: relative;
+  font-size: 13.5px; color: var(--text2); line-height: 1.7;
+  border-bottom: 1px solid var(--border);
+}
+.req-list li:last-child { border-bottom: none; }
+.req-list li::before {
+  content: ''; position: absolute; left: 0; top: 15px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue);
+}
+.req-list li strong { color: var(--text); font-weight: 600; }
+.req-list.purple li::before { background: var(--purple); }
+
+/* ── Phase cards ── */
+.phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+.phase-card { background: var(--bg2); padding: 22px 24px; }
+.phase-card.p1 { border-top: 3px solid var(--blue); }
+.phase-card.p2 { border-top: 3px solid var(--teal); }
+.phase-pill {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 10px; margin-bottom: 10px;
+}
+.p1 .phase-pill { background: var(--blue-dim); color: var(--blue); }
+.p2 .phase-pill { background: var(--teal-dim); color: var(--teal); }
+.phase-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.phase-when { font-size: 11px; font-family: var(--mono); color: var(--text3); margin-bottom: 12px; }
+.phase-desc { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; }
+.phase-goals { display: flex; flex-direction: column; gap: 6px; }
+.phase-goal { display: flex; gap: 8px; font-size: 12.5px; color: var(--text2); }
+.phase-goal::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+
+/* ── Timeline ── */
+.tl { display: flex; align-items: stretch; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+.tl-item { flex: 1; background: var(--bg2); padding: 14px 16px; border-right: 1px solid var(--border); }
+.tl-item:last-child { border-right: none; }
+.tl-item.cur { background: var(--blue-dim); }
+.tl-item.pivot { background: var(--amber-dim); }
+.tl-item.go { background: var(--teal-dim); }
+.tl-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
+.tl-val { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.tl-sub { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+/* ── Group compare ── */
+.grp-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.grp-card { padding: 16px 18px; border-radius: var(--r); }
+.grp-card.ga { background: var(--blue-dim); border: 1px solid rgba(88,166,255,.2); }
+.grp-card.gb { background: var(--teal-dim); border: 1px solid rgba(62,207,178,.2); }
+.grp-head { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.ga .grp-head { color: var(--blue); }
+.gb .grp-head { color: var(--teal); }
+.grp-body { font-size: 12.5px; color: var(--text2); line-height: 1.7; }
+
+/* ── Segment tags ── */
+.seg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.seg-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 16px 18px;
+}
+.seg-card.newbie  { border-left: 3px solid var(--teal); }
+.seg-card.highrtp { border-left: 3px solid var(--amber); }
+.seg-card.lowrtp  { border-left: 3px solid var(--purple); }
+.seg-card.vip     { border-left: 3px solid var(--pink); }
+.seg-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.seg-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 10px;
+}
+.newbie  .seg-badge { background: var(--teal-dim);   color: var(--teal); }
+.highrtp .seg-badge { background: var(--amber-dim);  color: var(--amber); }
+.lowrtp  .seg-badge { background: var(--purple-dim); color: var(--purple); }
+.vip     .seg-badge { background: var(--pink-dim);   color: var(--pink); }
+.seg-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.seg-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 12.5px; }
+.seg-lbl { color: var(--text3); flex-shrink: 0; width: 60px; }
+.seg-val { color: var(--text2); }
+
+/* ── Priority stack ── */
+.pri-stack { display: flex; flex-direction: column; gap: 3px; margin-bottom: 16px; }
+.pri-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  font-size: 13px;
+}
+.pri-rank {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; flex-shrink: 0;
+  font-family: var(--mono);
+}
+.pri-name { font-weight: 600; color: var(--text); width: 120px; }
+.pri-code { font-family: var(--mono); font-size: 11px; padding: 2px 7px; border-radius: 4px; background: var(--bg4); color: var(--text3); }
+.pri-note { font-size: 12px; color: var(--text2); }
+
+/* ── Metric row ── */
+.metric-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+.metric-cell { background: var(--bg2); padding: 18px 16px; text-align: center; }
+.metric-badge { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.metric-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.metric-def  { font-size: 11.5px; color: var(--text2); line-height: 1.5; margin-bottom: 8px; }
+.metric-win  { font-family: var(--mono); font-size: 11px; background: var(--blue-dim); color: var(--blue); padding: 2px 9px; border-radius: 10px; display: inline-block; }
+
+/* ── UI mockup description cards ── */
+.ui-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 16px; }
+.ui-card-head { background: var(--bg3); padding: 10px 16px; font-size: 12px; font-weight: 600; color: var(--text); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.ui-card-body { padding: 16px 18px; }
+
+/* ── Step flow ── */
+.step-flow { display: flex; flex-direction: column; gap: 2px; margin-bottom: 16px; }
+.step-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r-sm); }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--blue-dim); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; font-family: var(--mono); flex-shrink: 0; margin-top: 1px; }
+.step-content .step-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.step-content .step-desc  { font-size: 12.5px; color: var(--text2); line-height: 1.6; }
+
+/* ── Tag pill ── */
+.tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 11px; font-weight: 500; font-family: var(--mono); }
+.tag-blue   { background: var(--blue-dim);   color: var(--blue); }
+.tag-teal   { background: var(--teal-dim);   color: var(--teal); }
+.tag-amber  { background: var(--amber-dim);  color: var(--amber); }
+.tag-purple { background: var(--purple-dim); color: var(--purple); }
+.tag-pink   { background: var(--pink-dim);   color: var(--pink); }
+.tag-gray   { background: var(--bg4);        color: var(--text3); }
+
+/* ── Change log ── */
+.cl-row { display: flex; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--border); align-items: flex-start; font-size: 13px; }
+.cl-row:last-child { border-bottom: none; }
+.cl-ver  { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--blue); width: 36px; flex-shrink: 0; }
+.cl-date { font-family: var(--mono); font-size: 11px; color: var(--text3); width: 74px; flex-shrink: 0; }
+.cl-desc { color: var(--text2); }
+
+/* ── Checkbox list ── */
+.chk-list { list-style: none; padding: 0; margin-bottom: 14px; }
+.chk-list li { display: flex; gap: 9px; padding: 5px 0; font-size: 13px; color: var(--text2); }
+.chk-list li::before { content: '□'; color: var(--text3); flex-shrink: 0; margin-top: 1px; }
+
+
+/* ── Mockup shell ── */
+.mockup-wrap {
+  background: #0a0c0f;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.6);
+}
+.mockup-bar {
+  background: #161b22;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mockup-dots { display: flex; gap: 5px; }
+.mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #FF5F56; }
+.dot-y { background: #FFBD2E; }
+.dot-g { background: #27C93F; }
+.mockup-url {
+  flex: 1; background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 5px; padding: 3px 12px;
+  font-size: 11px; font-family: var(--mono); color: var(--text3);
+}
+
+/* ── App shell inside mockup ── */
+.app-shell {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 560px;
+}
+
+/* ── App sidebar ── */
+.app-sb {
+  background: #0d1117;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+}
+.app-sb-logo {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700; color: var(--text);
+}
+.app-sb-logo .logo-mark {
+  width: 24px; height: 24px; border-radius: 5px;
+  background: var(--blue); display: flex; align-items: center;
+  justify-content: center; font-size: 10px; font-weight: 900; color: #fff;
+}
+.app-sb-group {
+  font-size: 9px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--text3);
+  padding: 10px 14px 3px;
+}
+.app-sb-item {
+  padding: 7px 14px; font-size: 12px; color: var(--text2);
+  display: flex; align-items: center; gap: 7px;
+  cursor: pointer; border-left: 2px solid transparent;
+  transition: all .12s;
+}
+.app-sb-item:hover { background: var(--bg3); color: var(--text); }
+.app-sb-item.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-dim); }
+.app-sb-item.active.ab { color: var(--purple); border-left-color: var(--purple); background: var(--purple-dim); }
+.app-sb-item .icon { font-size: 13px; }
+
+/* ── App content ── */
+.app-content { background: var(--bg); overflow: hidden; }
+.app-topbar {
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; align-items: center;
+  justify-content: space-between;
+}
+.app-topbar-title { font-size: 13px; font-weight: 700; color: var(--text); }
+.app-topbar-breadcrumb { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.app-topbar-actions { display: flex; gap: 8px; }
+
+.app-body { padding: 16px 20px; }
+
+/* ── Toolbar ── */
+.ui-toolbar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.ui-input {
+  height: 30px; padding: 0 10px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 5px; font-size: 12px; color: var(--text);
+  font-family: var(--sans);
+}
+.ui-select {
+  height: 30px; padding: 0 8px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 5px; font-size: 12px; color: var(--text);
+  font-family: var(--sans);
+}
+.ui-btn {
+  height: 30px; padding: 0 12px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 5px; font-size: 12px; color: var(--text2);
+  font-family: var(--sans); cursor: pointer; white-space: nowrap;
+}
+.ui-btn:hover { background: var(--bg3); color: var(--text); }
+.ui-btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+.ui-btn.primary:hover { opacity: .9; }
+.ui-btn.purple { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
+.ui-spacer { flex: 1; }
+
+/* ── Tab bar ── */
+.ui-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+.ui-tab {
+  padding: 7px 14px; font-size: 12px; color: var(--text2);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all .12s;
+}
+.ui-tab:hover { color: var(--text); }
+.ui-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.ui-tab.active.ab { color: var(--purple); border-bottom-color: var(--purple); }
+
+/* ── Data table ── */
+.ui-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ui-tbl th {
+  padding: 7px 10px; text-align: left;
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--text3);
+  border-bottom: 1px solid var(--border2); white-space: nowrap;
+}
+.ui-tbl td {
+  padding: 8px 10px; border-bottom: 1px solid var(--border);
+  vertical-align: middle; color: var(--text2);
+}
+.ui-tbl tr:last-child td { border-bottom: none; }
+.ui-tbl tr:hover td { background: rgba(255,255,255,.02); }
+.ui-tbl .link { color: var(--blue); cursor: pointer; font-size: 11px; }
+.ui-tbl .link:hover { text-decoration: underline; }
+.ui-tbl .link.danger { color: var(--red); }
+
+/* ── Status / pill badges in mockup ── */
+.s-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 8px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.s-active  { background: var(--green-dim); color: var(--green); }
+.s-ended   { background: var(--bg4); color: var(--text3); }
+.s-running { background: var(--purple-dim); color: var(--purple); }
+.s-warn    { background: var(--amber-dim); color: var(--amber); }
+.s-p1      { background: var(--blue-dim); color: var(--blue); }
+.s-p2      { background: var(--teal-dim); color: var(--teal); }
+
+/* ── Stat cards row ── */
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+.stat-row.three { grid-template-columns: repeat(3,1fr); }
+.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 7px; padding: 12px 14px; }
+.stat-label { font-size: 10px; color: var(--text3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .06em; }
+.stat-val { font-size: 20px; font-weight: 700; font-family: var(--mono); }
+.sv-blue { color: var(--blue); }
+.sv-green { color: var(--green); }
+.sv-amber { color: var(--amber); }
+.sv-gray  { color: var(--text3); }
+.sv-purple{ color: var(--purple); }
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.55);
+  display: flex; align-items: flex-start;
+  justify-content: center; padding-top: 40px;
+  z-index: 10;
+}
+.modal-box {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 10px; width: 480px; max-height: 420px;
+  overflow-y: auto;
+}
+.modal-head {
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; background: var(--bg2); z-index: 2;
+}
+.modal-head h3 { font-size: 14px; font-weight: 700; color: var(--text); }
+.modal-x { width: 24px; height: 24px; border-radius: 5px; border: none; background: none; font-size: 16px; cursor: pointer; color: var(--text2); display: flex; align-items: center; justify-content: center; }
+.modal-body { padding: 16px 18px; }
+.modal-foot { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; position: sticky; bottom: 0; background: var(--bg2); }
+
+/* ── Form grid ── */
+.fg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fg { display: flex; flex-direction: column; gap: 4px; }
+.fg.full { grid-column: 1/-1; }
+.fg-label { font-size: 11px; font-weight: 600; color: var(--text2); }
+.fg-req { color: var(--red); margin-left: 2px; }
+.fg-hint { font-size: 10px; color: var(--text3); }
+.fg-input { height: 30px; padding: 0 9px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 5px; font-size: 12px; color: var(--text); font-family: var(--sans); }
+.fg-select { height: 30px; padding: 0 8px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 5px; font-size: 12px; color: var(--text); font-family: var(--sans); }
+.fg-textarea { padding: 7px 9px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 5px; font-size: 12px; color: var(--text); font-family: var(--sans); resize: vertical; }
+.form-section-label { grid-column: 1/-1; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding-top: 8px; border-top: 1px solid var(--border); }
+
+/* ── Metric compare (AB) ── */
+.ab-metric-row { display: grid; grid-template-columns: 160px 1fr 1fr 80px; gap: 0; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; margin-bottom: 10px; }
+.ab-metric-label { background: var(--bg3); padding: 10px 12px; font-size: 12px; font-weight: 600; color: var(--text); border-right: 1px solid var(--border); display: flex; align-items: center; }
+.ab-metric-a { background: var(--blue-dim); padding: 10px 12px; border-right: 1px solid var(--border); }
+.ab-metric-b { background: var(--teal-dim); padding: 10px 12px; border-right: 1px solid var(--border); }
+.ab-metric-diff { background: var(--bg2); padding: 10px 12px; display: flex; align-items: center; justify-content: center; }
+.ab-metric-grp-label { font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
+.ab-metric-a .ab-metric-grp-label { color: var(--blue); }
+.ab-metric-b .ab-metric-grp-label { color: var(--teal); }
+.ab-metric-val { font-size: 16px; font-weight: 700; font-family: var(--mono); color: var(--text); }
+.ab-metric-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
+.diff-pos { color: var(--green); font-size: 12px; font-weight: 700; font-family: var(--mono); }
+.diff-neg { color: var(--red); font-size: 12px; font-weight: 700; font-family: var(--mono); }
+.diff-neu { color: var(--text3); font-size: 12px; font-family: var(--mono); }
+
+/* ── Progress bar ── */
+.progress-wrap { margin-bottom: 10px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+.progress-bar { height: 5px; background: var(--bg4); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; }
+.progress-fill.blue { background: var(--blue); }
+.progress-fill.purple { background: var(--purple); }
+.progress-fill.green { background: var(--green); }
+
+/* ── UI section annotation ── */
+.annotation-box {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 18px; margin-top: 16px;
+}
+.annotation-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.annotation-title::before { content: ''; display: inline-block; width: 3px; height: 12px; border-radius: 2px; background: var(--blue); }
+.annotation-title.purple::before { background: var(--purple); }
+.annotation-list { list-style: none; padding: 0; }
+.annotation-list li { font-size: 12px; color: var(--text2); padding: 3px 0 3px 14px; position: relative; line-height: 1.6; }
+.annotation-list li::before { content: '→'; position: absolute; left: 0; color: var(--text3); }
+
+/* Print */
+@media print { .sidebar { display: none; } .wrap { grid-template-columns: 1fr; } .content { padding: 32px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-title">RTP 動態設定系統</div>
+    <div class="sb-brand-sub">需求規格書</div>
+    <div class="sb-brand-ver">v1.3 · 2025-06 · 草稿</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-group">系統概覽</div>
+    <a class="sb-item active" href="#s1"><span class="sb-num">01</span>系統目標</a>
+    <a class="sb-item" href="#s2"><span class="sb-num">02</span>使用者與權限</a>
+
+    <div class="sb-group">RTP 規則管理</div>
+    <a class="sb-item" href="#s3"><span class="sb-num">03</span>優先序機制</a>
+    <a class="sb-item" href="#s4"><span class="sb-num">04</span>規則操作需求</a>
+    <a class="sb-item" href="#s5"><span class="sb-num">05</span>線路預設值</a>
+    <a class="sb-item" href="#s6"><span class="sb-num">06</span>群組管理</a>
+
+    <div class="sb-group">A/B Testing</div>
+    <a class="sb-item ab" href="#ab1"><span class="sb-num">AB1</span>兩階段規劃</a>
+    <a class="sb-item ab" href="#ab2"><span class="sb-num">AB2</span>Tag 標籤定義</a>
+    <a class="sb-item ab" href="#ab3"><span class="sb-num">AB3</span>分群運作規則</a>
+    <a class="sb-item ab" href="#ab4"><span class="sb-num">AB4</span>測試指標定義</a>
+    <a class="sb-item ab" href="#ab5"><span class="sb-num">AB5</span>後台操作介面</a>
+
+    <a class="sb-item ab" href="#ui-mockup"><span class="sb-num">UI</span>介面操作規劃</a>
+
+    <div class="sb-group">審計與合規</div>
+    <a class="sb-item" href="#s7"><span class="sb-num">07</span>審計日誌需求</a>
+    <a class="sb-item" href="#s8"><span class="sb-num">08</span>安全與限制</a>
+    <a class="sb-item" href="#s9"><span class="sb-num">09</span>待決事項</a>
+    <a class="sb-item" href="#s10"><span class="sb-num">10</span>版本紀錄</a>
+  </nav>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">Product Requirements · Game Management System</div>
+  <div class="hero-title">RTP 動態設定系統</div>
+  <div class="hero-sub">需求規格書 — 含機率 A/B Testing 分群機制</div>
+  <div class="hero-tags">
+    <span class="hero-tag blue">v1.3 草稿</span>
+    <span class="hero-tag teal">PM 內部對齊</span>
+    <span class="hero-tag amber">軟體開發參考</span>
+    <span class="hero-tag purple">A/B Testing 整合</span>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ══ S1 ══ -->
+<section class="sec" id="s1">
+  <div class="sec-hd">
+    <div class="sec-num blue">01</div>
+    <div>
+      <div class="sec-title">系統目標</div>
+      <div class="sec-desc">這個系統要解決什麼問題，提供哪些核心能力</div>
+    </div>
+  </div>
+
+  <p class="body">遊戲管理後台需要一套可讓指定管理員彈性調整遊戲出獎率（RTP）的機制，並支援機率版本的 A/B 測試，以透過數據驗證不同機率配置對玩家留存的影響。</p>
+
+  <div class="sub">
+    <div class="sub-title">系統必須支援以下能力</div>
+    <ul class="req-list">
+      <li><strong>多維度 RTP 差異化設定：</strong>可依線路、幣值、遊戲、玩家群組等維度組合設定不同 RTP 數值，條件越精確優先序越高</li>
+      <li><strong>規則有效期管理：</strong>每條 RTP 規則有明確的生效與失效時間，時間到期後自動移入已結束狀態</li>
+      <li><strong>群組與特殊事件：</strong>可將特定玩家帳號歸入群組，並對群組設定特殊遊戲事件（如強制進入 FreeGame）</li>
+      <li><strong>機率 A/B 測試：</strong>同一款遊戲可同時運行兩套機率配置進行對照實驗，透過玩家分群追蹤各組留存數據，協助決策最佳機率版本</li>
+      <li><strong>族群差異化體驗：</strong>A/B 測試確定基礎版本後，可對新手、高 RTP、低 RTP、特殊照顧等不同玩家族群施加差異化機率調整</li>
+      <li><strong>完整操作紀錄：</strong>所有 RTP 設定變更和 A/B 測試操作均記錄於審計日誌，不可刪除</li>
+      <li><strong>RTP 模擬器：</strong>可在不實際生效的情況下，模擬查詢特定條件下會命中哪條規則及 RTP 數值</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">適用範圍</div>
+    <table class="tbl">
+      <thead><tr><th>項目</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>功能入口</strong></td><td>遊戲管理後台 → RTP 設定（含三個子頁：活動規則、線路預設值、A/B 機率測試）</td></tr>
+        <tr><td><strong>使用者</strong></td><td>具備 Admin 角色且在 RTP 操作白名單內的帳號</td></tr>
+        <tr><td><strong>影響範圍</strong></td><td>線上遊戲出獎率與機率配置，直接影響玩家體驗與財務報表</td></tr>
+        <tr><td><strong>優先級</strong></td><td>High — 涉及合規、財務與玩家體驗</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S2 ══ -->
+<section class="sec" id="s2">
+  <div class="sec-hd">
+    <div class="sec-num blue">02</div>
+    <div>
+      <div class="sec-title">使用者與權限</div>
+      <div class="sec-desc">誰可以操作這個系統，能做什麼</div>
+    </div>
+  </div>
+
+  <table class="tbl">
+    <thead><tr><th>角色</th><th>進入條件</th><th>可執行操作</th><th>不可執行</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Admin（白名單）</strong></td>
+        <td>具 Admin 角色 且 在 RTP 白名單中</td>
+        <td>新增 / 編輯 / 停用 RTP 規則、管理群組、建立 A/B 測試、查看審計日誌、使用模擬器</td>
+        <td>刪除規則或日誌、重啟已停用規則</td>
+      </tr>
+      <tr>
+        <td><strong>Admin（非白名單）</strong></td>
+        <td>具 Admin 角色 但 不在白名單</td>
+        <td>無法進入 RTP 設定頁面</td>
+        <td>所有操作</td>
+      </tr>
+      <tr>
+        <td><strong>非 Admin</strong></td>
+        <td>—</td>
+        <td>無法進入此模組</td>
+        <td>所有操作</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout c-warn">
+    <span class="callout-icon">⚠</span>
+    <div>白名單管理本身不在此功能模組範圍內，由 Super Admin 透過獨立機制維護。</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S3 ══ -->
+<section class="sec" id="s3">
+  <div class="sec-hd">
+    <div class="sec-num blue">03</div>
+    <div>
+      <div class="sec-title">RTP 優先序機制</div>
+      <div class="sec-desc">多條規則同時命中時，系統如何決定使用哪一條</div>
+    </div>
+  </div>
+
+  <p class="body">系統維護一份全局優先序排名。當玩家發起遊戲請求時，系統找出所有條件命中的進行中規則，執行排名最高（數字最小）的那一條。若無任何規則命中，依序 fallback 至線路預設值，再到全局預設值。</p>
+
+  <div class="sub">
+    <div class="sub-title">優先序排名規則</div>
+    <ul class="req-list">
+      <li><strong>排名為全局唯一整數</strong>，數字越小代表優先序越高，由 Admin 在建立規則時手動指定插入位置</li>
+      <li>若新規則要插入的位置已被占用，系統顯示受影響規則清單，Admin 確認後才執行批次往後位移</li>
+      <li>條件組合越精確（越多欄位有值），建議排在越前面；但最終排名由 Admin 決定，系統不強制</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">條件維度與建議排名參考</div>
+    <table class="tbl">
+      <thead><tr><th>建議區間</th><th>條件組合</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-purple">最高</span></td><td><code>群組 + 遊戲 + 線路 + 幣值</code></td><td>最精確，鎖定特定群組且指定遊戲/線路/幣值</td></tr>
+        <tr><td><span class="tag tag-blue">↓</span></td><td><code>群組 + 遊戲</code></td><td>針對特定群組在特定遊戲</td></tr>
+        <tr><td><span class="tag tag-blue">↓</span></td><td><code>群組</code></td><td>針對特定群組全部遊戲</td></tr>
+        <tr><td><span class="tag tag-teal">↓</span></td><td><code>線路 + 幣值 + 遊戲</code></td><td>針對特定線路/幣值/遊戲，不限群組</td></tr>
+        <tr><td><span class="tag tag-teal">↓</span></td><td><code>線路 + 幣值</code></td><td>針對特定線路/幣值</td></tr>
+        <tr><td><span class="tag tag-teal">↓</span></td><td><code>線路</code></td><td>針對特定線路全部遊戲</td></tr>
+        <tr><td><span class="tag tag-amber">↓</span></td><td><code>遊戲</code></td><td>針對特定遊戲全線路</td></tr>
+        <tr><td><span class="tag tag-gray">最低</span></td><td>（無規則命中）</td><td>fallback 至線路預設值 → 全局預設值</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Fallback 查找順序</div>
+    <div class="step-flow">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">命中進行中規則</div>
+          <div class="step-desc">找出所有條件符合且在有效期間內的規則，取排名最高（數字最小）的一條，採用其 RTP 值</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">無規則命中 → 線路預設值</div>
+          <div class="step-desc">依據玩家所在線路，使用各線路設定的預設 RTP（SEA 系列 96.7%、GLOBAL 系列 95.5%）</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">線路無設定 → 全局預設值</div>
+          <div class="step-desc">系統設定的最終 fallback 值，確保任何情況下都有 RTP 可用</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S4 ══ -->
+<section class="sec" id="s4">
+  <div class="sec-hd">
+    <div class="sec-num blue">04</div>
+    <div>
+      <div class="sec-title">RTP 規則操作需求</div>
+      <div class="sec-desc">後台介面上 Admin 需要能做到的事</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">規則列表頁面需求</div>
+    <ul class="req-list">
+      <li><strong>分三個標籤頁顯示：</strong>「進行中」（有效規則，按優先序排列）、「已結束」（到期或停用）、「審計日誌」</li>
+      <li><strong>篩選功能：</strong>進行中標籤頁支援依線路、幣值、遊戲、群組 ID 篩選；已結束支援依遊戲名稱與結束日期區間篩選</li>
+      <li><strong>列表欄位：</strong>排名、條件摘要（只顯示有填的欄位）、RTP 值（百分比格式，≥98% 顯示橘色警示）、生效起始與截止、操作按鈕</li>
+      <li><strong>已結束規則：</strong>僅供查閱，不提供任何編輯或重啟操作</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">新增 / 編輯規則需求</div>
+    <table class="tbl">
+      <thead><tr><th>欄位</th><th>必填</th><th>說明與限制</th></tr></thead>
+      <tbody>
+        <tr><td><strong>插入排名位置</strong></td><td>是</td><td>正整數，若位置已被占用則觸發 Shift 確認流程</td></tr>
+        <tr><td><strong>線路</strong></td><td>否</td><td>從系統線路清單選擇，留空表示不限線路</td></tr>
+        <tr><td><strong>幣值</strong></td><td>否</td><td>ISO 4217 代碼，留空表示不限幣值</td></tr>
+        <tr><td><strong>遊戲</strong></td><td>否</td><td>從遊戲清單選擇，留空表示不限遊戲</td></tr>
+        <tr><td><strong>群組 ID</strong></td><td>否</td><td>從已建立的群組中選擇，留空表示不指定群組</td></tr>
+        <tr><td><strong>RTP 值（%）</strong></td><td>是</td><td>80.00% ～ 99.00%，小數後 2 位；≥ 98% 需輸入確認碼 CONFIRM</td></tr>
+        <tr><td><strong>生效起始</strong></td><td>是</td><td>不可早於當前時間</td></tr>
+        <tr><td><strong>生效截止</strong></td><td>否</td><td>留空表示永久有效；若填寫需晚於生效起始</td></tr>
+        <tr><td><strong>備註</strong></td><td>否</td><td>上限 200 字，說明此規則用途</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Priority Shift 確認流程需求</div>
+    <ul class="req-list">
+      <li>當插入排名位置已被占用，儲存前需彈出確認視窗</li>
+      <li>確認視窗需列出「將被往後推移」的所有規則，顯示每條的 ID、條件摘要、原排名 → 新排名</li>
+      <li>Admin 可選擇「確認執行」或「取消並重新填寫排名」</li>
+      <li>確認後系統批次更新所有受影響規則，並記錄於審計日誌</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">停用規則需求</div>
+    <ul class="req-list">
+      <li>進行中規則提供「停用」操作，點擊後需彈出確認視窗</li>
+      <li>停用後規則立即失效，移入「已結束」標籤，不可重新啟用</li>
+      <li>需恢復效果時，必須建立新規則</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">RTP 模擬器需求</div>
+    <ul class="req-list">
+      <li>提供獨立的模擬器入口（頁面工具列按鈕）</li>
+      <li>Admin 輸入：線路、幣值、遊戲、群組 ID（選填）</li>
+      <li>系統回傳：命中的規則 ID 與條件摘要、最終 RTP 值、fallback 路徑說明</li>
+      <li>模擬結果不寫入資料庫，不影響線上運作</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S5 ══ -->
+<section class="sec" id="s5">
+  <div class="sec-hd">
+    <div class="sec-num blue">05</div>
+    <div>
+      <div class="sec-title">線路預設值管理</div>
+      <div class="sec-desc">無規則命中時各線路的 fallback RTP</div>
+    </div>
+  </div>
+
+  <ul class="req-list">
+    <li><strong>獨立子頁面：</strong>「線路預設值設定」為 RTP 設定模組的第二個子頁，與活動規則分開管理</li>
+    <li><strong>列表顯示：</strong>以表格列出所有線路，顯示線路代碼、系列（SEA / GLOBAL）、目前預設 RTP、最後修改人與時間</li>
+    <li><strong>行內編輯：</strong>點擊任一線路的「編輯」可在同一列直接修改 RTP 值，儲存前需確認</li>
+    <li><strong>修改限制：</strong>RTP 值範圍同活動規則（80.00% ～ 99.00%）</li>
+    <li><strong>目前預設值：</strong>SEA 系列線路預設 96.7%，GLOBAL 系列線路預設 95.5%</li>
+    <li><strong>修改記錄：</strong>每次修改均記錄於審計日誌</li>
+  </ul>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S6 ══ -->
+<section class="sec" id="s6">
+  <div class="sec-hd">
+    <div class="sec-num blue">06</div>
+    <div>
+      <div class="sec-title">群組管理需求</div>
+      <div class="sec-desc">玩家帳號的群組化管理與特殊事件設定</div>
+    </div>
+  </div>
+
+  <p class="body">群組是獨立管理的實體，用於將特定玩家帳號集合起來，以便在 RTP 規則中以群組為條件進行差異化設定，並可掛載特殊遊戲事件。</p>
+
+  <div class="sub">
+    <div class="sub-title">群組管理功能需求</div>
+    <table class="tbl">
+      <thead><tr><th>功能</th><th>需求說明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>群組列表</strong></td><td>顯示群組 ID、備註、帳號數量、掛載的特殊事件摘要</td></tr>
+        <tr><td><strong>新增群組</strong></td><td>填入群組 ID（唯一，建立後不可修改）、備註說明、帳號成員、特殊事件清單</td></tr>
+        <tr><td><strong>編輯群組</strong></td><td>可修改備註、帳號成員、特殊事件；群組 ID 建立後不可更改</td></tr>
+        <tr><td><strong>帳號成員輸入</strong></td><td>支援換行或逗號分隔批次貼入多個帳號；同一帳號可同時屬於多個群組</td></tr>
+        <tr><td><strong>刪除群組</strong></td><td>不提供刪除功能，僅可將所有特殊事件停用；若群組已被 RTP 規則引用，需先停用相關規則</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">特殊事件（Event）需求</div>
+    <ul class="req-list">
+      <li><strong>一個群組可掛載多個事件</strong>，各事件獨立開關，互不影響</li>
+      <li><strong>目前支援的事件類型：強制進入 FreeGame（force_fg）</strong>，可設定手數上限、觸發率、買入類型、下注倍率</li>
+      <li><strong>事件類型預留擴充空間</strong>，後續可新增其他類型（如加速 RTP）不影響現有事件</li>
+      <li><strong>移除事件為不可逆操作</strong>，需要二次確認</li>
+    </ul>
+  </div>
+
+  <div class="callout c-info">
+    <span class="callout-icon">ℹ</span>
+    <div>同一玩家帳號可能同時屬於多個群組，多個群組對同一玩家均有 RTP 規則命中時，依優先序模型取排名最高的規則執行。</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ AB1 ══ -->
+<section class="sec" id="ab1">
+  <div class="sec-hd">
+    <div class="sec-num purple">AB1</div>
+    <div>
+      <div class="sec-title">A/B Testing — 兩階段執行規劃</div>
+      <div class="sec-desc">機率版本對照實驗的整體執行策略</div>
+    </div>
+  </div>
+
+  <p class="body">機率 A/B Testing 讓同一款遊戲同時運行兩套機率配置（版本 A / 版本 B），透過追蹤真實玩家數據找出最佳機率版本。整個流程分為兩個明確階段執行。</p>
+
+  <div class="sub">
+    <div class="sub-title">執行時間軸</div>
+    <div class="tl">
+      <div class="tl-item cur">
+        <div class="tl-label">Phase 1 啟動</div>
+        <div class="tl-val">遊戲上線前 30 天</div>
+        <div class="tl-sub">A/B 兩套機率版本同時上線，開始隨機分群</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-label">遊戲正式上線</div>
+        <div class="tl-val">Day 0</div>
+        <div class="tl-sub">Phase 1 持續運行，收集真實玩家數據</div>
+      </div>
+      <div class="tl-item pivot">
+        <div class="tl-label">分析 & 決策</div>
+        <div class="tl-val">30 天後</div>
+        <div class="tl-sub">統計顯著性檢定，選出勝出版本，切換至 Phase 2</div>
+      </div>
+      <div class="tl-item go">
+        <div class="tl-label">Phase 2 運行</div>
+        <div class="tl-val">持續</div>
+        <div class="tl-sub">依玩家族群施加差異化機率調整，持續優化體驗</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">兩階段定義</div>
+    <div class="phase-grid">
+      <div class="phase-card p1">
+        <div class="phase-pill">Phase 1</div>
+        <div class="phase-name">機率測試期</div>
+        <div class="phase-when">遊戲上線前 30 天 → 分析完成</div>
+        <div class="phase-desc">純隨機對照實驗。目的是找出哪套機率配置能帶來更高的玩家留存率，分群方式刻意設計為「無智能判斷」，確保兩組玩家組成均等，數據純淨。</div>
+        <div class="phase-goals">
+          <div class="phase-goal">依 User ID 單雙號分為 A / B 兩組</div>
+          <div class="phase-goal">整月 Tag 鎖定，不允許中途切換</div>
+          <div class="phase-goal">不啟用任何族群智能判斷（RTP Tag、新手 Tag）</div>
+          <div class="phase-goal">收集四項核心指標，30 天後進行統計決策</div>
+        </div>
+      </div>
+      <div class="phase-card p2">
+        <div class="phase-pill">Phase 2</div>
+        <div class="phase-name">族群體驗優化期</div>
+        <div class="phase-when">Phase 1 結束後 → 持續運行</div>
+        <div class="phase-desc">在已確定的最佳基礎機率版本上，針對不同玩家族群（新手、高 RTP、低 RTP、特殊照顧）施加差異化微調，提升各族群的遊戲體驗與留存率。</div>
+        <div class="phase-goals">
+          <div class="phase-goal">依玩家行為特徵主動識別並分配族群 Tag</div>
+          <div class="phase-goal">RTP 動態計算機制正式啟用</div>
+          <div class="phase-goal">族群 Tag 可於每次遊玩 Session 結束後更新</div>
+          <div class="phase-goal">每月最多切換一次 Tag，確保指標歸因清晰</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Phase 1 → Phase 2 銜接條件</div>
+    <ul class="req-list">
+      <li><strong>樣本門檻：</strong>A / B 兩組各需達到至少 1,000 名玩家，方可進行統計分析</li>
+      <li><strong>顯著性門檻：</strong>D7 留存率差異需達統計顯著（p-value &lt; 0.05）才視為有明確結論</li>
+      <li><strong>不顯著時的處置：</strong>系統顯示警告，Admin 需輸入確認碼才可強制結束；建議延長測試或重新設計版本差異</li>
+      <li><strong>切換操作：</strong>Admin 在後台「結束測試」後，系統自動記錄勝出版本為基礎版本，並切換 Phase 2 分群模式；切換應在低峰時段執行，進行中的遊玩 Session 不受影響</li>
+    </ul>
+  </div>
+
+  <div class="callout c-warn">
+    <span class="callout-icon">⚠</span>
+    <div><strong>Peeking 問題：</strong>Phase 1 測試期間，即使看到某組數據暫時領先，也不可提前結束。在達到 30 天及 1,000 樣本前做出決策，統計結論的可靠性會大幅降低。系統需在視覺上提醒 Admin 目前測試進度是否已達決策條件。</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ AB2 ══ -->
+<section class="sec" id="ab2">
+  <div class="sec-hd">
+    <div class="sec-num purple">AB2</div>
+    <div>
+      <div class="sec-title">Tag 標籤定義</div>
+      <div class="sec-desc">玩家分群標籤的種類、格式與各族群的識別條件</div>
+    </div>
+  </div>
+
+  <p class="body">Tag 的有效範圍是「<strong>玩家 + 遊戲 + 線路</strong>」的組合。由於玩家只會在單一線路中遊玩，同一款遊戲在不同線路的 A/B Testing 完全獨立——不同線路的玩家有各自獨立的 Tag，彼此不共用。Tag 格式為 <strong>族群名稱 + 組別</strong>（如 <code>base_A</code>、<code>newbie_B</code>），每個月重置一次，整月有效。</p>
+
+  <div class="sub">
+    <div class="sub-title">Phase 1 基礎分群 Tag</div>
+    <div class="grp-pair">
+      <div class="grp-card ga">
+        <div class="grp-head">A 組　<code>base_A</code></div>
+        <div class="grp-body">User ID 尾數為<strong>奇數</strong>的玩家<br>套用機率版本 A</div>
+      </div>
+      <div class="grp-card gb">
+        <div class="grp-head">B 組　<code>base_B</code></div>
+        <div class="grp-body">User ID 尾數為<strong>偶數</strong>的玩家<br>套用機率版本 B</div>
+      </div>
+    </div>
+    <div class="callout c-info">
+      <span class="callout-icon">ℹ</span>
+      <div>User ID 尾數固定，同一玩家每月會分到相同組別。Tag 每月 1 日重置，玩家該月首次在該線路進入遊戲時寫入，整月有效不再改變。<br><br>同一款遊戲在不同線路各自有獨立的 A/B Testing，不同線路的 A 組、B 組互不相關，統計時也是獨立計算。</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title purple">Phase 2 族群 Tag 定義</div>
+    <div class="seg-grid">
+      <div class="seg-card newbie">
+        <div class="seg-head">
+          <span class="seg-badge">newbie</span>
+          <span class="seg-name">新手玩家</span>
+        </div>
+        <div class="seg-row"><span class="seg-lbl">Tag 格式</span><span class="seg-val"><code>newbie_A</code> / <code>newbie_B</code></span></div>
+        <div class="seg-row"><span class="seg-lbl">識別條件</span><span class="seg-val">帳號建立後 ≤ 7 天（天數可由後台設定調整）</span></div>
+        <div class="seg-row"><span class="seg-lbl">調整目的</span><span class="seg-val">新手引導型機率配置，提升早期留存意願</span></div>
+        <div class="seg-row"><span class="seg-lbl">主要指標</span><span class="seg-val">D1 留存率、D3 留存率、首日 Spin 數</span></div>
+        <div class="seg-row"><span class="seg-lbl">Tag 失效</span><span class="seg-val">第 8 天起不再認定為新手；本月已分配的 Tag 維持至月底</span></div>
+      </div>
+
+      <div class="seg-card highrtp">
+        <div class="seg-head">
+          <span class="seg-badge">high_rtp</span>
+          <span class="seg-name">高 RTP 玩家</span>
+        </div>
+        <div class="seg-row"><span class="seg-lbl">Tag 格式</span><span class="seg-val"><code>high_rtp_A</code> / <code>high_rtp_B</code></span></div>
+        <div class="seg-row"><span class="seg-lbl">識別條件</span><span class="seg-val">近期 Rolling RTP 達到或超過上限閾值（預設 ≥ 98%，可調整）</span></div>
+        <div class="seg-row"><span class="seg-lbl">調整目的</span><span class="seg-val">適度降低回報配置，驗證對留存率的影響</span></div>
+        <div class="seg-row"><span class="seg-lbl">主要指標</span><span class="seg-val">D7 留存率、每日 Spin 數變化</span></div>
+        <div class="seg-row"><span class="seg-lbl">切換時機</span><span class="seg-val">Session 結束後生效，本月最多切換 1 次</span></div>
+      </div>
+
+      <div class="seg-card lowrtp">
+        <div class="seg-head">
+          <span class="seg-badge">low_rtp</span>
+          <span class="seg-name">低 RTP 玩家</span>
+        </div>
+        <div class="seg-row"><span class="seg-lbl">Tag 格式</span><span class="seg-val"><code>low_rtp_A</code> / <code>low_rtp_B</code></span></div>
+        <div class="seg-row"><span class="seg-lbl">識別條件</span><span class="seg-val">近期 Rolling RTP 低於下限閾值（預設 ≤ 85%，可調整）</span></div>
+        <div class="seg-row"><span class="seg-lbl">調整目的</span><span class="seg-val">提升回報保護，改善流失風險</span></div>
+        <div class="seg-row"><span class="seg-lbl">主要指標</span><span class="seg-val">流失率降低幅度、D7 留存率提升</span></div>
+        <div class="seg-row"><span class="seg-lbl">切換時機</span><span class="seg-val">Session 結束後生效，本月最多切換 1 次</span></div>
+      </div>
+
+      <div class="seg-card vip">
+        <div class="seg-head">
+          <span class="seg-badge">vip_care</span>
+          <span class="seg-name">特殊照顧玩家</span>
+        </div>
+        <div class="seg-row"><span class="seg-lbl">Tag 格式</span><span class="seg-val"><code>vip_care_A</code> / <code>vip_care_B</code></span></div>
+        <div class="seg-row"><span class="seg-lbl">識別條件</span><span class="seg-val">人工標記或系統標記（VIP 玩家 / 流失風險玩家）</span></div>
+        <div class="seg-row"><span class="seg-lbl">調整目的</span><span class="seg-val">優惠機率配置，提升活躍度與黏著度</span></div>
+        <div class="seg-row"><span class="seg-lbl">主要指標</span><span class="seg-val">每月活躍天數、付費轉化率</span></div>
+        <div class="seg-row"><span class="seg-lbl">Tag 失效</span><span class="seg-val">依人工標記期限決定，不自動失效</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ AB3 ══ -->
+<section class="sec" id="ab3">
+  <div class="sec-hd">
+    <div class="sec-num purple">AB3</div>
+    <div>
+      <div class="sec-title">分群運作規則</div>
+      <div class="sec-desc">每次 Spin 的完整判斷鏈、Tag 寫入與更新時機、白名單排除機制</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">每次 Spin 的完整查詢優先序</div>
+    <p class="body">玩家每次發起 Spin，系統依下列固定順序逐層判斷，每一層有結果就停止，不繼續往下：</p>
+    <div class="step-flow">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">白名單特殊帳號檢查</div>
+          <div class="step-desc">
+            判斷此玩家是否屬於設有特殊 RTP 的白名單群組（如 50% 特殊機率群組）。<br>
+            → <strong>是：</strong>直接套用白名單 RTP 規則，<strong>不進入 A/B Testing</strong>，流程結束<br>
+            → <strong>否：</strong>繼續往下
+          </div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">RTP 規則命中（Priority 模型）</div>
+          <div class="step-desc">
+            依玩家所在線路，查找所有進行中且條件命中的 RTP 規則，取優先序最高的一條。<br>
+            → <strong>有命中：</strong>取該規則的 RTP 數值（如 AWS081 線路命中 98%）<br>
+            → <strong>無命中：</strong>使用線路預設值（如 96.7%）→ 再 fallback 至全局預設值
+          </div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">A/B Testing 分群查詢</div>
+          <div class="step-desc">
+            查詢「此玩家 + 此遊戲 + 此線路」當月是否有進行中的 A/B Testing。<br>
+            → <strong>無 A/B Testing：</strong>使用預設機率配置，流程結束<br>
+            → <strong>有 A/B Testing：</strong>查詢玩家的 segment_tag，取對應的機率版本（版本 A 或版本 B）
+          </div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--green-dim);color:var(--green)">✓</div>
+        <div class="step-content">
+          <div class="step-title">遊戲引擎執行</div>
+          <div class="step-desc">
+            將上方兩個結果合併送入遊戲引擎：<strong>RTP 數值</strong>（由步驟 2 決定）+ <strong>機率版本</strong>（由步驟 3 決定）→ 執行本次 Spin
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout c-warn">
+      <span class="callout-icon">⚠</span>
+      <div><strong>白名單排除是 A/B Testing 數據純淨的關鍵：</strong>白名單玩家的 RTP 已被人為介入（如 50%），其遊玩行為不代表機率版本本身的效果。若納入 A/B 統計樣本，會污染留存率數據、導致錯誤結論。系統需確保白名單玩家的 Spin 數據不計入任何 A/B 指標計算。</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">案例說明：遊戲 A 跨線路的實際運作</div>
+    <table class="tbl">
+      <thead><tr><th>玩家類型</th><th>所在線路</th><th>步驟 1 白名單</th><th>步驟 2 RTP</th><th>步驟 3 A/B</th><th>最終執行</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>一般玩家甲</strong></td>
+          <td>AWS081</td>
+          <td>否 → 繼續</td>
+          <td>命中 98% 規則</td>
+          <td>有 A/B → 查 Tag → <code>base_A</code></td>
+          <td>98% + 版本 A</td>
+        </tr>
+        <tr>
+          <td><strong>一般玩家乙</strong></td>
+          <td>AWS081</td>
+          <td>否 → 繼續</td>
+          <td>命中 98% 規則</td>
+          <td>有 A/B → 查 Tag → <code>base_B</code></td>
+          <td>98% + 版本 B</td>
+        </tr>
+        <tr>
+          <td><strong>一般玩家丙</strong></td>
+          <td>其他線路</td>
+          <td>否 → 繼續</td>
+          <td>線路預設 96.7%</td>
+          <td>有 A/B → 查 Tag → <code>base_A</code></td>
+          <td>96.7% + 版本 A</td>
+        </tr>
+        <tr>
+          <td><strong>一般玩家丁</strong></td>
+          <td>其他線路</td>
+          <td>否 → 繼續</td>
+          <td>線路預設 96.7%</td>
+          <td>有 A/B → 查 Tag → <code>base_B</code></td>
+          <td>96.7% + 版本 B</td>
+        </tr>
+        <tr>
+          <td><strong>白名單玩家戊</strong></td>
+          <td>AWS081</td>
+          <td><strong>是 → 結束</strong></td>
+          <td>白名單規則 50%</td>
+          <td>不進入</td>
+          <td>50%（無 A/B）</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout c-info">
+      <span class="callout-icon">ℹ</span>
+      <div>AWS081 的 A/B Testing 和其他線路的 A/B Testing 是兩個完全獨立的測試。玩家甲乙在 AWS081 的 A/B 分組，與玩家丙丁在其他線路的 A/B 分組，各自獨立計算、各自獨立決策，互不干擾。</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">A/B Testing 有效樣本定義</div>
+    <p class="body">並非所有玩家的數據都可以納入 A/B 統計。下列情況的玩家或 Spin 需排除於指標計算之外：</p>
+    <table class="tbl">
+      <thead><tr><th>排除情況</th><th>原因</th></tr></thead>
+      <tbody>
+        <tr><td>當次 Spin 命中白名單特殊 RTP 規則的玩家</td><td>RTP 被人為介入，行為不代表機率版本效果</td></tr>
+        <tr><td>當次 Spin 命中任何非線路預設的 RTP 規則的玩家</td><td>RTP 數值受其他變數影響，A/B 版本不是唯一變數</td></tr>
+        <tr><td>當月 Tag 切換過的玩家，切換前的歷史 Spin</td><td>該段 Spin 對應的機率版本與當前 Tag 不同，歸因混亂</td></tr>
+      </tbody>
+    </table>
+    <div class="callout c-warn">
+      <span class="callout-icon">⚠</span>
+      <div>排除規則若設計過嚴，可能導致有效樣本數不足、測試週期被迫延長。建議在後台參數設定中，允許 Admin 選擇排除範圍（例如只排除白名單，或排除所有非預設 RTP 規則命中的玩家），並在指標監控頁面顯示「有效樣本數」與「總遊玩人數」的對比。</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Tag 寫入與更新時機</div>
+    <ul class="req-list">
+      <li><strong>Phase 1 寫入：</strong>玩家當月首次在「該線路 + 該遊戲」進入時，依 User ID 單雙號判斷並寫入 <code>base_A</code> 或 <code>base_B</code>，整月不變</li>
+      <li><strong>Phase 2 寫入：</strong>玩家進入時，系統依族群優先級判斷適用的 Tag；若尚無本月 Tag 則立即寫入；若已有但偵測到族群條件變化（且本月尚未切換過），標記為待切換狀態</li>
+      <li><strong>待切換的生效時機：</strong>在下一次 Session（遊玩段落）結束後才正式套用新 Tag，不在遊玩中途切換，確保單次 Session 的機率版本一致</li>
+      <li><strong>每月切換上限：</strong>同一玩家在同一款遊戲同一條線路同一個月內，最多切換一次族群 Tag，確保當月指標歸因乾淨</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">多族群同時符合時的優先級（Phase 2）</div>
+    <p class="body">同一玩家可能同時符合多個族群條件，依下列優先級決定套用哪個 Tag：</p>
+    <div class="pri-stack">
+      <div class="pri-item">
+        <div class="pri-rank" style="background:var(--pink-dim);color:var(--pink)">P1</div>
+        <div class="pri-name">特殊照顧玩家</div>
+        <div class="pri-code">vip_care</div>
+        <div class="pri-note">人工標記優先，商業考量最高</div>
+      </div>
+      <div class="pri-item">
+        <div class="pri-rank" style="background:var(--teal-dim);color:var(--teal)">P2</div>
+        <div class="pri-name">新手玩家</div>
+        <div class="pri-code">newbie</div>
+        <div class="pri-note">初期體驗優先，影響長期留存</div>
+      </div>
+      <div class="pri-item">
+        <div class="pri-rank" style="background:var(--amber-dim);color:var(--amber)">P3</div>
+        <div class="pri-name">高 RTP 玩家</div>
+        <div class="pri-code">high_rtp</div>
+        <div class="pri-note">回報保護，避免過度獲利影響模型</div>
+      </div>
+      <div class="pri-item">
+        <div class="pri-rank" style="background:var(--purple-dim);color:var(--purple)">P4</div>
+        <div class="pri-name">低 RTP 玩家</div>
+        <div class="pri-code">low_rtp</div>
+        <div class="pri-note">流失保護，提升體驗感</div>
+      </div>
+      <div class="pri-item">
+        <div class="pri-rank" style="background:var(--bg4);color:var(--text3)">P5</div>
+        <div class="pri-name">基礎玩家</div>
+        <div class="pri-code">base</div>
+        <div class="pri-note">不符合以上任何族群的一般玩家</div>
+      </div>
+    </div>
+    <div class="callout c-info">
+      <span class="callout-icon">ℹ</span>
+      <div><strong>月份保護鎖：</strong>即使玩家狀態在月中變化（如新手期滿、RTP 脫離閾值），本月已切換一次 Tag 後就不再更新。次月初重新依當時狀態評估族群歸屬。</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">機率版本 Delta 架構（Phase 2）</div>
+    <p class="body">Phase 2 各族群的機率配置不是從零建立的獨立版本，而是以 Phase 1 勝出的基礎版本為底，疊加各族群專屬的差異化調整（Delta）。回滾時只需移除 Delta，基礎版本不受影響。</p>
+    <table class="tbl">
+      <thead><tr><th>族群 Tag</th><th>使用的機率配置</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td><code>base_A</code> / <code>base_B</code></td><td>基礎版本（無調整）</td><td>Phase 1 勝出版本，所有 Delta 的基底</td></tr>
+        <tr><td><code>newbie_A</code> / <code>newbie_B</code></td><td>基礎版本 + 新手調整</td><td>新手引導型機率微調</td></tr>
+        <tr><td><code>high_rtp_A</code> / <code>high_rtp_B</code></td><td>基礎版本 + 高 RTP 調整</td><td>回報上限保護調整</td></tr>
+        <tr><td><code>low_rtp_A</code> / <code>low_rtp_B</code></td><td>基礎版本 + 低 RTP 調整</td><td>回報下限保護調整</td></tr>
+        <tr><td><code>vip_care_A</code> / <code>vip_care_B</code></td><td>基礎版本 + 特殊照顧調整</td><td>VIP 優惠機率配置</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ AB4 ══ -->
+<section class="sec" id="ab4">
+  <div class="sec-hd">
+    <div class="sec-num purple">AB4</div>
+    <div>
+      <div class="sec-title">測試指標定義</div>
+      <div class="sec-desc">A/B 兩組各需追蹤的成效指標及判讀方式</div>
+    </div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-cell">
+      <div class="metric-badge">主要指標</div>
+      <div class="metric-name">首日 Spin 數</div>
+      <div class="metric-def">玩家加入當日的總轉數（含免費及付費 Spin）</div>
+      <div class="metric-win">D0 當日</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-badge">留存指標</div>
+      <div class="metric-name">D1 留存率</div>
+      <div class="metric-def">加入後第 1 天有遊玩記錄的玩家比例</div>
+      <div class="metric-win">D1 單日</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-badge">留存指標</div>
+      <div class="metric-name">D3 留存率</div>
+      <div class="metric-def">D1～D3 期間內至少遊玩過 1 天的玩家比例</div>
+      <div class="metric-win">D1–D3 區間</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-badge">主要決策指標</div>
+      <div class="metric-name">D7 留存率</div>
+      <div class="metric-def">D1～D7 期間內至少遊玩過 1 天的玩家比例</div>
+      <div class="metric-win">D1–D7 區間</div>
+    </div>
+  </div>
+
+  <div class="callout c-success">
+    <span class="callout-icon">✓</span>
+    <div><strong>「區間留存」定義：</strong>D3 留存率指的是「D1 到 D3 這三天內至少有一天回來遊玩」的玩家比例，而非「恰好在 D3 當天」。這樣的定義更能反映早期黏著度，避免單日波動造成誤判。D7 同理。</div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">後台指標監控顯示需求</div>
+    <ul class="req-list">
+      <li><strong>A / B 兩組並排對比：</strong>四項指標各顯示兩組數值、差異百分比、樣本數</li>
+      <li><strong>統計顯著性：</strong>D7 留存率旁顯示 p-value；p &lt; 0.05 時標示綠色「✓ 達到顯著」，未達顯著則以灰色提示「尚未顯著」</li>
+      <li><strong>決策條件進度：</strong>顯示目前樣本數是否達到 1,000 / 測試天數是否達到 30 天，讓 Admin 一眼看出是否可以結束測試</li>
+      <li><strong>資料更新頻率：</strong>指標每日更新一次，非即時數據</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ AB5 ══ -->
+<section class="sec" id="ab5">
+  <div class="sec-hd">
+    <div class="sec-num purple">AB5</div>
+    <div>
+      <div class="sec-title">A/B Testing 後台操作介面需求</div>
+      <div class="sec-desc">新增的第三個子頁面「A/B 機率測試」的完整操作需求</div>
+    </div>
+  </div>
+
+  <p class="body">在現有 RTP 設定模組下新增第三個子頁「A/B 機率測試」，與「活動規則」及「線路預設值設定」並列於導覽列。</p>
+
+  <div class="sub">
+    <div class="sub-title">子頁面四個分頁</div>
+    <table class="tbl">
+      <thead><tr><th>分頁</th><th>顯示什麼</th><th>可以做什麼</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>測試總覽</strong></td>
+          <td>目前進行中 / 已結束的 A/B 測試列表（遊戲名稱、階段、A/B 版本名稱、開始日期、狀態、當前樣本數）</td>
+          <td>建立新測試、查看測試詳情、結束測試</td>
+        </tr>
+        <tr>
+          <td><strong>指標監控</strong></td>
+          <td>A/B 兩組的四項指標對比（首日 Spin 數、D1/D3/D7 留存率）、統計顯著性、決策條件進度</td>
+          <td>僅查閱；可切換查看不同遊戲或月份</td>
+        </tr>
+        <tr>
+          <td><strong>分群狀態查詢</strong></td>
+          <td>輸入玩家帳號，顯示其當月 Tag、所屬組別、分群時間、當前 RTP 狀況</td>
+          <td>查詢（只讀）；不可手動修改玩家 Tag</td>
+        </tr>
+        <tr>
+          <td><strong>測試參數設定</strong></td>
+          <td>各遊戲的 A/B 測試參數（高/低 RTP 閾值、新手天數定義、Rolling 窗口大小）</td>
+          <td>Admin 可修改；修改記錄審計日誌</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">建立新 A/B 測試的欄位需求</div>
+    <table class="tbl">
+      <thead><tr><th>欄位</th><th>必填</th><th>說明與限制</th></tr></thead>
+      <tbody>
+        <tr><td><strong>遊戲</strong></td><td>是</td><td>從遊戲清單選擇</td></tr>
+        <tr><td><strong>線路</strong></td><td>是</td><td>從線路清單選擇；A/B Testing 以「遊戲 + 線路」為單位，同一款遊戲在不同線路可以有各自獨立的 A/B Testing；同一「遊戲 + 線路」組合同時只能有一個進行中的測試</td></tr>
+        <tr><td><strong>測試階段</strong></td><td>是</td><td>Phase 1（機率測試）或 Phase 2（族群體驗）</td></tr>
+        <tr><td><strong>機率版本 A</strong></td><td>是</td><td>從已上傳的機率配置版本清單中選擇</td></tr>
+        <tr><td><strong>機率版本 B</strong></td><td>Phase 1 必填</td><td>Phase 1 必填；Phase 2 留空表示使用已確定的基礎版本</td></tr>
+        <tr><td><strong>測試開始日</strong></td><td>是</td><td>不可早於今日</td></tr>
+        <tr><td><strong>預計結束日</strong></td><td>否</td><td>留空則手動結束；建議填寫 30 天後作為提醒</td></tr>
+        <tr><td><strong>備註</strong></td><td>否</td><td>上限 200 字</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">結束測試的操作需求</div>
+    <ul class="req-list">
+      <li><strong>正常結束（條件達成）：</strong>樣本 ≥ 1,000 且測試 ≥ 30 天且 p &lt; 0.05，顯示指標摘要後由 Admin 確認結束，系統自動記錄勝出版本</li>
+      <li><strong>強制結束（條件未達成）：</strong>若任一條件未達成，顯示警告並列出未滿足的條件，Admin 需輸入確認碼 <code>CONFIRM</code> 才可強制結束</li>
+      <li><strong>結束後：</strong>測試移至「已結束」列表，歷史指標數據保留供查閱，不可重新啟動（需建立新測試）</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">測試參數設定的可調整項目</div>
+    <ul class="req-list">
+      <li><strong>高 RTP 觸發閾值：</strong>預設 98%，可依遊戲類型調整（高波動遊戲正常 RTP 分布較寬，閾值應設更高）</li>
+      <li><strong>低 RTP 觸發閾值：</strong>預設 85%，可依遊戲調整</li>
+      <li><strong>新手天數定義：</strong>預設帳號建立後 7 天內為新手，可調整為 3 天或 14 天</li>
+      <li><strong>RTP Rolling 窗口：</strong>計算 RTP 所使用的近期 Spin 數量範圍，預設值由開發方建議</li>
+    </ul>
+  </div>
+</section>
+
+
+<div class="divider"></div>
+
+<!-- ══ UI-MOCKUP ══ -->
+<section class="sec" id="ui-mockup">
+  <div class="sec-hd">
+    <div class="sec-num purple">UI</div>
+    <div>
+      <div class="sec-title">後台操作介面規劃</div>
+      <div class="sec-desc">單一入口下三個子工具的頁面結構、互動流程與畫面配置</div>
+    </div>
+  </div>
+
+  <p class="body">後台 RTP 管理模組以單一入口進入，左側導覽列依功能分為三個子工具。各工具獨立運作，但共用相同的權限控管（Admin + 白名單）與審計日誌機制。</p>
+
+  <!-- ── 入口結構說明 ── -->
+  <div class="sub">
+    <div class="sub-title">整體導覽結構</div>
+    <table class="tbl">
+      <thead><tr><th>入口</th><th>子工具</th><th>主要用途</th><th>主要使用者</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3" style="vertical-align:middle;font-weight:600;color:var(--text)">遊戲管理<br>→ RTP 設定</td><td><strong>Group 管理</strong></td><td>建立玩家群組、納入 User ID、設定特殊 Event</td><td>CRM / 營運</td></tr>
+        <tr><td><strong>RTP 設定工具</strong></td><td>設定各維度 RTP 規則、管理優先序、線路預設值</td><td>營運 / 產品</td></tr>
+        <tr><td><strong>A/B Testing 工具</strong></td><td>建立機率測試、監控指標、查詢玩家分群狀態</td><td>產品 / 數據分析</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════════════════════════════════════
+       子工具 1：Group 管理
+  ════════════════════════════════════ -->
+  <div class="sub" style="margin-top:32px">
+    <div class="sub-title">子工具 1 — Group 管理</div>
+    <p class="body">管理玩家群組，將 User ID 歸入群組，作為 RTP 規則的條件維度與特殊 Event 的承載單位。</p>
+  </div>
+
+  <!-- Group 列表畫面 -->
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / groups</div>
+    </div>
+    <div class="app-shell">
+      <div class="app-sb">
+        <div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div>
+        <div class="app-sb-group">RTP 管理</div>
+        <div class="app-sb-item active"><span class="icon">👥</span>Group 管理</div>
+        <div class="app-sb-item"><span class="icon">⚙️</span>RTP 設定工具</div>
+        <div class="app-sb-item ab"><span class="icon">🧪</span>A/B Testing</div>
+      </div>
+      <div class="app-content">
+        <div class="app-topbar">
+          <div>
+            <div class="app-topbar-title">Group 管理</div>
+            <div class="app-topbar-breadcrumb">RTP 設定 / Group 管理</div>
+          </div>
+          <div class="app-topbar-actions">
+            <button class="ui-btn primary">＋ 新增群組</button>
+          </div>
+        </div>
+        <div class="app-body">
+          <div class="stat-row three">
+            <div class="stat-card"><div class="stat-label">群組總數</div><div class="stat-val sv-blue">5</div></div>
+            <div class="stat-card"><div class="stat-label">含 Event 群組</div><div class="stat-val sv-amber">3</div></div>
+            <div class="stat-card"><div class="stat-label">玩家帳號總數</div><div class="stat-val sv-gray">142</div></div>
+          </div>
+          <div class="ui-toolbar">
+            <input class="ui-input" placeholder="群組 ID" style="width:130px">
+            <select class="ui-select" style="width:110px"><option>所有類型</option><option>含 Event</option><option>無 Event</option></select>
+            <button class="ui-btn">篩選</button>
+            <div class="ui-spacer"></div>
+            <span style="font-size:11px;color:var(--text3)">共 5 個群組</span>
+          </div>
+          <table class="ui-tbl">
+            <thead><tr><th>群組 ID</th><th>備註</th><th>帳號數</th><th>掛載 Event</th><th>引用 RTP 規則數</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600">grp_whitelist50</td>
+                <td style="font-size:11px">50% 特殊機率白名單</td>
+                <td style="font-size:12px">28</td>
+                <td><span class="s-badge s-warn">force_fg</span></td>
+                <td style="font-size:12px;color:var(--blue)">2 條</td>
+                <td><span class="link">編輯</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600">grp_vip</td>
+                <td style="font-size:11px">VIP 玩家群組</td>
+                <td style="font-size:12px">45</td>
+                <td><span class="s-badge s-active">force_fg</span></td>
+                <td style="font-size:12px;color:var(--blue)">3 條</td>
+                <td><span class="link">編輯</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600">grp_newbie_care</td>
+                <td style="font-size:11px">新手照顧群組</td>
+                <td style="font-size:12px">39</td>
+                <td style="color:var(--text3);font-size:11px">無</td>
+                <td style="font-size:12px;color:var(--blue)">1 條</td>
+                <td><span class="link">編輯</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600">grp_promo_q2</td>
+                <td style="font-size:11px">Q2 促銷活動</td>
+                <td style="font-size:12px">18</td>
+                <td style="color:var(--text3);font-size:11px">無</td>
+                <td style="font-size:12px;color:var(--blue)">1 條</td>
+                <td><span class="link">編輯</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title">畫面說明 — Group 列表</div>
+    <ul class="annotation-list">
+      <li>統計列顯示群組總數、含 Event 群組數、全部帳號總數（跨群組去重）</li>
+      <li>可依群組 ID 或類型篩選；「引用 RTP 規則數」方便判斷群組是否可安全刪除或修改</li>
+      <li>點擊「編輯」開啟 Group 編輯 Modal，可修改成員與 Event；群組 ID 建立後不可更改</li>
+      <li>不提供刪除按鈕；若群組仍被 RTP 規則引用，編輯頁面會顯示引用警示</li>
+    </ul>
+  </div>
+
+  <!-- Group 編輯 Modal -->
+  <p class="body" style="margin-top:20px">以下為點擊「編輯」後彈出的 Group 編輯 Modal：</p>
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / groups</div>
+    </div>
+    <div style="position:relative;">
+      <div class="app-shell" style="filter:blur(1px);opacity:.4;pointer-events:none;min-height:400px">
+        <div class="app-sb"><div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div></div>
+        <div class="app-content"></div>
+      </div>
+      <div class="modal-overlay" style="position:absolute;">
+        <div class="modal-box" style="width:520px">
+          <div class="modal-head">
+            <h3>編輯群組：grp_whitelist50</h3>
+            <button class="modal-x">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="fg-grid">
+              <div class="fg">
+                <div class="fg-label">群組 ID</div>
+                <input class="fg-input" value="grp_whitelist50" disabled style="opacity:.5">
+                <div class="fg-hint">建立後不可修改</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">備註說明</div>
+                <input class="fg-input" value="50% 特殊機率白名單">
+              </div>
+              <div class="fg full">
+                <div class="fg-label">帳號成員<span style="color:var(--text3);font-size:10px;margin-left:6px">目前 28 位</span></div>
+                <textarea class="fg-textarea" rows="3" style="font-family:var(--mono);font-size:11px">user_8891
+user_7742, user_6603
+user_5514, user_4425...</textarea>
+                <div class="fg-hint">換行或逗號分隔；每位帳號可同時屬於多個群組</div>
+              </div>
+              <div class="form-section-label">特殊 Event 設定</div>
+              <div class="fg full" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <span style="font-size:11px;font-weight:600;color:var(--text)">force_fg　<span class="s-badge s-active">啟用中</span></span>
+                  <div style="display:flex;gap:6px">
+                    <button class="ui-btn" style="height:24px;font-size:11px">停用</button>
+                    <button class="ui-btn danger" style="height:24px;font-size:11px;color:var(--red)">移除</button>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+                  <div><div style="font-size:10px;color:var(--text3);margin-bottom:3px">spinCount 上限</div><input class="fg-input" value="50" style="width:100%;height:26px;font-size:12px;font-family:var(--mono)"></div>
+                  <div><div style="font-size:10px;color:var(--text3);margin-bottom:3px">triggerRate (%)</div><input class="fg-input" value="100" style="width:100%;height:26px;font-size:12px;font-family:var(--mono)"></div>
+                  <div><div style="font-size:10px;color:var(--text3);margin-bottom:3px">betRatio</div><input class="fg-input" value="1.0" style="width:100%;height:26px;font-size:12px;font-family:var(--mono)"></div>
+                </div>
+              </div>
+              <div class="fg full">
+                <button class="ui-btn" style="width:fit-content;font-size:11px">＋ 新增 Event</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-foot">
+            <button class="ui-btn">取消</button>
+            <button class="ui-btn primary">儲存群組</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title">畫面說明 — Group 編輯 Modal</div>
+    <ul class="annotation-list">
+      <li>群組 ID 顯示為灰色不可編輯狀態，明確提示建立後不可修改</li>
+      <li>帳號成員文字區塊支援換行或逗號分隔批次貼入，顯示目前成員數作為參考</li>
+      <li>Event 區塊顯示目前已掛載的事件，提供啟用/停用與移除操作；移除需二次確認</li>
+      <li>「＋ 新增 Event」展開事件類型選單，目前僅 force_fg 可選，其他類型標示「即將支援」</li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════════════════
+       子工具 2：RTP 設定工具
+  ════════════════════════════════════ -->
+  <div class="sub" style="margin-top:40px">
+    <div class="sub-title">子工具 2 — RTP 設定工具</div>
+    <p class="body">管理所有 RTP 規則，設定優先序、有效期、條件維度，並提供 RTP 模擬器。</p>
+  </div>
+
+  <!-- RTP 進行中列表 -->
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / rules</div>
+    </div>
+    <div class="app-shell">
+      <div class="app-sb">
+        <div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div>
+        <div class="app-sb-group">RTP 管理</div>
+        <div class="app-sb-item"><span class="icon">👥</span>Group 管理</div>
+        <div class="app-sb-item active"><span class="icon">⚙️</span>RTP 設定工具</div>
+        <div class="app-sb-item ab"><span class="icon">🧪</span>A/B Testing</div>
+      </div>
+      <div class="app-content">
+        <div class="app-topbar">
+          <div>
+            <div class="app-topbar-title">RTP 設定工具</div>
+            <div class="app-topbar-breadcrumb">RTP 設定 / 活動規則</div>
+          </div>
+          <div class="app-topbar-actions">
+            <button class="ui-btn">⊙ 模擬器</button>
+            <button class="ui-btn primary">＋ 新增規則</button>
+          </div>
+        </div>
+        <div class="app-body">
+          <div class="stat-row">
+            <div class="stat-card"><div class="stat-label">進行中規則</div><div class="stat-val sv-blue">6</div></div>
+            <div class="stat-card"><div class="stat-label">已結束規則</div><div class="stat-val sv-gray">12</div></div>
+            <div class="stat-card"><div class="stat-label">全局預設 RTP</div><div class="stat-val sv-green">96.0%</div></div>
+            <div class="stat-card"><div class="stat-label">今日操作次數</div><div class="stat-val sv-amber">4</div></div>
+          </div>
+          <div class="ui-tabs">
+            <div class="ui-tab active">進行中（6）</div>
+            <div class="ui-tab">已結束（12）</div>
+            <div class="ui-tab">線路預設值</div>
+            <div class="ui-tab">審計日誌</div>
+          </div>
+          <div class="ui-toolbar">
+            <input class="ui-input" placeholder="線路" style="width:80px">
+            <input class="ui-input" placeholder="幣值" style="width:70px">
+            <input class="ui-input" placeholder="遊戲" style="width:110px">
+            <input class="ui-input" placeholder="群組 ID" style="width:120px">
+            <button class="ui-btn">篩選</button>
+          </div>
+          <table class="ui-tbl">
+            <thead><tr><th style="width:40px">排名</th><th>線路</th><th>幣值</th><th>遊戲</th><th>群組 ID</th><th>RTP</th><th>生效起始</th><th>截止</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-family:var(--mono);font-weight:700;color:var(--blue);text-align:center">1</td>
+                <td><span class="s-badge s-p1">AWS081</span></td>
+                <td style="color:var(--text3)">—</td>
+                <td><span class="s-badge" style="background:var(--bg4);color:var(--text2)">GameA</span></td>
+                <td style="font-family:var(--mono);font-size:11px;color:var(--pink)">grp_whitelist50</td>
+                <td style="font-family:var(--mono);font-weight:700;color:var(--amber)">50.0%</td>
+                <td style="font-size:11px">2025-06-01</td>
+                <td style="font-size:11px;color:var(--text3)">永久</td>
+                <td><span class="link">編輯</span> <span class="link danger">停用</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--mono);font-weight:700;color:var(--blue);text-align:center">2</td>
+                <td><span class="s-badge s-p1">AWS081</span></td>
+                <td style="color:var(--text3)">—</td>
+                <td><span class="s-badge" style="background:var(--bg4);color:var(--text2)">GameA</span></td>
+                <td style="color:var(--text3)">—</td>
+                <td style="font-family:var(--mono);font-weight:700;color:var(--green)">98.0%</td>
+                <td style="font-size:11px">2025-06-01</td>
+                <td style="font-size:11px;color:var(--text3)">永久</td>
+                <td><span class="link">編輯</span> <span class="link danger">停用</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--mono);font-weight:700;color:var(--blue);text-align:center">3</td>
+                <td style="color:var(--text3)">—</td>
+                <td style="color:var(--text3)">—</td>
+                <td><span class="s-badge" style="background:var(--bg4);color:var(--text2)">GameA</span></td>
+                <td style="color:var(--text3)">—</td>
+                <td style="font-family:var(--mono);font-weight:700;color:var(--blue)">96.7%</td>
+                <td style="font-size:11px">2025-06-01</td>
+                <td style="font-size:11px;color:var(--text3)">永久</td>
+                <td><span class="link">編輯</span> <span class="link danger">停用</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title">畫面說明 — RTP 規則列表</div>
+    <ul class="annotation-list">
+      <li>排名 1 為白名單群組規則（grp_whitelist50），群組 ID 以粉色顯示，提醒此為特殊排除性設定</li>
+      <li>排名 2 為 AWS081 線路的一般規則（98%），排名 3 為其他線路的一般規則（96.7%）</li>
+      <li>RTP ≥ 98% 顯示橘色警示色；50% 等特殊值顯示琥珀色警示，與正常值視覺區隔</li>
+      <li>四個分頁：進行中、已結束、線路預設值、審計日誌；已結束僅供查閱</li>
+    </ul>
+  </div>
+
+
+  <!-- 新增規則 Modal -->
+  <p class="body" style="margin-top:20px">以下為點擊「＋ 新增規則」後彈出的新增規則 Modal：</p>
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / rules</div>
+    </div>
+    <div style="position:relative;">
+      <div class="app-shell" style="filter:blur(1px);opacity:.35;pointer-events:none;min-height:560px">
+        <div class="app-sb"><div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div></div>
+        <div class="app-content"></div>
+      </div>
+      <div class="modal-overlay" style="position:absolute;padding-top:24px;">
+        <div class="modal-box" style="width:540px;max-height:500px;">
+          <div class="modal-head">
+            <h3>新增 RTP 規則</h3>
+            <button class="modal-x">×</button>
+          </div>
+          <div class="modal-body">
+            <p style="font-size:11.5px;color:var(--text3);margin-bottom:14px;line-height:1.7">條件欄位可選填，留空表示不限制。Priority 若與現有規則衝突，儲存前會彈出 Shift 確認視窗。</p>
+            <div class="fg-grid">
+
+              <!-- Priority -->
+              <div class="fg full" style="background:var(--blue-dim);border:1px solid rgba(88,166,255,.2);border-radius:6px;padding:10px 12px;">
+                <div class="fg-label" style="color:var(--blue)">插入排名位置<span class="fg-req">*</span></div>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+                  <input class="fg-input" type="number" value="3" style="width:70px;font-family:var(--mono)">
+                  <span style="font-size:11px;color:var(--amber)">⚠ 排名 3 已被占用，儲存時將提示 Shift 確認（3 條規則往後移）</span>
+                </div>
+              </div>
+
+              <div class="form-section-label">條件維度（全部選填，留空 = 不限）</div>
+
+              <div class="fg">
+                <div class="fg-label">線路</div>
+                <select class="fg-select">
+                  <option>不限（留空）</option>
+                  <option selected>AWS081</option>
+                  <option>VN05</option>
+                  <option>TH08</option>
+                </select>
+              </div>
+              <div class="fg">
+                <div class="fg-label">幣值</div>
+                <select class="fg-select">
+                  <option selected>不限（留空）</option>
+                  <option>PHP</option>
+                  <option>THB</option>
+                  <option>VND</option>
+                </select>
+              </div>
+              <div class="fg">
+                <div class="fg-label">遊戲</div>
+                <select class="fg-select">
+                  <option>不限（留空）</option>
+                  <option selected>GameA</option>
+                  <option>GameB</option>
+                </select>
+              </div>
+              <div class="fg">
+                <div class="fg-label">群組 ID</div>
+                <select class="fg-select">
+                  <option selected>不限（留空）</option>
+                  <option>grp_whitelist50</option>
+                  <option>grp_vip</option>
+                  <option>grp_newbie_care</option>
+                </select>
+                <div class="fg-hint">選擇已建立的群組，或前往 Group 管理新增</div>
+              </div>
+
+              <div class="form-section-label">RTP 設定</div>
+
+              <div class="fg">
+                <div class="fg-label">RTP 值（%）<span class="fg-req">*</span></div>
+                <input class="fg-input" type="number" value="98.00" style="font-family:var(--mono)">
+                <div class="fg-hint">80.00% ～ 99.00%，小數後 2 位</div>
+              </div>
+              <div class="fg" style="justify-content:flex-end;">
+                <div style="background:var(--amber-dim);border:1px solid rgba(245,200,66,.25);border-radius:5px;padding:8px 10px;font-size:11px;color:var(--amber);line-height:1.6">
+                  ⚠ RTP ≥ 98%<br>需輸入確認碼 <strong>CONFIRM</strong>
+                </div>
+              </div>
+              <div class="fg full" style="display:none" id="confirm-area">
+                <div class="fg-label" style="color:var(--red)">確認碼<span class="fg-req">*</span></div>
+                <input class="fg-input" placeholder="輸入 CONFIRM" style="border-color:var(--red)">
+              </div>
+
+              <div class="form-section-label">有效期間</div>
+
+              <div class="fg">
+                <div class="fg-label">生效起始<span class="fg-req">*</span></div>
+                <input class="fg-input" type="datetime-local" value="2025-06-15T00:00">
+                <div class="fg-hint">不可早於現在</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">生效截止</div>
+                <input class="fg-input" type="datetime-local">
+                <div class="fg-hint">留空 = 永久有效</div>
+              </div>
+
+              <div class="fg full">
+                <div class="fg-label">備註</div>
+                <textarea class="fg-textarea" rows="2" placeholder="說明此規則用途（選填，上限 200 字）"></textarea>
+              </div>
+
+              <!-- Confirm input for high RTP -->
+              <div class="fg full" style="background:var(--red-dim,rgba(248,81,73,.08));border:1px solid rgba(248,81,73,.2);border-radius:5px;padding:10px 12px;">
+                <div class="fg-label" style="color:var(--red)">高 RTP 確認碼<span class="fg-req">*</span></div>
+                <input class="fg-input" placeholder="輸入 CONFIRM 以儲存 ≥ 98% 的規則" style="margin-top:4px;border-color:rgba(248,81,73,.4)">
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-foot">
+            <button class="ui-btn">取消</button>
+            <button class="ui-btn" style="color:var(--blue)">⊙ 模擬預覽</button>
+            <button class="ui-btn primary">儲存規則</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title">欄位說明 — 新增 RTP 規則</div>
+    <ul class="annotation-list">
+      <li><strong>插入排名位置（必填）：</strong>輸入正整數，即時顯示是否會觸發 Shift；旁邊文字說明受影響的規則數量</li>
+      <li><strong>條件維度（全部選填）：</strong>線路、幣值、遊戲、群組 ID 四欄均為下拉選單，留空代表「不限」；群組 ID 下方提供快速連結前往 Group 管理建立新群組</li>
+      <li><strong>RTP 值（必填）：</strong>數字輸入，範圍 80.00%～99.00%；一旦輸入值 ≥ 98%，自動顯示橘色警示與確認碼輸入區</li>
+      <li><strong>高 RTP 確認碼：</strong>RTP ≥ 98% 時出現，需輸入 <code style="background:var(--bg4);padding:1px 5px;border-radius:3px;font-family:var(--mono)">CONFIRM</code> 才可儲存，防止誤操作</li>
+      <li><strong>生效起始（必填）/ 生效截止（選填）：</strong>日期時間選擇器，起始不可早於現在；截止留空代表永久有效</li>
+      <li><strong>備註（選填）：</strong>上限 200 字，說明此規則用途供日後審計追蹤</li>
+      <li><strong>模擬預覽按鈕：</strong>儲存前可先開啟模擬器確認此規則在實際條件下的命中結果</li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════════════════
+       子工具 3：A/B Testing 工具
+  ════════════════════════════════════ -->
+  <div class="sub" style="margin-top:40px">
+    <div class="sub-title purple">子工具 3 — A/B Testing 工具</div>
+    <p class="body">建立與管理機率版本 A/B 測試，監控 A/B 兩組的留存指標，並可查詢單一玩家的分群狀態。</p>
+  </div>
+
+  <!-- AB Testing 總覽 -->
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / ab-testing</div>
+    </div>
+    <div class="app-shell">
+      <div class="app-sb">
+        <div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div>
+        <div class="app-sb-group">RTP 管理</div>
+        <div class="app-sb-item"><span class="icon">👥</span>Group 管理</div>
+        <div class="app-sb-item"><span class="icon">⚙️</span>RTP 設定工具</div>
+        <div class="app-sb-item active ab"><span class="icon">🧪</span>A/B Testing</div>
+      </div>
+      <div class="app-content">
+        <div class="app-topbar">
+          <div>
+            <div class="app-topbar-title">A/B Testing 工具</div>
+            <div class="app-topbar-breadcrumb">RTP 設定 / A/B Testing / 測試總覽</div>
+          </div>
+          <div class="app-topbar-actions">
+            <button class="ui-btn purple">＋ 建立測試</button>
+          </div>
+        </div>
+        <div class="app-body">
+          <div class="stat-row">
+            <div class="stat-card"><div class="stat-label">進行中測試</div><div class="stat-val sv-purple">2</div></div>
+            <div class="stat-card"><div class="stat-label">已完成測試</div><div class="stat-val sv-gray">5</div></div>
+            <div class="stat-card"><div class="stat-label">本月有效樣本（A組）</div><div class="stat-val sv-blue">1,284</div></div>
+            <div class="stat-card"><div class="stat-label">本月有效樣本（B組）</div><div class="stat-val sv-green">1,301</div></div>
+          </div>
+          <div class="ui-tabs">
+            <div class="ui-tab active ab">測試總覽</div>
+            <div class="ui-tab ab">指標監控</div>
+            <div class="ui-tab ab">分群狀態查詢</div>
+            <div class="ui-tab ab">測試參數設定</div>
+          </div>
+          <table class="ui-tbl">
+            <thead><tr><th>遊戲</th><th>線路</th><th>階段</th><th>版本 A</th><th>版本 B</th><th>開始日期</th><th>狀態</th><th>樣本進度</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600;color:var(--text)">GameA</td>
+                <td style="font-family:var(--mono);font-size:11px;color:var(--blue)">AWS081</td>
+                <td><span class="s-badge s-p1">Phase 1</span></td>
+                <td style="font-family:var(--mono);font-size:11px">v2025_06_A</td>
+                <td style="font-family:var(--mono);font-size:11px">v2025_06_B</td>
+                <td style="font-size:11px">2025-06-01</td>
+                <td><span class="s-badge s-running">進行中</span></td>
+                <td>
+                  <div style="font-size:10px;color:var(--text3);margin-bottom:3px">1,284 / 1,000 ✓　Day 14/30</div>
+                  <div class="progress-bar" style="width:120px"><div class="progress-fill purple" style="width:47%"></div></div>
+                </td>
+                <td><span class="link ab" style="color:var(--purple)">查看指標</span> <span class="link danger">結束</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;color:var(--text)">GameA</td>
+                <td style="font-family:var(--mono);font-size:11px;color:var(--blue)">VN05</td>
+                <td><span class="s-badge s-p1">Phase 1</span></td>
+                <td style="font-family:var(--mono);font-size:11px">v2025_06_A</td>
+                <td style="font-family:var(--mono);font-size:11px">v2025_06_B</td>
+                <td style="font-size:11px">2025-06-01</td>
+                <td><span class="s-badge s-running">進行中</span></td>
+                <td>
+                  <div style="font-size:10px;color:var(--text3);margin-bottom:3px">623 / 1,000　Day 14/30</div>
+                  <div class="progress-bar" style="width:120px"><div class="progress-fill blue" style="width:62%"></div></div>
+                </td>
+                <td><span class="link ab" style="color:var(--purple)">查看指標</span> <span class="link danger">結束</span></td>
+              </tr>
+              <tr style="opacity:.55">
+                <td style="font-weight:600;color:var(--text)">GameB</td>
+                <td style="font-family:var(--mono);font-size:11px;color:var(--text3)">AWS081</td>
+                <td><span class="s-badge s-p2">Phase 2</span></td>
+                <td style="font-family:var(--mono);font-size:11px;color:var(--text3)">v2025_05_A</td>
+                <td style="font-family:var(--mono);font-size:11px;color:var(--text3)">—</td>
+                <td style="font-size:11px;color:var(--text3)">2025-05-01</td>
+                <td><span class="s-badge s-ended">已完成</span></td>
+                <td style="font-size:11px;color:var(--text3)">A 組勝出 (p=0.031)</td>
+                <td><span class="link">查看歷史</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title purple">畫面說明 — A/B Testing 總覽</div>
+    <ul class="annotation-list">
+      <li>同一款遊戲（GameA）在不同線路（AWS081、VN05）各自跑獨立的測試，列表分開顯示</li>
+      <li>樣本進度顯示目前樣本數是否達到 1,000 門檻（✓ 表示已達），以及天數進度條</li>
+      <li>已完成的測試顯示決策結果（A 組勝出，p-value）供後續參考，整列以低透明度顯示以示區隔</li>
+      <li>「結束」按鈕依條件是否達成，決定是否需要額外輸入確認碼</li>
+    </ul>
+  </div>
+
+  <!-- 指標監控畫面 -->
+  <p class="body" style="margin-top:20px">以下為點擊「查看指標」後的指標監控分頁畫面：</p>
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / ab-testing / metrics?game=GameA&line=AWS081</div>
+    </div>
+    <div class="app-shell" style="min-height:480px">
+      <div class="app-sb">
+        <div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div>
+        <div class="app-sb-group">RTP 管理</div>
+        <div class="app-sb-item"><span class="icon">👥</span>Group 管理</div>
+        <div class="app-sb-item"><span class="icon">⚙️</span>RTP 設定工具</div>
+        <div class="app-sb-item active ab"><span class="icon">🧪</span>A/B Testing</div>
+      </div>
+      <div class="app-content">
+        <div class="app-topbar">
+          <div>
+            <div class="app-topbar-title">指標監控　<span style="font-size:11px;font-weight:400;color:var(--text3)">GameA / AWS081 / Phase 1</span></div>
+            <div class="app-topbar-breadcrumb">RTP 設定 / A/B Testing / 指標監控</div>
+          </div>
+          <div class="app-topbar-actions">
+            <select class="ui-select" style="width:110px"><option>GameA</option><option>GameB</option></select>
+            <select class="ui-select" style="width:90px"><option>AWS081</option><option>VN05</option></select>
+            <select class="ui-select" style="width:100px"><option>2025-06</option><option>2025-05</option></select>
+          </div>
+        </div>
+        <div class="app-body">
+          <!-- Decision progress -->
+          <div style="background:var(--purple-dim);border:1px solid rgba(192,132,252,.2);border-radius:7px;padding:12px 16px;margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:center">
+            <div>
+              <div style="font-size:10px;color:var(--purple);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">樣本數（每組最低 1,000）</div>
+              <div style="font-size:14px;font-weight:700;font-family:var(--mono);color:var(--green)">1,284 / 1,301　✓</div>
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--purple);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">測試天數（最低 30 天）</div>
+              <div style="font-size:14px;font-weight:700;font-family:var(--mono);color:var(--amber)">Day 14 / 30</div>
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--purple);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">統計顯著性（p &lt; 0.05）</div>
+              <div style="font-size:14px;font-weight:700;font-family:var(--mono);color:var(--text3)">尚未可判斷</div>
+            </div>
+          </div>
+          <!-- Metrics -->
+          <div class="ab-metric-row" style="border-radius:7px 7px 0 0">
+            <div class="ab-metric-label" style="background:var(--bg3);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">指標</div>
+            <div class="ab-metric-a"><div class="ab-metric-grp-label">A 組　<span style="font-family:var(--mono);font-size:10px;font-weight:400">n=1,284</span></div></div>
+            <div class="ab-metric-b"><div class="ab-metric-grp-label">B 組　<span style="font-family:var(--mono);font-size:10px;font-weight:400">n=1,301</span></div></div>
+            <div class="ab-metric-diff" style="background:var(--bg3);font-size:10px;color:var(--text3);text-align:center">差異</div>
+          </div>
+          <div class="ab-metric-row" style="border-radius:0;border-top:none">
+            <div class="ab-metric-label">首日 Spin 數</div>
+            <div class="ab-metric-a"><div class="ab-metric-val">42.3</div><div class="ab-metric-sub">次 / 人</div></div>
+            <div class="ab-metric-b"><div class="ab-metric-val">39.8</div><div class="ab-metric-sub">次 / 人</div></div>
+            <div class="ab-metric-diff"><span class="diff-pos">+6.3%</span></div>
+          </div>
+          <div class="ab-metric-row" style="border-radius:0;border-top:none">
+            <div class="ab-metric-label">D1 留存率</div>
+            <div class="ab-metric-a"><div class="ab-metric-val">38.2%</div><div class="ab-metric-sub">490 / 1,284</div></div>
+            <div class="ab-metric-b"><div class="ab-metric-val">35.6%</div><div class="ab-metric-sub">463 / 1,301</div></div>
+            <div class="ab-metric-diff"><span class="diff-pos">+2.6%</span></div>
+          </div>
+          <div class="ab-metric-row" style="border-radius:0;border-top:none">
+            <div class="ab-metric-label">D3 留存率</div>
+            <div class="ab-metric-a"><div class="ab-metric-val">24.1%</div><div class="ab-metric-sub">309 / 1,284</div></div>
+            <div class="ab-metric-b"><div class="ab-metric-val">22.8%</div><div class="ab-metric-sub">297 / 1,301</div></div>
+            <div class="ab-metric-diff"><span class="diff-pos">+1.3%</span></div>
+          </div>
+          <div class="ab-metric-row" style="border-radius:0 0 7px 7px;border-top:none">
+            <div class="ab-metric-label" style="flex-direction:column;align-items:flex-start;gap:3px">D7 留存率<div style="font-size:10px;font-weight:600;color:var(--amber)">主要決策指標</div></div>
+            <div class="ab-metric-a"><div class="ab-metric-val">16.4%</div><div class="ab-metric-sub">211 / 1,284</div></div>
+            <div class="ab-metric-b"><div class="ab-metric-val">14.9%</div><div class="ab-metric-sub">194 / 1,301</div></div>
+            <div class="ab-metric-diff"><span class="diff-pos">+1.5%</span><div style="font-size:9px;color:var(--text3);margin-top:2px">p = 0.18</div></div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text3);text-align:right">資料更新時間：2025-06-14 06:00　· 有效樣本已排除白名單玩家</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title purple">畫面說明 — 指標監控</div>
+    <ul class="annotation-list">
+      <li>頂部決策條件區塊一眼看出三個條件（樣本數、天數、p-value）各自是否達成，以顏色區分：綠色已達、橘色未達、灰色尚無法判斷</li>
+      <li>指標表格 A/B 兩組並排，每格顯示百分比、分子/分母（讓閱讀者可判斷樣本代表性）</li>
+      <li>D7 留存率標示為「主要決策指標」，差異欄同時顯示 p-value</li>
+      <li>右上角下拉選單可切換查看不同遊戲、線路、月份的指標數據</li>
+      <li>底部標示資料更新時間，並說明有效樣本已排除白名單玩家，確保閱讀者了解數據口徑</li>
+    </ul>
+  </div>
+
+
+  <!-- 建立測試 Modal -->
+  <p class="body" style="margin-top:20px">以下為點擊「＋ 建立測試」後彈出的建立 A/B 測試 Modal：</p>
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / ab-testing</div>
+    </div>
+    <div style="position:relative;">
+      <div class="app-shell" style="filter:blur(1px);opacity:.35;pointer-events:none;min-height:560px">
+        <div class="app-sb"><div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div></div>
+        <div class="app-content"></div>
+      </div>
+      <div class="modal-overlay" style="position:absolute;padding-top:24px;">
+        <div class="modal-box" style="width:540px;max-height:500px;">
+          <div class="modal-head">
+            <h3>建立 A/B 機率測試</h3>
+            <button class="modal-x">×</button>
+          </div>
+          <div class="modal-body">
+            <p style="font-size:11.5px;color:var(--text3);margin-bottom:14px;line-height:1.7">同一「遊戲 + 線路」組合同時只能有一個進行中的測試。建立前請確認該組合目前無進行中測試。</p>
+            <div class="fg-grid">
+
+              <div class="form-section-label" style="padding-top:0;border-top:none">測試範圍</div>
+
+              <div class="fg">
+                <div class="fg-label">遊戲<span class="fg-req">*</span></div>
+                <select class="fg-select">
+                  <option selected>GameA</option>
+                  <option>GameB</option>
+                  <option>GameC</option>
+                </select>
+              </div>
+              <div class="fg">
+                <div class="fg-label">線路<span class="fg-req">*</span></div>
+                <select class="fg-select">
+                  <option selected>AWS081</option>
+                  <option>VN05</option>
+                  <option>TH08</option>
+                </select>
+                <div class="fg-hint">A/B Testing 以「遊戲 + 線路」為單位獨立運行</div>
+              </div>
+              <div class="fg full">
+                <div class="fg-label">測試階段<span class="fg-req">*</span></div>
+                <div style="display:flex;gap:10px;margin-top:4px">
+                  <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding:7px 12px;background:var(--blue-dim);border:1px solid rgba(88,166,255,.3);border-radius:5px;color:var(--blue);font-weight:600">
+                    <input type="radio" name="phase" checked style="accent-color:var(--blue)"> Phase 1　機率測試期
+                  </label>
+                  <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding:7px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;color:var(--text2)">
+                    <input type="radio" name="phase" style="accent-color:var(--teal)"> Phase 2　族群體驗期
+                  </label>
+                </div>
+                <div class="fg-hint" style="margin-top:5px">Phase 1：隨機對照找出最佳版本 ／ Phase 2：在確定版本上做族群差異化調整</div>
+              </div>
+
+              <div class="form-section-label">機率版本設定</div>
+
+              <div class="fg">
+                <div class="fg-label">機率版本 A<span class="fg-req">*</span></div>
+                <select class="fg-select">
+                  <option selected>v2025_06_base_A</option>
+                  <option>v2025_05_base_A</option>
+                </select>
+                <div class="fg-hint">A 組玩家套用此版本</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">機率版本 B<span class="fg-req">*</span></div>
+                <select class="fg-select">
+                  <option selected>v2025_06_base_B</option>
+                  <option>v2025_05_base_B</option>
+                </select>
+                <div class="fg-hint">Phase 1 必填；Phase 2 留空使用已確定的基礎版本</div>
+              </div>
+              <div class="fg full" style="background:var(--blue-dim);border:1px solid rgba(88,166,255,.15);border-radius:5px;padding:8px 12px;">
+                <div style="font-size:11px;color:var(--blue);line-height:1.7">
+                  ℹ 白名單玩家（如 grp_whitelist50）將<strong>自動排除</strong>於 A/B 樣本之外，不論其 User ID 單雙號為何。
+                </div>
+              </div>
+
+              <div class="form-section-label">測試期間</div>
+
+              <div class="fg">
+                <div class="fg-label">測試開始日<span class="fg-req">*</span></div>
+                <input class="fg-input" type="date" value="2025-06-15">
+                <div class="fg-hint">不可早於今日</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">預計結束日</div>
+                <input class="fg-input" type="date" value="2025-07-15">
+                <div class="fg-hint">留空 = 手動結束；建議 30 天後</div>
+              </div>
+
+              <div class="form-section-label">分群參數（可使用預設值）</div>
+
+              <div class="fg">
+                <div class="fg-label">高 RTP 觸發閾值（%）</div>
+                <input class="fg-input" value="98.0" type="number" style="font-family:var(--mono)">
+                <div class="fg-hint">Rolling RTP ≥ 此值時觸發 high_rtp Tag</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">低 RTP 觸發閾值（%）</div>
+                <input class="fg-input" value="85.0" type="number" style="font-family:var(--mono)">
+                <div class="fg-hint">Rolling RTP ≤ 此值時觸發 low_rtp Tag</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">新手認定天數（天）</div>
+                <input class="fg-input" value="7" type="number" style="font-family:var(--mono)">
+                <div class="fg-hint">帳號建立後 N 天內視為新手玩家</div>
+              </div>
+              <div class="fg">
+                <div class="fg-label">Rolling 窗口大小（次）</div>
+                <input class="fg-input" value="200" type="number" style="font-family:var(--mono)">
+                <div class="fg-hint">RTP 計算所使用的近期 Spin 數量</div>
+              </div>
+
+              <div class="fg full">
+                <div class="fg-label">備註</div>
+                <textarea class="fg-textarea" rows="2" placeholder="說明此次測試目的（選填，上限 200 字）"></textarea>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-foot">
+            <button class="ui-btn">取消</button>
+            <button class="ui-btn purple" style="background:var(--purple-dim);border-color:var(--purple);color:var(--purple)">建立測試</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title purple">欄位說明 — 建立 A/B 測試</div>
+    <ul class="annotation-list">
+      <li><strong>遊戲 + 線路（必填）：</strong>兩欄組合決定這個測試的範圍；若該組合已有進行中測試，儲存時系統阻擋並提示</li>
+      <li><strong>測試階段（必填）：</strong>Phase 1 / Phase 2 以大按鈕選擇，切換時「機率版本 B」欄位同步調整是否顯示必填提示</li>
+      <li><strong>機率版本 A / B（必填）：</strong>從已上傳的機率配置版本清單中選擇；Modal 內顯示白名單自動排除說明，確保 PM 了解樣本口徑</li>
+      <li><strong>測試開始日（必填）/ 預計結束日（選填）：</strong>日期選擇器，預計結束日留空則手動結束；預填為開始日 +30 天作為提醒</li>
+      <li><strong>分群參數（四欄，可使用預設值）：</strong>高 RTP 閾值（98%）、低 RTP 閾值（85%）、新手認定天數（7 天）、Rolling 窗口大小（200 次）；Phase 1 期間這些參數不會啟用，Phase 2 才生效，但建立時一併設定避免切換時倉促</li>
+      <li><strong>備註（選填）：</strong>上限 200 字，記錄測試目的</li>
+    </ul>
+  </div>
+
+  <!-- 分群狀態查詢 -->
+  <p class="body" style="margin-top:20px">以下為「分群狀態查詢」分頁，供客服或 PM 查詢特定玩家的當前分群：</p>
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="mockup-dots"><div class="mockup-dot dot-r"></div><div class="mockup-dot dot-y"></div><div class="mockup-dot dot-g"></div></div>
+      <div class="mockup-url">admin.igaming.internal / rtp-settings / ab-testing / tag-lookup</div>
+    </div>
+    <div class="app-shell" style="min-height:320px">
+      <div class="app-sb">
+        <div class="app-sb-logo"><div class="logo-mark">G</div>GameAdmin</div>
+        <div class="app-sb-group">RTP 管理</div>
+        <div class="app-sb-item"><span class="icon">👥</span>Group 管理</div>
+        <div class="app-sb-item"><span class="icon">⚙️</span>RTP 設定工具</div>
+        <div class="app-sb-item active ab"><span class="icon">🧪</span>A/B Testing</div>
+      </div>
+      <div class="app-content">
+        <div class="app-topbar">
+          <div>
+            <div class="app-topbar-title">分群狀態查詢</div>
+            <div class="app-topbar-breadcrumb">RTP 設定 / A/B Testing / 分群狀態查詢</div>
+          </div>
+        </div>
+        <div class="app-body">
+          <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:16px;flex-wrap:wrap">
+            <div class="fg" style="gap:4px">
+              <div class="fg-label">玩家帳號 ID<span class="fg-req">*</span></div>
+              <input class="fg-input" value="user_7742" style="width:160px">
+            </div>
+            <div class="fg" style="gap:4px">
+              <div class="fg-label">遊戲<span class="fg-req">*</span></div>
+              <select class="fg-select" style="width:120px"><option>GameA</option><option>GameB</option></select>
+            </div>
+            <div class="fg" style="gap:4px">
+              <div class="fg-label">線路<span class="fg-req">*</span></div>
+              <select class="fg-select" style="width:100px"><option>AWS081</option><option>VN05</option></select>
+            </div>
+            <button class="ui-btn primary" style="margin-bottom:1px">查詢</button>
+          </div>
+          <!-- Result card -->
+          <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:8px;overflow:hidden">
+            <div style="padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:12px;font-weight:600;color:var(--text)">查詢結果　<span style="font-family:var(--mono);color:var(--blue)">user_7742</span></span>
+              <span class="s-badge s-active">有效 Tag</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--border)">
+              <div style="padding:12px 16px;border-right:1px solid var(--border)">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">當月 Tag</div>
+                <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--blue)">base_A</div>
+              </div>
+              <div style="padding:12px 16px;border-right:1px solid var(--border)">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">機率版本</div>
+                <div style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text)">v2025_06_base_A</div>
+              </div>
+              <div style="padding:12px 16px">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">分群時間</div>
+                <div style="font-size:12px;color:var(--text)">2025-06-01　09:32</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0">
+              <div style="padding:12px 16px;border-right:1px solid var(--border)">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">當前 Rolling RTP</div>
+                <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--green)">91.4%</div>
+                <div style="font-size:10px;color:var(--text3)">基於近 142 次 Spin</div>
+              </div>
+              <div style="padding:12px 16px;border-right:1px solid var(--border)">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">本月 Tag 切換次數</div>
+                <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text)">0 / 1</div>
+              </div>
+              <div style="padding:12px 16px">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">是否為白名單帳號</div>
+                <div style="font-size:13px;font-weight:600;color:var(--green)">否（納入 A/B 樣本）</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:var(--text3)">⚠ 此頁面為唯讀，不可手動修改玩家 Tag。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-title purple">畫面說明 — 分群狀態查詢</div>
+    <ul class="annotation-list">
+      <li>查詢條件為「玩家帳號 ID + 遊戲 + 線路」三欄必填，對應 A/B Testing 以「玩家 + 遊戲 + 線路」為分群單位的設計</li>
+      <li>結果卡片顯示當月 Tag、機率版本、分群時間、Rolling RTP（及樣本數）、本月切換次數、是否為白名單帳號（即是否納入 A/B 樣本）</li>
+      <li>「是否為白名單帳號」欄位明確告知此玩家是否計入 A/B 統計，方便客服判斷玩家的實際體驗</li>
+      <li>頁面底部固定顯示「唯讀警示」，明確告知不可手動修改 Tag</li>
+    </ul>
+  </div>
+
+</section>
+<div class="divider"></div>
+
+<!-- ══ S7 ══ -->
+<section class="sec" id="s7">
+  <div class="sec-hd">
+    <div class="sec-num blue">07</div>
+    <div>
+      <div class="sec-title">審計日誌需求</div>
+      <div class="sec-desc">哪些操作需要被記錄，記錄什麼，誰可以查</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">需要記錄的操作類型</div>
+    <table class="tbl">
+      <thead><tr><th>操作類型</th><th>觸發時機</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-teal">CREATE</span></td><td>新增 RTP 規則</td></tr>
+        <tr><td><span class="tag tag-blue">UPDATE</span></td><td>編輯 RTP 規則</td></tr>
+        <tr><td><span class="tag tag-amber">DEACTIVATE</span></td><td>停用 RTP 規則</td></tr>
+        <tr><td><span class="tag tag-gray">PRIORITY_SHIFT</span></td><td>執行優先序批次位移</td></tr>
+        <tr><td><span class="tag tag-teal">LINE_DEFAULT_UPDATE</span></td><td>修改線路預設 RTP</td></tr>
+        <tr><td><span class="tag tag-purple">AB_TEST_CREATE</span></td><td>建立新 A/B 測試</td></tr>
+        <tr><td><span class="tag tag-purple">AB_TEST_COMPLETE</span></td><td>結束 A/B 測試（含強制結束）</td></tr>
+        <tr><td><span class="tag tag-purple">AB_CONFIG_UPDATE</span></td><td>修改 A/B 測試參數設定</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">審計日誌查閱需求</div>
+    <ul class="req-list">
+      <li><strong>查閱權限：</strong>僅 Admin 白名單帳號可查閱，不對外公開</li>
+      <li><strong>篩選欄位：</strong>操作者帳號、操作類型、規則 ID / 測試 ID、時間區間</li>
+      <li><strong>顯示內容：</strong>時間、操作者、動作類型、對象 ID；點擊可展開操作前後的差異對比</li>
+      <li><strong>不可刪除：</strong>審計日誌為不可刪除、不可修改的歷史紀錄</li>
+      <li><strong>不提供匯出：</strong>避免 RTP 設定策略洩漏</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S8 ══ -->
+<section class="sec" id="s8">
+  <div class="sec-hd">
+    <div class="sec-num blue">08</div>
+    <div>
+      <div class="sec-title">安全與操作限制</div>
+      <div class="sec-desc">防止誤操作和異常行為的保護機制</div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">RTP 數值限制</div>
+    <ul class="req-list">
+      <li>最小值 80.00%、最大值 99.00%，精確至小數後 2 位</li>
+      <li>超出範圍的輸入，前端介面即時阻擋並提示錯誤訊息</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">高風險操作的二次確認機制</div>
+    <table class="tbl">
+      <thead><tr><th>操作</th><th>觸發條件</th><th>確認方式</th></tr></thead>
+      <tbody>
+        <tr><td>儲存高 RTP 規則</td><td>RTP 值 ≥ 98%</td><td>需輸入確認碼 <code>CONFIRM</code> 才可儲存</td></tr>
+        <tr><td>停用進行中規則</td><td>點擊停用按鈕</td><td>彈出確認視窗，說明操作不可逆後確認</td></tr>
+        <tr><td>Priority Shift</td><td>插入排名位置已被占用</td><td>顯示受影響規則清單，確認後才執行批次位移</td></tr>
+        <tr><td>強制結束 A/B 測試</td><td>統計條件未達成</td><td>顯示未滿足的條件清單，需輸入確認碼 <code>CONFIRM</code></td></tr>
+        <tr><td>移除群組事件</td><td>點擊移除事件</td><td>彈出確認視窗，說明操作不可逆後確認</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">其他限制規則</div>
+    <ul class="req-list">
+      <li><strong>不提供批次操作：</strong>每次僅能編輯單條規則，降低誤操作影響範圍</li>
+      <li><strong>不可刪除：</strong>規則和日誌均只能停用或封存，不可物理刪除，保留歷史可追溯性</li>
+      <li><strong>停用不可重啟：</strong>已停用的規則移入「已結束」後不可重新啟用，需建立新規則</li>
+      <li><strong>連續操作通知：</strong>同一帳號連續操作超過 10 條規則，觸發系統通知給 Super Admin</li>
+      <li><strong>A/B 測試唯一性：</strong>同一「遊戲 + 線路」組合同時只允許一個進行中的 A/B 測試；同一款遊戲在不同線路可以各自獨立跑 A/B 測試</li>
+      <li><strong>玩家 Tag 不可人工修改：</strong>分群狀態查詢頁為唯讀，後台不提供手動修改玩家 Tag 的功能</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S9 ══ -->
+<section class="sec" id="s9">
+  <div class="sec-hd">
+    <div class="sec-num blue">09</div>
+    <div>
+      <div class="sec-title">待決事項</div>
+      <div class="sec-desc">尚未確認的需求，需要各方決策</div>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 01 <span style="color:var(--text2);font-weight:400">— PM + Tech Lead</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>全局預設 RTP 由誰設定、在哪裡管理？</strong></p>
+      <p class="body">建議：統一在 RTP 設定模組管理，以最低優先序的特殊規則形式存在，避免設定分散。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 02 <span style="color:var(--text2);font-weight:400">— PM + Backend</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>群組 Event 類型後續擴充方式？</strong></p>
+      <p class="body">新增 Event 類型是否需要工程部署，或可由後台動態新增？若可動態新增，需定義欄位驗證機制。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 03 <span style="color:var(--text2);font-weight:400">— PM + Compliance</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>RTP 變更是否需要 Maker-Checker 雙人審核流程？</strong></p>
+      <p class="body">若合規要求高則建議導入，但會增加操作複雜度，需評估實際監管要求。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 04 <span style="color:var(--text2);font-weight:400">— PM + Backend</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>模擬器是否需要支援「查詢歷史時間點的命中結果」？</strong></p>
+      <p class="body">對審計有價值，但需要快照機制，增加後端儲存成本，需評估優先級。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 05 <span style="color:var(--text2);font-weight:400">— PM + Data Analyst</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>Phase 1 測試 30 天後仍無統計顯著差異時的處置策略？</strong></p>
+      <p class="body">建議：最多延長至 60 天，若仍無顯著差異則判定版本無差異，以 RTP 較低的版本作為基礎版本。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 06 <span style="color:var(--text2);font-weight:400">— PM + Game Designer</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>高/低 RTP 閾值是否需依遊戲類型分別設定？</strong></p>
+      <p class="body">不同類型遊戲（高波動 vs 低波動）的正常 RTP 分布差異大，建議以遊戲為單位設定，而非全局統一閾值。</p>
+    </div>
+  </div>
+
+  <div class="ui-card" style="border-color:var(--green);opacity:.75">
+    <div class="ui-card-head" style="color:var(--green)">✓ 已決定 · 07 <span style="color:var(--text2);font-weight:400">— PM + Customer Service Lead</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>玩家的分群 Tag 是否對客服後台開放查詢？</strong></p>
+      <p class="body">已決定：客服後台唯讀可查（查詢條件為玩家帳號 + 遊戲 + 線路），用於玩家異常回報時的還原追蹤；不對玩家前端暴露任何分群資訊。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 08 <span style="color:var(--text2);font-weight:400">— PM + Data Analyst</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>A/B Testing 有效樣本的排除範圍如何定義？</strong></p>
+      <p class="body">目前設計排除兩類：① 白名單特殊 RTP 玩家、② 當月 Tag 切換前的歷史 Spin。<br>待決：是否也要排除「命中任何非線路預設 RTP 規則的玩家」？排除範圍越大統計越純淨，但有效樣本數會減少、測試週期被迫延長。建議由 Data Analyst 評估各線路的特殊規則覆蓋比例後再決定。</p>
+    </div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-head">OPEN · 09 <span style="color:var(--text2);font-weight:400">— PM + Backend</span></div>
+    <div class="ui-card-body">
+      <p class="body" style="margin-bottom:6px"><strong>白名單玩家的 Spin 數據是否完全不寫入 A/B 指標，還是寫入但標記排除？</strong></p>
+      <p class="body">建議：寫入但標記排除（保留原始數據），讓後台可以彈性調整排除範圍，也方便事後稽核。若完全不寫入，一旦事後需要分析白名單玩家行為就無從追溯。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ S10 ══ -->
+<section class="sec" id="s10">
+  <div class="sec-hd">
+    <div class="sec-num blue">10</div>
+    <div>
+      <div class="sec-title">版本紀錄</div>
+    </div>
+  </div>
+  <div class="cl-row" style="background:var(--purple-dim);padding:12px 14px;border-radius:var(--r);margin-bottom:4px">
+    <span class="cl-ver" style="color:var(--purple)">v1.3</span>
+    <span class="cl-date">2025-06</span>
+    <span class="cl-desc">補充後台介面中「新增 RTP 規則」與「建立 A/B 測試」兩個 Modal 的完整欄位畫面與說明。新增 RTP 規則 Modal：插入排名（含即時 Shift 提示）、條件維度四欄（線路/幣值/遊戲/群組 ID，全部選填）、RTP 值（≥ 98% 自動顯示確認碼輸入區）、生效期間、備註、模擬預覽按鈕。建立 A/B 測試 Modal：遊戲 + 線路（必填，組合唯一性）、測試階段單選（Phase 1/2）、機率版本 A/B（含白名單自動排除說明）、測試期間、分群參數四欄（高/低 RTP 閾值、新手天數、Rolling 窗口）、備註。</span>
+  </div>
+  <div class="cl-row" style="padding:12px 14px">
+    <span class="cl-ver">v1.2</span>
+    <span class="cl-date">2025-06</span>
+    <span class="cl-desc">新增後台 Web 介面操作規劃章節（UI 節）。涵蓋三個子工具的完整畫面配置與互動說明：① Group 管理（列表畫面 + 編輯 Modal，含成員批次輸入、Event 管理）；② RTP 設定工具（進行中規則列表，含白名單群組的視覺區隔設計）；③ A/B Testing 工具（測試總覽、指標監控、分群狀態查詢三個分頁畫面，含決策條件進度區塊、A/B 指標對比表、玩家 Tag 查詢結果卡片）。同步更新側邊導覽列加入 UI 節連結。</span>
+  </div>
+  <div class="cl-row" style="padding:12px 14px">
+    <span class="cl-ver">v1.1</span>
+    <span class="cl-date">2025-06</span>
+    <span class="cl-desc">補齊 A/B Testing 核心設計前提：玩家與線路綁定（單一玩家只在單一線路遊玩）。影響範圍：① AB1 新增「核心設計前提」說明區塊；② AB2 更新 Tag 有效範圍定義（玩家 + 遊戲 + 線路）與 Phase 1 分群 callout；③ AB3 全面改寫——新增每次 Spin 完整查詢優先序（白名單 → RTP 規則 → A/B）、跨線路案例對照表、有效樣本排除定義、Tag 寫入時機補充線路維度；④ AB5 建立 A/B 測試欄位新增「線路」為必填、分群查詢條件加入線路、唯一性限制改為「遊戲 + 線路」組合；⑤ S8 安全限制同步更新；⑥ S9 OPEN-07 標記已決定，新增 OPEN-08（有效樣本排除範圍）與 OPEN-09（白名單數據寫入策略）。</span>
+  </div>
+  <div class="cl-row" style="padding:12px 14px">
+    <span class="cl-ver">v1.0</span>
+    <span class="cl-date">2025-06</span>
+    <span class="cl-desc">初版需求規格書。整合 RTP 動態設定系統（v1.2）與機率 A/B Testing 分群機制，重新以「需求導向」撰寫，移除所有技術實作細節（DB Schema、API、演算法、Pseudocode）。</span>
+  </div>
+</section>
+
+</div><!-- /content -->
+</main>
+</div><!-- /wrap -->
+
+<script>
+const items = document.querySelectorAll('.sb-item');
+const secs  = document.querySelectorAll('.sec');
+
+items.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      const id = en.target.id;
+      items.forEach(a => {
+        const match = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('active', match);
+      });
+    }
+  });
+}, { rootMargin: '-25% 0px -65% 0px' });
+
+secs.forEach(s => io.observe(s));
+</script>
+
+</body>
+</html>
