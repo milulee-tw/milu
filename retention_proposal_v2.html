@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>遊戲留存三大機制提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #D4A843;
+  --gold-light: #F0CC72;
+  --gold-dim: #8B6914;
+  --dark: #0D0E12;
+  --dark-2: #161820;
+  --dark-3: #1E2028;
+  --dark-4: #262830;
+  --border: rgba(212,168,67,0.2);
+  --border-bright: rgba(212,168,67,0.5);
+  --text-primary: #F0EDE6;
+  --text-secondary: #9A9488;
+  --text-dim: #5A5650;
+  --red: #E05A3A;
+  --teal: #3ABFB0;
+  --blue: #4A8FE0;
+  --green: #5ABF7A;
+  --purple: #9B7FE0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--dark); color: var(--text-primary); font-family: 'Noto Sans TC', sans-serif; font-weight: 400; line-height: 1.7; }
+
+/* ─── COVER ─── */
+.cover {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  position: relative; overflow: hidden; padding: 60px 40px; text-align: center;
+}
+.cover-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(212,168,67,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(155,127,224,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(58,191,176,0.05) 0%, transparent 60%);
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(212,168,67,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(212,168,67,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.cover-tag {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+  color: var(--gold); text-transform: uppercase; border: 1px solid var(--border-bright);
+  padding: 6px 16px; border-radius: 2px; margin-bottom: 40px; position: relative;
+}
+.cover h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 9vw, 88px); letter-spacing: 0.06em; line-height: 1;
+  color: var(--gold-light); text-shadow: 0 0 80px rgba(212,168,67,0.3);
+  margin-bottom: 12px; position: relative;
+}
+.cover h1 span { color: var(--text-primary); }
+.cover-sub { font-size: 15px; color: var(--text-secondary); letter-spacing: 0.06em; margin-bottom: 56px; position: relative; }
+.cover-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+.cover-badge {
+  padding: 10px 22px; border-radius: 3px; font-size: 13px; font-weight: 500;
+  border: 1px solid; letter-spacing: 0.04em;
+}
+.badge-v1 { background: rgba(155,127,224,0.1); border-color: rgba(155,127,224,0.35); color: #C4AAFF; }
+.badge-v2 { background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.35); color: var(--gold-light); }
+.badge-v3 { background: rgba(58,191,176,0.1); border-color: rgba(58,191,176,0.35); color: #7ADFD8; }
+.cover-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-dim); font-size: 11px; letter-spacing: 0.1em;
+}
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ─── LAYOUT ─── */
+.page { max-width: 1000px; margin: 0 auto; padding: 0 40px 120px; }
+.section { margin-bottom: 96px; }
+.section-header {
+  display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--border);
+}
+.section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 0.15em; }
+.section-title { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; }
+.section-title-en { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.15em; margin-left: auto; }
+
+.divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+/* ─── HYPOTHESIS ─── */
+.hypothesis-block {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--gold); padding: 28px 32px; border-radius: 0 4px 4px 0; margin-bottom: 32px;
+}
+.hypothesis-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
+.hypothesis-text { font-size: 16px; color: var(--text-primary); font-weight: 500; line-height: 1.8; }
+
+.insight-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.insight-card { background: var(--dark-3); border: 1px solid var(--border); border-radius: 4px; padding: 20px; }
+.insight-icon { font-size: 22px; margin-bottom: 10px; }
+.insight-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.insight-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ─── FEATURE SECTION HEADER ─── */
+.feat-head {
+  padding: 20px 24px; border-radius: 4px 4px 0 0; border: 1px solid;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 0;
+}
+.feat-head.purple { background: rgba(155,127,224,0.07); border-color: rgba(155,127,224,0.3); }
+.feat-head.gold { background: rgba(212,168,67,0.07); border-color: rgba(212,168,67,0.3); }
+.feat-head.teal { background: rgba(58,191,176,0.07); border-color: rgba(58,191,176,0.3); }
+.feat-num { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; }
+.feat-num.purple { color: #C4AAFF; }
+.feat-num.gold { color: var(--gold-light); }
+.feat-num.teal { color: #7ADFD8; }
+.feat-title { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+.feat-goal-tag {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+  padding: 4px 12px; border-radius: 2px; border: 1px solid;
+}
+.feat-goal-tag.purple { background: rgba(155,127,224,0.12); border-color: rgba(155,127,224,0.35); color: #C4AAFF; }
+.feat-goal-tag.gold { background: rgba(212,168,67,0.12); border-color: rgba(212,168,67,0.35); color: var(--gold-light); }
+.feat-goal-tag.teal { background: rgba(58,191,176,0.12); border-color: rgba(58,191,176,0.35); color: #7ADFD8; }
+.feat-body { border: 1px solid var(--border); border-top: none; border-radius: 0 0 4px 4px; padding: 28px 24px; background: var(--dark-3); }
+
+/* ─── FLOW DIAGRAM ─── */
+.flow-diagram { display: flex; align-items: stretch; margin-bottom: 32px; background: var(--dark-4); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.flow-step { flex: 1; padding: 20px 16px; text-align: center; border-right: 1px solid var(--border); }
+.flow-step:last-child { border-right: none; }
+.flow-step-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold-dim); letter-spacing: 0.15em; margin-bottom: 8px; }
+.flow-step-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+.flow-step-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.flow-step-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+
+/* ─── CHEST GRID (9 格) ─── */
+.chest-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; margin-bottom: 32px; }
+.chest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 20px; background: var(--dark-4); border: 1px solid var(--border); border-radius: 6px; }
+.chest-cell {
+  aspect-ratio: 1; border-radius: 6px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3px; border: 1.5px solid;
+  cursor: pointer; position: relative; transition: transform 0.15s, border-color 0.2s;
+}
+.chest-cell:hover { transform: scale(1.04); }
+.chest-cell.locked { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.08); }
+.chest-cell.unlocked { background: rgba(212,168,67,0.04); border-color: rgba(212,168,67,0.18); }
+.chest-cell.opened-small { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+.chest-cell.opened-mid { background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.4); }
+.chest-cell.opened-big { background: rgba(74,143,224,0.1); border-color: rgba(74,143,224,0.4); }
+.chest-cell.opened-jackpot { background: rgba(90,191,122,0.12); border-color: rgba(90,191,122,0.5); }
+.chest-cell .c-icon { font-size: 22px; }
+.chest-cell .c-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; }
+.chest-cell.opened-small .c-type { color: var(--text-dim); }
+.chest-cell.opened-mid .c-type { color: var(--gold); }
+.chest-cell.opened-big .c-type { color: var(--blue); }
+.chest-cell.opened-jackpot .c-type { color: var(--green); }
+.chest-cell .c-spin { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); }
+.chest-cell .check-mark { position: absolute; top: 4px; right: 6px; font-size: 9px; color: var(--gold); }
+.chest-cell.locked .c-icon::before { content: '📦'; }
+.spin-req-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.spin-badge { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 2px; background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.25); }
+.grid-progress { margin-top: 12px; }
+.grid-progress-bar-bg { height: 3px; background: var(--dark-4); border-radius: 2px; overflow: hidden; }
+.grid-progress-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+.grid-progress-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+.chest-legend { display: flex; flex-direction: column; gap: 10px; }
+.cl-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--dark-4); border: 1px solid var(--border); border-radius: 4px; }
+.cl-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.cl-info { flex: 1; }
+.cl-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.cl-desc { font-size: 11px; color: var(--text-secondary); }
+.cl-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); }
+
+.path-note {
+  padding: 16px 20px; background: rgba(212,168,67,0.05); border: 1px solid var(--border-bright);
+  border-radius: 4px; font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 28px;
+}
+.path-note strong { color: var(--gold-light); }
+
+/* ─── PATH CARDS ─── */
+.path-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+.path-card { background: var(--dark-4); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.path-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.path-title { font-size: 13px; font-weight: 700; }
+.path-prob { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 10px; border-radius: 2px; }
+.path-a .path-header { background: rgba(224,90,58,0.08); }
+.path-a .path-title { color: #F0907A; }
+.path-a .path-prob { background: rgba(224,90,58,0.15); color: #F0907A; }
+.path-b .path-header { background: rgba(74,143,224,0.08); }
+.path-b .path-title { color: #90C0F0; }
+.path-b .path-prob { background: rgba(74,143,224,0.15); color: #90C0F0; }
+.path-c .path-header { background: rgba(90,191,122,0.08); }
+.path-c .path-title { color: #7ADFA0; }
+.path-c .path-prob { background: rgba(90,191,122,0.15); color: #7ADFA0; }
+.path-body { padding: 14px 16px; }
+.path-row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.path-row:last-child { border-bottom: none; }
+.path-row span:first-child { color: var(--text-secondary); }
+.path-row span:last-child { color: var(--text-primary); font-family: 'DM Mono', monospace; }
+
+/* ─── UNLOCK MECHANISM ─── */
+.unlock-table-wrap { background: var(--dark-4); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 28px; }
+.unlock-table { width: 100%; border-collapse: collapse; }
+.unlock-table th {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--text-dim);
+  text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); background: var(--dark-3);
+}
+.unlock-table td { padding: 11px 16px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+.unlock-table tr:last-child td { border-bottom: none; }
+.unlock-table tr:hover td { background: rgba(255,255,255,0.015); }
+.spin-pill { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; padding: 2px 10px; border-radius: 3px; background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.25); }
+.status-pill { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
+.status-free { background: rgba(90,191,122,0.12); color: var(--green); border: 1px solid rgba(90,191,122,0.3); }
+.status-spin { background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.25); }
+.status-jackpot { background: rgba(90,191,122,0.15); color: #7ADFA0; border: 1px solid rgba(90,191,122,0.4); }
+.badge-small { background: rgba(255,255,255,0.06); color: var(--text-secondary); padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-mid { background: rgba(212,168,67,0.12); color: var(--gold); padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-big { background: rgba(74,143,224,0.12); color: #7AB5F0; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-jackpot { background: rgba(90,191,122,0.15); color: var(--green); padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+
+/* ─── DAY LOGIN ─── */
+.day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 28px; }
+.day-box { background: var(--dark-4); border: 1px solid var(--border); border-radius: 4px; padding: 14px 10px; text-align: center; }
+.day-box.day-free { border-color: rgba(90,191,122,0.35); }
+.day-box.day-task { border-color: rgba(155,127,224,0.35); }
+.day-box.day-big { border-color: rgba(212,168,67,0.5); }
+.day-num { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; margin-bottom: 8px; }
+.day-free .day-num { color: var(--green); }
+.day-task .day-num { color: #C4AAFF; }
+.day-big .day-num { color: var(--gold-light); }
+.day-icon { font-size: 20px; margin-bottom: 8px; }
+.day-cond { font-size: 10px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; line-height: 1.3; }
+.day-reward { font-size: 10px; color: var(--text-secondary); }
+.day-big .day-cond { color: var(--gold-light); }
+.day-phase-rows { display: flex; flex-direction: column; gap: 8px; }
+.day-phase { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; background: var(--dark-4); border: 1px solid var(--border); border-radius: 4px; }
+.phase-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.phase-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.phase-text strong { color: var(--text-primary); }
+
+/* ─── BINGO ─── */
+.bingo-wrap { display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: start; margin-bottom: 28px; }
+.bingo-card-outer { background: var(--dark-4); border: 1px solid var(--border); border-radius: 6px; padding: 18px; }
+.bingo-card-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; text-align: center; }
+.bingo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+.b-cell { aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-family: 'DM Mono', monospace; font-weight: 500; border: 1px solid rgba(255,255,255,0.06); color: var(--text-dim); background: rgba(255,255,255,0.02); }
+.b-cell.hit { background: rgba(58,191,176,0.15); border-color: rgba(58,191,176,0.45); color: #7ADFD8; }
+.b-cell.free { background: rgba(212,168,67,0.12); border-color: rgba(212,168,67,0.4); color: var(--gold-light); font-size: 9px; }
+.bingo-legend { font-size: 11px; color: var(--text-dim); margin-top: 10px; text-align: center; }
+.bingo-mechs { display: flex; flex-direction: column; gap: 10px; }
+.bm-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; background: var(--dark-4); border: 1px solid var(--border); border-radius: 4px; }
+.bm-dot { width: 3px; flex-shrink: 0; border-radius: 2px; align-self: stretch; }
+.bm-dot.teal { background: var(--teal); }
+.bm-dot.gold { background: var(--gold); }
+.bm-dot.purple { background: var(--purple); }
+.bm-dot.red { background: var(--red); }
+.bm-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.bm-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ─── SUMMARY TABLE ─── */
+.summary-table-wrap { background: var(--dark-3); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 40px; }
+.sum-table { width: 100%; border-collapse: collapse; }
+.sum-table th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; padding: 12px 18px; text-align: left; border-bottom: 1px solid var(--border); background: var(--dark-4); }
+.sum-table td { padding: 14px 18px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-primary); vertical-align: top; line-height: 1.6; }
+.sum-table tr:last-child td { border-bottom: none; }
+.sum-table tr:hover td { background: rgba(255,255,255,0.015); }
+.feat-tag { display: inline-block; padding: 2px 10px; border-radius: 2px; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; }
+.feat-tag.purple { background: rgba(155,127,224,0.12); color: #C4AAFF; }
+.feat-tag.gold { background: rgba(212,168,67,0.12); color: var(--gold-light); }
+.feat-tag.teal { background: rgba(58,191,176,0.12); color: #7ADFD8; }
+
+/* ─── KPI ─── */
+.kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.kpi-card { background: var(--dark-3); border: 1px solid var(--border); border-radius: 4px; padding: 22px 20px; }
+.kpi-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px; }
+.kpi-val { font-size: 28px; font-weight: 700; color: var(--gold-light); font-family: 'DM Mono', monospace; line-height: 1; margin-bottom: 6px; }
+.kpi-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ─── DEMO INTERACTIVE ─── */
+.demo-section { background: var(--dark-4); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 28px; }
+.demo-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
+.demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 280px; margin: 0 auto 16px; }
+.demo-cell { aspect-ratio: 1; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; border: 1.5px solid; transition: transform 0.15s, background 0.2s; position: relative; user-select: none; }
+.demo-cell:hover:not(.opened) { transform: scale(1.05); border-color: rgba(212,168,67,0.5) !important; }
+.demo-cell.closed { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.08); }
+.demo-cell.closed .chest { font-size: 22px; }
+.demo-cell.closed .prize-icon, .demo-cell.closed .prize-text { display: none; }
+.demo-cell.opened { cursor: default; }
+.demo-cell.type-small { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15) !important; }
+.demo-cell.type-mid { background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.4) !important; }
+.demo-cell.type-big { background: rgba(74,143,224,0.1); border-color: rgba(74,143,224,0.4) !important; }
+.demo-cell.type-jackpot { background: rgba(90,191,122,0.12); border-color: rgba(90,191,122,0.5) !important; }
+.demo-cell.opened .chest { display: none; }
+.prize-icon { font-size: 20px; }
+.prize-text { font-family: 'DM Mono', monospace; font-size: 9px; }
+.demo-cell.type-small .prize-text { color: var(--text-dim); }
+.demo-cell.type-mid .prize-text { color: var(--gold); }
+.demo-cell.type-big .prize-text { color: var(--blue); }
+.demo-cell.type-jackpot .prize-text { color: var(--green); }
+.demo-progress-wrap { margin-bottom: 12px; }
+.demo-prog-bar-bg { height: 4px; background: var(--dark); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+.demo-prog-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+.demo-prog-labels { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); }
+.demo-msg { text-align: center; font-size: 13px; color: var(--text-secondary); min-height: 22px; margin-bottom: 10px; }
+.demo-reset { display: block; margin: 0 auto; background: transparent; border: 1px solid var(--border); color: var(--text-secondary); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; padding: 7px 20px; border-radius: 3px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+.demo-reset:hover { border-color: var(--gold); color: var(--gold); }
+.demo-locked-note { font-size: 11px; color: var(--text-dim); text-align: center; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
+
+/* ─── FOOTER ─── */
+footer { border-top: 1px solid var(--border); padding: 20px 40px; display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto; }
+.footer-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.15em; }
+</style>
+</head>
+<body>
+
+<!-- ─── COVER ─── -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-tag">RETENTION PROPOSAL · 2025</div>
+  <h1>遊戲留存<span>三大</span>機制</h1>
+  <p class="cover-sub">提升日活 · 強化 Spin 數 · 驅動次日回流</p>
+  <div class="cover-badges">
+    <span class="cover-badge badge-v1">01 抽籤寶箱</span>
+    <span class="cover-badge badge-v2">02 7日登入獎勵</span>
+    <span class="cover-badge badge-v3">03 7日 Bingo 卡</span>
+  </div>
+  <div class="cover-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ─── 00 背景假設 ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">00 —</span>
+    <h2 class="section-title">提案背景與核心假設</h2>
+    <span class="section-title-en">BACKGROUND</span>
+  </div>
+  <div class="hypothesis-block">
+    <div class="hypothesis-label">CORE HYPOTHESIS</div>
+    <div class="hypothesis-text">
+      透過漸進式任務與獎勵機制設計，讓玩家在「今日完成」的動力下自然提升單日 Spin 次數，
+      並藉由跨日進度保留製造回流誘因，達成日活、留存率與玩家黏著度的同步提升。
+    </div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-icon">⚡</div>
+      <div class="insight-title">單日 Spin 數不足</div>
+      <div class="insight-desc">玩家缺乏在單日大量押注的動機，除日常消費外無明確驅動力。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">🔄</div>
+      <div class="insight-title">次日回流率低</div>
+      <div class="insight-desc">玩家登入後若無未完成任務牽引，隔日不再回來的機率顯著上升。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">📅</div>
+      <div class="insight-title">登入習慣未建立</div>
+      <div class="insight-desc">新手玩家尚未形成每日登入的行為習慣，需在前期以低門檻獎勵引導。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 01 抽籤寶箱 ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">01 —</span>
+    <h2 class="section-title">抽籤寶箱</h2>
+    <span class="section-title-en">LUCKY CHEST</span>
+  </div>
+
+  <div class="feat-head purple" style="margin-bottom:0">
+    <div>
+      <div class="feat-num purple" style="margin-bottom:4px">FEATURE 01</div>
+      <div class="feat-title">9 格寶箱 · Spin 累積解鎖 · 每日重置</div>
+    </div>
+    <div class="feat-goal-tag purple">目的：提高單日 Spin 數</div>
+  </div>
+  <div class="feat-body">
+
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:28px;">
+      玩家進入遊戲後會看到一個 <strong style="color:var(--text-primary)">3×3 共 9 格</strong> 的寶箱陣列。每格依序需累積一定 Spin 數才可解鎖翻開，其中 <strong style="color:var(--gold-light)">最終大獎（Jackpot）隨機藏在第 7、8 或 9 格</strong>，玩家翻完 Jackpot 後仍可繼續翻開剩餘格子取得額外小獎。整個循環當日不重置，<strong style="color:var(--text-primary)">隔日 00:00 重新洗牌開始</strong>。
+    </p>
+
+    <!-- 流程圖 -->
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-icon">🎰</div>
+        <div class="flow-step-title">累積 Spin</div>
+        <div class="flow-step-desc">每次 Spin 計入當日進度條，進度可視化</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-icon">🔓</div>
+        <div class="flow-step-title">達門檻解鎖格子</div>
+        <div class="flow-step-desc">每格所需 Spin 不同，依序點亮可翻開</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-icon">📦</div>
+        <div class="flow-step-title">翻開獲得獎勵</div>
+        <div class="flow-step-desc">小獎 / 中獎 / 大獎 / Jackpot 隨機分佈</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-icon">🔁</div>
+        <div class="flow-step-title">隔日重置</div>
+        <div class="flow-step-desc">當日未翻完不消失，隔日全新循環</div>
+      </div>
+    </div>
+
+    <!-- 9格示意 + 說明 -->
+    <div class="chest-wrap">
+      <div>
+        <div class="demo-section">
+          <div class="demo-title">互動示意 · 點擊翻開寶箱</div>
+          <div class="demo-progress-wrap">
+            <div class="demo-prog-bar-bg"><div class="demo-prog-bar" id="progressBar" style="width:5%"></div></div>
+            <div class="demo-prog-labels"><span>翻開 <span id="openCount">0</span> / 9</span><span id="spinCount">Spin 0</span></div>
+          </div>
+          <div class="demo-msg" id="demoMsg">點擊任意寶箱開始</div>
+          <div class="demo-grid" id="demoGrid"></div>
+          <button class="demo-reset" onclick="resetDemo()">↺ 重新洗牌</button>
+        </div>
+      </div>
+      <div class="chest-legend">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">獎品組成（9 格）</div>
+        <div class="cl-item">
+          <div class="cl-dot" style="background:rgba(255,255,255,0.3)"></div>
+          <div class="cl-info">
+            <div class="cl-name">小獎</div>
+            <div class="cl-desc">基礎代幣 / 免費 Spin</div>
+          </div>
+          <div class="cl-count">×5 格</div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-dot" style="background:var(--gold)"></div>
+          <div class="cl-info">
+            <div class="cl-name">中獎</div>
+            <div class="cl-desc">進階代幣 / 加倍獎勵</div>
+          </div>
+          <div class="cl-count">×2 格</div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-dot" style="background:var(--blue)"></div>
+          <div class="cl-info">
+            <div class="cl-name">大獎</div>
+            <div class="cl-desc">稀有道具 / 高倍代幣</div>
+          </div>
+          <div class="cl-count">×1 格</div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-dot" style="background:var(--green)"></div>
+          <div class="cl-info">
+            <div class="cl-name" style="color:var(--green)">Jackpot 最終獎</div>
+            <div class="cl-desc">每循環最大獎，藏在第 7–9 格</div>
+          </div>
+          <div class="cl-count">×1 格</div>
+        </div>
+        <div style="padding:12px 14px;background:var(--dark-4);border:1px solid var(--border);border-radius:4px;font-size:12px;color:var(--text-secondary);line-height:1.7;margin-top:4px;">
+          <span style="color:var(--gold)">最終獎位置分佈：</span><br>
+          格 7（20%）· 格 8（30%）· 格 9（50%）<br>
+          <span style="font-size:11px;color:var(--text-dim)">翻到 Jackpot 後，剩餘格子仍可繼續翻取小獎</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 解鎖門檻說明 -->
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;">格子解鎖 Spin 門檻（示意）</div>
+    <div class="unlock-table-wrap">
+      <table class="unlock-table">
+        <thead>
+          <tr><th>格子</th><th>累積 Spin 門檻</th><th>獎品類型</th><th>解鎖方式</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>格 1</td><td><span class="spin-pill">≥ 100</span></td><td><span class="badge-small">小獎</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 2</td><td><span class="spin-pill">≥ 200</span></td><td><span class="badge-small">小獎</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 3</td><td><span class="spin-pill">≥ 300</span></td><td><span class="badge-small">小獎</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 4</td><td><span class="spin-pill">≥ 400</span></td><td><span class="badge-mid">中獎</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 5</td><td><span class="spin-pill">≥ 500</span></td><td><span class="badge-small">小獎</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 6</td><td><span class="spin-pill">≥ 600</span></td><td><span class="badge-mid">中獎</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 7</td><td><span class="spin-pill">≥ 700</span></td><td><span class="badge-big">大獎</span> / <span class="badge-jackpot">Jackpot ×20%</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 8</td><td><span class="spin-pill">≥ 800</span></td><td><span class="badge-small">小獎</span> / <span class="badge-jackpot">Jackpot ×30%</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+          <tr><td>格 9</td><td><span class="spin-pill">≥ 900</span></td><td><span class="badge-small">小獎</span> / <span class="badge-jackpot">Jackpot ×50%</span></td><td><span class="status-spin">SPIN 累積</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--text-dim);margin-bottom:24px;">* 以上門檻數值為示意，實際可依遊戲類型與目標 Spin 數調整。Jackpot 位置每日洗牌隨機決定。</p>
+
+    <!-- 路徑分析 -->
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;">玩家路徑分析</div>
+    <div class="path-note">
+      由於 Jackpot 最終獎位置不同，玩家的當日 Spin 行為會形成三種路徑。路徑 C（Jackpot 在格 9）佔 <strong>50%</strong>，為主要路徑，能最大化當日 Spin 數。
+    </div>
+    <div class="path-grid">
+      <div class="path-card path-a">
+        <div class="path-header">
+          <span class="path-title">路徑 A｜Jackpot 格 7</span>
+          <span class="path-prob">20%</span>
+        </div>
+        <div class="path-body">
+          <div class="path-row"><span>最短觸發 Jackpot</span><span style="color:#F0907A">≥ 700 Spin</span></div>
+          <div class="path-row"><span>後續可繼續翻</span><span>格 8、9</span></div>
+          <div class="path-row"><span>最終完成循環</span><span>≥ 900 Spin</span></div>
+          <div class="path-row"><span>對留存影響</span><span>較低</span></div>
+        </div>
+      </div>
+      <div class="path-card path-b">
+        <div class="path-header">
+          <span class="path-title">路徑 B｜Jackpot 格 8</span>
+          <span class="path-prob">30%</span>
+        </div>
+        <div class="path-body">
+          <div class="path-row"><span>最短觸發 Jackpot</span><span style="color:#90C0F0">≥ 800 Spin</span></div>
+          <div class="path-row"><span>後續可繼續翻</span><span>格 9</span></div>
+          <div class="path-row"><span>最終完成循環</span><span>≥ 900 Spin</span></div>
+          <div class="path-row"><span>對留存影響</span><span>中等</span></div>
+        </div>
+      </div>
+      <div class="path-card path-c">
+        <div class="path-header">
+          <span class="path-title">路徑 C｜Jackpot 格 9</span>
+          <span class="path-prob">50%</span>
+        </div>
+        <div class="path-body">
+          <div class="path-row"><span>最短觸發 Jackpot</span><span style="color:#7ADFA0">≥ 900 Spin</span></div>
+          <div class="path-row"><span>後續可繼續翻</span><span>無（已全開）</span></div>
+          <div class="path-row"><span>最終完成循環</span><span>≥ 900 Spin</span></div>
+          <div class="path-row"><span>對留存影響</span><span style="color:#7ADFA0">最高</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 設計目的說明 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="padding:16px 18px;background:var(--dark-4);border:1px solid var(--border);border-radius:4px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:8px;">⚡ 急迫感設計</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.7;">格子當日不關閉，但隔日重置。玩家今天若不翻完，明天將面對全新排列、今日進度清零，製造「今天要繼續」的驅動力。</div>
+      </div>
+      <div style="padding:16px 18px;background:var(--dark-4);border:1px solid var(--border);border-radius:4px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:8px;">📊 進度可視化</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.7;">UI 顯示每格距解鎖還差多少 Spin，進度條即時更新。玩家離下一格越近，繼續押注的意願越強（IKEA 效應）。</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── 02 7日登入獎勵 ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">02 —</span>
+    <h2 class="section-title">7 日登入獎勵</h2>
+    <span class="section-title-en">LOGIN REWARD</span>
+  </div>
+
+  <div class="feat-head gold" style="margin-bottom:0">
+    <div>
+      <div class="feat-num gold" style="margin-bottom:4px">FEATURE 02</div>
+      <div class="feat-title">漸進式門檻 · 前期免費 · 後期任務</div>
+    </div>
+    <div class="feat-goal-tag gold">目的：養成每日登入習慣</div>
+  </div>
+  <div class="feat-body">
+
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:28px;">
+      連續 7 天登入獎勵機制。<strong style="color:var(--text-primary)">第 1–3 天</strong>純登入即可領取 Free Spin 卡，讓玩家無壓力建立習慣。<strong style="color:var(--gold-light)">第 4 天起</strong>需當日 Spin 達到門檻才可領獎，培養高 Spin 行為。<strong style="color:var(--gold-light)">第 7 天</strong>給予顯著大獎，作為完整週期留存的誘因。
+    </p>
+
+    <div class="day-grid">
+      <div class="day-box day-free">
+        <div class="day-num">DAY 1</div>
+        <div class="day-icon">🎁</div>
+        <div class="day-cond">直接登入</div>
+        <div class="day-reward">Free Spin 卡</div>
+      </div>
+      <div class="day-box day-free">
+        <div class="day-num">DAY 2</div>
+        <div class="day-icon">🎁</div>
+        <div class="day-cond">直接登入</div>
+        <div class="day-reward">Free Spin 卡</div>
+      </div>
+      <div class="day-box day-free">
+        <div class="day-num">DAY 3</div>
+        <div class="day-icon">🎁</div>
+        <div class="day-cond">直接登入</div>
+        <div class="day-reward">Free Spin 卡</div>
+      </div>
+      <div class="day-box day-task">
+        <div class="day-num">DAY 4</div>
+        <div class="day-icon">⚡</div>
+        <div class="day-cond">Spin ≥ 300</div>
+        <div class="day-reward">獎勵加碼</div>
+      </div>
+      <div class="day-box day-task">
+        <div class="day-num">DAY 5</div>
+        <div class="day-icon">⚡</div>
+        <div class="day-cond">Spin ≥ 300</div>
+        <div class="day-reward">獎勵加碼</div>
+      </div>
+      <div class="day-box day-task">
+        <div class="day-num">DAY 6</div>
+        <div class="day-icon">⚡</div>
+        <div class="day-cond">Spin ≥ 300</div>
+        <div class="day-reward">獎勵加碼</div>
+      </div>
+      <div class="day-box day-big">
+        <div class="day-num">DAY 7</div>
+        <div class="day-icon">🏆</div>
+        <div class="day-cond">Spin ≥ 300</div>
+        <div class="day-reward">特殊大獎</div>
+      </div>
+    </div>
+
+    <div class="day-phase-rows">
+      <div class="day-phase">
+        <div class="phase-dot" style="background:var(--green)"></div>
+        <div class="phase-text"><strong>第 1–3 天：免費領取期</strong> — 純登入即送 Free Spin 卡，消除新手心理門檻，快速建立每日登入習慣，不要求任何條件。</div>
+      </div>
+      <div class="day-phase">
+        <div class="phase-dot" style="background:var(--purple)"></div>
+        <div class="phase-text"><strong>第 4–6 天：任務解鎖期</strong> — 需當日 Spin ≥ 300 次方可領獎。透過已建立的習慣，自然導引玩家完成高 Spin 行為，感知成本較低。</div>
+      </div>
+      <div class="day-phase">
+        <div class="phase-dot" style="background:var(--gold)"></div>
+        <div class="phase-text"><strong>第 7 天：大獎誘因期</strong> — 完成第 7 天的玩家獲得顯著優於前幾天的特殊大獎。大獎的預期心理在第 4 天起就開始發揮拉力，驅動整個週期的完成率。</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── 03 7日 Bingo 卡 ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">03 —</span>
+    <h2 class="section-title">7 日 Bingo 卡</h2>
+    <span class="section-title-en">BINGO CARD</span>
+  </div>
+
+  <div class="feat-head teal" style="margin-bottom:0">
+    <div>
+      <div class="feat-num teal" style="margin-bottom:4px">FEATURE 03</div>
+      <div class="feat-title">每日領卡 · Spin 加速開號 · 跨日保留 3 天</div>
+    </div>
+    <div class="feat-goal-tag teal">目的：Spin↑ × 次日回流</div>
+  </div>
+  <div class="feat-body">
+
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:28px;">
+      每天登入可領取 1 張新的 5×5 Bingo 卡，每張卡保留 <strong style="color:var(--text-primary)">3 天</strong>（未完成自動到期）。每天可<strong style="color:#7ADFD8">免費開 1 個號碼</strong>；每累積 <strong style="color:#7ADFD8">100 Spin 可再開 1 個號碼</strong>。連成 Bingo 後即觸發抽獎，決定當日獎勵。
+    </p>
+
+    <div class="bingo-wrap">
+      <div class="bingo-card-outer">
+        <div class="bingo-card-title">BINGO CARD · 示意</div>
+        <div class="bingo-grid" id="bingoGrid">
+          <!-- filled by script -->
+        </div>
+        <div class="bingo-legend">
+          <span style="color:#7ADFD8">✓ 已開出</span> &nbsp;·&nbsp;
+          <span style="color:var(--gold-light)">★ FREE 自由格</span>
+        </div>
+      </div>
+      <div class="bingo-mechs">
+        <div class="bm-item">
+          <div class="bm-dot teal"></div>
+          <div>
+            <div class="bm-title">每日領 1 張新卡</div>
+            <div class="bm-desc">每日登入可領取 1 張 Bingo 卡，最多同時持有 3 張（保留期各 3 天）。每天可能有多張卡同時進行，提升管理感與參與深度。</div>
+          </div>
+        </div>
+        <div class="bm-item">
+          <div class="bm-dot gold"></div>
+          <div>
+            <div class="bm-title">每日免費開 1 個號碼</div>
+            <div class="bm-desc">無論是否押注，每天可免費為持有中的卡片開出 1 個號碼，創造「今天一定要回來開號碼」的每日登入誘因。</div>
+          </div>
+        </div>
+        <div class="bm-item">
+          <div class="bm-dot purple"></div>
+          <div>
+            <div class="bm-title">每累積 100 Spin 多開 1 個</div>
+            <div class="bm-desc">每累積 100 Spin 可額外開一個號碼，讓押注行為直接加速 Bingo 進度。玩家可在單日內透過大量 Spin 快速推進 Bingo，提升單日 Spin 數。</div>
+          </div>
+        </div>
+        <div class="bm-item">
+          <div class="bm-dot red"></div>
+          <div>
+            <div class="bm-title">Bingo 連線 → 觸發抽獎</div>
+            <div class="bm-desc">橫/直/斜任一連線即觸發抽獎決定當日獎勵。中心自由格（FREE）可協助連線。<strong style="color:var(--text-primary)">卡片保留 3 天</strong>的設計讓今日差一格的玩家明天必定回來。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="padding:16px 18px;background:var(--dark-4);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:0 4px 4px 0;">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--teal);letter-spacing:0.1em;margin-bottom:8px;">DAILY RETURN</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">每日免費開號確保玩家有<strong style="color:var(--text-primary)">天天回來</strong>的具體理由，不依賴玩家自發意願。</div>
+      </div>
+      <div style="padding:16px 18px;background:var(--dark-4);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--gold);letter-spacing:0.1em;margin-bottom:8px;">SPIN DRIVER</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">差 1 格就 Bingo 的狀態下，玩家有強烈動機<strong style="color:var(--text-primary)">多押注 100 Spin</strong> 換取額外開號機會。</div>
+      </div>
+      <div style="padding:16px 18px;background:var(--dark-4);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:0 4px 4px 0;">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--purple);letter-spacing:0.1em;margin-bottom:8px;">CROSS-DAY HOOK</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">3 天保留期產生<strong style="color:var(--text-primary)">跨日懸念</strong>，未完成的卡片持續牽引玩家次日回流。</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── 04 機制總結 ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">04 —</span>
+    <h2 class="section-title">機制總結與預期影響</h2>
+    <span class="section-title-en">SUMMARY</span>
+  </div>
+
+  <div class="summary-table-wrap">
+    <table class="sum-table">
+      <thead>
+        <tr><th>機制</th><th>核心設計邏輯</th><th>影響指標</th><th>留存策略</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="feat-tag purple">抽籤寶箱</span></td>
+          <td>9 格寶箱依 Spin 數解鎖；Jackpot 隨機在格 7/8/9；當日不關、隔日重置</td>
+          <td style="color:var(--gold-light)">單日 Spin 數↑</td>
+          <td style="color:var(--text-secondary)">急迫感 + 進度可視化</td>
+        </tr>
+        <tr>
+          <td><span class="feat-tag gold">7日登入獎勵</span></td>
+          <td>1–3 天免費領取；4–7 天需 Spin ≥ 300；第 7 天特殊大獎</td>
+          <td style="color:var(--gold-light)">登入率↑ 高 Spin 行為↑</td>
+          <td style="color:var(--text-secondary)">習慣養成 + 遞進門檻</td>
+        </tr>
+        <tr>
+          <td><span class="feat-tag teal">7日 Bingo 卡</span></td>
+          <td>每日領卡保 3 天；每日免費開號；每 100 Spin 多開 1 格；連線觸發抽獎</td>
+          <td style="color:var(--gold-light)">Spin↑ 次日回流↑</td>
+          <td style="color:var(--text-secondary)">跨日懸念 + 加速動機</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">PRIMARY KPI</div>
+      <div class="kpi-val">Spin↑</div>
+      <div class="kpi-desc">寶箱解鎖門檻 + Bingo 加速開號，雙重機制驅動單日 Spin 數提升</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">RETENTION KPI</div>
+      <div class="kpi-val">D1 / D7</div>
+      <div class="kpi-desc">Bingo 卡跨日保留 + 7日登入週期，覆蓋次日與週留存兩個維度</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ENGAGEMENT KPI</div>
+      <div class="kpi-val">DAU↑</div>
+      <div class="kpi-desc">三機制均有每日登入誘因，從不同角度強化玩家每日回訪動力</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end .page -->
+
+<footer>
+  <span class="footer-label">RETENTION MECHANISM PROPOSAL · CONFIDENTIAL</span>
+  <span class="footer-label">3 FEATURES · LUCKY CHEST + LOGIN REWARD + BINGO CARD · 2025</span>
+</footer>
+
+<script>
+// ─── Bingo Card ───
+(function(){
+  const nums = [];
+  while(nums.length < 24){
+    const n = Math.floor(Math.random()*75)+1;
+    if(!nums.includes(n)) nums.push(n);
+  }
+  const hitSet = new Set([0,2,4,6,11,14,18,23]);
+  const grid = document.getElementById('bingoGrid');
+  let idx = 0;
+  for(let r=0;r<5;r++){
+    for(let c=0;c<5;c++){
+      const cell = document.createElement('div');
+      cell.className = 'b-cell';
+      if(r===2&&c===2){ cell.className+=' free'; cell.textContent='FREE'; }
+      else {
+        const n = nums[idx];
+        cell.textContent = n;
+        if(hitSet.has(idx)) cell.className+=' hit';
+        idx++;
+      }
+      grid.appendChild(cell);
+    }
+  }
+})();
+
+// ─── Demo Grid ───
+const prizes = [
+  { type:'small', icon:'💰', label:'小獎' },
+  { type:'small', icon:'💰', label:'小獎' },
+  { type:'small', icon:'💰', label:'小獎' },
+  { type:'small', icon:'💰', label:'小獎' },
+  { type:'small', icon:'💰', label:'小獎' },
+  { type:'mid',   icon:'⭐', label:'中獎' },
+  { type:'mid',   icon:'⭐', label:'中獎' },
+  { type:'big',   icon:'💎', label:'大獎' },
+  { type:'jackpot', icon:'🏆', label:'Jackpot' },
+];
+
+let openedCount = 0;
+let jackpotPos = -1;
+let order = [];
+
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function buildDemo(){
+  openedCount = 0;
+  const r = Math.random();
+  jackpotPos = r < 0.2 ? 6 : r < 0.5 ? 7 : 8;
+  const nonJ = prizes.filter(p=>p.type!=='jackpot');
+  const shuffled = shuffle(nonJ);
+  shuffled.splice(jackpotPos, 0, prizes.find(p=>p.type==='jackpot'));
+  order = shuffled;
+
+  const grid = document.getElementById('demoGrid');
+  grid.innerHTML = '';
+  order.forEach((p,i) => {
+    const spinNeeded = (i+1)*100;
+    const cell = document.createElement('div');
+    cell.className = 'demo-cell closed';
+    cell.dataset.index = i;
+    cell.innerHTML = `<span class="chest">📦</span><span class="prize-icon" style="display:none">${p.icon}</span><span class="prize-text" style="display:none">${p.label}</span>`;
+    cell.title = `需 ${spinNeeded} Spin 解鎖`;
+    cell.addEventListener('click', () => openCell(cell, i, p));
+    grid.appendChild(cell);
+  });
+  updateProgress();
+  document.getElementById('demoMsg').innerHTML = '點擊任意寶箱開始翻開';
+}
+
+function openCell(cell, i, p){
+  if(cell.classList.contains('opened')) return;
+  cell.classList.remove('closed');
+  cell.classList.add('opened', `type-${p.type}`);
+  cell.querySelector('.chest').style.display='none';
+  cell.querySelector('.prize-icon').style.display='';
+  cell.querySelector('.prize-text').style.display='';
+  openedCount++;
+  updateProgress();
+  const msgs = {
+    small: '獲得 <strong style="color:var(--text-secondary)">小獎</strong>',
+    mid:   '不錯！獲得 <strong style="color:var(--gold-light)">中獎</strong>',
+    big:   '很好！獲得 <strong style="color:#7AB5F0">大獎</strong>',
+    jackpot: '🎉 <strong style="color:var(--green)">Jackpot！</strong> 仍可繼續翻開剩餘格子取小獎',
+  };
+  document.getElementById('demoMsg').innerHTML = msgs[p.type];
+  if(openedCount===9) document.getElementById('demoMsg').innerHTML = '✅ 本循環結束，隔日重置 · 按下重新洗牌開始新循環';
+}
+
+function updateProgress(){
+  const pct = Math.round((openedCount/9)*100);
+  document.getElementById('progressBar').style.width = Math.max(pct,3)+'%';
+  document.getElementById('openCount').textContent = openedCount;
+  document.getElementById('spinCount').textContent = 'Spin ' + (openedCount*100).toLocaleString();
+}
+
+function resetDemo(){ buildDemo(); document.getElementById('demoMsg').innerHTML = '點擊任意寶箱開始翻開'; }
+
+buildDemo();
+</script>
+</body>
+</html>
