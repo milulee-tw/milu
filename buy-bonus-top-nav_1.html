@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Buy Bonus — 頂部錨點導引(吸頂)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --gold: #f5c542;
+    --gold-soft: rgba(245, 197, 66, 0.18);
+    --panel: #1a1410;
+    --card: #2a2520;
+    --card-2: #3a352f;
+    --line: #33302a;
+    --muted: #999;
+    --coral: #f0997b;
+    --coral-text: #4a1b0c;
+    --teal: #5dcaa5;
+    --teal-text: #04342c;
+  }
+  body {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: #0d0a08;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .device { width: 100%; max-width: 360px; }
+  .panel {
+    background: var(--panel);
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP: sticky title + anchor nav */
+  .hdr-wrap {
+    background: var(--panel);
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--line);
+    z-index: 5;
+  }
+  .hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .hdr .title { color: var(--gold); font-weight: 600; font-size: 16px; }
+  .hdr .close { color: #888; font-size: 20px; cursor: pointer; line-height: 1; }
+
+  .nav-row { display: flex; gap: 8px; }
+  .chip {
+    flex: 1; border-radius: 10px; padding: 10px; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+    background: transparent; border: 1px solid #4a443c; color: var(--muted);
+  }
+  .chip.active {
+    background: var(--gold-soft); border-color: var(--gold);
+    color: var(--gold); font-weight: 600;
+  }
+  .indicator-track {
+    position: relative; height: 2px; margin-top: 8px;
+    background: var(--line); border-radius: 2px;
+  }
+  .indicator {
+    position: absolute; left: 0; top: 0; width: 50%; height: 100%;
+    background: var(--gold); border-radius: 2px; transition: left 0.25s ease;
+  }
+
+  /* SCROLL content */
+  .scroll {
+    height: 300px;
+    overflow-y: auto;
+    padding: 14px 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll::-webkit-scrollbar { width: 4px; }
+  .scroll::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+
+  .sec-label {
+    color: var(--gold); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.8px; margin: 0 0 10px;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .grid.last { margin-bottom: 4px; }
+  .card {
+    background: var(--card); border-radius: 10px; padding: 12px; text-align: center;
+    transition: box-shadow 0.3s, border-color 0.3s; border: 1px solid transparent;
+  }
+  .card .name { color: #ddd; font-size: 11px; margin-bottom: 6px; }
+  .card .art { background: var(--card-2); height: 34px; border-radius: 6px; margin-bottom: 8px; }
+  .card .price { color: var(--gold); font-size: 13px; margin-bottom: 8px; }
+  .btn-action { border: none; width: 100%; border-radius: 16px; padding: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .btn-activate { background: var(--coral); color: var(--coral-text); }
+  .btn-buy { background: var(--teal); color: var(--teal-text); }
+  .flash { box-shadow: 0 0 0 2px var(--gold); border-color: var(--gold); }
+
+  /* BOTTOM: operation bar only */
+  .opbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px 14px; border-top: 1px solid var(--line);
+  }
+  .balance {
+    background: var(--card); border-radius: 16px; padding: 8px 14px;
+    color: var(--gold); font-size: 12px;
+  }
+  .steppers { display: flex; gap: 8px; }
+  .step {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--card-2);
+    color: #ccc; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; cursor: pointer; user-select: none;
+  }
+
+  .hint { color: #666; font-size: 11px; text-align: center; margin-top: 12px; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="panel">
+
+      <!-- TOP: title + anchor nav -->
+      <div class="hdr-wrap">
+        <div class="hdr">
+          <span class="title">🎟 Buy Bonus</span>
+          <span class="close">✕</span>
+        </div>
+        <div class="nav-row">
+          <button class="chip active" id="chip-eb" data-target="eb">⚡ Extra Bet</button>
+          <button class="chip" id="chip-bb" data-target="bb">🎁 Bonus Buy</button>
+        </div>
+        <div class="indicator-track"><div class="indicator" id="indicator"></div></div>
+      </div>
+
+      <!-- SCROLL: both sections on one page -->
+      <div class="scroll" id="scroll">
+        <div id="sec-eb">
+          <div class="sec-label">EXTRA BET</div>
+          <div class="grid">
+            <div class="card"><div class="name">Title Title</div><div class="art"></div><div class="price">₱ 10.00</div><button class="btn-action btn-activate">ACTIVATE</button></div>
+            <div class="card"><div class="name">Title Title</div><div class="art"></div><div class="price">₱ 10.00</div><button class="btn-action btn-activate">ACTIVATE</button></div>
+          </div>
+        </div>
+        <div id="sec-bb">
+          <div class="sec-label">BONUS BUY</div>
+          <div class="grid last">
+            <div class="card"><div class="name">Title Title</div><div class="art"></div><div class="price">₱ 1000.00</div><button class="btn-action btn-buy">BUY</button></div>
+            <div class="card"><div class="name">Title Title</div><div class="art"></div><div class="price">₱ 1000.00</div><button class="btn-action btn-buy">BUY</button></div>
+          </div>
+          <div style="height:20px;"></div>
+        </div>
+      </div>
+
+      <!-- BOTTOM: operation bar -->
+      <div class="opbar">
+        <div class="balance">🪙 ₱ 1,500.00</div>
+        <div class="steppers">
+          <div class="step">−</div>
+          <div class="step">+</div>
+        </div>
+      </div>
+
+    </div>
+    <p class="hint">頂部導引 · 點 chip 跳轉對應區塊 · 上下滑動時 chip 與指示條自動高亮<br>導引固定在頂部,維持可發現性與「先分類後內容」的閱讀順序</p>
+  </div>
+
+<script>
+(function () {
+  var scroll = document.getElementById('scroll');
+  var chipEB = document.getElementById('chip-eb');
+  var chipBB = document.getElementById('chip-bb');
+  var indicator = document.getElementById('indicator');
+  var secEB = document.getElementById('sec-eb');
+  var secBB = document.getElementById('sec-bb');
+
+  function setActive(target) {
+    if (target === 'bb') {
+      chipBB.classList.add('active'); chipEB.classList.remove('active');
+      indicator.style.left = '50%';
+    } else {
+      chipEB.classList.add('active'); chipBB.classList.remove('active');
+      indicator.style.left = '0';
+    }
+  }
+
+  function jumpTo(target) {
+    var sec = target === 'bb' ? secBB : secEB;
+    var top = sec.offsetTop - scroll.offsetTop - 4;
+    scroll.scrollTo({ top: top, behavior: 'smooth' });
+    setActive(target);
+    sec.querySelectorAll('.card').forEach(function (c) {
+      c.classList.add('flash');
+      setTimeout(function () { c.classList.remove('flash'); }, 350);
+    });
+  }
+
+  chipEB.addEventListener('click', function () { jumpTo('eb'); });
+  chipBB.addEventListener('click', function () { jumpTo('bb'); });
+
+  scroll.addEventListener('scroll', function () {
+    var threshold = secBB.offsetTop - scroll.offsetTop - scroll.scrollTop;
+    setActive(threshold < 100 ? 'bb' : 'eb');
+  });
+})();
+</script>
+</body>
+</html>
