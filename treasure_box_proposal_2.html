@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>寶箱抽獎活動企劃提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #D4A843;
+  --gold-light: #F0CC72;
+  --gold-dim: #8B6914;
+  --dark: #0D0E12;
+  --dark-2: #161820;
+  --dark-3: #1E2028;
+  --dark-4: #262830;
+  --border: rgba(212,168,67,0.2);
+  --border-bright: rgba(212,168,67,0.5);
+  --text-primary: #F0EDE6;
+  --text-secondary: #9A9488;
+  --text-dim: #5A5650;
+  --red: #E05A3A;
+  --teal: #3ABFB0;
+  --blue: #4A8FE0;
+  --green: #5ABF7A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--dark);
+  color: var(--text-primary);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* ─── COVER ─── */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.cover-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(212,168,67,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(74,143,224,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(58,191,176,0.05) 0%, transparent 60%);
+}
+
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(212,168,67,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,67,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.cover-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  border: 1px solid var(--border-bright);
+  padding: 6px 16px;
+  border-radius: 2px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.cover h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 10vw, 96px);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--gold-light);
+  text-shadow: 0 0 80px rgba(212,168,67,0.3);
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.cover h1 span {
+  color: var(--text-primary);
+}
+
+.cover-sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: rgba(255,255,255,0.02);
+}
+
+.cover-stat {
+  padding: 20px 32px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.cover-stat:last-child { border-right: none; }
+
+.cover-stat-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--gold-light);
+  display: block;
+}
+
+.cover-stat-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 4px;
+}
+
+.cover-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ─── LAYOUT ─── */
+.page { max-width: 1000px; margin: 0 auto; padding: 0 40px 120px; }
+
+/* ─── SECTION ─── */
+.section { margin-bottom: 100px; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.section-title-en {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  margin-left: auto;
+}
+
+/* ─── BACKGROUND / HYPOTHESIS ─── */
+.hypothesis-block {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 32px;
+}
+
+.hypothesis-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.hypothesis-text {
+  font-size: 17px;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.insight-card {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.insight-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.insight-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.insight-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ─── MECHANISM FLOW ─── */
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 40px;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.flow-step {
+  flex: 1;
+  padding: 24px 20px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.flow-step:last-child { border-right: none; }
+
+.flow-step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+.flow-step-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.flow-step-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.flow-step-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.flow-arrow {
+  width: 20px;
+  flex-shrink: 0;
+  text-align: center;
+  color: var(--gold-dim);
+  font-size: 18px;
+}
+
+/* ─── 9-GRID DEMO ─── */
+.grid-demo-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+.grid-demo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 24px;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.grid-cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1.5px solid;
+  position: relative;
+  cursor: default;
+  transition: transform 0.15s;
+}
+
+.grid-cell:hover { transform: scale(1.03); }
+
+.cell-small {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.08);
+}
+
+.cell-mid {
+  background: rgba(212,168,67,0.07);
+  border-color: rgba(212,168,67,0.25);
+}
+
+.cell-big {
+  background: rgba(74,143,224,0.08);
+  border-color: rgba(74,143,224,0.3);
+}
+
+.cell-jackpot {
+  background: rgba(90,191,122,0.1);
+  border-color: rgba(90,191,122,0.4);
+  box-shadow: 0 0 20px rgba(90,191,122,0.15);
+}
+
+.cell-icon { font-size: 22px; }
+.cell-type {
+  font-size: 9px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+}
+.cell-small .cell-type { color: var(--text-dim); }
+.cell-mid .cell-type { color: var(--gold); }
+.cell-big .cell-type { color: var(--blue); }
+.cell-jackpot .cell-type { color: var(--green); }
+
+.cell-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+.cell-small .cell-val { color: var(--text-secondary); }
+.cell-mid .cell-val { color: var(--gold-light); }
+.cell-big .cell-val { color: #7AB5F0; }
+.cell-jackpot .cell-val { color: #7ADFA0; }
+
+.cell-revealed {
+  background: rgba(212,168,67,0.15) !important;
+  border-color: var(--gold) !important;
+}
+.cell-revealed::after {
+  content: '✓';
+  position: absolute;
+  top: 4px; right: 6px;
+  font-size: 10px;
+  color: var(--gold);
+}
+
+.grid-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-info { flex: 1; }
+.legend-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.legend-desc { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+.legend-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ─── PRIZE TABLE ─── */
+.prize-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.prize-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  padding: 10px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark-3);
+}
+
+.prize-table th:not(:first-child) { text-align: right; }
+
+.prize-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.prize-table td:not(:first-child) { text-align: right; }
+
+.prize-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.prize-table tfoot td {
+  font-weight: 700;
+  border-top: 1px solid var(--border);
+  border-bottom: none;
+  color: var(--gold-light);
+  background: var(--dark-3);
+}
+
+.badge-small { background: rgba(255,255,255,0.06); color: var(--text-secondary); padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-mid { background: rgba(212,168,67,0.12); color: var(--gold); padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-big { background: rgba(74,143,224,0.12); color: #7AB5F0; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-j7 { background: rgba(224,90,58,0.12); color: #F0907A; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-j8 { background: rgba(74,143,224,0.15); color: #90C0F0; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+.badge-j9 { background: rgba(90,191,122,0.15); color: var(--green); padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+
+/* ─── PATH CARDS ─── */
+.path-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.path-card {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.path-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.path-title { font-size: 13px; font-weight: 700; }
+.path-prob {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.path-a .path-header { background: rgba(224,90,58,0.08); }
+.path-a .path-title { color: #F0907A; }
+.path-a .path-prob { background: rgba(224,90,58,0.15); color: #F0907A; }
+
+.path-b .path-header { background: rgba(74,143,224,0.08); }
+.path-b .path-title { color: #90C0F0; }
+.path-b .path-prob { background: rgba(74,143,224,0.15); color: #90C0F0; }
+
+.path-c .path-header { background: rgba(90,191,122,0.08); }
+.path-c .path-title { color: #7ADFA0; }
+.path-c .path-prob { background: rgba(90,191,122,0.15); color: #7ADFA0; }
+
+.path-body { padding: 16px 18px; }
+
+.path-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.path-row:last-child { border-bottom: none; font-weight: 700; font-size: 13px; }
+.path-row span:first-child { color: var(--text-secondary); }
+.path-row span:last-child { color: var(--text-primary); font-family: 'DM Mono', monospace; }
+
+/* ─── RTP SUMMARY ─── */
+.rtp-bar-wrap { margin-bottom: 40px; }
+
+.rtp-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.rtp-label {
+  width: 120px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.rtp-track {
+  flex: 1;
+  height: 28px;
+  background: var(--dark-4);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.rtp-fill {
+  height: 100%;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  transition: width 0.6s ease;
+}
+
+.rtp-fill-a { background: linear-gradient(90deg, rgba(224,90,58,0.6), rgba(224,90,58,0.3)); color: #F0907A; width: 67%; }
+.rtp-fill-b { background: linear-gradient(90deg, rgba(74,143,224,0.6), rgba(74,143,224,0.3)); color: #90C0F0; width: 81%; }
+.rtp-fill-c { background: linear-gradient(90deg, rgba(90,191,122,0.6), rgba(90,191,122,0.3)); color: #7ADFA0; width: 100%; }
+.rtp-fill-avg { background: linear-gradient(90deg, rgba(212,168,67,0.7), rgba(212,168,67,0.3)); color: var(--gold-light); width: 84.5%; }
+
+.rtp-val {
+  width: 60px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  text-align: right;
+}
+
+.rtp-range-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: rgba(212,168,67,0.06);
+  border: 1px solid var(--border-bright);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.rtp-range-note strong { color: var(--gold-light); }
+
+/* ─── TIMELINE ─── */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--dark);
+}
+
+.timeline-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+}
+
+.timeline-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ─── KPI ─── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.kpi-card {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 20px;
+}
+
+.kpi-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.kpi-val {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--gold-light);
+  font-family: 'DM Mono', monospace;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.kpi-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── RISK ─── */
+.risk-list { display: flex; flex-direction: column; gap: 10px; }
+
+.risk-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  align-items: flex-start;
+}
+
+.risk-level {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+}
+
+.risk-high { background: rgba(224,90,58,0.15); color: #F0907A; }
+.risk-mid { background: rgba(212,168,67,0.15); color: var(--gold); }
+.risk-low { background: rgba(90,191,122,0.15); color: var(--green); }
+
+.risk-content .risk-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.risk-content .risk-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 40px 0;
+}
+
+/* ─── DEMO INTERACTION ─── */
+.demo-section {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  margin-bottom: 40px;
+}
+
+.demo-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.demo-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 360px;
+  margin: 0 auto 20px;
+}
+
+.demo-cell {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  background: var(--dark-4);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.demo-cell::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+}
+
+.demo-cell:hover:not(.opened) {
+  border-color: var(--gold);
+  background: rgba(212,168,67,0.08);
+  transform: translateY(-2px);
+}
+
+.demo-cell.opened {
+  cursor: default;
+  transform: none;
+}
+
+.demo-cell .chest { font-size: 26px; transition: all 0.3s; }
+.demo-cell .prize-icon { font-size: 22px; display: none; }
+.demo-cell .prize-text { font-size: 10px; font-family: 'DM Mono', monospace; display: none; }
+
+.demo-cell.opened .chest { display: none; }
+.demo-cell.opened .prize-icon { display: block; }
+.demo-cell.opened .prize-text { display: block; }
+
+.demo-cell.opened.type-small { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+.demo-cell.opened.type-mid { background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.35); }
+.demo-cell.opened.type-big { background: rgba(74,143,224,0.1); border-color: rgba(74,143,224,0.4); }
+.demo-cell.opened.type-jackpot {
+  background: rgba(90,191,122,0.12);
+  border-color: var(--green);
+  box-shadow: 0 0 24px rgba(90,191,122,0.2);
+  animation: jackpotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes jackpotPulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(90,191,122,0.2); }
+  50% { box-shadow: 0 0 40px rgba(90,191,122,0.4); }
+}
+
+.demo-cell.type-small .prize-text { color: var(--text-secondary); }
+.demo-cell.type-mid .prize-text { color: var(--gold); }
+.demo-cell.type-big .prize-text { color: #7AB5F0; }
+.demo-cell.type-jackpot .prize-text { color: var(--green); }
+
+.demo-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn {
+  padding: 10px 24px;
+  border-radius: 3px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--dark);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.btn-primary:hover { background: var(--gold-light); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+.btn-ghost:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+
+.demo-progress {
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+}
+
+.demo-progress strong { color: var(--gold-light); }
+
+/* spin counter */
+.spin-tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+  background: var(--dark-4);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.spin-tracker-item { text-align: center; }
+.spin-tracker-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--gold-light);
+  display: block;
+  line-height: 1;
+}
+.spin-tracker-label { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+.progress-bar-wrap { flex: 1; max-width: 280px; }
+.progress-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; }
+.progress-bar-track { height: 6px; background: var(--dark-3); border-radius: 3px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 3px; transition: width 0.4s ease; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     COVER
+════════════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+
+  <div class="cover-tag">CRM Activity Proposal · 2025</div>
+
+  <h1><span>寶箱</span>抽獎<br>活動企劃</h1>
+  <p class="cover-sub">新手玩家次留驗證計劃 · 9宮格籤筒機制</p>
+
+  <div class="cover-stats">
+    <div class="cover-stat">
+      <span class="cover-stat-val">300</span>
+      <span class="cover-stat-label">Spins 解鎖</span>
+    </div>
+    <div class="cover-stat">
+      <span class="cover-stat-val">1%</span>
+      <span class="cover-stat-label">RTP 獎勵預算</span>
+    </div>
+    <div class="cover-stat">
+      <span class="cover-stat-val">9</span>
+      <span class="cover-stat-label">格籤筒循環</span>
+    </div>
+    <div class="cover-stat">
+      <span class="cover-stat-val">2700</span>
+      <span class="cover-stat-label">保底 Spins</span>
+    </div>
+  </div>
+
+  <div class="cover-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CONTENT
+════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- ── 01 背景與假設 ── -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2 class="section-title">背景與假設</h2>
+      <span class="section-title-en">BACKGROUND</span>
+    </div>
+
+    <div class="hypothesis-block">
+      <div class="hypothesis-label">核心假設 / Data Hypothesis</div>
+      <div class="hypothesis-text">
+        新手玩家在 <strong style="color:var(--gold-light)">Day 1 的押注次數越多，次日留存率（D1 Retention）越高</strong>。
+        本次活動目的為透過簡易 CRM 機制快速驗證此假設。
+      </div>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-icon">📊</div>
+        <div class="insight-title">數據來源</div>
+        <div class="insight-desc">數據組分析 Day 1 行為數據，發現 spin 次數與次留存在正相關</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🎯</div>
+        <div class="insight-title">驗證方式</div>
+        <div class="insight-desc">透過活動誘因提升新手 spin 次數，觀察 D1 Retention 是否同步提升</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">⚡</div>
+        <div class="insight-title">執行原則</div>
+        <div class="insight-desc">簡易版本優先，不依賴 free spin 或道具卡等未完成功能</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02 活動機制 ── -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2 class="section-title">活動機制設計</h2>
+      <span class="section-title-en">MECHANISM</span>
+    </div>
+
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <span class="flow-step-num">STEP 01</span>
+        <span class="flow-step-icon">🎰</span>
+        <div class="flow-step-title">玩家進行 Spin</div>
+        <div class="flow-step-desc">任意遊戲均可累積<br>最小押注 1 披索</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <span class="flow-step-num">STEP 02</span>
+        <span class="flow-step-icon">📈</span>
+        <div class="flow-step-title">累積至 300 次</div>
+        <div class="flow-step-desc">每 300 手解鎖<br>一次寶箱抽獎機會</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <span class="flow-step-num">STEP 03</span>
+        <span class="flow-step-icon">📢</span>
+        <div class="flow-step-title">宣告最終獎金額</div>
+        <div class="flow-step-desc">活動前公告本循環<br>最終獎固定金額</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <span class="flow-step-num">STEP 04</span>
+        <span class="flow-step-icon">🗺️</span>
+        <div class="flow-step-title">進入寶箱遊戲</div>
+        <div class="flow-step-desc">9 宮格洗牌後<br>玩家依序翻開格子</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <span class="flow-step-num">STEP 05</span>
+        <span class="flow-step-icon">🏆</span>
+        <div class="flow-step-title">觸發最終獎</div>
+        <div class="flow-step-desc">最早格 7 觸發<br>中獎後可繼續翻剩餘格</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <span class="flow-step-num">STEP 06</span>
+        <span class="flow-step-icon">🔄</span>
+        <div class="flow-step-title">循環重置</div>
+        <div class="flow-step-desc">9 格抽完後<br>進入新一輪循環</div>
+      </div>
+    </div>
+
+    <!-- 互動示意 -->
+    <div class="demo-section">
+      <div class="demo-title">互動示意 / Interactive Demo</div>
+      <div class="demo-sub">點擊寶箱翻開格子，體驗抽獎流程示意。最終獎固定 12 披索，最早於第 7 格觸發（示意用）</div>
+
+      <div class="spin-tracker">
+        <div class="spin-tracker-item">
+          <span class="spin-tracker-val" id="spinCount">300</span>
+          <div class="spin-tracker-label">累積 Spins</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label">
+            <span>本循環進度</span>
+            <span id="progressText">1 / 9</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressBar" style="width:11%"></div>
+          </div>
+        </div>
+        <div class="spin-tracker-item">
+          <span class="spin-tracker-val" id="openCount">0</span>
+          <div class="spin-tracker-label">已開格數</div>
+        </div>
+      </div>
+
+      <div class="demo-grid" id="demoGrid">
+        <!-- cells injected by JS -->
+      </div>
+
+      <div class="demo-progress" id="demoMsg">點擊任意寶箱開始</div>
+
+      <div class="demo-controls">
+        <button class="btn btn-ghost" onclick="resetDemo()">↺ 重置</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── 03 獎金結構 ── -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2 class="section-title">獎金結構設計</h2>
+      <span class="section-title-en">REWARD STRUCTURE</span>
+    </div>
+
+    <!-- 9宮格示意 x 圖例 -->
+    <div class="grid-demo-wrap">
+      <div>
+        <p style="font-size:12px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:12px;">格子組成（固定比例）</p>
+        <div class="grid-demo">
+          <div class="grid-cell cell-small"><span class="cell-icon">💰</span><span class="cell-type">小獎</span><span class="cell-val">×5格</span></div>
+          <div class="grid-cell cell-mid"><span class="cell-icon">⭐</span><span class="cell-type">中獎</span><span class="cell-val">×2格</span></div>
+          <div class="grid-cell cell-small"><span class="cell-icon">💰</span><span class="cell-type">小獎</span><span class="cell-val">×5格</span></div>
+          <div class="grid-cell cell-big cell-revealed"><span class="cell-icon">💎</span><span class="cell-type">大獎</span><span class="cell-val">×1格</span></div>
+          <div class="grid-cell cell-mid"><span class="cell-icon">⭐</span><span class="cell-type">中獎</span><span class="cell-val">×2格</span></div>
+          <div class="grid-cell cell-small"><span class="cell-icon">💰</span><span class="cell-type">小獎</span><span class="cell-val">×5格</span></div>
+          <div class="grid-cell cell-small"><span class="cell-icon">💰</span><span class="cell-type">小獎</span><span class="cell-val">×5格</span></div>
+          <div class="grid-cell cell-small"><span class="cell-icon">💰</span><span class="cell-type">小獎</span><span class="cell-val">×5格</span></div>
+          <div class="grid-cell cell-jackpot"><span class="cell-icon">🏆</span><span class="cell-type">最終獎</span><span class="cell-val">×1格</span></div>
+        </div>
+        <p style="font-size:11px;color:var(--text-dim);margin-top:10px;">※ 小獎、中獎、大獎位置每次循環隨機排列<br>※ 大獎 70% 機率落在第 5 格之後<br>※ 最終獎固定 12披索，位置限定於第 7–9 格，比例 2:3:5</p>
+      </div>
+
+      <div class="grid-legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:rgba(255,255,255,0.2)"></div>
+          <div class="legend-info">
+            <div class="legend-name">小獎</div>
+            <div class="legend-desc">基礎獎勵，保持參與感</div>
+          </div>
+          <div class="legend-count">5格 / 1披索</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--gold)"></div>
+          <div class="legend-info">
+            <div class="legend-name">中獎</div>
+            <div class="legend-desc">有感獎勵，提升期待</div>
+          </div>
+          <div class="legend-count">2格 / 3披索</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--blue)"></div>
+          <div class="legend-info">
+            <div class="legend-name">大獎</div>
+            <div class="legend-desc">驚喜感，強化留存動機</div>
+          </div>
+          <div class="legend-count">1格 / 5披索</div>
+        </div>
+        <div class="legend-item" style="border-color:rgba(90,191,122,0.3);background:rgba(90,191,122,0.05)">
+          <div class="legend-dot" style="background:var(--green)"></div>
+          <div class="legend-info">
+            <div class="legend-name" style="color:var(--green)">最終獎</div>
+            <div class="legend-desc">活動前宣告固定金額，第 7–9 格觸發，比例 2:3:5</div>
+          </div>
+          <div class="legend-count" style="color:var(--green)">1格 / 12披索</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 獎金明細表 -->
+    <p style="font-size:12px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:16px;">完整獎金配置表（1披索押注基準）</p>
+    <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:32px;">
+      <table class="prize-table">
+        <thead>
+          <tr>
+            <th>格數</th>
+            <th>等級</th>
+            <th>獎金（1披索）</th>
+            <th>押注 5披索</th>
+            <th>押注 10披索</th>
+            <th>說明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>小獎（5格）</td><td><span class="badge-small">小獎</span></td><td>1</td><td>5</td><td>10</td><td style="color:var(--text-dim);font-size:12px">9格內隨機分布</td></tr>
+          <tr><td>中獎（2格）</td><td><span class="badge-mid">中獎</span></td><td>3</td><td>15</td><td>30</td><td style="color:var(--text-dim);font-size:12px">9格內隨機分布</td></tr>
+          <tr><td>大獎（1格）</td><td><span class="badge-big">大獎</span></td><td>5</td><td>25</td><td>50</td><td style="color:var(--text-dim);font-size:12px">70% 機率落在第 5 格之後</td></tr>
+          <tr style="background:rgba(90,191,122,0.06)"><td>最終獎（1格）</td><td><span class="badge-j9">最終獎 J</span></td><td style="color:#7ADFA0;font-weight:700">12</td><td style="color:#7ADFA0">60</td><td style="color:#7ADFA0">120</td><td style="color:var(--text-dim);font-size:12px">固定金額，活動前宣告，格7/8/9 比例 2:3:5</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="2">循環期望值（加權，玩家中獎後離開）</td><td>27.05</td><td>135.3</td><td>270.5</td><td style="color:var(--gold);font-size:12px">RTP ≈ 1.005%</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- 三條路徑 -->
+    <p style="font-size:12px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:16px;">最終獎觸發路徑</p>
+    <div class="path-grid">
+      <div class="path-card path-a">
+        <div class="path-header">
+          <span class="path-title">路徑 A｜格 7 觸發</span>
+          <span class="path-prob">20%</span>
+        </div>
+        <div class="path-body">
+          <div class="path-row"><span>前6格期望獎金</span><span>13.9</span></div>
+          <div class="path-row"><span>最終獎 J</span><span style="color:#F0907A">12</span></div>
+          <div class="path-row"><span>格8、9未翻（省下）</span><span style="color:var(--text-dim)">約 2.1</span></div>
+          <div class="path-row"><span>實際總支出</span><span>25.9 披索</span></div>
+          <div class="path-row"><span>單路徑 RTP</span><span style="color:#F0907A">0.96%</span></div>
+        </div>
+      </div>
+      <div class="path-card path-b">
+        <div class="path-header">
+          <span class="path-title">路徑 B｜格 8 觸發</span>
+          <span class="path-prob">30%</span>
+        </div>
+        <div class="path-body">
+          <div class="path-row"><span>前7格期望獎金</span><span>14.6</span></div>
+          <div class="path-row"><span>最終獎 J</span><span style="color:#90C0F0">12</span></div>
+          <div class="path-row"><span>格9未翻（省下）</span><span style="color:var(--text-dim)">約 1.4</span></div>
+          <div class="path-row"><span>實際總支出</span><span>26.6 披索</span></div>
+          <div class="path-row"><span>單路徑 RTP</span><span style="color:#90C0F0">0.99%</span></div>
+        </div>
+      </div>
+      <div class="path-card path-c">
+        <div class="path-header">
+          <span class="path-title">路徑 C｜格 9 觸發</span>
+          <span class="path-prob">50%</span>
+        </div>
+        <div class="path-body">
+          <div class="path-row"><span>前8格期望獎金</span><span>16.0</span></div>
+          <div class="path-row"><span>最終獎 J</span><span style="color:#7ADFA0">12</span></div>
+          <div class="path-row"><span>未翻格</span><span style="color:var(--text-dim)">無</span></div>
+          <div class="path-row"><span>實際總支出</span><span>28.0 披索</span></div>
+          <div class="path-row"><span>單路徑 RTP</span><span style="color:#7ADFA0">1.04%</span></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── 04 RTP 分析 ── -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04 —</span>
+      <h2 class="section-title">RTP 成本分析</h2>
+      <span class="section-title-en">RTP ANALYSIS</span>
+    </div>
+
+    <div class="rtp-bar-wrap">
+      <div class="rtp-row">
+        <span class="rtp-label">路徑 A（20%）</span>
+        <div class="rtp-track"><div class="rtp-fill rtp-fill-a">0.96%</div></div>
+        <span class="rtp-val" style="color:#F0907A">0.96%</span>
+      </div>
+      <div class="rtp-row">
+        <span class="rtp-label">路徑 B（30%）</span>
+        <div class="rtp-track"><div class="rtp-fill rtp-fill-b">0.99%</div></div>
+        <span class="rtp-val" style="color:#90C0F0">0.99%</span>
+      </div>
+      <div class="rtp-row">
+        <span class="rtp-label">路徑 C（50%）</span>
+        <div class="rtp-track"><div class="rtp-fill rtp-fill-c">1.04%</div></div>
+        <span class="rtp-val" style="color:#7ADFA0">1.04%</span>
+      </div>
+      <div class="divider"></div>
+      <div class="rtp-row">
+        <span class="rtp-label" style="font-weight:700;color:var(--gold)">加權期望值</span>
+        <div class="rtp-track"><div class="rtp-fill rtp-fill-avg">1.005%</div></div>
+        <span class="rtp-val" style="color:var(--gold-light);font-weight:700">1.005%</span>
+      </div>
+    </div>
+
+    <div class="rtp-range-note">
+      <span>⚡</span>
+      <span>允許浮動範圍 <strong>0.9% – 1.1%</strong>，三條路徑單獨 RTP 均落在範圍內（0.96% / 0.99% / 1.04%），加權期望值 <strong>1.005%</strong>。成本來源：提撥 0.5% + 遊戲 RTP 降低 0.5%。</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 遊戲類型成本對照 -->
+    <p style="font-size:12px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:16px;">依遊戲類型說明</p>
+    <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+      <table class="prize-table">
+        <thead>
+          <tr>
+            <th>遊戲類型</th>
+            <th>No Win 率</th>
+            <th>RTP 調整方式</th>
+            <th>活動獎勵預算</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>5 Line 以內遊戲</td>
+            <td>85%</td>
+            <td style="color:var(--text-secondary);font-size:12px">遊戲 RTP − 0.5% + 提撥 0.5%</td>
+            <td style="color:var(--gold-light);font-weight:700">1% of 總投注</td>
+          </tr>
+          <tr>
+            <td>其他遊戲</td>
+            <td>73%</td>
+            <td style="color:var(--text-secondary);font-size:12px">遊戲 RTP − 0.5% + 提撥 0.5%</td>
+            <td style="color:var(--gold-light);font-weight:700">1% of 總投注</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 05 驗證計劃 ── -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05 —</span>
+      <h2 class="section-title">驗證計劃</h2>
+      <span class="section-title-en">VALIDATION PLAN</span>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">PHASE 01 · 準備期</div>
+        <div class="timeline-title">A/B 測試分組設計</div>
+        <div class="timeline-desc">將新手玩家隨機分為實驗組（有寶箱活動）與對照組（無活動），確保兩組基線行為一致，避免選擇偏差。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">PHASE 02 · 執行期（1–2 週）</div>
+        <div class="timeline-title">活動上線，收集行為數據</div>
+        <div class="timeline-desc">追蹤實驗組 Day 1 平均 spin 次數、寶箱觸發率、D1 Retention、D7 Retention 等關鍵指標。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">PHASE 03 · 分析期</div>
+        <div class="timeline-title">假設驗證與結論</div>
+        <div class="timeline-desc">比對實驗組 vs 對照組的 D1 Retention 差異。若實驗組顯著提升，則假設成立，可規劃完整版活動系統。</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">主要 KPI</div>
+        <div class="kpi-val">D1</div>
+        <div class="kpi-desc">次日留存率（D1 Retention）為主要驗證指標</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">次要 KPI</div>
+        <div class="kpi-val">300+</div>
+        <div class="kpi-desc">實驗組新手平均 Day 1 Spin 次數達標率</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">觀察指標</div>
+        <div class="kpi-val">D7</div>
+        <div class="kpi-desc">D7 Retention 觀察長尾效果，作為參考數據</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06 風險評估 ── -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06 —</span>
+      <h2 class="section-title">風險與注意事項</h2>
+      <span class="section-title-en">RISK ASSESSMENT</span>
+    </div>
+
+    <div class="risk-list">
+      <div class="risk-item">
+        <span class="risk-level risk-high">HIGH</span>
+        <div class="risk-content">
+          <div class="risk-title">高押注玩家成本放大</div>
+          <div class="risk-desc">小獎、中獎、大獎金額與押注線性相關。均押 50 披索的玩家，循環內非最終獎部分最高達 800 披索。最終獎若採固定金額（12披索基準），可有效控制大額玩家的最終獎成本；若採比例制則需設置 cap 上限。</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level risk-mid">MID</span>
+        <div class="risk-content">
+          <div class="risk-title">遊戲 RTP 調整影響玩家體驗</div>
+          <div class="risk-desc">降低遊戲 RTP 0.5% 可能被高頻玩家感知。建議優先在新手流量較高的遊戲執行，並監控玩家投訴率變化。</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level risk-mid">MID</span>
+        <div class="risk-content">
+          <div class="risk-title">路徑 A 單路徑 RTP 偏低（0.74%）</div>
+          <div class="risk-desc">格 7 觸發最終獎的玩家整個循環 RTP 僅 0.74%，低於 0.9% 目標下限。雖加權後符合標準，但若需每條路徑都在範圍內，需調高 J₇ 至約 8 披索。</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level risk-low">LOW</span>
+        <div class="risk-content">
+          <div class="risk-title">玩家提前放棄循環</div>
+          <div class="risk-desc">部分玩家在觸發寶箱後可能不繼續抽完剩餘格子。建議在 UI 上強調「抽完可獲得額外小獎」，提升完成率。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end .page -->
+
+<footer>
+  <span class="footer-label">TREASURE BOX CRM PROPOSAL · CONFIDENTIAL</span>
+  <span class="footer-label">1% RTP · 9-GRID MECHANISM · 2025</span>
+</footer>
+
+<script>
+// ─── Demo Grid ───
+const prizes = [
+  { type: 'small', icon: '💰', label: '小獎', val: '+1' },
+  { type: 'small', icon: '💰', label: '小獎', val: '+1' },
+  { type: 'small', icon: '💰', label: '小獎', val: '+1' },
+  { type: 'small', icon: '💰', label: '小獎', val: '+1' },
+  { type: 'small', icon: '💰', label: '小獎', val: '+1' },
+  { type: 'mid',   icon: '⭐', label: '中獎', val: '+3' },
+  { type: 'mid',   icon: '⭐', label: '中獎', val: '+3' },
+  { type: 'big',   icon: '💎', label: '大獎', val: '+5' },
+  { type: 'jackpot', icon: '🏆', label: '最終獎', val: '+12' },
+];
+
+let openedCount = 0;
+let order = [];
+let jackpotPos = -1;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildDemo() {
+  openedCount = 0;
+  // Decide jackpot position: 6,7,8 (0-indexed) with prob 20/30/50
+  const r = Math.random();
+  jackpotPos = r < 0.2 ? 6 : r < 0.5 ? 7 : 8;
+
+  // Build 9-cell arrangement
+  const nonJackpot = prizes.filter(p => p.type !== 'jackpot');
+  const shuffled = shuffle(nonJackpot);
+  // Insert jackpot at jackpotPos
+  shuffled.splice(jackpotPos, 0, prizes.find(p => p.type === 'jackpot'));
+  order = shuffled;
+
+  const grid = document.getElementById('demoGrid');
+  grid.innerHTML = '';
+  order.forEach((p, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'demo-cell';
+    cell.dataset.index = i;
+    cell.innerHTML = `
+      <span class="chest">📦</span>
+      <span class="prize-icon">${p.icon}</span>
+      <span class="prize-text">${p.label}</span>
+      <span class="prize-text" style="font-family:'DM Mono',monospace;font-size:9px">${p.val}</span>
+    `;
+    cell.addEventListener('click', () => openCell(cell, i, p));
+    grid.appendChild(cell);
+  });
+
+  updateProgress();
+  document.getElementById('demoMsg').innerHTML = '點擊任意寶箱開始';
+}
+
+function openCell(cell, i, p) {
+  if (cell.classList.contains('opened')) return;
+  cell.classList.add('opened', `type-${p.type}`);
+  openedCount++;
+  updateProgress();
+
+  const msgs = {
+    small: '獲得小獎 <strong style="color:var(--text-primary)">+1 披索</strong>',
+    mid:   '不錯！獲得中獎 <strong style="color:var(--gold-light)">+3 披索</strong>',
+    big:   '很好！獲得大獎 <strong style="color:#7AB5F0">+5 披索</strong>',
+    jackpot: '🎉 恭喜！抽到<strong style="color:var(--green)">最終獎 +12披索</strong>！可繼續翻開剩餘格子獲得額外小獎',
+  };
+  document.getElementById('demoMsg').innerHTML = msgs[p.type];
+
+  if (openedCount === 9) {
+    document.getElementById('demoMsg').innerHTML = '✅ 本循環結束！再按一次可開始新循環';
+    document.getElementById('demoGrid').querySelectorAll('.demo-cell').forEach(c => {
+      c.removeEventListener('click', () => {});
+      c.style.cursor = 'default';
+    });
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round((openedCount / 9) * 100);
+  document.getElementById('progressBar').style.width = Math.max(pct, 5) + '%';
+  document.getElementById('progressText').textContent = `${openedCount} / 9`;
+  document.getElementById('openCount').textContent = openedCount;
+  document.getElementById('spinCount').textContent = (300 + openedCount * 300).toLocaleString();
+}
+
+function resetDemo() {
+  buildDemo();
+}
+
+buildDemo();
+</script>
+</body>
+</html>
