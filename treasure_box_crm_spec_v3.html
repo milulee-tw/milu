@@ -142,6 +142,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .badge-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; border: 1px solid rgba(176,132,216,0.25); }
 .tag-pm { background: rgba(74,143,224,0.12); color: #90C0F0; }
 .tag-design { background: rgba(176,132,216,0.12); color: #C8A0F0; }
+.tag-web { background: rgba(224,150,58,0.14); color: #E0B070; }
 .callout.success { border-left-color: var(--green); }
 .oq-item.pm { border-left-color: var(--purple); }
 .oq-item.pm .oq-owner { color: var(--purple); }
@@ -1409,7 +1410,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">Task 職能說明</div>
   <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
     <span class="tag-pill tag-eng">🛠 後端工程</span>
-    <span class="tag-pill tag-opt">🎮 前端/Unity</span>
+    <span class="tag-pill tag-web">🌐 前端Web</span>
     <span class="tag-pill tag-data">📊 數據組</span>
     <span class="tag-pill tag-req">🖥 基礎建設</span>
     <span class="tag-pill tag-v1" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM/企劃</span>
@@ -1480,18 +1481,18 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
         <tr><td>4.1</td><td>寶箱 UI 設計稿輸出</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">3×3格子佈局、解鎖動畫、翻格動畫、進度條、最終獎光效設計稿</td><td></td></tr>
-        <tr><td>4.2</td><td>寶箱入口按鈕（遊戲內 UI）</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">遊戲主畫面顯示寶箱快捷入口（含未翻格提示紅點）</td><td></td></tr>
-        <tr><td>4.3</td><td>寶箱主畫面實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">3×3 Grid、每格顯示解鎖狀態（鎖定/可翻/已翻）、當前進度條、下一格倒計距離</td><td></td></tr>
-        <tr><td>4.4</td><td>翻格動畫實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">點擊翻格翻轉動畫、獎勵金額飛出、最終獎特效（爆發光效）</td><td></td></tr>
-        <tr><td>4.5</td><td>進度條即時更新</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">每次 Spin 後更新進度條顯示，格子達門檻時發光提示</td><td></td></tr>
-        <tr><td>4.6</td><td>重置倒計時顯示</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">顯示距今日 00:00 重置還有多少時間，製造急迫感</td><td></td></tr>
-        <tr><td>4.7</td><td>API 串接</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">串接 GET /chest/status 取狀態，串接 POST /chest/open 翻格</td><td></td></tr>
+        <tr><td>4.2</td><td>寶箱入口按鈕（遊戲內 UI）</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">遊戲主畫面顯示寶箱快捷入口（含未翻格提示紅點）</td><td></td></tr>
+        <tr><td>4.3</td><td>寶箱主畫面實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">3×3 Grid、每格顯示解鎖狀態（鎖定/可翻/已翻）、當前進度條、下一格倒計距離</td><td></td></tr>
+        <tr><td>4.4</td><td>翻格動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊翻格翻轉動畫、獎勵金額飛出、最終獎特效（爆發光效）</td><td></td></tr>
+        <tr><td>4.5</td><td>進度條即時更新</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">每次 Spin 後更新進度條顯示，格子達門檻時發光提示</td><td></td></tr>
+        <tr><td>4.6</td><td>重置倒計時顯示</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">顯示距今日 00:00 重置還有多少時間，製造急迫感</td><td></td></tr>
+        <tr><td>4.7</td><td>API 串接</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">串接 GET /chest/status 取狀態，串接 POST /chest/open 翻格</td><td></td></tr>
         <tr><td>4.8</td><td>背包 UI 設計稿</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">主畫面背包 icon、背包列表頁、道具卡片樣式、遊戲選擇彈窗設計稿</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
-        <tr><td>4.9</td><td>主畫面背包 icon 實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">固定顯示於主畫面，持有道具時顯示數量紅點提示</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
-        <tr><td>4.10</td><td>背包主頁面實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">列出所有持有道具，顯示道具名稱、數量、有效期限、使用按鈕</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
-        <tr><td>4.11</td><td>遊戲選擇彈窗實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">點擊 FREE SPIN 卡後跳出可選遊戲列表（依後台設定的 GameId 清單），顯示遊戲縮圖+名稱</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
-        <tr><td>4.12</td><td>道具使用跳轉流程實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">玩家選擇遊戲後呼叫後端 API，取得 AWC 跳轉 URL，執行跳轉進入遊戲</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
-        <tr><td>4.13</td><td>洗牌動態動畫實作</td><td><span class="tag-pill tag-opt">🎮 Unity</span></td><td class="dim">攤開階段→點擊開始遊戲→獎項集中中央→洗牌動畫→分散到9格背面蓋牌，整段動畫流暢度為關鍵體驗</td><td></td></tr>
+        <tr><td>4.9</td><td>主畫面背包 icon 實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">固定顯示於主畫面，持有道具時顯示數量紅點提示</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.10</td><td>背包主頁面實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">列出所有持有道具，顯示道具名稱、數量、有效期限、使用按鈕</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.11</td><td>遊戲選擇彈窗實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊 FREE SPIN 卡後跳出可選遊戲列表（依後台設定的 GameId 清單），顯示遊戲縮圖+名稱</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.12</td><td>道具使用跳轉流程實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">玩家選擇遊戲後呼叫後端 API，取得 AWC 跳轉 URL，執行跳轉進入遊戲</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.13</td><td>洗牌動態動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">攤開階段→點擊開始遊戲→獎項集中中央→洗牌動畫→分散到9格背面蓋牌，整段動畫流暢度為關鍵體驗</td><td></td></tr>
       </tbody>
     </table>
   </div>
@@ -1500,15 +1501,15 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <table class="spec-table">
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
-        <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
-        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">填寫：活動名稱、期間、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
-        <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
-        <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
-        <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
+        <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
+        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、期間、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
+        <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
+        <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
+        <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
         <tr><td>5.6</td><td>後台帳號權限設定</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">區分 Admin（全操作）、Operator（只可查看+啟停，不可改獎勵參數）</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
-        <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
-        <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
-        <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
+        <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
+        <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -1557,7 +1558,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-phase">PHASE 03 · 第 3–6 週（與 Phase 02 平行）</div>
-      <div class="tl-title">前端 Unity UI + 後台</div>
+      <div class="tl-title">前端 Web UI + 後台</div>
       <div class="tl-tasks">
         <span class="tl-task design">UI 設計稿</span>
         <span class="tl-task pm">9宮格畫面+洗牌動畫</span>
@@ -1621,10 +1622,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <div class="progress-section">
             <div class="progress-label">
               <span>本階段進度</span>
-              <span style="color:var(--gold-light);">再押 ₱100 解鎖下一格</span>
+              <span style="color:var(--gold-light);">300 / 500</span>
             </div>
             <div class="progress-bar">
-              <div class="progress-fill" style="width:70%;"></div>
+              <div class="progress-fill" style="width:60%;"></div>
             </div>
           </div>
 
@@ -1646,7 +1647,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <tr><td>格子·已解鎖</td><td class="dim">累積押注達門檻，格子發光閃爍</td><td class="dim">點擊執行翻格請求，觸發翻轉動畫</td></tr>
           <tr><td>格子·已翻開</td><td class="dim">顯示獲得的獎勵金額，綠色邊框</td><td class="dim">點擊可再次查看獎勵，不重複派獎</td></tr>
           <tr><td>最終獎格</td><td class="dim">翻開後特殊金色光效爆發（位置每日動態洗牌，不固定）</td><td class="dim">全螢幕特效動畫，顯示恭喜彈窗</td></tr>
-          <tr><td>進度條</td><td class="dim">顯示本階段進度與「再押 ₱X 解鎖下一格」，永遠不顯示 ₱3,600 累積總額</td><td class="dim">每次押注後即時更新</td></tr>
+          <tr><td>進度條</td><td class="dim">以「已累積 / 本階段目標」呈現（如 300/500），永遠不顯示 ₱3,600 累積總額</td><td class="dim">每次押注後即時更新</td></tr>
           <tr><td>重置倒計時</td><td class="dim">距當日 00:00 的剩餘時間</td><td class="dim">每秒更新，顯示 HH:MM:SS</td></tr>
         </tbody>
       </table>
@@ -2089,7 +2090,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="info-grid-2">
     <div class="cost-block">
       <div class="cost-row"><span class="cost-label">後端工程（Golang）</span><span class="cost-val">4–6 週</span></div>
-      <div class="cost-row"><span class="cost-label">前端/Unity 工程</span><span class="cost-val">3–4 週</span></div>
+      <div class="cost-row"><span class="cost-label">前端Web 工程</span><span class="cost-val">3–4 週</span></div>
       <div class="cost-row"><span class="cost-label">後台介面開發</span><span class="cost-val">2–3 週</span></div>
       <div class="cost-row"><span class="cost-label">UI 設計</span><span class="cost-val">1–2 週</span></div>
       <div class="cost-row"><span class="cost-label">QA / 測試</span><span class="cost-val">1–2 週</span></div>
@@ -2190,7 +2191,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="info-card-desc" style="line-height:1.8;">
         · AWC 完整需求一次提交 + 資料層（含背包水管）：2–3週<br>
         · 核心業務邏輯（洗牌+第幾抽權重+派獎）：3–4週<br>
-        · 前端 Unity UI（iFrame+洗牌動畫）+ 後台：4週<br>
+        · 前端 Web UI（iFrame+洗牌動畫）+ 後台：4週<br>
         · AWC 串接測試 + 測試驗收上線：3週<br>
         <span style="color:var(--green);">含完整基建 + AWC 一次串完，換來 v2 不必再碰 AWC</span>
       </div>
@@ -2274,17 +2275,17 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
   <div class="log-item">
     <div class="log-event">chest_panel_opened</div>
-    <div class="log-owner"><span class="tag-pill tag-opt">🎮 Unity</span></div>
+    <div class="log-owner"><span class="tag-pill tag-web">🌐 前端Web</span></div>
     <div class="log-desc">玩家點擊開啟寶箱面板。欄位：player_id, source (入口按鈕/通知), timestamp。用途：入口曝光效果分析</div>
   </div>
   <div class="log-item">
     <div class="log-event">chest_cell_tap_locked</div>
-    <div class="log-owner"><span class="tag-pill tag-opt">🎮 Unity</span></div>
+    <div class="log-owner"><span class="tag-pill tag-web">🌐 前端Web</span></div>
     <div class="log-desc">點擊尚未解鎖的格子。欄位：player_id, cell_index, remaining_wager, timestamp。用途：玩家意圖分析（知道差多少）</div>
   </div>
   <div class="log-item">
     <div class="log-event">chest_panel_closed</div>
-    <div class="log-owner"><span class="tag-pill tag-opt">🎮 Unity</span></div>
+    <div class="log-owner"><span class="tag-pill tag-web">🌐 前端Web</span></div>
     <div class="log-desc">關閉寶箱面板。欄位：player_id, cells_opened, cells_unlocked_but_not_opened, timestamp。用途：分析是否有解鎖但未翻的行為</div>
   </div>
 </section>
