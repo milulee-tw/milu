@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽寶箱 CRM 功能規格書 v3.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #D4A843;
+  --gold-light: #F0CC72;
+  --gold-dim: #8B6914;
+  --dark: #0D0E12;
+  --dark-2: #161820;
+  --dark-3: #1E2028;
+  --dark-4: #262830;
+  --dark-5: #2E3040;
+  --border: rgba(212,168,67,0.18);
+  --border-bright: rgba(212,168,67,0.45);
+  --text-primary: #F0EDE6;
+  --text-secondary: #9A9488;
+  --text-dim: #5A5650;
+  --red: #E05A3A;
+  --teal: #3ABFB0;
+  --blue: #4A8FE0;
+  --green: #5ABF7A;
+  --purple: #B084D8;
+  --orange: #E0963A;
+  --sidebar-w: 280px;
+  --topnav-h: 48px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--dark);
+  color:var(--text-primary);
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--dark-2);}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
+
+/* ═══ LAYOUT MODE TOGGLE ═══ */
+body.layout-top .sidebar { display: none; }
+body.layout-top .topnav  { display: flex; }
+body.layout-top .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
+body.layout-side .sidebar { display: flex; }
+body.layout-side .topnav  { display: none; }
+body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
+
+.layout-toggle {
+  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  display: flex; background: var(--dark-3);
+  border: 1px solid var(--border-bright); border-radius: 6px;
+  overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+.layout-toggle-btn {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em;
+  padding: 8px 14px; cursor: pointer; color: var(--text-dim);
+  background: none; border: none; transition: all .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.layout-toggle-btn:hover { color: var(--text-secondary); }
+.layout-toggle-btn.active { background: rgba(212,168,67,0.12); color: var(--gold-light); }
+.layout-toggle-divider { width: 1px; background: var(--border); align-self: stretch; }
+
+/* ═══ TOP NAV ═══ */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,14,18,0.92); border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px); padding: 0 40px; height: var(--topnav-h);
+  overflow-x: auto; align-items: center; gap: 0;
+}
+.topnav::-webkit-scrollbar{height:2px;}
+.nav-brand {
+  font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold);
+  letter-spacing: 0.15em; white-space: nowrap; margin-right: 32px; flex-shrink: 0;
+}
+.nav-item {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim); padding: 0 14px; height: var(--topnav-h);
+  display: flex; align-items: center; cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent; transition: all .2s; text-decoration: none;
+}
+.nav-item:hover { color: var(--gold-light); border-bottom-color: var(--gold); }
+.nav-item.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+.topnav-meta {
+  margin-left: auto; display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0; padding-left: 24px; border-left: 1px solid var(--border);
+}
+.topnav-meta-item { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--text-secondary); white-space: nowrap; }
+.topnav-meta-divider { color: var(--text-dim); font-size: 10px; }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w); z-index: 100;
+  background: var(--dark-2); border-right: 1px solid var(--border);
+  flex-direction: column; overflow: hidden;
+}
+.sidebar-header { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.sidebar-brand { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+.sidebar-title { font-size: 14px; font-weight: 700; color: var(--text-primary); line-height: 1.4; margin-bottom: 14px; }
+.sidebar-meta { display: flex; flex-direction: column; gap: 6px; }
+.sidebar-meta-row { display: flex; align-items: center; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; }
+.sidebar-meta-label { color: var(--text-dim); }
+.sidebar-meta-val { color: var(--text-secondary); }
+.sidebar-meta-val.status-active { color: #7ADFA0; background: rgba(90,191,122,0.1); padding: 2px 7px; border-radius: 2px; }
+.sidebar-meta-val.status-draft { color: var(--gold-light); background: rgba(212,168,67,0.1); padding: 2px 7px; border-radius: 2px; }
+.sidebar-meta-val.status-review { color: #90C0F0; background: rgba(74,143,224,0.1); padding: 2px 7px; border-radius: 2px; }
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0 80px; }
+.sidebar-nav::-webkit-scrollbar{width:3px;}
+.sidebar-section { margin-bottom: 2px; }
+.sidebar-section-btn {
+  width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+  font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+  color: var(--text-secondary); background: none; border: none; cursor: pointer;
+  text-align: left; text-decoration: none; transition: all .2s; border-left: 2px solid transparent;
+}
+.sidebar-section-btn:hover { color: var(--text-secondary); background: rgba(255,255,255,0.03); }
+.sidebar-section-btn.active { color: var(--gold-light); border-left-color: var(--gold); background: rgba(212,168,67,0.06); }
+.sidebar-section-num { font-size: 10px; color: var(--text-dim); flex-shrink: 0; width: 20px; }
+.sidebar-section-btn.active .sidebar-section-num { color: var(--gold); }
+.sidebar-chevron { margin-left: auto; font-size: 10px; color: var(--text-dim); transition: transform .2s; flex-shrink: 0; }
+.sidebar-section.open .sidebar-chevron { transform: rotate(90deg); }
+.sidebar-subsections { display: none; padding: 2px 0 4px; border-left: 1px solid var(--border); margin-left: 30px; }
+.sidebar-section.open .sidebar-subsections { display: block; }
+.sidebar-sub-link { display: block; padding: 7px 16px 7px 14px; font-size: 12px; color: var(--text-secondary); text-decoration: none; transition: color .15s; border-left: 2px solid transparent; line-height: 1.4; }
+.sidebar-sub-link:hover { color: var(--text-secondary); }
+.sidebar-sub-link.active { color: var(--gold-light); border-left-color: var(--gold-dim); }
+
+/* ═══ MAIN CONTENT WRAP ═══ */
+.main-wrap { transition: margin-left .3s, padding-top .3s; min-height: 100vh; }
+
+/* ═══ EXTRA UTILITIES (template) ═══ */
+.badge-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; border: 1px solid rgba(176,132,216,0.25); }
+.tag-pm { background: rgba(74,143,224,0.12); color: #90C0F0; }
+.tag-design { background: rgba(176,132,216,0.12); color: #C8A0F0; }
+.tag-web { background: rgba(224,150,58,0.14); color: #E0B070; }
+.callout.success { border-left-color: var(--green); }
+.oq-item.pm { border-left-color: var(--purple); }
+.oq-item.pm .oq-owner { color: var(--purple); }
+
+@media(max-width:900px){
+  body.layout-side .sidebar { display: none; }
+  body.layout-side .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
+}
+
+/* ─── COVER ─── */
+.cover{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  position:relative;overflow:hidden;
+  padding:60px 40px;text-align:center;
+}
+.cover-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%,rgba(212,168,67,0.07) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%,rgba(74,143,224,0.05) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%,rgba(176,132,216,0.04) 0%,transparent 60%);
+}
+.cover-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.cover-tag{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;
+  border:1px solid var(--border-bright);padding:6px 18px;border-radius:2px;
+  margin-bottom:36px;position:relative;
+}
+.cover h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,10vw,96px);
+  letter-spacing:0.06em;line-height:0.95;
+  color:var(--gold-light);
+  text-shadow:0 0 80px rgba(212,168,67,0.25);
+  margin-bottom:12px;position:relative;
+}
+.cover h1 span{color:var(--text-primary);}
+.cover-sub{
+  font-size:14px;color:var(--text-secondary);
+  letter-spacing:0.1em;margin-bottom:56px;position:relative;
+}
+.cover-pills{
+  display:flex;gap:10px;flex-wrap:wrap;
+  justify-content:center;position:relative;margin-bottom:60px;
+}
+.cover-pill{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.1em;color:var(--text-secondary);
+  padding:7px 14px;border:1px solid var(--border);
+  border-radius:20px;background:rgba(255,255,255,0.02);
+}
+.cover-pill strong{color:var(--gold-light);}
+.cover-badges{
+  display:flex;gap:12px;flex-wrap:wrap;
+  justify-content:center;position:relative;
+}
+.badge{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.12em;padding:5px 12px;border-radius:2px;
+  text-transform:uppercase;
+}
+.badge-v1{background:rgba(90,191,122,0.12);color:#7ADFA0;border:1px solid rgba(90,191,122,0.25);}
+.badge-scope{background:rgba(212,168,67,0.1);color:var(--gold-light);border:1px solid var(--border);}
+.badge-conf{background:rgba(224,90,58,0.1);color:#F0907A;border:1px solid rgba(224,90,58,0.25);}
+
+/* ─── LAYOUT ─── */
+.page{max-width:1040px;margin:0 auto;padding:0 40px 120px;}
+.section{margin-bottom:100px;padding-top:20px;}
+.section-header{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:40px;padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.section-num{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--gold);letter-spacing:0.18em;
+}
+.section-title{font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:0.02em;}
+.section-title-en{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--text-dim);letter-spacing:0.15em;margin-left:auto;
+}
+.sub-title{
+  font-size:14px;font-weight:700;color:var(--gold-light);
+  margin-bottom:14px;margin-top:28px;
+  display:flex;align-items:center;gap:10px;
+}
+.sub-title::before{content:'';width:3px;height:13px;background:var(--gold);flex-shrink:0;}
+.body-text{font-size:13px;color:var(--text-secondary);margin-bottom:14px;line-height:1.85;}
+.body-text strong{color:var(--text-primary);}
+.body-text em{color:var(--gold-light);font-style:normal;font-weight:600;}
+
+/* ─── HYPOTHESIS ─── */
+.hypo-block{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-left:3px solid var(--gold);
+  padding:24px 28px;border-radius:0 4px 4px 0;margin-bottom:28px;
+}
+.hypo-label{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--gold);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:8px;
+}
+.hypo-text{font-size:15px;color:var(--text-primary);font-weight:500;line-height:1.75;}
+
+/* ─── INFO GRID ─── */
+.info-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.info-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;}
+.info-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;}
+.info-card{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-radius:4px;padding:18px;
+}
+.info-card-icon{font-size:22px;margin-bottom:8px;}
+.info-card-title{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px;}
+.info-card-desc{font-size:12px;color:var(--text-secondary);line-height:1.6;}
+.info-card-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--gold-light);margin-bottom:4px;}
+.info-card-label{font-size:11px;color:var(--text-dim);}
+
+/* ─── TABLE ─── */
+.spec-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;}
+.spec-table th{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;
+  color:var(--text-dim);text-transform:uppercase;
+  padding:10px 14px;text-align:left;
+  border-bottom:1px solid var(--border);
+  background:var(--dark-3);
+}
+.spec-table td{
+  padding:11px 14px;color:var(--text-primary);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.spec-table td.mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);}
+.spec-table td.dim{color:var(--text-secondary);}
+.spec-table tr:hover td{background:rgba(255,255,255,0.015);}
+.tag-pill{
+  font-family:'DM Mono',monospace;font-size:9px;
+  padding:3px 8px;border-radius:2px;letter-spacing:0.08em;
+  display:inline-block;
+}
+.tag-v1{background:rgba(90,191,122,0.12);color:#7ADFA0;}
+.tag-v2{background:rgba(176,132,216,0.12);color:#C8A0F0;}
+.tag-req{background:rgba(224,90,58,0.12);color:#F0907A;}
+.tag-opt{background:rgba(74,143,224,0.12);color:#90C0F0;}
+.tag-data{background:rgba(58,191,176,0.12);color:#70DFD0;}
+.tag-eng{background:rgba(212,168,67,0.12);color:var(--gold-light);}
+.tag-inf{background:rgba(224,90,58,0.15);color:#F0907A;border:1px solid rgba(224,90,58,0.3);}
+
+/* ─── FLOW DIAGRAM ─── */
+.flow-wrap{margin-bottom:32px;overflow-x:auto;}
+.flow{
+  display:flex;align-items:center;gap:0;
+  min-width:max-content;padding:4px;
+}
+.flow-step{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-radius:4px;padding:14px 18px;text-align:center;
+  min-width:140px;
+}
+.flow-step-num{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--gold);letter-spacing:0.2em;margin-bottom:6px;
+}
+.flow-step-title{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.flow-step-desc{font-size:11px;color:var(--text-secondary);line-height:1.5;}
+.flow-step.highlight{border-color:var(--gold);background:rgba(212,168,67,0.06);}
+.flow-step.warn{border-color:var(--red);background:rgba(224,90,58,0.06);}
+.flow-step.success{border-color:var(--green);background:rgba(90,191,122,0.06);}
+.flow-arrow{
+  color:var(--text-dim);font-size:18px;padding:0 8px;flex-shrink:0;
+}
+.flow-arrow-down{
+  text-align:center;color:var(--text-dim);font-size:18px;
+  padding:8px 0;margin:0 auto;
+}
+.flow-v{display:flex;flex-direction:column;gap:0;align-items:center;}
+.flow-v .flow-step{min-width:320px;text-align:left;}
+
+/* ─── PRIZE GRID ─── */
+.prize-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:8px;margin-bottom:24px;
+}
+.prize-cell{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-radius:6px;padding:16px;text-align:center;
+  position:relative;cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.prize-cell:hover{border-color:var(--gold);background:rgba(212,168,67,0.05);}
+.prize-cell-num{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--text-dim);letter-spacing:0.2em;
+  position:absolute;top:8px;left:10px;
+}
+.prize-cell-icon{font-size:28px;margin:8px 0 6px;}
+.prize-cell-type{font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.prize-cell-val{font-family:'DM Mono',monospace;font-size:18px;color:var(--gold-light);font-weight:500;}
+.prize-cell-unlock{font-size:10px;color:var(--text-dim);margin-top:6px;}
+.prize-cell.small{border-color:rgba(74,143,224,0.25);}
+.prize-cell.small .prize-cell-val{color:#90C0F0;}
+.prize-cell.medium{border-color:rgba(90,191,122,0.25);}
+.prize-cell.medium .prize-cell-val{color:#7ADFA0;}
+.prize-cell.large{border-color:rgba(212,168,67,0.4);}
+.prize-cell.large .prize-cell-val{color:var(--gold-light);}
+.prize-cell.jackpot{
+  border-color:rgba(212,168,67,0.6);
+  background:rgba(212,168,67,0.05);
+}
+.prize-cell.jackpot .prize-cell-val{color:var(--gold-light);font-size:22px;}
+.jackpot-indicator{
+  position:absolute;top:6px;right:8px;
+  font-family:'DM Mono',monospace;font-size:8px;
+  color:var(--gold);letter-spacing:0.1em;
+  background:rgba(212,168,67,0.12);
+  padding:2px 6px;border-radius:2px;
+}
+
+/* ─── THRESHOLD TABLE ─── */
+.threshold-bar-wrap{margin-bottom:6px;}
+.threshold-row{
+  display:grid;grid-template-columns:60px 100px 1fr 80px 80px 80px;
+  gap:10px;align-items:center;
+  padding:8px 12px;border-radius:3px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.threshold-row:hover{background:rgba(255,255,255,0.02);}
+.threshold-row.header{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--text-dim);letter-spacing:0.12em;
+  text-transform:uppercase;border-bottom:1px solid var(--border);
+  background:var(--dark-3);
+}
+.threshold-bar{
+  height:4px;background:var(--dark-5);border-radius:2px;overflow:hidden;
+}
+.threshold-bar-fill{
+  height:100%;border-radius:2px;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  transition:width .3s;
+}
+
+/* ─── COMPARISON TABLE ─── */
+.compare-wrap{overflow-x:auto;margin-bottom:28px;}
+.compare-table{width:100%;border-collapse:collapse;font-size:12px;min-width:640px;}
+.compare-table th{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;
+  color:var(--text-dim);text-transform:uppercase;
+  padding:12px 16px;text-align:left;
+  border-bottom:1px solid var(--border);
+  background:var(--dark-3);
+}
+.compare-table th.v1-col{color:var(--green);}
+.compare-table th.v2-col{color:var(--purple);}
+.compare-table td{
+  padding:11px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  vertical-align:top;
+}
+.compare-table td:first-child{color:var(--text-secondary);font-weight:500;}
+.compare-table .v1-val{color:#7ADFA0;}
+.compare-table .v2-val{color:#C8A0F0;}
+.compare-table tr:hover td{background:rgba(255,255,255,0.015);}
+.check{color:var(--green);}
+.cross{color:var(--text-dim);}
+.plus{color:var(--orange);}
+
+/* ─── TIMELINE ─── */
+.timeline{position:relative;padding-left:28px;margin-bottom:32px;}
+.timeline::before{
+  content:'';position:absolute;left:6px;top:8px;bottom:8px;
+  width:1px;background:var(--border);
+}
+.tl-item{position:relative;margin-bottom:32px;}
+.tl-dot{
+  position:absolute;left:-24px;top:5px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--dark-3);border:2px solid var(--gold-dim);
+}
+.tl-dot.active{border-color:var(--gold);background:rgba(212,168,67,0.2);}
+.tl-phase{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--gold);letter-spacing:0.2em;margin-bottom:6px;
+}
+.tl-title{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:8px;}
+.tl-tasks{display:flex;flex-wrap:wrap;gap:6px;}
+.tl-task{
+  font-size:11px;color:var(--text-secondary);
+  background:var(--dark-3);border:1px solid var(--border);
+  padding:4px 10px;border-radius:3px;
+}
+.tl-task.eng{border-left:2px solid var(--gold);}
+.tl-task.pm{border-left:2px solid var(--blue);}
+.tl-task.data{border-left:2px solid var(--teal);}
+.tl-task.inf{border-left:2px solid var(--red);}
+.tl-task.design{border-left:2px solid var(--purple);}
+
+/* ─── KPI CARDS ─── */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.kpi-card{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-radius:4px;padding:20px;
+}
+.kpi-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:8px;}
+.kpi-val{font-family:'DM Mono',monospace;font-size:28px;color:var(--gold-light);font-weight:500;margin-bottom:4px;}
+.kpi-desc{font-size:11px;color:var(--text-secondary);line-height:1.6;}
+.kpi-card.primary{border-color:rgba(212,168,67,0.35);}
+
+/* ─── COST TABLE ─── */
+.cost-block{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-radius:4px;padding:24px;margin-bottom:16px;
+}
+.cost-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:13px;
+}
+.cost-row:last-child{border-bottom:none;}
+.cost-row.total{
+  font-weight:700;color:var(--gold-light);
+  border-top:1px solid var(--border);padding-top:12px;margin-top:4px;
+}
+.cost-label{color:var(--text-secondary);}
+.cost-val{font-family:'DM Mono',monospace;color:var(--text-primary);}
+.cost-val.highlight{color:var(--gold-light);}
+
+/* ─── UI MOCKUP ─── */
+.mockup-phone{
+  width:320px;margin:0 auto 32px;
+  background:var(--dark-2);border:1px solid var(--border);
+  border-radius:28px;overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04);
+}
+.mockup-statusbar{
+  background:var(--dark);padding:14px 24px 8px;
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);
+}
+.mockup-screen{
+  background:linear-gradient(180deg,#0A0B10 0%,#0D0E14 100%);
+  padding:16px;min-height:560px;
+  position:relative;
+}
+.mockup-game-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+}
+.mockup-game-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:18px;
+  color:var(--gold-light);letter-spacing:0.1em;
+}
+.mockup-balance{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--text-secondary);
+}
+.mockup-balance span{color:var(--gold-light);font-size:13px;}
+
+/* Treasure chest UI */
+.chest-container{
+  background:rgba(212,168,67,0.04);
+  border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+  margin-bottom:12px;
+}
+.chest-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
+}
+.chest-title{
+  font-size:12px;font-weight:700;color:var(--gold-light);
+  display:flex;align-items:center;gap:6px;
+}
+.chest-progress-info{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--text-secondary);
+}
+.chest-progress-info span{color:var(--gold-light);}
+
+/* Progress bar */
+.progress-section{margin-bottom:12px;}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--text-dim);margin-bottom:5px;
+}
+.progress-bar{
+  height:5px;background:var(--dark-5);
+  border-radius:3px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--gold-dim),var(--gold));
+}
+
+/* 3x3 grid */
+.chest-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:6px;
+}
+.chest-cell{
+  background:var(--dark-4);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px;padding:10px 6px;
+  text-align:center;position:relative;
+  min-height:72px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.chest-cell.unlocked{
+  border-color:rgba(212,168,67,0.3);
+  background:rgba(212,168,67,0.06);
+  cursor:pointer;
+}
+.chest-cell.opened{
+  border-color:rgba(90,191,122,0.3);
+  background:rgba(90,191,122,0.05);
+}
+.chest-cell.locked{opacity:0.5;}
+.chest-cell-num{
+  position:absolute;top:4px;left:6px;
+  font-family:'DM Mono',monospace;font-size:8px;color:var(--text-dim);
+}
+.chest-cell-icon{font-size:20px;margin-bottom:3px;}
+.chest-cell-val{
+  font-family:'DM Mono',monospace;font-size:11px;
+  font-weight:600;
+}
+.chest-cell.unlocked .chest-cell-val{color:var(--gold-light);}
+.chest-cell.opened .chest-cell-val{color:#7ADFA0;}
+.chest-cell.locked .chest-cell-val{color:var(--text-dim);}
+.chest-cell-unlock-req{font-size:8px;color:var(--text-dim);margin-top:2px;}
+.jackpot-glow{
+  box-shadow:0 0 12px rgba(212,168,67,0.3);
+  border-color:var(--gold) !important;
+}
+
+/* Reset info */
+.reset-info{
+  display:flex;align-items:center;gap:6px;
+  font-size:10px;color:var(--text-dim);
+  padding:8px 12px;
+  background:rgba(255,255,255,0.03);
+  border-radius:6px;margin-top:8px;
+}
+
+/* Admin mockup */
+.admin-wrap{
+  background:var(--dark-2);border:1px solid var(--border);
+  border-radius:8px;overflow:hidden;margin-bottom:28px;
+}
+.admin-topbar{
+  background:var(--dark-3);padding:12px 20px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);
+}
+.admin-topbar-title{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--text-primary);letter-spacing:0.1em;
+}
+.admin-status{
+  font-family:'DM Mono',monospace;font-size:9px;
+  padding:3px 10px;border-radius:2px;margin-left:auto;
+}
+.admin-status.active{background:rgba(90,191,122,0.12);color:#7ADFA0;}
+.admin-status.draft{background:rgba(212,168,67,0.12);color:var(--gold-light);}
+.admin-body{padding:20px;}
+.admin-form-row{
+  display:grid;grid-template-columns:160px 1fr;
+  gap:12px;align-items:start;margin-bottom:14px;
+}
+.admin-label{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--text-secondary);letter-spacing:0.1em;
+  padding-top:10px;
+}
+.admin-input{
+  background:var(--dark-4);border:1px solid var(--border);
+  border-radius:3px;padding:9px 12px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--text-primary);width:100%;
+  display:flex;align-items:center;
+}
+.admin-input .placeholder{color:var(--text-dim);}
+.admin-input-group{display:flex;gap:8px;}
+.admin-prize-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:6px;
+}
+.admin-prize-cell{
+  background:var(--dark-4);border:1px solid var(--border);
+  border-radius:4px;padding:10px;text-align:center;
+}
+.admin-prize-cell-num{
+  font-family:'DM Mono',monospace;font-size:8px;
+  color:var(--text-dim);margin-bottom:4px;
+}
+.admin-prize-cell-input{
+  font-family:'DM Mono',monospace;font-size:14px;
+  color:var(--gold-light);text-align:center;
+  display:flex;align-items:center;justify-content:center;gap:2px;
+}
+.admin-prize-cell-sub{font-size:9px;color:var(--text-dim);margin-top:2px;}
+.admin-section-divider{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--text-dim);letter-spacing:0.18em;text-transform:uppercase;
+  padding:10px 0 8px;border-top:1px solid var(--border);
+  margin:16px 0 14px;
+}
+.admin-btn-row{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;}
+.admin-btn{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.12em;padding:9px 20px;
+  border-radius:3px;cursor:pointer;border:none;
+}
+.admin-btn.primary{
+  background:var(--gold);color:var(--dark);font-weight:700;
+}
+.admin-btn.secondary{
+  background:transparent;color:var(--text-secondary);
+  border:1px solid var(--border);
+}
+.admin-rtp-bar{
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;
+}
+.admin-rtp-track{
+  flex:1;height:6px;background:var(--dark-5);
+  border-radius:3px;position:relative;overflow:visible;
+}
+.admin-rtp-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  width:67%;
+}
+.admin-rtp-marker{
+  position:absolute;top:-3px;left:67%;
+  width:2px;height:12px;background:var(--gold);
+  transform:translateX(-50%);
+}
+.admin-rtp-val{
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--green);
+}
+.admin-rtp-range{
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;font-size:8px;color:var(--text-dim);
+}
+
+/* ─── LOG TABLE ─── */
+.log-section{margin-bottom:28px;}
+.log-item{
+  display:grid;grid-template-columns:180px 100px 1fr;
+  gap:12px;padding:10px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:12px;
+}
+.log-item:hover{background:rgba(255,255,255,0.015);}
+.log-item.header{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--text-dim);letter-spacing:0.12em;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+  background:var(--dark-3);
+}
+.log-event{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);}
+.log-owner{font-size:10px;}
+.log-owner .tag-pill{display:inline-block;}
+.log-desc{color:var(--text-secondary);line-height:1.5;}
+
+/* ─── OPEN QUESTIONS ─── */
+.oq-item{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-left:3px solid var(--orange);
+  padding:16px 20px;border-radius:0 4px 4px 0;
+  margin-bottom:10px;
+}
+.oq-owner{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--orange);letter-spacing:0.15em;margin-bottom:6px;
+}
+.oq-q{font-size:13px;color:var(--text-primary);font-weight:500;}
+.oq-item.awc{border-left-color:var(--blue);}
+.oq-item.awc .oq-owner{color:var(--blue);}
+
+/* ─── TABS ─── */
+.tab-bar{
+  display:flex;gap:0;border-bottom:1px solid var(--border);
+  margin-bottom:24px;
+}
+.tab-btn{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.12em;color:var(--text-dim);
+  padding:10px 20px;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;
+}
+.tab-btn:hover{color:var(--text-secondary);}
+.tab-btn.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* ─── FOOTER ─── */
+.doc-footer{
+  text-align:center;padding:60px 40px;
+  border-top:1px solid var(--border);
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--text-dim);letter-spacing:0.15em;
+  line-height:2;
+}
+
+/* ─── CALLOUT ─── */
+.callout{
+  background:var(--dark-3);border:1px solid var(--border);
+  border-left:3px solid var(--teal);
+  padding:16px 20px;border-radius:0 4px 4px 0;
+  margin-bottom:20px;font-size:13px;
+  color:var(--text-secondary);
+}
+.callout strong{color:var(--text-primary);}
+.callout.warn{border-left-color:var(--orange);}
+.callout.warn strong{color:var(--orange);}
+.callout.info{border-left-color:var(--blue);}
+
+/* ─── EXTENSION BADGE ─── */
+.ext-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;color:var(--purple);
+  background:rgba(176,132,216,0.08);
+  border:1px solid rgba(176,132,216,0.2);
+  padding:3px 10px;border-radius:2px;
+  margin-left:8px;vertical-align:middle;
+}
+.ext-badge::before{content:'v2 READY';letter-spacing:0.12em;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  .page{padding:0 20px 80px;}
+  .info-grid-3,.info-grid-4,.kpi-grid{grid-template-columns:1fr 1fr;}
+  .prize-grid{grid-template-columns:repeat(3,1fr);}
+  .topnav{padding:0 20px;}
+  .compare-wrap{overflow-x:scroll;}
+  .admin-form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body class="layout-side">
+
+<!-- ═══════════ LAYOUT TOGGLE ═══════════ -->
+<div class="layout-toggle">
+  <button class="layout-toggle-btn" id="btn-side" onclick="setLayout('side')">▣ 側邊欄</button>
+  <div class="layout-toggle-divider"></div>
+  <button class="layout-toggle-btn" id="btn-top" onclick="setLayout('top')">☰ 頂部列</button>
+</div>
+
+<!-- ═══════════ TOP NAV ═══════════ -->
+<nav class="topnav" id="topnav">
+  <span class="nav-brand">CHEST SPEC · V3.1</span>
+  <a class="nav-item active" href="#overview">概要</a>
+  <a class="nav-item" href="#mechanic">玩法機制</a>
+  <a class="nav-item" href="#prizes">獎勵設計</a>
+  <a class="nav-item" href="#flow">技術流程</a>
+  <a class="nav-item" href="#tasks">Task列表</a>
+  <a class="nav-item" href="#ui">UI/UX模擬</a>
+  <a class="nav-item" href="#backend">後台規劃</a>
+  <a class="nav-item" href="#kpi">KPI目標</a>
+  <a class="nav-item" href="#cost">成本評估</a>
+  <a class="nav-item" href="#comparison">v1 vs v2</a>
+  <a class="nav-item" href="#logs">Log埋點</a>
+  <a class="nav-item" href="#awc">AWC需求</a>
+  <a class="nav-item" href="#openq">待確認</a>
+  <a class="nav-item" href="#i18n">多國語系</a>
+  <div class="topnav-meta">
+    <span class="topnav-meta-item" id="topnav-date"></span>
+    <span class="topnav-meta-divider">·</span>
+    <span class="topnav-meta-item">Milu</span>
+    <span class="topnav-meta-divider">·</span>
+    <span class="topnav-meta-item">FORCE / COMBO GAMING</span>
+  </div>
+</nav>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">CMB · SPEC DOC</div>
+    <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
+    <div class="sidebar-meta">
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.1</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">PLATFORM</span><span class="sidebar-meta-val">FORCE / COMBO GAMING</span></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav" id="sidebar-nav">
+    <div class="sidebar-section open" data-section="overview">
+      <button class="sidebar-section-btn active" onclick="navTo('overview')"><span class="sidebar-section-num">01</span>提案概要<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#overview">核心假設</a>
+        <a class="sidebar-sub-link" href="#overview">背景問題點</a>
+        <a class="sidebar-sub-link" href="#overview">版本規劃一覽</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="mechanic">
+      <button class="sidebar-section-btn" onclick="navTo('mechanic')"><span class="sidebar-section-num">02</span>玩法機制設計<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#mechanic">機制核心流程</a>
+        <a class="sidebar-sub-link" href="#mechanic">每日開始流程</a>
+        <a class="sidebar-sub-link" href="#mechanic">解鎖門檻設計</a>
+        <a class="sidebar-sub-link" href="#mechanic">重置規則</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="prizes">
+      <button class="sidebar-section-btn" onclick="navTo('prizes')"><span class="sidebar-section-num">03</span>獎勵設計與 RTP<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#prizes">獎勵結構</a>
+        <a class="sidebar-sub-link" href="#prizes">FREE SPIN 卡</a>
+        <a class="sidebar-sub-link" href="#prizes">RTP 計算驗證</a>
+        <a class="sidebar-sub-link" href="#prizes">逐抽期望值</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="flow">
+      <button class="sidebar-section-btn" onclick="navTo('flow')"><span class="sidebar-section-num">04</span>技術架構與流程<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#flow">資料結構</a>
+        <a class="sidebar-sub-link" href="#flow">系統處理流程</a>
+        <a class="sidebar-sub-link" href="#flow">每日重置排程</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="tasks">
+      <button class="sidebar-section-btn" onclick="navTo('tasks')"><span class="sidebar-section-num">05</span>開發 Task 列表<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#tasks">Phase 分期 Task</a>
+        <a class="sidebar-sub-link" href="#tasks">開發時程</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="ui">
+      <button class="sidebar-section-btn" onclick="navTo('ui')"><span class="sidebar-section-num">06</span>UI / UX 示意<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#ui">玩家端畫面</a>
+        <a class="sidebar-sub-link" href="#ui">iFrame 入口與展開</a>
+        <a class="sidebar-sub-link" href="#ui">進場與提示觸發</a>
+        <a class="sidebar-sub-link" href="#ui-artspec">美術設計頁面清單</a>
+        <a class="sidebar-sub-link" href="#ui-assets">美術資產清單</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="backend">
+      <button class="sidebar-section-btn" onclick="navTo('backend')"><span class="sidebar-section-num">07</span>後台管理規劃<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#backend">後台功能模組</a>
+        <a class="sidebar-sub-link" href="#backend">設定畫面示意</a>
+        <a class="sidebar-sub-link" href="#backend">功能規格補充</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="kpi">
+      <button class="sidebar-section-btn" onclick="navTo('kpi')"><span class="sidebar-section-num">08</span>KPI 目標<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#kpi">現況基準</a>
+        <a class="sidebar-sub-link" href="#kpi">主要 KPI 與推算</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="cost">
+      <button class="sidebar-section-btn" onclick="navTo('cost')"><span class="sidebar-section-num">09</span>成本評估<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#cost">活動獎勵成本</a>
+        <a class="sidebar-sub-link" href="#cost">開發人力成本</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="comparison">
+      <button class="sidebar-section-btn" onclick="navTo('comparison')"><span class="sidebar-section-num">10</span>v1 vs v2 對比<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#comparison">功能差異對比</a>
+        <a class="sidebar-sub-link" href="#comparison">開發時程對比</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="logs">
+      <button class="sidebar-section-btn" onclick="navTo('logs')"><span class="sidebar-section-num">11</span>Log 埋點規劃<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#logs">後端必要埋點</a>
+        <a class="sidebar-sub-link" href="#logs">前端埋點事件</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="awc">
+      <button class="sidebar-section-btn" onclick="navTo('awc')"><span class="sidebar-section-num">12</span>AWC 串接需求<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#awc">現金獎需求（v1）</a>
+        <a class="sidebar-sub-link" href="#awc">道具使用需求</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="openq">
+      <button class="sidebar-section-btn" onclick="navTo('openq')"><span class="sidebar-section-num">13</span>待確認事項<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#openq">需上司決策</a>
+        <a class="sidebar-sub-link" href="#openq">需與 AWC 確認</a>
+      </div>
+    </div>
+    <div class="sidebar-section open" data-section="i18n">
+      <button class="sidebar-section-btn" onclick="navTo('i18n')"><span class="sidebar-section-num">14</span>多國語系文案<span class="sidebar-chevron">›</span></button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#i18n">i18n 規則與注意事項</a>
+        <a class="sidebar-sub-link" href="#i18n">文案翻譯總表</a>
+      </div>
+    </div>
+  </nav>
+</aside>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="main-wrap" id="main-wrap">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-tag">CRM FEATURE SPEC · 2026</div>
+  <h1>抽<span>寶箱</span><br>功能規格書</h1>
+  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.1</div>
+  <div class="cover-pills">
+    <div class="cover-pill"><strong>活動類型</strong> CRM 留存機制</div>
+    <div class="cover-pill"><strong>解鎖條件</strong> 累積總押注金額</div>
+    <div class="cover-pill"><strong>實作階段</strong> 兩階段（v1 現金獎+完整基建 / v2 編輯工具+背包）</div>
+    <div class="cover-pill"><strong>平台</strong> FORCE / COMBO GAMING</div>
+    <div class="cover-pill"><strong>市場</strong> 菲律賓（披索）</div>
+  </div>
+  <div class="cover-badges">
+    <span class="badge badge-v1">V1 現金獎 + 完整基建</span>
+    <span class="badge badge-scope">V2 編輯工具 + 背包</span>
+    <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════ 01 OVERVIEW ═══════════ -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">提案概要與目的</span>
+    <span class="section-title-en">OVERVIEW & PURPOSE</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">核心假設 · HYPOTHESIS</div>
+    <div class="hypo-text">透過「累積押注金額解鎖寶箱」的漸進式獎勵機制，驅動玩家在當日內持續押注，同時以隔日重置的急迫感製造次日回流動機，達到提升單日 Spin 數與 D1 留存率的雙重目標。</div>
+  </div>
+
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">🎯</div>
+      <div class="info-card-title">主要目標</div>
+      <div class="info-card-desc">提升新手玩家單日押注總量，透過累積門檻設計讓玩家有持續押注的具體動機</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🔄</div>
+      <div class="info-card-title">次要目標</div>
+      <div class="info-card-desc">隔日重置機制製造跨日懸念，今日未翻完的進度清零，驅動玩家次日回流繼續</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📊</div>
+      <div class="info-card-title">驗證指標</div>
+      <div class="info-card-desc">D1 留存率變化、活動組 vs 對照組單日 Spin 數差異、活動參與率、完整循環完成率</div>
+    </div>
+  </div>
+
+  <div class="sub-title">背景問題點</div>
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">⚡</div>
+      <div class="info-card-title">單日押注動力不足</div>
+      <div class="info-card-desc">玩家除日常消費外，缺乏在單日內集中押注的明確誘因</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📅</div>
+      <div class="info-card-title">次日回流率偏低</div>
+      <div class="info-card-desc">玩家無未完成任務牽引時，次日不回流的機率顯著提升</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🆕</div>
+      <div class="info-card-title">新手黏著度低</div>
+      <div class="info-card-desc">新進玩家前期缺乏低門檻回饋，習慣尚未建立前容易流失</div>
+    </div>
+  </div>
+
+  <div class="sub-title">功能定位：本次切版核心原則</div>
+  <div class="callout">
+    <strong>玩家面 v1 只發現金獎，但後端基建一次做滿、AWC API 一次串完。</strong>v1 的 <em>place_bet</em> 與 v2 才會用到的 <em>LoginWithoutRedirect</em> 等需求<strong>一次性打包提交給 AWC 集成商</strong>，避免分兩次串接造成重複的開發、溝通與等待成本。FREE SPIN 卡的「水管」（資料表 + AWC API + max win 上限設定）在 v1 就建好，<strong>實際發卡與使用體驗留到 v2</strong>。
+  </div>
+
+  <div class="callout success">
+    <strong>v3.1 修訂說明（2026/06）：</strong>① 第 06 章新增「美術設計頁面與狀態清單」——依據互動原型《抽寶箱 CRM 浮動icon 原型.html》盤點全部需設計的畫面、狀態與資產，美術可直接據此開工；② 新增第 14 章「多國語系文案表」——全部玩家可見文字 × 13 語系翻譯初稿；③ Phase 4／5 職能修正（玩家端與後台均為 🌐 前端Web，後端＝Server）；④ 玩家端進度條顯示改為「已累積/本階段目標」（如 300/500）。
+  </div>
+
+  <div class="sub-title">版本規劃一覽</div>
+  <div class="info-grid-2">
+    <div class="info-card" style="border-color:rgba(90,191,122,0.3);">
+      <div class="info-card-title" style="color:#7ADFA0;">v1 · 本次主開發（現金獎 + 完整基建）</div>
+      <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
+        ✅ 動態洗牌 9 宮格（非固定位置）<br>
+        ✅ 攤開 → 洗牌動態 → 背面蓋牌選格 流程<br>
+        ✅ 獎項組成：小獎×5、中獎×2、大獎×1、最終獎×1<br>
+        ✅ 累積押注解鎖（每格增量門檻，內部累積至 ₱3,600）<br>
+        ✅ 現金獎寶箱（保留 usertype 指定玩家 tag 能力）<br>
+        ✅ 9 格 3×3 陣列、每日 00:00 重置<br>
+        ✅ 後台抽獎設定改為「第幾抽權重」模式<br>
+        ✅ AWC place_bet 入帳對接<br>
+        ✅ 串接 AWC LoginWithoutRedirect（API 一次給齊，道具實際使用留 v2）<br>
+        ✅ FREE SPIN 卡獎勵 max win 上限設定<br>
+        ✅ AWC 完整需求一次對齊<br>
+        ✅ 玩家進度 log 追蹤、發放紀錄、對帳結構
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(176,132,216,0.3);">
+      <div class="info-card-title" style="color:#C8A0F0;">v2 · 後續擴充</div>
+      <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
+        ✅ 獎勵內容編輯工具（可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list）<br>
+        ✅ 背包系統顯示<br>
+        ✅ FREE SPIN 卡實際發放與跳轉使用（背包點卡 → LoginWithoutRedirect 跳轉進遊戲）<br>
+        <span style="color:var(--text-dim);font-size:11px;">＊v2 不再新增 AWC 串接，水管已於 v1 一次打通</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 02 MECHANIC ═══════════ -->
+<section class="section" id="mechanic">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">玩法機制設計</span>
+    <span class="section-title-en">GAME MECHANIC</span>
+  </div>
+
+  <div class="sub-title">機制核心流程</div>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">🎰 玩家押注</div>
+        <div class="flow-step-desc">每次押注金額<br>累積進入進度條</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">📈 達門檻解鎖</div>
+        <div class="flow-step-desc">累積押注達當格<br>門檻後格子亮起</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">📦 點擊翻格</div>
+        <div class="flow-step-desc">玩家主動點擊<br>翻開獲得獎勵</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">💰 派發獎勵</div>
+        <div class="flow-step-desc">現金入帳玩家<br>錢包（AWC）</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">🔁 隔日重置</div>
+        <div class="flow-step-desc">00:00 進度清零<br>全新洗牌開始</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:32px;">每日開始流程</div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">🕛 每日 Reset</div>
+        <div class="flow-step-desc">00:00 重置，獎項組合重新產生（小獎×5、中獎×2、大獎×1、最終獎×1）</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">🃏 攤開階段</div>
+        <div class="flow-step-desc">9 格全部正面朝上，玩家可看到今日有哪些獎項種類，但不知道洗牌後位置</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">▶️ 點擊「開始遊戲」</div>
+        <div class="flow-step-desc">玩家確認後觸發洗牌動態</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight" style="min-width:400px;">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">🔀 洗牌動態</div>
+        <div class="flow-step-desc">所有獎項動畫集中到畫面中央 → 執行洗牌動態效果 → 隨機分散到 9 個格子</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">🂠 背面蓋牌</div>
+        <div class="flow-step-desc">9 格全部翻回背面，玩家開始依押注門檻解鎖格子並選擇點擊</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">解鎖門檻設計（累積押注金額）</div>
+  <div class="callout info">
+    <strong>為什麼改用累積押注金額而非 Spin 次數？</strong><br>
+    Spin 次數對不同押注段的玩家體驗差異極大——低押注玩家每次 ₱1，高押注玩家每次 ₱100，同樣的 Spin 數對後者幾乎沒有成本感。<br>
+    改用押注金額後，<strong>大 R 玩家可因高押注段快速過關</strong>，機制對各押注段玩家更為公平且有感。
+  </div>
+
+  <div class="callout">
+    <strong>增量門檻 vs 內部累積：</strong>下表 <em>[50, 100, 150, 200, 300, 400, 600, 800, 1,000]</em> 為「每格增量門檻」。內部 <em>today_wager</em> 持續累加，解鎖第 d 格的條件為 <em>today_wager ≥ 累積門檻[d]</em>，其中累積門檻 = 增量 running sum = <strong>[50, 150, 300, 500, 800, 1,200, 1,800, 2,600, 3,600]</strong>，完整循環內部累積總押注 = <strong>₱3,600</strong>。<br><br>
+    <strong>UI 顯示原則：</strong>玩家畫面<strong>只顯示「再押 ₱X 解鎖下一格」</strong>（X = 下一格累積門檻 − today_wager），進度條呈現「本階段進度」；<strong>永遠不顯示 ₱3,600 累積總門檻</strong>，讓玩家覺得每階段都好達成（詳見第 06 章 UI）。
+  </div>
+
+  <div class="threshold-row header">
+    <div>格子</div>
+    <div>增量門檻</div>
+    <div>本階段增量佔比</div>
+    <div>@₱1/spin</div>
+    <div>@₱10/spin</div>
+    <div>@₱20/spin</div>
+  </div>
+  <div id="threshold-rows"></div>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);margin-top:8px;">※ 上表為每格<strong>增量</strong>門檻與本階段所需 spins；內部累積門檻為其 running sum（最終 ₱3,600），玩家端不顯示總額。</div>
+
+  <div class="sub-title" style="margin-top:24px;">重置規則</div>
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">🕛</div>
+      <div class="info-card-title">每日 00:00 重置</div>
+      <div class="info-card-desc">當日累積押注（today_wager）清零，獎項組合重新產生並重新洗牌。最終獎位置每日動態隨機，不再固定於特定格</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">⏸️</div>
+      <div class="info-card-title">當日未翻完不補</div>
+      <div class="info-card-desc">今日累積未達門檻的格子，隔日直接清零。不保留進度——製造急迫感驅動玩家當日完成</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎲</div>
+      <div class="info-card-title">動態洗牌分配</div>
+      <div class="info-card-desc">每日開始時執行洗牌，小獎×5、中獎×2、大獎×1、最終獎×1 隨機分配到9格。玩家看到攤開結果後點「開始遊戲」才執行洗牌，格子翻回背面。</div>
+    </div>
+  </div>
+
+  <div class="sub-title">玩家路徑分析</div>
+  <div class="callout info">
+    <strong>v2 改為動態洗牌機制，最終獎位置每日隨機，不再固定於第 7/8/9 格。</strong>玩家每次的最終獎解鎖門檻取決於洗牌後最終獎落在第幾格，增加每日新鮮感與公平性。
+  </div>
+</section>
+
+<!-- ═══════════ 03 PRIZES ═══════════ -->
+<section class="section" id="prizes">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">獎勵設計與 RTP 計算</span>
+    <span class="section-title-en">PRIZE STRUCTURE & RTP</span>
+  </div>
+
+  <div class="sub-title">獎勵結構（9 宮格組成）</div>
+  <div class="prize-grid" id="prize-grid-display"></div>
+
+  <div class="info-grid-4">
+    <div class="info-card">
+      <div class="info-card-val" style="color:#90C0F0;">💙 ₱1</div>
+      <div class="info-card-label">小獎 ×5格</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-val" style="color:#7ADFA0;">💚 ₱3</div>
+      <div class="info-card-label">中獎 ×2格</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-val" style="color:var(--gold-light);">🌟 ₱8</div>
+      <div class="info-card-label">大獎 ×1格</div>
+    </div>
+    <div class="info-card" style="border-color:rgba(212,168,67,0.4);">
+      <div class="info-card-val">👑 ₱18</div>
+      <div class="info-card-label">最終獎 ×1格（原 Jackpot）</div>
+    </div>
+  </div>
+  <div class="body-text" style="font-size:12px;">合計 <strong>9 格</strong>，每日洗牌後隨機分配位置。</div>
+
+  <div class="sub-title">FREE SPIN 卡（v2 新增獎勵類型）</div>
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">💳</div>
+      <div class="info-card-title">道具性質</div>
+      <div class="info-card-desc">FREE SPIN 卡為道具類獎勵，不直接發放現金，而是存入玩家背包，可自行選擇時機使用</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎮</div>
+      <div class="info-card-title">使用方式</div>
+      <div class="info-card-desc">玩家進入背包後點擊 FREE SPIN 卡，選擇允許使用的 Combo 遊戲，系統跳轉進入該遊戲並自動套用免費局數</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">⚙️</div>
+      <div class="info-card-title">技術機制</div>
+      <div class="info-card-desc">後台發卡時設定允許的 GameId 清單與局數。跳轉時呼叫 AWC LoginWithoutRedirect API，取得一次性遊戲入口 URL 後跳轉</div>
+    </div>
+  </div>
+
+  <div class="sub-title">RTP 計算驗證</div>
+  <div class="callout">
+    <strong>固定獎池模型：</strong>獎池固定 = 小獎 ×5(₱1) + 中獎 ×2(₱3) + 大獎 ×1(₱8) + 最終獎 ×1(₱18) = <strong>₱37</strong>。<br><br>
+    <strong>解鎖門檻（每格增量）：</strong>₱50 / ₱100 / ₱150 / ₱200 / ₱300 / ₱400 / ₱600 / ₱800 / ₱1,000，<strong>內部累積總押注 = ₱3,600</strong>。<br><br>
+    <strong>完整循環 RTP = ₱37 ÷ ₱3,600 = <span style="color:var(--green);">1.028%</span>（容許區間 0.9%–1.1%，✓ 通過）</strong><br><br>
+    翻完 9 格的人必得 ₱37，RTP 恆為 1.028%；逐抽權重的作用是「把大獎／最終獎壓到後段」，控制<strong>早退玩家</strong>的 RTP 暴露。
+  </div>
+
+  <div class="sub-title">9 格逐抽期望值與 RTP 佔比</div>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>抽次</th>
+        <th>P小</th>
+        <th>P中</th>
+        <th>P大</th>
+        <th>P終</th>
+        <th>期望獎金</th>
+        <th>累積派彩</th>
+        <th>累積押注</th>
+        <th>RTP佔比</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td class="mono">70%</td><td class="mono">30%</td><td class="mono dim">–</td><td class="mono dim">–</td><td class="mono">₱1.60</td><td class="mono">₱1.60</td><td class="mono">₱50</td><td class="mono" style="color:var(--orange);">3.20%</td></tr>
+      <tr><td>2</td><td class="mono">65%</td><td class="mono">35%</td><td class="mono dim">–</td><td class="mono dim">–</td><td class="mono">₱1.70</td><td class="mono">₱3.30</td><td class="mono">₱150</td><td class="mono" style="color:var(--orange);">2.20%</td></tr>
+      <tr><td>3</td><td class="mono">63%</td><td class="mono">31%</td><td class="mono">5%</td><td class="mono dim">–</td><td class="mono">₱2.00</td><td class="mono">₱5.30</td><td class="mono">₱300</td><td class="mono">1.77%</td></tr>
+      <tr><td>4</td><td class="mono">63%</td><td class="mono">26%</td><td class="mono">11%</td><td class="mono dim">–</td><td class="mono">₱2.28</td><td class="mono">₱7.58</td><td class="mono">₱500</td><td class="mono">1.52%</td></tr>
+      <tr><td>5</td><td class="mono">63%</td><td class="mono">21%</td><td class="mono">16%</td><td class="mono dim">–</td><td class="mono">₱2.51</td><td class="mono">₱10.08</td><td class="mono">₱800</td><td class="mono">1.26%</td></tr>
+      <tr><td>6</td><td class="mono">61%</td><td class="mono">17%</td><td class="mono">23%</td><td class="mono dim">–</td><td class="mono">₱2.93</td><td class="mono">₱13.01</td><td class="mono">₱1,200</td><td class="mono">1.09%</td></tr>
+      <tr><td>7</td><td class="mono">42%</td><td class="mono">14%</td><td class="mono">19%</td><td class="mono" style="color:var(--gold-light);">26%</td><td class="mono">₱7.01</td><td class="mono">₱20.03</td><td class="mono">₱1,800</td><td class="mono">1.11%</td></tr>
+      <tr><td>8</td><td class="mono">39%</td><td class="mono">14%</td><td class="mono">16%</td><td class="mono" style="color:var(--gold-light);">32%</td><td class="mono">₱7.82</td><td class="mono">₱27.85</td><td class="mono">₱2,600</td><td class="mono">1.07%</td></tr>
+      <tr><td>9</td><td class="mono">35%</td><td class="mono">12%</td><td class="mono">11%</td><td class="mono" style="color:var(--gold-light);">42%</td><td class="mono">₱9.15</td><td class="mono">₱37.00</td><td class="mono">₱3,600</td><td class="mono" style="color:var(--green);">1.028%</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:12px;">早期（格 1–2）RTP 佔比偏高（3.2% / 2.2%）是「押少少就拿走小獎」的結構性暴露；第 6 格後收斂至 ~1%，<strong>第幾抽權重</strong>即為此設計——把大獎／最終獎壓到後段，控制早退玩家的 RTP 暴露。</div>
+
+  <div class="callout warn">
+    <strong>安全設計：洗牌結果解鎖時即寫死</strong><br>
+    洗牌結果（各格獎項內容、最終獎落點）在玩家當日第一次解鎖時即決定並寫入資料庫，後續不允許重抽；玩家無法透過重整或重新登入改變結果，避免作弊風險。累積門檻為每格增量、UI 僅顯示下一階段所需，<strong>不顯示 ₱3,600 總額</strong>（見第 06 章 UI）。
+  </div>
+</section>
+
+<!-- ═══════════ 04 FLOW ═══════════ -->
+<section class="section" id="flow">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">技術架構與運作流程</span>
+    <span class="section-title-en">ARCHITECTURE & FLOW</span>
+  </div>
+
+  <div class="sub-title">資料結構（v1 基建一次做滿，含背包水管）</div>
+  <div class="info-grid-2">
+    <div class="info-card" style="border-left:3px solid var(--gold);">
+      <div class="info-card-title">📚 LAYER 01 · 獎勵清單 <span class="ext-badge"></span></div>
+      <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
+        所有可能獎品登記於此。<br>
+        v1：R_CASH_1、R_CASH_3、R_CASH_8、R_CASH_18<br>
+        <span style="color:var(--gold-light);font-size:11px;">v1 水管：R_FS_1STAR ～ R_FS_5STAR（含 max win 上限，v2 啟用發放）</span>
+      </div>
+    </div>
+    <div class="info-card" style="border-left:3px solid var(--blue);">
+      <div class="info-card-title">📋 LAYER 02 · 活動模板</div>
+      <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
+        每個寶箱活動是一張「配方」：解鎖條件、9格獎池、第幾抽權重、活動期間<br>
+        <span style="color:var(--gold-light);font-size:11px;">v1：usertype 玩家 tag 投放欄位（保留指定玩家能力）</span>
+      </div>
+    </div>
+    <div class="info-card" style="border-left:3px solid var(--teal);">
+      <div class="info-card-title">📈 LAYER 03 · 玩家進度</div>
+      <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
+        記錄每玩家每活動的當日累積押注、已解鎖格數、洗牌結果（解鎖時寫入）、已翻格紀錄
+      </div>
+    </div>
+    <div class="info-card" style="border-left:3px solid var(--green);">
+      <div class="info-card-title">🧾 LAYER 04 · 發放紀錄</div>
+      <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
+        每筆派獎的收據：玩家ID、活動ID、獎勵類型、金額、AWC交易ID。<br>
+        <strong>月結對帳唯一依據</strong>
+      </div>
+    </div>
+  </div>
+  <div class="callout info">
+    <strong>背包水管於 v1 一併建立：</strong>除上述四層外，v1 基建另建 <em>inventory（背包）</em> 與 <em>item_use_log（道具使用紀錄）</em> 兩張資料表，並串妥 AWC <em>LoginWithoutRedirect</em> API；FREE SPIN 卡的儲存／跳轉欄位先就位，<strong>實際發卡與背包使用體驗於 v2 啟用</strong>，屆時不需再動資料層與 AWC。
+  </div>
+
+  <div class="sub-title">玩家押注後的系統處理流程</div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">1 · AWC CALLBACK</div>
+        <div class="flow-step-title">收到 place_bet 回調</div>
+        <div class="flow-step-desc">AWC 在每次押注後回傳 game_account、bet_amount、game_code</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">2 · PROGRESS UPDATE</div>
+        <div class="flow-step-title">累積押注金額至玩家進度表</div>
+        <div class="flow-step-desc">UPDATE player_progress SET today_wager += bet_amount WHERE player_id AND campaign_id AND date = today</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight" style="min-width:400px;">
+        <div class="flow-step-num">3 · THRESHOLD CHECK</div>
+        <div class="flow-step-title">檢查是否達下一格門檻</div>
+        <div class="flow-step-desc">判斷 today_wager ≥ 下一格累積門檻 → 若第一次達到：執行洗牌寫入（若尚未）→ 標記該格為 unlocked</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">4 · PUSH NOTIFICATION</div>
+        <div class="flow-step-title">通知前端格子已解鎖</div>
+        <div class="flow-step-desc">回傳解鎖狀態，前端顯示格子發光動畫提示玩家可翻開</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:32px;">玩家點擊翻格後的獎勵派發流程</div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">1 · CLICK EVENT</div>
+        <div class="flow-step-title">玩家點擊已解鎖格子</div>
+        <div class="flow-step-desc">前端送出翻格請求（player_id, campaign_id, cell_index）</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">2 · VALIDATE</div>
+        <div class="flow-step-title">後端驗證狀態合法性</div>
+        <div class="flow-step-desc">確認：① 格子狀態為 unlocked ② 今日尚未翻過 ③ 非重複請求</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight" style="min-width:400px;">
+        <div class="flow-step-num">3 · GRANT REWARD</div>
+        <div class="flow-step-title">呼叫 AWC place_bet 派發現金</div>
+        <div class="flow-step-desc">bet_amount=0，標記 bonus_type=CHEST_REWARD, campaign_id。等待 AWC 回成功後才更新狀態</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step success" style="min-width:400px;">
+        <div class="flow-step-num">4 · RECORD & UPDATE</div>
+        <div class="flow-step-title">寫入發放紀錄，更新格子狀態</div>
+        <div class="flow-step-desc">INSERT RewardGrant（active）→ UPDATE cell_state = opened → 回傳獎勵金額給前端</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step warn" style="min-width:400px;">
+        <div class="flow-step-num">5 · FAILURE HANDLING</div>
+        <div class="flow-step-title">AWC 失敗時的處理</div>
+        <div class="flow-step-desc">RewardGrant 維持 pending 狀態，排隊重試。格子不標為 opened，玩家不顯示獎勵，避免發出玩家用不到的獎</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:32px;">每日重置排程</div>
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-title">⏰ 觸發時機</div>
+      <div class="info-card-desc">每日 00:00 伺服器時間（菲律賓 UTC+8）自動排程觸發</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🔄 重置內容</div>
+      <div class="info-card-desc">清除玩家當日 today_wager、格子狀態（unlocked/opened → locked）、洗牌結果</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📝 保留內容</div>
+      <div class="info-card-desc">歷史發放紀錄（RewardGrant）全保留，供對帳使用。不影響玩家歷史派彩</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 05 TASKS ═══════════ -->
+<section class="section" id="tasks">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-title">開發 Task 列表與職能分配</span>
+    <span class="section-title-en">TASK LIST & OWNERSHIP</span>
+  </div>
+
+  <div class="sub-title">Task 職能說明</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+    <span class="tag-pill tag-eng">🛠 後端工程</span>
+    <span class="tag-pill tag-web">🌐 前端Web</span>
+    <span class="tag-pill tag-data">📊 數據組</span>
+    <span class="tag-pill tag-req">🖥 基礎建設</span>
+    <span class="tag-pill tag-v1" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM/企劃</span>
+    <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 UI設計</span>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(this,'phase1')">Phase 1 · AWC對齊</button>
+    <button class="tab-btn" onclick="switchTab(this,'phase2')">Phase 2 · 資料層</button>
+    <button class="tab-btn" onclick="switchTab(this,'phase3')">Phase 3 · 業務邏輯</button>
+    <button class="tab-btn" onclick="switchTab(this,'phase4')">Phase 4 · 前端UI</button>
+    <button class="tab-btn" onclick="switchTab(this,'phase5')">Phase 5 · 後台</button>
+    <button class="tab-btn" onclick="switchTab(this,'phase6')">Phase 6 · 上線驗收</button>
+  </div>
+
+  <div class="tab-content active" id="tab-phase1">
+    <table class="spec-table">
+      <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>1.1</td><td>送出 place_bet 新增欄位需求書</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">請求 AWC 新增 bonus_type / campaign_id 欄位，bet_amount=0 零押注交易確認</td><td class="dim">需書面確認</td></tr>
+        <tr><td>1.2</td><td>確認零押注交易合法性</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">確認 AWC 平台商能正確處理 bet_amount=0 的純派發交易</td><td class="dim tag-req" style="background:none;padding:0;color:var(--red);">⚠️ 基礎建設前置</td></tr>
+        <tr><td>1.3</td><td>確認每日對帳口徑</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">確認 get_bet_summary 是否能分離活動派彩 vs 一般 GGR</td><td class="dim">需 AWC 確認</td></tr>
+        <tr><td>1.4</td><td>確認 Callback 規格</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">place_bet 回調中可取得 bet_amount、game_account、game_code 確認</td><td></td></tr>
+        <tr><td>1.5</td><td>送出 v2 背包系統 AWC 需求書</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">提前告知 AWC：v2 需要串接 LoginWithoutRedirect API 取得遊戲跳轉 URL，請求排期確認</td><td class="dim" style="color:var(--orange);">⚠️ 與 v2 開發平行進行，不等 v1 完成</td></tr>
+        <tr><td>1.6</td><td>確認 LoginWithoutRedirect 規格</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">確認 AWC 的 LoginWithoutRedirect 回傳格式、Token 有效期、一次性 URL 限制</td><td class="dim">需 AWC 配合</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-content" id="tab-phase2">
+    <table class="spec-table">
+      <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>2.1</td><td>建立 reward_catalog 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">登記所有獎品類型：R_CASH_1 / R_CASH_3 / R_CASH_8 / R_CASH_18，預留 R_FS_* 欄位結構</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;font-size:9px;">v2預留</span></td></tr>
+        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[], start_date, end_date, status</td><td></td></tr>
+        <tr><td>2.3</td><td>建立 player_progress 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_id + campaign_id + date 為複合主鍵；today_wager, cell_states[], shuffle_result, created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>2.4</td><td>建立 reward_grant 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發放收據：player_id, campaign_id, cell_index, reward_id, amount, awc_txn_id, status(pending/active/failed), created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>2.5</td><td>建立 MongoDB Index</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_progress: {player_id, date} compound index；reward_grant: {player_id, status} index</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>2.6</td><td>寫入初始活動設定檔</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">v1 先用 config file 管理活動參數，後台 UI 後補。工程上線即可，不需後台介面</td><td></td></tr>
+        <tr><td>2.7</td><td>建立 inventory（背包）資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">儲存玩家持有道具：player_id, item_type(FREE_SPIN), item_id, game_ids[], rounds, expire_at, status(active/used/expired), created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>2.8</td><td>建立 item_use_log 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">記錄每次道具使用：player_id, item_id, game_id, awc_launch_url, used_at, status</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-content" id="tab-phase3">
+    <table class="spec-table">
+      <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>3.1</td><td>押注累積邏輯（Wager Hook）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">接收 AWC place_bet callback，累積今日押注至 player_progress，觸發門檻判斷</td><td></td></tr>
+        <tr><td>3.2</td><td>格子解鎖邏輯</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">判斷 today_wager 是否跨越下一格門檻，首次解鎖時執行洗牌並寫入 shuffle_result</td><td></td></tr>
+        <tr><td>3.3</td><td>洗牌演算法 + 第幾抽權重抽選</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日依固定獎池（小×5/中×2/大×1/終×1）動態洗牌分配到 9 格；翻格依「第幾抽權重」抽選獎項、抽到後該獎項數量 -1 並重算權重，結果寫死不可改</td><td></td></tr>
+        <tr><td>3.4</td><td>翻格 API（POST /chest/open）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證格子狀態合法 → 呼叫 AWC place_bet 派現金 → 等回成功 → 寫 reward_grant(active) → 更新 cell_state</td><td></td></tr>
+        <tr><td>3.5</td><td>重試機制（Retry Queue）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">AWC 呼叫失敗時 reward_grant 維持 pending，背景排程重試至成功為止</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>3.6</td><td>冪等性保護</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">同一格重複翻格請求（前端重傳）需被正確攔截，不重複派獎</td><td></td></tr>
+        <tr><td>3.7</td><td>每日重置排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日 00:00 UTC+8 清空當日 player_progress，不清歷史 reward_grant</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>3.8</td><td>查詢玩家寶箱狀態 API（GET /chest/status）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">回傳當日進度、各格解鎖狀態、已翻格獎勵，供前端渲染</td><td></td></tr>
+        <tr><td>3.9</td><td>FREE SPIN 卡派發邏輯</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">翻格結果為 FREE SPIN 卡時，寫入 inventory 資料表，不呼叫 AWC place_bet，改以道具形式儲存（實際發卡）</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
+        <tr><td>3.10</td><td>背包查詢 API（GET /inventory）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">回傳玩家目前持有道具清單，含道具類型、數量、可使用遊戲列表、有效期限</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
+        <tr><td>3.11</td><td>背包使用 API（POST /inventory/use，道具使用跳轉）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證道具有效 → 呼叫 AWC LoginWithoutRedirect（帶 Token + GameId）→ 取得一次性 URL → 回傳前端 → 更新 item_use_log（AWC 已於 v1 串妥）</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
+        <tr><td>3.12</td><td>道具過期排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日檢查 inventory 中 expire_at < now 的道具，更新 status = expired</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-content" id="tab-phase4">
+    <table class="spec-table">
+      <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>4.1</td><td>寶箱 UI 設計稿輸出</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">3×3格子佈局、解鎖動畫、翻格動畫、進度條、最終獎光效設計稿</td><td></td></tr>
+        <tr><td>4.2</td><td>寶箱入口按鈕（遊戲內 UI）</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">遊戲主畫面顯示寶箱快捷入口（含未翻格提示紅點）</td><td></td></tr>
+        <tr><td>4.3</td><td>寶箱主畫面實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">3×3 Grid、每格顯示解鎖狀態（鎖定/可翻/已翻）、當前進度條、下一格倒計距離</td><td></td></tr>
+        <tr><td>4.4</td><td>翻格動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊翻格翻轉動畫、獎勵金額飛出、最終獎特效（爆發光效）</td><td></td></tr>
+        <tr><td>4.5</td><td>進度條即時更新</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">每次 Spin 後更新進度條顯示，格子達門檻時發光提示</td><td></td></tr>
+        <tr><td>4.6</td><td>重置倒計時顯示</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">顯示距今日 00:00 重置還有多少時間，製造急迫感</td><td></td></tr>
+        <tr><td>4.7</td><td>API 串接</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">串接 GET /chest/status 取狀態，串接 POST /chest/open 翻格</td><td></td></tr>
+        <tr><td>4.8</td><td>背包 UI 設計稿</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">主畫面背包 icon、背包列表頁、道具卡片樣式、遊戲選擇彈窗設計稿</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.9</td><td>主畫面背包 icon 實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">固定顯示於主畫面，持有道具時顯示數量紅點提示</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.10</td><td>背包主頁面實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">列出所有持有道具，顯示道具名稱、數量、有效期限、使用按鈕</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.11</td><td>遊戲選擇彈窗實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊 FREE SPIN 卡後跳出可選遊戲列表（依後台設定的 GameId 清單），顯示遊戲縮圖+名稱</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.12</td><td>道具使用跳轉流程實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">玩家選擇遊戲後呼叫後端 API，取得 AWC 跳轉 URL，執行跳轉進入遊戲</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.13</td><td>洗牌動態動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">攤開階段→點擊開始遊戲→獎項集中中央→洗牌動畫→分散到9格背面蓋牌，整段動畫流暢度為關鍵體驗</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-content" id="tab-phase5">
+    <table class="spec-table">
+      <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
+        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、期間、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
+        <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
+        <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
+        <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
+        <tr><td>5.6</td><td>後台帳號權限設定</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">區分 Admin（全操作）、Operator（只可查看+啟停，不可改獎勵參數）</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
+        <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
+        <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-content" id="tab-phase6">
+    <table class="spec-table">
+      <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>6.1</td><td>Tester 帳號白名單測試</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">使用 is_tester=true 帳號完整走過一個解鎖→翻格→派獎→重置循環</td><td></td></tr>
+        <tr><td>6.2</td><td>AWC 對帳欄位驗證</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">確認 bonus_type / campaign_id 欄位在 get_bet_summary 中可正確分離</td><td></td></tr>
+        <tr><td>6.3</td><td>重試機制壓力測試</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">模擬 AWC 失敗場景，驗證 retry queue 正確執行且不重複派獎</td><td></td></tr>
+        <tr><td>6.4</td><td>上線監控設定</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td><td class="dim">設定 reward_grant pending 數量 alert，AWC 失敗率 alert</td><td></td></tr>
+        <tr><td>6.5</td><td>數據 Log 驗收</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">確認 Section 10 所列 Log 事件均正確上報，欄位無缺失</td><td></td></tr>
+        <tr><td>6.6</td><td>正式上線與觀察期</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">先上單一活動版本觀察 2 週，數字健康後再評估 v2 分眾擴充</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-title" style="margin-top:32px;">開發時程建議</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot active"></div>
+      <div class="tl-phase">PHASE 01 · 第 1–2 週</div>
+      <div class="tl-title">AWC 完整需求一次提交 + 資料層建立</div>
+      <div class="tl-tasks">
+        <span class="tl-task pm">一次提交完整 AWC 需求（place_bet + LoginWithoutRedirect）</span>
+        <span class="tl-task eng">建立六層資料表（含背包水管）</span>
+        <span class="tl-task inf">MongoDB Index</span>
+        <span class="tl-task eng">初始設定檔</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">PHASE 02 · 第 2–5 週</div>
+      <div class="tl-title">核心業務邏輯開發</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">Wager Hook</span>
+        <span class="tl-task eng">洗牌演算法</span>
+        <span class="tl-task eng">翻格派獎 API</span>
+        <span class="tl-task eng">FREE SPIN 卡派發邏輯</span>
+        <span class="tl-task eng">背包 API</span>
+        <span class="tl-task inf">Retry Queue</span>
+        <span class="tl-task eng">重置排程</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">PHASE 03 · 第 3–6 週（與 Phase 02 平行）</div>
+      <div class="tl-title">前端 Web UI + 後台</div>
+      <div class="tl-tasks">
+        <span class="tl-task design">UI 設計稿</span>
+        <span class="tl-task pm">9宮格畫面+洗牌動畫</span>
+        <span class="tl-task pm">背包UI+跳轉流程</span>
+        <span class="tl-task eng">後台活動表單+新版抽獎設定</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">PHASE 04 · 第 6–7 週</div>
+      <div class="tl-title">AWC 串接測試</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">LoginWithoutRedirect 串接測試</span>
+        <span class="tl-task eng">place_bet 欄位驗證</span>
+        <span class="tl-task pm">對帳口徑確認</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">PHASE 05 · 第 7–8 週</div>
+      <div class="tl-title">測試驗收 + 上線</div>
+      <div class="tl-tasks">
+        <span class="tl-task pm">Tester 白名單完整循環測試</span>
+        <span class="tl-task eng">QA 功能測試</span>
+        <span class="tl-task data">Log 驗收</span>
+        <span class="tl-task inf">監控 Alert</span>
+        <span class="tl-task pm">正式上線</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 06 UI MOCKUP ═══════════ -->
+<section class="section" id="ui">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-title">UI / UX 操作示意規劃</span>
+    <span class="section-title-en">UI/UX MOCKUP & SPEC</span>
+  </div>
+
+  <div class="sub-title">玩家端寶箱畫面（手機版示意）</div>
+
+  <div style="display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start;">
+    <div class="mockup-phone">
+      <div class="mockup-statusbar">
+        <span>9:41</span>
+        <span>▲▲▲ 100%</span>
+      </div>
+      <div class="mockup-screen">
+        <div class="mockup-game-header">
+          <div class="mockup-game-logo">LET'S GO!</div>
+          <div class="mockup-balance">餘額 <span>₱1,250.00</span></div>
+        </div>
+
+        <div class="chest-container">
+          <div class="chest-header">
+            <div class="chest-title">🎁 每日寶箱</div>
+            <div class="chest-progress-info">翻開 <span>3</span> / 9</div>
+          </div>
+
+          <div class="progress-section">
+            <div class="progress-label">
+              <span>本階段進度</span>
+              <span style="color:var(--gold-light);">300 / 500</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:60%;"></div>
+            </div>
+          </div>
+
+          <div class="chest-grid" id="mockup-grid"></div>
+
+          <div class="reset-info">
+            ⏱ 今日重置倒計時：<span style="color:var(--gold-light);font-family:'DM Mono',monospace;">14:23:07</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sub-title" style="margin-top:0;">UI 元件說明</div>
+      <table class="spec-table">
+        <thead><tr><th>元件</th><th>狀態說明</th><th>互動行為</th></tr></thead>
+        <tbody>
+          <tr><td>格子·鎖定</td><td class="dim">累積押注尚未達門檻，顯示鎖頭圖示與所需押注差額</td><td class="dim">點擊無反應，可顯示「還差 ₱XXX 解鎖」提示</td></tr>
+          <tr><td>格子·已解鎖</td><td class="dim">累積押注達門檻，格子發光閃爍</td><td class="dim">點擊執行翻格請求，觸發翻轉動畫</td></tr>
+          <tr><td>格子·已翻開</td><td class="dim">顯示獲得的獎勵金額，綠色邊框</td><td class="dim">點擊可再次查看獎勵，不重複派獎</td></tr>
+          <tr><td>最終獎格</td><td class="dim">翻開後特殊金色光效爆發（位置每日動態洗牌，不固定）</td><td class="dim">全螢幕特效動畫，顯示恭喜彈窗</td></tr>
+          <tr><td>進度條</td><td class="dim">以「已累積 / 本階段目標」呈現（如 300/500），永遠不顯示 ₱3,600 累積總額</td><td class="dim">每次押注後即時更新</td></tr>
+          <tr><td>重置倒計時</td><td class="dim">距當日 00:00 的剩餘時間</td><td class="dim">每秒更新，顯示 HH:MM:SS</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-title">UX 設計原則</div>
+      <div class="info-grid-2">
+        <div class="info-card">
+          <div class="info-card-title">📊 進度可視化</div>
+          <div class="info-card-desc">IKEA 效應：明確顯示距下一格還差多少，讓玩家感知「再一點就到了」，強化繼續押注意願</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">⏰ 急迫感設計</div>
+          <div class="info-card-desc">倒計時顯示讓玩家清楚意識到今日進度即將歸零，製造「今天一定要翻完」的驅動力</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🎉 獎勵反饋</div>
+          <div class="info-card-desc">翻格動畫、金額飛出效果、最終獎全螢幕爆炸特效——讓每次翻格都有強烈的滿足感</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🔴 入口紅點 + 氣泡提示</div>
+          <div class="info-card-desc">主遊戲畫面的寶箱入口 icon，有可翻格時 icon 亮起 + 顯示小紅點，並主動跳出「快來抽獎囉！」氣泡（3 秒自動消失），降低玩家錯過的機率</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:32px;">遊戲內 iFrame 入口與展開</div>
+  <div class="callout info">
+    <strong>白話說明：</strong>寶箱活動以 <em>iFrame</em>（內嵌的獨立小網頁）嵌入 Combo 遊戲畫面；好處是活動內容可由後台更新、<strong>不需重出遊戲版本</strong>，活動上下架、文案調整都能熱更新。
+  </div>
+  <div class="info-grid-2">
+    <div class="info-card">
+      <div class="info-card-title">🎯 入口按鈕（icon）</div>
+      <div class="info-card-desc">固定顯示於遊戲主畫面（參考 Mission 面板的展開互動範式），持有可抽次數時 icon 亮起並帶紅點。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🪄 展開／收回（方案 A）</div>
+      <div class="info-card-desc">點擊 icon → 抽獎視窗<strong>由 icon 原點縮放（scale + 位移）展開</strong>；關閉視窗 → <strong>縮回該 icon</strong>。以 spring／縮放動畫呈現「從哪顆按鈕長出來、就縮回哪顆」的連續感。</div>
+    </div>
+  </div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">👆 點擊入口 icon</div>
+        <div class="flow-step-desc">玩家點擊主畫面寶箱 icon</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight" style="min-width:400px;">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">🪄 自 icon 原點放大展開</div>
+        <div class="flow-step-desc">抽獎視窗以 spring/scale 動畫從 icon 座標放大展開</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">🖼 抽獎視窗（iFrame）</div>
+        <div class="flow-step-desc">於 iFrame 內進行攤開／洗牌／選格抽獎，內容後台可熱更新</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step" style="min-width:400px;">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">✖ 關閉視窗</div>
+        <div class="flow-step-desc">玩家點關閉</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step success" style="min-width:400px;">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">↩ 縮回該 icon</div>
+        <div class="flow-step-desc">視窗以反向 scale 動畫縮回原 icon，維持連續感</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:32px;">進場與提示觸發邏輯</div>
+  <table class="spec-table">
+    <thead><tr><th>觸發情境</th><th>條件</th><th>行為</th></tr></thead>
+    <tbody>
+      <tr><td>每日首次進場</td><td class="dim">符合活動的玩家當日第一次進入 Combo 遊戲</td><td class="dim">主動全屏跳出活動頁</td></tr>
+      <tr><td>可抽提示</td><td class="dim">累積押注解鎖之「可抽次數 &gt; 1」</td><td class="dim">① 入口 icon 亮起 + 小紅點　② 主動跳出氣泡框「快來抽獎囉！」，3 秒後自動消失，引導點開</td></tr>
+      <tr><td>觸發頻率</td><td class="dim">每多解鎖一格可抽</td><td class="dim">每次達標都提示（每解鎖一格觸發一次氣泡）</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>實作備註（防抖）：</strong>同一秒內多格同時解鎖時做防抖（debounce），只跳一次氣泡，避免連續彈出干擾體驗。
+  </div>
+
+  <!-- ═══ v3.1 新增：美術設計頁面與狀態清單 ═══ -->
+  <div class="sub-title" id="ui-artspec" style="margin-top:40px;">美術設計頁面與狀態清單（v3.1 新增）</div>
+  <div class="callout info">
+    <strong>設計依據：</strong>本清單依互動原型 <em>《抽寶箱 CRM 浮動icon 原型.html》</em>（同資料夾）盤點，共 <strong>6 個畫面組（P1–P6）</strong>。美術請搭配原型實際操作確認動態節奏。原型畫布為直式手機 <strong>430 × 932（@1x）</strong>，切圖建議輸出 @2x／@3x。<br>
+    <strong>不在設計範圍：</strong>① 原型右下角調整面板（Tweaks，原型工具）；② 背景 slot 遊戲畫面（僅為示意）；③ 原型內「⏩ 示範：快速集滿」連結（demo 專用）。
+  </div>
+
+  <div class="sub-title" style="font-size:13px;">P1 · 浮動入口 icon（常駐遊戲主畫面）</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:140px;">狀態</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+    <tbody>
+      <tr><td>一般狀態</td><td class="dim">寶箱主體 icon（約 64×64pt）＋外圈進度環（漸層描邊，顯示「本階段累積進度」百分比）</td><td class="dim">進度環隨押注即時增長（stroke 動畫 0.5s）</td></tr>
+      <tr><td>可翻提示</td><td class="dim">icon 發光（outer glow）＋右上角紅點，紅點內顯示可翻格數數字</td><td class="dim">呼吸式發光 loop</td></tr>
+      <tr><td>氣泡提示</td><td class="dim">白底圓角氣泡「快來抽獎囉！🎁」＋朝向 icon 的三角指標；icon 在左半屏時氣泡靠左、右半屏靠右（雙向版型）</td><td class="dim">解鎖新格時自動跳出，3 秒後淡出；多格同時解鎖只跳一次（防抖）</td></tr>
+      <tr><td>長按拖曳</td><td class="dim">長按 0.5 秒進入拖曳態：icon 微放大＋顯示「拖曳到任意位置」提示字</td><td class="dim">拖曳跟手；放開後自動吸附至左右螢幕邊緣（snap 回彈動畫）</td></tr>
+      <tr><td>隱藏態</td><td class="dim">開啟寶箱彈窗／遊戲中心面板時 icon 暫時隱藏</td><td class="dim">淡出／淡入</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" style="font-size:13px;">P2 · 遊戲中心展開面板</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+    <tbody>
+      <tr><td>面板本體</td><td class="dim">直式窄面板（約 132pt 寬），錨定於 icon 旁、朝螢幕內側展開；含標題「遊戲中心」</td><td class="dim">自 icon 原點縮放展開；關閉反向縮回</td></tr>
+      <tr><td>功能入口 ×6</td><td class="dim">抽寶箱（live）／任務／道具／排行／推薦／收藏；每項＝icon＋主名稱＋副標小字</td><td class="dim">項目依序進場（stagger 約 0.04s/項）</td></tr>
+      <tr><td>live 項紅點</td><td class="dim">「抽寶箱」有可翻格時顯示紅點</td><td class="dim">—</td></tr>
+      <tr><td>COMING SOON 蓋牌</td><td class="dim">未開放項目降彩度＋「敬請期待」badge（本期僅「抽寶箱」開放）</td><td class="dim">點擊無反應</td></tr>
+      <tr><td>背景遮罩</td><td class="dim">半透明 scrim 罩住遊戲畫面</td><td class="dim">點擊遮罩關閉面板</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" style="font-size:13px;">P3 · 寶箱主彈窗（攤牌 → 洗牌 → 遊玩 三階段）</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:140px;">階段/元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+    <tbody>
+      <tr><td>共用框架</td><td class="dim">標題「每日抽寶箱」＋英文副標、關閉鈕 ✕、重置倒數列「⏱ 今日重置倒數 HH:MM:SS」、進度區（「本階段進度」標籤＋ <strong>300/500</strong> 數值＋進度條＋「再押 ₱X 解鎖下一格」提示）、背景裝飾層</td><td class="dim">彈窗自 icon 原點 scale 展開、關閉縮回原 icon（連續感，見上方展開流程圖）</td></tr>
+      <tr><td>① 攤牌階段</td><td class="dim">9 宮格全部正面朝上攤開（每格＝獎項 icon＋金額），底部說明「今日獎項已攤開 — 看清楚有哪些獎，準備開始！」＋主按鈕「開始遊戲」</td><td class="dim">進場攤牌動畫（依序翻正）</td></tr>
+      <tr><td>② 洗牌階段</td><td class="dim">獎項牌集中至中央 → 漩渦洗牌（swirl）→ 分散回 9 格背面蓋牌；按鈕變為「洗牌中…」（disabled 態）</td><td class="dim">全程約 1.5 秒；<strong>流暢度為關鍵體驗</strong>（對應 Task 4.13）</td></tr>
+      <tr><td>③ 遊玩階段·格子三態</td><td class="dim">a. <strong>已翻開</strong>：正面框＋獎項 icon＋金額；b. <strong>可翻</strong>：牌背發光＋「點我翻開」標籤；c. <strong>鎖定</strong>：降彩度＋鎖頭 🔒，「下一格」額外顯示「再押 ₱X」。每格左上有 1–9 序號</td><td class="dim">點可翻格 → 3D 翻轉（flip）→ 小獎金額由格內飛出上浮 1 秒；最終獎觸發 P4</td></tr>
+      <tr><td>③ 遊玩階段·footer</td><td class="dim">「已翻開 X / 9 · N 格可翻」；全解鎖翻完時改顯「明日 00:00 重置，全新洗牌 🎲」</td><td class="dim">即時更新</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" style="font-size:13px;">P4 · 最終大獎爆發畫面</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+    <tbody>
+      <tr><td>全螢幕遮罩</td><td class="dim">罩住整個彈窗的深色遮罩</td><td class="dim">點擊任意處可關閉</td></tr>
+      <tr><td>彩帶 Confetti</td><td class="dim">多彩紙片（約 6 色、40 片）自頂部灑落</td><td class="dim">隨機大小/速度/延遲，落下 loop</td></tr>
+      <tr><td>獎勵卡</td><td class="dim">👑 大圖＋「恭喜獲得最終大獎！」＋大字金額＋主按鈕「太棒了！收下」</td><td class="dim">爆發式進場（scale + bounce）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" style="font-size:13px;">P5 · 新手教學（2 步驟，首次進入觸發）</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+    <tbody>
+      <tr><td>遮罩＋spotlight</td><td class="dim">半透明教學遮罩；步驟 1 在進度條位置挖洞聚焦＋指示箭頭 ⬆</td><td class="dim">spotlight 隨版面自動對位</td></tr>
+      <tr><td>教學卡·步驟 1</td><td class="dim">📊 插圖＋標題「押注就能集滿累積條」＋說明文＋按鈕「跳過」「下一步」＋步驟圓點指示</td><td class="dim">卡片彈入</td></tr>
+      <tr><td>教學卡·步驟 2</td><td class="dim">寶箱🎁→👑＋金額 的示意小動畫＋星光粒子＋標題「每天都有機會抽中最大獎！」＋說明文＋按鈕「開始抽寶箱 🎉」</td><td class="dim">示意動畫 loop、星光閃爍</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" style="font-size:13px;">P6 · 主題風格（需定稿）</div>
+  <div class="body-text">原型內建三套換色風格：<strong>糖果（預設）／藍紫／金黑</strong>。糖果版色票示意——背景 <em>#8FD0FF→#C9B8FF→#FFD6EC</em>、彈窗 <em>#FFD3EC→#C9B8FF→#AEE3FF</em>、格子 <em>#8C6CF0→#6242CC</em>、進度條 <em>#FF8EC4→#FFD86B</em>。</div>
+  <div class="callout warn">
+    <strong>需 PM＋美術決策：</strong>首發以<strong>單一主題</strong>定稿（建議從三風格擇一深化）；「多主題換膚」列 v2 評估，避免 v1 美術量 ×3。
+  </div>
+
+  <div class="sub-title" id="ui-assets" style="margin-top:32px;">美術資產清單（Asset List）</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:36px;">#</th><th>資產項目</th><th>數量/規格</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>浮動 icon 寶箱主體</td><td class="dim">×1，含一般態＋發光態</td><td class="dim">P1</td></tr>
+      <tr><td>2</td><td>進度環＋紅點（含數字樣式）</td><td class="dim">×1 組</td><td class="dim">P1，環為程式描邊、美術定色</td></tr>
+      <tr><td>3</td><td>氣泡框</td><td class="dim">×1（左右雙向鏡像）</td><td class="dim">P1</td></tr>
+      <tr><td>4</td><td>遊戲中心面板底＋6 入口 icon</td><td class="dim">面板 ×1、icon ×6</td><td class="dim">P2，未開放 5 項可先低保真</td></tr>
+      <tr><td>5</td><td>COMING SOON／敬請期待 badge</td><td class="dim">×1</td><td class="dim">P2</td></tr>
+      <tr><td>6</td><td>彈窗背景框＋標題列＋關閉鈕＋裝飾層</td><td class="dim">×1 組</td><td class="dim">P3</td></tr>
+      <tr><td>7</td><td>進度條（軌道＋漸層填充）</td><td class="dim">×1 組</td><td class="dim">P3，與 P1 進度環同色系</td></tr>
+      <tr><td>8</td><td>牌背 ×1＋牌面框（小/中/大獎共框換色）＋最終獎特殊框</td><td class="dim">背 ×1、面框 ×2 種</td><td class="dim">P3，獎項結構見第 03 章</td></tr>
+      <tr><td>9</td><td>獎項 icon（小獎/中獎/大獎/最終獎👑）</td><td class="dim">×4</td><td class="dim">P3/P4</td></tr>
+      <tr><td>10</td><td>鎖頭 icon</td><td class="dim">×1</td><td class="dim">P3 鎖定態</td></tr>
+      <tr><td>11</td><td>按鈕組：主按鈕（開始遊戲/收下）＋次按鈕（跳過/下一步）</td><td class="dim">主/次 ×各 1 套（含 disabled 態）</td><td class="dim">P3/P4/P5</td></tr>
+      <tr><td>12</td><td>洗牌動畫素材</td><td class="dim">單格牌素材＋動態示意</td><td class="dim">P3，動畫由前端程式實作，美術出分層素材</td></tr>
+      <tr><td>13</td><td>翻格 flip＋金額飛出特效素材</td><td class="dim">×1 組</td><td class="dim">P3</td></tr>
+      <tr><td>14</td><td>Confetti 彩帶粒子</td><td class="dim">6 色基礎片</td><td class="dim">P4，程式生成、美術定色票</td></tr>
+      <tr><td>15</td><td>教學卡插圖 ×2＋spotlight 遮罩樣式</td><td class="dim">×1 組</td><td class="dim">P5</td></tr>
+      <tr><td>16</td><td>多語系字體確認（CJK/泰文/緬甸文/孟加拉文/拉丁）</td><td class="dim">建議 Noto Sans 系列</td><td class="dim">⚠️ 基礎建設，見第 14 章多國語系</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>動效分工原則：</strong>洗牌／翻格／爆發等動效由 🌐 前端Web 以程式動畫實作（CSS/JS），美術提供<strong>分層靜態素材＋動態節奏示意</strong>（以原型為準）；若評估後需序列幀（sprite sheet）再另行開工項。
+  </div>
+</section>
+
+<!-- ═══════════ 07 BACKEND ═══════════ -->
+<section class="section" id="backend">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-title">後台管理介面規劃</span>
+    <span class="section-title-en">ADMIN PANEL DESIGN</span>
+  </div>
+
+  <div class="callout info">
+    <strong>後台設計原則：</strong>v1 後台聚焦在「活動設定」與「異常處理」，不包含數據分析儀表板（由數據組另拉）。v2 可在此架構上擴充活動模板複製、分眾投放設定等功能。
+  </div>
+
+  <div class="sub-title">後台功能模組</div>
+  <div class="info-grid-3">
+    <div class="info-card" style="border-color:rgba(90,191,122,0.3);">
+      <div class="info-card-title" style="color:#7ADFA0;">📋 活動管理</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 活動列表（狀態篩選）<br>
+        · 新增 / 編輯活動<br>
+        · 啟動 / 暫停活動<br>
+        · RTP 即時試算驗證<br>
+        <span style="color:var(--purple);font-size:11px;">v2：活動模板複製</span>
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(74,143,224,0.3);">
+      <div class="info-card-title" style="color:#90C0F0;">🔧 異常處理</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · Pending 發放列表<br>
+        · 手動重試觸發<br>
+        · 失敗原因查詢<br>
+        · AWC 回傳 Log 查看
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(212,168,67,0.3);">
+      <div class="info-card-title" style="color:var(--gold-light);">👥 帳號權限</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · Admin：全操作<br>
+        · Operator：查看+啟停<br>
+        · 不可改獎勵參數（Operator）<br>
+        <span style="color:var(--purple);font-size:11px;">v2：更細粒度權限</span>
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(58,191,176,0.3);">
+      <div class="info-card-title" style="color:var(--teal);">📒 注單查詢（對帳）</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 依 bonus_type 篩選：<br>
+        　一般注單 / CHEST_REWARD（現金獎） / FREE_SPIN（道具）<br>
+        · 支援日期區間查詢<br>
+        · 對應 AWC get_bet_summary 的 bonus_type 分離欄位
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">後台活動設定畫面示意</div>
+
+  <div class="admin-wrap">
+    <div class="admin-topbar">
+      <span class="admin-topbar-title">🎁 活動管理 · 建立新活動</span>
+      <span class="admin-status draft">DRAFT</span>
+    </div>
+    <div class="admin-body">
+      <div class="admin-section-divider">基本資料</div>
+      <div class="admin-form-row">
+        <div class="admin-label">CAMPAIGN ID</div>
+        <div class="admin-input"><span style="color:var(--gold-light);font-family:'DM Mono',monospace;">TB_2026Q3_V1</span></div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-label">活動名稱</div>
+        <div class="admin-input">寶箱活動 · Q3 2026</div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-label">活動期間</div>
+        <div class="admin-input-group">
+          <div class="admin-input" style="flex:1;">2026/07/01</div>
+          <div style="padding:9px 4px;color:var(--text-dim);">→</div>
+          <div class="admin-input" style="flex:1;">2026/09/30</div>
+        </div>
+      </div>
+
+      <div class="admin-section-divider">解鎖門檻設定（每格增量，單位：披索；內部累積至 ₱3,600）</div>
+      <div class="admin-prize-grid">
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 1</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">50</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 2</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">100</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 3</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">150</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 4</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">200</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 5</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">300</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 6</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">400</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 7</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">600</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 8</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">800</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+        <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 9</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">1,000</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
+      </div>
+
+      <div class="admin-section-divider">抽獎權重設定（第幾抽）</div>
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>抽次</th>
+            <th>小獎權重（%）</th>
+            <th>中獎權重（%）</th>
+            <th>大獎權重（%）</th>
+            <th>最終獎權重（%）</th>
+            <th>備註</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>第 1 抽</td><td class="mono" style="color:#90C0F0;">70</td><td class="mono" style="color:#7ADFA0;">30</td><td class="mono">0</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 2 抽</td><td class="mono" style="color:#90C0F0;">65</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">0</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 3 抽</td><td class="mono" style="color:#90C0F0;">60</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">5</td><td class="mono">0</td><td class="dim">大獎開始開放</td></tr>
+          <tr><td>第 4 抽</td><td class="mono" style="color:#90C0F0;">55</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">10</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 5 抽</td><td class="mono" style="color:#90C0F0;">50</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">15</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 6 抽</td><td class="mono" style="color:#90C0F0;">45</td><td class="mono" style="color:#7ADFA0;">30</td><td class="mono">25</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 7 抽</td><td class="mono" style="color:#90C0F0;">30</td><td class="mono" style="color:#7ADFA0;">25</td><td class="mono">30</td><td class="mono" style="color:var(--gold-light);">15</td><td class="dim">最終獎開始開放</td></tr>
+          <tr><td>第 8 抽</td><td class="mono" style="color:#90C0F0;">25</td><td class="mono" style="color:#7ADFA0;">25</td><td class="mono">30</td><td class="mono" style="color:var(--gold-light);">20</td><td class="dim"></td></tr>
+          <tr><td>第 9 抽</td><td class="mono dim" colspan="4" style="text-align:center;">依剩餘獎項數量自動計算</td><td class="dim">無特殊保底</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <strong>重要：</strong>每完成一抽，該格抽到的獎項數量 -1。當某獎項數量歸零時，後續抽次該獎項的權重自動歸零，系統依剩餘獎項比例重新分配。第9抽將由剩餘獎項決定，無特殊保底。
+      </div>
+
+      <div class="admin-section-divider">RTP 自動驗算</div>
+      <div class="admin-rtp-bar">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);">0.9%</span>
+        <div class="admin-rtp-track">
+          <div class="admin-rtp-fill"></div>
+          <div class="admin-rtp-marker"></div>
+        </div>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);">1.1%</span>
+        <div class="admin-rtp-val">✓ 1.028%</div>
+      </div>
+      <div class="admin-rtp-range" style="padding:0 16px;">
+        <span>下限 0.9%</span>
+        <span style="color:var(--green);">✓ 在容許區間</span>
+        <span>上限 1.1%</span>
+      </div>
+
+      <div class="admin-btn-row">
+        <button class="admin-btn secondary">儲存草稿</button>
+        <button class="admin-btn primary">上線活動</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">後台功能規格補充</div>
+  <table class="spec-table">
+    <thead><tr><th>功能</th><th>描述</th><th>v1</th><th>v2預留</th></tr></thead>
+    <tbody>
+      <tr><td>活動建立表單</td><td class="dim">填寫期間、每格增量門檻、固定獎池、第幾抽權重、usertype tag</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>抽獎權重設定（第幾抽）</td><td class="dim">從第1抽到第9抽各自設定四種獎項權重，支援獎項歸零自動重算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>注單篩選（bonus_type）</td><td class="dim">依獎勵類型分離注單，對帳用</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>RTP 自動試算</td><td class="dim">填完獎勵即時顯示 RTP%，超出範圍警示</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>獎勵內容編輯工具</td><td class="dim">編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list</td><td class="dim">—</td><td><span class="tag-pill tag-v2">v2 擴充</span></td></tr>
+      <tr><td>活動啟停</td><td class="dim">一鍵上線/暫停，暫停時前端顯示維護中</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>Pending 異常列表</td><td class="dim">查詢發放失敗紀錄，手動觸發重試</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>帳號權限管理</td><td class="dim">Admin / Operator 兩種角色</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">細粒度擴充</td></tr>
+      <tr><td>活動模板複製</td><td class="dim">複製現有活動為新版本，只改參數</td><td class="dim">—（設定檔管理）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
+      <tr><td>分眾 tag 設定</td><td class="dim">設定投放 tag：LOW / MID / HIGH</td><td class="dim">—</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
+      <tr><td>月結對帳儀表板</td><td class="dim">視覺化活動成本 vs GGR 拆帳</td><td class="dim">—（數據組另拉）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 08 KPI ═══════════ -->
+<section class="section" id="kpi">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-title">預期提升目標（KPI）</span>
+    <span class="section-title-en">KPI TARGETS</span>
+  </div>
+
+  <div class="sub-title">Combo Gaming 現況基準</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">每日總 BET</div>
+      <div class="kpi-val">$40萬</div>
+      <div class="kpi-desc">每日總押注（美金），全平台現況</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">每日新玩家</div>
+      <div class="kpi-val">4,000</div>
+      <div class="kpi-desc">每日新進玩家數</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">DAU</div>
+      <div class="kpi-val">10,000</div>
+      <div class="kpi-desc">每日活躍玩家</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">次日留存</div>
+      <div class="kpi-val">10%</div>
+      <div class="kpi-desc">現況次日回流率</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">3 日區間留存</div>
+      <div class="kpi-val">17%</div>
+      <div class="kpi-desc">3 日內至少回來 1 次的比例</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">每日玩家貢獻值</div>
+      <div class="kpi-val">$33</div>
+      <div class="kpi-desc">每人每日貢獻值（USD）</div>
+    </div>
+  </div>
+
+  <div class="sub-title">主要 KPI 目標</div>
+  <div class="kpi-grid">
+    <div class="kpi-card primary">
+      <div class="kpi-label">次日留存</div>
+      <div class="kpi-val">10% → 15%</div>
+      <div class="kpi-desc">+5pp，為本活動最核心驗證假設</div>
+    </div>
+    <div class="kpi-card primary">
+      <div class="kpi-label">3 日區間留存</div>
+      <div class="kpi-val">17% → 22%</div>
+      <div class="kpi-desc">+5pp，3 日內至少回來 1 次</div>
+    </div>
+    <div class="kpi-card primary">
+      <div class="kpi-label">DAU</div>
+      <div class="kpi-val">≈ 10,400</div>
+      <div class="kpi-desc">+4%（區間 +2%~+6%）</div>
+    </div>
+  </div>
+
+  <div class="sub-title">推算結果</div>
+  <table class="spec-table">
+    <thead><tr><th>指標</th><th>現況</th><th>提升後</th><th>增量</th></tr></thead>
+    <tbody>
+      <tr><td>DAU</td><td class="mono">10,000</td><td class="mono">10,400</td><td class="mono" style="color:var(--green);">+4%</td></tr>
+      <tr><td>總 BET</td><td class="mono">$400,000/日</td><td class="mono">$499,200/日</td><td class="mono" style="color:var(--green);">+24.8%（月 +$298 萬）</td></tr>
+      <tr><td>貢獻值收入</td><td class="mono">$330,000/日</td><td class="mono">$411,840/日</td><td class="mono" style="color:var(--green);">+24.8%（月 +$246 萬）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>總 BET 增量拆解：</strong>留存帶動 <strong>+$1.6 萬/日</strong>（多 400 人 × $40）＋ 單人押注帶動 <strong>+$8.3 萬/日</strong>（DAU 10,400 × 20% = 2,080 人，各 +$40）= <strong>+$9.92 萬/日</strong>。
+  </div>
+
+  <div class="callout warn">
+    <strong>計算假設（明列以利日後挑戰）：</strong><br>
+    1. <strong>留存帶動 DAU：</strong>+5pp 留存 ≈ 每日多留 200 名玩家、早期活躍約 2 天（主估），故 +400 DAU。<br>
+    2. <strong>單人押注：</strong>估 20% 玩家受活動影響、其平均押注貢獻變為 2 倍（×2）；若實際為 ×3，總 BET 增量放大至 +45.6%（月 +$547 萬）。<br>
+    3. 主要增量來自「20% × 2」此積極假設，<strong>待 v1 觀察期實測驗證</strong>。
+  </div>
+
+  <div class="sub-title">次要觀察指標</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">格1 解鎖達成率</div>
+      <div class="kpi-val">≥80%</div>
+      <div class="kpi-desc">進入活動後是否真的累積到 ₱50 的首格門檻。過低代表門檻設定需調整</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">完整循環率</div>
+      <div class="kpi-val">≥15%</div>
+      <div class="kpi-desc">成功翻完9格（押注達 ₱3,600）的玩家比例，反映大R玩家參與深度</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">實際 RTP</div>
+      <div class="kpi-val">0.9–1.1%</div>
+      <div class="kpi-desc">滾動實際派彩 ÷ 活動觸發押注，持續監控是否在預算區間內</div>
+    </div>
+  </div>
+
+  <div class="sub-title">異常警示指標（需即時告警）</div>
+  <div class="info-grid-3">
+    <div class="info-card" style="border-left:3px solid var(--red);">
+      <div class="info-card-title" style="color:#F0907A;">⚠️ 發放失敗率</div>
+      <div class="info-card-desc">reward_grant pending 數量 > 正常值的 3 倍，或失敗率 > 1%，立即告警</div>
+    </div>
+    <div class="info-card" style="border-left:3px solid var(--orange);">
+      <div class="info-card-title" style="color:var(--orange);">⚠️ RTP 異常</div>
+      <div class="info-card-desc">滾動 RTP 超出 0.9%–1.1% 區間持續 2 日，需人工確認獎勵設定</div>
+    </div>
+    <div class="info-card" style="border-left:3px solid var(--orange);">
+      <div class="info-card-title" style="color:var(--orange);">⚠️ 參與率驟降</div>
+      <div class="info-card-desc">日參與率較前7日均值下降 30% 以上，可能有前端顯示問題</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>數據分析由數據組負責：</strong>KPI 觀察需在後台系統 Log 正確埋入後，由數據組拉數據製作 Dashboard。此處列出的 KPI 目標值為初始設定，可依上線後實際數據動態調整。
+  </div>
+</section>
+
+<!-- ═══════════ 09 COST ═══════════ -->
+<section class="section" id="cost">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <span class="section-title">成本評估</span>
+    <span class="section-title-en">COST ESTIMATION</span>
+  </div>
+
+  <div class="sub-title">活動獎勵成本（每完整循環）</div>
+  <div class="cost-block">
+    <div class="cost-row">
+      <span class="cost-label">完整循環總押注</span>
+      <span class="cost-val">₱3,600 / 玩家</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">每循環期望獎金（RTP 1.028%）</span>
+      <span class="cost-val">= ₱37 / 玩家（固定獎池）</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">活動 RTP 預算來源</span>
+      <span class="cost-val">遊戲 RTP 降 0.5% + 公司提撥 0.5%</span>
+    </div>
+    <div class="cost-row total">
+      <span class="cost-label">活動 RTP 上限</span>
+      <span class="cost-val highlight">1.0% 總押注額</span>
+    </div>
+  </div>
+
+  <div class="sub-title">不同玩家規模下月度成本估算</div>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>月活躍參與玩家</th>
+        <th>平均完整循環次數</th>
+        <th>月總押注估算</th>
+        <th>月活動獎勵成本（1%）</th>
+        <th>備註</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>100 人</td>
+        <td class="mono">3 次/人</td>
+        <td class="mono">₱1,080,000</td>
+        <td class="mono" style="color:var(--green);">₱10,800</td>
+        <td class="dim">初期驗證規模</td>
+      </tr>
+      <tr>
+        <td>500 人</td>
+        <td class="mono">3 次/人</td>
+        <td class="mono">₱5,400,000</td>
+        <td class="mono" style="color:var(--gold-light);">₱54,000</td>
+        <td class="dim">穩定期目標</td>
+      </tr>
+      <tr>
+        <td>1,000 人</td>
+        <td class="mono">3 次/人</td>
+        <td class="mono">₱10,800,000</td>
+        <td class="mono" style="color:var(--orange);">₱108,000</td>
+        <td class="dim">成長期，需持續監控</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 以上估算假設玩家平均押注段 ₱1，實際成本與玩家押注行為相關。大 R 玩家因高押注快速過關，單次循環成本比例不變但絕對金額更高。</div>
+
+  <div class="sub-title">開發人力成本（粗估）</div>
+  <div class="info-grid-2">
+    <div class="cost-block">
+      <div class="cost-row"><span class="cost-label">後端工程（Golang）</span><span class="cost-val">4–6 週</span></div>
+      <div class="cost-row"><span class="cost-label">前端Web 工程</span><span class="cost-val">3–4 週</span></div>
+      <div class="cost-row"><span class="cost-label">後台介面開發</span><span class="cost-val">2–3 週</span></div>
+      <div class="cost-row"><span class="cost-label">UI 設計</span><span class="cost-val">1–2 週</span></div>
+      <div class="cost-row"><span class="cost-label">QA / 測試</span><span class="cost-val">1–2 週</span></div>
+      <div class="cost-row total"><span class="cost-label">預估上線週期</span><span class="cost-val highlight">約 10–12 週</span></div>
+    </div>
+    <div>
+      <div class="callout info" style="margin-top:0;">
+        <strong>最小可行版本（MVP）可縮短至 6–8 週：</strong><br><br>
+        若要快速上線驗證假設，可先省略後台介面（用設定檔代替），並簡化動畫效果，將後台介面與進階動畫排入 Phase 2 補完。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10 COMPARISON ═══════════ -->
+<section class="section" id="comparison">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <span class="section-title">v1 vs v2 差異對比與時程</span>
+    <span class="section-title-en">V1 vs V2 COMPARISON</span>
+  </div>
+
+  <div class="sub-title">功能差異對比</div>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:200px;">功能項目</th>
+          <th class="v1-col">v1（本次主開發）</th>
+          <th class="v2-col">v2（後續擴充）</th>
+          <th style="width:140px;">說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>解鎖條件</td>
+          <td class="v1-val">✅ 累積押注（每格增量、內部累積 ₱3,600）</td>
+          <td class="v2-val">✓ 沿用</td>
+          <td class="dim">UI 只顯示「再押 ₱X 解鎖下一格」，不顯示總額</td>
+        </tr>
+        <tr>
+          <td>獎勵類型</td>
+          <td class="v1-val">✅ 現金獎（玩家面）</td>
+          <td class="v2-val">＋ FREE SPIN 卡實際發放／使用</td>
+          <td class="dim">卡水管（資料表+AWC+max win）v1 已建好</td>
+        </tr>
+        <tr>
+          <td>洗牌機制</td>
+          <td class="v1-val">✅ 動態洗牌</td>
+          <td class="v2-val">✓ 沿用</td>
+          <td class="dim">最終獎位置每日隨機，不固定 7/8/9 格</td>
+        </tr>
+        <tr>
+          <td>後台設定</td>
+          <td class="v1-val">✅ 第幾抽權重 + RTP 試算 + 注單篩選</td>
+          <td class="v2-val">＋ 獎勵內容編輯工具</td>
+          <td class="dim">v2 可自助編輯 FREE SPIN 各星 bet</td>
+        </tr>
+        <tr>
+          <td>AWC 串接</td>
+          <td class="v1-val">✅ place_bet + LoginWithoutRedirect 一次串完（API 一次給齊）</td>
+          <td class="v2-val">僅啟用道具使用，不再新增 AWC 串接</td>
+          <td class="dim">一次提交完整需求，AWC 只串一次</td>
+        </tr>
+        <tr>
+          <td>背包系統</td>
+          <td class="cross">✗（資料表預留）</td>
+          <td class="v2-val">✅ 顯示 + 使用</td>
+          <td class="dim">inventory 水管 v1 建好，v2 啟用體驗</td>
+        </tr>
+        <tr>
+          <td>玩家分群</td>
+          <td class="v1-val">✅ 保留 usertype tag 投放能力</td>
+          <td class="v2-val">✓ 沿用擴充</td>
+          <td class="dim">v1 即可指定玩家 tag 投放</td>
+        </tr>
+        <tr>
+          <td>對帳口徑</td>
+          <td class="v1-val">✅ bonus_type 注單分離（現金 vs GGR）</td>
+          <td class="v2-val">＋ FREE_SPIN 道具使用獨立標記</td>
+          <td class="dim">get_bet_summary 依 bonus_type 分離</td>
+        </tr>
+        <tr>
+          <td>資料庫架構</td>
+          <td class="v1-val">✅ 完整建立（含背包水管六層）</td>
+          <td class="v2-val">✓ 沿用（僅新增資料）</td>
+          <td class="dim">v1 一次做滿，v2 不需動資料層</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-title">預估開發時程對比</div>
+  <div class="info-grid-2">
+    <div class="info-card" style="border-color:rgba(90,191,122,0.35);">
+      <div class="info-card-title" style="color:#7ADFA0;">v1 開發週期</div>
+      <div style="font-family:'DM Mono',monospace;font-size:32px;color:#7ADFA0;margin:12px 0;">12–14 週</div>
+      <div class="info-card-desc" style="line-height:1.8;">
+        · AWC 完整需求一次提交 + 資料層（含背包水管）：2–3週<br>
+        · 核心業務邏輯（洗牌+第幾抽權重+派獎）：3–4週<br>
+        · 前端 Web UI（iFrame+洗牌動畫）+ 後台：4週<br>
+        · AWC 串接測試 + 測試驗收上線：3週<br>
+        <span style="color:var(--green);">含完整基建 + AWC 一次串完，換來 v2 不必再碰 AWC</span>
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(176,132,216,0.35);">
+      <div class="info-card-title" style="color:#C8A0F0;">v2 增量開發週期（在 v1 基礎上）</div>
+      <div style="font-family:'DM Mono',monospace;font-size:32px;color:#C8A0F0;margin:12px 0;">+3–4 週</div>
+      <div class="info-card-desc" style="line-height:1.8;">
+        水管已通，無需再碰 AWC：<br>
+        · 獎勵內容編輯工具：1–2週<br>
+        · 背包系統顯示：1週<br>
+        · FREE SPIN 卡實際發放 + 道具跳轉使用：1–2週
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>取捨說明：</strong>v1 把後端基建一次做滿、AWC API 一次串完（12–14 週），雖然 v1 工期較長，但<strong>換來 v2 不必重複串接 AWC、不需重動資料層</strong>，v2 增量只需 +3–4 週即可啟用編輯工具、背包與道具使用。整體避免分兩次串接造成的重複開發、溝通與等待成本。
+  </div>
+</section>
+
+<!-- ═══════════ 11 LOGS ═══════════ -->
+<section class="section" id="logs">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <span class="section-title">Log 埋點規劃</span>
+    <span class="section-title-en">ANALYTICS LOG SPEC</span>
+  </div>
+
+  <div class="callout info">
+    <strong>說明：</strong>後台不含數據分析儀表板，以下 Log 事件由工程埋入，數據組另行拉數據製作分析報表。欄位設計以「可還原完整事件脈絡」為原則。
+  </div>
+
+  <div class="sub-title">必要埋點事件（v1 上線前必須完成）</div>
+  <div class="log-item header">
+    <div>Event Name</div>
+    <div>負責職能</div>
+    <div>欄位說明 / 分析用途</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_session_start</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">玩家當日第一次累積到任何押注時觸發。欄位：player_id, campaign_id, date。<br>用途：計算日活躍參與率分母</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_cell_unlocked</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">格子達門檻解鎖時觸發。欄位：player_id, campaign_id, cell_index, today_wager, unlock_threshold, timestamp。<br>用途：分析各格解鎖達成率、玩家押注分布</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_cell_opened</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">玩家成功翻開格子並派獎後觸發。欄位：player_id, campaign_id, cell_index, reward_type, reward_amount, awc_txn_id, timestamp。<br>用途：核心活動參與 + 獎勵成本統計</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_jackpot_triggered</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">玩家翻到最終獎時獨立記錄。欄位：player_id, campaign_id, final_prize_cell (1–9，動態洗牌位置), draw_index (第幾抽), amount, timestamp。<br>用途：最終獎觸發頻率監控與成本分析</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_cycle_completed</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">玩家翻完所有9格時觸發。欄位：player_id, campaign_id, total_wager_today, total_rewards, cycle_duration_min, timestamp。<br>用途：完整循環率、大R玩家行為分析</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_reward_grant_failed</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">AWC 派獎呼叫失敗時觸發。欄位：player_id, campaign_id, cell_index, error_code, retry_count, timestamp。<br>用途：異常監控、失敗率告警</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_daily_reset</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">每日重置排程執行時記錄。欄位：campaign_id, reset_date, players_affected, timestamp。<br>用途：確認重置排程正常運行</div>
+  </div>
+
+  <div class="sub-title" style="margin-top:24px;">前端埋點事件（供 UI 行為分析）</div>
+  <div class="log-item header">
+    <div>Event Name</div>
+    <div>負責職能</div>
+    <div>欄位說明 / 分析用途</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_panel_opened</div>
+    <div class="log-owner"><span class="tag-pill tag-web">🌐 前端Web</span></div>
+    <div class="log-desc">玩家點擊開啟寶箱面板。欄位：player_id, source (入口按鈕/通知), timestamp。用途：入口曝光效果分析</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_cell_tap_locked</div>
+    <div class="log-owner"><span class="tag-pill tag-web">🌐 前端Web</span></div>
+    <div class="log-desc">點擊尚未解鎖的格子。欄位：player_id, cell_index, remaining_wager, timestamp。用途：玩家意圖分析（知道差多少）</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">chest_panel_closed</div>
+    <div class="log-owner"><span class="tag-pill tag-web">🌐 前端Web</span></div>
+    <div class="log-desc">關閉寶箱面板。欄位：player_id, cells_opened, cells_unlocked_but_not_opened, timestamp。用途：分析是否有解鎖但未翻的行為</div>
+  </div>
+</section>
+
+<!-- ═══════════ 12 AWC REQUIREMENTS ═══════════ -->
+<section class="section" id="awc">
+  <div class="section-header">
+    <span class="section-num">12</span>
+    <span class="section-title">AWC 串接需求對齊</span>
+    <span class="section-title-en">AWC INTEGRATION REQUIREMENTS</span>
+  </div>
+
+  <div class="callout info">
+    <strong>v1 即一次性提交完整需求（含 v2 道具使用所需的 LoginWithoutRedirect），AWC 只串一次。</strong>把 v1 的 place_bet 與 v2 才會用到的 LoginWithoutRedirect 等需求一次性打包提交給 AWC 集成商，避免分兩次串接造成重複的開發、溝通與等待成本。建議在規格書確認後立即送出，與 BE/FE 開發平行進行。
+  </div>
+
+  <div class="sub-title">現金獎相關需求（v1 本次啟用）</div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 現金獎</div>
+    <div class="oq-q">place_bet 新增 bonus_type 與 campaign_id 欄位；確認 bet_amount=0 零押注交易可正確處理入帳。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 現金獎</div>
+    <div class="oq-q">get_bet_summary 活動獎勵可依 bonus_type 分離統計，與一般 GGR 獨立核算。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 現金獎</div>
+    <div class="oq-q">派獎失敗重試邏輯：比照 free_game 持續重試至成功，確認最大重試次數限制。</div>
+  </div>
+
+  <div class="sub-title" style="margin-top:24px;">道具使用相關需求（v1 一次提交，v2 啟用）</div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 一次提交（v2 啟用）</div>
+    <div class="oq-q">LoginWithoutRedirect API 規格確認：請求參數（Token + GameId）、回傳格式（一次性 URL）、URL 有效期限與使用限制。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 一次提交（v2 啟用）</div>
+    <div class="oq-q">同一玩家 Token 可否在短時間內連續呼叫 LoginWithoutRedirect 多次（背包內多張卡的情境）。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 一次提交（v2 啟用）</div>
+    <div class="oq-q">跳轉後 FREE SPIN 自動套用的觸發機制：是由 AWC 在玩家進入遊戲時自動識別，還是需要 Combo 在跳轉前另行呼叫 CreateFreeSpin API？</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 一次提交（v2 啟用）</div>
+    <div class="oq-q">FREE SPIN 卡的有效期限判定：玩家進入遊戲時判定，還是在背包持有階段即判定？請確認過期卡是否仍可呼叫 LoginWithoutRedirect。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 一次提交（v2 啟用）</div>
+    <div class="oq-q">對帳需求：背包道具使用記錄是否需要在 get_bet_summary 中獨立標記（item_use / FREE_SPIN_USED）。</div>
+  </div>
+</section>
+
+<!-- ═══════════ 13 OPEN QUESTIONS ═══════════ -->
+<section class="section" id="openq">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <span class="section-title">待確認事項</span>
+    <span class="section-title-en">OPEN QUESTIONS</span>
+  </div>
+
+  <div class="sub-title">需上司決策</div>
+  <div class="oq-item">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">每格增量門檻最終確認：建議值 ₱50 / ₱100 / ₱150 / ₱200 / ₱300 / ₱400 / ₱600 / ₱800 / ₱1,000（內部累積至 ₱3,600），是否核准？如需調整，逐抽權重與 RTP 需重新驗算。</div>
+  </div>
+  <div class="oq-item">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">固定獎池 ₱37（小×5 + 中×2 + 大×1 + 最終×1，RTP 1.028%）是否接受？此為翻完 9 格之恆定 RTP，逐抽權重僅控制早退玩家的 RTP 暴露。</div>
+  </div>
+  <div class="oq-item">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">後台「第幾抽權重」設定介面是否一開始就開放營運自助調整，還是 v1 先以設定檔管理權重、觀察期後再補後台 UI？</div>
+  </div>
+  <div class="oq-item">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">v1 觀察期結束的判定標準：觀察幾週？D1 留存達到什麼數字視為假設成立，進入 v2 開發？</div>
+  </div>
+
+  <div class="sub-title" style="margin-top:24px;">需與 AWC 確認</div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC ALIGN</div>
+    <div class="oq-q">place_bet 是否可新增 bonus_type 與 campaign_id 欄位？以及 bet_amount=0 的零押注派發交易，平台商是否可正確處理入帳？</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC ALIGN</div>
+    <div class="oq-q">get_bet_summary 的每日對帳報表，活動獎勵是否能以 bonus_type 作為分離依據，與一般 GGR 獨立統計？</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC ALIGN</div>
+    <div class="oq-q">派獎失敗重試的邏輯：建議比照 free_game 持續重試至成功，是否符合 AWC 規格？是否有最大重試次數限制？</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC ALIGN</div>
+    <div class="oq-q">上述所有 AWC 需求已整理於第12章，本章不重複列出，請直接參照第12章 AWC 串接需求對齊。</div>
+  </div>
+</section>
+
+
+<!-- ═══════════ 14 I18N（v3.1 新增） ═══════════ -->
+<section class="section" id="i18n">
+  <div class="section-header">
+    <span class="section-num">14</span>
+    <span class="section-title">多國語系文案表</span>
+    <span class="section-title-en">LOCALIZATION STRINGS</span>
+  </div>
+
+  <div class="callout warn">
+    <strong>翻譯狀態：</strong>以下 13 語系翻譯為<strong>初稿（AI 產生）</strong>，上線前必須經在地化團隊審校，<strong>泰文（th）、緬甸文（my-MM）、孟加拉文（bn）為高優先審校項</strong>。zh-Hant 為文案原文基準。
+  </div>
+
+  <div class="sub-title">i18n 規則與注意事項</div>
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-title">🔑 Key 命名規則</div>
+      <div class="info-card-desc">依畫面前綴：<em>fab_</em>（浮動icon）／<em>crm_</em>（遊戲中心）／<em>tb_</em>（寶箱彈窗）／<em>tut_</em>（教學）。共 35 條。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🧩 Placeholder 規則</div>
+      <div class="info-card-desc"><em>{amount}</em>＝含幣別金額（如 ₱100）、<em>{n}</em>＝數量、<em>{time}</em>＝HH:MM:SS。翻譯時<strong>不可改動或翻譯</strong> placeholder 本身，但可依語序移動位置。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📏 字長膨脹</div>
+      <div class="info-card-desc">緬甸文／孟加拉文／泰文通常比中文長 30–60%。按鈕與氣泡需預留寬度，或允許縮字（min font size），由美術與前端Web 共同驗版。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🔤 字體（⚠️ 基礎建設）</div>
+      <div class="info-card-desc">建議統一 Noto Sans 系列：Noto Sans TC/SC/JP/KR/Thai/Myanmar/Bengali。緬甸文需確認 Unicode（非 Zawgyi）渲染。所列語言無 RTL，免鏡像版型。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🏷 英文裝飾字</div>
+      <div class="info-card-desc">標 ※ 的 key（LUCKY CHEST／DAILY LUCKY CHEST）為視覺裝飾副標，已提供翻譯；實際顯示「在地化」或「固定英文」由美術版面決策，建議拉丁語系市場固定英文。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🔢 數字與時間格式</div>
+      <div class="info-card-desc">金額千分位、00:00 等格式由前端依 locale 處理；孟加拉文有本地數字（০-৯），需與在地化確認採用西方或本地數字。</div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <strong>交付方式：</strong>本表為規格書內檢視版（表格可左右捲動）；開發用請由本表導出 JSON／CSV（key → 13 語），由 🌐 前端Web 接 i18n 框架載入，文案修改走語系檔熱更新、不需改版。
+  </div>
+
+  <div class="sub-title">文案翻譯總表 · 浮動入口 icon（P1）｜2 條</div>
+<div class="compare-wrap"><table class="spec-table" style="min-width:1900px;"><thead><tr><th style="min-width:150px;">KEY</th><th style="min-width:110px;">使用位置</th><th>zh-Hant</th><th>en</th><th>zh-Hans</th><th>ja-JP</th><th>ko-KR</th><th>th</th><th>vi</th><th>id</th><th>my-MM</th><th>bn</th><th>pt</th><th>es-ES</th><th>tr-TR</th></tr></thead><tbody>
+<tr><td class="mono">fab_bubble_cta</td><td class="dim" style="font-size:11px;">浮動icon·氣泡</td><td class="dim" style="min-width:130px;">快來抽獎囉！</td><td class="dim" style="min-width:130px;">Come open your chest!</td><td class="dim" style="min-width:130px;">快来抽奖啦！</td><td class="dim" style="min-width:130px;">宝箱を開けよう！</td><td class="dim" style="min-width:130px;">보물상자를 열어보세요!</td><td class="dim" style="min-width:130px;">มาเปิดกล่องสมบัติกันเถอะ!</td><td class="dim" style="min-width:130px;">Mở rương ngay nào!</td><td class="dim" style="min-width:130px;">Ayo buka peti hadiah!</td><td class="dim" style="min-width:130px;">ရတနာသေတ္တာကို ဖွင့်လိုက်ပါ!</td><td class="dim" style="min-width:130px;">এসো পুরস্কার খুলে নাও!</td><td class="dim" style="min-width:130px;">Venha abrir seu baú!</td><td class="dim" style="min-width:130px;">¡Ven a abrir tu cofre!</td><td class="dim" style="min-width:130px;">Hadi sandığını aç!</td></tr>
+<tr><td class="mono">fab_drag_hint</td><td class="dim" style="font-size:11px;">浮動icon·拖曳提示</td><td class="dim" style="min-width:130px;">拖曳到任意位置</td><td class="dim" style="min-width:130px;">Drag anywhere</td><td class="dim" style="min-width:130px;">拖拽到任意位置</td><td class="dim" style="min-width:130px;">好きな位置にドラッグ</td><td class="dim" style="min-width:130px;">원하는 위치로 드래그</td><td class="dim" style="min-width:130px;">ลากไปวางได้ทุกตำแหน่ง</td><td class="dim" style="min-width:130px;">Kéo đến vị trí bất kỳ</td><td class="dim" style="min-width:130px;">Seret ke posisi mana saja</td><td class="dim" style="min-width:130px;">နှစ်သက်ရာနေရာသို့ ဆွဲယူပါ</td><td class="dim" style="min-width:130px;">যেকোনো জায়গায় টেনে আনুন</td><td class="dim" style="min-width:130px;">Arraste para qualquer lugar</td><td class="dim" style="min-width:130px;">Arrastra a cualquier lugar</td><td class="dim" style="min-width:130px;">İstediğin yere sürükle</td></tr>
+</tbody></table></div>
+  <div class="sub-title">文案翻譯總表 · 遊戲中心面板（P2）｜9 條</div>
+<div class="compare-wrap"><table class="spec-table" style="min-width:1900px;"><thead><tr><th style="min-width:150px;">KEY</th><th style="min-width:110px;">使用位置</th><th>zh-Hant</th><th>en</th><th>zh-Hans</th><th>ja-JP</th><th>ko-KR</th><th>th</th><th>vi</th><th>id</th><th>my-MM</th><th>bn</th><th>pt</th><th>es-ES</th><th>tr-TR</th></tr></thead><tbody>
+<tr><td class="mono">crm_panel_title</td><td class="dim" style="font-size:11px;">遊戲中心·標題</td><td class="dim" style="min-width:130px;">遊戲中心</td><td class="dim" style="min-width:130px;">Game Center</td><td class="dim" style="min-width:130px;">游戏中心</td><td class="dim" style="min-width:130px;">ゲームセンター</td><td class="dim" style="min-width:130px;">게임 센터</td><td class="dim" style="min-width:130px;">ศูนย์เกม</td><td class="dim" style="min-width:130px;">Trung tâm trò chơi</td><td class="dim" style="min-width:130px;">Pusat Game</td><td class="dim" style="min-width:130px;">ဂိမ်းစင်တာ</td><td class="dim" style="min-width:130px;">গেম সেন্টার</td><td class="dim" style="min-width:130px;">Central de Jogos</td><td class="dim" style="min-width:130px;">Centro de juegos</td><td class="dim" style="min-width:130px;">Oyun Merkezi</td></tr>
+<tr><td class="mono">crm_item_chest</td><td class="dim" style="font-size:11px;">遊戲中心·入口名稱</td><td class="dim" style="min-width:130px;">抽寶箱</td><td class="dim" style="min-width:130px;">Lucky Chest</td><td class="dim" style="min-width:130px;">抽宝箱</td><td class="dim" style="min-width:130px;">ラッキーチェスト</td><td class="dim" style="min-width:130px;">보물상자 뽑기</td><td class="dim" style="min-width:130px;">เปิดกล่องสมบัติ</td><td class="dim" style="min-width:130px;">Rương may mắn</td><td class="dim" style="min-width:130px;">Peti Keberuntungan</td><td class="dim" style="min-width:130px;">ကံစမ်းရတနာသေတ္တာ</td><td class="dim" style="min-width:130px;">লাকি চেস্ট</td><td class="dim" style="min-width:130px;">Baú da Sorte</td><td class="dim" style="min-width:130px;">Cofre de la suerte</td><td class="dim" style="min-width:130px;">Şans Sandığı</td></tr>
+<tr><td class="mono">crm_item_chest_sub</td><td class="dim" style="font-size:11px;">遊戲中心·入口副標 ※</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">幸运宝箱</td><td class="dim" style="min-width:130px;">ラッキーチェスト</td><td class="dim" style="min-width:130px;">럭키 체스트</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">লাকি চেস্ট</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td><td class="dim" style="min-width:130px;">LUCKY CHEST</td></tr>
+<tr><td class="mono">crm_item_mission</td><td class="dim" style="font-size:11px;">遊戲中心·入口名稱</td><td class="dim" style="min-width:130px;">任務</td><td class="dim" style="min-width:130px;">Missions</td><td class="dim" style="min-width:130px;">任务</td><td class="dim" style="min-width:130px;">ミッション</td><td class="dim" style="min-width:130px;">미션</td><td class="dim" style="min-width:130px;">ภารกิจ</td><td class="dim" style="min-width:130px;">Nhiệm vụ</td><td class="dim" style="min-width:130px;">Misi</td><td class="dim" style="min-width:130px;">မစ်ရှင်</td><td class="dim" style="min-width:130px;">মিশন</td><td class="dim" style="min-width:130px;">Missões</td><td class="dim" style="min-width:130px;">Misiones</td><td class="dim" style="min-width:130px;">Görevler</td></tr>
+<tr><td class="mono">crm_item_props</td><td class="dim" style="font-size:11px;">遊戲中心·入口名稱</td><td class="dim" style="min-width:130px;">道具</td><td class="dim" style="min-width:130px;">Items</td><td class="dim" style="min-width:130px;">道具</td><td class="dim" style="min-width:130px;">アイテム</td><td class="dim" style="min-width:130px;">아이템</td><td class="dim" style="min-width:130px;">ไอเทม</td><td class="dim" style="min-width:130px;">Vật phẩm</td><td class="dim" style="min-width:130px;">Item</td><td class="dim" style="min-width:130px;">ပစ္စည်းများ</td><td class="dim" style="min-width:130px;">আইটেম</td><td class="dim" style="min-width:130px;">Itens</td><td class="dim" style="min-width:130px;">Objetos</td><td class="dim" style="min-width:130px;">Eşyalar</td></tr>
+<tr><td class="mono">crm_item_ranking</td><td class="dim" style="font-size:11px;">遊戲中心·入口名稱</td><td class="dim" style="min-width:130px;">排行</td><td class="dim" style="min-width:130px;">Rankings</td><td class="dim" style="min-width:130px;">排行</td><td class="dim" style="min-width:130px;">ランキング</td><td class="dim" style="min-width:130px;">랭킹</td><td class="dim" style="min-width:130px;">อันดับ</td><td class="dim" style="min-width:130px;">Bảng xếp hạng</td><td class="dim" style="min-width:130px;">Peringkat</td><td class="dim" style="min-width:130px;">အဆင့်သတ်မှတ်ချက်</td><td class="dim" style="min-width:130px;">র্যাঙ্কিং</td><td class="dim" style="min-width:130px;">Classificação</td><td class="dim" style="min-width:130px;">Clasificación</td><td class="dim" style="min-width:130px;">Sıralama</td></tr>
+<tr><td class="mono">crm_item_recommend</td><td class="dim" style="font-size:11px;">遊戲中心·入口名稱</td><td class="dim" style="min-width:130px;">推薦</td><td class="dim" style="min-width:130px;">Recommended</td><td class="dim" style="min-width:130px;">推荐</td><td class="dim" style="min-width:130px;">おすすめ</td><td class="dim" style="min-width:130px;">추천</td><td class="dim" style="min-width:130px;">แนะนำ</td><td class="dim" style="min-width:130px;">Đề xuất</td><td class="dim" style="min-width:130px;">Rekomendasi</td><td class="dim" style="min-width:130px;">အကြံပြုထားသည်</td><td class="dim" style="min-width:130px;">প্রস্তাবিত</td><td class="dim" style="min-width:130px;">Recomendados</td><td class="dim" style="min-width:130px;">Recomendados</td><td class="dim" style="min-width:130px;">Önerilenler</td></tr>
+<tr><td class="mono">crm_item_favorite</td><td class="dim" style="font-size:11px;">遊戲中心·入口名稱</td><td class="dim" style="min-width:130px;">收藏</td><td class="dim" style="min-width:130px;">Favorites</td><td class="dim" style="min-width:130px;">收藏</td><td class="dim" style="min-width:130px;">お気に入り</td><td class="dim" style="min-width:130px;">즐겨찾기</td><td class="dim" style="min-width:130px;">รายการโปรด</td><td class="dim" style="min-width:130px;">Yêu thích</td><td class="dim" style="min-width:130px;">Favorit</td><td class="dim" style="min-width:130px;">အကြိုက်ဆုံးများ</td><td class="dim" style="min-width:130px;">পছন্দসমূহ</td><td class="dim" style="min-width:130px;">Favoritos</td><td class="dim" style="min-width:130px;">Favoritos</td><td class="dim" style="min-width:130px;">Favoriler</td></tr>
+<tr><td class="mono">crm_coming_soon</td><td class="dim" style="font-size:11px;">遊戲中心·未開放標記</td><td class="dim" style="min-width:130px;">敬請期待</td><td class="dim" style="min-width:130px;">COMING SOON</td><td class="dim" style="min-width:130px;">敬请期待</td><td class="dim" style="min-width:130px;">近日公開</td><td class="dim" style="min-width:130px;">곧 공개</td><td class="dim" style="min-width:130px;">เร็วๆ นี้</td><td class="dim" style="min-width:130px;">Sắp ra mắt</td><td class="dim" style="min-width:130px;">Segera Hadir</td><td class="dim" style="min-width:130px;">မကြာမီလာမည်</td><td class="dim" style="min-width:130px;">শীঘ্রই আসছে</td><td class="dim" style="min-width:130px;">Em breve</td><td class="dim" style="min-width:130px;">Próximamente</td><td class="dim" style="min-width:130px;">Çok yakında</td></tr>
+</tbody></table></div>
+  <div class="sub-title">文案翻譯總表 · 寶箱主彈窗與最終獎（P3／P4）｜17 條</div>
+<div class="compare-wrap"><table class="spec-table" style="min-width:1900px;"><thead><tr><th style="min-width:150px;">KEY</th><th style="min-width:110px;">使用位置</th><th>zh-Hant</th><th>en</th><th>zh-Hans</th><th>ja-JP</th><th>ko-KR</th><th>th</th><th>vi</th><th>id</th><th>my-MM</th><th>bn</th><th>pt</th><th>es-ES</th><th>tr-TR</th></tr></thead><tbody>
+<tr><td class="mono">tb_title</td><td class="dim" style="font-size:11px;">彈窗·主標題</td><td class="dim" style="min-width:130px;">每日抽寶箱</td><td class="dim" style="min-width:130px;">Daily Lucky Chest</td><td class="dim" style="min-width:130px;">每日抽宝箱</td><td class="dim" style="min-width:130px;">デイリー宝箱</td><td class="dim" style="min-width:130px;">매일 보물상자</td><td class="dim" style="min-width:130px;">เปิดกล่องสมบัติรายวัน</td><td class="dim" style="min-width:130px;">Rương may mắn mỗi ngày</td><td class="dim" style="min-width:130px;">Peti Keberuntungan Harian</td><td class="dim" style="min-width:130px;">နေ့စဉ်ကံစမ်းရတနာသေတ္တာ</td><td class="dim" style="min-width:130px;">দৈনিক লাকি চেস্ট</td><td class="dim" style="min-width:130px;">Baú da Sorte Diário</td><td class="dim" style="min-width:130px;">Cofre diario de la suerte</td><td class="dim" style="min-width:130px;">Günlük Şans Sandığı</td></tr>
+<tr><td class="mono">tb_title_sub</td><td class="dim" style="font-size:11px;">彈窗·英文副標 ※</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">每日幸运宝箱</td><td class="dim" style="min-width:130px;">デイリーラッキーチェスト</td><td class="dim" style="min-width:130px;">데일리 럭키 체스트</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">দৈনিক লাকি চেস্ট</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td><td class="dim" style="min-width:130px;">DAILY LUCKY CHEST</td></tr>
+<tr><td class="mono">tb_reset_countdown</td><td class="dim" style="font-size:11px;">彈窗·重置倒數</td><td class="dim" style="min-width:130px;">今日重置倒數 {time}</td><td class="dim" style="min-width:130px;">Resets in {time}</td><td class="dim" style="min-width:130px;">今日重置倒计时 {time}</td><td class="dim" style="min-width:130px;">リセットまで {time}</td><td class="dim" style="min-width:130px;">리셋까지 {time}</td><td class="dim" style="min-width:130px;">รีเซ็ตในอีก {time}</td><td class="dim" style="min-width:130px;">Đặt lại sau {time}</td><td class="dim" style="min-width:130px;">Direset dalam {time}</td><td class="dim" style="min-width:130px;">{time} အတွင်း ပြန်လည်စတင်မည်</td><td class="dim" style="min-width:130px;">{time} পরে রিসেট হবে</td><td class="dim" style="min-width:130px;">Reinicia em {time}</td><td class="dim" style="min-width:130px;">Se reinicia en {time}</td><td class="dim" style="min-width:130px;">{time} içinde sıfırlanır</td></tr>
+<tr><td class="mono">tb_stage_progress</td><td class="dim" style="font-size:11px;">彈窗·進度標籤</td><td class="dim" style="min-width:130px;">本階段進度</td><td class="dim" style="min-width:130px;">Stage progress</td><td class="dim" style="min-width:130px;">本阶段进度</td><td class="dim" style="min-width:130px;">現在の進捗</td><td class="dim" style="min-width:130px;">현재 단계 진행도</td><td class="dim" style="min-width:130px;">ความคืบหน้าด่านนี้</td><td class="dim" style="min-width:130px;">Tiến độ giai đoạn</td><td class="dim" style="min-width:130px;">Progres tahap ini</td><td class="dim" style="min-width:130px;">ဤအဆင့်၏ တိုးတက်မှု</td><td class="dim" style="min-width:130px;">এই ধাপের অগ্রগতি</td><td class="dim" style="min-width:130px;">Progresso da etapa</td><td class="dim" style="min-width:130px;">Progreso de la etapa</td><td class="dim" style="min-width:130px;">Aşama ilerlemesi</td></tr>
+<tr><td class="mono">tb_all_unlocked</td><td class="dim" style="font-size:11px;">彈窗·全解鎖標籤</td><td class="dim" style="min-width:130px;">今日已全部解鎖</td><td class="dim" style="min-width:130px;">All unlocked today</td><td class="dim" style="min-width:130px;">今日已全部解锁</td><td class="dim" style="min-width:130px;">本日すべて解放済み</td><td class="dim" style="min-width:130px;">오늘 모두 잠금 해제됨</td><td class="dim" style="min-width:130px;">ปลดล็อกครบแล้ววันนี้</td><td class="dim" style="min-width:130px;">Đã mở khóa tất cả hôm nay</td><td class="dim" style="min-width:130px;">Semua terbuka hari ini</td><td class="dim" style="min-width:130px;">ယနေ့ အားလုံးဖွင့်ပြီးပါပြီ</td><td class="dim" style="min-width:130px;">আজ সব আনলক হয়েছে</td><td class="dim" style="min-width:130px;">Tudo desbloqueado hoje</td><td class="dim" style="min-width:130px;">Todo desbloqueado hoy</td><td class="dim" style="min-width:130px;">Bugün tümü açıldı</td></tr>
+<tr><td class="mono">tb_next_hint</td><td class="dim" style="font-size:11px;">彈窗·解鎖提示</td><td class="dim" style="min-width:130px;">再押 {amount} 解鎖下一格</td><td class="dim" style="min-width:130px;">Bet {amount} more to unlock the next cell</td><td class="dim" style="min-width:130px;">再押 {amount} 解锁下一格</td><td class="dim" style="min-width:130px;">あと {amount} ベットで次のマスを解放</td><td class="dim" style="min-width:130px;">{amount} 더 베팅하면 다음 칸 잠금 해제</td><td class="dim" style="min-width:130px;">เดิมพันอีก {amount} เพื่อปลดล็อกช่องถัดไป</td><td class="dim" style="min-width:130px;">Cược thêm {amount} để mở ô tiếp theo</td><td class="dim" style="min-width:130px;">Taruhan {amount} lagi untuk membuka kotak berikutnya</td><td class="dim" style="min-width:130px;">နောက်တစ်ကွက် ဖွင့်ရန် {amount} ထပ်လောင်းပါ</td><td class="dim" style="min-width:130px;">পরের ঘর আনলক করতে আরও {amount} বাজি ধরুন</td><td class="dim" style="min-width:130px;">Aposte mais {amount} para desbloquear a próxima casa</td><td class="dim" style="min-width:130px;">Apuesta {amount} más para desbloquear la siguiente casilla</td><td class="dim" style="min-width:130px;">Sonraki kareyi açmak için {amount} daha bahis yap</td></tr>
+<tr><td class="mono">tb_open_all_hint</td><td class="dim" style="font-size:11px;">彈窗·全解鎖提示</td><td class="dim" style="min-width:130px;">把所有格子翻開吧！</td><td class="dim" style="min-width:130px;">Flip all the cells!</td><td class="dim" style="min-width:130px;">把所有格子翻开吧！</td><td class="dim" style="min-width:130px;">すべてのマスをめくろう！</td><td class="dim" style="min-width:130px;">모든 칸을 뒤집어 보세요!</td><td class="dim" style="min-width:130px;">เปิดให้ครบทุกช่องเลย!</td><td class="dim" style="min-width:130px;">Lật hết tất cả các ô nào!</td><td class="dim" style="min-width:130px;">Buka semua kotaknya!</td><td class="dim" style="min-width:130px;">ကွက်အားလုံးကို လှန်လိုက်ပါ!</td><td class="dim" style="min-width:130px;">সব ঘর উল্টে ফেলুন!</td><td class="dim" style="min-width:130px;">Vire todas as casas!</td><td class="dim" style="min-width:130px;">¡Voltea todas las casillas!</td><td class="dim" style="min-width:130px;">Tüm kareleri çevir!</td></tr>
+<tr><td class="mono">tb_spread_note</td><td class="dim" style="font-size:11px;">彈窗·攤牌說明</td><td class="dim" style="min-width:130px;">今日獎項已攤開 — 看清楚有哪些獎，準備開始！</td><td class="dim" style="min-width:130px;">Today's prizes are revealed — take a look, then get ready to start!</td><td class="dim" style="min-width:130px;">今日奖项已摊开 — 看清楚有哪些奖，准备开始！</td><td class="dim" style="min-width:130px;">本日の賞品を公開中 — 中身を確認してスタート！</td><td class="dim" style="min-width:130px;">오늘의 상품이 공개되었습니다 — 확인하고 시작하세요!</td><td class="dim" style="min-width:130px;">รางวัลวันนี้เปิดให้ดูแล้ว — ดูให้ชัดแล้วเตรียมเริ่มเลย!</td><td class="dim" style="min-width:130px;">Phần thưởng hôm nay đã được trải ra — xem kỹ rồi sẵn sàng bắt đầu!</td><td class="dim" style="min-width:130px;">Hadiah hari ini sudah dibuka — lihat dulu, lalu siap mulai!</td><td class="dim" style="min-width:130px;">ယနေ့ဆုများကို ပြသထားပြီ — သေချာကြည့်ပြီး စတင်ရန် ပြင်ဆင်ပါ!</td><td class="dim" style="min-width:130px;">আজকের পুরস্কার দেখানো হয়েছে — ভালো করে দেখে শুরু করুন!</td><td class="dim" style="min-width:130px;">Os prêmios de hoje estão à mostra — confira e prepare-se para começar!</td><td class="dim" style="min-width:130px;">Los premios de hoy están a la vista — míralos y prepárate para empezar.</td><td class="dim" style="min-width:130px;">Bugünün ödülleri açıldı — iyice bak ve başlamaya hazırlan!</td></tr>
+<tr><td class="mono">tb_start_btn</td><td class="dim" style="font-size:11px;">彈窗·主按鈕</td><td class="dim" style="min-width:130px;">開始遊戲</td><td class="dim" style="min-width:130px;">Start</td><td class="dim" style="min-width:130px;">开始游戏</td><td class="dim" style="min-width:130px;">ゲーム開始</td><td class="dim" style="min-width:130px;">게임 시작</td><td class="dim" style="min-width:130px;">เริ่มเกม</td><td class="dim" style="min-width:130px;">Bắt đầu</td><td class="dim" style="min-width:130px;">Mulai</td><td class="dim" style="min-width:130px;">ဂိမ်းစတင်မည်</td><td class="dim" style="min-width:130px;">খেলা শুরু</td><td class="dim" style="min-width:130px;">Começar</td><td class="dim" style="min-width:130px;">Empezar</td><td class="dim" style="min-width:130px;">Başla</td></tr>
+<tr><td class="mono">tb_shuffling</td><td class="dim" style="font-size:11px;">彈窗·洗牌中</td><td class="dim" style="min-width:130px;">洗牌中…</td><td class="dim" style="min-width:130px;">Shuffling…</td><td class="dim" style="min-width:130px;">洗牌中…</td><td class="dim" style="min-width:130px;">シャッフル中…</td><td class="dim" style="min-width:130px;">셔플 중…</td><td class="dim" style="min-width:130px;">กำลังสับไพ่…</td><td class="dim" style="min-width:130px;">Đang xáo trộn…</td><td class="dim" style="min-width:130px;">Mengocok…</td><td class="dim" style="min-width:130px;">ရောမွှေနေသည်…</td><td class="dim" style="min-width:130px;">শাফল হচ্ছে…</td><td class="dim" style="min-width:130px;">Embaralhando…</td><td class="dim" style="min-width:130px;">Barajando…</td><td class="dim" style="min-width:130px;">Karıştırılıyor…</td></tr>
+<tr><td class="mono">tb_tap_open</td><td class="dim" style="font-size:11px;">格子·可翻標籤</td><td class="dim" style="min-width:130px;">點我翻開</td><td class="dim" style="min-width:130px;">Tap to flip</td><td class="dim" style="min-width:130px;">点我翻开</td><td class="dim" style="min-width:130px;">タップしてめくる</td><td class="dim" style="min-width:130px;">눌러서 뒤집기</td><td class="dim" style="min-width:130px;">แตะเพื่อเปิด</td><td class="dim" style="min-width:130px;">Chạm để lật</td><td class="dim" style="min-width:130px;">Ketuk untuk membuka</td><td class="dim" style="min-width:130px;">လှန်ရန် နှိပ်ပါ</td><td class="dim" style="min-width:130px;">উল্টাতে ট্যাপ করুন</td><td class="dim" style="min-width:130px;">Toque para virar</td><td class="dim" style="min-width:130px;">Toca para voltear</td><td class="dim" style="min-width:130px;">Çevirmek için dokun</td></tr>
+<tr><td class="mono">tb_lock_req</td><td class="dim" style="font-size:11px;">格子·鎖定需求</td><td class="dim" style="min-width:130px;">再押 {amount}</td><td class="dim" style="min-width:130px;">Bet {amount} more</td><td class="dim" style="min-width:130px;">再押 {amount}</td><td class="dim" style="min-width:130px;">あと {amount}</td><td class="dim" style="min-width:130px;">{amount} 더</td><td class="dim" style="min-width:130px;">อีก {amount}</td><td class="dim" style="min-width:130px;">Thêm {amount}</td><td class="dim" style="min-width:130px;">{amount} lagi</td><td class="dim" style="min-width:130px;">{amount} ထပ်လောင်းပါ</td><td class="dim" style="min-width:130px;">আরও {amount}</td><td class="dim" style="min-width:130px;">Mais {amount}</td><td class="dim" style="min-width:130px;">{amount} más</td><td class="dim" style="min-width:130px;">{amount} daha</td></tr>
+<tr><td class="mono">tb_opened_count</td><td class="dim" style="font-size:11px;">footer·已翻計數</td><td class="dim" style="min-width:130px;">已翻開 {n} / 9</td><td class="dim" style="min-width:130px;">Opened {n} / 9</td><td class="dim" style="min-width:130px;">已翻开 {n} / 9</td><td class="dim" style="min-width:130px;">{n} / 9 開封済み</td><td class="dim" style="min-width:130px;">{n} / 9 열림</td><td class="dim" style="min-width:130px;">เปิดแล้ว {n} / 9</td><td class="dim" style="min-width:130px;">Đã mở {n} / 9</td><td class="dim" style="min-width:130px;">Terbuka {n} / 9</td><td class="dim" style="min-width:130px;">ဖွင့်ပြီး {n} / 9</td><td class="dim" style="min-width:130px;">খোলা হয়েছে {n} / 9</td><td class="dim" style="min-width:130px;">Abertas {n} / 9</td><td class="dim" style="min-width:130px;">Abiertas {n} / 9</td><td class="dim" style="min-width:130px;">Açılan {n} / 9</td></tr>
+<tr><td class="mono">tb_cells_available</td><td class="dim" style="font-size:11px;">footer·可翻計數</td><td class="dim" style="min-width:130px;">{n} 格可翻</td><td class="dim" style="min-width:130px;">{n} ready to flip</td><td class="dim" style="min-width:130px;">{n} 格可翻</td><td class="dim" style="min-width:130px;">{n} マスめくれる</td><td class="dim" style="min-width:130px;">{n}칸 뒤집기 가능</td><td class="dim" style="min-width:130px;">เปิดได้ {n} ช่อง</td><td class="dim" style="min-width:130px;">{n} ô có thể lật</td><td class="dim" style="min-width:130px;">{n} kotak bisa dibuka</td><td class="dim" style="min-width:130px;">ဖွင့်နိုင်သည့် {n} ကွက်</td><td class="dim" style="min-width:130px;">{n}টি ঘর খোলা যাবে</td><td class="dim" style="min-width:130px;">{n} casas para virar</td><td class="dim" style="min-width:130px;">{n} casillas para voltear</td><td class="dim" style="min-width:130px;">Çevrilebilir {n} kare</td></tr>
+<tr><td class="mono">tb_reset_tomorrow</td><td class="dim" style="font-size:11px;">footer·明日重置</td><td class="dim" style="min-width:130px;">明日 00:00 重置，全新洗牌</td><td class="dim" style="min-width:130px;">Resets at 00:00 tomorrow with a fresh shuffle</td><td class="dim" style="min-width:130px;">明日 00:00 重置，全新洗牌</td><td class="dim" style="min-width:130px;">明日 00:00 にリセット＆再シャッフル</td><td class="dim" style="min-width:130px;">내일 00:00 리셋, 새로 셔플됩니다</td><td class="dim" style="min-width:130px;">รีเซ็ตพรุ่งนี้ 00:00 พร้อมสับใหม่ทั้งหมด</td><td class="dim" style="min-width:130px;">Đặt lại lúc 00:00 ngày mai, xáo trộn hoàn toàn mới</td><td class="dim" style="min-width:130px;">Direset besok pukul 00:00 dengan kocokan baru</td><td class="dim" style="min-width:130px;">မနက်ဖြန် 00:00 တွင် ပြန်လည်စတင်ပြီး အသစ်ရောမွှေမည်</td><td class="dim" style="min-width:130px;">আগামীকাল ০০:০০ টায় রিসেট, নতুন শাফল</td><td class="dim" style="min-width:130px;">Reinicia amanhã às 00:00 com novo embaralhamento</td><td class="dim" style="min-width:130px;">Se reinicia mañana a las 00:00 con nueva mezcla</td><td class="dim" style="min-width:130px;">Yarın 00:00'da sıfırlanır, yeniden karıştırılır</td></tr>
+<tr><td class="mono">tb_final_congrats</td><td class="dim" style="font-size:11px;">最終獎·恭喜標題</td><td class="dim" style="min-width:130px;">恭喜獲得最終大獎！</td><td class="dim" style="min-width:130px;">Congratulations! You won the grand prize!</td><td class="dim" style="min-width:130px;">恭喜获得最终大奖！</td><td class="dim" style="min-width:130px;">おめでとう！最終大賞を獲得！</td><td class="dim" style="min-width:130px;">축하합니다! 최종 대상을 획득했습니다!</td><td class="dim" style="min-width:130px;">ยินดีด้วย! คุณได้รับรางวัลใหญ่สุดท้าย!</td><td class="dim" style="min-width:130px;">Chúc mừng! Bạn đã trúng giải thưởng lớn cuối cùng!</td><td class="dim" style="min-width:130px;">Selamat! Anda memenangkan hadiah utama!</td><td class="dim" style="min-width:130px;">ဂုဏ်ယူပါသည်! နောက်ဆုံးဆုကြီး ရရှိပါပြီ!</td><td class="dim" style="min-width:130px;">অভিনন্দন! আপনি চূড়ান্ত বড় পুরস্কার জিতেছেন!</td><td class="dim" style="min-width:130px;">Parabéns! Você ganhou o grande prêmio!</td><td class="dim" style="min-width:130px;">¡Felicidades! ¡Ganaste el gran premio!</td><td class="dim" style="min-width:130px;">Tebrikler! Büyük ödülü kazandın!</td></tr>
+<tr><td class="mono">tb_final_claim</td><td class="dim" style="font-size:11px;">最終獎·收下按鈕</td><td class="dim" style="min-width:130px;">太棒了！收下</td><td class="dim" style="min-width:130px;">Awesome! Claim it</td><td class="dim" style="min-width:130px;">太棒了！收下</td><td class="dim" style="min-width:130px;">やったね！受け取る</td><td class="dim" style="min-width:130px;">좋아요! 받기</td><td class="dim" style="min-width:130px;">เยี่ยมเลย! รับรางวัล</td><td class="dim" style="min-width:130px;">Tuyệt vời! Nhận ngay</td><td class="dim" style="min-width:130px;">Keren! Ambil</td><td class="dim" style="min-width:130px;">အရမ်းကောင်းပါတယ်! လက်ခံမည်</td><td class="dim" style="min-width:130px;">দারুণ! গ্রহণ করুন</td><td class="dim" style="min-width:130px;">Incrível! Resgatar</td><td class="dim" style="min-width:130px;">¡Genial! Reclamar</td><td class="dim" style="min-width:130px;">Harika! Al</td></tr>
+</tbody></table></div>
+  <div class="sub-title">文案翻譯總表 · 新手教學（P5）｜7 條</div>
+<div class="compare-wrap"><table class="spec-table" style="min-width:1900px;"><thead><tr><th style="min-width:150px;">KEY</th><th style="min-width:110px;">使用位置</th><th>zh-Hant</th><th>en</th><th>zh-Hans</th><th>ja-JP</th><th>ko-KR</th><th>th</th><th>vi</th><th>id</th><th>my-MM</th><th>bn</th><th>pt</th><th>es-ES</th><th>tr-TR</th></tr></thead><tbody>
+<tr><td class="mono">tut1_title</td><td class="dim" style="font-size:11px;">教學1·標題</td><td class="dim" style="min-width:130px;">押注就能集滿累積條</td><td class="dim" style="min-width:130px;">Betting fills up the progress bar</td><td class="dim" style="min-width:130px;">押注就能集满累积条</td><td class="dim" style="min-width:130px;">ベットでゲージが貯まる</td><td class="dim" style="min-width:130px;">베팅하면 게이지가 채워져요</td><td class="dim" style="min-width:130px;">เดิมพันเพื่อสะสมแถบความคืบหน้า</td><td class="dim" style="min-width:130px;">Đặt cược để tích đầy thanh tiến độ</td><td class="dim" style="min-width:130px;">Bertaruh untuk mengisi bilah progres</td><td class="dim" style="min-width:130px;">လောင်းကစားခြင်းဖြင့် တိုးတက်မှုဘားကို ဖြည့်ပါ</td><td class="dim" style="min-width:130px;">বাজি ধরলেই প্রগ্রেস বার পূর্ণ হবে</td><td class="dim" style="min-width:130px;">Apostar enche a barra de progresso</td><td class="dim" style="min-width:130px;">Apostar llena la barra de progreso</td><td class="dim" style="min-width:130px;">Bahis yaptıkça ilerleme çubuğu dolar</td></tr>
+<tr><td class="mono">tut1_body</td><td class="dim" style="font-size:11px;">教學1·內文</td><td class="dim" style="min-width:130px;">在遊戲裡每次押注都會累積到這條進度條，集滿一段就能解鎖一格寶箱，點開領獎！</td><td class="dim" style="min-width:130px;">Every bet you place in the game adds to this progress bar. Fill a stage to unlock a chest cell, then tap it to claim your prize!</td><td class="dim" style="min-width:130px;">在游戏里每次押注都会累积到这条进度条，集满一段就能解锁一格宝箱，点开领奖！</td><td class="dim" style="min-width:130px;">ゲーム内のベットはすべてこのゲージに加算。1段階貯まるごとに宝箱のマスが解放され、タップで賞品をゲット！</td><td class="dim" style="min-width:130px;">게임에서 베팅할 때마다 이 게이지에 누적됩니다. 한 단계를 채우면 보물상자 칸이 해제되고, 눌러서 보상을 받으세요!</td><td class="dim" style="min-width:130px;">ทุกการเดิมพันในเกมจะสะสมเข้าแถบนี้ สะสมครบหนึ่งช่วงจะปลดล็อกช่องกล่องสมบัติ แตะเพื่อรับรางวัล!</td><td class="dim" style="min-width:130px;">Mỗi lần cược trong game đều tích vào thanh tiến độ này. Đầy một giai đoạn sẽ mở khóa một ô rương, chạm để nhận thưởng!</td><td class="dim" style="min-width:130px;">Setiap taruhan dalam game terakumulasi ke bilah ini. Penuhi satu tahap untuk membuka kotak peti, lalu ketuk untuk mengambil hadiah!</td><td class="dim" style="min-width:130px;">ဂိမ်းထဲတွင် လောင်းတိုင်း ဤဘားထဲ စုဆောင်းမည်။ တစ်ဆင့်ပြည့်လျှင် သေတ္တာတစ်ကွက် ပွင့်ပြီး နှိပ်၍ ဆုယူပါ!</td><td class="dim" style="min-width:130px;">গেমে প্রতিটি বাজি এই প্রগ্রেস বারে জমা হয়। একটি ধাপ পূর্ণ হলে একটি চেস্ট ঘর আনলক হবে, ট্যাপ করে পুরস্কার নিন!</td><td class="dim" style="min-width:130px;">Cada aposta no jogo acumula nesta barra. Complete uma etapa para desbloquear uma casa do baú e toque para resgatar o prêmio!</td><td class="dim" style="min-width:130px;">Cada apuesta en el juego se acumula en esta barra. Completa una etapa para desbloquear una casilla del cofre y tócala para reclamar tu premio.</td><td class="dim" style="min-width:130px;">Oyundaki her bahis bu çubukta birikir. Bir aşamayı doldur, bir sandık karesi açılsın; dokun ve ödülünü al!</td></tr>
+<tr><td class="mono">tut2_title</td><td class="dim" style="font-size:11px;">教學2·標題</td><td class="dim" style="min-width:130px;">每天都有機會抽中最大獎！</td><td class="dim" style="min-width:130px;">A chance at the grand prize every day!</td><td class="dim" style="min-width:130px;">每天都有机会抽中最大奖！</td><td class="dim" style="min-width:130px;">毎日、最大賞のチャンス！</td><td class="dim" style="min-width:130px;">매일 최대 상금의 기회!</td><td class="dim" style="min-width:130px;">มีโอกาสได้รางวัลใหญ่ทุกวัน!</td><td class="dim" style="min-width:130px;">Mỗi ngày đều có cơ hội trúng giải lớn nhất!</td><td class="dim" style="min-width:130px;">Setiap hari ada peluang hadiah terbesar!</td><td class="dim" style="min-width:130px;">နေ့တိုင်း ဆုကြီးဆွတ်ခူးရန် အခွင့်အရေးရှိသည်!</td><td class="dim" style="min-width:130px;">প্রতিদিনই সবচেয়ে বড় পুরস্কার জেতার সুযোগ!</td><td class="dim" style="min-width:130px;">Chance de ganhar o grande prêmio todos os dias!</td><td class="dim" style="min-width:130px;">¡Cada día puedes ganar el gran premio!</td><td class="dim" style="min-width:130px;">Her gün büyük ödül şansı!</td></tr>
+<tr><td class="mono">tut2_body</td><td class="dim" style="font-size:11px;">教學2·內文</td><td class="dim" style="min-width:130px;">寶箱每天 00:00 重置重新洗牌，最大獎位置每天都不一樣——翻到就是你的！</td><td class="dim" style="min-width:130px;">The chest resets and reshuffles at 00:00 every day — the grand prize moves daily. Flip it and it's yours!</td><td class="dim" style="min-width:130px;">宝箱每天 00:00 重置重新洗牌，最大奖位置每天都不一样——翻到就是你的！</td><td class="dim" style="min-width:130px;">宝箱は毎日 00:00 にリセット＆シャッフル。最大賞の位置は毎日変わる——めくれたら君のもの！</td><td class="dim" style="min-width:130px;">보물상자는 매일 00:00에 리셋·셔플됩니다. 최대 상금 위치는 매일 달라져요 — 뒤집으면 당신의 것!</td><td class="dim" style="min-width:130px;">กล่องสมบัติรีเซ็ตและสับใหม่ทุกวัน 00:00 ตำแหน่งรางวัลใหญ่เปลี่ยนทุกวัน — เปิดเจอก็เป็นของคุณ!</td><td class="dim" style="min-width:130px;">Rương đặt lại và xáo trộn lúc 00:00 mỗi ngày, vị trí giải lớn luôn thay đổi — lật trúng là của bạn!</td><td class="dim" style="min-width:130px;">Peti direset dan dikocok ulang pukul 00:00 setiap hari, posisi hadiah terbesar selalu berbeda — buka dan jadi milikmu!</td><td class="dim" style="min-width:130px;">သေတ္တာကို နေ့စဉ် 00:00 တွင် ပြန်စပြီး ရောမွှေသည်။ ဆုကြီးနေရာ နေ့တိုင်းပြောင်းသည် — လှန်မိလျှင် သင့်ဟာဖြစ်သည်!</td><td class="dim" style="min-width:130px;">চেস্ট প্রতিদিন ০০:০০ টায় রিসেট ও নতুন করে শাফল হয়, বড় পুরস্কারের জায়গা প্রতিদিন বদলায় — উল্টালেই আপনার!</td><td class="dim" style="min-width:130px;">O baú reinicia e embaralha às 00:00 todos os dias; o grande prêmio muda de lugar diariamente — vire e ele é seu!</td><td class="dim" style="min-width:130px;">El cofre se reinicia y baraja a las 00:00 cada día; el gran premio cambia de lugar a diario — ¡voltéalo y es tuyo!</td><td class="dim" style="min-width:130px;">Sandık her gün 00:00'da sıfırlanır ve karıştırılır; büyük ödülün yeri her gün değişir — çevirirsen senindir!</td></tr>
+<tr><td class="mono">tut_skip</td><td class="dim" style="font-size:11px;">教學·跳過鈕</td><td class="dim" style="min-width:130px;">跳過</td><td class="dim" style="min-width:130px;">Skip</td><td class="dim" style="min-width:130px;">跳过</td><td class="dim" style="min-width:130px;">スキップ</td><td class="dim" style="min-width:130px;">건너뛰기</td><td class="dim" style="min-width:130px;">ข้าม</td><td class="dim" style="min-width:130px;">Bỏ qua</td><td class="dim" style="min-width:130px;">Lewati</td><td class="dim" style="min-width:130px;">ကျော်မည်</td><td class="dim" style="min-width:130px;">এড়িয়ে যান</td><td class="dim" style="min-width:130px;">Pular</td><td class="dim" style="min-width:130px;">Omitir</td><td class="dim" style="min-width:130px;">Atla</td></tr>
+<tr><td class="mono">tut_next</td><td class="dim" style="font-size:11px;">教學·下一步鈕</td><td class="dim" style="min-width:130px;">下一步</td><td class="dim" style="min-width:130px;">Next</td><td class="dim" style="min-width:130px;">下一步</td><td class="dim" style="min-width:130px;">次へ</td><td class="dim" style="min-width:130px;">다음</td><td class="dim" style="min-width:130px;">ถัดไป</td><td class="dim" style="min-width:130px;">Tiếp theo</td><td class="dim" style="min-width:130px;">Berikutnya</td><td class="dim" style="min-width:130px;">ရှေ့သို့</td><td class="dim" style="min-width:130px;">পরবর্তী</td><td class="dim" style="min-width:130px;">Avançar</td><td class="dim" style="min-width:130px;">Siguiente</td><td class="dim" style="min-width:130px;">İleri</td></tr>
+<tr><td class="mono">tut_start_btn</td><td class="dim" style="font-size:11px;">教學·開始鈕</td><td class="dim" style="min-width:130px;">開始抽寶箱</td><td class="dim" style="min-width:130px;">Start opening chests!</td><td class="dim" style="min-width:130px;">开始抽宝箱</td><td class="dim" style="min-width:130px;">宝箱を開け始める</td><td class="dim" style="min-width:130px;">보물상자 열기 시작</td><td class="dim" style="min-width:130px;">เริ่มเปิดกล่องสมบัติ</td><td class="dim" style="min-width:130px;">Bắt đầu mở rương</td><td class="dim" style="min-width:130px;">Mulai buka peti</td><td class="dim" style="min-width:130px;">ရတနာသေတ္တာ စဖွင့်မည်</td><td class="dim" style="min-width:130px;">চেস্ট খোলা শুরু করুন</td><td class="dim" style="min-width:130px;">Começar a abrir baús</td><td class="dim" style="min-width:130px;">Empezar a abrir cofres</td><td class="dim" style="min-width:130px;">Sandık açmaya başla</td></tr>
+</tbody></table></div>
+</section>
+
+</div><!-- /page -->
+
+<div class="doc-footer">
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.1 · CONFIDENTIAL 2026<br>
+  FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）
+</div>
+
+</div><!-- /main-wrap -->
+
+<script>
+// ═══ LAYOUT TOGGLE ═══
+function setLayout(mode){
+  document.body.className = 'layout-' + mode;
+  document.getElementById('btn-side').classList.toggle('active', mode==='side');
+  document.getElementById('btn-top').classList.toggle('active', mode==='top');
+  localStorage.setItem('spec-layout', mode);
+}
+(function(){ const saved = localStorage.getItem('spec-layout') || 'side'; setLayout(saved); })();
+
+// ═══ 日期動態產生 ═══
+(function(){
+  const now = new Date();
+  const dateStr = now.getFullYear()+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+String(now.getDate()).padStart(2,'0');
+  const sd = document.getElementById('sidebar-date');
+  const td = document.getElementById('topnav-date');
+  if(sd) sd.textContent = dateStr;
+  if(td) td.textContent = dateStr;
+})();
+
+// ═══ SIDEBAR 章節展開/收合 ═══
+document.querySelectorAll('.sidebar-section-btn').forEach(btn=>{
+  btn.addEventListener('click', function(){ this.closest('.sidebar-section').classList.toggle('open'); });
+});
+
+function navTo(id){
+  const target = document.getElementById(id);
+  if(target){
+    const offset = document.body.classList.contains('layout-top') ? 60 : 20;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior:'smooth' });
+  }
+}
+
+// ═══ SCROLL SPY ═══
+const sections = document.querySelectorAll('.section');
+function updateActiveNav(){
+  let current='';
+  sections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 100) current = s.id; });
+  document.querySelectorAll('.nav-item').forEach(n=>{ n.classList.toggle('active', n.getAttribute('href')==='#'+current); });
+  document.querySelectorAll('.sidebar-section-btn').forEach(btn=>{ const el = btn.closest('.sidebar-section'); btn.classList.toggle('active', el.dataset.section===current); });
+  document.querySelectorAll('.sidebar-sub-link').forEach(link=>{ link.classList.toggle('active', link.getAttribute('href')==='#'+current); });
+}
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+// ─── TABS ───
+function switchTab(btn, id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+// ─── THRESHOLD ROWS ───
+// thresholds = 每格「增量」門檻；cumulative = 內部累積 running sum（最終 ₱3,600，玩家端不顯示）
+const thresholds = [50,100,150,200,300,400,600,800,1000];
+const cumulative = thresholds.reduce((acc,t,i)=>{acc.push((acc[i-1]||0)+t);return acc;},[]);
+const maxInc = Math.max(...thresholds);
+const prizes = ['小獎 ₱1','小獎 ₱1','小獎 ₱1','小獎 ₱1','小獎 ₱1','中獎 ₱3','中獎 ₱3','大獎 ₱8','最終獎 ₱18'];
+const container = document.getElementById('threshold-rows');
+thresholds.forEach((t,i)=>{
+  const div = document.createElement('div');
+  div.className='threshold-row';
+  const pct = Math.round(t/maxInc*100); // 本階段增量佔比（相對最大增量，非累積進度）
+  div.innerHTML=`
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);">格 ${i+1}</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;">+₱${t.toLocaleString()}<span style="color:var(--text-dim);font-size:9px;"> ／累積 ₱${cumulative[i].toLocaleString()}</span></div>
+    <div>
+      <div class="threshold-bar">
+        <div class="threshold-bar-fill" style="width:${pct}%"></div>
+      </div>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);">${t} spins</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);">${Math.ceil(t/10)} spins</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);">${Math.ceil(t/20)} spins</div>
+  `;
+  container.appendChild(div);
+});
+
+// ─── PRIZE GRID ───
+const prizeData = [
+  {cell:1,type:'small',icon:'💙',label:'小獎',val:'₱1',unlock:'洗牌後決定'},
+  {cell:2,type:'small',icon:'💙',label:'小獎',val:'₱1',unlock:'洗牌後決定'},
+  {cell:3,type:'small',icon:'💙',label:'小獎',val:'₱1',unlock:'洗牌後決定'},
+  {cell:4,type:'small',icon:'💙',label:'小獎',val:'₱1',unlock:'洗牌後決定'},
+  {cell:5,type:'small',icon:'💙',label:'小獎',val:'₱1',unlock:'洗牌後決定'},
+  {cell:6,type:'medium',icon:'💚',label:'中獎',val:'₱3',unlock:'洗牌後決定'},
+  {cell:7,type:'medium',icon:'💚',label:'中獎',val:'₱3',unlock:'洗牌後決定'},
+  {cell:8,type:'large',icon:'🌟',label:'大獎',val:'₱8',unlock:'洗牌後決定'},
+  {cell:9,type:'jackpot',icon:'👑',label:'最終獎',val:'₱18',unlock:'洗牌後決定'},
+];
+const pg = document.getElementById('prize-grid-display');
+prizeData.forEach(p=>{
+  const div=document.createElement('div');
+  div.className=`prize-cell ${p.type}`;
+  const isJP = p.type==='jackpot';
+  div.innerHTML=`
+    <div class="prize-cell-num">格 ${p.cell}</div>
+    ${isJP?'<div class="jackpot-indicator">最終獎</div>':''}
+    <div class="prize-cell-icon">${p.icon}</div>
+    <div class="prize-cell-type">${p.label}</div>
+    <div class="prize-cell-val">${p.val}</div>
+    <div class="prize-cell-unlock">解鎖：${p.unlock}</div>
+  `;
+  if(isJP) div.classList.add('jackpot-glow');
+  pg.appendChild(div);
+});
+
+// ─── MOCKUP GRID ───
+// UI 原則：只在「下一格」顯示再押金額（本階段增量），其餘鎖定格不顯示數字、不顯示累積總額
+const mockupData = [
+  {state:'opened',icon:'💙',val:'₱1',req:''},
+  {state:'opened',icon:'💙',val:'₱1',req:''},
+  {state:'opened',icon:'💚',val:'₱3',req:''},
+  {state:'unlocked',icon:'🔓',val:'?',req:''},      // 格4 可翻（洗牌後內容未知）
+  {state:'locked',icon:'🔒',val:'?',req:'再押₱100'},  // 格5 = 下一格，顯示本階段增量
+  {state:'locked',icon:'🔒',val:'?',req:''},
+  {state:'locked',icon:'🔒',val:'?',req:''},
+  {state:'locked',icon:'🔒',val:'?',req:''},
+  {state:'locked',icon:'🔒',val:'?',req:''},
+];
+const mg = document.getElementById('mockup-grid');
+mockupData.forEach((m,i)=>{
+  const div=document.createElement('div');
+  div.className=`chest-cell ${m.state}`;
+  div.innerHTML=`
+    <div class="chest-cell-num">${i+1}</div>
+    <div class="chest-cell-icon">${m.icon}</div>
+    <div class="chest-cell-val">${m.val}</div>
+    ${m.req?`<div class="chest-cell-unlock-req">${m.req}</div>`:''}
+  `;
+  mg.appendChild(div);
+});
+
+// ─── SMOOTH SCROLL ───
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
