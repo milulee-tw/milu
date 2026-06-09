@@ -1,6 +1,6 @@
 {
-  "updated": "2026-05-20",
-  "count": 32,
+  "updated": "2026-06-05",
+  "count": 33,
   "items": [
     {
       "date": "2026-03-09",
@@ -161,6 +161,11 @@
       "date": "2026-05-20",
       "category": "伺服器更新",
       "event": "不停機更新（約 3 小時）：全遊戲更新 random 模組 & log 輸出方式；新增線路資料；RTP 水池控制；RTP 顯示開關；新增幣別 TWDv；新增 S012 釣魚哥"
+    },
+    {
+      "date": "2026-06-05",
+      "category": "合規送審",
+      "event": "COMBO GAMING 5 款遊戲於 Jackpot Combo 平台通過 PAGCOR 審核（累計共 10 款過審）"
     }
   ]
 }
