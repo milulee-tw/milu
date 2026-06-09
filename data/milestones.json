@@ -1,6 +1,6 @@
 {
-  "updated": "2026-06-05",
-  "count": 38,
+  "updated": "2026-06-09",
+  "count": 40,
   "items": [
     {
       "date": "2026-03-09",
@@ -191,6 +191,16 @@
       "date": "2026-06-05",
       "category": "合規送審",
       "event": "COMBO GAMING 5 款遊戲於 Jackpot Combo 平台通過 PAGCOR 審核（累計共 10 款過審）"
+    },
+    {
+      "date": "2026-06-09",
+      "category": "品牌策略",
+      "event": "LLG 品牌正式閉幕；歐洲線未來統一改用 Combo 品牌名稱"
+    },
+    {
+      "date": "2026-06-09",
+      "category": "商務合作",
+      "event": "合作夥伴 EGS 建立串接群組，開發串接先行啟動；營運推廣尚未開始"
     }
   ]
 }
