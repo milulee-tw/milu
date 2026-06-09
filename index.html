@@ -293,6 +293,35 @@
             font-family: 'Space Mono', monospace;
         }
  
+        .refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7em;
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+        .refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .refresh-btn:active { transform: scale(0.96); }
+        .refresh-btn.loading { opacity: 0.6; pointer-events: none; }
+        .refresh-btn .refresh-icon { display: inline-block; }
+        .refresh-btn.loading .refresh-icon { animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .refresh-status {
+            font-size: 0.66em;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            flex-shrink: 0;
+        }
+
         /* ─── CONTENT ─── */
         .content {
             flex: 1;
@@ -586,6 +615,8 @@
             <div class="topbar-breadcrumb" id="breadcrumb">
                 <span>規格庫</span> / 選擇文件
             </div>
+            <button class="refresh-btn" id="refresh-btn" onclick="loadMilestones(true)" title="重新整理大事記"><span class="refresh-icon">🔄</span><span>重新整理</span></button>
+            <div class="refresh-status" id="refresh-status"></div>
             <div class="topbar-meta" id="topbar-date"></div>
         </div>
         <div class="content">
@@ -613,178 +644,8 @@
  
         <div class="right-panel-content">
             <div class="panel-section">
-                <div class="panel-title">本週動態</div>
-                <div class="crm-list" id="crm-items">
- 
-                    <div class="crm-item amber">
-                        <div class="crm-item-label">🛠 遊戲開發・3月第4週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/1) [S011 火車] BETA 版本完成並結案，完成度 100%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item amber">
-                        <div class="crm-item-label">🛠 遊戲開發・4月第1週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/10) [S011 火車] 進行全公司試玩會</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item amber">
-                        <div class="crm-item-label">🛠 遊戲開發・4月第2週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/14) 克克開始遊戲後台 RTP 設定工具規劃</div>
-                                </div>
-                            </div>
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/15) 進行 CMB 官網第一次進度同步會議</div>
-                                    <div class="entry-sub">Server 預計 4/23 完成</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item warn">
-                        <div class="crm-item-label">⚙️ 系統技術・3月第4週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(3/25) 伺服器功能更新</div>
-                                    <div class="entry-sub">
-                                        <b>GameService：</b>新增遊戲 Slot009<br>
-                                        <b>Gateway：</b>新增押注區段設定支援小數點、新增 UFA 廳館邏輯、水池功能 Redis 支援 Cluster 模式<br>
-                                        <b>GameLog：</b>新增遊戲 Slot009 Log、修正 Slot015 Log betId 錯誤問題
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(3/26) 伺服器功能更新</div>
-                                    <div class="entry-sub">
-                                        <b>Gateway：</b>新增 Bet 段及 TRY 幣值押注上限 &amp; 預設 Bet
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item warn">
-                        <div class="crm-item-label">⚙️ 系統技術・3月第5週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/1) 伺服器功能更新</div>
-                                    <div class="entry-sub">
-                                        <b>GameLog：</b>調整數據組 Log 串接（Odds 計算）、[bug 修正] Slot015 Log 計算錯誤
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item warn">
-                        <div class="crm-item-label">⚙️ 系統技術・4月第2週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/15) 伺服器功能更新・版更計劃</div>
-                                    <div class="entry-sub">
-                                        <b>Gateway：</b>水池設定（只需更新 MongoDB）、修復遊戲注單資源未釋放 bug<br>
-                                        <b>Gateway + Gamelog：</b>toml 轉 mongo（需要設定 MongoDB）
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item">
-                        <div class="crm-item-label">🚀 遊戲上線・4月第1週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/7) PB 站台移除 Combo 在越南站和孟加拉站的 Hot Game 版位</div>
-                                    <div class="entry-sub">孟加拉及越南市場主要差異：將 Combo 遊戲從 Hot Games 版位移除</div>
-                                </div>
-                            </div>
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/8) [S009 星際動物] 於 AWC 開放遊玩</div>
-                                </div>
-                            </div>
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/10) [S023 海盜女王][S009 星際動物] 在 MPS 開放遊玩</div>
-                                    <div class="entry-sub">新遊戲提升 DAU 約 +250 人，第 3 天趨緩（-160 人）</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item">
-                        <div class="crm-item-label">🚀 遊戲上線・4月第2週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/16) 調整 Free Spin Bet 段</div>
-                                    <div class="entry-sub">除 Arcade Game 和 S015 錢來也外，一律支援 Free Spin 3 段以上 Bet 段使用 Free Spin</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item amber">
-                        <div class="crm-item-label">📋 合規送審・3月第5週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/2) 完成 LLG PP 環境並提供 bmm 測試帳號</div>
-                                    <div class="entry-sub">
-                                        提供原 GLI 過審 5 款遊戲給 bmm 測試<br>
-                                        另提供全新 7 款遊戲給 bmm 進行測試
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="crm-item">
-                        <div class="crm-item-label">🎯 CRM・4月第2週</div>
-                        <div class="crm-item-text">
-                            <div class="entry">
-                                <span class="entry-arrow">→</span>
-                                <div class="entry-body">
-                                    <div class="entry-title">(4/13) 和曉陽合庭進行第二次 CRM 提案</div>
-                                    <div class="entry-sub">後續先不進行活動規劃，以數據觀察玩家旅程（漏斗）呈現狀況，了解玩家需求後，針對痛點進行重點優化規格</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                </div>
+                <div class="panel-title">最新大事記</div>
+                <div class="crm-list" id="crm-items"></div>
             </div>
         </div>
     </div>
@@ -815,6 +676,114 @@
         now.getFullYear() + '-' +
         String(now.getMonth() + 1).padStart(2, '0') + '-' +
         String(now.getDate()).padStart(2, '0');
+
+    /* ─── CMB 大事記側欄（自動載入 data/milestones.json，最新在最上面） ─── */
+    const SHOW_LATEST = 15;
+    const MILESTONES_FALLBACK = [
+        {"date": "2026-03-09", "category": "合規送審", "event": "已提交 17 款遊戲計畫，分為 3 條線同時進行；目前 5 款已提交 Source Code，預計 LLG PP 環境月底才能提供測試"},
+        {"date": "2026-03-20", "category": "遊戲上線", "event": "[S023 海盜女王] 於 AWC 開放遊玩"},
+        {"date": "2026-03-25", "category": "伺服器更新", "event": "版本更新：GameService 新增 Slot009；Gateway 新增押注區段設定支援小數點、新增 UFA 廳館邏輯、水池功能 Redis 支援 Cluster 模式；GameLog 新增 Slot009 Log、修正 Slot015 Log betId 錯誤"},
+        {"date": "2026-03-26", "category": "伺服器更新", "event": "版本更新：Gateway 新增 Bet 段及 TRY 幣值押注上限 & 預設 Bet"},
+        {"date": "2026-04-01", "category": "遊戲開發", "event": "[S011 火車] BETA 版本完成並結案，完成度 100%"},
+        {"date": "2026-04-01", "category": "伺服器更新", "event": "版本更新：GameLog 調整數據組 Log 串接（Odds 計算）；[Bug Fix] Slot015 Log 計算錯誤修正"},
+        {"date": "2026-04-02", "category": "合規送審", "event": "完成 LLG PP 環境並提供 bmm 測試帳號；提供原 GLI 過審 5 款遊戲給 bmm 測試；另提供全新 7 款遊戲給 bmm 進行測試"},
+        {"date": "2026-04-07", "category": "遊戲上線", "event": "PB 站台移除 Combo 在越南站和孟加拉站的 Hot Game 版位（PB 回應：該市場差異導致調整）"},
+        {"date": "2026-04-08", "category": "遊戲上線", "event": "[S009 星際動物] 於 AWC 開放遊玩"},
+        {"date": "2026-04-10", "category": "遊戲開發", "event": "[S011 火車] 進行全公司試玩會"},
+        {"date": "2026-04-10", "category": "遊戲上線", "event": "[S023 海盜女王][S009 星際動物] 在 MPS 開放遊玩；新遊戲提升 DAU 約 +250 人，第 3 天趨緩（-160 人）"},
+        {"date": "2026-04-13", "category": "CRM", "event": "和曉陽、合庭進行第二次 CRM 提案；後續先不進行活動規劃，以數據觀察玩家旅程（漏斗）呈現狀況，了解玩家需求後針對痛點進行重點優化規格"},
+        {"date": "2026-04-14", "category": "遊戲開發", "event": "克克開始遊戲後台 RTP 設定工具規劃"},
+        {"date": "2026-04-15", "category": "遊戲開發", "event": "進行 CMB 官網第一次進度同步會議，Server 預計 4/23 完成"},
+        {"date": "2026-04-15", "category": "伺服器更新", "event": "版本更新：Gateway 水池設定（只需更新 MongoDB）；修復遊戲注單資源未釋放 Bug；Gateway + GameLog toml 轉 mongo（需設定 MongoDB）"},
+        {"date": "2026-04-16", "category": "遊戲上線", "event": "調整 Free Spin Bet 段：除 Arcade Game 和 S015 錢來也，一律支援 Free Spin 3 段以上 Bet 段使用 Free Spin"},
+        {"date": "2026-04-17", "category": "遊戲上線", "event": "調整多幣種的遊戲押注上限，提升大客玩家押注總量"},
+        {"date": "2026-04-20", "category": "遊戲上線", "event": "AWS082 線路開放，目前主要客群來源為泰銖；預計 4/23 因 PMS 開放而關閉其中 8 款遊戲"},
+        {"date": "2026-04-21", "category": "合規送審", "event": "RNG 送審後發現問題：需由 Go 原生 math 函式庫改為 crypto；暫停 Clark 和郁宸現有工作，優先處理 RNG 調整和驗證；後續 RNG 邏輯集中統一模組維護"},
+        {"date": "2026-04-23", "category": "遊戲開發", "event": "前端版本更新：新增葡萄牙語（pt-BR）、西班牙文、緬甸文、越南文、印尼文支持；client log 修正、Slot Framework 重構、CoreUtilities 重構、Bug Fixes"},
+        {"date": "2026-04-23", "category": "遊戲上線", "event": "PMS 上線導致 8 條線路共 8 款遊戲關閉，其他線路營收明顯下滑；預計 4/29 針對 4/24–4/28 下滑狀況進行分析並提出後續方案"},
+        {"date": "2026-04-24", "category": "遊戲開發", "event": "[S012 釣魚哥] 進行全公司試玩會"},
+        {"date": "2026-04-29", "category": "遊戲開發", "event": "完成熊貓和釣魚哥結案會議"},
+        {"date": "2026-04-29", "category": "伺服器更新", "event": "RNG 函式庫統一改為使用 crypto 並驗證完成"},
+        {"date": "2026-04-29", "category": "遊戲上線", "event": "火車開放正式機並通知 AWS 和 MPS 串接測試"},
+        {"date": "2026-05-01", "category": "遊戲上線", "event": "前端 Prod HotFix：修正餘額不正確自動刷新；更新遊戲代號 Slot014、Slot017"},
+        {"date": "2026-05-06", "category": "伺服器更新", "event": "版本更新：slot002 更新 rtp 控制；game-backend mongodb 調整連線邏輯"},
+        {"date": "2026-05-08", "category": "遊戲上線", "event": "前端 Prod HotFix：修正 Slot006 軟糖熊連點卡住 Bug"},
+        {"date": "2026-05-12", "category": "CRM", "event": "已確認執行「上調絕對值熔斷數值」和「3000x 倍數熔斷數值」；實際執行時間尚待確認"},
+        {"date": "2026-05-14", "category": "遊戲上線", "event": "前端版本更新：[Feat] 新增土耳其語系；[Feat] 新增 RTP Info 顯示開關；[Feat] 新增公版數字支援歐陸格式；[Feat] 新增 TWDv 貨幣格式支援；[Fix] Auto Spin 進 FG 結束後 Buy Bonus 按鈕消失；[Fix] 移除 IFrame 開啟遊戲（優化效能）"},
+        {"date": "2026-05-15", "category": "遊戲開發", "event": "進行熊貓試玩會"},
+        {"date": "2026-05-20", "category": "伺服器更新", "event": "不停機更新（約 3 小時）：全遊戲更新 random 模組 & log 輸出方式；新增線路資料；RTP 水池控制；RTP 顯示開關；新增幣別 TWDv；新增 S012 釣魚哥"}
+    ];
+    const CAT_STYLE = {
+        '遊戲開發':   { cls: 'amber', icon: '🛠' },
+        '伺服器更新': { cls: 'warn',  icon: '⚙️' },
+        '遊戲上線':   { cls: '',      icon: '🚀' },
+        '合規送審':   { cls: '',      icon: '📋' },
+        'CRM':        { cls: '',      icon: '🎯' }
+    };
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"]/g, function(c){
+            return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];
+        });
+    }
+
+    function mdShort(date) {
+        var p = String(date).split('-');
+        return p.length === 3 ? (parseInt(p[1],10) + '/' + parseInt(p[2],10)) : date;
+    }
+
+    function renderMilestones(items) {
+        var sorted = items.slice().sort(function(a,b){
+            return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0);
+        });
+        var latest = sorted.slice(0, SHOW_LATEST);
+        var html = latest.map(function(it){
+            var st = CAT_STYLE[it.category] || { cls: '', icon: '•' };
+            return '<div class="crm-item ' + st.cls + '">'
+                +    '<div class="crm-item-label">' + st.icon + ' ' + escapeHtml(it.category) + '</div>'
+                +    '<div class="crm-item-text">'
+                +        '<div class="entry">'
+                +            '<span class="entry-arrow">→</span>'
+                +            '<div class="entry-body">'
+                +                '<div class="entry-title">(' + mdShort(it.date) + ') ' + escapeHtml(it.event) + '</div>'
+                +            '</div>'
+                +        '</div>'
+                +    '</div>'
+                + '</div>';
+        }).join('');
+        document.getElementById('crm-items').innerHTML = html;
+    }
+
+    function setRefreshStatus(text) {
+        var el = document.getElementById('refresh-status');
+        if (el) el.textContent = text;
+    }
+
+    function nowHM() {
+        var d = new Date();
+        return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    }
+
+    function loadMilestones(manual) {
+        var btn = document.getElementById('refresh-btn');
+        if (btn) btn.classList.add('loading');
+        setRefreshStatus('更新中…');
+        fetch('./data/milestones.json?_=' + Date.now(), { cache: 'no-store' })
+            .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+            .then(function(data){
+                var items = (data && data.items) ? data.items : [];
+                if (!items.length) throw new Error('empty');
+                renderMilestones(items);
+                setRefreshStatus('已更新 ' + nowHM());
+            })
+            .catch(function(){
+                renderMilestones(MILESTONES_FALLBACK);
+                setRefreshStatus(manual ? '無法連線・顯示本機快照' : '顯示本機快照');
+            })
+            .finally(function(){ if (btn) btn.classList.remove('loading'); });
+    }
+
+    loadMilestones(false);
 </script>
  
 </body>
