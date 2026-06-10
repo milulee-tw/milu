@@ -1036,6 +1036,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout success">
+    <strong>v3.2 補充說明（錢包別，2026/06）：</strong>新增「現金獎入帳錢包別」需求——遊戲端於 place_bet 增加 <strong>wallet_target（MAIN｜BONUS）</strong> 欄位，讓平台／集成商知道本筆現金獎應入主錢包或 Bonus 錢包；同步更新第 04 章（reward_grant 增記入帳錢包別）、第 11 章（chest_cell_opened／chest_jackpot_triggered 埋點加 wallet_target）、第 12 章（AWC 串接需求）、第 13 章（待與 AWC 確認錢包模型）。
+  </div>
+
+  <div class="callout success">
     <strong>v3.2 修訂說明（2026/06）：</strong>依更新版互動原型調整核心機制——① <strong>翻格機制改版</strong>：累積押注由「解鎖固定位置格子」改為「<strong>賺取翻牌次數</strong>」，玩家可<strong>自由翻開任意未開格子</strong>（提升挖寶自主性；因集滿仍翻完全部 9 格，RTP／經濟模型不變）；② 新增 <strong>P7「今日全部抽完」結算畫面</strong>；③ 全文進度／格子文案與第 14 章 i18n 同步改字並新增結算畫面文案。詳見第 02、04、06、14 章。
   </div>
 
@@ -1332,7 +1336,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="info-card-title">🧾 LAYER 04 · 發放紀錄</div>
       <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
         每筆派獎的收據：玩家ID、活動ID、獎勵類型、金額、AWC交易ID。<br>
-        <strong>月結對帳唯一依據</strong>
+        <strong>月結對帳唯一依據</strong><br>
+        <span style="color:var(--gold-light);font-size:11px;">🏦 wallet_target（入帳錢包別 MAIN｜BONUS）：與 place_bet 一致，供對帳區分主錢包派彩 vs bonus 錢包派彩</span>
       </div>
     </div>
   </div>
@@ -2380,12 +2385,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="log-item">
     <div class="log-event">chest_cell_opened</div>
     <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
-    <div class="log-desc">玩家成功翻開格子並派獎後觸發。欄位：player_id, campaign_id, cell_index, reward_type, reward_amount, awc_txn_id, timestamp。<br>用途：核心活動參與 + 獎勵成本統計</div>
+    <div class="log-desc">玩家成功翻開格子並派獎後觸發。欄位：player_id, campaign_id, cell_index, reward_type, reward_amount, awc_txn_id, <strong>wallet_target (MAIN｜BONUS)</strong>, timestamp。<br>用途：核心活動參與 + 獎勵成本統計（含錢包別派彩拆分）</div>
   </div>
   <div class="log-item">
     <div class="log-event">chest_jackpot_triggered</div>
     <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
-    <div class="log-desc">玩家翻到最終獎時獨立記錄。欄位：player_id, campaign_id, final_prize_cell (1–9，動態洗牌位置), draw_index (第幾抽), amount, timestamp。<br>用途：最終獎觸發頻率監控與成本分析</div>
+    <div class="log-desc">玩家翻到最終獎時獨立記錄。欄位：player_id, campaign_id, final_prize_cell (1–9，動態洗牌位置), draw_index (第幾抽), amount, <strong>wallet_target (MAIN｜BONUS)</strong>, timestamp。<br>用途：最終獎觸發頻率監控與成本分析</div>
   </div>
   <div class="log-item">
     <div class="log-event">chest_cycle_completed</div>
@@ -2401,6 +2406,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="log-event">chest_daily_reset</div>
     <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
     <div class="log-desc">每日重置排程執行時記錄。欄位：campaign_id, reset_date, players_affected, timestamp。<br>用途：確認重置排程正常運行</div>
+  </div>
+
+  <div class="callout info" style="margin-top:16px;">
+    <strong>📌 欄位補充（錢包別）：</strong><em>chest_cell_opened</em> 與 <em>chest_jackpot_triggered</em> 事件新增 <strong>wallet_target（MAIN｜BONUS）</strong> 欄位，記錄該筆現金獎實際入帳錢包別（與 place_bet／reward_grant 的 wallet_target 一致），供數據端分析主錢包 vs bonus 錢包的派彩分布與成本拆分。
   </div>
 
   <div class="sub-title" style="margin-top:24px;">前端埋點事件（供 UI 行為分析）</div>
@@ -2442,6 +2451,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="oq-item awc">
     <div class="oq-owner">AWC · V1 現金獎</div>
     <div class="oq-q">place_bet 新增 bonus_type 與 campaign_id 欄位；確認 bet_amount=0 零押注交易可正確處理入帳。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC · V1 現金獎</div>
+    <div class="oq-q">place_bet 新增 <strong>wallet_target</strong> 欄位（值：<strong>MAIN｜BONUS</strong>），標明本次現金獎 win_amount 應入「主錢包（main wallet）」或「Bonus 錢包」，供平台／集成商路由入帳；可與 bonus_type、campaign_id 同批一次提交。<span style="color:var(--gold-light);font-size:11px;">⚠️ 須先確認集成商錢包模型是否支援雙錢包（main/bonus），並確認「錢包別」由遊戲端決定後以此欄位告知，或由集成商依 bonus_type 自行判斷路由。</span></div>
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC · V1 現金獎</div>
@@ -2513,6 +2526,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="oq-item awc">
     <div class="oq-owner">AWC ALIGN</div>
     <div class="oq-q">派獎失敗重試的邏輯：建議比照 free_game 持續重試至成功，是否符合 AWC 規格？是否有最大重試次數限制？</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC ALIGN</div>
+    <div class="oq-q"><strong>錢包別路由（wallet_target）：</strong>集成商錢包模型是否支援「main wallet / bonus 錢包」雙錢包？現金獎入帳能否依 place_bet 的 wallet_target（MAIN｜BONUS）路由到指定錢包？「錢包別」由遊戲端決定（帶 wallet_target）還是由集成商依 bonus_type 自行判斷？bonus 錢包是否有流水／提款限制需一併告知？</div>
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC ALIGN</div>
