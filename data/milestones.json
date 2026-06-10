@@ -1,6 +1,6 @@
 {
   "updated": "2026-06-12",
-  "count": 42,
+  "count": 45,
   "items": [
     {
       "date": "2026-03-09",
@@ -203,9 +203,24 @@
       "event": "合作夥伴 EGS 建立串接群組，開發串接先行啟動；營運推廣尚未開始"
     },
     {
+      "date": "2026-06-09",
+      "category": "客戶需求",
+      "event": "UFA SLOT 針對 6 月後新增的 3 款遊戲提出額外修改要求，要求改掉上回第一次修改的內容；包含 S012 Golden Bass 遊戲名稱更動，宣傳文案共重工 2 次"
+    },
+    {
       "date": "2026-06-10",
       "category": "遊戲開發",
       "event": "[S032 阿拉丁] Beta 版本測試完成"
+    },
+    {
+      "date": "2026-06-10",
+      "category": "合規送審",
+      "event": "Combo 遊戲暫時於 Jackpot Combo（JC）平台下架；應菲律賓官方合規需求，MegaXcess 僅接受單一集成商資料，Combo 未來上架 JC 須改由 Sanatech 作為中介進行串接；預期 AWC 使用線路 AWS051 串接至 Sanatech，JC 則另外申請獨立線路進行串接"
+    },
+    {
+      "date": "2026-06-10",
+      "category": "伺服器更新",
+      "event": "不停機更新 gateway v1.6.8：[Hotfix] 修正 UFA 免費遊戲帶入異常 game_code"
     },
     {
       "date": "2026-06-12",
