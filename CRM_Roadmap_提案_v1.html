@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLOT CRM 後續開發 Roadmap 提案 · CMB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ─── CSS VARIABLES ─── */
+:root {
+  --gold: #D4A843;
+  --gold-light: #F0CC72;
+  --gold-dim: #8B6914;
+  --dark: #0D0E12;
+  --dark-2: #161820;
+  --dark-3: #1E2028;
+  --dark-4: #262830;
+  --dark-5: #2E3040;
+  --border: rgba(212,168,67,0.18);
+  --border-bright: rgba(212,168,67,0.45);
+  --text-primary: #F0EDE6;
+  --text-secondary: #9A9488;
+  --text-dim: #5A5650;
+  --red: #E05A3A;
+  --teal: #3ABFB0;
+  --blue: #4A8FE0;
+  --green: #5ABF7A;
+  --purple: #B084D8;
+  --orange: #E0963A;
+  --sidebar-w: 280px;
+  --topnav-h: 48px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--dark);
+  color:var(--text-primary);
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  font-size:14px;
+}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--dark-2);}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
+
+/* ═══════════════════════════════════════
+   LAYOUT MODE TOGGLE
+═══════════════════════════════════════ */
+/* ── 預設：左側邊欄模式 ── */
+body.layout-top .sidebar { display: none; }
+body.layout-top .topnav  { display: flex; }
+body.layout-top .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
+
+body.layout-side .sidebar { display: flex; }
+body.layout-side .topnav  { display: none; }
+body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
+
+/* 切換按鈕 */
+.layout-toggle {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 200;
+  display: flex;
+  background: var(--dark-3);
+  border: 1px solid var(--border-bright);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+.layout-toggle-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.12em;
+  padding: 8px 14px;
+  cursor: pointer;
+  color: var(--text-dim);
+  background: none; border: none;
+  transition: all .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.layout-toggle-btn:hover { color: var(--text-secondary); }
+.layout-toggle-btn.active {
+  background: rgba(212,168,67,0.12);
+  color: var(--gold-light);
+}
+.layout-toggle-divider {
+  width: 1px; background: var(--border);
+  align-self: stretch;
+}
+
+/* ═══════════════════════════════════════
+   TOP NAV（水平導覽）
+═══════════════════════════════════════ */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,14,18,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 0 40px;
+  height: var(--topnav-h);
+  overflow-x: auto;
+  align-items: center; gap: 0;
+}
+.topnav::-webkit-scrollbar{height:2px;}
+.nav-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--gold);
+  letter-spacing: 0.15em; white-space: nowrap;
+  margin-right: 32px; flex-shrink: 0;
+}
+.nav-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim);
+  padding: 0 14px; height: var(--topnav-h);
+  display: flex; align-items: center;
+  cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all .2s; text-decoration: none;
+}
+.nav-item:hover { color: var(--gold-light); border-bottom-color: var(--gold); }
+.nav-item.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+
+/* ═══════════════════════════════════════
+   SIDEBAR（左側導覽）
+═══════════════════════════════════════ */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w); z-index: 100;
+  background: var(--dark-2);
+  border-right: 1px solid var(--border);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 側邊欄頂部：文件資訊 */
+.sidebar-header {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.sidebar-title {
+  font-size: 14px; font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4; margin-bottom: 14px;
+}
+.sidebar-meta {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.sidebar-meta-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.06em;
+}
+.sidebar-meta-label { color: var(--text-dim); }
+.sidebar-meta-val { color: var(--text-secondary); }
+.sidebar-meta-val.status-active {
+  color: #7ADFA0;
+  background: rgba(90,191,122,0.1);
+  padding: 2px 7px; border-radius: 2px;
+}
+.sidebar-meta-val.status-draft {
+  color: var(--gold-light);
+  background: rgba(212,168,67,0.1);
+  padding: 2px 7px; border-radius: 2px;
+}
+.sidebar-meta-val.status-review {
+  color: #90C0F0;
+  background: rgba(74,143,224,0.1);
+  padding: 2px 7px; border-radius: 2px;
+}
+
+/* 側邊欄導覽區 */
+.sidebar-nav {
+  flex: 1; overflow-y: auto;
+  padding: 12px 0 80px;
+}
+.sidebar-nav::-webkit-scrollbar{width:3px;}
+
+.sidebar-section {
+  margin-bottom: 2px;
+}
+.sidebar-section-btn {
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: none; border: none;
+  cursor: pointer; text-align: left;
+  text-decoration: none;
+  transition: all .2s;
+  border-left: 2px solid transparent;
+}
+.sidebar-section-btn:hover {
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.03);
+}
+.sidebar-section-btn.active {
+  color: var(--gold-light);
+  border-left-color: var(--gold);
+  background: rgba(212,168,67,0.06);
+}
+.sidebar-section-num {
+  font-size: 10px; color: var(--text-dim);
+  flex-shrink: 0; width: 20px;
+}
+.sidebar-section-btn.active .sidebar-section-num {
+  color: var(--gold);
+}
+.sidebar-chevron {
+  margin-left: auto; font-size: 10px;
+  color: var(--text-dim);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.sidebar-section.open .sidebar-chevron {
+  transform: rotate(90deg);
+}
+
+/* 子章節 */
+.sidebar-subsections {
+  display: none;
+  padding: 2px 0 4px;
+  border-left: 1px solid var(--border);
+  margin-left: 30px;
+}
+.sidebar-section.open .sidebar-subsections {
+  display: block;
+}
+.sidebar-sub-link {
+  display: block;
+  padding: 7px 16px 7px 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color .15s;
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+}
+.sidebar-sub-link:hover { color: var(--text-secondary); }
+.sidebar-sub-link.active {
+  color: var(--gold-light);
+  border-left-color: var(--gold-dim);
+}
+
+/* ═══════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════ */
+.main-wrap {
+  transition: margin-left .3s, padding-top .3s;
+  min-height: 100vh;
+}
+.page { max-width: 1040px; margin: 0 auto; padding: 0 40px 120px; }
+.section { margin-bottom: 100px; padding-top: 20px; }
+.section-header {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  color: var(--gold-light); letter-spacing: 0.18em;
+}
+.section-title { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; }
+.section-title-en {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--text-secondary); letter-spacing: 0.15em; margin-left: auto;
+}
+.sub-title {
+  font-size: 15px; font-weight: 700; color: var(--gold-light);
+  margin-bottom: 14px; margin-top: 28px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sub-title::before { content:''; width:3px; height:13px; background:var(--gold); flex-shrink:0; }
+.body-text { font-size: 13px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.85; }
+.body-text strong { color: var(--text-primary); }
+.body-text em { color: var(--gold-light); font-style: normal; font-weight: 600; }
+
+/* ─── COVER ─── */
+.cover {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 60px 40px; text-align: center;
+}
+.cover-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%,rgba(212,168,67,0.07) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%,rgba(74,143,224,0.05) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%,rgba(176,132,216,0.04) 0%,transparent 60%);
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px);
+  background-size: 60px 60px;
+}
+.cover-tag {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase;
+  border: 1px solid var(--border-bright); padding: 6px 18px; border-radius: 2px;
+  margin-bottom: 36px; position: relative;
+}
+.cover h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px,10vw,96px);
+  letter-spacing: 0.06em; line-height: 0.95;
+  color: var(--gold-light);
+  text-shadow: 0 0 80px rgba(212,168,67,0.25);
+  margin-bottom: 12px; position: relative;
+}
+.cover h1 span { color: var(--text-primary); }
+.cover-sub {
+  font-size: 14px; color: var(--text-secondary);
+  letter-spacing: 0.1em; margin-bottom: 56px; position: relative;
+}
+.cover-pills {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: center; position: relative; margin-bottom: 60px;
+}
+.cover-pill {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; color: var(--text-secondary);
+  padding: 7px 14px; border: 1px solid var(--border);
+  border-radius: 20px; background: rgba(255,255,255,0.02);
+}
+.cover-pill strong { color: var(--gold-light); }
+.cover-badges {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  justify-content: center; position: relative;
+}
+.badge {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; padding: 5px 12px; border-radius: 2px;
+  text-transform: uppercase;
+}
+.badge-v1 { background: rgba(90,191,122,0.12); color: #7ADFA0; border: 1px solid rgba(90,191,122,0.25); }
+.badge-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; border: 1px solid rgba(176,132,216,0.25); }
+.badge-scope { background: rgba(212,168,67,0.1); color: var(--gold-light); border: 1px solid var(--border); }
+.badge-conf { background: rgba(224,90,58,0.1); color: #F0907A; border: 1px solid rgba(224,90,58,0.25); }
+
+/* ─── HYPOTHESIS ─── */
+.hypo-block {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 24px 28px; border-radius: 0 4px 4px 0; margin-bottom: 28px;
+}
+.hypo-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  color: var(--gold); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px;
+}
+.hypo-text { font-size: 15px; color: var(--text-primary); font-weight: 500; line-height: 1.75; }
+
+/* ─── INFO GRID ─── */
+.info-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+.info-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 28px; }
+.info-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 28px; }
+.info-card {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 18px;
+}
+.info-card-icon { font-size: 22px; margin-bottom: 8px; }
+.info-card-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.info-card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+.info-card-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--gold-light); margin-bottom: 4px; }
+.info-card-label { font-size: 11px; color: var(--text-dim); }
+
+/* ─── TABLE ─── */
+.spec-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }
+.spec-table th {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+  color: var(--text-secondary); text-transform: uppercase;
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark-3);
+}
+.spec-table td {
+  padding: 11px 14px; color: var(--text-primary);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.spec-table td.mono { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold-light); }
+.spec-table td.dim { color: var(--text-secondary); }
+.spec-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+/* ─── TAG PILLS ─── */
+.tag-pill {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  padding: 3px 8px; border-radius: 2px; letter-spacing: 0.08em;
+  display: inline-block;
+}
+.tag-v1 { background: rgba(90,191,122,0.12); color: #7ADFA0; }
+.tag-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; }
+.tag-req { background: rgba(224,90,58,0.12); color: #F0907A; }
+.tag-opt { background: rgba(74,143,224,0.12); color: #90C0F0; }
+.tag-data { background: rgba(58,191,176,0.12); color: #70DFD0; }
+.tag-eng { background: rgba(212,168,67,0.12); color: var(--gold-light); }
+.tag-inf { background: rgba(224,90,58,0.15); color: #F0907A; border: 1px solid rgba(224,90,58,0.3); }
+.tag-pm { background: rgba(74,143,224,0.12); color: #90C0F0; }
+.tag-design { background: rgba(176,132,216,0.12); color: #C8A0F0; }
+.check { color: var(--green); }
+.cross { color: var(--text-dim); }
+.plus { color: var(--orange); }
+
+/* ─── FLOW DIAGRAM ─── */
+.flow-wrap { margin-bottom: 32px; overflow-x: auto; }
+.flow { display: flex; align-items: center; gap: 0; min-width: max-content; padding: 4px; }
+.flow-step {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 14px 18px; text-align: center; min-width: 140px;
+}
+.flow-step-num { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 6px; }
+.flow-step-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.flow-step-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+.flow-step.highlight { border-color: var(--gold); background: rgba(212,168,67,0.06); }
+.flow-step.warn { border-color: var(--red); background: rgba(224,90,58,0.06); }
+.flow-step.success { border-color: var(--green); background: rgba(90,191,122,0.06); }
+.flow-arrow { color: var(--text-dim); font-size: 18px; padding: 0 8px; flex-shrink: 0; }
+.flow-arrow-down { text-align: center; color: var(--text-dim); font-size: 18px; padding: 8px 0; margin: 0 auto; }
+.flow-v { display: flex; flex-direction: column; gap: 0; align-items: center; }
+.flow-v .flow-step { min-width: 320px; text-align: left; }
+
+/* ─── TABS ─── */
+.tab-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+.tab-btn {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; color: var(--text-dim);
+  padding: 10px 20px; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s; background: none;
+  border-top: none; border-left: none; border-right: none;
+}
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ─── KPI ─── */
+.kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+.kpi-card { background: var(--dark-3); border: 1px solid var(--border); border-radius: 4px; padding: 20px; }
+.kpi-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+.kpi-val { font-family: 'DM Mono', monospace; font-size: 28px; color: var(--gold-light); font-weight: 500; margin-bottom: 4px; }
+.kpi-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+.kpi-card.primary { border-color: rgba(212,168,67,0.35); }
+
+/* ─── COST ─── */
+.cost-block { background: var(--dark-3); border: 1px solid var(--border); border-radius: 4px; padding: 24px; margin-bottom: 16px; }
+.cost-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+.cost-row:last-child { border-bottom: none; }
+.cost-row.total { font-weight: 700; color: var(--gold-light); border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; }
+.cost-label { color: var(--text-secondary); }
+.cost-val { font-family: 'DM Mono', monospace; color: var(--text-primary); }
+.cost-val.highlight { color: var(--gold-light); }
+
+/* ─── COMPARE TABLE ─── */
+.compare-wrap { overflow-x: auto; margin-bottom: 28px; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 640px; }
+.compare-table th {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em;
+  color: var(--text-dim); text-transform: uppercase;
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--border); background: var(--dark-3);
+}
+.compare-table th.v1-col { color: var(--green); }
+.compare-table th.v2-col { color: var(--purple); }
+.compare-table td { padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+.compare-table td:first-child { color: var(--text-secondary); font-weight: 500; }
+.compare-table .v1-val { color: #7ADFA0; }
+.compare-table .v2-val { color: #C8A0F0; }
+.compare-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+/* ─── TIMELINE ─── */
+.timeline { position: relative; padding-left: 28px; margin-bottom: 32px; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 32px; }
+.tl-dot { position: absolute; left: -24px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--dark-3); border: 2px solid var(--gold-dim); }
+.tl-dot.active { border-color: var(--gold); background: rgba(212,168,67,0.2); }
+.tl-phase { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 6px; }
+.tl-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.tl-tasks { display: flex; flex-wrap: wrap; gap: 6px; }
+.tl-task { font-size: 11px; color: var(--text-secondary); background: var(--dark-3); border: 1px solid var(--border); padding: 4px 10px; border-radius: 3px; }
+.tl-task.eng { border-left: 2px solid var(--gold); }
+.tl-task.pm { border-left: 2px solid var(--blue); }
+.tl-task.data { border-left: 2px solid var(--teal); }
+.tl-task.inf { border-left: 2px solid var(--red); }
+.tl-task.design { border-left: 2px solid var(--purple); }
+
+/* ─── CALLOUT ─── */
+.callout {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  padding: 16px 20px; border-radius: 0 4px 4px 0;
+  margin-bottom: 20px; font-size: 13px; color: var(--text-secondary);
+}
+.callout strong { color: var(--text-primary); }
+.callout.warn { border-left-color: var(--orange); }
+.callout.warn strong { color: var(--orange); }
+.callout.info { border-left-color: var(--blue); }
+.callout.success { border-left-color: var(--green); }
+
+/* ─── OPEN QUESTIONS ─── */
+.oq-item {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  padding: 16px 20px; border-radius: 0 4px 4px 0; margin-bottom: 10px;
+}
+.oq-owner { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); letter-spacing: 0.15em; margin-bottom: 6px; }
+.oq-q { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+.oq-item.awc { border-left-color: var(--blue); }
+.oq-item.awc .oq-owner { color: var(--blue); }
+.oq-item.pm { border-left-color: var(--purple); }
+.oq-item.pm .oq-owner { color: var(--purple); }
+
+/* ─── LOG TABLE ─── */
+.log-item {
+  display: grid; grid-template-columns: 180px 100px 1fr;
+  gap: 12px; padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 12px;
+}
+.log-item:hover { background: rgba(255,255,255,0.015); }
+.log-item.header {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); background: var(--dark-3);
+}
+.log-event { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold-light); }
+.log-owner { font-size: 10px; }
+.log-desc { color: var(--text-secondary); line-height: 1.5; }
+
+/* ─── FOOTER ─── */
+.doc-footer {
+  text-align: center; padding: 60px 40px;
+  border-top: 1px solid var(--border);
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text-dim); letter-spacing: 0.15em; line-height: 2;
+}
+
+/* ─── TOPNAV META ─── */
+.topnav-meta {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+}
+.topnav-meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.topnav-meta-divider {
+  color: var(--text-dim);
+  font-size: 10px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  body.layout-side .sidebar { display: none; }
+  body.layout-side .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
+  .info-grid-3,.info-grid-4,.kpi-grid { grid-template-columns: 1fr 1fr; }
+  .page { padding: 0 20px 80px; }
+}
+</style>
+</head>
+<body class="layout-side">
+
+<!-- ═══════════ LAYOUT TOGGLE ═══════════ -->
+<div class="layout-toggle">
+  <button class="layout-toggle-btn" id="btn-side" onclick="setLayout('side')">
+    ▣ 側邊欄
+  </button>
+  <div class="layout-toggle-divider"></div>
+  <button class="layout-toggle-btn" id="btn-top" onclick="setLayout('top')">
+    ☰ 頂部列
+  </button>
+</div>
+
+<!-- ═══════════ TOP NAV ═══════════ -->
+<nav class="topnav" id="topnav">
+  <span class="nav-brand">CRM-ROADMAP · V1.0</span>
+  <a class="nav-item active" href="#overview">策略思路</a>
+  <a class="nav-item" href="#logic">留存邏輯鏈</a>
+  <a class="nav-item" href="#scope">功能盤點</a>
+  <a class="nav-item" href="#roadmap">Roadmap</a>
+  <a class="nav-item" href="#mechanic">核心機制</a>
+  <a class="nav-item" href="#kpi">KPI</a>
+  <a class="nav-item" href="#risk">財務/風險</a>
+  <a class="nav-item" href="#openq">待確認</a>
+  <div class="topnav-meta">
+    <span class="topnav-meta-item" id="topnav-date"></span>
+    <span class="topnav-meta-divider">·</span>
+    <span class="topnav-meta-item">Milu</span>
+    <span class="topnav-meta-divider">·</span>
+    <span class="topnav-meta-item">Force / CMB</span>
+  </div>
+</nav>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">CMB · STRATEGY</div>
+    <div class="sidebar-title">SLOT CRM 後續開發<br>Roadmap 提案</div>
+    <div class="sidebar-meta">
+      <div class="sidebar-meta-row">
+        <span class="sidebar-meta-label">VERSION</span>
+        <span class="sidebar-meta-val">v1.0</span>
+      </div>
+      <div class="sidebar-meta-row">
+        <span class="sidebar-meta-label">DATE</span>
+        <span class="sidebar-meta-val" id="sidebar-date"></span>
+      </div>
+      <div class="sidebar-meta-row">
+        <span class="sidebar-meta-label">AUTHOR</span>
+        <span class="sidebar-meta-val">Milu</span>
+      </div>
+      <div class="sidebar-meta-row">
+        <span class="sidebar-meta-label">STATUS</span>
+        <span class="sidebar-meta-val status-review">REVIEW</span>
+      </div>
+      <div class="sidebar-meta-row">
+        <span class="sidebar-meta-label">PLATFORM</span>
+        <span class="sidebar-meta-val">Force / CMB</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav" id="sidebar-nav">
+
+    <div class="sidebar-section open" data-section="overview">
+      <button class="sidebar-section-btn active" onclick="navTo('overview')">
+        <span class="sidebar-section-num">01</span>
+        策略思路
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#overview">核心命題</a>
+        <a class="sidebar-sub-link" href="#overview">四個核心判斷</a>
+        <a class="sidebar-sub-link" href="#overview">決策前提</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="logic">
+      <button class="sidebar-section-btn" onclick="navTo('logic')">
+        <span class="sidebar-section-num">02</span>
+        留存邏輯鏈
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#logic">核心洞察</a>
+        <a class="sidebar-sub-link" href="#logic">機制 A / B</a>
+        <a class="sidebar-sub-link" href="#logic">D1 閉環</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="scope">
+      <button class="sidebar-section-btn" onclick="navTo('scope')">
+        <span class="sidebar-section-num">03</span>
+        功能重新盤點
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#scope">留 / 改 / 延 / 砍</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="roadmap">
+      <button class="sidebar-section-btn" onclick="navTo('roadmap')">
+        <span class="sidebar-section-num">04</span>
+        Roadmap 雙線排程
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#roadmap">W0–W5 時間軸</a>
+        <a class="sidebar-sub-link" href="#roadmap">排程理由</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="mechanic">
+      <button class="sidebar-section-btn" onclick="navTo('mechanic')">
+        <span class="sidebar-section-num">05</span>
+        核心機制設計
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#mechanic">簽到 + 補簽卡</a>
+        <a class="sidebar-sub-link" href="#mechanic">排行榜 + 回放</a>
+        <a class="sidebar-sub-link" href="#mechanic">任務系統</a>
+        <a class="sidebar-sub-link" href="#mechanic">即時競賽</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="kpi">
+      <button class="sidebar-section-btn" onclick="navTo('kpi')">
+        <span class="sidebar-section-num">06</span>
+        KPI 對齊
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#kpi">各 Wave 指標</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="risk">
+      <button class="sidebar-section-btn" onclick="navTo('risk')">
+        <span class="sidebar-section-num">07</span>
+        財務鐵則與風險
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#risk">總活動 RTP ≤ 2%</a>
+        <a class="sidebar-sub-link" href="#risk">設計風險</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="openq">
+      <button class="sidebar-section-btn" onclick="navTo('openq')">
+        <span class="sidebar-section-num">08</span>
+        已鎖定 vs 待確認
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#openq">已鎖定數值</a>
+        <a class="sidebar-sub-link" href="#openq">待細設計</a>
+      </div>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="main-wrap" id="main-wrap">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-tag">CMB · STRATEGY PROPOSAL · 2026</div>
+  <h1>CRM <span>ROADMAP</span></h1>
+  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.0</div>
+  <div class="cover-pills">
+    <div class="cover-pill"><strong>類型</strong> 策略提案</div>
+    <div class="cover-pill"><strong>北極星</strong> 次日 D1 留存</div>
+    <div class="cover-pill"><strong>平台</strong> Force / CMB</div>
+    <div class="cover-pill"><strong>市場</strong> 菲律賓</div>
+  </div>
+  <div class="cover-badges">
+    <span class="badge badge-scope">提案範疇 W0–W5</span>
+    <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════ 01 OVERVIEW ═══════════ -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">策略思路</span>
+    <span class="section-title-en">STRATEGY &amp; RATIONALE</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">核心命題 · HYPOTHESIS</div>
+    <div class="hypo-text">讓玩家從「偶爾來玩」變成「每天有事要做」。本提案在<strong>抽寶箱已拍板</strong>的基礎上，重新排定後續 CRM 功能的開發順序，以<strong>「次日 / D1 留存」</strong>為單一北極星，並砍掉計畫書最重的幸運幣經濟。</div>
+  </div>
+
+  <div class="sub-title">策略思路：四個核心判斷</div>
+  <div class="body-text">這份 Roadmap 不是一張功能清單，而是<strong>四個判斷導出的結果</strong>——先講清楚我怎麼想，後面所有做法與排序都從這裡推出來。</div>
+  <div class="info-grid-4">
+    <div class="info-card">
+      <div class="info-card-icon">✂️</div>
+      <div class="info-card-title">① 化繁為簡</div>
+      <div class="info-card-desc">放棄計畫書最重的幸運幣第二貨幣經濟，改走<strong style="color:var(--text-primary)">直接機制</strong>（行為直接換現金/卡）→ 開發更快、財務更可控、風險更低。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎯</div>
+      <div class="info-card-title">② 單一聚焦</div>
+      <div class="info-card-desc">只盯一個北極星 <strong style="color:var(--text-primary)">次日 / D1 留存</strong>；每個功能都要能回答「它怎麼讓玩家明天回來」。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🔁</div>
+      <div class="info-card-title">③ 行為驅動</div>
+      <div class="info-card-desc">核心洞察 <strong style="color:var(--text-primary)">「玩越多 → 次日留存越好」</strong>；用機制製造「明天回來、且回來會押注」的理由（詳見 §02）。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">⚙️</div>
+      <div class="info-card-title">④ 務實節奏</div>
+      <div class="info-card-desc">小步快跑、後端<strong style="color:var(--text-primary)">雙線並行</strong>、重後端/高風險往後排、財務總活動 <strong style="color:var(--text-primary)">RTP ≤ 2%</strong> 嚴控；差異化用輕量「即時競賽」收尾。</div>
+    </div>
+  </div>
+
+  <div class="sub-title">決策前提總表</div>
+  <table class="spec-table">
+    <thead>
+      <tr><th>維度</th><th>決定</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>經濟模型</td><td class="dim">直接機制（幸運幣經濟 🔴 凍結）</td></tr>
+      <tr><td>北極星指標</td><td class="dim">次日 / D1 留存</td></tr>
+      <tr><td>次要指標</td><td class="dim">單日押注量 / GGR（後期主攻）</td></tr>
+      <tr><td>人力</td><td class="dim">後端 1.5–2、前端 1+、Unity 兼職/外包；可並行 2 線</td></tr>
+      <tr><td>起跑線</td><td class="dim">抽寶箱 v1 已拍板（已建好共用水管）</td></tr>
+      <tr><td>差異化主打</td><td class="dim">即時競賽（連續即時排名賽，net win 計分）+ 品牌門面</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <strong>抽寶箱 v1 已偷偷建好的「共用水管」</strong>，後續功能大量複用：AWC <em style="color:var(--gold-light);font-style:normal">place_bet</em> 直接發現金管道、<em style="color:var(--gold-light);font-style:normal">LoginWithoutRedirect</em> 卡跳轉、活動模板（已含 usertype 玩家 Tag 投放欄位）、背包 <em style="color:var(--gold-light);font-style:normal">inventory</em> + 道具紀錄資料表、FREE SPIN 卡 max win 上限、發放/對帳結構。
+  </div>
+
+  <div class="callout success">
+    <strong>從思路到做法</strong>：以上是策略思路與定調。接下來的章節，就是由這套思路一路導出的具體做法——<em style="color:var(--gold-light);font-style:normal">§02 留存邏輯鏈</em>把核心洞察機制化，<em style="color:var(--gold-light);font-style:normal">§03 功能盤點 → §04 Roadmap → §05 核心機制</em>則是排序與執行。
+  </div>
+</section>
+
+<!-- ═══════════ 02 LOGIC ═══════════ -->
+<section class="section" id="logic">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">留存邏輯鏈</span>
+    <span class="section-title-en">RETENTION LOGIC CHAIN</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">核心洞察 · CORE INSIGHT</div>
+    <div class="hypo-text">玩家當日<strong>玩得越多（押注 / Spin 越多），次日留存越好</strong>。所有機制的目的，都是製造「玩家明天回來、且回來會押注」的理由。</div>
+  </div>
+
+  <div class="body-text">本提案把「抽寶箱 → FREE SPIN 卡 → 背包 → 簽到碎片」排在最前面，背後是一條環環相扣的 D1 留存邏輯，由兩個機制合成一個閉環：</div>
+
+  <div class="info-grid-2">
+    <div class="info-card">
+      <div class="info-card-icon">📦</div>
+      <div class="info-card-title">機制 A — 抽寶箱發 FREE SPIN 卡（隔日才能用）</div>
+      <div class="info-card-desc">抽到的 FREE SPIN 卡不是當下用，而是 <strong style="color:var(--gold-light)">隔日起約 7 日內（D+1～D+7）</strong> 可使用 → 在玩家心裡埋下「明天回來用卡」的鉤子；用卡＝進遊戲＝產生押注。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎁</div>
+      <div class="info-card-title">機制 B — 登入送碎片湊卡（領取需押注）</div>
+      <div class="info-card-desc">每日登入發 FREE SPIN 卡碎片、湊滿 10 片換 1 張整卡；<strong style="color:var(--gold-light)">每日領取需當日至少完成 1 次押注</strong> → 把「純登入領獎」變成「登入並玩一手才領」，杜絕免費仔。</div>
+    </div>
+  </div>
+
+  <div class="sub-title">三者合成「玩 → 領 → 隔日再玩」D1 閉環</div>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">簽到領碎片</div>
+        <div class="flow-step-desc">須當日 ≥1 押注</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">湊卡 / 抽寶箱抽卡</div>
+        <div class="flow-step-desc">10 碎片換 1 張卡</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">卡隔日才能用</div>
+        <div class="flow-step-desc">D+1～D+7 使用窗</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">隔日回來用卡</div>
+        <div class="flow-step-desc">再押注 → 回到 STEP 01</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    這條鏈就是 <strong>W1（抽寶箱＋FREE SPIN 卡＋背包）</strong> 與 <strong>W2（簽到碎片）</strong> 必須緊鄰、且排在競技線之前的原因：它們不是各自獨立的功能，而是同一個 D1 留存引擎的四個零件。
+  </div>
+</section>
+
+<!-- ═══════════ 03 SCOPE ═══════════ -->
+<section class="section" id="scope">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">功能重新盤點</span>
+    <span class="section-title-en">SCOPE · KEEP / DEFER / CUT</span>
+  </div>
+
+  <div class="body-text">把計畫書 v5 的功能，依「直接機制 + D1 北極星」重新分類。<strong>🟢 保留／改設計　🟠 後期 Backlog　🔴 凍結</strong>。</div>
+
+  <table class="spec-table">
+    <thead>
+      <tr><th>計畫書原功能</th><th>處置</th><th>說明</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>抽寶箱 v1</td><td>✅ 已拍板</td><td class="dim">每日重置引擎，起跑線（W0）</td></tr>
+      <tr><td>簽到系統</td><td>🟢 獨立 Wave（W2）</td><td class="dim">D1 核心，改發碎片湊卡（非直接發現金）；簽到另外拆成一個 Wave</td></tr>
+      <tr><td>Tag（新玩家/斷簽/高押量）</td><td>🟢 保留（W1）</td><td class="dim">精準投放地基；越早建越划算</td></tr>
+      <tr><td>斷簽處理</td><td>🟢 保留·改設計</td><td class="dim">改為補簽卡續簽（隨簽到 W2），取消「斷簽召回禮包」</td></tr>
+      <tr><td>抽寶箱第二段（道具獎勵庫+卡+背包）</td><td>🟢 保留（W1）</td><td class="dim">CRM 共用基建，另立規格；卡水管已建</td></tr>
+      <tr><td>排行榜（個人 + 全線路）</td><td>🟢 保留·提前（W3）</td><td class="dim">含日即時排名賽（net win），即時競賽地基；與大獎回放同 Wave</td></tr>
+      <tr><td>大獎回放</td><td>🟢 提前·綁排行榜（W3）</td><td class="dim">與排行榜同一個 Wave，從榜上可點看大獎回放（複用既有規格）</td></tr>
+      <tr><td>日任務 + 週任務（常態）</td><td>🟢 新增（W4）</td><td class="dim">基礎留存，固定寶箱獎勵複用獎勵庫；總活動 RTP ≤ ~2%</td></tr>
+      <tr><td>挑戰/地圖任務（寶箱·特殊活動）</td><td>🟠 後期·特殊限定</td><td class="dim">非常態，依時機（週末/節慶）或 usertype（押量下滑/回流）投放；活動期間 RTP 調降 ~2%、bet 不與日/週重複計入</td></tr>
+      <tr><td>即時競賽</td><td>🟢 差異化主打（W5）</td><td class="dim">連續即時排名賽，建在 W3 排行榜引擎上；net win 短週期結算發卡</td></tr>
+      <tr><td>通知中心（Inbox/Popup）</td><td>🟠 後續·活動量起來後</td><td class="dim">各功能早期用自身提示即可；活動多時再做聚合通道</td></tr>
+      <tr><td>品牌門面（展示頁）</td><td>🟠 後續·不綁即時競賽</td><td class="dim">隨活動量增長，與通知中心一起後做</td></tr>
+      <tr><td>押注任務 + RTP 撥出引擎</td><td>🟠 後期 Backlog</td><td class="dim">衝押注量、最重後端，留到衝 GGR 階段</td></tr>
+      <tr><td>VIP 分層 / 完整背包 / 升級/賽季/Jackpot/幸運輪</td><td>🟠 Backlog</td><td class="dim">看數據再啟動</td></tr>
+      <tr><td>幸運幣第二貨幣 / 幣水庫看板</td><td>🔴 凍結</td><td class="dim">直接機制路線下整套移除</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 04 ROADMAP ═══════════ -->
+<section class="section" id="roadmap">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">Roadmap 雙線排程</span>
+    <span class="section-title-en">ROADMAP · W0–W5</span>
+  </div>
+
+  <div class="callout info">
+    <strong>設計原則</strong>：各 Wave 時程依複雜度不等（<strong>約 4–6 週，下方為估算、待開發團隊校準</strong>）。<em style="color:var(--gold-light);font-style:normal">🅐 線＝後端主力（一個 Wave 一顆重引擎）</em>；<em style="color:var(--purple);font-style:normal">🅑 線＝前端 / Unity 並行</em>。後端重引擎依序 Tag → 排行榜 → 任務 → 即時競賽，不重疊。
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot active"></div>
+      <div class="tl-phase">WAVE 0 · 進行中 · 約 6 週</div>
+      <div class="tl-title">起跑線：抽寶箱 v1（現金獎）</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">抽寶箱 v1 · 現金獎</span>
+        <span class="tl-task eng">共用水管（發現金/卡/Tag 投放/對帳）</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">WAVE 1 · D1 地基 + 投放基建 · 約 5 週</div>
+      <div class="tl-title">Tag 引擎 + 抽寶箱第二段</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">🅐 Tag 引擎（自動打標 + 斷簽偵測）</span>
+        <span class="tl-task design">🅑 抽寶箱第二段：道具獎勵庫 + FREE SPIN 卡 + 背包</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">WAVE 2 · 簽到收集（D1 核心）· 約 4 週</div>
+      <div class="tl-title">簽到系統 + 補簽卡</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">🅐 碎片帳本 + 補簽卡（複用 v1 背包/庫存水管）</span>
+        <span class="tl-task design">🅑 簽到 UI（碎片湊卡）+ 補簽續簽</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">WAVE 3 · 基礎排行榜 + 回放 · 約 6 週</div>
+      <div class="tl-title">排行榜（個人 + 全線路）+ 大獎回放</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">🅐 排行榜分數引擎 + 個人榜 / 全線路榜（日賽 net win）</span>
+        <span class="tl-task design">🅑 大獎回放（從排行榜點看大獎）</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">WAVE 4 · 基礎任務留存 · 約 4 週</div>
+      <div class="tl-title">任務系統(日 / 週任務 · 常態)</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">🅐 任務引擎（日 + 週任務 · 寶箱發獎 · 複用獎勵庫）</span>
+        <span class="tl-task design">🅑 任務大廳 + 寶箱開獎演出</span>
+        <span class="tl-task inf">總活動 RTP ≤ ~2%</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">WAVE 5 · 差異化 · 約 5 週</div>
+      <div class="tl-title">即時競賽</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">🅐 即時競賽（連續即時排名賽 · 建在 W3 排行榜引擎上 · net win）</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">後續 · 活動量起來後加入</div>
+      <div class="tl-title">通知中心 + 品牌門面</div>
+      <div class="tl-tasks">
+        <span class="tl-task design">通知中心（Inbox / Popup）— 活動多時做聚合通道</span>
+        <span class="tl-task design">品牌門面 v1 + 社交分享</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>後期 Backlog（看數據再啟動）</strong>：挑戰 / 地圖任務（寶箱 · 特殊限定活動，週末/節慶或 usertype 投放）、RTP 撥出引擎 + 押注任務（RTP 版）、Jackpot 連線彩金、Free Bonus 卡、品牌門面後台、VIP 分層、完整背包、升級系統、積分賽季、幸運輪。🔴 幸運幣經濟維持凍結。
+  </div>
+
+  <div class="sub-title">時程估算（待開發團隊校準）</div>
+  <div class="cost-block">
+    <div class="cost-row"><span class="cost-label">W0 · 抽寶箱 v1（現金獎，最重單一基建）</span><span class="cost-val">約 6 週</span></div>
+    <div class="cost-row"><span class="cost-label">W1 · Tag 引擎 + 抽寶箱第二段</span><span class="cost-val">約 5 週</span></div>
+    <div class="cost-row"><span class="cost-label">W2 · 簽到系統 + 補簽卡</span><span class="cost-val">約 4 週</span></div>
+    <div class="cost-row"><span class="cost-label">W3 · 排行榜（個人 + 全線路）+ 大獎回放（後端較重）</span><span class="cost-val">約 6 週</span></div>
+    <div class="cost-row"><span class="cost-label">W4 · 任務系統（日 / 週任務）</span><span class="cost-val">約 4 週</span></div>
+    <div class="cost-row"><span class="cost-label">W5 · 即時競賽</span><span class="cost-val">約 5 週</span></div>
+    <div class="cost-row total"><span class="cost-label">W0 → W5 連續推進合計</span><span class="cost-val highlight">約 30 週（≈ 7 個月）</span></div>
+  </div>
+  <div class="callout warn">
+    <strong>⚠ 工時為估算，需開發團隊校準</strong>：後端較重的是 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）三個 Wave；簽到（W2）複用 v1 背包/庫存水管、相對輕。<strong>通知中心、品牌門面</strong>放到後續、活動量起來後加入，不計入上表。Wave 間可部分前後重疊（前端先動），實際總時程以開發評估為準。
+  </div>
+
+  <div class="sub-title">排程關鍵理由</div>
+  <div class="body-text">
+    • <strong>抽寶箱兩段上線</strong>：第一段（現金獎，v3.2）先上線；第二段（道具獎勵庫＋卡＋背包＋後台調整）另立規格，作 CRM 全功能共用基建。<br>
+    • <strong>W1 純基建、通知後置</strong>：Tag 引擎 + 斷簽偵測先建好，餵給 W2 補簽卡判斷與精準投放；通知中心移到後續、活動量起來再做聚合通道，早期各功能用自身提示即可。<br>
+    • <strong>簽到拆獨立 Wave（W2）</strong>：簽到是 D1 核心引擎，緊接 W1 卡水管；補簽卡同屬簽到、一起做，接住斷簽。<br>
+    • <strong>排行榜 + 回放一起（W3）</strong>：排行榜引擎 + 個人/全線路榜 + 大獎回放同一個 Wave，獨立可玩，也是即時競賽的地基。<br>
+    • <strong>任務（W4）→ 即時競賽（W5）</strong>：任務是成熟低風險的基礎留存、走固定寶箱、不需 RTP 撥出引擎；即時競賽建在 W3 排行榜引擎上、差異化收尾。<br>
+    • <strong>品牌門面後置、不綁即時競賽</strong>：門面價值隨活動量增長，與通知中心一起放後續、活動齊了再上。
+  </div>
+
+  <div class="callout warn">
+    <strong>⚠ 負載提醒</strong>：後端較重集中在 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）三個 Wave，需吃滿 1.5–2 後端。簽到（W2）複用抽寶箱 v1 的背包/道具庫存水管，相對輕、不是從零。
+  </div>
+</section>
+
+<!-- ═══════════ 05 MECHANIC ═══════════ -->
+<section class="section" id="mechanic">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-title">核心機制設計</span>
+    <span class="section-title-en">CORE MECHANICS</span>
+  </div>
+
+  <div class="sub-title">簽到收集系統 + 補簽卡（W2）</div>
+  <div class="body-text">把「每日領獎」變成「多日收集目標」，且不產生純薅羊毛、無押注的免費仔。</div>
+  <div class="info-grid-2">
+    <div class="info-card">
+      <div class="info-card-title">簽到碎片</div>
+      <div class="info-card-desc">
+        • 1 碎片 = <strong style="color:var(--gold-light)">₱0.1</strong>，<strong style="color:var(--gold-light)">10 碎片 = 1 張 FREE SPIN 卡（₱1）</strong><br>
+        • 領取條件：每日需<strong style="color:var(--gold-light)">當日 ≥1 次押注</strong>才可領<br>
+        • 卡 <strong style="color:var(--gold-light)">D+1～D+7</strong> 使用窗，製造隔日回訪
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">補簽卡（取代斷簽召回禮包）</div>
+      <div class="info-card-desc">
+        • 來源：簽到發放，<strong style="color:var(--gold-light)">每週上限 2 張</strong><br>
+        • 勤簽玩家把補簽卡「存起來」當保險，漏一天用庫存補回、不中斷收集<br>
+        • 上限鎖死、不會變免費仔；把斷簽玩家導回收集迴圈
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">排行榜層（個人 + 全線路）+ 大獎回放（W3）</div>
+  <div class="body-text">排行榜與大獎回放放在同一個 Wave。即時競賽不是憑空長出來的——它建在這層「基礎排行榜 + 回放」之上，這層本身就是 W3 的留存內容。</div>
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">👤</div>
+      <div class="info-card-title">個人排行榜</div>
+      <div class="info-card-desc">玩家自己的紀錄 / 最高贏分 / 歷史名次，給「超越昨天的自己」的目標感。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🌐</div>
+      <div class="info-card-title">全線路排行榜</div>
+      <div class="info-card-desc">跨全服 / 全線路的大獎榜、即時 net win 榜（日即時排名賽呈現面），製造 FOMO。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎬</div>
+      <div class="info-card-title">大獎回放</div>
+      <div class="info-card-desc">從榜上大獎紀錄點進看 in-game 回放，把「別人中大獎」變成可圍觀、可炫耀的社交事件。</div>
+    </div>
+  </div>
+
+  <div class="sub-title">任務系統（W4 日/週常態；挑戰任務後期特殊限定）</div>
+  <div class="body-text">獎勵統一以「寶箱」發放（金錢、FREE SPIN 卡等，複用抽寶箱獎勵庫與背包）。依開放性質分兩塊：</div>
+  <div class="info-grid-2">
+    <div class="info-card">
+      <div class="info-card-title">常態（W4 先做）</div>
+      <div class="info-card-desc">
+        • <strong style="color:var(--text-primary)">日任務</strong>：每日小目標，完成開寶箱 → 每日回訪理由<br>
+        • <strong style="color:var(--text-primary)">週任務</strong>：跨日累積中目標，完成開更大寶箱 → 拉長回訪週期
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">特殊限定活動（後期 · 非常態）</div>
+      <div class="info-card-desc">
+        • <strong style="color:var(--text-primary)">挑戰任務（地圖 / 寶箱任務）</strong>：走到指定遊戲完成關卡 → 解鎖下一關 → 每過一關開寶箱<br>
+        • <strong style="color:var(--gold-light)">兩種觸發</strong>：① 週末 / 節慶檔期；② 針對特殊 usertype（押量下滑、回流玩家）投放（複用 Tag 投放）
+      </div>
+    </div>
+  </div>
+  <div class="callout warn">
+    <strong>💰 財務鐵則：總活動 RTP 控制在約 2% 以內</strong><br>
+    • 所有 CRM 活動撥出的<strong>總和需 ≤ 約 2%</strong>，是任務獎勵配比的上限框架。<br>
+    • <strong>不可重複計入</strong>：挑戰任務進行期間，其 bet 累積不得同時計入日 / 週任務 → 否則同一筆押注被多重發獎、總 RTP 疊加超標、很難給。<br>
+    • <strong>活動期間調降</strong>：開放挑戰 / 寶箱特殊活動時（週末 / 節慶或對特定 usertype），整體活動 RTP 相應調降（約 2%），避免虧損。
+  </div>
+
+  <div class="sub-title">即時競賽（W5 · 差異化主打）</div>
+  <div class="body-text">形式：<strong>連續即時排名賽</strong>，建在 W3 排行榜引擎之上。隨時加入、即時對全服排名，依 net win 計分，短週期結算發 FREE SPIN 卡 — 用「即時排名跳動」與「重置前衝一波」的張力做出與其他廠商的區別。</div>
+  <table class="spec-table">
+    <thead><tr><th>項目</th><th>設計</th></tr></thead>
+    <tbody>
+      <tr><td>形式</td><td class="dim">連續即時排名賽，<strong style="color:var(--gold-light)">隨時加入、即時對全服排名</strong></td></tr>
+      <tr><td>計分</td><td class="dim"><strong style="color:var(--gold-light)">net win</strong>（當日淨贏分），即時排名跳動</td></tr>
+      <tr><td>結算</td><td class="dim">短週期（日 / 週）結算，發 FREE SPIN 卡</td></tr>
+      <tr><td>差異化</td><td class="dim">即時排名 + 重置前衝刺張力，與其他廠商做出區別</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">競技深度可在中後期視數據再行深化（榜單機制可擴充），本提案先以「即時競賽」輕量收尾，控制首期規模。</div>
+
+  <div class="sub-title">通知中心 + 品牌門面（後續 · 活動量起來後）</div>
+  <div class="body-text">
+    這兩塊都<strong>放到後續、不卡核心</strong>，等活動量起來再加入：<br>
+    • <strong>通知中心（Inbox / Popup）</strong>：早期各功能用自身提示即可；活動一多，才需要一個聚合的通知/廣宣通道。<br>
+    • <strong>品牌門面（展示頁）</strong>：品牌識別 + 活動輪播 + 導流，價值與「有幾個活動可輪播」成正比，故等簽到/排行榜/任務/即時競賽都上線、且<strong>不與即時競賽綁</strong>之後再上；v1 輪播先寫死、幾乎純前端，後台編輯工具列入 Backlog。
+  </div>
+</section>
+
+<!-- ═══════════ 06 KPI ═══════════ -->
+<section class="section" id="kpi">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-title">KPI 對齊</span>
+    <span class="section-title-en">KPI ALIGNMENT</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card primary">
+      <div class="kpi-label">北極星</div>
+      <div class="kpi-val">D1 ↑</div>
+      <div class="kpi-desc">次日 / D1 留存 — W2 簽到起為主要驗證</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">收集回訪</div>
+      <div class="kpi-val">碎片→卡</div>
+      <div class="kpi-desc">碎片兌換率、補簽卡使用率</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">差異化</div>
+      <div class="kpi-val">競賽</div>
+      <div class="kpi-desc">即時競賽參與率、競賽週留存</div>
+    </div>
+  </div>
+
+  <table class="spec-table">
+    <thead><tr><th>Wave</th><th>主要驗證指標</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">W0</td><td class="dim">單日 Spin 數（活動 vs 對照組）、活動參與率、完整循環完成率、D1 變化</td></tr>
+      <tr><td class="mono">W1</td><td class="dim">Tag 覆蓋率、FREE SPIN 卡使用率（抽寶箱第二段）</td></tr>
+      <tr><td class="mono">W2</td><td class="dim">D1 留存 ↑、簽到完成率、碎片→卡兌換率、補簽卡使用率</td></tr>
+      <tr><td class="mono">W3</td><td class="dim">個人/全線路榜開啟率、日賽參與率、大獎回放觀看率</td></tr>
+      <tr><td class="mono">W4</td><td class="dim">任務完成率（日/週）、寶箱開啟率、指定遊戲導量</td></tr>
+      <tr><td class="mono">W5</td><td class="dim">即時競賽參與率、競賽週留存</td></tr>
+      <tr><td class="mono">後續</td><td class="dim">通知開啟/點擊率、品牌門面導流率、社交分享率</td></tr>
+      <tr><td class="mono">後期</td><td class="dim">日均押注量 ↑、押注任務完成率、RTP 撥出 vs 實際發獎效益（衝 GGR 階段）</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 07 RISK ═══════════ -->
+<section class="section" id="risk">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-title">財務鐵則與設計風險</span>
+    <span class="section-title-en">FINANCE &amp; RISK</span>
+  </div>
+
+  <div class="callout warn">
+    <strong>💰 財務鐵則</strong>：所有 CRM 活動撥出的<strong>總和需控制在約 2% 以內</strong>；任務間 <strong>bet 不重複計入</strong>（挑戰期間 bet 不算日/週）；週末開放挑戰/寶箱特殊活動時（週末/節慶或對特定 usertype）整體 RTP 相應調降，避免虧損。RTP 下限由 Server 全程鎖定。
+  </div>
+
+  <table class="spec-table">
+    <thead><tr><th>風險</th><th>說明</th><th>建議處理</th></tr></thead>
+    <tbody>
+      <tr><td>net win 排名高度運氣導向</td><td class="dim">單日波動大，₱1 小注玩家可能靠運氣洗榜壓過大 R</td><td class="dim">加最低押注量資格門檻才計入排名</td></tr>
+      <tr><td>W2 後端過載</td><td class="dim">排行榜引擎 + 日賽 + 簽到/補簽帳本同期</td><td class="dim">簽到/補簽複用 v1 庫存水管；必要時配 1.5–2 後端</td></tr>
+      <tr><td>FREE SPIN 卡通膨</td><td class="dim">簽到碎片 + 即時競賽 + 抽寶箱多來源發卡</td><td class="dim">監控發放量；卡有 max win 上限（v1 已建）</td></tr>
+      <tr><td>總活動 RTP 超標</td><td class="dim">同一筆 bet 重複計入多個任務 → 多重發獎、總 RTP &gt; 2%</td><td class="dim">任務間不重複計入；總活動 RTP ≤ ~2%；特殊活動期間 RTP 調降</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 08 OPEN QUESTIONS ═══════════ -->
+<section class="section" id="openq">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-title">已鎖定 vs 待確認</span>
+    <span class="section-title-en">LOCKED vs OPEN</span>
+  </div>
+
+  <div class="sub-title">已鎖定數值</div>
+  <table class="spec-table">
+    <thead><tr><th>項目</th><th>鎖定</th></tr></thead>
+    <tbody>
+      <tr><td>簽到碎片</td><td class="dim">1 碎片 = ₱0.1，10 碎片 = 1 張 FREE SPIN 卡（₱1）；每日領取需當日 ≥1 押注</td></tr>
+      <tr><td>FREE SPIN 卡使用窗</td><td class="dim">發放後隔日起約 7 日內可用（D+1～D+7）</td></tr>
+      <tr><td>補簽卡</td><td class="dim">簽到發放，每週上限 2 張，當斷簽保險</td></tr>
+      <tr><td>即時競賽計分</td><td class="dim">net win（當日淨贏分），短週期結算發 FREE SPIN 卡</td></tr>
+      <tr><td>總活動 RTP</td><td class="dim">≤ 約 2%；任務間 bet 不重複計入；特殊活動期間調降</td></tr>
+      <tr><td>抽寶箱兩段上線</td><td class="dim">第一段現金獎先上線；第二段道具/卡/背包/後台另立規格</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">待各功能進 Sprint 前細設計（不卡 Roadmap）</div>
+  <div class="oq-item pm">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">簽到：連續簽到曲線、碎片每日發放量；補簽卡使用流程、庫存/到期規則、囤積上限呈現。</div>
+  </div>
+  <div class="oq-item pm">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">排行榜層：個人/全線路榜的榜單維度（最高贏分？net win？倍率？）、大獎回放的「大獎」入榜門檻、回放資料保存期。</div>
+  </div>
+  <div class="oq-item pm">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">即時競賽：結算週期（日/週）、獎勵發放量、即時排名最低押注量資格門檻（防洗榜）、計分與排名呈現。</div>
+  </div>
+  <div class="oq-item pm">
+    <div class="oq-owner">PM DECISION</div>
+    <div class="oq-q">任務系統：日/週任務目標與獎勵配比（總活動 RTP ≤ ~2% 框架內）、挑戰/地圖任務關卡數/指定遊戲清單/各關寶箱內容、bet 不重複計入判定邏輯、特殊活動（週末/節慶/usertype 投放）觸發條件與 RTP 調降幅度。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">AWC ALIGN</div>
+    <div class="oq-q">Free Bonus 卡的 Unity in-game bonus 觸發整合；FREE SPIN 卡 LoginWithoutRedirect 跳轉與各星 bet / 帶遊戲 list 設定（隨抽寶箱第二段規格提出）。</div>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<div class="doc-footer">
+  SLOT CRM 後續開發 Roadmap 提案 · V1.0 · CONFIDENTIAL 2026<br>
+  CMB · 菲律賓市場 · 框架文件，各功能細節於對應 Wave 啟動前以獨立需求文件呈現
+</div>
+
+</div><!-- /main-wrap -->
+
+<script>
+// ═══════════ LAYOUT TOGGLE ═══════════
+function setLayout(mode) {
+  document.body.className = 'layout-' + mode;
+  document.getElementById('btn-side').classList.toggle('active', mode === 'side');
+  document.getElementById('btn-top').classList.toggle('active', mode === 'top');
+  localStorage.setItem('spec-layout', mode);
+}
+
+// 初始化：讀取上次選擇的 layout
+(function(){
+  const saved = localStorage.getItem('spec-layout') || 'side';
+  setLayout(saved);
+})();
+
+// ═══════════ 日期動態產生 ═══════════
+(function(){
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const dateStr = y + '/' + m + '/' + d;
+  const sidebarDate = document.getElementById('sidebar-date');
+  const topnavDate  = document.getElementById('topnav-date');
+  if (sidebarDate) sidebarDate.textContent = dateStr;
+  if (topnavDate)  topnavDate.textContent  = dateStr;
+})();
+
+// ═══════════ SIDEBAR：點擊章節 toggle 展開/收合（不強制收合其他） ═══════════
+document.querySelectorAll('.sidebar-section-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const section = this.closest('.sidebar-section');
+    section.classList.toggle('open');
+  });
+});
+
+function navTo(id) {
+  const target = document.getElementById(id);
+  if (target) {
+    const offset = document.body.classList.contains('layout-top') ? 60 : 20;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+// ═══════════ SCROLL SPY ═══════════
+const sections = document.querySelectorAll('.section');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+
+  // Top nav highlight
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.getAttribute('href') === '#' + current);
+  });
+
+  // Sidebar highlight：只更新 active 樣式，不動展開/收合狀態
+  document.querySelectorAll('.sidebar-section-btn').forEach(btn => {
+    const sectionEl = btn.closest('.sidebar-section');
+    btn.classList.toggle('active', sectionEl.dataset.section === current);
+  });
+
+  // Sidebar sub-link highlight
+  document.querySelectorAll('.sidebar-sub-link').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+// ═══════════ TABS ═══════════
+function switchTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ═══════════ SMOOTH SCROLL (top nav) ═══════════
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
