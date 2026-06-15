@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;background:#0e1430}
+.gamebg{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,#27306a 0%,#141a3d 60%,#0a0e26 100%)}
+.scrim{position:absolute;inset:0;background:rgba(8,10,28,.62)}
+.panel{position:absolute;right:14px;bottom:120px;width:150px;background:linear-gradient(160deg,#FFD3EC,#C9B8FF 55%,#AEE3FF);border-radius:22px;padding:14px 12px;box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.ptitle{text-align:center;font-size:16px;font-weight:900;color:#5b3a8f;margin-bottom:10px}
+.item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.7);border-radius:14px;padding:9px 10px;margin-bottom:8px;position:relative}
+.item.live{background:#fff;box-shadow:0 4px 12px rgba(140,108,240,.4);border:2px solid #8C6CF0}
+.ic{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#8C6CF0,#6242CC);display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+.tx{line-height:1.15}
+.tx b{font-size:14px;color:#3d2b6b;display:block}
+.tx span{font-size:10px;color:#8a7bb0}
+.livebadge{position:absolute;top:-7px;right:-6px;background:#ff3b54;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px}
+.soon{filter:grayscale(.5);opacity:.78}
+.soon .tx span{color:#b04e7a}
+.label{position:absolute;left:0;bottom:60px;width:430px;text-align:center;color:#fff;font-size:12px;text-shadow:0 1px 3px #000}
+.fab{position:absolute;right:30px;bottom:64px;width:54px;height:54px;border-radius:50%;background:linear-gradient(145deg,#8C6CF0,#6242CC);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 6px 16px rgba(0,0,0,.4)}
+</style></head><body>
+<div class="frame">
+  <div class="gamebg"></div>
+  <div class="scrim"></div>
+  <div class="panel">
+    <div class="ptitle">遊戲中心</div>
+    <div class="item live"><div class="ic">🎁</div><div class="tx"><b>抽寶箱</b><span>每日免費抽</span></div><div class="livebadge">LIVE</div></div>
+    <div class="item soon"><div class="ic">📋</div><div class="tx"><b>任務</b><span>敬請期待</span></div></div>
+    <div class="item soon"><div class="ic">🎒</div><div class="tx"><b>道具</b><span>敬請期待</span></div></div>
+    <div class="item soon"><div class="ic">🏆</div><div class="tx"><b>排行</b><span>敬請期待</span></div></div>
+    <div class="item soon"><div class="ic">👍</div><div class="tx"><b>推薦</b><span>敬請期待</span></div></div>
+    <div class="item soon"><div class="ic">⭐</div><div class="tx"><b>收藏</b><span>敬請期待</span></div></div>
+  </div>
+  <div class="fab">🎁</div>
+  <div class="label">P2 遊戲中心展開面板</div>
+</div>
+</body></html>

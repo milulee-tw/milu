@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;background:#0e1430}
+/* slot game background (示意) */
+.gamebg{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,#27306a 0%,#141a3d 60%,#0a0e26 100%)}
+.reels{position:absolute;top:300px;left:35px;right:35px;height:240px;background:linear-gradient(#1a2150,#10173b);border:3px solid #3a4790;border-radius:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px;box-shadow:0 0 40px rgba(80,110,255,.35) inset}
+.reel{background:linear-gradient(#0c1233,#161e4d);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:46px}
+.demoTag{position:absolute;top:80px;left:0;right:0;text-align:center;color:#7d88c4;font-size:13px;letter-spacing:2px}
+.title{position:absolute;top:140px;left:0;right:0;text-align:center;color:#cfe0ff;font-size:22px;font-weight:800;text-shadow:0 2px 8px #000}
+.spinbar{position:absolute;bottom:46px;left:35px;right:35px;height:64px;background:linear-gradient(#ffd86b,#ff9d3c);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#5a2e00;font-weight:900;font-size:20px;box-shadow:0 6px 20px rgba(255,160,40,.5)}
+/* floating treasure icon */
+.fab{position:absolute;right:18px;bottom:230px;width:84px;height:84px}
+.ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#FFD86B 0% 64%,rgba(255,255,255,.18) 64% 100%);padding:5px;filter:drop-shadow(0 0 14px rgba(255,170,80,.8))}
+.ringin{width:100%;height:100%;border-radius:50%;background:linear-gradient(145deg,#8C6CF0,#6242CC);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(255,255,255,.25) inset}
+.chest{font-size:40px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+.badge{position:absolute;top:-4px;right:-4px;min-width:26px;height:26px;background:#ff3b54;border:2px solid #fff;border-radius:13px;color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+/* bubble */
+.bubble{position:absolute;right:14px;bottom:330px;background:#fff;border-radius:18px;padding:12px 16px;font-size:16px;font-weight:700;color:#5b3a8f;box-shadow:0 8px 22px rgba(0,0,0,.3);white-space:nowrap}
+.bubble:after{content:"";position:absolute;bottom:-9px;right:34px;border:9px solid transparent;border-top-color:#fff;border-bottom:0}
+.label{position:absolute;right:18px;bottom:206px;width:84px;text-align:center;color:#fff;font-size:11px;text-shadow:0 1px 3px #000}
+</style></head><body>
+<div class="frame">
+  <div class="gamebg"></div>
+  <div class="demoTag">遊戲畫面（示意，非設計範圍）</div>
+  <div class="title">🎰 Combo Slot Game</div>
+  <div class="reels"><div class="reel">🍒</div><div class="reel">7️⃣</div><div class="reel">🔔</div><div class="reel">🍋</div><div class="reel">⭐</div><div class="reel">🍇</div><div class="reel">💎</div><div class="reel">🍀</div><div class="reel">🍒</div></div>
+  <div class="spinbar">SPIN ₱1</div>
+  <div class="bubble">快來抽獎囉！🎁</div>
+  <div class="fab">
+    <div class="ring"><div class="ringin"><div class="chest">🎁</div></div></div>
+    <div class="badge">3</div>
+  </div>
+  <div class="label">P1 浮動入口 icon</div>
+</div>
+</body></html>

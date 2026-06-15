@@ -1,0 +1,63 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;background:#0e1430}
+.scrim{position:absolute;inset:0;background:rgba(8,10,28,.55)}
+.modal{position:absolute;top:46px;left:18px;right:18px;bottom:46px;border-radius:30px;background:linear-gradient(165deg,#FFD3EC 0%,#C9B8FF 52%,#AEE3FF 100%);box-shadow:0 20px 60px rgba(0,0,0,.5);padding:22px 20px;display:flex;flex-direction:column}
+.close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:18px;color:#5b3a8f;font-weight:700}
+.htitle{text-align:center;font-size:26px;font-weight:900;color:#4a2f7a;text-shadow:0 2px 0 rgba(255,255,255,.6)}
+.hsub{text-align:center;font-size:11px;letter-spacing:3px;color:#7a5fae;margin-top:2px}
+.count{margin:12px auto 0;background:rgba(74,47,122,.16);border-radius:14px;padding:6px 16px;font-size:14px;font-weight:700;color:#4a2f7a}
+.proglabel{display:flex;justify-content:space-between;align-items:baseline;margin:16px 4px 6px}
+.proglabel b{font-size:13px;color:#4a2f7a}
+.proglabel .v{font-size:15px;font-weight:900;color:#6242CC}
+.track{height:16px;border-radius:10px;background:rgba(255,255,255,.55);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15) inset}
+.fill{height:100%;width:80%;background:linear-gradient(90deg,#FF8EC4,#FFD86B);border-radius:10px}
+.hint{text-align:center;font-size:13px;color:#7a3e86;margin-top:8px;font-weight:800}
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:12px;margin-top:16px}
+.cell{position:relative;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cell .no{position:absolute;top:5px;left:8px;font-size:11px;font-weight:800;z-index:2}
+/* opened */
+.opened{background:linear-gradient(160deg,#fff,#f3ecff);border:3px solid #b9a4f0;box-shadow:0 6px 14px rgba(98,66,204,.22)}
+.opened .no{color:#b3a0e0}
+.opened .pi{font-size:30px}.opened .amt{font-size:16px;font-weight:900;color:#4a2f7a;margin-top:3px}
+.opened.final{background:linear-gradient(160deg,#fff6da,#ffe3a6);border-color:#FFC23C}
+/* flippable (card back, glowing) */
+.flip{background:linear-gradient(155deg,#9a7bf5,#6242CC);border:3px solid #FFD86B;box-shadow:0 0 18px rgba(255,200,90,.85),0 6px 14px rgba(0,0,0,.3)}
+.flip .no{color:#e7deff}
+.flip .qm{font-size:34px;color:rgba(255,255,255,.9)}
+.flip .tap{margin-top:6px;font-size:11px;font-weight:800;color:#fff;background:rgba(0,0,0,.22);padding:2px 8px;border-radius:8px}
+/* locked */
+.lock{background:linear-gradient(155deg,#7d74a0,#574e78);border:3px solid #6a608c;opacity:.6}
+.lock .no{color:#d8d2ec}
+.lock .lk{font-size:30px;filter:grayscale(1)}
+.tag{position:absolute;top:6px;left:18px;background:rgba(74,47,122,.85);color:#fff;font-size:11px;padding:2px 8px;border-radius:8px}
+.legend{display:flex;justify-content:center;gap:14px;margin-top:12px;font-size:11px;color:#5b3a8f}
+.legend i{font-style:normal;display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:3px}
+</style></head><body>
+<div class="frame">
+  <div class="scrim"></div>
+  <div class="modal">
+    <div class="tag">P3 遊玩階段</div>
+    <div class="close">✕</div>
+    <div class="htitle">每日抽寶箱</div>
+    <div class="hsub">DAILY TREASURE BOX</div>
+    <div class="count">⏱ 今日重置倒數 06:24:18</div>
+    <div class="proglabel"><b>本階段進度</b><span class="v">400 / 500</span></div>
+    <div class="track"><div class="fill"></div></div>
+    <div class="hint">可再翻 2 格！自選任一格翻開</div>
+    <div class="grid">
+      <div class="cell opened"><span class="no">1</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+      <div class="cell flip"><span class="no">2</span><div class="qm">？</div><div class="tap">點我翻開</div></div>
+      <div class="cell opened"><span class="no">3</span><div class="pi">💚</div><div class="amt">₱3</div></div>
+      <div class="cell flip"><span class="no">4</span><div class="qm">？</div><div class="tap">點我翻開</div></div>
+      <div class="cell opened"><span class="no">5</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+      <div class="cell lock"><span class="no">6</span><div class="lk">🔒</div></div>
+      <div class="cell lock"><span class="no">7</span><div class="lk">🔒</div></div>
+      <div class="cell lock"><span class="no">8</span><div class="lk">🔒</div></div>
+      <div class="cell lock"><span class="no">9</span><div class="lk">🔒</div></div>
+    </div>
+    <div class="legend"><span><i style="background:#fff;border:2px solid #b9a4f0"></i>已翻開</span><span><i style="background:#6242CC"></i>可翻</span><span><i style="background:#574e78"></i>鎖定</span></div>
+  </div>
+</div>
+</body></html>

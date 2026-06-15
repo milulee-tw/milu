@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;background:#0e1430}
+.scrim{position:absolute;inset:0;background:radial-gradient(70% 50% at 50% 38%,rgba(120,80,200,.55),rgba(8,10,28,.9))}
+.confetti{position:absolute;width:12px;height:18px;border-radius:2px;opacity:.95}
+.card{position:absolute;top:230px;left:40px;right:40px;border-radius:30px;background:linear-gradient(165deg,#FFF3D0,#FFE08A 60%,#FFC23C);box-shadow:0 24px 70px rgba(255,170,40,.55),0 0 0 6px rgba(255,255,255,.25);padding:34px 26px;text-align:center}
+.crown{font-size:96px;line-height:1;filter:drop-shadow(0 8px 14px rgba(180,110,0,.5))}
+.ttl{font-size:24px;font-weight:900;color:#8a4b00;margin-top:8px}
+.amt{font-size:64px;font-weight:900;color:#a85f00;text-shadow:0 3px 0 #fff;margin:10px 0 4px}
+.sub{font-size:14px;color:#8a4b00;opacity:.85}
+.btn{margin:26px auto 0;height:60px;border-radius:20px;background:linear-gradient(#FF8EC4,#c05bd6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:900;box-shadow:0 10px 24px rgba(190,80,200,.55)}
+.tag{position:absolute;top:18px;left:0;right:0;text-align:center;color:#ffd86b;font-size:12px;letter-spacing:2px}
+.rays{position:absolute;top:160px;left:50%;width:520px;height:520px;transform:translateX(-50%);background:conic-gradient(from 0deg,rgba(255,216,107,.28) 0 8deg,transparent 8deg 22deg);border-radius:50%;filter:blur(1px)}
+</style></head><body>
+<div class="frame">
+  <div class="scrim"></div>
+  <div class="rays"></div>
+  <div class="tag">P4 最終大獎爆發畫面</div>
+  <div class="card">
+    <div class="crown">👑</div>
+    <div class="ttl">恭喜獲得最終大獎！</div>
+    <div class="amt">₱18</div>
+    <div class="sub">現金已派入你的錢包</div>
+    <div class="btn">太棒了！收下</div>
+  </div>
+  <script>
+  var box=document.querySelector('.frame');var cols=['#FF6BAA','#FFD86B','#7CE0FF','#9A7BF5','#7CF0A8','#FFB05C'];
+  for(var i=0;i<46;i++){var c=document.createElement('div');c.className='confetti';c.style.left=(Math.random()*430)+'px';c.style.top=(Math.random()*600)+'px';c.style.background=cols[i%6];c.style.transform='rotate('+(Math.random()*360)+'deg)';box.appendChild(c);}
+  </script>
+</div>
+</body></html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;background:#0e1430}
+.scrim{position:absolute;inset:0;background:rgba(8,10,28,.55)}
+.modal{position:absolute;top:46px;left:18px;right:18px;bottom:46px;border-radius:30px;background:linear-gradient(165deg,#FFD3EC 0%,#C9B8FF 52%,#AEE3FF 100%);box-shadow:0 20px 60px rgba(0,0,0,.5);padding:22px 20px;display:flex;flex-direction:column}
+.close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:18px;color:#5b3a8f;font-weight:700}
+.htitle{text-align:center;font-size:26px;font-weight:900;color:#4a2f7a;text-shadow:0 2px 0 rgba(255,255,255,.6)}
+.hsub{text-align:center;font-size:11px;letter-spacing:3px;color:#7a5fae;margin-top:2px}
+.count{margin:12px auto 0;background:rgba(74,47,122,.16);border-radius:14px;padding:6px 16px;font-size:14px;font-weight:700;color:#4a2f7a}
+.proglabel{display:flex;justify-content:space-between;align-items:baseline;margin:16px 4px 6px}
+.proglabel b{font-size:13px;color:#4a2f7a}
+.proglabel .v{font-size:15px;font-weight:900;color:#6242CC}
+.track{height:16px;border-radius:10px;background:rgba(255,255,255,.55);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15) inset}
+.fill{height:100%;width:60%;background:linear-gradient(90deg,#FF8EC4,#FFD86B);border-radius:10px}
+.hint{text-align:center;font-size:13px;color:#7a3e86;margin-top:8px;font-weight:700}
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:12px;margin-top:16px}
+.cell{position:relative;border-radius:16px;background:linear-gradient(160deg,#fff,#f3ecff);border:3px solid #b9a4f0;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(98,66,204,.22)}
+.cell .no{position:absolute;top:5px;left:8px;font-size:11px;font-weight:800;color:#b3a0e0}
+.cell .pi{font-size:30px;line-height:1}
+.cell .amt{font-size:16px;font-weight:900;margin-top:3px;color:#4a2f7a}
+.cell.final{background:linear-gradient(160deg,#fff6da,#ffe3a6);border-color:#FFC23C;box-shadow:0 6px 18px rgba(255,180,40,.5)}
+.cell.final .amt{color:#a85f00}
+.footer{text-align:center;font-size:13px;color:#5b3a8f;margin-top:14px;line-height:1.4}
+.btn{margin-top:12px;height:56px;border-radius:18px;background:linear-gradient(#FF8EC4,#c05bd6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;font-weight:900;box-shadow:0 8px 20px rgba(190,80,200,.5)}
+.tag{position:absolute;top:6px;left:18px;background:rgba(74,47,122,.85);color:#fff;font-size:11px;padding:2px 8px;border-radius:8px}
+</style></head><body>
+<div class="frame">
+  <div class="scrim"></div>
+  <div class="modal">
+    <div class="tag">P3 攤牌階段</div>
+    <div class="close">✕</div>
+    <div class="htitle">每日抽寶箱</div>
+    <div class="hsub">DAILY TREASURE BOX</div>
+    <div class="count">⏱ 今日重置倒數 06:24:18</div>
+    <div class="proglabel"><b>本階段進度</b><span class="v">300 / 500</span></div>
+    <div class="track"><div class="fill"></div></div>
+    <div class="hint">再押 ₱200 解鎖下一次機會</div>
+    <div class="grid">
+      <div class="cell"><span class="no">1</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+      <div class="cell"><span class="no">2</span><div class="pi">💚</div><div class="amt">₱3</div></div>
+      <div class="cell"><span class="no">3</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+      <div class="cell"><span class="no">4</span><div class="pi">🌟</div><div class="amt">₱8</div></div>
+      <div class="cell"><span class="no">5</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+      <div class="cell"><span class="no">6</span><div class="pi">💚</div><div class="amt">₱3</div></div>
+      <div class="cell"><span class="no">7</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+      <div class="cell final"><span class="no">8</span><div class="pi">👑</div><div class="amt">₱18</div></div>
+      <div class="cell"><span class="no">9</span><div class="pi">💙</div><div class="amt">₱1</div></div>
+    </div>
+    <div class="footer">今日獎項已攤開 — 看清楚有哪些獎，準備開始！</div>
+    <div class="btn">開始遊戲</div>
+  </div>
+</div>
+</body></html>

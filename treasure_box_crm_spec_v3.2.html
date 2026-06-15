@@ -286,6 +286,29 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .spec-table td.mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);}
 .spec-table td.dim{color:var(--text-secondary);}
 .spec-table tr:hover td{background:rgba(255,255,255,0.015);}
+
+/* ─── ARTSPEC: 原型截圖 + 說明 兩欄版型 ─── */
+.artspec-row{display:flex;gap:26px;align-items:flex-start;margin-bottom:30px;}
+.artspec-shot{flex:0 0 218px;position:sticky;top:16px;}
+.artspec-detail{flex:1;min-width:0;}
+.artspec-detail .sub-title{margin-top:0;}
+.artspec-detail > .spec-table:last-child{margin-bottom:0;}
+.phone-frame{
+  border:1px solid var(--border-bright);
+  border-radius:18px;padding:7px;
+  background:linear-gradient(160deg,var(--dark-3),var(--dark-2));
+  box-shadow:0 10px 34px rgba(0,0,0,0.45);
+}
+.phone-frame img{width:100%;display:block;border-radius:12px;}
+.phone-frame.dual{display:flex;flex-direction:column;gap:7px;}
+.shot-caption{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;
+  color:var(--text-dim);text-transform:uppercase;text-align:center;margin-top:10px;line-height:1.5;
+}
+@media(max-width:880px){
+  .artspec-row{flex-direction:column;}
+  .artspec-shot{flex-basis:auto;width:230px;position:static;align-self:flex-start;}
+}
 .tag-pill{
   font-family:'DM Mono',monospace;font-size:9px;
   padding:3px 8px;border-radius:2px;letter-spacing:0.08em;
@@ -1765,35 +1788,60 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <!-- ═══ v3.1 新增：美術設計頁面與狀態清單 ═══ -->
   <div class="sub-title" id="ui-artspec" style="margin-top:40px;">美術設計頁面與狀態清單（v3.1 新增）</div>
   <div class="callout info">
-    <strong>設計依據：</strong>本清單依互動原型 <em>《抽寶箱 CRM 浮動icon 原型.html》</em>（同資料夾）盤點，共 <strong>6 個畫面組（P1–P6）</strong>。美術請搭配原型實際操作確認動態節奏。原型畫布為直式手機 <strong>430 × 932（@1x）</strong>，切圖建議輸出 @2x／@3x。<br>
+    <strong>設計依據：</strong>本清單依互動原型 <em>《抽寶箱 CRM 浮動icon 原型.html》</em>（同資料夾）盤點，共 <strong>7 個畫面組（P1–P7，其中 P6 為主題風格）</strong>。下方各區塊<strong>左側為原型截圖示意、右側為功能/狀態說明表</strong>；美術請搭配原型實際操作確認動態節奏。原型畫布為直式手機 <strong>430 × 932（@1x）</strong>，切圖建議輸出 @2x／@3x。<br>
     <strong>不在設計範圍：</strong>① 原型右下角調整面板（Tweaks，原型工具）；② 背景 slot 遊戲畫面（僅為示意）；③ 原型內「⏩ 示範：快速集滿」連結（demo 專用）。
   </div>
 
   <div class="sub-title" style="font-size:13px;">P1 · 浮動入口 icon（常駐遊戲主畫面）</div>
-  <table class="spec-table">
-    <thead><tr><th style="width:140px;">狀態</th><th>視覺規格</th><th>動態需求</th></tr></thead>
-    <tbody>
-      <tr><td>一般狀態</td><td class="dim">寶箱主體 icon（約 64×64pt）＋外圈進度環（漸層描邊，顯示「本階段累積進度」百分比）</td><td class="dim">進度環隨押注即時增長（stroke 動畫 0.5s）</td></tr>
-      <tr><td>可翻提示</td><td class="dim">icon 發光（outer glow）＋右上角紅點，紅點內顯示可翻格數數字</td><td class="dim">呼吸式發光 loop</td></tr>
-      <tr><td>氣泡提示</td><td class="dim">白底圓角氣泡「快來抽獎囉！🎁」＋朝向 icon 的三角指標；icon 在左半屏時氣泡靠左、右半屏靠右（雙向版型）</td><td class="dim">解鎖新格時自動跳出，3 秒後淡出；多格同時解鎖只跳一次（防抖）</td></tr>
-      <tr><td>長按拖曳</td><td class="dim">長按 0.5 秒進入拖曳態：icon 微放大＋顯示「拖曳到任意位置」提示字</td><td class="dim">拖曳跟手；放開後自動吸附至左右螢幕邊緣（snap 回彈動畫）</td></tr>
-      <tr><td>隱藏態</td><td class="dim">開啟寶箱彈窗／遊戲中心面板時 icon 暫時隱藏</td><td class="dim">淡出／淡入</td></tr>
-    </tbody>
-  </table>
+  <div class="artspec-row">
+    <div class="artspec-shot">
+      <div class="phone-frame"><img src="axure_assets/P1_float_icon.png" alt="P1 浮動入口 icon 原型截圖" loading="lazy"></div>
+      <div class="shot-caption">P1 · 浮動 icon（原型示意）</div>
+    </div>
+    <div class="artspec-detail">
+      <table class="spec-table">
+        <thead><tr><th style="width:140px;">狀態</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+        <tbody>
+          <tr><td>一般狀態</td><td class="dim">寶箱主體 icon（約 64×64pt）＋外圈進度環（漸層描邊，顯示「本階段累積進度」百分比）</td><td class="dim">進度環隨押注即時增長（stroke 動畫 0.5s）</td></tr>
+          <tr><td>可翻提示</td><td class="dim">icon 發光（outer glow）＋右上角紅點，紅點內顯示可翻格數數字</td><td class="dim">呼吸式發光 loop</td></tr>
+          <tr><td>氣泡提示</td><td class="dim">白底圓角氣泡「快來抽獎囉！🎁」＋朝向 icon 的三角指標；icon 在左半屏時氣泡靠左、右半屏靠右（雙向版型）</td><td class="dim">解鎖新格時自動跳出，3 秒後淡出；多格同時解鎖只跳一次（防抖）</td></tr>
+          <tr><td>長按拖曳</td><td class="dim">長按 0.5 秒進入拖曳態：icon 微放大＋顯示「拖曳到任意位置」提示字</td><td class="dim">拖曳跟手；放開後自動吸附至左右螢幕邊緣（snap 回彈動畫）</td></tr>
+          <tr><td>隱藏態</td><td class="dim">開啟寶箱彈窗／遊戲中心面板時 icon 暫時隱藏</td><td class="dim">淡出／淡入</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="sub-title" style="font-size:13px;">P2 · 遊戲中心展開面板</div>
-  <table class="spec-table">
-    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
-    <tbody>
-      <tr><td>面板本體</td><td class="dim">直式窄面板（約 132pt 寬），錨定於 icon 旁、朝螢幕內側展開；含標題「遊戲中心」</td><td class="dim">自 icon 原點縮放展開；關閉反向縮回</td></tr>
-      <tr><td>功能入口 ×6</td><td class="dim">抽寶箱（live）／任務／道具／排行／推薦／收藏；每項＝icon＋主名稱＋副標小字</td><td class="dim">項目依序進場（stagger 約 0.04s/項）</td></tr>
-      <tr><td>live 項紅點</td><td class="dim">「抽寶箱」有可翻格時顯示紅點</td><td class="dim">—</td></tr>
-      <tr><td>COMING SOON 蓋牌</td><td class="dim">未開放項目降彩度＋「敬請期待」badge（本期僅「抽寶箱」開放）</td><td class="dim">點擊無反應</td></tr>
-      <tr><td>背景遮罩</td><td class="dim">半透明 scrim 罩住遊戲畫面</td><td class="dim">點擊遮罩關閉面板</td></tr>
-    </tbody>
-  </table>
+  <div class="artspec-row">
+    <div class="artspec-shot">
+      <div class="phone-frame"><img src="axure_assets/P2_game_center.png" alt="P2 遊戲中心展開面板 原型截圖" loading="lazy"></div>
+      <div class="shot-caption">P2 · 遊戲中心面板（原型示意）</div>
+    </div>
+    <div class="artspec-detail">
+      <table class="spec-table">
+        <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+        <tbody>
+          <tr><td>面板本體</td><td class="dim">直式窄面板（約 132pt 寬），錨定於 icon 旁、朝螢幕內側展開；含標題「遊戲中心」</td><td class="dim">自 icon 原點縮放展開；關閉反向縮回</td></tr>
+          <tr><td>功能入口 ×6</td><td class="dim">抽寶箱（live）／任務／道具／排行／推薦／收藏；每項＝icon＋主名稱＋副標小字</td><td class="dim">項目依序進場（stagger 約 0.04s/項）</td></tr>
+          <tr><td>live 項紅點</td><td class="dim">「抽寶箱」有可翻格時顯示紅點</td><td class="dim">—</td></tr>
+          <tr><td>COMING SOON 蓋牌</td><td class="dim">未開放項目降彩度＋「敬請期待」badge（本期僅「抽寶箱」開放）</td><td class="dim">點擊無反應</td></tr>
+          <tr><td>背景遮罩</td><td class="dim">半透明 scrim 罩住遊戲畫面</td><td class="dim">點擊遮罩關閉面板</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="sub-title" style="font-size:13px;">P3 · 寶箱主彈窗（攤牌 → 洗牌 → 遊玩 三階段）</div>
+  <div class="artspec-row">
+    <div class="artspec-shot">
+      <div class="phone-frame dual">
+        <img src="axure_assets/P3a_reveal.png" alt="P3 攤牌階段 原型截圖" loading="lazy">
+        <img src="axure_assets/P3b_play.png" alt="P3 遊玩階段 原型截圖" loading="lazy">
+      </div>
+      <div class="shot-caption">P3a 攤牌階段 ／ P3b 遊玩階段<br>（原型示意）</div>
+    </div>
+    <div class="artspec-detail">
   <table class="spec-table">
     <thead><tr><th style="width:140px;">階段/元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
     <tbody>
@@ -1804,26 +1852,44 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>③ 遊玩階段·footer</td><td class="dim">「已翻開 X / 9 · 可再翻 N 格」；進度提示「可翻任意 N 格！」（有次數）或「把所有格子翻開吧！」（暫無次數）；含「⏩ 示範：快速集滿」demo 連結（原型 demo 用，正式上線移除）</td><td class="dim">即時更新</td></tr>
     </tbody>
   </table>
+    </div>
+  </div>
 
   <div class="sub-title" style="font-size:13px;">P4 · 最終大獎爆發畫面</div>
-  <table class="spec-table">
-    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
-    <tbody>
-      <tr><td>全螢幕遮罩</td><td class="dim">罩住整個彈窗的深色遮罩</td><td class="dim">點擊任意處可關閉</td></tr>
-      <tr><td>彩帶 Confetti</td><td class="dim">多彩紙片（約 6 色、40 片）自頂部灑落</td><td class="dim">隨機大小/速度/延遲，落下 loop</td></tr>
-      <tr><td>獎勵卡</td><td class="dim">👑 大圖＋「恭喜獲得最終大獎！」＋大字金額＋主按鈕「太棒了！收下」</td><td class="dim">爆發式進場（scale + bounce）</td></tr>
-    </tbody>
-  </table>
+  <div class="artspec-row">
+    <div class="artspec-shot">
+      <div class="phone-frame"><img src="axure_assets/P4_jackpot.png" alt="P4 最終大獎爆發畫面 原型截圖" loading="lazy"></div>
+      <div class="shot-caption">P4 · 最終大獎爆發（原型示意）</div>
+    </div>
+    <div class="artspec-detail">
+      <table class="spec-table">
+        <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+        <tbody>
+          <tr><td>全螢幕遮罩</td><td class="dim">罩住整個彈窗的深色遮罩</td><td class="dim">點擊任意處可關閉</td></tr>
+          <tr><td>彩帶 Confetti</td><td class="dim">多彩紙片（約 6 色、40 片）自頂部灑落</td><td class="dim">隨機大小/速度/延遲，落下 loop</td></tr>
+          <tr><td>獎勵卡</td><td class="dim">👑 大圖＋「恭喜獲得最終大獎！」＋大字金額＋主按鈕「太棒了！收下」</td><td class="dim">爆發式進場（scale + bounce）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="sub-title" style="font-size:13px;">P5 · 新手教學（2 步驟，首次進入觸發）</div>
-  <table class="spec-table">
-    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
-    <tbody>
-      <tr><td>遮罩＋spotlight</td><td class="dim">半透明教學遮罩；步驟 1 在進度條位置挖洞聚焦＋指示箭頭 ⬆</td><td class="dim">spotlight 隨版面自動對位</td></tr>
-      <tr><td>教學卡·步驟 1</td><td class="dim">📊 插圖＋標題「押注就能集滿累積條」＋說明文＋按鈕「跳過」「下一步」＋步驟圓點指示。<strong>※ 說明文需配合新機制由「解鎖一格寶箱」改為「解鎖一次翻牌機會、自選任一格翻開」</strong>（原型尚未同步）</td><td class="dim">卡片彈入</td></tr>
-      <tr><td>教學卡·步驟 2</td><td class="dim">寶箱🎁→👑＋金額 的示意小動畫＋星光粒子＋標題「每天都有機會抽中最大獎！」＋說明文＋按鈕「開始抽寶箱 🎉」</td><td class="dim">示意動畫 loop、星光閃爍</td></tr>
-    </tbody>
-  </table>
+  <div class="artspec-row">
+    <div class="artspec-shot">
+      <div class="phone-frame"><img src="axure_assets/P5_tutorial.png" alt="P5 新手教學 原型截圖" loading="lazy"></div>
+      <div class="shot-caption">P5 · 新手教學 步驟 1（原型示意）</div>
+    </div>
+    <div class="artspec-detail">
+      <table class="spec-table">
+        <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+        <tbody>
+          <tr><td>遮罩＋spotlight</td><td class="dim">半透明教學遮罩；步驟 1 在進度條位置挖洞聚焦＋指示箭頭 ⬆</td><td class="dim">spotlight 隨版面自動對位</td></tr>
+          <tr><td>教學卡·步驟 1</td><td class="dim">📊 插圖＋標題「押注就能集滿累積條」＋說明文＋按鈕「跳過」「下一步」＋步驟圓點指示。<strong>※ 說明文需配合新機制由「解鎖一格寶箱」改為「解鎖一次翻牌機會、自選任一格翻開」</strong>（原型尚未同步）</td><td class="dim">卡片彈入</td></tr>
+          <tr><td>教學卡·步驟 2</td><td class="dim">寶箱🎁→👑＋金額 的示意小動畫＋星光粒子＋標題「每天都有機會抽中最大獎！」＋說明文＋按鈕「開始抽寶箱 🎉」</td><td class="dim">示意動畫 loop、星光閃爍</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="sub-title" style="font-size:13px;">P6 · 主題風格（需定稿）</div>
   <div class="body-text">原型內建三套換色風格：<strong>糖果（預設）／藍紫／金黑</strong>。糖果版色票示意——背景 <em>#8FD0FF→#C9B8FF→#FFD6EC</em>、彈窗 <em>#FFD3EC→#C9B8FF→#AEE3FF</em>、格子 <em>#8C6CF0→#6242CC</em>、進度條 <em>#FF8EC4→#FFD86B</em>。</div>
@@ -1832,18 +1898,26 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="sub-title" style="font-size:13px;">P7 · 今日全部抽完結算畫面（v3.2 新增｜9 格全開觸發）</div>
-  <div class="callout info">
-    <strong>觸發時機：</strong>當玩家把今日 9 格<strong>全部翻開</strong>後，自動跳出全螢幕結算畫面（取代原本 footer 一行的「明日重置」提示）。
+  <div class="artspec-row">
+    <div class="artspec-shot">
+      <div class="phone-frame"><img src="axure_assets/P7_settle.png" alt="P7 今日全部抽完結算畫面 原型截圖" loading="lazy"></div>
+      <div class="shot-caption">P7 · 今日抽完結算（原型示意）</div>
+    </div>
+    <div class="artspec-detail">
+      <div class="callout info" style="margin-top:0;">
+        <strong>觸發時機：</strong>當玩家把今日 9 格<strong>全部翻開</strong>後，自動跳出全螢幕結算畫面（取代原本 footer 一行的「明日重置」提示）。
+      </div>
+      <table class="spec-table">
+        <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
+        <tbody>
+          <tr><td>全螢幕遮罩</td><td class="dim">罩住整個彈窗的深色遮罩（覆蓋 9 宮格）</td><td class="dim">9 格全開後自動出現</td></tr>
+          <tr><td>彩帶 Confetti</td><td class="dim">與 P4 同款彩帶，慶祝今日全數完成</td><td class="dim">灑落 loop</td></tr>
+          <tr><td>結算卡</td><td class="dim">🎊 大圖＋標題「今日寶箱全部抽完啦！」＋副標「下一輪遊戲將於」＋<strong>大字倒數計時 HH:MM:SS</strong>＋說明「後重新開始，明日 00:00 全新洗牌 🎲」＋主按鈕「好的，期待下一輪！」</td><td class="dim">卡片進場（scale/bounce）；倒數每秒更新</td></tr>
+          <tr><td>關閉行為</td><td class="dim">點主按鈕關閉整個寶箱彈窗、縮回浮動 icon</td><td class="dim">—</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <table class="spec-table">
-    <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
-    <tbody>
-      <tr><td>全螢幕遮罩</td><td class="dim">罩住整個彈窗的深色遮罩（覆蓋 9 宮格）</td><td class="dim">9 格全開後自動出現</td></tr>
-      <tr><td>彩帶 Confetti</td><td class="dim">與 P4 同款彩帶，慶祝今日全數完成</td><td class="dim">灑落 loop</td></tr>
-      <tr><td>結算卡</td><td class="dim">🎊 大圖＋標題「今日寶箱全部抽完啦！」＋副標「下一輪遊戲將於」＋<strong>大字倒數計時 HH:MM:SS</strong>＋說明「後重新開始，明日 00:00 全新洗牌 🎲」＋主按鈕「好的，期待下一輪！」</td><td class="dim">卡片進場（scale/bounce）；倒數每秒更新</td></tr>
-      <tr><td>關閉行為</td><td class="dim">點主按鈕關閉整個寶箱彈窗、縮回浮動 icon</td><td class="dim">—</td></tr>
-    </tbody>
-  </table>
   <div class="callout warn">
     <strong>區分 P4 與 P7：</strong>P4 是「翻中<strong>最終大獎那一格</strong>」時的單格爆發（可能發生在中途）；P7 是「<strong>9 格全部翻完</strong>」的當日收尾結算。兩者皆為全螢幕慶祝畫面但觸發條件與文案不同，美術需分別產出。
 

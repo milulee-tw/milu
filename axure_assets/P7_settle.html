@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;background:#0e1430}
+.scrim{position:absolute;inset:0;background:radial-gradient(70% 50% at 50% 40%,rgba(120,150,220,.5),rgba(8,10,28,.92))}
+.confetti{position:absolute;width:12px;height:18px;border-radius:2px;opacity:.95}
+.card{position:absolute;top:250px;left:38px;right:38px;border-radius:30px;background:linear-gradient(165deg,#FFD3EC,#C9B8FF 55%,#AEE3FF);box-shadow:0 24px 70px rgba(120,90,200,.55),0 0 0 6px rgba(255,255,255,.25);padding:34px 26px;text-align:center}
+.party{font-size:90px;line-height:1;filter:drop-shadow(0 8px 12px rgba(80,40,140,.4))}
+.ttl{font-size:23px;font-weight:900;color:#4a2f7a;margin-top:6px}
+.sub{font-size:14px;color:#6b4f9a;margin-top:14px}
+.cd{font-size:50px;font-weight:900;color:#6242CC;text-shadow:0 2px 0 #fff;letter-spacing:2px;margin:6px 0}
+.note{font-size:13px;color:#6b4f9a}
+.btn{margin:26px auto 0;height:60px;border-radius:20px;background:linear-gradient(#FF8EC4,#c05bd6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;font-weight:900;box-shadow:0 10px 24px rgba(190,80,200,.55)}
+.tag{position:absolute;top:18px;left:0;right:0;text-align:center;color:#FFD86B;font-size:12px;letter-spacing:2px}
+</style></head><body>
+<div class="frame">
+  <div class="scrim"></div>
+  <div class="tag">P7 今日全部抽完結算畫面</div>
+  <div class="card">
+    <div class="party">🎊</div>
+    <div class="ttl">今日寶箱全部抽完啦！</div>
+    <div class="sub">下一輪遊戲將於</div>
+    <div class="cd">06:24:18</div>
+    <div class="note">後重新開始，明日 00:00 全新洗牌 🎲</div>
+    <div class="btn">好的，期待下一輪！</div>
+  </div>
+  <script>
+  var box=document.querySelector('.frame');var cols=['#FF6BAA','#FFD86B','#7CE0FF','#9A7BF5','#7CF0A8','#FFB05C'];
+  for(var i=0;i<46;i++){var c=document.createElement('div');c.className='confetti';c.style.left=(Math.random()*430)+'px';c.style.top=(Math.random()*650)+'px';c.style.background=cols[i%6];c.style.transform='rotate('+(Math.random()*360)+'deg)';box.appendChild(c);}
+  </script>
+</div>
+</body></html>
