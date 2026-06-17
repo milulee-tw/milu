@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM 中台 + 渠道適配層 架構規格 · CMB · v1.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#D4A843;--gold-light:#F0CC72;--gold-dim:#8B6914;--dark:#0D0E12;--dark-2:#161820;--dark-3:#1E2028;--dark-4:#262830;--border:rgba(212,168,67,0.18);--border-bright:rgba(212,168,67,0.45);--text-primary:#F0EDE6;--text-secondary:#9A9488;--text-dim:#5A5650;--red:#E05A3A;--teal:#3ABFB0;--blue:#4A8FE0;--green:#5ABF7A;--purple:#B084D8;--orange:#E0963A;--sidebar-w:280px;--topnav-h:48px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text-primary);font-family:'Noto Sans TC',sans-serif;line-height:1.7;font-size:14px;}
+::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-track{background:var(--dark-2);}::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
+body.layout-top .sidebar{display:none;}body.layout-top .topnav{display:flex;}body.layout-top .main-wrap{margin-left:0;padding-top:var(--topnav-h);}
+body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}body.layout-side .main-wrap{margin-left:var(--sidebar-w);padding-top:0;}
+.layout-toggle{position:fixed;bottom:28px;right:28px;z-index:200;display:flex;background:var(--dark-3);border:1px solid var(--border-bright);border-radius:6px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.5);}
+.layout-toggle-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;padding:8px 14px;cursor:pointer;color:var(--text-dim);background:none;border:none;transition:all .2s;}
+.layout-toggle-btn.active{background:rgba(212,168,67,0.12);color:var(--gold-light);}
+.layout-toggle-divider{width:1px;background:var(--border);align-self:stretch;}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,14,18,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);padding:0 40px;height:var(--topnav-h);overflow-x:auto;align-items:center;}
+.nav-brand{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:0.15em;white-space:nowrap;margin-right:32px;flex-shrink:0;}
+.nav-item{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--text-dim);padding:0 14px;height:var(--topnav-h);display:flex;align-items:center;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;text-decoration:none;}
+.nav-item:hover,.nav-item.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+.topnav-meta{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:24px;border-left:1px solid var(--border);}
+.topnav-meta-item{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-secondary);white-space:nowrap;}.topnav-meta-divider{color:var(--text-dim);font-size:10px;}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);z-index:100;background:var(--dark-2);border-right:1px solid var(--border);flex-direction:column;overflow:hidden;}
+.sidebar-header{padding:24px 20px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.sidebar-brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.sidebar-title{font-size:14px;font-weight:700;color:var(--text-primary);line-height:1.4;margin-bottom:14px;}
+.sidebar-meta{display:flex;flex-direction:column;gap:6px;}
+.sidebar-meta-row{display:flex;align-items:center;justify-content:space-between;font-family:'DM Mono',monospace;font-size:11px;}
+.sidebar-meta-label{color:var(--text-dim);}.sidebar-meta-val{color:var(--text-secondary);}
+.sidebar-meta-val.status-draft{color:var(--gold-light);background:rgba(212,168,67,0.1);padding:2px 7px;border-radius:2px;}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0 80px;}
+.sidebar-section-btn{width:100%;display:flex;align-items:center;gap:10px;padding:10px 20px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text-secondary);background:none;border:none;cursor:pointer;text-align:left;transition:all .2s;border-left:2px solid transparent;}
+.sidebar-section-btn:hover{background:rgba(255,255,255,0.03);}
+.sidebar-section-btn.active{color:var(--gold-light);border-left-color:var(--gold);background:rgba(212,168,67,0.06);}
+.sidebar-section-num{font-size:10px;color:var(--text-dim);width:20px;}.sidebar-section-btn.active .sidebar-section-num{color:var(--gold);}
+.main-wrap{transition:margin-left .3s,padding-top .3s;min-height:100vh;}
+.page{max-width:1060px;margin:0 auto;padding:0 40px 120px;}
+.section{margin-bottom:90px;padding-top:20px;}
+.section-header{display:flex;align-items:baseline;gap:16px;margin-bottom:36px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.section-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--gold-light);letter-spacing:0.18em;}
+.section-title{font-size:22px;font-weight:700;color:var(--text-primary);}
+.section-title-en{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);letter-spacing:0.15em;margin-left:auto;}
+.sub-title{font-size:15px;font-weight:700;color:var(--gold-light);margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+.sub-title::before{content:'';width:3px;height:13px;background:var(--gold);flex-shrink:0;}
+.body-text{font-size:13px;color:var(--text-secondary);margin-bottom:14px;line-height:1.85;}
+.body-text strong{color:var(--text-primary);}.body-text em{color:var(--gold-light);font-style:normal;font-weight:600;}
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;padding:60px 40px;text-align:center;}
+.cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(212,168,67,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 70%,rgba(176,132,216,0.05) 0%,transparent 60%);}
+.cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px);background-size:60px 60px;}
+.cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;border:1px solid var(--border-bright);padding:6px 18px;border-radius:2px;margin-bottom:36px;position:relative;}
+.cover h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,8.5vw,84px);letter-spacing:0.05em;line-height:0.95;color:var(--gold-light);text-shadow:0 0 80px rgba(212,168,67,0.25);margin-bottom:12px;position:relative;}
+.cover h1 span{color:var(--text-primary);}
+.cover-sub{font-size:14px;color:var(--text-secondary);letter-spacing:0.08em;margin-bottom:48px;position:relative;}
+.cover-pills{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;position:relative;}
+.cover-pill{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--text-secondary);padding:7px 14px;border:1px solid var(--border);border-radius:20px;background:rgba(255,255,255,0.02);}
+.cover-pill strong{color:var(--gold-light);}
+.hypo-block{background:var(--dark-3);border:1px solid var(--border);border-left:3px solid var(--gold);padding:24px 28px;border-radius:0 4px 4px 0;margin-bottom:28px;}
+.hypo-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:8px;}
+.hypo-text{font-size:15px;color:var(--text-primary);font-weight:500;line-height:1.75;}
+.info-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.info-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;}
+.info-card{background:var(--dark-3);border:1px solid var(--border);border-radius:4px;padding:18px;}
+.info-card-icon{font-size:22px;margin-bottom:8px;}
+.info-card-title{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px;}
+.info-card-desc{font-size:12px;color:var(--text-secondary);line-height:1.6;}
+.spec-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;}
+.spec-table th{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--text-secondary);text-transform:uppercase;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--dark-3);}
+.spec-table td{padding:11px 12px;color:var(--text-primary);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;}
+.spec-table td.mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);}
+.spec-table td.dim{color:var(--text-secondary);}
+.spec-table tr:hover td{background:rgba(255,255,255,0.015);}
+.tag-pill{font-family:'DM Mono',monospace;font-size:9px;padding:3px 8px;border-radius:2px;letter-spacing:0.06em;display:inline-block;white-space:nowrap;}
+.tag-hub{background:rgba(212,168,67,0.14);color:var(--gold-light);}
+.tag-direct{background:rgba(90,191,122,0.14);color:#7ADFA0;}
+.tag-aggr{background:rgba(74,143,224,0.14);color:#90C0F0;}
+.tag-plat{background:rgba(176,132,216,0.14);color:#C8A0F0;}
+.tag-new{background:rgba(224,150,58,0.16);color:#F0B070;border:1px solid rgba(224,150,58,0.3);}
+.tag-infra{background:rgba(224,90,58,0.16);color:#F0907A;border:1px solid rgba(224,90,58,0.32);}
+.tag-ok{background:rgba(90,191,122,0.14);color:#7ADFA0;}
+.callout{background:var(--dark-3);border:1px solid var(--border);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 4px 4px 0;margin-bottom:20px;font-size:13px;color:var(--text-secondary);}
+.callout strong{color:var(--text-primary);}
+.callout.warn{border-left-color:var(--orange);}.callout.warn strong{color:var(--orange);}
+.callout.info{border-left-color:var(--blue);}.callout.success{border-left-color:var(--green);}
+.callout.danger{border-left-color:var(--red);}.callout.danger strong{color:var(--red);}
+.changelog{background:var(--dark-2);border:1px solid var(--border-bright);border-radius:6px;padding:20px 24px;margin:34px 0 0;}
+.changelog-head{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.changelog ul{list-style:none;margin:0;padding:0;}
+.changelog li{font-size:12px;color:var(--text-secondary);line-height:1.6;padding:5px 0 5px 18px;position:relative;border-bottom:1px solid rgba(255,255,255,0.03);}
+.changelog li::before{content:'▸';position:absolute;left:0;color:var(--gold-dim);}
+.changelog li strong{color:var(--text-primary);}
+.changelog li .cl-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--red);margin-right:6px;}
+.oq-item{background:var(--dark-3);border:1px solid var(--border);border-left:3px solid var(--orange);padding:14px 18px;border-radius:0 4px 4px 0;margin-bottom:10px;}
+.oq-owner{font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);letter-spacing:0.15em;margin-bottom:6px;}
+.oq-q{font-size:13px;color:var(--text-primary);font-weight:500;}
+.oq-item.awc{border-left-color:var(--blue);}.oq-item.awc .oq-owner{color:var(--blue);}
+.oq-item.mps{border-left-color:var(--green);}.oq-item.mps .oq-owner{color:var(--green);}
+.doc-footer{text-align:center;padding:60px 40px;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.15em;line-height:2;}
+/* architecture layered diagram */
+.arch{margin:8px 0 28px;}
+.arch-layer{border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:6px;background:var(--dark-3);}
+.arch-layer.hub{border-color:var(--border-bright);background:rgba(212,168,67,0.06);}
+.arch-layer-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.arch-row{display:flex;gap:8px;flex-wrap:wrap;}
+.arch-box{flex:1;min-width:150px;background:var(--dark-4);border:1px solid var(--border);border-radius:5px;padding:12px 14px;}
+.arch-box.direct{border-left:3px solid var(--green);}
+.arch-box.aggr{border-left:3px solid var(--blue);}
+.arch-box.plat{border-left:3px solid var(--purple);}
+.arch-box.future{border-left:3px solid var(--text-dim);opacity:.75;border-style:dashed;}
+.arch-box-title{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.arch-box-desc{font-size:11px;color:var(--text-secondary);line-height:1.5;}
+.arch-bus{text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);background:rgba(212,168,67,0.08);border:1px dashed var(--border-bright);border-radius:5px;padding:8px;margin-bottom:6px;letter-spacing:0.04em;}
+.arch-down{text-align:center;color:var(--text-dim);font-size:16px;padding:2px 0;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;font-size:11px;color:var(--text-secondary);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+@media(max-width:900px){body.layout-side .sidebar{display:none;}body.layout-side .main-wrap{margin-left:0;padding-top:var(--topnav-h);}.info-grid-3,.info-grid-2{grid-template-columns:1fr;}.page{padding:0 20px 80px;}}
+</style>
+</head>
+<body class="layout-side">
+
+<div class="layout-toggle">
+  <button class="layout-toggle-btn" id="btn-side" onclick="setLayout('side')">▣ 側邊欄</button>
+  <div class="layout-toggle-divider"></div>
+  <button class="layout-toggle-btn" id="btn-top" onclick="setLayout('top')">☰ 頂部列</button>
+</div>
+
+<nav class="topnav" id="topnav">
+  <span class="nav-brand">CRM-ARCH · V1.3</span>
+  <a class="nav-item active" href="#overview">概要</a>
+  <a class="nav-item" href="#arch">架構總覽</a>
+  <a class="nav-item" href="#hub">中台職責</a>
+  <a class="nav-item" href="#adapter">渠道適配層</a>
+  <a class="nav-item" href="#prereq">三大前提</a>
+  <a class="nav-item" href="#boundary">對接邊界</a>
+  <a class="nav-item" href="#strategy">建置策略</a>
+  <a class="nav-item" href="#openq">待確認</a>
+  <div class="topnav-meta"><span class="topnav-meta-item" id="topnav-date"></span><span class="topnav-meta-divider">·</span><span class="topnav-meta-item">Milu</span><span class="topnav-meta-divider">·</span><span class="topnav-meta-item">Force / CMB</span></div>
+</nav>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">CMB · SPEC DOC</div>
+    <div class="sidebar-title">CRM 中台 + 渠道適配層<br>整合架構規格</div>
+    <div class="sidebar-meta">
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.3</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">DOC CODE</span><span class="sidebar-meta-val">CRM-ARCH</span></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section"><button class="sidebar-section-btn active" onclick="navTo('overview')"><span class="sidebar-section-num">01</span>概要與目的</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('arch')"><span class="sidebar-section-num">02</span>架構總覽</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('hub')"><span class="sidebar-section-num">03</span>CRM 中台職責</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('adapter')"><span class="sidebar-section-num">04</span>渠道適配層</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('prereq')"><span class="sidebar-section-num">05</span>三大前提</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('boundary')"><span class="sidebar-section-num">06</span>對接邊界</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('strategy')"><span class="sidebar-section-num">07</span>建置策略</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('openq')"><span class="sidebar-section-num">08</span>待確認事項</button></div>
+  </nav>
+</aside>
+
+<div class="main-wrap" id="main-wrap">
+
+<div class="cover">
+  <div class="cover-bg"></div><div class="cover-grid"></div>
+  <div class="cover-tag">CMB · CRM ARCHITECTURE · 2026</div>
+  <h1>CRM <span>中台</span> + 渠道適配層</h1>
+  <div class="cover-sub">CRM HUB + CHANNEL ADAPTER · 一套 CRM 控多平台（直連型＋集成商型兩型 adapter）整合架構 · V1.3 · 第一階段 AWC 首發（注單通道發獎）</div>
+  <div class="cover-pills">
+    <div class="cover-pill"><strong>目標</strong> 一套 CRM 控多平台</div>
+    <div class="cover-pill"><strong>直連型</strong> MPS / Jackpot Combo</div>
+    <div class="cover-pill"><strong>集成商型</strong> AWC 注單通道</div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- CHANGELOG -->
+<div class="changelog">
+  <div class="changelog-head">修訂紀錄 · CHANGELOG（最新：v1.2 → v1.3 · 2026/06/17）</div>
+  <ul>
+    <li><span class="cl-tag" style="color:var(--gold-light)">v1.3</span><strong>集成商型 adapter 改走「注單通道發獎」，不再對接 Promotion Tool / Bonus 錢包</strong>。經國清向 FC 釐清：任務獎勵以 <strong>Bet_Amount=0 / Win_Amount=X 的正常注單</strong>表達，走既有「遊戲→AWC→平台」通道，由平台結算入<strong>玩家主錢包真金</strong>。原 v1.2「AWC Promotion Tool 提供活動錢包／流水／Free Spin、可發 Bonus」之假設<strong>作廢</strong>。詳見 CRM-ROUTE v2.0。</li>
+    <li><span class="cl-tag" style="color:var(--gold-light)">v1.3</span><strong>錢包目標收斂為單一（主錢包真金）</strong>。獎勵一律即真金、可立即提領，<strong>不做平台級受限紅利（Bonus／流水／roll-over）</strong>。防濫用責任由平台 Bonus 機制收回至<strong>中台自有風控／額度／reserve</strong>。grantReward 的 <span class="mono">wallet_target=BONUS</span> 分支移除。</li>
+    <li><span class="cl-tag" style="color:var(--gold-light)">v1.3</span><strong>第一階段卡點轉移</strong>：從「對接 AWC 哪一層（Promotion Tool / Seamless）」改為「<strong>逐平台商務開通任務功能＋RTP 揭露</strong>」（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收）。</li>
+    <li style="border-top:1px solid var(--border);margin-top:6px;padding-top:8px;"><span class="cl-tag">v1.2</span><strong>主路由翻轉：第一階段＝集成商型（AWC）首發</strong>。<em>（v1.3 註：AWC 仍為首發，但對接方式由 Promotion Tool 改為注單通道。）</em>抽寶箱、Free Spin 規格本就照 AWC API 撰寫，最快上線。<strong>MPS 直連改列第二階段戰略目標</strong>。</li>
+    <li><span class="cl-tag" style="color:var(--gold-light)">v1.2</span><strong>工時順序調整</strong>：先建 AWC 集成商 adapter，MPS 直連 adapter 留第二階段加掛（中台 L1 不動）。守則：本階段把 AWC 嚴格關在 adapter 內，第二階段換 MPS 才便宜。</li>
+    <li style="border-top:1px solid var(--border);margin-top:6px;padding-top:8px;"><span class="cl-tag">v1.1</span><strong>adapter 分類軸重定義</strong>：原「遊戲端 / 平台端」改為<strong>「集成商型（AWC）/ 直連型（MPS·Jackpot Combo）」</strong>。差異不在「誰是遊戲、誰是平台」，而在「經集成商代拋 vs 直連平台」。</li>
+    <li><span class="cl-tag">P0</span><strong>MPS 與 Jackpot Combo 並列為同型直連平台商</strong>：兩者皆自持 Bonus 錢包＋流水；Jackpot Combo ≈ 另一個 MPS，與 Combo 遊戲商拆開，<strong>非「Combo 自當平台」</strong>。</li>
+    <li><span class="cl-tag">P0</span><strong>中台降為「非結算權威」</strong>：Combo 永遠是 GP，任何路徑都不持錢包、不結算，只送值。原「跨端唯一真相來源」改為「發放真相 ＋ 對平台回報歸戶稽核」。</li>
+    <li><span class="cl-tag">P0</span><strong>刪「錢包在誰家」對比</strong>：Bonus 錢包/流水一律在平台商；真實差異改為「直連（1 跳、對帳直達）vs 經 AWC（2 跳、口徑受中介）」。</li>
+    <li><span class="cl-tag">P0</span><strong>刪「混用導注單」錯誤段</strong>：兩型路徑互斥、不混用，不存在「把 AWC 注單導進 MPS」的需求（原 v1 §07 該段基於錯誤前提）。</li>
+    <li><span class="cl-tag">v1.1</span><strong>§07 全改「兩型 adapter 按平台路由」</strong>：架構同時支援兩型，按目標平台選路由（非二選一）。<em>註：v1.1 當時主路由設為 MPS，已於 v1.2 翻為 AWC 首發。</em></li>
+    <li><span class="cl-tag">P2</span><strong>新增 reserve 保留額度機制</strong>：鎖住「中台風控 ↔ 平台結算」的 async 空窗，防超發通膨。</li>
+    <li><span class="cl-tag">P2</span><strong>revoke() 按 reward 型別＋平台能力定義</strong>：Free Spin 已發卡＝best-effort、不保證。</li>
+    <li><span class="cl-tag">P2</span><strong>player mapping 升為 P0 基礎建設</strong>：獨立估時、先於任何 adapter（見 §07）。</li>
+    <li><span class="cl-tag">P2</span><strong>§08 清理</strong>：刪「MPS 能否取得 AWC 遊戲注單」（互斥、無此需求）。</li>
+  </ul>
+</div>
+
+<!-- 01 -->
+<section class="section" id="overview">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">概要與目的</span><span class="section-title-en">OVERVIEW</span></div>
+  <div class="hypo-block">
+    <div class="hypo-label">核心主張 · THESIS</div>
+    <div class="hypo-text">把 CRM 設計成<strong>「決策大腦（中台）」</strong>，把各執行端封裝成可插拔的<strong>「渠道適配層 Adapter」</strong>。中台只發出<em>統一的發獎/發卡/入帳指令</em>，由 adapter 翻譯成各端 API。<strong>Combo 永遠是遊戲商（GP），任何路徑都不持錢包、不結算，只送值</strong>；錢包與結算永遠在下游平台商。一套 CRM 即可<strong>同時支援直連型平台（MPS / Jackpot Combo）與集成商型渠道（AWC，以注單發獎）</strong>，新增渠道只需加一個 adapter。</div>
+  </div>
+  <div class="info-grid-3">
+    <div class="info-card"><div class="info-card-icon">🧠</div><div class="info-card-title">中台＝決策</div><div class="info-card-desc">玩家分群、活動編排、觸發、campaign 主檔、對帳歸戶。與「執行端」無關，<strong>不結算</strong>。</div></div>
+    <div class="info-card"><div class="info-card-icon">🔌</div><div class="info-card-title">Adapter＝執行</div><div class="info-card-desc">把統一指令翻成各端 API：集成商型走 AWC，直連型走 MPS / Jackpot Combo。</div></div>
+    <div class="info-card"><div class="info-card-icon">➕</div><div class="info-card-title">可擴展</div><div class="info-card-desc">新增渠道＝加一個 adapter instance，中台與既有活動邏輯不動。</div></div>
+  </div>
+  <div class="sub-title">In Scope / Out of Scope</div>
+  <div class="info-grid-2">
+    <div class="info-card"><div class="info-card-title">✔ In Scope</div><div class="info-card-desc">① 三層架構與職責切分；② 統一渠道介面定義；③ 集成商型 / 直連型 adapter 邊界；④ 與 AWC 注單通道 / Seamless 的對應；⑤ 跨端三大前提（玩家識別 / campaign 命名 / 入帳模型）</div></div>
+    <div class="info-card"><div class="info-card-title">✘ Out of Scope</div><div class="info-card-desc">① 各活動的玩法細節（抽寶箱、Free Spin 等另立規格）；② 各平台商內部錢包實作；③ CDP / 數據倉儲建置；④ 具體 API 欄位逐一定義（落到各 adapter 規格）</div></div>
+  </div>
+  <div class="callout info"><strong>與既有規格的關係</strong>：抽寶箱、Free Spin 卡都是<strong>「中台底下的能力 / 活動」</strong>；本文件定義它們共用的上層骨架。正因兩者已<em>低耦合</em>（reward_id + campaign_id 窄介面），才能各自插進此架構、並依目標平台選走哪一型 adapter。</div>
+</section>
+
+<!-- 02 -->
+<section class="section" id="arch">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">架構總覽</span><span class="section-title-en">ARCHITECTURE</span></div>
+  <div class="arch">
+    <div class="arch-layer hub">
+      <div class="arch-layer-label">Layer 1 · CRM 中台（決策 / 管理大腦）</div>
+      <div class="arch-row">
+        <div class="arch-box"><div class="arch-box-title">玩家分群 / 名單</div><div class="arch-box-desc">tag、生命週期、受眾鎖定</div></div>
+        <div class="arch-box"><div class="arch-box-title">活動編排 / 觸發</div><div class="arch-box-desc">條件、排程、事件觸發</div></div>
+        <div class="arch-box"><div class="arch-box-title">campaign 主檔</div><div class="arch-box-desc">campaign_id / reference_id 源頭</div></div>
+        <div class="arch-box"><div class="arch-box-title">對帳歸戶</div><div class="arch-box-desc">收平台回報、統一歸戶稽核（不結算）</div></div>
+      </div>
+    </div>
+    <div class="arch-down">▼ 統一內部介面 ▼</div>
+    <div class="arch-bus">grantReward( campaign_id, player, reward )　/　launchGame( player, game )　/　settle( reference_id )</div>
+    <div class="arch-down">▼ 按目標平台選 adapter 型別 ▼</div>
+    <div class="arch-layer">
+      <div class="arch-layer-label">Layer 2 · 渠道適配層（Channel Adapters · 兩型）</div>
+      <div class="arch-row">
+        <div class="arch-box direct"><div class="arch-box-title">🔗 直連型 Adapter</div><div class="arch-box-desc">翻譯成直連平台商 API（MPS / Jackpot Combo）：送 win 值、無中介，平台自持錢包並結算入主錢包</div></div>
+        <div class="arch-box aggr"><div class="arch-box-title">🔌 集成商型 Adapter</div><div class="arch-box-desc">翻譯成 AWC 注單通道：以 Bet=0/Win=X 注單發獎、入主錢包真金，需加解密簽章</div></div>
+        <div class="arch-box future"><div class="arch-box-title">➕ 未來渠道</div><div class="arch-box-desc">他站 / 他供應商，新增即插</div></div>
+      </div>
+    </div>
+    <div class="arch-down">▼</div>
+    <div class="arch-layer">
+      <div class="arch-layer-label">Layer 3 · 執行端（平台商錢包 / 結算）</div>
+      <div class="arch-row">
+        <div class="arch-box direct"><div class="arch-box-title">MPS（直連平台商）</div><div class="arch-box-desc">平台商本身、自持錢包並結算（第二階段直連）</div></div>
+        <div class="arch-box direct"><div class="arch-box-title">Jackpot Combo（未來）</div><div class="arch-box-desc">≈ 另一個 MPS、直連平台商、自持錢包，與 Combo GP 拆開</div></div>
+        <div class="arch-box aggr"><div class="arch-box-title">AWC 背後平台商</div><div class="arch-box-desc">經 AWC 注單通道；平台收到 Bet=0/Win=X 注單，結算入<strong>玩家主錢包真金</strong></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout success"><strong>關鍵：中台不認識「AWC / MPS / Jackpot Combo」這些名字</strong>。它只發 <span class="tag-pill tag-hub">grantReward / launchGame / settle</span> 三類抽象指令，差異全吸收在 adapter。要換平台、加渠道，動 adapter 不動中台。</div>
+  <div class="callout warn"><strong>兩型互斥、按平台路由</strong>：任一部署只走一型 adapter（直連型 <em>或</em> 集成商型），不混用——同一玩家旅程不會「直連啟動、集成商結算」。中台依目標平台路由到對應 adapter。</div>
+</section>
+
+<!-- 03 -->
+<section class="section" id="hub">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">CRM 中台職責</span><span class="section-title-en">HUB RESPONSIBILITIES</span></div>
+  <table class="spec-table">
+    <thead><tr><th>職責</th><th>內容</th><th>為何放中台</th></tr></thead>
+    <tbody>
+      <tr><td>玩家分群 / 名單</td><td class="dim">tag、生命週期階段、受眾鎖定、黑白名單</td><td class="dim">跨端共用，不應綁某一端</td></tr>
+      <tr><td>活動編排 / 觸發</td><td class="dim">解鎖條件、排程、事件觸發（CDP→CRM）、活動模板</td><td class="dim">決策邏輯，與執行端無關</td></tr>
+      <tr><td>campaign 主檔</td><td class="dim"><span class="mono">campaign_id</span> 源頭、<span class="mono">reference_id</span> 產生規則</td><td class="dim">來源唯一、跨端一致才能對帳</td></tr>
+      <tr><td>獎勵型錄</td><td class="dim">現金 / Free Spin 卡 / 未來品項的 SKU 型錄（reward_id）</td><td class="dim">建檔一次、多活動多渠道複用</td></tr>
+      <tr><td>對帳歸戶 / 稽核</td><td class="dim">把各 adapter 回報的<strong>平台結算結果</strong>統一歸戶、稽核、月結</td><td class="dim"><strong>中台不結算</strong>；它是發放真相 + 對平台回報的歸戶稽核者</td></tr>
+      <tr><td>風控 / 額度 / reserve</td><td class="dim">發放上限、頻率熔斷、預算控管、<strong>保留額度 reserve（發放當下鎖額）</strong></td><td class="dim">集中控管避免各端破口、防超發</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>中台不做的事</strong>：不直接呼叫任何供應商 API、<strong>不持有錢包、不算流水、不做結算判定</strong>、不管遊戲演出——這些全在平台商，經 adapter 下沉，保持中台「純決策」。</div>
+  <div class="callout danger"><strong>⚠ 超發空窗（必處理）</strong>：中台的預算/風控與平台的實際結算之間是 <em>async</em>。若不鎖額，連續發放可能在平台回報前就超出預算（通膨破口）。對策＝<strong>發放當下在中台先扣「保留額度 reserve」</strong>，待平台結算回報後核銷或釋放。</div>
+</section>
+
+<!-- 04 -->
+<section class="section" id="adapter">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">渠道適配層（Channel Adapter）</span><span class="section-title-en">ADAPTERS</span></div>
+  <div class="body-text">每個 adapter 實作同一組<strong>統一介面</strong>，對上接中台指令、對下接該端 API。中台呼叫時只指定 <span class="mono">adapter 型別</span>（DIRECT 直連 / AGGREGATOR 集成商），由路由依目標平台送到對應 adapter instance。</div>
+  <div class="sub-title">統一介面（中台 ↔ adapter 契約）</div>
+  <table class="spec-table">
+    <thead><tr><th>介面</th><th>用途</th><th>直連型對應（MPS / Jackpot Combo）</th><th>集成商型對應（AWC）</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">grantReward()</td><td class="dim">發現金 / 發卡（一律真金）</td><td class="dim">平台直連發獎 API（送 win 值 / 指定遊戲）</td><td class="dim">以 Bet=0/Win=X 注單發獎 + CreateFreeSpin（發卡）</td></tr>
+      <tr><td class="mono">launchGame()</td><td class="dim">跳轉進遊戲使用獎勵</td><td class="dim">平台直連啟動</td><td class="dim">doLoginAndLaunchGame / LoginWithoutRedirect</td></tr>
+      <tr><td class="mono">settle()</td><td class="dim">送出獎勵結果（<strong>平台收注單即結算入主錢包</strong>）</td><td class="dim">送 win 值給 MPS/平台錢包，平台結算回報</td><td class="dim">產生 Bet=0/Win=X 注單，帶 campaign_id / ref_voucher_id</td></tr>
+      <tr><td class="mono">queryStatus()</td><td class="dim">查詢進度 / 對帳</td><td class="dim">平台對帳 API</td><td class="dim">getTransactionByUpdateDate（注單對帳）</td></tr>
+      <tr><td class="mono">revoke()</td><td class="dim">作廢 / 取消（<strong>能力而定</strong>）</td><td class="dim">平台取消 API（若提供）</td><td class="dim">— 已發卡不撤，擴充走補發新卡</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>revoke() 不是保證操作</strong>：作廢能力取決於下游平台/集成商是否提供 API，且須按 reward 型別定義語意。<strong>Free Spin 已發卡＝best-effort、不保證可撤</strong>（呼應 Decision Log #5「已發卡不可變更，擴充走補發新卡」）。介面保留 revoke()，但各 adapter 須明示「支援 / 不支援 / 部分支援」。</div>
+  <div class="info-grid-2">
+    <div class="info-card"><div class="info-card-title"><span class="tag-pill tag-aggr">集成商型 Adapter</span> <span class="tag-pill tag-ok">第一階段首發</span></div><div class="info-card-desc">封裝 <strong>AWC 集成商</strong>。發獎走<strong>既有注單通道</strong>：以 <span class="mono">Bet=0/Win=X</span> 注單表達獎勵、入主錢包真金，發卡用 CreateFreeSpin、跳轉用 LoginWithoutRedirect、對帳用 getTransactionByUpdateDate。需處理加解密簽章、GMT-4 時區。<strong>不對接 Promotion Tool / Bonus 錢包</strong>（v1.3 修正）。<strong>第一階段主路由</strong>（抽寶箱 / Free Spin 規格本就照此撰寫）。</div></div>
+    <div class="info-card"><div class="info-card-title"><span class="tag-pill tag-direct">直連型 Adapter</span> <span class="tag-pill tag-new">第二階段</span></div><div class="info-card-desc">封裝<strong>直連平台商</strong>（MPS、Jackpot Combo、未來其他直連平台）。同一個 shape、多個 instance。送值、無中介，平台自持錢包並結算。<strong>第二階段戰略目標</strong>，屆時只是新增一個 instance、中台 L1 不動。</div></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="section" id="prereq">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">三大前提（adapter 模式成立的基礎）</span><span class="section-title-en">PREREQUISITES</span></div>
+  <div class="info-grid-3">
+    <div class="info-card"><div class="info-card-icon">🆔</div><div class="info-card-title">① 統一玩家識別 <span class="tag-pill tag-infra">基建</span></div><div class="info-card-desc">CRM 玩家 ID ↔ 各平台（MPS / Jackpot Combo / AWC 背後平台）玩家 ID 的對應表（player mapping）。沒有它，同一玩家在各端無法歸戶。<strong>P0 基礎建設，獨立估時（見 §07）。</strong></div></div>
+    <div class="info-card"><div class="info-card-icon">🏷️</div><div class="info-card-title">② 統一 campaign / reference</div><div class="info-card-desc">campaign_id / reference_id 跨端命名一致（<span class="tag-pill tag-ok">已設計</span>，見 Free Spin 規格 §02）。promotionId 對映 campaign_id。</div></div>
+    <div class="info-card"><div class="info-card-icon">🏦</div><div class="info-card-title">③ 入帳一律主錢包真金</div><div class="info-card-desc">錢包在平台商；中台只負責送出「發 X 真金」，由 adapter 以注單表達。<strong>不分 Bonus／不綁流水</strong>（v1.3 收斂）。</div></div>
+  </div>
+  <div class="callout warn"><strong>最該先釘的是 ①</strong>：跨端玩家識別沒對齊，後面分群、對帳、發獎全部串不起來。<strong>列為架構落地第一個前置任務（P0 基建），先於任何 adapter 開發。</strong></div>
+</section>
+
+<!-- 06 -->
+<section class="section" id="boundary">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">與現有系統對接邊界</span><span class="section-title-en">INTEGRATION BOUNDARY</span></div>
+  <div class="sub-title">AWC ＝ 集成商型 adapter（走既有注單通道，非 Promotion Tool）</div>
+  <div class="body-text"><strong>v1.3 修正</strong>：經國清向 FC 釐清，任務獎勵<em>不透過 Promotion Tool、不進 Bonus 錢包</em>，而是以一筆 <span class="mono">Bet_Amount=0 / Win_Amount=X</span> 的<strong>正常注單</strong>，搭遊戲本來就在跑的「遊戲→AWC→平台」注單通道送出，由平台結算入<strong>玩家主錢包真金</strong>。集成商型 adapter 要做的不是「對接促銷工具」，而是「<strong>讓遊戲產生帶 campaign_id 標記的零下注中獎注單，並回收注單做對帳</strong>」。</div>
+  <table class="spec-table">
+    <thead><tr><th>中台介面</th><th>AWC 注單通道實作</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">grantReward（現金 / Free Spin）</td><td class="dim">產生 Bet=0/Win=X 注單；發卡用 CreateFreeSpin</td><td class="dim">獎勵即真金，入主錢包</td></tr>
+      <tr><td class="mono">launchGame</td><td class="dim">doLoginAndLaunchGame / LoginWithoutRedirect</td><td class="dim">卡片跳轉進遊戲</td></tr>
+      <tr><td class="mono">settle（送出獎勵結果）</td><td class="dim">注單即結算依據，帶 campaign_id / ref_voucher_id</td><td class="dim"><strong>無 Promotion Tool、無流水</strong></td></tr>
+      <tr><td class="mono">queryStatus / 對帳</td><td class="dim">getTransactionByUpdateDate / GetFreeSpinSendDetail</td><td class="dim">以自有發送紀錄為主，注單校驗</td></tr>
+      <tr><td class="mono">revoke</td><td class="dim">— 已發卡不撤，擴充走補發新卡</td><td class="dim">不需作廢 API</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>已不需要 Promotion Tool / Bonus 錢包</strong>：原 v1.2 設想「對接 AWC Promotion Tool 拿活動錢包 + 流水」的整段<em>作廢</em>。發獎搭既有注單流，沒有第二條金流管線，所以也不需 CPS。剩下的不是技術串接，而是<strong>逐平台商務開通「任務功能 / Bet=0 注單」</strong>（見 §08 / AWC-TOPO v2）。</div>
+  <div class="callout"><strong>抽寶箱 / Free Spin 如何插入</strong>：兩者都是中台底下的「活動 / 能力」，透過 <span class="mono">grantReward(...)</span> 發放，<strong>按目標平台選走直連型或集成商型 adapter</strong>。同一張 Free Spin 卡換平台時，卡邏輯不動，只換 adapter。</div>
+</section>
+
+<!-- 07 STRATEGY -->
+<section class="section" id="strategy">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">建置策略：兩型 adapter 與平台路由</span><span class="section-title-en">TWO ADAPTER TYPES · ROUTING</span></div>
+  <div class="hypo-block">
+    <div class="hypo-label">決策前提 · PREMISE（v1.2 修正）</div>
+    <div class="hypo-text">結算與錢包<strong>永遠在平台商</strong>（MPS / Jackpot Combo / AWC 背後平台）——Combo 不持有、不自建、只送值。所以這不是「租 vs 自建」、也不是「選誰家錢包」，而是<strong>「同時支援兩型 adapter、按目標平台路由」</strong>：直連型（MPS / Jackpot Combo，少一層中介、對帳直達）與集成商型（AWC，<em>以注單發獎</em>、覆蓋廣）。<em>第一階段主路由＝集成商型（AWC）首發（最快上線、規格已就位）；MPS 直連型＝第二階段戰略目標。</em></div>
+  </div>
+
+  <div class="callout success"><strong>關鍵事實（v1.3 修正）</strong>：集成商型發獎只需產生一筆 <span class="mono">Bet=0 / Win=final（已封頂 min(total_win, 上限)）</span> 的注單、帶 <span class="mono">campaign_id</span>，由平台結算入<strong>主錢包真金</strong>。<strong>無 Promotion Tool、無 Bonus 錢包、無流水</strong>。先前「自建錢包」「對接活動錢包 / 流水」估算皆<strong>作廢</strong>。</div>
+
+  <div class="sub-title">三層歸屬（v1.1 修正後）</div>
+  <table class="spec-table">
+    <thead><tr><th>層</th><th>內容</th><th>歸屬</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag-pill tag-hub">L1 大腦</span></td><td>分群、觸發、campaign 主檔、編排、設定獎勵金額 / 上限 / 指定遊戲、<strong>風控 / 防濫用 / reserve 鎖額</strong></td><td class="dim">CRM 自有</td></tr>
+      <tr><td><span class="tag-pill tag-hub">L2 結算</span></td><td><strong>收注單、結算入主錢包真金</strong></td><td class="dim">⭐ <strong>平台商所有</strong>（MPS / Jackpot Combo / AWC 背後平台）；Combo 不持有、不自建，<strong>只送值</strong></td></tr>
+      <tr><td><span class="tag-pill tag-direct">L3 閘道</span></td><td>遊戲啟動、注單 / 結果回報</td><td class="dim">直連平台 or 經集成商，<strong>按 adapter 型別</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">兩型 adapter 並排比較</div>
+  <table class="spec-table">
+    <thead><tr><th>面向</th><th>直連型（MPS / Jackpot Combo）</th><th>集成商型（AWC）</th></tr></thead>
+    <tbody>
+      <tr><td>中間角色</td><td class="dim">🟢 無中介，直連平台商（1 跳）</td><td class="dim">AWC 代拋（2 跳）</td></tr>
+      <tr><td>錢包 / 結算</td><td class="dim">平台商（MPS / Jackpot Combo）自持</td><td class="dim">AWC 背後平台商，收注單結算入主錢包</td></tr>
+      <tr><td>對帳直達度</td><td class="dim">🟢 直達、口徑近</td><td class="dim">🔴 口徑受 AWC 中介</td></tr>
+      <tr><td>商務 / 議價</td><td class="dim">🟢 不經集成商抽成</td><td class="dim">受集成商條件</td></tr>
+      <tr><td>遊戲 / 平台覆蓋</td><td class="dim">直連生態（逐一接）</td><td class="dim">🟢 一次集成、覆蓋廣</td></tr>
+      <tr><td>額外處理</td><td class="dim">各平台協定逐一接</td><td class="dim">加解密簽章、GMT-4 時區</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>不是二選一</strong>：架構<strong>同時支援兩型</strong>，按目標平台路由。某平台只能經 AWC 觸及 → 走集成商型；某平台可直連（MPS / Jackpot Combo）→ 走直連型。下方工時是「各型 adapter 的建置成本」，非互斥方案的取捨。</div>
+
+  <div class="sub-title">集成商型 adapter 建置工時（AWC · <span style="color:var(--green)">第一階段首發</span> · 粗估*）</div>
+  <table class="spec-table">
+    <thead><tr><th>模組</th><th>工時（人天）</th></tr></thead>
+    <tbody>
+      <tr><td>adapter 統一介面 + 路由</td><td class="mono">5–8</td></tr>
+      <tr><td>中台 L1（campaign 主檔 / 獎勵型錄 / 風控 / reserve / 設值）</td><td class="mono">10–15</td></tr>
+      <tr><td>AWC L3 閘道 adapter（launch + 注單 + <strong>加解密簽章 MD5 / KeyG / AgentKey 安全存放</strong>）</td><td class="mono">12–18</td></tr>
+      <tr><td>AWC 發卡 / 獎勵注單發送（CreateFreeSpin + Bet=0/Win 中獎注單）</td><td class="mono">8–12</td></tr>
+      <tr><td>遊戲 ID 對映表 + 時區（GMT-4）+ 對帳（campaign_id / getTransaction）</td><td class="mono">8–13</td></tr>
+      <tr><td>抽寶箱 / Free Spin 接入 + 整合測試</td><td class="mono">10–15</td></tr>
+      <tr><td><strong>小計</strong></td><td class="mono"><strong>~53–81 人天 ≈ 8–12 週（2–3 人）</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="callout success"><strong>第一階段＝AWC 首發</strong>：含中台 L1（兩型共用、只算一次）。<strong>另須先做 player mapping 基建（下表，~16–26 人天，獨立排程）。</strong></div>
+
+  <div class="sub-title">直連型 adapter 建置工時（MPS · <span style="color:#F0B070">第二階段</span> · 粗估*）</div>
+  <table class="spec-table">
+    <thead><tr><th>模組</th><th>工時（人天）</th></tr></thead>
+    <tbody>
+      <tr><td>adapter 統一介面 + 路由</td><td class="mono">5–8</td></tr>
+      <tr><td>中台 L1（campaign 主檔 / 獎勵型錄 / 風控 / reserve / 設值）</td><td class="mono">10–15</td></tr>
+      <tr><td>直連平台整合（送 win 值 + campaign_id + 指定遊戲）</td><td class="mono">10–18</td></tr>
+      <tr><td>結算彙總 + 封頂（算 final 後交平台）</td><td class="mono">6–10</td></tr>
+      <tr><td>L3 閘道（遊戲啟動 + 結果回報）</td><td class="mono">10–15</td></tr>
+      <tr><td>抽寶箱 / Free Spin 接入 + 整合測試</td><td class="mono">10–15</td></tr>
+      <tr><td><strong>小計（完整獨立建置）</strong></td><td class="mono"><strong>~51–81 人天</strong></td></tr>
+      <tr><td class="dim">└ 第二階段「加掛」增量（L1 / 統一介面 / 活動接入已於首發完成）</td><td class="mono dim">~30–48 人天 ≈ 5–7 週</td></tr>
+    </tbody>
+  </table>
+  <div class="callout"><strong>* 工時為相對量級粗估，非承諾值</strong>，假設 2–3 人後端團隊，需 BE/FE 校準。<strong>第二階段加掛 MPS 只需增量部分</strong>——中台 L1、統一介面、活動接入皆已於第一階段（AWC 首發）完成，不重複計。</div>
+
+  <div class="sub-title"><span class="tag-pill tag-infra">基建</span> player mapping 獨立估時（P0 · 先於 adapter）</div>
+  <div class="body-text">跨端玩家識別是兩型 adapter 共同的地基，<strong>須先於任何 adapter 完成</strong>，故獨立估時、獨立排程。</div>
+  <table class="spec-table">
+    <thead><tr><th>模組</th><th>工時（人天）</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>對映表設計 + 儲存（CRM player ↔ 各平台 player）</td><td class="mono">5–8</td><td class="dim">資料模型、唯一鍵、索引</td></tr>
+      <tr><td>對映建立 / 維護流程（註冊綁定 / 補綁 / 退綁）</td><td class="mono">5–8</td><td class="dim">含各平台帳號取得方式</td></tr>
+      <tr><td>跨平台查詢 API + 快取</td><td class="mono">3–5</td><td class="dim">發獎 / 對帳即時查映</td></tr>
+      <tr><td>異常處理（一對多 / 缺映 / 衝突 / 合併）</td><td class="mono">3–5</td><td class="dim">⚠️ 漏映＝發獎失敗或錯帳</td></tr>
+      <tr><td><strong>小計</strong></td><td class="mono"><strong>~16–26 人天 ≈ 3–4 週</strong></td><td class="dim">⚠️基建，<strong>不可併入 adapter</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>誰維護待定</strong>：player mapping 由 CRM 自維、還是各平台提供對映服務，是 §08 待確認項，直接影響此估時與責任邊界。</div>
+
+  <div class="sub-title">決策（定調）</div>
+  <div class="callout success"><strong>✅ 第一階段主路由＝集成商型（AWC）首發（注單通道發獎）</strong>：抽寶箱 / Free Spin 規格本就照 AWC API 撰寫，獎勵以 <span class="mono">Bet=0/Win=X</span> 注單發放、入主錢包真金，<strong>不需 Promotion Tool / Bonus 錢包</strong>，最快上線。CRM 只送 <span class="mono">{campaign_id, win 金額, 指定遊戲}</span>，由 AWC 背後平台商結算。<strong>MPS 直連型＝第二階段戰略目標</strong>，屆時新增一個 instance、中台不動。<strong>守則：本階段把 AWC 嚴格關在 adapter 內，勿讓簽章/口徑滲進中台 L1。</strong></div>
+  <div class="callout warn"><strong>動工前確認（§05 / §08）</strong>：① player mapping 基建先就位；② adapter 統一介面先定義；③ <strong>AWC 書面確認</strong>：place_bet 帶 campaign_id、Bet=0 零押注中獎注單可處理、注單回呼帶回 ref_voucher_id、CreateFreeSpin / LoginWithoutRedirect 規格；④ <strong>逐平台商務開通</strong>「任務功能 / Bet=0」。第 ③④ 為<strong>第一階段 go/no-go 關卡</strong>。（MPS go/no-go 屬第二階段，可提前探詢不阻塞。）</div>
+
+  <div class="sub-title">守則：adapter 隔離</div>
+  <div class="callout info"><strong>架構紅利</strong>：因為各平台/集成商的差異都關在 adapter 內，新增或切換渠道時<strong>中台（L1）與活動邏輯完全不動</strong>，只「新增 / 切換一個 adapter instance」。守住統一介面，任一渠道都「可插可拔」，其他路由不受影響。</div>
+</section>
+
+<!-- 08 -->
+<section class="section" id="openq">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">待確認事項</span><span class="section-title-en">OPEN QUESTIONS</span></div>
+  <div class="oq-item"><div class="oq-owner">PM / 風控</div><div class="oq-q"><strong>真金直發的防濫用</strong>：獎勵即真金、可立即提領，平台 Bonus 流水鎖已不擋。領取資格 / 頻率 / 額度 / 黑名單等防濫用，由中台 L1 補上（取代原平台級受限紅利的風控）。</div></div>
+  <div class="oq-item"><div class="oq-owner">PM / 基建</div><div class="oq-q">跨端玩家識別（player mapping）由誰維護？CRM 自維，還是各平台（MPS / Jackpot Combo / AWC 背後平台）提供對映？此題決定 §07 基建估時與責任邊界。</div></div>
+  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN · 第一階段優先</div><div class="oq-q">注單通道發獎確認：place_bet 帶 campaign_id、<strong>Bet=0 零押注中獎注單可正確處理入帳</strong>、注單回呼帶回 <span class="mono">ref_free_voucher_id / campaign_id</span> 供對帳、CreateFreeSpin / LoginWithoutRedirect 規格。（已不問 Promotion Tool / Bonus 入帳；見 AWC-TOPO v2。）</div></div>
+  <div class="oq-item fc"><div class="oq-owner">業務 / BD · 第一階段優先</div><div class="oq-q"><strong>逐平台開通盤點</strong>：哪些目標平台接受任務功能 / Bet=0 注單？覆蓋率？（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收。）每個開通平台須備妥 RTP 佔比揭露。</div></div>
+  <div class="oq-item mps"><div class="oq-owner">MPS · 第二階段 go/no-go</div><div class="oq-q">MPS 直連發獎 API 能否由 CRM 外部送 win 值（帶 campaign_id + 指定遊戲）入主錢包？決定第二階段直連型（MPS）能否成立。可提前探詢，不阻塞第一階段。</div></div>
+  <div class="oq-item"><div class="oq-owner">平台 · Jackpot Combo</div><div class="oq-q">Jackpot Combo（≈ 另一個 MPS）何時就緒？是否提供與 MPS 對等的「發獎 / 錢包 / 入帳 / 對帳 / 取消」直連 API，供直連型 adapter 再 new 一個 instance？</div></div>
+  <div class="oq-item"><div class="oq-owner">PM / 對帳</div><div class="oq-q">跨端對帳彙整口徑：promotionId / campaign_id 是否能在各平台報表都帶出並對齊？reserve 核銷 / 釋放規則？</div></div>
+</section>
+
+</div>
+
+<div class="doc-footer">
+  CRM 中台 + 渠道適配層 整合架構規格 · V1.3 · CONFIDENTIAL 2026<br>
+  CMB · CRM 生態 · 關聯：抽寶箱 v3.3 / Free Spin 卡 v2.0 / CRM-ROUTE v2.0 / AWC-TOPO v2 / 開發總路線圖 v1.1<br>
+  v1.3 修訂：集成商型 adapter 改走「注單通道發獎」（Bet=0/Win→主錢包真金），移除 Promotion Tool / Bonus 錢包 / 流水 假設
+</div>
+
+</div>
+
+<script>
+function setLayout(mode){document.body.className='layout-'+mode;document.getElementById('btn-side').classList.toggle('active',mode==='side');document.getElementById('btn-top').classList.toggle('active',mode==='top');localStorage.setItem('spec-layout',mode);}
+(function(){setLayout(localStorage.getItem('spec-layout')||'side');})();
+(function(){var n=new Date();var s=n.getFullYear()+'/'+String(n.getMonth()+1).padStart(2,'0')+'/'+String(n.getDate()).padStart(2,'0');var a=document.getElementById('sidebar-date'),b=document.getElementById('topnav-date');if(a)a.textContent=s;if(b)b.textContent=s;})();
+function navTo(id){var t=document.getElementById(id);if(t){var o=document.body.classList.contains('layout-top')?60:20;window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-o,behavior:'smooth'});}}
+var sections=document.querySelectorAll('.section');
+function upd(){var cur='';sections.forEach(function(s){if(window.scrollY>=s.offsetTop-100)cur=s.id;});document.querySelectorAll('.nav-item').forEach(function(n){n.classList.toggle('active',n.getAttribute('href')==='#'+cur);});document.querySelectorAll('.sidebar-section-btn').forEach(function(btn){btn.classList.toggle('active',btn.getAttribute('onclick')==="navTo('"+cur+"')");});}
+window.addEventListener('scroll',upd);upd();
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
