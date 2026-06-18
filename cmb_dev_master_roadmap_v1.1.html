@@ -236,8 +236,8 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="flow-step">
       <div class="flow-badge">🔌 對外採購層</div>
       <div class="flow-body">
-        <div class="flow-title">AWC 一次性串接總清單　<span class="tag-pill tag-src">[AWC]</span></div>
-        <div class="flow-desc"><span class="mono">awc_integration_consolidated_checklist_v2</span>　給 AWC 的「一次性需求書」：A 派現金 / B 背包跳轉 / C 發卡，<strong>只串一次</strong>。</div>
+        <div class="flow-title">集成商一次性串接總清單　<span class="tag-pill tag-src">[AWC]</span></div>
+        <div class="flow-desc"><span class="mono">integration_consolidated_checklist_v2</span>　給集成商的「一次性需求書」：A 派現金 / B 背包跳轉 / C 發卡，<strong>只串一次</strong>。</div>
         <div class="flow-roles">角色：對外採購單　·　在路線圖：<span class="tag-pill tag-src">[P0]</span><span class="tag-pill tag-src">[P3]</span><span class="tag-pill tag-src">[P4]</span></div>
       </div>
     </div>
@@ -353,8 +353,8 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   </div>
   <div class="callout success"><strong>一句話帶各單位</strong>：中台是<strong>地基</strong>，活動是蓋在上面的房子，<span class="mono">free_spin_chest_spec</span> 是 v2 的新「商品」，AWC 清單是<strong>對外採購單</strong>——這張矩陣負責「機制與職責」，旁邊「01 依賴總覽」負責「先後順序」，兩張一起看就是完整作戰圖。</div>
 
-  <div class="sub-title">附：要和 AWC 溝通／確認什麼（核心策略：只串一次）</div>
-  <div class="body-text">AWC 串接定調「<strong>只串一次</strong>」：v1 現金獎與 v2 才用的背包／Free Spin <strong>一次打包提交</strong>，v2 不必再碰 AWC。下表為三大群組的對接重點，逐項細節見 <span class="mono">awc_integration_consolidated_checklist_v2</span>。</div>
+  <div class="sub-title">附：要和集成商溝通／確認什麼（核心策略：只串一次）</div>
+  <div class="body-text">集成商串接定調「<strong>只串一次</strong>」：v1 現金獎與 v2 才用的背包／Free Spin <strong>一次打包提交</strong>，v2 不必再碰集成商。下表為三大群組的對接重點，逐項細節見 <span class="mono">integration_consolidated_checklist_v2</span>。</div>
   <table class="spec-table">
     <thead><tr><th style="width:14%">群組</th><th style="width:52%">串接重點</th><th>API</th><th>啟用</th><th>狀態</th></tr></thead>
     <tbody>
@@ -367,10 +367,10 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
       </tr>
       <tr>
         <td><strong>B · 背包跳轉</strong></td>
-        <td class="dim">Token+GameId 一次性 URL／有效期／使用限制；同玩家短時間連續多次呼叫（背包多卡）；<strong>跳轉後 Free Spin 是 AWC 自動套用 vs Combo 另呼叫 CreateFreeSpin</strong>；過期卡能否跳轉＋有效期判定點。</td>
+        <td class="dim">Token+GameId 一次性 URL／有效期／使用限制；同玩家短時間連續多次呼叫（背包多卡）；<strong>跳轉後 Free Spin 是集成商自動套用 vs Combo 另呼叫 CreateFreeSpin</strong>；過期卡能否跳轉＋有效期判定點。</td>
         <td class="mono">LoginWithoutRedirect</td>
         <td><span class="tag-pill tag-v2">V2</span></td>
-        <td class="dim">已列，部分<strong>待 AWC 回覆</strong></td>
+        <td class="dim">已列，部分<strong>待集成商回覆</strong></td>
       </tr>
       <tr>
         <td><strong>C · 發卡通知</strong></td>
@@ -381,7 +381,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
       </tr>
     </tbody>
   </table>
-  <div class="callout danger"><strong>三條會卡死全案、需 AWC「書面回覆」的決策題</strong>：① 注單發獎欄位（<span class="mono">place_bet</span> 帶 <span class="mono">campaign_id</span>、<span class="mono">Bet=0</span> 中獎注單、回呼帶 <span class="mono">ref_voucher_id</span>）＋逐平台開通盤點；② 跳轉後 Free Spin 觸發方式（B3：AWC 自動 vs 另呼叫）；③ 過期卡判定（B4）。另：player mapping 與 AWC 加密簽章屬我方 <span class="tag-pill tag-infra">P1 基建</span>，沒先做發獎／對帳全對不到人。</div>
+  <div class="callout danger"><strong>三條會卡死全案、需集成商「書面回覆」的決策題</strong>：① 注單發獎欄位（<span class="mono">place_bet</span> 帶 <span class="mono">campaign_id</span>、<span class="mono">Bet=0</span> 中獎注單、回呼帶 <span class="mono">ref_voucher_id</span>）＋逐平台開通盤點；② 跳轉後 Free Spin 觸發方式（B3：集成商自動 vs 另呼叫）；③ 過期卡判定（B4）。另：player mapping 與集成商加密簽章屬我方 <span class="tag-pill tag-infra">P1 基建</span>，沒先做發獎／對帳全對不到人。</div>
 </section>
 
 <!-- P0 -->
