@@ -130,6 +130,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <span class="nav-brand">CMB · ROADMAP V1.1</span>
   <a class="nav-item active" href="#intro">如何使用</a>
   <a class="nav-item" href="#dep">依賴總覽</a>
+  <a class="nav-item" href="#matrix">機制矩陣</a>
   <a class="nav-item" href="#p0">P0 對外</a>
   <a class="nav-item" href="#p1">P1 基建</a>
   <a class="nav-item" href="#p2">P2 中台</a>
@@ -157,15 +158,16 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <nav class="sidebar-nav">
     <div class="sidebar-section"><button class="sidebar-section-btn active" onclick="navTo('intro')"><span class="sidebar-section-num">00</span>如何使用本文件</button></div>
     <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('dep')"><span class="sidebar-section-num">01</span>依賴總覽圖</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p0')"><span class="sidebar-section-num">02</span>P0 對外決策關卡</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p1')"><span class="sidebar-section-num">03</span>P1 共用基礎建設</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p2')"><span class="sidebar-section-num">04</span>P2 中台 + MPS adapter</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p3')"><span class="sidebar-section-num">05</span>P3 抽寶箱 v1 現金獎</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p4')"><span class="sidebar-section-num">06</span>P4 Free Spin 發卡結算</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p5')"><span class="sidebar-section-num">07</span>P5 抽寶箱 v2 背包</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p6')"><span class="sidebar-section-num">08</span>P6 對帳 / 監控 / 上線</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('byrole')"><span class="sidebar-section-num">09</span>職能視圖（每人一覽）</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('openq')"><span class="sidebar-section-num">10</span>對外待確認彙整</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('matrix')"><span class="sidebar-section-num">02</span>機制全景矩陣</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p0')"><span class="sidebar-section-num">03</span>P0 對外決策關卡</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p1')"><span class="sidebar-section-num">04</span>P1 共用基礎建設</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p2')"><span class="sidebar-section-num">05</span>P2 中台 + MPS adapter</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p3')"><span class="sidebar-section-num">06</span>P3 抽寶箱 v1 現金獎</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p4')"><span class="sidebar-section-num">07</span>P4 Free Spin 發卡結算</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p5')"><span class="sidebar-section-num">08</span>P5 抽寶箱 v2 背包</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p6')"><span class="sidebar-section-num">09</span>P6 對帳 / 監控 / 上線</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('byrole')"><span class="sidebar-section-num">10</span>職能視圖（每人一覽）</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('openq')"><span class="sidebar-section-num">11</span>對外待確認彙整</button></div>
   </nav>
 </aside>
 
@@ -192,16 +194,55 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="hypo-label">這份文件解決什麼 · WHY</div>
     <div class="hypo-text">四份規格各自按「功能」切，每份內部都重複了自己的基建、AWC 串接、資料層與待確認——<strong>沒有任何一份能告訴你全局先做哪個</strong>。本文件把四份所有 Task 攤平，按「誰卡住誰」重排成 <em>P0→P6</em> 七個依賴階段，<strong>四份規格不動、繼續當細節來源（source of truth）</strong>，這份只負責「施工順序」。</div>
   </div>
-  <div class="sub-title">四份來源文件對照</div>
-  <table class="spec-table">
-    <thead><tr><th>代號</th><th>文件</th><th>角色</th><th>在路線圖的位置</th></tr></thead>
-    <tbody>
-      <tr><td class="mono">[ARCH]</td><td>CRM 中台 + 渠道適配層架構 v1.1</td><td class="dim">骨架</td><td class="dim">P0 / P1 / P2</td></tr>
-      <tr><td class="mono">[BOX]</td><td>抽寶箱 CRM 規格 v3.2</td><td class="dim">活動 / 發放渠道</td><td class="dim">P1 / P3 / P5 / P6</td></tr>
-      <tr><td class="mono">[FS]</td><td>Free Spin 卡規格 v1</td><td class="dim">獎勵商品 + 結算服務</td><td class="dim">P1 / P4 / P6</td></tr>
-      <tr><td class="mono">[AWC]</td><td>AWC 一次性串接總清單 v1</td><td class="dim">對外採購單</td><td class="dim">P0 / P3 / P4</td></tr>
-    </tbody>
-  </table>
+  <div class="sub-title">五份文件架構定位圖</div>
+  <div class="body-text">這套規格共 <strong>5 份</strong>：本路線圖是 <em>總綱（管施工順序）</em>，其餘四份是 <em>細節來源（Source of Truth）</em>，各管一層、互不重複。改「細節」動四份其一；改「先後順序」只動這份路線圖。</div>
+  <div class="flow">
+    <div class="flow-step ship">
+      <div class="flow-badge">總綱層</div>
+      <div class="flow-body">
+        <div class="flow-title">開發總路線圖　Master Build Order　▸ 本文件</div>
+        <div class="flow-desc"><span class="mono">cmb_dev_master_roadmap_v1.1</span>　把四份規格攤平成 <strong>P0→P6</strong> 七階段，只回答「現在輪到誰、做什麼、卡在誰」。</div>
+        <div class="flow-roles">角色：整合者 / 會議主軸</div>
+      </div>
+    </div>
+    <div class="flow-down">▼ 拆成 7 個依賴階段；任一 Task 要細節 → 回查下面四份（四份內容不動）▼</div>
+    <div class="flow-step">
+      <div class="flow-badge">🦴 骨架層</div>
+      <div class="flow-body">
+        <div class="flow-title">CRM 中台 ＋ 渠道適配層架構　<span class="tag-pill tag-src">[ARCH]</span></div>
+        <div class="flow-desc"><span class="mono">crm_hub_channel_adapter_arch_v1.3</span>　定義「中台怎麼控活動」；把 AWC 嚴格關在 adapter 內，二期換 MPS 才便宜。</div>
+        <div class="flow-roles">角色：共用骨架　·　在路線圖：<span class="tag-pill tag-src">[P0]</span><span class="tag-pill tag-src">[P1]</span><span class="tag-pill tag-src">[P2]</span></div>
+      </div>
+    </div>
+    <div class="flow-down">▼</div>
+    <div class="flow-step">
+      <div class="flow-badge">🎁 活動層</div>
+      <div class="flow-body">
+        <div class="flow-title">抽寶箱功能規格　<span class="tag-pill tag-src">[BOX]</span></div>
+        <div class="flow-desc"><span class="mono">treasure_box_crm_spec_v3.3</span>　v1：押注累積→翻格派<strong>現金</strong>；v2：翻格發 <strong>Free Spin 卡</strong>入背包＋跳轉。</div>
+        <div class="flow-roles">角色：活動 / 發放渠道　·　在路線圖：<span class="tag-pill tag-src">[P1]</span><span class="tag-pill tag-src">[P3]</span><span class="tag-pill tag-src">[P5]</span><span class="tag-pill tag-src">[P6]</span></div>
+      </div>
+    </div>
+    <div class="flow-down">▼</div>
+    <div class="flow-step">
+      <div class="flow-badge">🎰 獎勵商品層</div>
+      <div class="flow-body">
+        <div class="flow-title">Free Spin 卡 ＋ 背包系統　<span class="tag-pill tag-src">[FS]</span></div>
+        <div class="flow-desc"><span class="mono">free_spin_chest_spec_v2.0</span>　卡的生命週期、背包顯示與跳轉 Reload、整卡結算封頂入主錢包真金。</div>
+        <div class="flow-roles">角色：獎勵商品 + 結算服務　·　在路線圖：<span class="tag-pill tag-src">[P1]</span><span class="tag-pill tag-src">[P4]</span><span class="tag-pill tag-src">[P6]</span></div>
+      </div>
+    </div>
+    <div class="flow-down">▼</div>
+    <div class="flow-step">
+      <div class="flow-badge">🔌 對外採購層</div>
+      <div class="flow-body">
+        <div class="flow-title">AWC 一次性串接總清單　<span class="tag-pill tag-src">[AWC]</span></div>
+        <div class="flow-desc"><span class="mono">awc_integration_consolidated_checklist_v2</span>　給 AWC 的「一次性需求書」：A 派現金 / B 背包跳轉 / C 發卡，<strong>只串一次</strong>。</div>
+        <div class="flow-roles">角色：對外採購單　·　在路線圖：<span class="tag-pill tag-src">[P0]</span><span class="tag-pill tag-src">[P3]</span><span class="tag-pill tag-src">[P4]</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout info"><strong>一句話分工</strong>：<strong>路線圖</strong>＝施工順序　·　<strong>ARCH</strong>＝共用骨架　·　<strong>BOX</strong>＝活動　·　<strong>FS</strong>＝獎勵商品　·　<strong>AWC</strong>＝對外採購。找細節認對層、別翻錯檔。</div>
   <div class="sub-title">每個 Task 怎麼讀</div>
   <div class="legend">
     <span><span class="tag-pill tag-be">後端</span></span>
@@ -260,9 +301,92 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <div class="callout danger"><strong>三條最容易被忽略、但會整案卡死的依賴</strong>：① <strong>AWC 串接欄位未書面確認（place_bet 帶 campaign_id、Bet=0 中獎注單、注單回呼帶 ref_voucher_id）+ 逐平台開通未盤點 → 發放與對帳規格定不下來</strong>；② <strong>player mapping（CRM ↔ AWC 帳號）沒先做 → 發獎/對帳全部對不到人</strong>；③ <strong>AWC 加密簽章模組沒先做 → 發卡與結算一行都動不了</strong>。</div>
 </section>
 
+
+<!-- 02 MECHANISM MATRIX (新增 · 會議用) -->
+<section class="section" id="matrix">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">機制全景矩陣（會議用）</span><span class="section-title-en">MECHANISM MATRIX</span></div>
+  <div class="hypo-block">
+    <div class="hypo-label">這張表解決什麼 · WHY</div>
+    <div class="hypo-text">給<strong>全職能開案會議</strong>一頁看懂三件事：<strong>CRM 中台怎麼控活動</strong>、<strong>抽寶箱 v1</strong> 與 <strong>Free Spin 卡＋背包 v2</strong> 各自怎麼跑、<strong>跟 AWC 要談／確認什麼</strong>。每格掛 <span class="tag-pill tag-src">[Px]</span> 階段標籤，對齊「01 依賴總覽」的施工順序——看到自己那格，就知道在哪個階段做。</div>
+  </div>
+  <div class="callout warn"><strong>文件歸屬提醒</strong>：Free Spin 卡＋背包目前是<strong>獨立規格</strong> <span class="mono">free_spin_chest_spec_v2.0</span>（<strong>不</strong>在抽寶箱檔內）；抽寶箱 v2 只負責「翻格發卡＋背包跳轉」。找細節請認這份獨立檔，別找錯文件。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:13%">維度</th><th style="width:40%">🎁 抽寶箱 v1（現金獎）</th><th style="width:47%">🎰 Free Spin 卡 ＋ 背包 v2</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>① 中台怎麼控</strong></td>
+        <td class="dim">後台建活動 → 設觸發條件＋機率＋現金獎池；中台依玩家事件觸發開箱、<strong>直接派彩</strong>。<span class="tag-pill tag-src">[P2]</span></td>
+        <td class="dim">同一套後台，新增「Free Spin 卡」<strong>獎勵類別</strong>（幣值 × 5 階段 BET 面值對照）；中台派的是<strong>卡</strong>、不是現金。<span class="tag-pill tag-src">[P2]</span><span class="tag-pill tag-src">[P4]</span></td>
+      </tr>
+      <tr>
+        <td><strong>② 玩家流程</strong></td>
+        <td class="dim">達標 → 浮動 icon → 開箱 → 現金<strong>即時入主錢包</strong>。<span class="tag-pill tag-src">[P3]</span></td>
+        <td class="dim">開箱 → 得卡 → <strong>進背包</strong> → 背包選遊戲 → 跳轉 AWC 玩免費旋轉 → <strong>整卡用完結算</strong>入錢包。<span class="tag-pill tag-src">[P5]</span><span class="tag-pill tag-src">[P4]</span></td>
+      </tr>
+      <tr>
+        <td><strong>③ 背包／獎勵<br>怎麼運作</strong><br><span class="dim">（v2 核心差異）</span></td>
+        <td class="dim">無背包，獎勵即時入帳、<strong>無生命週期</strong>。</td>
+        <td class="dim">卡有<strong>面值／有效期（GMT+8）</strong>、發卡即 <span class="mono">Snapshot</span> 鎖定、可多遊戲切換；整卡結算為<strong>一筆注單</strong>（<span class="mono">Bet=0 / Win=final</span>）入<strong>真金、可立即提領</strong>。<span class="tag-pill tag-src">[P4]</span><span class="tag-pill tag-src">[P5]</span></td>
+      </tr>
+      <tr>
+        <td><strong>④ 與 AWC<br>對接點</strong></td>
+        <td class="dim">走既有「遊戲 → AWC → 平台」<strong>注單通道</strong>，CRM 帶 <span class="mono">campaign_id</span> 送 win 值入主錢包。<span class="tag-pill tag-src">[ARCH§08]</span></td>
+        <td class="dim">需 AWC 支援 Free Spin <strong>發放／啟用</strong>（<span class="mono">CreateFreeSpin</span>）＋<strong>跳轉</strong>（<span class="mono">LoginWithoutRedirect</span>）＋贏分回傳；<strong>僅限 Combo 自家遊戲</strong>。<span class="tag-pill tag-src">[AWC]</span></td>
+      </tr>
+      <tr>
+        <td><strong>⑤ 待 AWC<br>確認（卡點）</strong></td>
+        <td class="dim">AWC 能否由 CRM 外部送 win 值（帶 <span class="mono">campaign_id</span>、<span class="mono">Bet=0</span> 中獎注單、回呼帶 <span class="mono">ref_voucher_id</span>）入主錢包真金？<span class="tag-pill tag-src">[P0]</span></td>
+        <td class="dim">面值對照、發卡／啟用 API、callback 格式、是否提供查詢 API。<span class="tag-pill tag-src">[P0]</span><br><strong>共同：</strong>AWC 不出報表 → <strong>對帳以我方自記為準</strong>。</td>
+      </tr>
+      <tr>
+        <td><strong>⑥ 主責職能<br>× 階段</strong></td>
+        <td class="dim"><span class="tag-pill tag-be">後端</span>中台 P2 · <span class="tag-pill tag-fe">前端</span>icon P3 · <span class="tag-pill tag-art">美術</span>寶箱 P3 · <span class="tag-pill tag-data">數據</span>埋點 P6 · <span class="tag-pill tag-pm">PM/對外</span>P0</td>
+        <td class="dim"><span class="tag-pill tag-be">後端</span>結算 P4 · <span class="tag-pill tag-fe">前端</span>背包 P5 · <span class="tag-pill tag-art">美術</span>背包 P5 · <span class="tag-pill tag-pm">PM/對外</span>P0 · <span class="tag-pill tag-infra">⚠️基建</span>P1 沒先做全卡關</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="legend">
+    <span><span class="tag-pill tag-src">[Px]</span> ＝ 對應「01 依賴總覽」的施工階段</span>
+    <span><span class="tag-pill tag-src">[ARCH§08]</span><span class="tag-pill tag-src">[AWC]</span> ＝ 回查原規格章節</span>
+    <span><span class="tag-pill tag-v1">v1</span> 抽寶箱現金獎 · 先上線</span>
+    <span><span class="tag-pill tag-v2">v2</span> Free Spin 卡＋背包 · 須卡先存在</span>
+  </div>
+  <div class="callout success"><strong>一句話帶各單位</strong>：中台是<strong>地基</strong>，活動是蓋在上面的房子，<span class="mono">free_spin_chest_spec</span> 是 v2 的新「商品」，AWC 清單是<strong>對外採購單</strong>——這張矩陣負責「機制與職責」，旁邊「01 依賴總覽」負責「先後順序」，兩張一起看就是完整作戰圖。</div>
+
+  <div class="sub-title">附：要和 AWC 溝通／確認什麼（核心策略：只串一次）</div>
+  <div class="body-text">AWC 串接定調「<strong>只串一次</strong>」：v1 現金獎與 v2 才用的背包／Free Spin <strong>一次打包提交</strong>，v2 不必再碰 AWC。下表為三大群組的對接重點，逐項細節見 <span class="mono">awc_integration_consolidated_checklist_v2</span>。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:14%">群組</th><th style="width:52%">串接重點</th><th>API</th><th>啟用</th><th>狀態</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>A · 派現金入帳</strong></td>
+        <td class="dim">新增 <span class="mono">bonus_type</span>＋<span class="mono">campaign_id</span> 欄位；<span class="mono">bet=0</span> 零押注可正確入帳；注單回呼帶回 <span class="mono">ref_free_voucher_id</span>／<span class="mono">campaign_id</span> 供歸卡、歸活動對帳；派獎失敗重試。</td>
+        <td class="mono">place_bet</td>
+        <td><span class="tag-pill tag-v1">V1</span></td>
+        <td class="dim">多為已列</td>
+      </tr>
+      <tr>
+        <td><strong>B · 背包跳轉</strong></td>
+        <td class="dim">Token+GameId 一次性 URL／有效期／使用限制；同玩家短時間連續多次呼叫（背包多卡）；<strong>跳轉後 Free Spin 是 AWC 自動套用 vs Combo 另呼叫 CreateFreeSpin</strong>；過期卡能否跳轉＋有效期判定點。</td>
+        <td class="mono">LoginWithoutRedirect</td>
+        <td><span class="tag-pill tag-v2">V2</span></td>
+        <td class="dim">已列，部分<strong>待 AWC 回覆</strong></td>
+      </tr>
+      <tr>
+        <td><strong>C · 發卡通知</strong></td>
+        <td class="dim">帶 <span class="mono">reference_id</span>／<span class="mono">currency</span>／有效期（GMT-4）／<span class="mono">NumberOfRounds</span>／<span class="mono">GameIds</span>；<strong>ReferenceId 唯一性防重</strong>（重送回 102）、長度 50、GameIds 串長 200 上限。</td>
+        <td class="mono">CreateFreeSpin</td>
+        <td><span class="tag-pill tag-v2">V2</span></td>
+        <td class="dim"><strong>本次新補入</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout danger"><strong>三條會卡死全案、需 AWC「書面回覆」的決策題</strong>：① 注單發獎欄位（<span class="mono">place_bet</span> 帶 <span class="mono">campaign_id</span>、<span class="mono">Bet=0</span> 中獎注單、回呼帶 <span class="mono">ref_voucher_id</span>）＋逐平台開通盤點；② 跳轉後 Free Spin 觸發方式（B3：AWC 自動 vs 另呼叫）；③ 過期卡判定（B4）。另：player mapping 與 AWC 加密簽章屬我方 <span class="tag-pill tag-infra">P1 基建</span>，沒先做發獎／對帳全對不到人。</div>
+</section>
+
 <!-- P0 -->
 <section class="section" id="p0">
-  <div class="section-header"><span class="section-num">02</span><span class="section-title">P0 · 對外決策關卡</span><span class="section-title-en">PHASE 0 · GATE</span></div>
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">P0 · 對外決策關卡</span><span class="section-title-en">PHASE 0 · GATE</span></div>
   <div class="phase-head"><span class="phase-chip gate">P0 · GATE</span><span class="phase-goal">目標：敲定對接對象與技術前提，未過不發任何工程需求書。可與 P1 平行先跑。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -281,7 +405,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P1 -->
 <section class="section" id="p1">
-  <div class="section-header"><span class="section-num">03</span><span class="section-title">P1 · 共用基礎建設</span><span class="section-title-en">PHASE 1 · SHARED INFRA</span></div>
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">P1 · 共用基礎建設</span><span class="section-title-en">PHASE 1 · SHARED INFRA</span></div>
   <div class="phase-head"><span class="phase-chip infra">P1 · 基建</span><span class="phase-goal">目標：把所有活動共用的地基做滿。⚠️ 全標基建，沒就位下游全卡。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -301,7 +425,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P2 -->
 <section class="section" id="p2">
-  <div class="section-header"><span class="section-num">04</span><span class="section-title">P2 · 中台 L1 + MPS adapter</span><span class="section-title-en">PHASE 2 · HUB + ADAPTER</span></div>
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">P2 · 中台 L1 + MPS adapter</span><span class="section-title-en">PHASE 2 · HUB + ADAPTER</span></div>
   <div class="phase-head"><span class="phase-chip">P2 · 中台</span><span class="phase-goal">目標：發放決策層與「集成商型（AWC）adapter」就位（第一階段首發），活動才有發獎管道。MPS 直連 adapter 留第二階段。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -318,7 +442,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P3 -->
 <section class="section" id="p3">
-  <div class="section-header"><span class="section-num">05</span><span class="section-title">P3 · 抽寶箱 v1 現金獎</span><span class="section-title-en">PHASE 3 · TREASURE BOX v1</span></div>
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">P3 · 抽寶箱 v1 現金獎</span><span class="section-title-en">PHASE 3 · TREASURE BOX v1</span></div>
   <div class="phase-head"><span class="phase-chip ship">P3 · 上線①</span><span class="phase-goal">目標：第一個可上線的完整閉環（押注→翻格→派現金）。全垂直：後端＋前端＋美術＋後台。</span></div>
   <div class="sub-title">後端 · 業務邏輯</div>
   <table class="spec-table">
@@ -357,7 +481,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P4 -->
 <section class="section" id="p4">
-  <div class="section-header"><span class="section-num">06</span><span class="section-title">P4 · Free Spin 發卡 + 結算</span><span class="section-title-en">PHASE 4 · FREE SPIN</span></div>
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">P4 · Free Spin 發卡 + 結算</span><span class="section-title-en">PHASE 4 · FREE SPIN</span></div>
   <div class="phase-head"><span class="phase-chip">P4 · 能力</span><span class="phase-goal">目標：把「Free Spin 卡」這個獎勵商品＋結算服務做出來，供抽寶箱 v2（與未來活動）發放。</span></div>
   <div class="sub-title">後端 · 發卡與結算</div>
   <table class="spec-table">
@@ -384,7 +508,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P5 -->
 <section class="section" id="p5">
-  <div class="section-header"><span class="section-num">07</span><span class="section-title">P5 · 抽寶箱 v2 背包 + 卡使用</span><span class="section-title-en">PHASE 5 · TREASURE BOX v2</span></div>
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">P5 · 抽寶箱 v2 背包 + 卡使用</span><span class="section-title-en">PHASE 5 · TREASURE BOX v2</span></div>
   <div class="phase-head"><span class="phase-chip ship">P5 · 上線②</span><span class="phase-goal">目標：抽寶箱翻出 Free Spin 卡 → 背包 → 用卡跳轉。依賴 P4 卡能力已存在。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -402,7 +526,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P6 -->
 <section class="section" id="p6">
-  <div class="section-header"><span class="section-num">08</span><span class="section-title">P6 · 對帳 / 監控 / 上線驗收</span><span class="section-title-en">PHASE 6 · RECONCILE & LAUNCH</span></div>
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">P6 · 對帳 / 監控 / 上線驗收</span><span class="section-title-en">PHASE 6 · RECONCILE & LAUNCH</span></div>
   <div class="phase-head"><span class="phase-chip">P6 · 收尾</span><span class="phase-goal">目標：跨活動的對帳、reserve 核銷、監控告警、Log 驗收與上線觀察。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -419,7 +543,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- 09 BY ROLE -->
 <section class="section" id="byrole">
-  <div class="section-header"><span class="section-num">09</span><span class="section-title">職能視圖（每人一覽自己的線）</span><span class="section-title-en">BY ROLE</span></div>
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">職能視圖（每人一覽自己的線）</span><span class="section-title-en">BY ROLE</span></div>
   <div class="body-text">同一份內容，換成「每個職能跨階段一覽」。給組長分工、給成員看自己這條線用。</div>
 
   <div class="sub-title"><span class="tag-pill tag-be">後端 / 基建</span> 主力，貫穿全程</div>
@@ -478,7 +602,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- 10 OPEN QUESTIONS -->
 <section class="section" id="openq">
-  <div class="section-header"><span class="section-num">10</span><span class="section-title">對外待確認彙整（去重）</span><span class="section-title-en">OPEN QUESTIONS</span></div>
+  <div class="section-header"><span class="section-num">11</span><span class="section-title">對外待確認彙整（去重）</span><span class="section-title-en">OPEN QUESTIONS</span></div>
   <div class="body-text">把四份文件的待確認去重，按對象分組。<strong>第一階段＝AWC，故 AWC 確認最優先；MPS 屬第二階段。</strong></div>
 
   <div class="sub-title">AWC（第一階段主路由 · 優先確認）</div>
