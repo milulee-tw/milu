@@ -310,6 +310,53 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="hypo-text">給<strong>全職能開案會議</strong>一頁看懂三件事：<strong>CRM 中台怎麼控活動</strong>、<strong>抽寶箱 v1</strong> 與 <strong>Free Spin 卡＋背包 v2</strong> 各自怎麼跑、<strong>跟 AWC 要談／確認什麼</strong>。每格掛 <span class="tag-pill tag-src">[Px]</span> 階段標籤，對齊「01 依賴總覽」的施工順序——看到自己那格，就知道在哪個階段做。</div>
   </div>
   <div class="callout warn"><strong>文件歸屬提醒</strong>：Free Spin 卡＋背包目前是<strong>獨立規格</strong> <span class="mono">free_spin_chest_spec_v2.0</span>（<strong>不</strong>在抽寶箱檔內）；抽寶箱 v2 只負責「翻格發卡＋背包跳轉」。找細節請認這份獨立檔，別找錯文件。</div>
+
+  <div class="sub-title">資產回平台流程（與平台溝通資產的統一通道）</div>
+  <svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" role="img" font-family="'Noto Sans TC',sans-serif" style="width:100%;height:auto;display:block;margin:0 0 10px;border:1px solid var(--border);border-radius:10px;">
+    <title>CRM 中台資產結算流程：CRM 中台決定獎勵，經 Combo 產生現金與 Free Spin 卡結果，兩種資產收斂成 Bet=0/Win 注單，透過集成商（首發 AWC）回平台更新玩家主錢包真金。</title>
+    <desc>橫向流程圖，四節點：CRM 中台、Combo、AWC 集成商、平台。</desc>
+    <defs>
+      <marker id="ahd" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--gold)"/></marker>
+    </defs>
+    <rect x="0" y="0" width="960" height="360" rx="12" fill="var(--dark-2)"/>
+    <text x="40" y="44" fill="var(--gold)" font-size="13" letter-spacing="2" font-family="'DM Mono',monospace">ASSET SETTLEMENT FLOW · 與平台溝通資產的統一通道</text>
+
+    <rect x="36" y="120" width="180" height="86" rx="10" fill="var(--dark-3)" stroke="var(--gold)" stroke-width="1.4"/>
+    <text x="126" y="152" text-anchor="middle" fill="var(--text-primary)" font-size="17" font-weight="700">CRM 中台</text>
+    <text x="126" y="175" text-anchor="middle" fill="var(--text-secondary)" font-size="12">決策 · 編排發放</text>
+    <text x="126" y="193" text-anchor="middle" fill="var(--text-secondary)" font-size="12">現金 / Free Spin 卡</text>
+
+    <rect x="288" y="120" width="180" height="86" rx="10" fill="var(--dark-3)" stroke="var(--border-bright)" stroke-width="1.2"/>
+    <text x="378" y="152" text-anchor="middle" fill="var(--text-primary)" font-size="17" font-weight="700">Combo</text>
+    <text x="378" y="175" text-anchor="middle" fill="var(--text-secondary)" font-size="12">主辦 · 結果源頭</text>
+    <text x="378" y="193" text-anchor="middle" fill="var(--text-secondary)" font-size="12">局數 / 獎項 / FS 演出</text>
+
+    <rect x="540" y="120" width="180" height="86" rx="10" fill="var(--dark-4)" stroke="var(--gold)" stroke-width="1.6"/>
+    <text x="630" y="150" text-anchor="middle" fill="var(--gold-light)" font-size="16" font-weight="700">AWC 集成商</text>
+    <text x="630" y="173" text-anchor="middle" fill="var(--text-secondary)" font-size="12">注單通道</text>
+    <text x="630" y="191" text-anchor="middle" fill="var(--gold-light)" font-size="12" font-family="'DM Mono',monospace">Bet=0 / Win=X</text>
+
+    <rect x="792" y="120" width="148" height="86" rx="10" fill="var(--dark-3)" stroke="var(--green)" stroke-width="1.4"/>
+    <text x="866" y="150" text-anchor="middle" fill="var(--text-primary)" font-size="17" font-weight="700">平台</text>
+    <text x="866" y="173" text-anchor="middle" fill="var(--text-secondary)" font-size="12">更新玩家</text>
+    <text x="866" y="191" text-anchor="middle" fill="#7ADFA0" font-size="12">主錢包真金</text>
+
+    <line x1="216" y1="163" x2="282" y2="163" stroke="var(--gold)" stroke-width="1.6" marker-end="url(#ahd)"/>
+    <text x="249" y="152" text-anchor="middle" fill="var(--text-secondary)" font-size="11">決定獎勵</text>
+    <line x1="468" y1="163" x2="534" y2="163" stroke="var(--gold)" stroke-width="1.6" marker-end="url(#ahd)"/>
+    <line x1="720" y1="163" x2="786" y2="163" stroke="var(--gold)" stroke-width="1.6" marker-end="url(#ahd)"/>
+    <text x="753" y="152" text-anchor="middle" fill="var(--text-secondary)" font-size="11">注單回傳</text>
+
+    <rect x="476" y="232" width="116" height="26" rx="13" fill="rgba(212,168,67,0.12)" stroke="rgba(212,168,67,0.4)"/>
+    <text x="534" y="249" text-anchor="middle" fill="var(--gold-light)" font-size="12">💰 現金獎</text>
+    <rect x="476" y="266" width="116" height="26" rx="13" fill="rgba(176,132,216,0.12)" stroke="rgba(176,132,216,0.4)"/>
+    <text x="534" y="283" text-anchor="middle" fill="#C8A0F0" font-size="12">🎰 Free Spin 卡</text>
+    <path d="M534,232 C534,210 500,185 478,170" fill="none" stroke="rgba(212,168,67,0.5)" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <text x="500" y="226" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">兩種資產匯流</text>
+
+    <text x="40" y="332" fill="var(--text-secondary)" font-size="12.5">不論現金或 Free Spin 卡，最終都以 <tspan fill="var(--gold-light)" font-family="'DM Mono',monospace">Bet=0/Win</tspan> 注單經集成商（首發 AWC）回平台、入玩家主錢包真金——這就是與平台溝通資產的統一通道。</text>
+  </svg>
+  <div class="body-text" style="margin-top:4px;">一句話：CRM 中台決定發什麼（現金 / Free Spin 卡）→ Combo 產生結果 →<strong>兩種資產都收斂成 <span class="mono">Bet=0/Win</span> 注單</strong>，經集成商（首發 AWC）回平台 → 更新玩家<strong>主錢包真金</strong>。走平台直連時改由平台直收，通道概念不變。</div>
   <table class="spec-table">
     <thead><tr><th style="width:13%">維度</th><th style="width:40%">🎁 抽寶箱 v1（現金獎）</th><th style="width:47%">🎰 Free Spin 卡 ＋ 背包 v2</th></tr></thead>
     <tbody>
