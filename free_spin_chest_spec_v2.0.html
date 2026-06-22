@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Spin 抽寶箱發放卡規格書 · CMB · v2.0</title>
+<title>Free Spin 抽寶箱發放卡規格書 · CMB · v2.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -266,7 +266,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- TOP NAV -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">FS-SPEC · V2.0</span>
+  <span class="nav-brand">FS-SPEC · V2.1</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#terms">名詞與資料模型</a>
   <a class="nav-item" href="#lifecycle">卡片生命週期</a>
@@ -292,7 +292,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">Free Spin 抽寶箱發放卡<br>細節流程與後台規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.0</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.1</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -333,13 +333,15 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <a class="sidebar-sub-link" href="#backend">幣值 × 5 階段 BET</a>
         <a class="sidebar-sub-link" href="#backend">face_value 對照表</a>
         <a class="sidebar-sub-link" href="#backend">後台介面</a>
+        <a class="sidebar-sub-link" href="#backend">後台介面視覺稿</a>
       </div>
     </div>
     <div class="sidebar-section" data-section="bag">
       <button class="sidebar-section-btn" onclick="navTo('bag')"><span class="sidebar-section-num">05</span>背包與跳轉<span class="sidebar-chevron">›</span></button>
       <div class="sidebar-subsections">
         <a class="sidebar-sub-link" href="#bag">背包顯示欄位</a>
-        <a class="sidebar-sub-link" href="#bag">跳轉 Reload 流程</a>
+        <a class="sidebar-sub-link" href="#bag">背包前台視覺稿</a>
+        <a class="sidebar-sub-link" href="#bag">跳轉 / 指定啟用流程</a>
       </div>
     </div>
     <div class="sidebar-section" data-section="awc">
@@ -381,7 +383,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · FEATURE SPEC · 2026</div>
   <h1>FREE <span>SPIN</span> 卡</h1>
-  <div class="cover-sub">FREE SPIN CARD · 抽寶箱發放、細節流程與後台規格 · V2.0（注單入主錢包真金）</div>
+  <div class="cover-sub">FREE SPIN CARD · 抽寶箱發放、細節流程與後台規格 · V2.1（有效期定案 · reference_id 指定啟用 · 補 UI 視覺稿）</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> CRM 周邊 · 非現金獎勵</div>
     <div class="cover-pill"><strong>來源</strong> 抽寶箱 第二階段</div>
@@ -410,7 +412,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="hypo-text">抽寶箱第一階段僅派<strong>現金獎</strong>；第二階段起新增 <em>FREE SPIN 卡</em>這類「非現金獎勵」。本規格定義 FREE SPIN 卡從「後台登記 → 抽中發卡 → 背包持有 → 進遊戲使用 → 整卡結算入帳」的完整細節流程，以及支撐它的<strong>獎勵清單 ID 工具</strong>與 <strong>AWC / 平台串接</strong>規格。</div>
   </div>
 
-  <div class="callout danger"><strong>v2.0 修訂紀錄（2026/06/17 · 注單模式釐清，取代 BONUS 設計）</strong><br>
+  <div class="callout danger"><strong>v2.1 修訂紀錄（2026/06/22 · 有效期定案 + 啟動機制補強 + 補 UI 視覺稿）</strong><br>
+  ★ <strong>有效期定案</strong>：採「<strong>發卡 +N 天</strong>」相對制、<strong>自然日制</strong>（發卡日為第 1 天，第 N 天 23:59:59 GMT+8 到期），<strong>N 值鎖在卡模板</strong>（與遊戲列表一致）。發卡當下換算成絕對 datetime 再送 AWC。原 §10 待確認此項移為「已決」。<br>
+  ★ <strong>啟動機制補強</strong>：跳轉啟用由「AWC 進場自動識別」改為「<strong>跳轉前先綁定 reference_id 再 launch</strong>」——明確指定要啟動哪一張卡，解決「玩家同時持多張對同遊戲有效的卡時無法判斷啟用哪張」與「續玩同一張未用完卡（如 5/10）」的歧義。<br>
+  ★ <strong>補 UI 視覺稿</strong>：§04 新增後台獎勵清單工具 wireframe；§05 升級玩家背包前台稿（卡片內展開選遊戲才開始、顯示已用次數 5/10、修正舊 BONUS 顯示為主錢包真金）。<br>
+  <span style="opacity:.7">———（以下為 v2.0 既有紀錄，保留供追溯）———</span><br>
+  <strong>v2.0 修訂紀錄（2026/06/17 · 注單模式釐清，取代 BONUS 設計）</strong><br>
   ★ <strong>結算一律入主錢包真金、可立即提領</strong>：經國清向 FC 釐清，整卡結算以一筆 <span class="mono">Bet_Amount=0 / Win_Amount=final</span> 注單發放，走既有「遊戲→AWC→平台」注單通道入<strong>主錢包</strong>，<strong>不透過 Promotion Tool、不進 Bonus 錢包、不需 CPS</strong>。<br>
   ★ <strong>移除整套 BONUS 設計</strong>：<span class="mono">wallet_target（MAIN/BONUS）</span>、<span class="mono">bonus_ratio</span> 流水倍數、roll-over、SETTLE 3B（BONUS）、Bonus 入帳 API、Promotion Tool vs Seamless 決策——<strong>全部移除</strong>。封頂仍由我方結算層自套 <span class="mono">min(total_win, max_conversion)</span>。<br>
   ★ <strong>⚠ 防濫用補強（必做）</strong>：原「高價值卡鎖 BONUS」的提款風險防線已不存在；獎勵即真金，<strong>領取資格 / 頻率 / 額度 / 黑名單等防濫用須由 CRM 中台自持</strong>。<br>
@@ -501,7 +508,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>BET 階段</td><td class="mono">bet_tier (1–5)</td><td>每幣值有 5 階段押注；對應 Coin Size × Multiplier × Line 的組合</td><td class="dim">Coin Size / Multiplier</td></tr>
       <tr><td>總次數 / 剩餘次數</td><td class="mono">num_of_rounds / rounds_left</td><td>整張卡的免費旋轉局數，跨列表遊戲共用同一池</td><td class="dim">NumberOfRounds / Game Count</td></tr>
       <tr><td>可用遊戲列表</td><td class="mono">game_ids[]</td><td>發卡當下鎖定，卡內可自由切換；逗號串長度上限 200</td><td class="dim">GameIds</td></tr>
-      <tr><td>有效期限</td><td class="mono">valid_from / valid_to</td><td>發卡當下鎖定，<strong>到期統一結算（付累積、封頂 max win），剩餘未轉次數放棄</strong>（時區 GMT+8）</td><td class="dim">FreeSpinValidity</td></tr>
+      <tr><td>有效期限</td><td class="mono">valid_from / valid_to</td><td>發卡當下依<strong>卡模板 N 天</strong>換算並凍結；<strong>發卡日為第 1 天，第 N 天 23:59:59（GMT+8）到期（自然日制）</strong>；到期統一結算（付累積、封頂 max win）、剩餘未轉次數放棄</td><td class="dim">FreeSpinValidity</td></tr>
       <tr><td>結算上限</td><td class="mono">max_conversion</td><td>整卡結束後最終可獲得的獎金上限值（我方結算層自套 min 封頂）</td><td class="dim">Max. Conversion</td></tr>
       <tr><td>入帳目標</td><td class="mono">—（固定主錢包）</td><td><span class="tag-pill tag-v1">v2.0：一律入主錢包真金</span>，以 Bet=0/Win 注單發放。<s>原 wallet_target / bonus_ratio 欄位移除</s></td><td class="dim">—</td></tr>
       <tr><td>卡片價值 / 面額</td><td class="mono">face_value</td><td>該幣值此 BET 階段的「對應價值」，供展示、成本估算與對帳</td><td class="dim">本案自定</td></tr>
@@ -549,7 +556,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td class="mono">num_of_rounds</td><td>int</td><td>獎勵清單</td><td><span class="cross">否</span></td></tr>
       <tr><td class="mono">rounds_left</td><td>int</td><td>初始 = num_of_rounds</td><td><span class="check">是（遞減）</span></td></tr>
       <tr><td class="mono">game_ids[]</td><td>string</td><td>獎勵清單遊戲列表</td><td><span class="cross">否</span></td></tr>
-      <tr><td class="mono">valid_from / valid_to</td><td>datetime</td><td>發卡時間 + 效期</td><td><span class="cross">否</span></td></tr>
+      <tr><td class="mono">validity_days</td><td>int</td><td>卡模板（發卡 +N 天 · 自然日）</td><td><span class="cross">否</span></td></tr>
+      <tr><td class="mono">valid_from / valid_to</td><td>datetime</td><td>發卡時間 + 卡模板 N 天（自然日換算，GMT+8；valid_to = 第 N 天 23:59:59）</td><td><span class="cross">否</span></td></tr>
       <tr><td class="mono">max_conversion</td><td>decimal</td><td>獎勵清單對應幣值</td><td><span class="cross">否</span></td></tr>
       <tr><td class="mono">status</td><td>enum</td><td>ISSUED → ACTIVE → SETTLED / EXPIRED</td><td><span class="check">是</span></td></tr>
       <tr><td class="mono">awc_create_time</td><td>bigint</td><td>CreateFreeSpin 回傳</td><td><span class="cross">否</span></td></tr>
@@ -786,9 +794,139 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>幣別選擇</td><td>Dropdown（多幣別可分頁）</td><td class="dim">每幣別獨立一組 5 階段設定；切換幣別保留各自數值</td></tr>
       <tr><td>5 階段 BET 矩陣</td><td>Table（5 列固定）</td><td class="dim">每列：coin_size / multiplier / 每轉押注 / 次數 / face_value / max_conversion（v2.0：移除 wallet_target / bonus_ratio）</td></tr>
       <tr><td>可用遊戲列表</td><td>Multi-select（含搜尋）</td><td class="dim">勾選此卡可玩的 Game IDs；逗號串長度上限 200，超出需擋</td></tr>
-      <tr><td>有效期模式</td><td>Radio + 數值</td><td class="dim">相對天數（發卡 +N 天）或絕對日期；時區 GMT+8（待 AWC 確認）</td></tr>
+      <tr><td>有效期模式</td><td>Radio + 數值</td><td class="dim">以<strong>相對天數（發卡 +N 天）為主</strong>，N 鎖在卡模板（與遊戲列表一致）；自然日制、GMT+8（發卡日為第 1 天，第 N 天 23:59:59 到期）；絕對日期為次要選項</td></tr>
       <tr><td>入帳目標</td><td>固定顯示</td><td class="dim">v2.0：一律「主錢包真金」，無需設定（已移除 MAIN/BONUS Toggle 與 bonus_ratio）</td></tr>
       <tr><td>儲存 / 啟用</td><td>Button</td><td class="dim">啟用後才可被抽寶箱獎池引用；已發出的卡不受後續修改影響（快照）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">後台介面視覺稿（Wireframe）</div>
+  <div class="body-text">下方為「獎勵清單 ID 工具 · FREE SPIN 卡」後台設定頁的低保真視覺稿，標示各區塊相對位置與互動樣態（非最終美術）。<em>淡化 / 唯讀</em>欄位代表系統自動計算或次要選項。</div>
+
+  <div style="background:var(--dark-2);border:1px solid var(--border-bright);border-radius:10px;padding:20px;margin-bottom:20px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--gold);margin-bottom:16px;display:flex;justify-content:space-between;">
+      <span>⚙ 後台 · 獎勵清單 ID 工具</span><span>NON_CASH › FREE SPIN</span>
+    </div>
+
+    <!-- 1. 獎勵類別切換 -->
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">① 獎勵類別</div>
+    <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;width:max-content;margin-bottom:18px;">
+      <span style="font-size:12px;padding:8px 18px;color:var(--text-secondary);background:var(--dark-3);">現金獎 CASH</span>
+      <span style="font-size:12px;padding:8px 18px;color:#1a1206;background:linear-gradient(180deg,var(--gold-light),var(--gold));font-weight:700;">非現金獎 NON_CASH ●</span>
+    </div>
+
+    <!-- 2. 幣別分頁 -->
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">② 幣別（各自保留數值）</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;">
+      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:rgba(212,168,67,0.12);color:var(--gold-light);border:1px solid var(--border-bright);">THB ●</span>
+      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">PHP</span>
+      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">IDR</span>
+      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">VND</span>
+      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">USD</span>
+    </div>
+
+    <!-- 3. 5 階段 BET 矩陣 -->
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">③ 5 階段 BET 矩陣（THB 示意 · 每轉押注、face_value 為系統自動計算唯讀欄）</div>
+    <div style="overflow-x:auto;margin-bottom:6px;">
+    <table class="spec-table" style="min-width:760px;margin-bottom:6px;">
+      <thead><tr><th>Tier</th><th>reward_id</th><th>coin_size</th><th>multiplier</th><th>每轉押注<br>(自動)</th><th>次數</th><th>face_value<br>(自動)</th><th>max_conversion</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="mono">R_FS_1STAR</td>
+          <td><span style="display:inline-block;min-width:46px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">0.2</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">2</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">10</span></td>
+          <td><span style="display:inline-block;min-width:60px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">20 THB</span></td>
+          <td><span style="display:inline-block;min-width:70px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">200 THB</span></td></tr>
+        <tr><td>2</td><td class="mono">R_FS_2STAR</td>
+          <td><span style="display:inline-block;min-width:46px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">0.5</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">5</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">10</span></td>
+          <td><span style="display:inline-block;min-width:60px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">50 THB</span></td>
+          <td><span style="display:inline-block;min-width:70px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">500 THB</span></td></tr>
+        <tr><td>3</td><td class="mono">R_FS_3STAR</td>
+          <td><span style="display:inline-block;min-width:46px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">10</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">10</span></td>
+          <td><span style="display:inline-block;min-width:60px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">100 THB</span></td>
+          <td><span style="display:inline-block;min-width:70px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1,000 THB</span></td></tr>
+        <tr><td>4</td><td class="mono">R_FS_4STAR</td>
+          <td><span style="display:inline-block;min-width:46px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">2</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">20</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">10</span></td>
+          <td><span style="display:inline-block;min-width:60px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">200 THB</span></td>
+          <td><span style="display:inline-block;min-width:70px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">2,000 THB</span></td></tr>
+        <tr><td>5</td><td class="mono">R_FS_5STAR</td>
+          <td><span style="display:inline-block;min-width:46px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">5</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">1</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">50</span></td>
+          <td><span style="display:inline-block;min-width:36px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">10</span></td>
+          <td><span style="display:inline-block;min-width:60px;padding:4px 8px;background:var(--dark);border:1px dashed var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">500 THB</span></td>
+          <td><span style="display:inline-block;min-width:70px;padding:4px 8px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;">5,000 THB</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:18px;">▦ 實線框＝可編輯　┄ 虛線框＝自動計算唯讀（每轉押注 = coin × mult × line；face_value = 每轉押注 × 次數）</div>
+
+    <!-- 4. 可用遊戲列表 -->
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">④ 可用遊戲列表（Multi-select · 逗號串長度上限 200，超出需擋）</div>
+    <div style="border:1px solid var(--border-bright);border-radius:6px;padding:10px;margin-bottom:6px;">
+      <div style="display:flex;align-items:center;gap:8px;background:var(--dark);border:1px solid var(--border);border-radius:4px;padding:7px 10px;margin-bottom:10px;color:var(--text-dim);font-size:12px;">🔍 搜尋遊戲名稱 / Game ID…</div>
+      <div class="fs-games" style="margin:0;">
+        <span class="fs-game-chip">Fortune Tiger ✕</span>
+        <span class="fs-game-chip">Mahjong Ways ✕</span>
+        <span class="fs-game-chip">Fortune Ox ✕</span>
+        <span class="fs-game-chip">Lucky Neko ✕</span>
+        <span class="fs-game-chip" style="border-style:dashed;color:var(--text-dim);">＋ 加入遊戲</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:18px;">已選 4 款 · 逗號串長度 <span style="color:var(--gold-light);">42 / 200</span></div>
+
+    <!-- 5. 有效期模式 -->
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">⑤ 有效期模式</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;">
+      <div style="display:flex;align-items:center;gap:10px;background:rgba(212,168,67,0.06);border:1px solid var(--border-bright);border-radius:6px;padding:10px 12px;">
+        <span style="color:var(--gold-light);">◉</span>
+        <span style="font-size:12px;color:var(--text-primary);font-weight:500;">發卡 +N 天（相對 · 預設）</span>
+        <span style="font-size:12px;color:var(--text-secondary);">N =</span>
+        <span style="display:inline-block;min-width:40px;text-align:center;padding:4px 10px;background:var(--dark-4);border:1px solid var(--border-bright);border-radius:4px;font-family:'DM Mono',monospace;color:var(--gold-light);">7</span>
+        <span style="font-size:12px;color:var(--text-secondary);">天</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:6px;padding:10px 12px;opacity:.5;">
+        <span style="color:var(--text-dim);">○</span>
+        <span style="font-size:12px;color:var(--text-secondary);">絕對日期（次要）</span>
+        <span style="display:inline-block;padding:4px 10px;background:var(--dark-3);border:1px solid var(--border);border-radius:4px;font-family:'DM Mono',monospace;color:var(--text-dim);">YYYY/MM/DD</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:18px;">⏱ <strong style="color:var(--text-secondary);">自然日制</strong>：發卡日為第 1 天，第 N 天 23:59:59 GMT+8 到期；<strong style="color:var(--text-secondary);">N 鎖在此卡模板</strong>（與遊戲列表一致）。發卡當下換算成絕對 datetime 再送 AWC。</div>
+
+    <!-- 6. 入帳目標 -->
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">⑥ 入帳目標（固定 · 不可編輯）</div>
+    <div style="margin-bottom:18px;">
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 14px;border-radius:20px;background:rgba(90,191,122,0.12);color:#7ADFA0;border:1px solid rgba(90,191,122,0.25);">🏦 主錢包真金 · 無流水</span>
+    </div>
+
+    <!-- 7. 動作列 -->
+    <div style="display:flex;gap:10px;border-top:1px solid var(--border);padding-top:16px;">
+      <span style="font-size:12px;padding:9px 22px;border-radius:6px;background:var(--dark-4);border:1px solid var(--border-bright);color:var(--text-secondary);">儲存草稿</span>
+      <span style="font-size:12px;padding:9px 22px;border-radius:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:#1a1206;font-weight:700;">啟用</span>
+    </div>
+  </div>
+
+  <div class="sub-title">UI 功能說明（對應上方 wireframe 7 區塊）</div>
+  <table class="spec-table">
+    <thead><tr><th>元件</th><th>功能</th><th>規則</th></tr></thead>
+    <tbody>
+      <tr><td>① 獎勵類別切換</td><td class="dim">在 CASH / NON_CASH 間切換獎勵大類</td><td class="dim">僅選中 <strong>NON_CASH</strong> 才展開下方 FREE SPIN 設定區；CASH 沿用既有現金獎設定</td></tr>
+      <tr><td>② 幣別分頁</td><td class="dim">切換 THB / PHP / IDR / VND / USD，各幣別獨立一組 5 階段設定</td><td class="dim">切換幣別時<strong>各自保留已填數值</strong>；幣別範圍以「Combo 平台貨幣設定」為準</td></tr>
+      <tr><td>③ 5 階段 BET 矩陣</td><td class="dim">逐 Tier 填 coin_size / multiplier / 次數 / max_conversion</td><td class="dim"><strong>每轉押注</strong>（= coin × mult × line）與 <strong>face_value</strong>（= 每轉押注 × 次數）為<strong>系統自動計算唯讀欄</strong>，不可手填</td></tr>
+      <tr><td>④ 可用遊戲列表</td><td class="dim">Multi-select 含搜尋，已選顯示為可移除 chip</td><td class="dim">逗號串（GameIds）長度<strong>上限 200，超出需擋</strong>；列表鎖在卡模板，發卡後不可改</td></tr>
+      <tr><td>⑤ 有效期模式</td><td class="dim">設定卡片有效期</td><td class="dim">預設「<strong>發卡 +N 天（相對）</strong>」+ N 數字輸入；<strong>自然日制</strong>（發卡日第 1 天，第 N 天 23:59:59 GMT+8 到期）、<strong>N 鎖卡模板</strong>；絕對日期為次要選項</td></tr>
+      <tr><td>⑥ 入帳目標</td><td class="dim">顯示最終結算入帳去向</td><td class="dim">固定「<strong>主錢包真金 · 無流水</strong>」，不可編輯（對齊 v2.0，已移除 MAIN/BONUS 切換）</td></tr>
+      <tr><td>⑦ 動作列</td><td class="dim">儲存草稿 / 啟用</td><td class="dim"><strong>啟用後</strong>才可被抽寶箱獎池引用；<strong>已發卡走快照、不受後續修改影響</strong></td></tr>
     </tbody>
   </table>
 </section>
@@ -812,54 +950,93 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <tr><td>剩餘 / 總次數</td><td class="mono">rounds_left / num_of_rounds</td></tr>
           <tr><td>最大獎金金額</td><td class="mono">max_conversion</td></tr>
           <tr><td>可玩哪些遊戲</td><td class="mono">game_ids[]（圖示牆）</td></tr>
-          <tr><td>剩餘可使用時間</td><td class="mono">valid_to − now（倒數）</td></tr>
-          <tr><td>狀態</td><td class="mono">ISSUED / ACTIVE / 即將到期</td></tr>
+          <tr><td>剩餘可使用時間</td><td class="mono">valid_to − now（倒數；&lt; 24h 紅色提示）</td></tr>
+          <tr><td>狀態</td><td class="mono">全新未使用 / 使用中 / 即將到期</td></tr>
+          <tr><td>最終入帳</td><td class="mono">主錢包真金（無流水）</td></tr>
         </tbody>
       </table>
     </div>
     <div>
       <div class="mock">
         <div class="mock-head"><span>🎒 我的背包 · FREE SPIN</span><span>3 張</span></div>
-        <div class="fs-card">
-          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge">可使用</span></div>
+
+        <!-- 卡 1：使用中 5/10 · 卡片內展開選遊戲 -->
+        <div class="fs-card" style="border-color:var(--gold);">
+          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge" style="background:rgba(212,168,67,0.16);color:var(--gold-light);">使用中</span></div>
           <div class="fs-row"><span>每轉押注</span><b>10 THB</b></div>
-          <div class="fs-row"><span>剩餘 / 總次數</span><b>7 / 10</b></div>
+          <div class="fs-row"><span>已用 / 總次數</span><b><span style="color:var(--gold-light);">5</span> / 10（剩 5 次可續玩）</b></div>
           <div class="fs-row"><span>最大獎金</span><b>1,000 THB</b></div>
-          <div class="fs-row"><span>入帳錢包</span><b>BONUS</b></div>
+          <div class="fs-row"><span>最終入帳</span><b>主錢包真金（無流水）</b></div>
           <div class="fs-row"><span>剩餘時間</span><b>2 天 04:12</b></div>
+          <div style="border-top:1px dashed var(--border);margin:10px 0 8px;padding-top:8px;font-size:10px;color:var(--text-dim);">▾ 展開選遊戲（點圖示選一款）</div>
           <div class="fs-games">
-            <span class="fs-game-chip">Fortune Tiger</span>
+            <span class="fs-game-chip" style="background:rgba(212,168,67,0.18);color:var(--gold-light);border-color:var(--gold);font-weight:700;">Fortune Tiger ✓</span>
+            <span class="fs-game-chip">Mahjong Ways</span>
+            <span class="fs-game-chip">Fortune Ox</span>
+            <span class="fs-game-chip">+2</span>
+          </div>
+          <div class="fs-btn">開始 ▶</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center;">已選 Fortune Tiger → 按鈕亮起；續玩帶<strong style="color:var(--text-secondary);">同一 reference_id</strong>、續扣同池</div>
+        </div>
+
+        <!-- 卡 2：即將到期 倒數 <24h -->
+        <div class="fs-card" style="border-color:var(--red);">
+          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge" style="background:rgba(224,90,58,0.16);color:#F0907A;">即將到期</span></div>
+          <div class="fs-row"><span>每轉押注</span><b>20 THB</b></div>
+          <div class="fs-row"><span>已用 / 總次數</span><b>2 / 10</b></div>
+          <div class="fs-row"><span>最大獎金</span><b>2,000 THB</b></div>
+          <div class="fs-row"><span>剩餘時間</span><b style="color:#F0907A;">⏱ 18:42:09（&lt; 24h）</b></div>
+          <div class="fs-btn">選遊戲並開始 ▶</div>
+        </div>
+
+        <!-- 卡 3：全新未使用 10/10 · 展開但未選 → 按鈕灰態 -->
+        <div class="fs-card">
+          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge">全新未使用</span></div>
+          <div class="fs-row"><span>每轉押注</span><b>5 THB</b></div>
+          <div class="fs-row"><span>已用 / 總次數</span><b>0 / 10</b></div>
+          <div class="fs-row"><span>最大獎金</span><b>500 THB</b></div>
+          <div class="fs-row"><span>剩餘時間</span><b>6 天 22:30</b></div>
+          <div style="border-top:1px dashed var(--border);margin:10px 0 8px;padding-top:8px;font-size:10px;color:var(--text-dim);">▾ 展開選遊戲（尚未選擇）</div>
+          <div class="fs-games">
+            <span class="fs-game-chip">Lucky Neko</span>
             <span class="fs-game-chip">Mahjong Ways</span>
             <span class="fs-game-chip">+3</span>
           </div>
-          <div class="fs-btn">選遊戲並開始 ▶</div>
+          <div class="fs-btn" style="background:var(--dark-4);color:var(--text-dim);border:1px solid var(--border);">開始 ▶（請先選遊戲）</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center;">未選遊戲時按鈕為 <strong style="color:var(--text-secondary);">disabled 灰態</strong>，必須先選一款才能開始</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="sub-title">需求 5 · 跳轉到指定遊戲（Reload 流程）</div>
+  <div class="callout success"><strong>操作流程說明</strong>：點卡片 → 卡內展開<strong>遊戲牆</strong> → 選一款（<strong>必選</strong>，未選按鈕維持灰態）→ 開始 → 系統帶該卡 <span class="mono">reference_id</span> 指定啟用 → 跳轉遊戲。<br><strong>Corner case · 續玩同卡</strong>：未用完的卡（如 5/10）續玩時帶<strong>同一 <span class="mono">reference_id</span></strong>，繼續扣同一局數池、<strong>不另開新卡</strong>。</div>
+
+  <div class="sub-title">需求 5 · 跳轉到指定遊戲（Reload 流程 · v2.1：跳轉前綁定 reference_id 指定啟用）</div>
   <div class="flow-wrap">
     <div class="flow">
-      <div class="flow-step"><div class="flow-step-num">01</div><div class="flow-step-title">玩家選遊戲</div><div class="flow-step-desc">在卡的 game_ids 中點選一款</div></div>
+      <div class="flow-step"><div class="flow-step-num">01</div><div class="flow-step-title">玩家選遊戲</div><div class="flow-step-desc">卡片內遊戲牆選一款（必選）</div></div>
       <div class="flow-arrow">→</div>
       <div class="flow-step highlight"><div class="flow-step-num">02</div><div class="flow-step-title">產 Token</div><div class="flow-step-desc">我方產生一次性 access token</div></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><div class="flow-step-num">03</div><div class="flow-step-title">LoginWithoutRedirect</div><div class="flow-step-desc">帶 Token / GameId / Lang，取回入口網址</div></div>
+      <div class="flow-step highlight"><div class="flow-step-num">03</div><div class="flow-step-title">指定啟用 API</div><div class="flow-step-desc">帶 reference_id + game_id 綁定玩家 session（明確指定要啟用哪張卡）</div></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step success"><div class="flow-step-num">04</div><div class="flow-step-title">開啟遊戲</div><div class="flow-step-desc">AWC 自動識別玩家有此 Free Spin 並套用</div></div>
+      <div class="flow-step"><div class="flow-step-num">04</div><div class="flow-step-title">LoginWithoutRedirect</div><div class="flow-step-desc">帶 Token / GameId / Lang，取回一次性入口網址</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step success"><div class="flow-step-num">05</div><div class="flow-step-title">開啟遊戲</div><div class="flow-step-desc">平台依步驟 3 綁定的 reference_id 直接啟用該卡（不再靠進場自動猜測）</div></div>
     </div>
   </div>
   <table class="spec-table">
     <thead><tr><th>項目</th><th>規格</th></tr></thead>
     <tbody>
-      <tr><td>API</td><td class="mono">GET /singleWallet/LoginWithoutRedirect</td></tr>
+      <tr><td>指定啟用 API</td><td class="mono">SetActiveFreeSpin（暫名，待 AWC 確認命名）— 參數 player_id, reference_id, game_id</td></tr>
+      <tr><td>跳轉 API</td><td class="mono">GET /singleWallet/LoginWithoutRedirect</td></tr>
       <tr><td>必帶參數</td><td class="mono">Token, GameId, Lang（HomeUrl / Platform 選帶，不入 MD5）</td></tr>
       <tr><td>回傳</td><td class="dim">Data = 遊戲入口網址（JSON 編碼，需解碼）；<strong>此連結只可使用一次</strong></td></tr>
       <tr><td>跳轉方式</td><td class="dim">前端取回網址後導頁 / 開新視窗；過期或已用需重新取得</td></tr>
-      <tr><td>套用時機</td><td class="dim">由 AWC 在玩家進入遊戲時自動識別套用（不需我方在跳轉前另呼叫使用 API；待 §10 向 AWC 確認）</td></tr>
+      <tr><td>套用時機</td><td class="dim">依<strong>跳轉前綁定的 reference_id 直接啟用指定卡</strong>；玩家持多張對同遊戲有效的卡時，由 reference_id 精準指定，避免 AWC 自動識別誤選</td></tr>
     </tbody>
   </table>
+  <div class="callout warn"><strong>多卡歧義 / 續玩同卡</strong>：玩家同遊戲可能持多張卡，啟用前<strong>必綁 reference_id</strong>；未用完卡（5/10）續玩帶<strong>同一 reference_id</strong>，續扣同池、不開新卡。</div>
   <div class="callout warn"><strong>一次性連結注意</strong>：LoginWithoutRedirect 回傳的連結只能用一次。背包多張卡 / 玩家連點需做防抖與重取機制，避免「連結已失效」體驗（§10 已列為待 AWC 確認）。</div>
 </section>
 
@@ -906,7 +1083,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <table class="spec-table">
     <thead><tr><th>用途</th><th>API</th><th>關鍵參數 / 回傳</th><th>對應需求</th></tr></thead>
     <tbody>
-      <tr><td>發卡通知</td><td class="mono">CreateFreeSpin</td><td class="dim">Account, Currency, <strong>ReferenceId</strong>, FreeSpinValidity(時區待 AWC 確認，我方營運 GMT+8), NumberOfRounds, GameIds → 回 CreateTime</td><td>需求 2 / 6</td></tr>
+      <tr><td>發卡通知</td><td class="mono">CreateFreeSpin</td><td class="dim">Account, Currency, <strong>ReferenceId</strong>, FreeSpinValidity（我方在<strong>發卡當下把「+N 天」換算成絕對 datetime（第 N 天 23:59:59 GMT+8）</strong>再送 AWC，AWC 僅收絕對時間戳）, NumberOfRounds, GameIds → 回 CreateTime</td><td>需求 2 / 6</td></tr>
+      <tr><td>指定啟用</td><td class="mono">SetActiveFreeSpin <span class="tag-pill tag-inf">⚠️ 待 AWC 確認是否提供，否則改用「我方 Token 綁 reference_id 反查」備援</span></td><td class="dim">player_id, <strong>reference_id</strong>, game_id：跳轉前綁定要啟用的指定卡，解多卡歧義 / 續玩同卡</td><td>需求 5（v2.1）</td></tr>
       <tr><td>跳轉入口</td><td class="mono">LoginWithoutRedirect</td><td class="dim">Token, GameId, Lang → 回一次性遊戲網址</td><td>需求 5</td></tr>
       <tr><td>已發卡細節</td><td class="mono">GetFreeSpinSendDetail</td><td class="dim">SendAmount, UsedAmount, UnusedAmount, ExpiredTime, SendGame, ClaimGame</td><td>需求 4（背包校驗）</td></tr>
       <tr><td>派送總覽</td><td class="mono">GetFreeSpinRecordSummary</td><td class="dim">TotalSend / TotalUsed / TotalUnused + 投注派彩統計</td><td>對帳</td></tr>
@@ -915,8 +1093,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </tbody>
   </table>
   <div class="callout info"><strong>CreateFreeSpin 範例</strong>（JILI / AWC）：<br>
-    <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);">{ "Account":"player_THB", "Currency":"THB", "ReferenceId":"FS_CHEST_2026_0001", "FreeSpinValidity":"2026-07-15T12:00:00", "NumberOfRounds":10, "GameIds":"108,110" }</span><br>
-    其中 <strong>ReferenceId 就是我方卡序號</strong>，是後續查詢 / 對帳 / 防重複的 key（AWC 回 102 = 序號已使用）。
+    <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);">{ "Account":"player_THB", "Currency":"THB", "ReferenceId":"FS_CHEST_2026_0001", "FreeSpinValidity":"2026-06-28T23:59:59", "NumberOfRounds":10, "GameIds":"108,110" }</span><br>
+    <span style="color:var(--text-dim);">// FreeSpinValidity 為我方「發卡 +N 天」換算後的絕對時間戳：例 2026/06/22 發卡、卡模板 N=7 → 第 7 天 2026/06/28 23:59:59（GMT+8）。AWC 僅收絕對時間。</span><br>
+    其中 <strong>ReferenceId 就是我方卡序號</strong>，是後續查詢 / 對帳 / 防重複 / <strong>指定啟用（SetActiveFreeSpin）</strong>的 key（AWC 回 102 = 序號已使用）。
   </div>
 
   <div class="sub-title">結算入帳串接（v2.0 改寫 · Bet=0/Win 注單入主錢包）</div>
@@ -983,6 +1162,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="gherkin-row"><span class="gherkin-key and">And</span><span class="gherkin-text">跳轉端做節流：同卡 N 秒內僅取一次一次性連結，避免連結即時失效</span></div>
   </div>
 
+  <div class="gherkin guard">
+    <div class="gherkin-title">情境 5 · 多卡歧義 → 帶 reference_id 精準啟用指定卡、續玩同卡扣同池（v2.1）</div>
+    <div class="gherkin-row"><span class="gherkin-key given">Given</span><span class="gherkin-text">玩家同時持有兩張對同一遊戲 A 有效的卡：卡甲（ref=FS_001，5/10 使用中）與卡乙（ref=FS_002，全新 10/10）</span></div>
+    <div class="gherkin-row"><span class="gherkin-key when">When</span><span class="gherkin-text">玩家從卡甲點「開始」進入遊戲 A，跳轉前以 <span class="mono">SetActiveFreeSpin(reference_id=FS_001, game_id=A)</span> 綁定</span></div>
+    <div class="gherkin-row"><span class="gherkin-key then">Then</span><span class="gherkin-text">平台依綁定的 FS_001 啟用<strong>卡甲</strong>（非卡乙），不靠進場自動猜測；卡乙不受影響</span></div>
+    <div class="gherkin-row"><span class="gherkin-key and">And</span><span class="gherkin-text">續玩卡甲時帶<strong>同一 reference_id=FS_001</strong>，續扣同一局數池（5→4→…），<strong>不另開新卡</strong></span></div>
+  </div>
+
   <div class="sub-title">TDD 單元測試指引（工程師動筆前先寫測試）</div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>確定性邏輯</th><th>必測案例（紅燈→綠燈）</th></tr></thead>
@@ -995,6 +1182,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td class="mono">T6</td><td>快照凍結</td><td class="dim">發卡後改後台獎勵清單 → 已發卡參數不變</td></tr>
       <tr><td class="mono">T7</td><td>結算注單入主錢包</td><td class="dim">結算產生 bet_amount=0 / win_amount=final 注單，帶 campaign_id / ref_voucher_id；入主錢包真金</td></tr>
       <tr><td class="mono">T8</td><td>GameIds 長度上限</td><td class="dim">逗號串 ≤200；超出回參數錯誤</td></tr>
+      <tr><td class="mono">T9</td><td>reference_id 指定啟用</td><td class="dim">持兩張對同遊戲有效的卡，綁定 ref 啟用指定卡；續玩帶同一 ref 扣同池、不開新卡</td></tr>
+      <tr><td class="mono">T10</td><td>有效期換算（發卡 +N 天 · 自然日）</td><td class="dim">N=7、發卡日為第 1 天 → valid_to=第 7 天 23:59:59 GMT+8；換算成絕對時間戳送 AWC</td></tr>
     </tbody>
   </table>
 </section>
@@ -1023,6 +1212,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>3.4</td><td><strong>真金直發防濫用</strong>（領取資格 / 頻率 / 額度 / 黑名單）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">v2.0 新增：平台流水鎖已不擋，須由 CRM 中台自持風控</td><td><span class="tag-pill tag-inf">⚠️ 必做</span></td></tr>
       <tr><td>4.1</td><td>背包 UI（卡片列表 + 細節 + 倒數）</td><td><span class="tag-pill tag-opt">🎮 前端</span> <span class="tag-pill tag-design">🎨 UI</span></td><td class="dim">§05 欄位</td><td></td></tr>
       <tr><td>4.2</td><td>跳轉（LoginWithoutRedirect + 導頁）</td><td><span class="tag-pill tag-opt">🎮 前端</span></td><td class="dim">一次性連結解碼導頁</td><td></td></tr>
+      <tr><td>4.3</td><td><strong>跳轉前 reference_id 指定啟用綁定</strong>（SetActiveFreeSpin / Token 綁定備援）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-opt">🎮 前端</span></td><td class="dim">v2.1 新增：跳轉前綁定 reference_id+game_id 指定啟用；與一次性 Token 模組相關（若 AWC 無此 API，改我方 Token 綁 ref、平台開局反查）</td><td><span class="tag-pill tag-inf">⚠️ 基建 · 待 AWC</span></td></tr>
       <tr><td>5.1</td><td>對帳：GetFreeSpinSendDetail / Summary 比對</td><td><span class="tag-pill tag-data">📊 數據</span></td><td class="dim">月結對帳</td><td></td></tr>
       <tr><td>6.1</td><td>BDD/TDD 測試案例落地</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">§07 T1–T8</td><td></td></tr>
     </tbody>
@@ -1040,6 +1230,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="log-item"><span class="log-event">fs_card_issued</span><span class="log-owner"><span class="tag-pill tag-eng">後端</span></span><span class="log-desc">發卡成功：reference_id / campaign_id / reward_id / currency / face_value</span></div>
   <div class="log-item"><span class="log-event">fs_awc_create</span><span class="log-owner"><span class="tag-pill tag-eng">後端</span></span><span class="log-desc">CreateFreeSpin 請求 / 回應（含 ErrorCode、CreateTime、102 重複）</span></div>
   <div class="log-item"><span class="log-event">fs_bag_view</span><span class="log-owner"><span class="tag-pill tag-opt">前端</span></span><span class="log-desc">玩家開背包查看 FREE SPIN 卡</span></div>
+  <div class="log-item"><span class="log-event">fs_activate</span><span class="log-owner"><span class="tag-pill tag-eng">後端</span></span><span class="log-desc">綁定啟用：reference_id / game_id / token（跳轉前指定要啟用哪張卡）</span></div>
   <div class="log-item"><span class="log-event">fs_launch</span><span class="log-owner"><span class="tag-pill tag-opt">前端</span></span><span class="log-desc">點擊跳轉：選定 game_id + 取一次性連結結果</span></div>
   <div class="log-item"><span class="log-event">fs_round_used</span><span class="log-owner"><span class="tag-pill tag-eng">後端</span></span><span class="log-desc">每局扣除（或由對帳回灌）：rounds_left 變化、所在 game_id</span></div>
   <div class="log-item"><span class="log-event">fs_settled</span><span class="log-owner"><span class="tag-pill tag-eng">後端</span></span><span class="log-desc">整卡結算：total_win / capped_final / campaign_id / ref_voucher_id（入主錢包真金）</span></div>
@@ -1057,12 +1248,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">需 PM / 上司決策</div>
   <div class="oq-item pm"><div class="oq-owner">PM DECISION</div><div class="oq-q">每幣值 × 5 階段的 face_value / 次數 / max_conversion 實際數值由誰定？是否需先出一份「公版押注段 × 幣別」對照表（可沿用既有共用押注段）。</div></div>
   <div class="oq-item pm"><div class="oq-owner">PM DECISION · 已定調（v2.0）</div><div class="oq-q">✅ 入帳目標：<strong>一律主錢包真金、可立即提領</strong>（移除 wallet_target / bonus_ratio / 受限紅利）。遊戲列表 v1 鎖卡模板。<strong>⚠ 仍待補</strong>：真金直發的<strong>防濫用規則</strong>（領取資格 / 頻率 / 額度 / 黑名單），以及任務獎勵 RTP 佔比 / 派彩上限。</div></div>
-  <div class="oq-item pm"><div class="oq-owner">PM DECISION</div><div class="oq-q">卡片有效期採「發卡 +N 天」相對制還是綁活動結束日的絕對制？跨活動是否統一。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">已決（v2.1）</div><div class="oq-q">✅ 採<strong>發卡 +N 天相對制 · 自然日 · GMT+8 · N 鎖卡模板</strong>。（原「相對制 vs 綁活動結束日絕對制」決策已定案。）</div></div>
 
   <div class="sub-title" style="margin-top:24px;">需與 AWC / 平台確認</div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">CreateFreeSpin 是否能帶入「每轉押注（coin_size / multiplier）」？若不能，押注大小如何決定（AWC 預設綁定 reference？）。</div></div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">結算「最大上限 max_conversion」封頂<strong>一律由我方結算層自套 min()</strong>，不依賴 AWC。確認 Bet=0 中獎注單可正常處理入帳。</div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">跳轉後 FREE SPIN 自動套用的觸發機制：AWC 在玩家進入遊戲時自動識別，還是需我方在跳轉前另呼叫使用 API？</div></div>
+  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN · 方向已定（v2.1）</div><div class="oq-q">跳轉後 FREE SPIN 啟用機制：<strong>已定採「跳轉前綁定 reference_id 指定啟用」</strong>（不再靠 AWC 進場自動識別）。<strong>仍待確認</strong>：AWC 是否提供「指定啟用 / <span class="mono">SetActiveFreeSpin</span>」API；若無，改由<strong>我方一次性 Token 綁 reference_id、平台開局反查</strong>備援。</div></div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">LoginWithoutRedirect 一次性連結：同玩家短時間多卡 / 連點的取連結頻率限制與失效重取建議。</div></div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">過期卡是否仍可呼叫 LoginWithoutRedirect？有效期判定點在「持有階段」還是「進遊戲當下」。</div></div>
   <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">已決（v1.1）</div><div class="oq-q">✅ 不需要「作廢 / 更新已發 free spin」API——已定調已發卡不變更，擴充走補發新卡。此項從待確認移除。</div></div>
@@ -1076,8 +1267,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.0 · CONFIDENTIAL 2026<br>
+  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.1 · CONFIDENTIAL 2026<br>
   CMB · CRM 生態 / 推廣規格 · 與抽寶箱 v3.3 / CRM-ARCH v1.3 / AWC-TOPO v2 對齊<br>
+  v2.1 修訂：有效期定案（發卡 +N 天 · 自然日 · GMT+8 · N 鎖卡模板）；啟動改為跳轉前綁定 reference_id 指定啟用（SetActiveFreeSpin / Token 綁定備援）；補 §04 後台 wireframe 與 §05 玩家背包前台稿<br>
   v2.0 修訂：結算改走「注單通道（Bet=0/Win→主錢包真金）」，移除 BONUS 錢包 / wallet_target / bonus_ratio / 流水 / Promotion Tool；新增真金防濫用 + 逐平台開通
 </div>
 
