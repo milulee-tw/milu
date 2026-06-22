@@ -590,7 +590,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CRM-ROADMAP · V1.0</span>
+  <span class="nav-brand">CRM-ROADMAP · V1.1</span>
   <a class="nav-item active" href="#overview">策略思路</a>
   <a class="nav-item" href="#logic">留存邏輯鏈</a>
   <a class="nav-item" href="#scope">功能盤點</a>
@@ -598,6 +598,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <a class="nav-item" href="#mechanic">核心機制</a>
   <a class="nav-item" href="#kpi">KPI</a>
   <a class="nav-item" href="#risk">財務/風險</a>
+  <a class="nav-item" href="#rtpctrl">風控基建</a>
   <a class="nav-item" href="#openq">待確認</a>
   <div class="topnav-meta">
     <span class="topnav-meta-item" id="topnav-date"></span>
@@ -616,7 +617,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-meta">
       <div class="sidebar-meta-row">
         <span class="sidebar-meta-label">VERSION</span>
-        <span class="sidebar-meta-val">v1.0</span>
+        <span class="sidebar-meta-val">v1.1</span>
       </div>
       <div class="sidebar-meta-row">
         <span class="sidebar-meta-label">DATE</span>
@@ -683,7 +684,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span class="sidebar-chevron">›</span>
       </button>
       <div class="sidebar-subsections">
-        <a class="sidebar-sub-link" href="#roadmap">W0–W5 時間軸</a>
+        <a class="sidebar-sub-link" href="#roadmap">W0–W6 時間軸</a>
         <a class="sidebar-sub-link" href="#roadmap">排程理由</a>
       </div>
     </div>
@@ -720,14 +721,27 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span class="sidebar-chevron">›</span>
       </button>
       <div class="sidebar-subsections">
-        <a class="sidebar-sub-link" href="#risk">總活動 RTP ≤ 2%</a>
+        <a class="sidebar-sub-link" href="#risk">動態總邊際管理</a>
         <a class="sidebar-sub-link" href="#risk">設計風險</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section open" data-section="rtpctrl">
+      <button class="sidebar-section-btn" onclick="navTo('rtpctrl')">
+        <span class="sidebar-section-num">08</span>
+        風控與動態RTP基建
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#rtpctrl">運作流程 + 三表機制</a>
+        <a class="sidebar-sub-link" href="#rtpctrl">監控看板 + KPI</a>
+        <a class="sidebar-sub-link" href="#rtpctrl">最小 vs 完整</a>
       </div>
     </div>
 
     <div class="sidebar-section open" data-section="openq">
       <button class="sidebar-section-btn" onclick="navTo('openq')">
-        <span class="sidebar-section-num">08</span>
+        <span class="sidebar-section-num">09</span>
         已鎖定 vs 待確認
         <span class="sidebar-chevron">›</span>
       </button>
@@ -749,7 +763,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · STRATEGY PROPOSAL · 2026</div>
   <h1>CRM <span>ROADMAP</span></h1>
-  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.0</div>
+  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.1</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> 策略提案</div>
     <div class="cover-pill"><strong>北極星</strong> 次日 D1 留存</div>
@@ -757,7 +771,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="cover-pill"><strong>市場</strong> 菲律賓</div>
   </div>
   <div class="cover-badges">
-    <span class="badge badge-scope">提案範疇 W0–W5</span>
+    <span class="badge badge-scope">提案範疇 W0–W6</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
   </div>
 </div>
@@ -798,7 +812,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="info-card">
       <div class="info-card-icon">⚙️</div>
       <div class="info-card-title">④ 務實節奏</div>
-      <div class="info-card-desc">小步快跑、後端<strong style="color:var(--text-primary)">雙線並行</strong>、重後端/高風險往後排、財務總活動 <strong style="color:var(--text-primary)">RTP ≤ 2%</strong> 嚴控；差異化用輕量「即時競賽」收尾。</div>
+      <div class="info-card-desc">小步快跑、後端<strong style="color:var(--text-primary)">雙線並行</strong>、重後端/高風險往後排、財務改走 <strong style="color:var(--text-primary)">動態總邊際管理</strong>（活動+遊戲 RTP 守 ≈96.7%、§08）嚴控；差異化用輕量「即時競賽」收尾。</div>
     </div>
   </div>
 
@@ -910,9 +924,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>抽寶箱第二段（道具獎勵庫+卡+背包）</td><td>🟢 保留（W1）</td><td class="dim">CRM 共用基建，另立規格；卡水管已建</td></tr>
       <tr><td>排行榜（個人 + 全線路）</td><td>🟢 保留·提前（W3）</td><td class="dim">含日即時排名賽（net win），即時競賽地基；與大獎回放同 Wave</td></tr>
       <tr><td>大獎回放</td><td>🟢 提前·綁排行榜（W3）</td><td class="dim">與排行榜同一個 Wave，從榜上可點看大獎回放（複用既有規格）</td></tr>
-      <tr><td>日任務 + 週任務（常態）</td><td>🟢 新增（W4）</td><td class="dim">基礎留存，固定寶箱獎勵複用獎勵庫；總活動 RTP ≤ ~2%</td></tr>
+      <tr><td>CRM 獎勵監控 + 動態 RTP 控制</td><td>🟢 基礎建設·新增（W4）</td><td class="dim">多活動並行前置依賴；總邊際即時監控 + 動態 RTP 反向補償（詳見 §08）</td></tr>
+      <tr><td>日任務 + 週任務（常態）</td><td>🟢 新增（W5）</td><td class="dim">基礎留存，固定寶箱獎勵複用獎勵庫；發獎佔比納入 W4 總邊際監控</td></tr>
       <tr><td>挑戰/地圖任務（寶箱·特殊活動）</td><td>🟠 後期·特殊限定</td><td class="dim">非常態，依時機（週末/節慶）或 usertype（押量下滑/回流）投放；活動期間 RTP 調降 ~2%、bet 不與日/週重複計入</td></tr>
-      <tr><td>即時競賽</td><td>🟢 差異化主打（W5）</td><td class="dim">連續即時排名賽，建在 W3 排行榜引擎上；net win 短週期結算發卡</td></tr>
+      <tr><td>即時競賽</td><td>🟢 差異化主打（W6）</td><td class="dim">連續即時排名賽，建在 W3 排行榜引擎上；net win 短週期結算發卡</td></tr>
       <tr><td>通知中心（Inbox/Popup）</td><td>🟠 後續·活動量起來後</td><td class="dim">各功能早期用自身提示即可；活動多時再做聚合通道</td></tr>
       <tr><td>品牌門面（展示頁）</td><td>🟠 後續·不綁即時競賽</td><td class="dim">隨活動量增長，與通知中心一起後做</td></tr>
       <tr><td>押注任務 + RTP 撥出引擎</td><td>🟠 後期 Backlog</td><td class="dim">衝押注量、最重後端，留到衝 GGR 階段</td></tr>
@@ -927,11 +942,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="section-header">
     <span class="section-num">04</span>
     <span class="section-title">Roadmap 雙線排程</span>
-    <span class="section-title-en">ROADMAP · W0–W5</span>
+    <span class="section-title-en">ROADMAP · W0–W6</span>
   </div>
 
   <div class="callout info">
-    <strong>設計原則</strong>：各 Wave 時程依複雜度不等（<strong>約 4–6 週，下方為估算、待開發團隊校準</strong>）。<em style="color:var(--gold-light);font-style:normal">🅐 線＝後端主力（一個 Wave 一顆重引擎）</em>；<em style="color:var(--purple);font-style:normal">🅑 線＝前端 / Unity 並行</em>。後端重引擎依序 Tag → 排行榜 → 任務 → 即時競賽，不重疊。
+    <strong>設計原則</strong>：各 Wave 時程依複雜度不等（<strong>約 4–6 週，下方為估算、待開發團隊校準</strong>）。<em style="color:var(--gold-light);font-style:normal">🅐 線＝後端主力（一個 Wave 一顆重引擎）</em>；<em style="color:var(--purple);font-style:normal">🅑 線＝前端 / Unity 並行</em>。後端重引擎依序 Tag → 排行榜 → 風控/動態RTP → 任務 → 即時競賽，不重疊。
   </div>
 
   <div class="timeline">
@@ -973,17 +988,28 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-phase">WAVE 4 · 基礎任務留存 · 約 4 週</div>
-      <div class="tl-title">任務系統(日 / 週任務 · 常態)</div>
+      <div class="tl-phase">WAVE 4 · 風控與動態RTP基建 · 約 6 週</div>
+      <div class="tl-title">CRM獎勵監控 + 動態RTP系統</div>
       <div class="tl-tasks">
-        <span class="tl-task eng">🅐 任務引擎（日 + 週任務 · 寶箱發獎 · 複用獎勵庫）</span>
-        <span class="tl-task design">🅑 任務大廳 + 寶箱開獎演出</span>
-        <span class="tl-task inf">總活動 RTP ≤ ~2%</span>
+        <span class="tl-task inf">即時RTP累計引擎</span>
+        <span class="tl-task inf">三表權重控制服務</span>
+        <span class="tl-task inf">自動節流閘門</span>
+        <span class="tl-task inf">監控看板</span>
       </div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-phase">WAVE 5 · 差異化 · 約 5 週</div>
+      <div class="tl-phase">WAVE 5 · 基礎任務留存 · 約 4 週</div>
+      <div class="tl-title">任務系統(日 / 週任務 · 常態)</div>
+      <div class="tl-tasks">
+        <span class="tl-task eng">🅐 任務引擎(日 + 週任務 · 寶箱發獎 · 複用獎勵庫)</span>
+        <span class="tl-task design">🅑 任務大廳 + 寶箱開獎演出</span>
+        <span class="tl-task inf">發獎佔比納入 W4 總邊際監控</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">WAVE 6 · 差異化 · 約 5 週</div>
       <div class="tl-title">即時競賽</div>
       <div class="tl-tasks">
         <span class="tl-task eng">🅐 即時競賽（連續即時排名賽 · 建在 W3 排行榜引擎上 · net win）</span>
@@ -1010,12 +1036,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="cost-row"><span class="cost-label">W1 · Tag 引擎 + 抽寶箱第二段</span><span class="cost-val">約 5 週</span></div>
     <div class="cost-row"><span class="cost-label">W2 · 簽到系統 + 補簽卡</span><span class="cost-val">約 4 週</span></div>
     <div class="cost-row"><span class="cost-label">W3 · 排行榜（個人 + 全線路）+ 大獎回放（後端較重）</span><span class="cost-val">約 6 週</span></div>
-    <div class="cost-row"><span class="cost-label">W4 · 任務系統（日 / 週任務）</span><span class="cost-val">約 4 週</span></div>
-    <div class="cost-row"><span class="cost-label">W5 · 即時競賽</span><span class="cost-val">約 5 週</span></div>
-    <div class="cost-row total"><span class="cost-label">W0 → W5 連續推進合計</span><span class="cost-val highlight">約 30 週（≈ 7 個月）</span></div>
+    <div class="cost-row"><span class="cost-label">W4 · 風控與動態RTP基建（重後端基建）</span><span class="cost-val">約 6 週</span></div>
+    <div class="cost-row"><span class="cost-label">W5 · 任務系統（日 / 週任務）</span><span class="cost-val">約 4 週</span></div>
+    <div class="cost-row"><span class="cost-label">W6 · 即時競賽</span><span class="cost-val">約 5 週</span></div>
+    <div class="cost-row total"><span class="cost-label">W0 → W6 連續推進合計</span><span class="cost-val highlight">約 36 週（≈ 8 個月）</span></div>
   </div>
   <div class="callout warn">
-    <strong>⚠ 工時為估算，需開發團隊校準</strong>：後端較重的是 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）三個 Wave；簽到（W2）複用 v1 背包/庫存水管、相對輕。<strong>通知中心、品牌門面</strong>放到後續、活動量起來後加入，不計入上表。Wave 間可部分前後重疊（前端先動），實際總時程以開發評估為準。
+    <strong>⚠ 工時為估算，需開發團隊校準</strong>：後端較重的是 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）、W4（風控與動態RTP基建）四個 Wave；簽到（W2）複用 v1 背包/庫存水管、相對輕。<strong>通知中心、品牌門面</strong>放到後續、活動量起來後加入，不計入上表。Wave 間可部分前後重疊（前端先動），實際總時程以開發評估為準。
   </div>
 
   <div class="sub-title">排程關鍵理由</div>
@@ -1024,12 +1051,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     • <strong>W1 純基建、通知後置</strong>：Tag 引擎 + 斷簽偵測先建好，餵給 W2 補簽卡判斷與精準投放；通知中心移到後續、活動量起來再做聚合通道，早期各功能用自身提示即可。<br>
     • <strong>簽到拆獨立 Wave（W2）</strong>：簽到是 D1 核心引擎，緊接 W1 卡水管；補簽卡同屬簽到、一起做，接住斷簽。<br>
     • <strong>排行榜 + 回放一起（W3）</strong>：排行榜引擎 + 個人/全線路榜 + 大獎回放同一個 Wave，獨立可玩，也是即時競賽的地基。<br>
-    • <strong>任務（W4）→ 即時競賽（W5）</strong>：任務是成熟低風險的基礎留存、走固定寶箱、不需 RTP 撥出引擎；即時競賽建在 W3 排行榜引擎上、差異化收尾。<br>
+    • <strong>W4 風控基建排在任務之前</strong>：多活動疊加爆量前，總邊際監控與動態 RTP 必須先就位，否則後續任何疊加活動都在賭莊家邊際。<br>
+    • <strong>任務（W5）→ 即時競賽（W6）</strong>：任務是成熟低風險的基礎留存、走固定寶箱、不需 RTP 撥出引擎；即時競賽建在 W3 排行榜引擎上、差異化收尾。<br>
     • <strong>品牌門面後置、不綁即時競賽</strong>：門面價值隨活動量增長，與通知中心一起放後續、活動齊了再上。
   </div>
 
   <div class="callout warn">
-    <strong>⚠ 負載提醒</strong>：後端較重集中在 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）三個 Wave，需吃滿 1.5–2 後端。簽到（W2）複用抽寶箱 v1 的背包/道具庫存水管，相對輕、不是從零。
+    <strong>⚠ 負載提醒</strong>：後端較重集中在 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）、W4（風控與動態RTP基建）四個 Wave，需吃滿 1.5–2 後端。<strong>W4 切勿與 W3 排行榜引擎重疊</strong>——兩者都是重後端，疊在一起會卡死。簽到（W2）複用抽寶箱 v1 的背包/道具庫存水管，相對輕、不是從零。
   </div>
 </section>
 
@@ -1082,11 +1110,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </div>
   </div>
 
-  <div class="sub-title">任務系統（W4 日/週常態；挑戰任務後期特殊限定）</div>
+  <div class="sub-title">任務系統（W5 日/週常態；挑戰任務後期特殊限定）</div>
   <div class="body-text">獎勵統一以「寶箱」發放（金錢、FREE SPIN 卡等，複用抽寶箱獎勵庫與背包）。依開放性質分兩塊：</div>
   <div class="info-grid-2">
     <div class="info-card">
-      <div class="info-card-title">常態（W4 先做）</div>
+      <div class="info-card-title">常態（W5 先做）</div>
       <div class="info-card-desc">
         • <strong style="color:var(--text-primary)">日任務</strong>：每日小目標，完成開寶箱 → 每日回訪理由<br>
         • <strong style="color:var(--text-primary)">週任務</strong>：跨日累積中目標，完成開更大寶箱 → 拉長回訪週期
@@ -1101,13 +1129,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </div>
   </div>
   <div class="callout warn">
-    <strong>💰 財務鐵則：總活動 RTP 控制在約 2% 以內</strong><br>
-    • 所有 CRM 活動撥出的<strong>總和需 ≤ 約 2%</strong>，是任務獎勵配比的上限框架。<br>
-    • <strong>不可重複計入</strong>：挑戰任務進行期間，其 bet 累積不得同時計入日 / 週任務 → 否則同一筆押注被多重發獎、總 RTP 疊加超標、很難給。<br>
-    • <strong>活動期間調降</strong>：開放挑戰 / 寶箱特殊活動時（週末 / 節慶或對特定 usertype），整體活動 RTP 相應調降（約 2%），避免虧損。
+    <strong>💰 財務鐵則：納入動態總邊際管理（§08）</strong><br>
+    • 任務發獎佔比不再用固定上限框，而是即時計入 <strong>W4 總邊際監控</strong>，由遊戲 RTP 反向補償，使「活動+遊戲 RTP」總和守 ≈96.7%、邊際 ≈3.3%（灰色市場）。<br>
+    • <strong>不可重複計入</strong>：挑戰任務進行期間，其 bet 累積不得同時計入日 / 週任務 → 否則同一筆押注被多重發獎、總邊際被吃穿、很難給。<br>
+    • <strong>觸線自動節流</strong>：邊際逼近門檻 / 遊戲 RTP 觸 92% 地板時，系統自動把當期活動發獎打折 / 暫停（不只靠人工看警報）。
   </div>
 
-  <div class="sub-title">即時競賽（W5 · 差異化主打）</div>
+  <div class="sub-title">即時競賽（W6 · 差異化主打）</div>
   <div class="body-text">形式：<strong>連續即時排名賽</strong>，建在 W3 排行榜引擎之上。隨時加入、即時對全服排名，依 net win 計分，短週期結算發 FREE SPIN 卡 — 用「即時排名跳動」與「重置前衝一波」的張力做出與其他廠商的區別。</div>
   <table class="spec-table">
     <thead><tr><th>項目</th><th>設計</th></tr></thead>
@@ -1161,8 +1189,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td class="mono">W1</td><td class="dim">Tag 覆蓋率、FREE SPIN 卡使用率（抽寶箱第二段）</td></tr>
       <tr><td class="mono">W2</td><td class="dim">D1 留存 ↑、簽到完成率、碎片→卡兌換率、補簽卡使用率</td></tr>
       <tr><td class="mono">W3</td><td class="dim">個人/全線路榜開啟率、日賽參與率、大獎回放觀看率</td></tr>
-      <tr><td class="mono">W4</td><td class="dim">任務完成率（日/週）、寶箱開啟率、指定遊戲導量</td></tr>
-      <tr><td class="mono">W5</td><td class="dim">即時競賽參與率、競賽週留存</td></tr>
+      <tr><td class="mono">W4</td><td class="dim">邊際守線達成率、活動超發攔截次數、92% 地板觸發次數、自動節流反應延遲</td></tr>
+      <tr><td class="mono">W5</td><td class="dim">任務完成率（日/週）、寶箱開啟率、指定遊戲導量</td></tr>
+      <tr><td class="mono">W6</td><td class="dim">即時競賽參與率、競賽週留存</td></tr>
       <tr><td class="mono">後續</td><td class="dim">通知開啟/點擊率、品牌門面導流率、社交分享率</td></tr>
       <tr><td class="mono">後期</td><td class="dim">日均押注量 ↑、押注任務完成率、RTP 撥出 vs 實際發獎效益（衝 GGR 階段）</td></tr>
     </tbody>
@@ -1178,7 +1207,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout warn">
-    <strong>💰 財務鐵則</strong>：所有 CRM 活動撥出的<strong>總和需控制在約 2% 以內</strong>；任務間 <strong>bet 不重複計入</strong>（挑戰期間 bet 不算日/週）；週末開放挑戰/寶箱特殊活動時（週末/節慶或對特定 usertype）整體 RTP 相應調降，避免虧損。RTP 下限由 Server 全程鎖定。
+    <strong>💰 財務鐵則（動態總邊際管理）</strong>：捨棄「總活動 RTP ≤ 約 2%」的靜態上限，改為<strong>動態總邊際管理</strong>——活動 RTP 可浮動，由<strong>遊戲 RTP 反向補償</strong>，使「活動 RTP + 遊戲 RTP」總和守在 <strong>≈96.7%</strong>、莊家邊際 ≈3.3%；遊戲 RTP 設 <strong>92% 硬地板</strong>，超線由系統<strong>自動節流</strong>（當期活動發獎打折/暫停）。任務間 bet 仍不重複計入。完整機制、三表加權與監控看板見 <em style="color:var(--gold-light);font-style:normal">§08 風控與動態 RTP 基建</em>。
   </div>
 
   <table class="spec-table">
@@ -1187,15 +1216,199 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>net win 排名高度運氣導向</td><td class="dim">單日波動大，₱1 小注玩家可能靠運氣洗榜壓過大 R</td><td class="dim">加最低押注量資格門檻才計入排名</td></tr>
       <tr><td>W2 後端過載</td><td class="dim">排行榜引擎 + 日賽 + 簽到/補簽帳本同期</td><td class="dim">簽到/補簽複用 v1 庫存水管；必要時配 1.5–2 後端</td></tr>
       <tr><td>FREE SPIN 卡通膨</td><td class="dim">簽到碎片 + 即時競賽 + 抽寶箱多來源發卡</td><td class="dim">監控發放量；卡有 max win 上限（v1 已建）</td></tr>
-      <tr><td>總活動 RTP 超標</td><td class="dim">同一筆 bet 重複計入多個任務 → 多重發獎、總 RTP &gt; 2%</td><td class="dim">任務間不重複計入；總活動 RTP ≤ ~2%；特殊活動期間 RTP 調降</td></tr>
+      <tr><td>總活動 RTP 超標</td><td class="dim">同一筆 bet 重複計入多個任務 → 多重發獎、總 RTP &gt; 2%</td><td class="dim">任務間不重複計入；改採動態總邊際管理（§08）；特殊活動期間 RTP 調降</td></tr>
+      <tr><td>動態 RTP 反應延遲</td><td class="dim">RTP 是回頭看的統計值、警報具事後性，錢已發追不回</td><td class="dim">硬性自動節流 + 保守門檻先行，不只靠人工看警報手動降</td></tr>
+      <tr><td>per-player 公平性 / 觀感 / 合規</td><td class="dim">個人化調 RTP 可能引發公平性與觀感爭議</td><td class="dim">完整方案才開；最小方案先以全線路總邊際為主、不個人化</td></tr>
+      <tr><td>三表權重切換 / 灰色市場限定</td><td class="dim">動態調 RTP 改變實際賠付，合規市場不允許</td><td class="dim">合規（GLI / BMM）市場停用此模組，只跑固定 96.7% 表</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- ═══════════ 08 OPEN QUESTIONS ═══════════ -->
-<section class="section" id="openq">
+<!-- ═══════════ 08 RTP CONTROL ═══════════ -->
+<section class="section" id="rtpctrl">
   <div class="section-header">
     <span class="section-num">08</span>
+    <span class="section-title">風控與動態 RTP 基建</span>
+    <span class="section-title-en">RISK CONTROL &amp; DYNAMIC RTP</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">開發目的 · WHY</div>
+    <div class="hypo-text">當平台從「單一活動」走向<strong>「多活動同時舉辦」</strong>，各線路的活動發獎會疊加，總 RTP 容易失控。本基建在<strong>多活動並行之前</strong>先就位：即時監控「活動發獎 RTP 佔比 + 遊戲正在跑的 RTP」相加後是否仍有利潤，並用動態 RTP 反向補償，把總邊際守在 ≈3.3%。沒有這套，後續任何疊加活動都是在賭莊家邊際。</div>
+  </div>
+
+  <div class="body-text">本章是<strong>基礎建設層</strong>，由兩塊系統組成：<em>① CRM 獎勵監控系統</em>——即時看各線路「總活動發獎 RTP 佔比 + 遊戲正在跑的 RTP」相加後是否仍有利潤；<em>② 動態 RTP 系統</em>——用 0% / 96.7% / 100% 三組機率表搭配權重，靠調權重把有效 RTP 連續落在區間內，由遊戲 RTP 反向補償活動超發。</div>
+
+  <div class="callout warn">
+    <strong>⚠ 灰色市場限定（前提）</strong>：動態 RTP（三表權重切換）<strong>僅適用灰色市場</strong>；合規（GLI / BMM 認證）市場因 RTP 須固定揭露、不可動態調整，<strong>此模組一律停用</strong>，改以固定門檻 + 軟硬警報控管。本章所有「動態調 RTP」設計均以灰色市場為前提。
+  </div>
+
+  <!-- 運作流程圖 -->
+  <div class="sub-title">運作流程：從押注事件到地板保護</div>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">押注 · 發獎事件</div>
+        <div class="flow-step-desc">各線路即時上報</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">即時累計活動RTP佔比</div>
+        <div class="flow-step-desc">各活動發獎累計</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">比對當前遊戲RTP</div>
+        <div class="flow-step-desc">取線路即時遊戲RTP</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">邊際試算</div>
+        <div class="flow-step-desc">活動+遊戲 &gt;96.7%？邊際 &lt;門檻？</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">切換三表權重</div>
+        <div class="flow-step-desc">升混0%表 → 降遊戲RTP補償</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 06</div>
+        <div class="flow-step-title">92% 地板保護</div>
+        <div class="flow-step-desc">遊戲RTP不可再降</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warn">
+        <div class="flow-step-num">STEP 07</div>
+        <div class="flow-step-title">軟警報 + 自動節流</div>
+        <div class="flow-step-desc">觸地板：通知營運 + 系統自動降活動發獎</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>核心公式</strong>：有效遊戲 RTP = 原始 96.7% − 活動累積發獎 RTP 佔比。活動發越多 → 遊戲 RTP 要往下補（<strong>升混 0% 表</strong>）；活動收手 → 遊戲 RTP 回升（<strong>升混 100% 表</strong>）。目標是讓「<strong>活動 RTP + 遊戲 RTP</strong>」總和維持 ≈96.7%、莊家邊際守住 ≈3.3%。
+  </div>
+  <div class="callout warn">
+    <strong>92% 是遊戲 RTP 硬地板</strong>：遊戲 RTP 最低只能補償到 92%（保護玩家體驗）。一旦觸地板，<strong>無法再靠降遊戲 RTP 補償</strong>，必須改降「活動發獎佔比」。控制因此分<strong>兩段</strong>：<strong>① 軟性警報</strong>（通知營運）＋<strong>② 硬性自動節流</strong>（系統先自動把當期活動發獎打折／暫停）。不可只靠人看警報手動降——RTP 是回頭看的統計值、警報有事後性、錢已發追不回，要控的是<strong>水龍頭</strong>、不是追已經流出去的水。
+  </div>
+
+  <!-- 三表加權機制 -->
+  <div class="sub-title">動態 RTP：三表加權機制</div>
+  <div class="body-text">用三組機率表搭配權重，靠調權重把有效 RTP 連續落在目標區間：</div>
+  <table class="spec-table">
+    <thead><tr><th>機率表</th><th>作用</th><th>加權邏輯</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0% 表</td><td>不發獎（全輸盤面）</td><td class="dim">活動超發、需壓低遊戲 RTP 時 → <strong style="color:var(--gold-light)">升混 0% 表</strong>權重，把有效 RTP 往下拉</td></tr>
+      <tr><td class="mono">96.7% 表</td><td>原始基準 RTP</td><td class="dim">常態主力表；活動發獎佔比低時以此為主</td></tr>
+      <tr><td class="mono">100% 表</td><td>足額回饋盤面</td><td class="dim">活動收手、需把遊戲 RTP 補回時 → <strong style="color:var(--gold-light)">升混 100% 表</strong>權重，把有效 RTP 往上抬</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>⚠ 灰色市場限定，合規市場停用</strong>：三表權重即時切換會改變實際 RTP；<strong>合規（GLI / BMM）市場停用此機制</strong>，只跑固定 96.7% 表、動態補償一律關閉。
+  </div>
+
+  <!-- Task 與職能單位 -->
+  <div class="sub-title">Task 任務清單與職能單位</div>
+  <table class="spec-table">
+    <thead><tr><th>Task</th><th>職能</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td>監控資料管線</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-data">資料</span></td><td class="dim">彙整各線路押注 / 發獎事件，供即時計算</td></tr>
+      <tr><td>即時RTP累計引擎</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-eng">後端</span></td><td class="dim">即時累計各活動發獎 RTP 佔比與當前遊戲 RTP</td></tr>
+      <tr><td>三表權重控制服務</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-eng">後端</span></td><td class="dim">依邊際試算動態調整 0% / 96.7% / 100% 表權重（灰色市場）</td></tr>
+      <tr><td>自動節流閘門</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-eng">後端</span></td><td class="dim">觸地板 / 超線時自動把當期活動發獎打折 / 暫停</td></tr>
+      <tr><td>警報通道</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-eng">後端</span></td><td class="dim">軟性警報推送營運（接近地板 / 邊際過低）</td></tr>
+      <tr><td>後台監控看板</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-design">前端後台</span></td><td class="dim">各線路即時 RTP / 邊際 / 狀態燈呈現</td></tr>
+    </tbody>
+  </table>
+
+  <!-- UI/UX 監控看板 -->
+  <div class="sub-title">UI/UX：即時 RTP 監控看板（營運後台）</div>
+  <div class="body-text">營運後台核心畫面，<strong>各線路一列</strong>，即時呈現邊際健康度與節流狀態（下表為模擬看板）：</div>
+  <table class="spec-table">
+    <thead><tr><th>線路</th><th>原始RTP</th><th>當前活動<br>累積RTP佔比</th><th>動態調整後<br>遊戲RTP</th><th>合計</th><th>剩餘<br>利潤邊際</th><th>狀態燈</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">Line-A</td><td>96.7%</td><td>1.8%</td><td>94.9%</td><td>96.7%</td><td>3.3%</td><td><span style="color:var(--green)">● 綠 正常</span></td></tr>
+      <tr><td class="mono">Line-B</td><td>96.7%</td><td>4.5%</td><td>92.2%</td><td>96.7%</td><td>3.3%</td><td><span style="color:var(--gold-light)">● 黃 接近地板</span></td></tr>
+      <tr><td class="mono">Line-C</td><td>96.7%</td><td>5.6%</td><td>92.0%</td><td><span style="color:var(--red)">97.6%</span></td><td><span style="color:var(--red)">2.4%</span></td><td><span style="color:var(--red)">● 紅 觸發節流</span></td></tr>
+    </tbody>
+  </table>
+  <div class="body-text">
+    <strong>欄位說明</strong>：<br>
+    • <strong>原始RTP</strong>：遊戲設計基準（96.7%）。<br>
+    • <strong>當前活動累積RTP佔比</strong>：該線路所有進行中活動的發獎佔比總和。<br>
+    • <strong>動態調整後遊戲RTP</strong>：依核心公式（96.7% − 活動佔比）反向補償後的有效遊戲 RTP，下限鎖 92%。<br>
+    • <strong>合計</strong>：活動 RTP + 動態遊戲 RTP，目標守在 ≈96.7%。<br>
+    • <strong>剩餘利潤邊際</strong>：100% − 合計，目標 ≈3.3%。<br>
+    • <strong>狀態燈</strong>：<span style="color:var(--green)">綠＝正常</span>、<span style="color:var(--gold-light)">黃＝遊戲 RTP 接近 92% 地板</span>、<span style="color:var(--red)">紅＝已觸地板、合計超 96.7%、系統自動節流中</span>。<br>
+    <strong>警報 / 節流操作流</strong>：黃燈時推軟警報給營運（可手動先降活動發獎）；一旦遊戲 RTP 觸 92% 地板且合計仍 &gt;96.7%（如 Line-C），系統<strong>自動觸發節流</strong>（當期活動發獎打折 / 暫停）並轉紅燈，營運事後檢視，不需即時手動介入。
+  </div>
+
+  <!-- KPI -->
+  <div class="sub-title">預期提升目標（KPI）</div>
+  <div class="kpi-grid">
+    <div class="kpi-card primary">
+      <div class="kpi-label">邊際守線</div>
+      <div class="kpi-val">守線率</div>
+      <div class="kpi-desc">總邊際 ≥ ~3.3% 的時間佔比</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">攔截</div>
+      <div class="kpi-val">超發 ↓</div>
+      <div class="kpi-desc">活動超發攔截次數</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">反應</div>
+      <div class="kpi-val">節流延遲</div>
+      <div class="kpi-desc">自動節流反應延遲（分鐘）</div>
+    </div>
+  </div>
+  <table class="spec-table">
+    <thead><tr><th>指標</th><th>定義 / 目標</th></tr></thead>
+    <tbody>
+      <tr><td>邊際守線達成率</td><td class="dim">各線路總邊際 ≥ ~3.3% 的時間佔比（越高越好）</td></tr>
+      <tr><td>活動超發攔截次數</td><td class="dim">系統在邊際跌破門檻時成功攔截 / 節流的次數</td></tr>
+      <tr><td>地板觸發次數</td><td class="dim">遊戲 RTP 觸 92% 地板的頻率（過高代表活動配比需檢討）</td></tr>
+      <tr><td>自動節流反應延遲（分鐘）</td><td class="dim">從觸發到節流生效的時間（越短越好）</td></tr>
+      <tr><td>毛利波動收斂</td><td class="dim">導入後各線路毛利波動度下降幅度</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 成本評估 -->
+  <div class="sub-title">所需成本評估</div>
+  <div class="cost-block">
+    <div class="cost-row"><span class="cost-label">後端 · 即時RTP累計引擎 + 三表權重控制 + 自動節流閘門</span><span class="cost-val highlight">最重（重後端基建）</span></div>
+    <div class="cost-row"><span class="cost-label">資料 · 監控資料管線（各線路押注 / 發獎彙整）</span><span class="cost-val">中</span></div>
+    <div class="cost-row"><span class="cost-label">後台 · 即時 RTP 監控看板 + 警報通道</span><span class="cost-val">中</span></div>
+    <div class="cost-row total"><span class="cost-label">整體定位</span><span class="cost-val highlight">重後端基建 · 約 6 週（W4）</span></div>
+  </div>
+
+  <!-- 最小 vs 完整 -->
+  <div class="sub-title">最小方案 vs 完整方案</div>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead><tr><th>面向</th><th class="v1-col">最小方案（MVP）</th><th class="v2-col">完整方案</th></tr></thead>
+      <tbody>
+        <tr><td>作用範圍</td><td class="v1-val">全線路池子總邊際會計（不個人化）</td><td class="v2-val">per-player（依玩家身上活動數 / 累積獎勵 RTP 個人化調 RTP）</td></tr>
+        <tr><td>警報</td><td class="v1-val">軟性警報</td><td class="v2-val">預測式預警（趨勢提前示警）</td></tr>
+        <tr><td>節流</td><td class="v1-val">半自動節流</td><td class="v2-val">全自動節流</td></tr>
+        <tr><td>RTP 控制</td><td class="v1-val">固定門檻</td><td class="v2-val">三表權重即時控制</td></tr>
+        <tr><td>多活動分攤</td><td class="v1-val">總額控管</td><td class="v2-val">多活動分攤演算</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout info">最小方案先求<strong>守住全線路總邊際</strong>、快上線；per-player 動態 RTP 與預測式預警留到中後期、依數據與合規評估再開。</div>
+</section>
+
+<!-- ═══════════ 09 OPEN QUESTIONS ═══════════ -->
+<section class="section" id="openq">
+  <div class="section-header">
+    <span class="section-num">09</span>
     <span class="section-title">已鎖定 vs 待確認</span>
     <span class="section-title-en">LOCKED vs OPEN</span>
   </div>
@@ -1208,7 +1421,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>FREE SPIN 卡使用窗</td><td class="dim">發放後隔日起約 7 日內可用（D+1～D+7）</td></tr>
       <tr><td>補簽卡</td><td class="dim">簽到發放，每週上限 2 張，當斷簽保險</td></tr>
       <tr><td>即時競賽計分</td><td class="dim">net win（當日淨贏分），短週期結算發 FREE SPIN 卡</td></tr>
-      <tr><td>總活動 RTP</td><td class="dim">≤ 約 2%；任務間 bet 不重複計入；特殊活動期間調降</td></tr>
+      <tr><td>總邊際管理</td><td class="dim">動態總邊際管理：活動+遊戲 RTP 總和守 ≈96.7%、邊際 ≈3.3%、92% 硬地板、超線自動節流（灰色市場）；任務間 bet 不重複計入（詳見 §08）</td></tr>
       <tr><td>抽寶箱兩段上線</td><td class="dim">第一段現金獎先上線；第二段道具/卡/背包/後台另立規格</td></tr>
     </tbody>
   </table>
@@ -1228,7 +1441,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
   <div class="oq-item pm">
     <div class="oq-owner">PM DECISION</div>
-    <div class="oq-q">任務系統：日/週任務目標與獎勵配比（總活動 RTP ≤ ~2% 框架內）、挑戰/地圖任務關卡數/指定遊戲清單/各關寶箱內容、bet 不重複計入判定邏輯、特殊活動（週末/節慶/usertype 投放）觸發條件與 RTP 調降幅度。</div>
+    <div class="oq-q">任務系統：日/週任務目標與獎勵配比（納入 §08 動態總邊際管理框架）、挑戰/地圖任務關卡數/指定遊戲清單/各關寶箱內容、bet 不重複計入判定邏輯、特殊活動（週末/節慶/usertype 投放）觸發條件與 RTP 調降幅度。</div>
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC ALIGN</div>
@@ -1239,7 +1452,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  SLOT CRM 後續開發 Roadmap 提案 · V1.0 · CONFIDENTIAL 2026<br>
+  SLOT CRM 後續開發 Roadmap 提案 · V1.1 · CONFIDENTIAL 2026<br>
   CMB · 菲律賓市場 · 框架文件，各功能細節於對應 Wave 啟動前以獨立需求文件呈現
 </div>
 
