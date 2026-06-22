@@ -224,6 +224,51 @@
         }
  
         .submenu li a:hover::before { background: var(--accent); }
+
+        /* ─── 關聯群組：規格書 ↔ 原型 ─── */
+        /* 主項（規格書）：左側琥珀色標記條，標示其下掛有原型 */
+        .submenu li.rel-parent a { border-left-color: var(--accent-2); }
+
+        /* 子項（原型）：往內縮排，連接線上接規格書 */
+        .submenu li.rel-child a {
+            position: relative;
+            padding-left: 50px;
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+        .submenu li.rel-child a::before { display: none; }   /* 隱藏預設圓點，改用連接線 */
+        .submenu li.rel-child a:hover {
+            color: var(--text-primary);
+            border-left-color: var(--accent-2);
+        }
+
+        /* └─ 形狀的連接線，由原型往上接到規格書 */
+        .submenu li.rel-child .branch {
+            position: absolute;
+            left: 22px;
+            top: -18px;
+            bottom: 50%;
+            width: 14px;
+            border-left: 1.5px solid var(--accent-2);
+            border-bottom: 1.5px solid var(--accent-2);
+            border-radius: 0 0 0 5px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* 「原型」標籤 */
+        .rel-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--accent-2);
+            background: rgba(245,158,11,0.12);
+            border: 1px solid rgba(245,158,11,0.35);
+            border-radius: 4px;
+            padding: 1px 5px;
+            flex-shrink: 0;
+        }
  
         .sidebar-footer {
             padding: 12px;
@@ -574,8 +619,8 @@
             <ul class="submenu">
                 <li><a href="cmb_dev_master_roadmap_v1.1.html" target="content-frame" onclick="setTitle('CRM 開發總路線圖')">CRM 開發總路線圖</a></li>
                 <li><a href="crm_hub_channel_adapter_arch_v1.3.html" target="content-frame" onclick="setTitle('CRM 中台與渠道彙整')">CRM 中台與渠道彙整</a></li>
-                <li><a href="treasure_box_crm_spec_v3.3.html" target="content-frame" onclick="setTitle('CRM 抽寶箱功能規格書')">CRM 抽寶箱功能規格書</a></li>
-                <li><a href="抽寶箱 CRM 浮動icon 原型.html" target="content-frame" onclick="setTitle('抽寶箱原型')">CRM 抽寶箱原型設計</a></li>
+                <li class="rel-parent"><a href="treasure_box_crm_spec_v3.3.html" target="content-frame" onclick="setTitle('CRM 抽寶箱功能規格書')">CRM 抽寶箱功能規格書</a></li>
+                <li class="rel-child"><a href="抽寶箱 CRM 浮動icon 原型.html" target="content-frame" onclick="setTitle('抽寶箱原型')"><span class="branch"></span><span class="rel-badge">原型</span>抽寶箱浮動 icon 原型</a></li>
                 <li><a href="free_spin_chest_spec_v2.0.html" target="content-frame" onclick="setTitle('CRM Free Spin卡+背包系統 v2.1')">CRM Free Spin卡+背包系統 v2.1</a></li>
                 <li><a href="integration_consolidated_checklist_v2.html" target="content-frame" onclick="setTitle('串接確認內容')">串接確認內容</a></li>
             </ul>
