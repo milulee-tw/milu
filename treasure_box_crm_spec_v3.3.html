@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 CRM 功能規格書 v3.3</title>
+<title>抽寶箱 CRM 功能規格書 v3.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -828,7 +828,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CHEST SPEC · V3.3</span>
+  <span class="nav-brand">CHEST SPEC · V3.4</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">玩法機制</a>
   <a class="nav-item" href="#prizes">獎勵設計</a>
@@ -858,7 +858,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.3</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.4</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
@@ -986,7 +986,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CRM FEATURE SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>功能規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.3</div>
+  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.4</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>活動類型</strong> CRM 留存機制</div>
     <div class="cover-pill"><strong>解鎖條件</strong> 累積總押注金額</div>
@@ -1056,6 +1056,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">功能定位：本次切版核心原則</div>
   <div class="callout">
     <strong>玩家面 v1 只發現金獎，但後端基建一次做滿、AWC API 一次串完。</strong>v1 的 <em>place_bet</em> 與 v2 才會用到的 <em>LoginWithoutRedirect</em> 等需求<strong>一次性打包提交給 AWC 集成商</strong>，避免分兩次串接造成重複的開發、溝通與等待成本。FREE SPIN 卡的「水管」（資料表 + AWC API + max win 上限設定）在 v1 就建好，<strong>實際發卡與使用體驗留到 v2</strong>。
+  </div>
+
+  <div class="callout success">
+    <strong>v3.4 修訂（待確認收斂，2026-06-23）：</strong>§13「需上司決策」四項已拍板並改標「✅ 已決」——① 每格增量門檻 ₱50~₱1,000（累積 ₱3,600）→ 核准；② 固定獎池 ₱37 / RTP 1.028% → 核准；③ 後台「第幾抽權重」介面 → v1 即開放營運後台自助調整；④ v1 觀察期 → 觀察 2 週 ＋ D1 留存相對對照組 +3~5pt 達標進 v2。AWC 項註明 <strong>canonical 唯一來源＝《integration_consolidated_checklist_v2.html》</strong>。完整決策追溯彙整見 <em>cmb_dev_master_roadmap_v1.1.html §11</em>。
   </div>
 
   <div class="callout danger">
@@ -2522,21 +2526,24 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout warn">
-    <strong>📌 補充（Free Spin 整併，2026/06）</strong>：原 §12 僅涵蓋現金獎 place_bet 與跳轉 LoginWithoutRedirect，<strong>缺少 Free Spin 真正的「發卡通知 / Bonus 入帳 / 查詢對帳 / 整合拓樸」</strong>。這些已於 <strong>Free Spin 卡規格 §06</strong> 補齊，並整併成一份單一提交文件 → <strong>《AWC 一次性串接總清單》（awc_integration_consolidated_checklist_v1，共 20 項）</strong>。送 AWC 時請<strong>以該合併清單為準</strong>，本章下方同步補列 Free Spin 群組（C/D/E/F）。
+    <strong>📌 補充（Free Spin 整併，2026/06）</strong>：原 §12 僅涵蓋現金獎 place_bet 與跳轉 LoginWithoutRedirect，<strong>缺少 Free Spin 真正的「發卡通知 / Bet=0 入帳 / 查詢對帳 / 整合拓樸」</strong>。這些已於 <strong>Free Spin 卡規格 §06</strong> 補齊。
+  </div>
+  <div class="callout info">
+    <strong>🔗 canonical 唯一來源（2026-06-23 收斂）：</strong>所有 AWC（集成商）串接需求以 <strong>《integration_consolidated_checklist_v2.html》</strong> 為唯一 canonical 清單，<strong>本章不重複維護</strong>；下方列項僅為對齊參考，如有出入以該 checklist 為準。送 AWC 時請以該合併清單為準。
   </div>
 
   <div class="sub-title">現金獎相關需求（v1 本次啟用）</div>
   <div class="oq-item awc">
-    <div class="oq-owner">AWC · V1 現金獎</div>
-    <div class="oq-q">place_bet 新增 bonus_type 與 campaign_id 欄位；確認 bet_amount=0 零押注交易可正確處理入帳。</div>
+    <div class="oq-owner">AWC · V1 現金獎（2026-06-23 補述）</div>
+    <div class="oq-q">place_bet 主注單新增 <strong>campaign_id ＋ bonus_type（獲獎類型編號）＋ item_id（道具id）</strong> 欄位。bet_amount=0 以注單發放入主錢包真金＝<strong>我方既定機制（不需詢問「可行嗎」）</strong>，平台是否接受 Bet=0 屬逐平台開通。CRM 獎勵明細（現金獎＋FS 卡）<strong>另存 CRM 端獎勵表、不透過 AWC</strong>。（canonical 見 checklist A1–A3）</div>
   </div>
   <div class="oq-item">
     <div class="oq-owner">v3.3 · 已移除</div>
     <div class="oq-q"><s>place_bet 新增 wallet_target（MAIN｜BONUS）雙錢包路由</s> —— <strong>本需求作廢</strong>。經釐清，現金獎 win_amount 一律以 Bet=0/Win 注單入<strong>主錢包真金</strong>，不分錢包別、不需雙錢包模型。place_bet 不帶 wallet_target，僅保留 bonus_type / campaign_id 作對帳分離。</div>
   </div>
   <div class="oq-item awc">
-    <div class="oq-owner">AWC · V1 現金獎</div>
-    <div class="oq-q">get_bet_summary 活動獎勵可依 bonus_type 分離統計，與一般 GGR 獨立核算。</div>
+    <div class="oq-owner">AWC · V1 現金獎（2026-06-23 AWC 初步回覆）</div>
+    <div class="oq-q">get_bet_summary 活動獎勵可依 bonus_type 分離統計，與一般 GGR 獨立核算。<strong>目前可行，惟需新增 bonus_type 編號以判斷獲獎類型（編號表由我方提供）。</strong>（canonical 見 checklist E1）</div>
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC · V1 現金獎</div>
@@ -2594,21 +2601,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="sub-title">需上司決策</div>
-  <div class="oq-item">
-    <div class="oq-owner">PM DECISION</div>
-    <div class="oq-q">每格增量門檻最終確認：建議值 ₱50 / ₱100 / ₱150 / ₱200 / ₱300 / ₱400 / ₱600 / ₱800 / ₱1,000（內部累積至 ₱3,600），是否核准？如需調整，逐抽權重與 RTP 需重新驗算。</div>
+  <div class="callout success" style="margin-bottom:16px;"><strong>📌 v3.4 收斂（2026-06-23）：</strong>以下 4 項 PM 決策已於 2026-06-23 拍板。完整決策追溯彙整見 <em>cmb_dev_master_roadmap_v1.1.html §11</em>，本章僅留結論。</div>
+  <div class="oq-item pm">
+    <div class="oq-owner">✅ 已決（2026-06-23）</div>
+    <div class="oq-q"><strong>每格增量門檻 ₱50 / ₱100 / ₱150 / ₱200 / ₱300 / ₱400 / ₱600 / ₱800 / ₱1,000（內部累積至 ₱3,600）→ 已核准（採建議值）。</strong></div>
   </div>
-  <div class="oq-item">
-    <div class="oq-owner">PM DECISION</div>
-    <div class="oq-q">固定獎池 ₱37（小×5 + 中×2 + 大×1 + 最終×1，RTP 1.028%）是否接受？此為翻完 9 格之恆定 RTP，逐抽權重僅控制早退玩家的 RTP 暴露。</div>
+  <div class="oq-item pm">
+    <div class="oq-owner">✅ 已決（2026-06-23）</div>
+    <div class="oq-q"><strong>固定獎池 ₱37（小×5 + 中×2 + 大×1 + 最終×1，RTP 1.028%）→ 已核准。</strong>此為翻完 9 格之恆定 RTP，逐抽權重僅控制早退玩家的 RTP 暴露。</div>
   </div>
-  <div class="oq-item">
-    <div class="oq-owner">PM DECISION</div>
-    <div class="oq-q">後台「第幾抽權重」設定介面是否一開始就開放營運自助調整，還是 v1 先以設定檔管理權重、觀察期後再補後台 UI？</div>
+  <div class="oq-item pm">
+    <div class="oq-owner">✅ 已決（2026-06-23）</div>
+    <div class="oq-q"><strong>後台「第幾抽權重」設定介面 → v1 即開放營運後台自助調整</strong>（含後台 UI ＋權限 ＋驗算校驗），不採「先設定檔、觀察期後再補 UI」方案。</div>
   </div>
-  <div class="oq-item">
-    <div class="oq-owner">PM DECISION</div>
-    <div class="oq-q">v1 觀察期結束的判定標準：觀察幾週？D1 留存達到什麼數字視為假設成立，進入 v2 開發？</div>
+  <div class="oq-item pm">
+    <div class="oq-owner">✅ 已決（2026-06-23）</div>
+    <div class="oq-q"><strong>v1 觀察期判定 → 觀察 2 週 ＋ D1 留存「相對對照組 +3~5pt」達標才進 v2。</strong></div>
   </div>
 
   <div class="sub-title" style="margin-top:24px;">需與 AWC 確認</div>
@@ -2630,7 +2638,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC ALIGN</div>
-    <div class="oq-q">上述所有 AWC 需求已整理於第12章，本章不重複列出，請直接參照第12章 AWC 串接需求對齊。</div>
+    <div class="oq-q">上述所有 AWC 需求已整理於第12章，本章不重複列出。<strong>canonical 唯一來源＝《integration_consolidated_checklist_v2.html》，本章與第12章皆不重複維護</strong>，送 AWC 時請以該合併清單為準。</div>
   </div>
 </section>
 
@@ -2741,8 +2749,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.3 · CONFIDENTIAL 2026<br>
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.4 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）<br>
+  v3.4 修訂（2026-06-23）：§13 待確認收斂——門檻 ₱50~1,000、獎池 ₱37/RTP1.028%、權重 v1 後台自助、觀察期 2 週+D1相對+3~5pt 四項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
+  v3.4 增補（2026-06-23 · AWC 釐清）：place_bet 主注單欄位補 item_id（道具id）+ bonus_type（獲獎類型編號）；Bet=0 入主錢包為我方既定機制不需詢問；CRM 獎勵明細另存表不透過 AWC；get_bet_summary 可分離但需加 bonus_type 編號<br>
   v3.3 修訂：現金獎改走「注單通道（Bet=0/Win→主錢包真金）」，移除 wallet_target 雙錢包 / Bonus 入帳；新增逐平台開通 + 真金防濫用
 </div>
 

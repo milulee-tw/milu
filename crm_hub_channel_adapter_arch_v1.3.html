@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRM 中台 + 渠道適配層 架構規格 · CMB · v1.3</title>
+<title>CRM 中台 + 渠道適配層 架構規格 · CMB · v1.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -127,7 +127,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 </div>
 
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CRM-ARCH · V1.3</span>
+  <span class="nav-brand">CRM-ARCH · V1.4</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#arch">架構總覽</a>
   <a class="nav-item" href="#hub">中台職責</a>
@@ -144,7 +144,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">CRM 中台 + 渠道適配層<br>整合架構規格</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.3</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.4</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -169,7 +169,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <div class="cover-bg"></div><div class="cover-grid"></div>
   <div class="cover-tag">CMB · CRM ARCHITECTURE · 2026</div>
   <h1>CRM <span>中台</span> + 渠道適配層</h1>
-  <div class="cover-sub">CRM HUB + CHANNEL ADAPTER · 一套 CRM 控多平台（直連型＋集成商型兩型 adapter）整合架構 · V1.3 · 第一階段 AWC 首發（注單通道發獎）</div>
+  <div class="cover-sub">CRM HUB + CHANNEL ADAPTER · 一套 CRM 控多平台（直連型＋集成商型兩型 adapter）整合架構 · V1.4 · 第一階段 AWC 首發（注單通道發獎）</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>目標</strong> 一套 CRM 控多平台</div>
     <div class="cover-pill"><strong>直連型</strong> MPS / Jackpot Combo</div>
@@ -181,8 +181,9 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- CHANGELOG -->
 <div class="changelog">
-  <div class="changelog-head">修訂紀錄 · CHANGELOG（最新：v1.2 → v1.3 · 2026/06/17）</div>
+  <div class="changelog-head">修訂紀錄 · CHANGELOG（最新：v1.3 → v1.4 · 2026-06-23）</div>
   <ul>
+    <li style="border-bottom:1px solid var(--border);margin-bottom:6px;padding-bottom:8px;"><span class="cl-tag" style="color:var(--gold-light)">v1.4</span><strong>§08 待確認收斂（2026-06-23）</strong>：CRM 中台 → <strong>自建</strong>；player mapping → <strong>CRM 自維</strong>；真金防濫用 → 桶1 數值把關、獨立風控 deferred；跨端對帳主鍵統一 <strong>campaign_id</strong>、reserve＝活動級預算池；MPS / Jackpot Combo（M1/M2）第二階段 → <strong>現在就提前探詢（不阻塞第一階段）</strong>。AWC 項 canonical＝<em>integration_consolidated_checklist_v2</em>；完整追溯見 roadmap §11。</li>
     <li><span class="cl-tag" style="color:var(--gold-light)">v1.3</span><strong>集成商型 adapter 改走「注單通道發獎」，不再對接 Promotion Tool / Bonus 錢包</strong>。經國清向 FC 釐清：任務獎勵以 <strong>Bet_Amount=0 / Win_Amount=X 的正常注單</strong>表達，走既有「遊戲→AWC→平台」通道，由平台結算入<strong>玩家主錢包真金</strong>。原 v1.2「AWC Promotion Tool 提供活動錢包／流水／Free Spin、可發 Bonus」之假設<strong>作廢</strong>。詳見 CRM-ROUTE v2.0。</li>
     <li><span class="cl-tag" style="color:var(--gold-light)">v1.3</span><strong>錢包目標收斂為單一（主錢包真金）</strong>。獎勵一律即真金、可立即提領，<strong>不做平台級受限紅利（Bonus／流水／roll-over）</strong>。防濫用責任由平台 Bonus 機制收回至<strong>中台自有風控／額度／reserve</strong>。grantReward 的 <span class="mono">wallet_target=BONUS</span> 分支移除。</li>
     <li><span class="cl-tag" style="color:var(--gold-light)">v1.3</span><strong>第一階段卡點轉移</strong>：從「對接 AWC 哪一層（Promotion Tool / Seamless）」改為「<strong>逐平台商務開通任務功能＋RTP 揭露</strong>」（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收）。</li>
@@ -419,20 +420,23 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 <!-- 08 -->
 <section class="section" id="openq">
   <div class="section-header"><span class="section-num">08</span><span class="section-title">待確認事項</span><span class="section-title-en">OPEN QUESTIONS</span></div>
-  <div class="oq-item"><div class="oq-owner">PM / 風控</div><div class="oq-q"><strong>真金直發的防濫用</strong>：獎勵即真金、可立即提領，平台 Bonus 流水鎖已不擋。領取資格 / 頻率 / 額度 / 黑名單等防濫用，由中台 L1 補上（取代原平台級受限紅利的風控）。</div></div>
-  <div class="oq-item"><div class="oq-owner">PM / 基建</div><div class="oq-q">跨端玩家識別（player mapping）由誰維護？CRM 自維，還是各平台（MPS / Jackpot Combo / AWC 背後平台）提供對映？此題決定 §07 基建估時與責任邊界。</div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN · 第一階段優先</div><div class="oq-q">注單通道發獎確認：place_bet 帶 campaign_id、<strong>Bet=0 零押注中獎注單可正確處理入帳</strong>、注單回呼帶回 <span class="mono">ref_free_voucher_id / campaign_id</span> 供對帳、CreateFreeSpin / LoginWithoutRedirect 規格。（已不問 Promotion Tool / Bonus 入帳；見 AWC-TOPO v2。）</div></div>
-  <div class="oq-item fc"><div class="oq-owner">業務 / BD · 第一階段優先</div><div class="oq-q"><strong>逐平台開通盤點</strong>：哪些目標平台接受任務功能 / Bet=0 注單？覆蓋率？（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收。）每個開通平台須備妥 RTP 佔比揭露。</div></div>
-  <div class="oq-item mps"><div class="oq-owner">MPS · 第二階段 go/no-go</div><div class="oq-q">MPS 直連發獎 API 能否由 CRM 外部送 win 值（帶 campaign_id + 指定遊戲）入主錢包？決定第二階段直連型（MPS）能否成立。可提前探詢，不阻塞第一階段。</div></div>
-  <div class="oq-item"><div class="oq-owner">平台 · Jackpot Combo</div><div class="oq-q">Jackpot Combo（≈ 另一個 MPS）何時就緒？是否提供與 MPS 對等的「發獎 / 錢包 / 入帳 / 對帳 / 取消」直連 API，供直連型 adapter 再 new 一個 instance？</div></div>
-  <div class="oq-item"><div class="oq-owner">PM / 對帳</div><div class="oq-q">跨端對帳彙整口徑：promotionId / campaign_id 是否能在各平台報表都帶出並對齊？reserve 核銷 / 釋放規則？</div></div>
+  <div class="callout success" style="margin-bottom:16px;"><strong>📌 v1.4 收斂（2026-06-23）：</strong>CRM 中台自建、player mapping、防濫用方向、跨端對帳口徑、MPS/Jackpot 第二階段探詢均已拍板。完整決策追溯彙整見 <em>cmb_dev_master_roadmap_v1.1.html §11</em>，本章僅留結論；AWC 項 canonical＝<em>integration_consolidated_checklist_v2.html</em>。</div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>CRM 中台 → 自建</strong>（非採購）。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>跨端玩家識別（player mapping）→ CRM 自維</strong>（非各平台提供對映）。此為 §07 P0 基建，責任邊界落在中台。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決方向（2026-06-23）</div><div class="oq-q"><strong>真金直發防濫用：寶箱＋Free Spin 皆屬桶1（押注衍生）靠數值（max_conversion 封頂）把關，不需獨立風控模組。</strong>獨立防濫用參數（資格 / 頻率 / 額度 / 黑名單）deferred，依賴未來「7 日登入獎勵（桶2）」功能。框架＝GP 邊界（無 KYC / 無提款 hold）＋活動分桶＋新手蜜月 7 天。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>跨端對帳口徑：對帳主鍵統一 campaign_id</strong>（各平台報表能否帶出屬 AWC 範疇，見 checklist A3）；<strong>reserve＝只做「活動級預算池」</strong>（抽到上限停發），單筆靠 max_conversion 封頂，不做單筆 reserve 預扣核銷。</div></div>
+  <div class="oq-item mps"><div class="oq-owner">✅ 已決（2026-06-23）· 進行中</div><div class="oq-q"><strong>第二階段 MPS / Jackpot Combo（M1/M2）直連發獎 API → 現在就提前探詢（不阻塞第一階段）。</strong>探詢內容：MPS 直連發獎 API 能否由 CRM 外部送 win 值（帶 campaign_id + 指定遊戲）入主錢包；Jackpot Combo（≈ 另一個 MPS）是否提供與 MPS 對等的「發獎 / 錢包 / 入帳 / 對帳 / 取消」直連 API，供直連型 adapter 再 new 一個 instance。狀態：進行中。</div></div>
+  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN · 第一階段優先（canonical＝checklist · 2026-06-23 更新）</div><div class="oq-q">注單通道發獎：place_bet 主注單補 <strong>campaign_id ＋ bonus_type（獲獎類型編號）＋ item_id（道具id）</strong>；Bet=0 入主錢包真金＝我方既定機制（不需詢問）；<strong>CRM 獎勵明細（現金獎＋FS 卡）另存 CRM 端獎勵表、不透過 AWC</strong>。<strong>仍待 AWC：</strong>SetActiveFreeSpin 帶 reference_id 主動啟用（B3）、拓樸 F1。<strong>canonical 唯一來源＝《integration_consolidated_checklist_v2.html》，本章不重複維護。</strong></div></div>
+  <div class="oq-item fc"><div class="oq-owner">業務 / BD · 第一階段優先（canonical＝checklist）</div><div class="oq-q"><strong>逐平台開通盤點</strong>：哪些目標平台接受任務功能 / Bet=0 注單？覆蓋率？（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收。）每個開通平台須備妥 RTP 佔比揭露。詳見 checklist。</div></div>
 </section>
 
 </div>
 
 <div class="doc-footer">
-  CRM 中台 + 渠道適配層 整合架構規格 · V1.3 · CONFIDENTIAL 2026<br>
-  CMB · CRM 生態 · 關聯：抽寶箱 v3.3 / Free Spin 卡 v2.0 / CRM-ROUTE v2.0 / AWC-TOPO v2 / 開發總路線圖 v1.1<br>
+  CRM 中台 + 渠道適配層 整合架構規格 · V1.4 · CONFIDENTIAL 2026<br>
+  CMB · CRM 生態 · 關聯：抽寶箱 v3.4 / Free Spin 卡 v2.2 / CRM-ROUTE v2.0 / AWC-TOPO v2 / 開發總路線圖 v1.2<br>
+  v1.4 修訂（2026-06-23）：§08 待確認收斂——CRM 中台自建、player mapping CRM 自維、防濫用桶1數值把關、對帳主鍵 campaign_id、reserve 活動級預算池、MPS/Jackpot 第二階段提前探詢；AWC 項 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
+  v1.4 增補（2026-06-23 · AWC 釐清）：注單通道補 item_id + bonus_type 編號、CRM 獎勵明細另存表不透過 AWC、Bet=0 為既定機制；FS 過期卡每次下注判定失效即結算；僅餘 SetActiveFreeSpin(B3) / 拓樸(F1) / 逐平台開通(F3) 待回覆<br>
   v1.3 修訂：集成商型 adapter 改走「注單通道發獎」（Bet=0/Win→主錢包真金），移除 Promotion Tool / Bonus 錢包 / 流水 假設
 </div>
 

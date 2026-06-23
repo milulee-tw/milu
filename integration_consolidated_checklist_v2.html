@@ -106,7 +106,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 </div>
 
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">INTEG · V2.0</span>
+  <span class="nav-brand">INTEG · V2.1</span>
   <a class="nav-item active" href="#overview">目的</a>
   <a class="nav-item" href="#checklist">串接總清單</a>
   <a class="nav-item" href="#questions">待集成商決策</a>
@@ -126,7 +126,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">集成商一次性串接總清單<br>抽寶箱 + Free Spin 整併</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.0</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.1</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -148,7 +148,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <div class="cover-bg"></div><div class="cover-grid"></div>
   <div class="cover-tag">CMB · INTEGRATION · 2026</div>
   <h1>集成商 <span>一次性串接</span></h1>
-  <div class="cover-sub">抽寶箱 + Free Spin 整併總清單 · ONE-SHOT INTEGRATION · V2.0（注單模式：Bet=0/Win→主錢包真金）</div>
+  <div class="cover-sub">抽寶箱 + Free Spin 整併總清單 · ONE-SHOT INTEGRATION · V2.1（注單模式：Bet=0/Win→主錢包真金 · AWC canonical 唯一來源）</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>來源</strong> 抽寶箱 v3.2 §12 + Free Spin 規格 §06</div>
     <div class="cover-pill"><strong>目的</strong> 集成商只串一次</div>
@@ -172,6 +172,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="info-card"><div class="info-card-icon">🟠</div><div class="info-card-title">狀態標記</div><div class="info-card-desc"><span class="tag-pill tag-exist">已列</span> 抽寶箱原本就有；<span class="tag-pill tag-new">新增補入</span> Free Spin 規格新發現、本次補進打包清單。</div></div>
   </div>
   <div class="callout info"><strong>使用方式</strong>：本清單即「給集成商的一次性需求書」骨架。建議規格確認後立即送出，與 BE/FE 開發平行。逐項標了 <strong>API · 啟用時點 · 來源 · 狀態</strong>，§03 為需集成商書面回覆的決策題。</div>
+  <div class="callout success"><strong>🔗 canonical 唯一來源（2026-06-23 確認）：</strong>本清單為全專案 <strong>AWC（集成商）串接需求的唯一 canonical 清單</strong>——抽寶箱 v3.4 §12/§13、Free Spin v2.2 §10、CRM-ARCH v1.4 §08、roadmap v1.2 §11 的 AWC 項皆指向本份、不重複維護。<strong>MPS / Jackpot Combo（M1/M2）非 AWC，不放本份</strong>，留在 roadmap §11 第二階段探詢區。本次盤點：群組 A（A1–A4）/ B（B1–B4，含跳轉自動套用 B3、過期卡 B4）/ C（C1–C3）/ D（D1–D2，D3/D4 已移除）/ E（E1–E3）/ F（F1–F3）皆在；F2「作廢/更新已發卡」我方已定不做、可略。</div>
 </section>
 
 <!-- 02 -->
@@ -190,9 +191,9 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <table class="spec-table">
     <thead><tr><th style="width:30px">#</th><th>串接項目</th><th>API / 欄位</th><th>時點</th><th>來源 / 狀態</th></tr></thead>
     <tbody>
-      <tr><td class="mono">A1</td><td>新增 <span class="mono">bonus_type</span> + <span class="mono">campaign_id</span> 欄位</td><td class="mono">place_bet</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
-      <tr><td class="mono">A2</td><td><span class="mono">bet_amount=0</span> 零押注交易可正確入帳</td><td class="mono">place_bet</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
-      <tr><td class="mono">A3</td><td>注單回呼帶回 <span class="mono">ref_free_voucher_id / campaign_id</span> 供歸卡 / 歸活動對帳<br><span class="dim" style="font-size:11px;">（v2：原「wallet_target 雙錢包路由」移除——一律入主錢包真金）</span></td><td class="mono">place_bet 回呼</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span><span class="tag-pill tag-fs">FreeSpin</span> <span class="tag-pill tag-new">v2 改寫</span></td></tr>
+      <tr><td class="mono">A1</td><td>主注單新增 <span class="mono">campaign_id</span> ＋ <span class="mono">bonus_type</span>（獲獎類型編號）＋ <span class="mono">item_id</span>（道具 id）欄位<br><span class="dim" style="font-size:11px;">（2026-06-23：補入 item_id 道具資訊；bonus_type 用於判斷獲獎類型）</span></td><td class="mono">place_bet</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-new">v2.1 補欄位</span></td></tr>
+      <tr><td class="mono">A2</td><td><span class="mono">bet_amount=0</span> 零押注以注單發放入主錢包真金<br><span class="dim" style="font-size:11px;">（2026-06-23：此為我方既定發放機制，<strong>不再列為待 AWC 確認的設計題</strong>；個別平台是否接受 Bet=0 注單屬 F3 逐平台開通）</span></td><td class="mono">place_bet</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-fs">已定·不需詢問</span></td></tr>
+      <tr><td class="mono">A3</td><td>注單回呼帶回 <span class="mono">ref_free_voucher_id / campaign_id</span> 供歸卡 / 歸活動對帳<br><span class="dim" style="font-size:11px;">（v2：原「wallet_target 雙錢包路由」移除——一律入主錢包真金）<br>（2026-06-23：CRM 產生的獎勵明細（現金獎＋Free Spin 卡）<strong>另存 CRM 端獎勵表、不透過 AWC</strong>；AWC 端只需在主注單帶回 campaign_id / item_id 供我方歸戶）</span></td><td class="mono">place_bet 回呼</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span><span class="tag-pill tag-fs">FreeSpin</span> <span class="tag-pill tag-new">v2.1 補述</span></td></tr>
       <tr><td class="mono">A4</td><td>派獎失敗重試（比照 free_game 重試至成功 + 最大次數）</td><td class="mono">place_bet</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
     </tbody>
   </table>
@@ -203,8 +204,8 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <tbody>
       <tr><td class="mono">B1</td><td>API 規格：Token+GameId、一次性 URL、有效期、使用限制</td><td class="mono">LoginWithoutRedirect</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
       <tr><td class="mono">B2</td><td>同一玩家 Token 短時間連續多次呼叫（背包多卡）</td><td class="mono">LoginWithoutRedirect</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
-      <tr><td class="mono">B3</td><td>跳轉後 Free Spin 自動套用觸發機制（集成商自動識別 vs Combo 另呼叫 CreateFreeSpin）</td><td class="mono">LoginWithoutRedirect / CreateFreeSpin</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
-      <tr><td class="mono">B4</td><td>過期卡能否呼叫 LoginWithoutRedirect + 有效期判定點</td><td class="mono">LoginWithoutRedirect</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
+      <tr><td class="mono">B3</td><td>跳轉後 Free Spin 主動啟用：<strong>請 AWC 釐清 <span class="mono">SetActiveFreeSpin</span> 能否帶入 <span class="mono">reference_id</span></strong> 指定該卡 → 跳轉後即主動開始 Free Spin。<br><span class="dim" style="font-size:11px;">（2026-06-23 我方方向：能帶 reference_id 即自動啟用；<strong>若 AWC 不支援亦可接受</strong>——退回「玩家自背包點擊執行」備援）</span></td><td class="mono">SetActiveFreeSpin / CreateFreeSpin</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-req">待 AWC 釐清</span></td></tr>
+      <tr><td class="mono">B4</td><td>有效期判定：<strong>過期卡不可呼叫 LoginWithoutRedirect</strong>（我方已定）。<strong>每次下注時判斷該卡是否仍有效，若已失效 → 直接結算給錢（不再起新局）。</strong><br><span class="dim" style="font-size:11px;">（2026-06-23：判定點＝每次下注當下；待 AWC 確認其過期卡行為與此一致 / 可由我方控管）</span></td><td class="mono">LoginWithoutRedirect / 結算</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-fs">我方已定 + 待 AWC 對齊</span></td></tr>
     </tbody>
   </table>
 
@@ -233,7 +234,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <table class="spec-table">
     <thead><tr><th style="width:30px">#</th><th>串接項目</th><th>API / 欄位</th><th>時點</th><th>來源 / 狀態</th></tr></thead>
     <tbody>
-      <tr><td class="mono">E1</td><td>活動派彩依 <span class="mono">bonus_type</span> 分離統計（與一般 GGR 獨立核算）</td><td class="mono">get_bet_summary</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
+      <tr><td class="mono">E1</td><td>活動派彩依 <span class="mono">bonus_type</span> 分離統計（與一般 GGR 獨立核算）<br><span class="dim" style="font-size:11px;">（2026-06-23 AWC 回覆：目前可分離；<strong>需新增 <span class="mono">bonus_type</span> 編號以判斷獲獎類型</strong>，編號表由我方提供）</span></td><td class="mono">get_bet_summary</td><td><span class="tag-pill tag-v1">V1</span></td><td class="dim"><span class="tag-pill tag-fs">可行·需加編號</span></td></tr>
       <tr><td class="mono">E2</td><td>道具 / Free Spin 使用記錄獨立標記（<span class="mono">item_use / FREE_SPIN_USED</span>）</td><td class="mono">get_bet_summary</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-chest">抽寶箱</span> <span class="tag-pill tag-exist">已列</span></td></tr>
       <tr><td class="mono">E3</td><td>Free Spin 派送 / 使用查詢（背包顯示 + 對帳）</td><td class="mono">GetFreeSpinSendDetail / Summary / RecordByTime</td><td><span class="tag-pill tag-v2">V2</span></td><td class="dim"><span class="tag-pill tag-fs">FreeSpin</span> <span class="tag-pill tag-new">新增補入</span></td></tr>
     </tbody>
@@ -255,12 +256,14 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 <!-- 03 -->
 <section class="section" id="questions">
   <div class="section-header"><span class="section-num">03</span><span class="section-title">待集成商書面回覆的決策題</span><span class="section-title-en">DECISIONS NEEDED</span></div>
-  <div class="oq-item"><div class="oq-owner">集成商 ALIGN · 注單入帳</div><div class="oq-q">結算 / 現金獎以 <strong>Bet=0/Win 注單</strong>入<strong>主錢包真金</strong>可行嗎？注單回呼帶回 <span class="api">ref_free_voucher_id / campaign_id</span> 供歸卡對帳？（A2 / A3 / D1）</div></div>
-  <div class="oq-item"><div class="oq-owner">BD · 逐平台開通</div><div class="oq-q">透過集成商觸及的平台，哪些接受任務功能 / bet_amount=0 注單？覆蓋率？RTP 揭露窗口？（F3）<span class="api">FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收</span></div></div>
-  <div class="oq-item"><div class="oq-owner">集成商 ALIGN · 發卡</div><div class="oq-q">Free Spin 跳轉後自動套用：集成商進遊戲時自動識別，還是需 Combo 跳轉前另呼叫 CreateFreeSpin？每轉押注由誰決定？（B3 / C1 / C3）</div></div>
-  <div class="oq-item"><div class="oq-owner">集成商 ALIGN · 效期</div><div class="oq-q">過期卡是否仍可呼叫 LoginWithoutRedirect？有效期判定點在「持有階段」還是「進遊戲當下」？（B4）</div></div>
-  <div class="oq-item"><div class="oq-owner">集成商 ALIGN · 維運</div><div class="oq-q">是否提供「作廢 / 更新已發 free spin」API？（F2）</div></div>
-  <div class="oq-item"><div class="oq-owner">集成商 / 平台 · 拓樸</div><div class="oq-q">採「經集成商（集成型）」還是「Combo 與平台直連」？決定發卡通知與結果回報的串接對象。（F1）</div></div>
+  <div class="callout success" style="margin-bottom:16px;"><strong>📌 2026-06-23 更新：</strong>下列部分項目已由我方拍板或經 AWC 初步回覆，狀態如各項所示；仍需 AWC 書面回覆者標「待 AWC」。</div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已定 · 不需詢問（注單入帳）</div><div class="oq-q">現金獎 / Free Spin 結算以 <strong>Bet=0/Win 注單入主錢包真金＝我方既定機制</strong>，不再列為待 AWC 設計題。CRM 獎勵明細（現金獎＋FS 卡）<strong>另存 CRM 端獎勵表、不透過 AWC</strong>；AWC 端只需在主注單帶回 <span class="api">campaign_id / item_id</span> 供歸戶。（A1–A3 / D1）</div></div>
+  <div class="oq-item"><div class="oq-owner">BD · 逐平台開通（仍待盤點）</div><div class="oq-q">透過集成商觸及的平台，哪些接受任務功能 / bet_amount=0 注單？覆蓋率？RTP 揭露窗口？（F3）<span class="api">FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收</span></div></div>
+  <div class="oq-item"><div class="oq-owner">待 AWC · 發卡主動啟用（B3）</div><div class="oq-q"><strong>請 AWC 釐清 <span class="api">SetActiveFreeSpin</span> 能否帶入 <span class="api">reference_id</span></strong> 指定該卡 → 跳轉後主動開始 Free Spin。<strong>我方方向：能帶即自動啟用；不支援亦可接受</strong>（退回玩家自背包點擊執行備援）。每轉押注由誰帶入一併確認。（B3 / C1 / C3）</div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已定 · 效期（B4，待 AWC 對齊）</div><div class="oq-q"><strong>過期卡不可呼叫 LoginWithoutRedirect</strong>；有效期<strong>於每次下注當下判斷</strong>，若已失效 → <strong>直接結算給錢、不再起新局</strong>。待 AWC 確認其過期卡行為與此一致或可由我方控管。（B4）</div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ AWC 初步回覆 · 對帳分離（E1）</div><div class="oq-q">get_bet_summary 目前可依 <span class="api">bonus_type</span> 分離活動派彩 vs GGR；<strong>需新增 bonus_type 編號以判斷獲獎類型</strong>，編號表由我方提供。（E1）</div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已定 · 維運（F2）</div><div class="oq-q">不需「作廢 / 更新已發 free spin」API——已發卡不變更、擴充走補發新卡，<strong>F2 可略，不需 AWC 回覆</strong>。</div></div>
+  <div class="oq-item"><div class="oq-owner">集成商 / 平台 · 拓樸（仍待）</div><div class="oq-q">採「經集成商（集成型）」還是「Combo 與平台直連」？決定發卡通知與結果回報的串接對象。（F1）</div></div>
 </section>
 
 <!-- 04 -->
@@ -333,8 +336,10 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 </div>
 
 <div class="doc-footer">
-  集成商一次性串接總清單 · 抽寶箱 + Free Spin 整併 · V2.0 · CONFIDENTIAL 2026<br>
-  CMB · 來源：抽寶箱 v3.3 §12 + Free Spin v2.0 §06 + 國清↔FC 注單模式釐清 · 關聯：AWC-CONFIRM v3 / AWC-TOPO v2<br>
+  集成商一次性串接總清單 · 抽寶箱 + Free Spin 整併 · V2.1 · CONFIDENTIAL 2026<br>
+  CMB · 來源：抽寶箱 v3.4 §12 + Free Spin v2.2 §06 + 國清↔FC 注單模式釐清 · 關聯：AWC-CONFIRM v3 / AWC-TOPO v2 / roadmap v1.2<br>
+  v2.1 修訂（2026-06-23）：確立本份為 AWC（集成商）唯一 canonical 來源（四份源規格 AWC 項皆指向本份）；盤點 A1–A4 / B1–B4 / C1–C3 / D1–D2 / E1–E3 / F1–F3 完整、F2 標「我方不做、可略」；MPS/Jackpot（M1/M2）非 AWC、不放本份（留 roadmap §11 第二階段）<br>
+  v2.1 增補（2026-06-23 · AWC 釐清）：注單入帳為我方既定機制不需詢問、CRM 獎勵明細另存表不透過 AWC、主注單補 item_id（道具id）+ bonus_type（獲獎類型編號）；B3 SetActiveFreeSpin 帶 reference_id 主動啟用（不支援則背包手動備援）；B4 過期卡不可呼叫 LoginWithoutRedirect、每次下注判定失效即直接結算；E1 get_bet_summary 可分離但需加 bonus_type 編號<br>
   v2.0 修訂：改走注單通道（Bet=0/Win→主錢包真金），刪減群組 D（Bonus 入帳 / 流水 / roll-over），新增 F3 逐平台開通盤點
 </div>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMB 開發總路線圖 · Master Build Order · v1.1</title>
+<title>CMB 開發總路線圖 · Master Build Order · v1.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -127,7 +127,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 </div>
 
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CMB · ROADMAP V1.1</span>
+  <span class="nav-brand">CMB · ROADMAP V1.2</span>
   <a class="nav-item active" href="#intro">如何使用</a>
   <a class="nav-item" href="#dep">依賴總覽</a>
   <a class="nav-item" href="#matrix">機制矩陣</a>
@@ -148,7 +148,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="sidebar-brand">CMB · BUILD ORDER</div>
     <div class="sidebar-title">開發總路線圖<br>Master Build Order</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.1</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.2</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -650,28 +650,43 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 <!-- 10 OPEN QUESTIONS -->
 <section class="section" id="openq">
   <div class="section-header"><span class="section-num">11</span><span class="section-title">對外待確認彙整（去重）</span><span class="section-title-en">OPEN QUESTIONS</span></div>
-  <div class="body-text">把四份文件的待確認去重，按對象分組。<strong>第一階段＝AWC，故 AWC 確認最優先；MPS 屬第二階段。</strong></div>
+  <div class="body-text">把四份文件的待確認去重，按對象分組。<strong>本章為全專案「已決事項」的唯一完整追溯處（決策總帳）；其他源規格只留結論與指向本章。</strong>第一階段＝AWC，故 AWC 確認最優先；MPS 屬第二階段。</div>
 
-  <div class="sub-title">AWC（第一階段主路由 · 優先確認）</div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">place_bet 可否新增 bonus_type / campaign_id 欄位、bet_amount=0 零押注合法？get_bet_summary 能否分離活動派彩 vs GGR？<span class="tag-pill tag-src">[BOX 1.1–1.4][AWC §A/E]</span></div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN（確認函 A1/A2）</div><div class="oq-q">獎勵注單回呼是否帶回 ref_free_voucher_id / campaign_id 供對帳？max_conversion 封頂一律由我方結算層自套 min()。（已不問 Bonus 入帳 / 流水）<span class="tag-pill tag-src">[AWC-TOPO v2]</span></div></div>
-  <div class="oq-item fc"><div class="oq-owner">BD · 逐平台開通</div><div class="oq-q">哪些目標平台接受任務功能 / Bet=0 注單？覆蓋率？每個開通平台備妥 RTP 佔比揭露。（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收）<span class="tag-pill tag-src">[AWC-TOPO v2]</span></div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">LoginWithoutRedirect 一次性連結：頻率限制、失效重取、過期卡可否呼叫、跳轉後 FS 自動套用觸發機制。<span class="tag-pill tag-src">[FS §10][AWC §B]</span></div></div>
+  <div class="callout success"><strong>📌 決策總帳更新（2026-06-23 收斂）：</strong>本次將四份源規格殘留的「待確認」逐項收斂。已決項在此處保留完整結論，源規格僅留指向；AWC（集成商）項的 canonical 唯一清單＝<strong>《integration_consolidated_checklist_v2.html》</strong>，本章與源規格皆不重複維護其細項。</div>
 
-  <div class="sub-title">PM / 上司決策</div>
-  <div class="oq-item"><div class="oq-owner">PM DECISION</div><div class="oq-q">每幣值 × 5 階段的 face_value / 次數 / max_conversion 實際數值（一律入主錢包真金）；任務獎勵的 RTP 佔比與派彩上限；<strong>真金直發的防濫用規則（領取資格 / 頻率 / 黑名單）</strong>。<span class="tag-pill tag-src">[FS §10]</span></div></div>
-  <div class="oq-item"><div class="oq-owner">PM DECISION</div><div class="oq-q">卡有效期採「發卡 +N 天」相對制 or 綁活動結束日絕對制，跨活動是否統一。<span class="tag-pill tag-src">[FS §10]</span></div></div>
-  <div class="oq-item"><div class="oq-owner">PM / 架構</div><div class="oq-q">CRM 中台自建 vs 採購；player mapping 由 CRM 自維 or 各平台提供（影響 I1 估時與責任邊界）。<span class="tag-pill tag-src">[ARCH §08]</span></div></div>
+  <div class="sub-title">✅ 已決（2026-06-23）· PM / 上司決策</div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>Free Spin face_value 表 → 沿用公版押注段預設</strong>：次數全段 = 10、max_conversion = face_value × 10、系統自動算，營運可逐段微調。<span class="tag-pill tag-src">[FS §10 / §07]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>任務獎勵 RTP → 單筆＝max_conversion 封頂；活動整體 RTP 佔比硬上限 = 3pt</strong>（動態 RTP 安全閥，超過降權 / 停發；取代舊「≤2%」靜態鐵則）。<span class="tag-pill tag-src">[FS §10]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>真金防濫用 → 框架已定</strong>：GP 邊界（無 KYC / 無提款 hold）＋活動分桶＋新手蜜月 7 天。寶箱＋Free Spin 皆屬桶1（押注衍生）<strong>靠數值（max_conversion 封頂）把關，不需獨立風控模組</strong>；獨立防濫用參數 deferred，依賴未來「7 日登入獎勵（桶2）」功能。<span class="tag-pill tag-src">[ARCH §08][FS §10]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>卡有效期 → 發卡 +N 天相對制</strong>（自然日 · GMT+8 · N 鎖卡模板，跨活動統一）。<span class="tag-pill tag-src">[FS §10]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>CRM 中台 → 自建</strong>（非採購）；<strong>player mapping → CRM 自維</strong>（非各平台提供）。<span class="tag-pill tag-src">[ARCH §08]</span></div></div>
 
-  <div class="sub-title">第二階段（MPS 直連 · 可提前探詢，不阻塞第一階段）</div>
-  <div class="oq-item mps"><div class="oq-owner">MPS · 第二階段</div><div class="oq-q">MPS 直連發獎 API 能否由 CRM 外部送 win 值（帶 campaign_id + 指定遊戲）入主錢包真金？決定第二階段直連型能否直接成立。<span class="tag-pill tag-src">[ARCH §08]</span></div></div>
+  <div class="sub-title" style="margin-top:24px;">✅ 已決（2026-06-23）· 內部數值與機制</div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>寶箱固定獎池 ₱37 / RTP 1.028% → 核准</strong>（翻完 9 格之恆定 RTP）。<span class="tag-pill tag-src">[BOX §13]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>寶箱每格增量門檻 ₱50 / 100 / 150 / 200 / 300 / 400 / 600 / 800 / 1,000（累積 ₱3,600）→ 核准</strong>（採建議值）。<span class="tag-pill tag-src">[BOX §13]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>後台「第幾抽權重」設定介面 → v1 即開放營運後台自助調整</strong>（含後台 UI ＋權限 ＋驗算校驗）。<span class="tag-pill tag-src">[BOX §13]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>v1 觀察期判定 → 觀察 2 週 ＋ D1 留存「相對對照組 +3~5pt」達標才進 v2</strong>。<span class="tag-pill tag-src">[BOX §13]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>跨端對帳 / reserve → 對帳主鍵統一 campaign_id；reserve＝只做「活動級預算池」</strong>（抽到上限停發），單筆靠 max_conversion 封頂，不做單筆 reserve 預扣核銷。<span class="tag-pill tag-src">[ARCH §08]</span></div></div>
+
+  <div class="sub-title" style="margin-top:24px;">AWC（第一階段主路由 · canonical＝integration_consolidated_checklist_v2）</div>
+  <div class="callout info"><strong>🔗 canonical：</strong>以下 AWC（集成商）項目以 <strong>《integration_consolidated_checklist_v2.html》</strong> 為唯一完整清單，本章僅彙整對象與優先序，細項不重複維護。<strong>2026-06-23 更新</strong>：部分項目已由我方拍板或經 AWC 初步回覆，狀態如各項所示。</div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已定（2026-06-23）· 注單入帳</div><div class="oq-q">Bet=0/Win 入主錢包真金＝我方既定機制（不需詢問）；place_bet 主注單補 <strong>campaign_id ＋ bonus_type（獲獎類型編號）＋ item_id（道具id）</strong>；CRM 獎勵明細（現金獎＋FS 卡）<strong>另存 CRM 端獎勵表、不透過 AWC</strong>。注單回呼帶 campaign_id / item_id / ref_free_voucher_id 供歸戶；max_conversion 封頂一律由我方結算層自套 min()。<span class="tag-pill tag-src">[checklist A]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ AWC 初步回覆（2026-06-23）· 對帳分離</div><div class="oq-q">get_bet_summary 可依 bonus_type 分離活動派彩 vs GGR；<strong>需新增 bonus_type 編號判斷獲獎類型</strong>（編號表由我方提供）。<span class="tag-pill tag-src">[checklist E]</span></div></div>
+  <div class="oq-item" style="border-left-color:var(--green);"><div class="oq-owner" style="color:var(--green);">✅ 已定（2026-06-23）· FS 效期</div><div class="oq-q"><strong>過期卡不可呼叫 LoginWithoutRedirect</strong>；每次下注當下判斷有效性，失效即<strong>直接結算給錢</strong>。（待 AWC 對齊其過期卡行為）<span class="tag-pill tag-src">[checklist B4]</span></div></div>
+  <div class="oq-item awc"><div class="oq-owner">待 AWC · FS 主動啟用（B3）</div><div class="oq-q">請 AWC 釐清 <strong>SetActiveFreeSpin 能否帶入 reference_id</strong> → 跳轉後主動開始 Free Spin；不支援則退回「玩家自背包執行」備援。含 LoginWithoutRedirect 頻率限制 / 失效重取、每轉押注由誰帶入。<span class="tag-pill tag-src">[checklist B/C]</span></div></div>
+  <div class="oq-item fc"><div class="oq-owner">BD · 逐平台開通（仍待盤點）</div><div class="oq-q">哪些目標平台接受任務功能 / Bet=0 注單？覆蓋率？每個開通平台備妥 RTP 佔比揭露。（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收）<span class="tag-pill tag-src">[checklist F3]</span></div></div>
+
+  <div class="sub-title" style="margin-top:24px;">第二階段（MPS / Jackpot Combo 直連 · 現在就提前探詢，不阻塞第一階段）</div>
+  <div class="oq-item mps"><div class="oq-owner">✅ 已決（2026-06-23）· 現在就提前探詢</div><div class="oq-q"><strong>MPS / Jackpot Combo（M1/M2）直連發獎 API → 現在就提前探詢（不阻塞第一階段）。</strong>探詢：直連發獎 API 能否由 CRM 外部送 win 值（帶 campaign_id + 指定遊戲）入主錢包真金；Jackpot Combo（≈ 另一個 MPS）是否提供對等的「發獎 / 錢包 / 入帳 / 對帳 / 取消」直連 API。<strong>注意：MPS / Jackpot（M1/M2）非 AWC，不放 integration checklist，僅在此第二階段探詢區追蹤。</strong><span class="tag-pill tag-src">[ARCH §08]</span></div></div>
 </section>
 
 </div>
 
 <div class="doc-footer">
-  CMB 開發總路線圖 · Master Build Order · V1.1 · CONFIDENTIAL 2026<br>
-  來源：CRM 中台架構 v1.3 · 抽寶箱 v3.3 · Free Spin 卡 v2.0 · AWC-TOPO v2 · CRM-ROUTE v2.0<br>
+  CMB 開發總路線圖 · Master Build Order · V1.2 · CONFIDENTIAL 2026<br>
+  來源：CRM 中台架構 v1.4 · 抽寶箱 v3.4 · Free Spin 卡 v2.2 · AWC-TOPO v2 · CRM-ROUTE v2.0 · integration_consolidated_checklist v2<br>
+  v1.2 修訂（2026-06-23）：§11 升為決策總帳——face_value 沿用公版、RTP 單筆封頂+活動 3pt 硬上限、防濫用桶1數值把關、卡有效期相對制、CRM 中台自建、player mapping CRM 自維、寶箱 ₱37/RTP1.028%、門檻 ₱50~1000、權重 v1 後台自助、觀察期 2週+D1相對+3~5pt、reserve 活動級預算池等改標「✅ 已決」；MPS/Jackpot 第二階段標「提前探詢」；AWC 項 canonical＝integration_consolidated_checklist_v2<br>
+  v1.2 增補（2026-06-23 · AWC 釐清）：注單入帳為我方既定機制（補 item_id + bonus_type 編號、獎勵明細另存表不透過 AWC）、get_bet_summary 可分離需加編號、FS 過期卡每次下注判定失效即結算——改標「✅ 已決」；僅餘 SetActiveFreeSpin 帶 reference_id（B3）、逐平台開通（F3）、拓樸（F1）待 AWC/BD 回覆<br>
   v1.1 修訂：獎勵改走「注單通道（Bet=0/Win→主錢包真金）」，移除 Bonus 入帳 / 流水 / CPS；新增 G7 逐平台開通 + 真金防濫用<br>
   組織方式：階段（依賴）為主 × 職能為輔 · 範圍 v1 + v2
 </div>

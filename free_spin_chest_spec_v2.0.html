@@ -266,7 +266,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- TOP NAV -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">FS-SPEC · V2.1</span>
+  <span class="nav-brand">FS-SPEC · V2.2</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#terms">名詞與資料模型</a>
   <a class="nav-item" href="#lifecycle">卡片生命週期</a>
@@ -292,7 +292,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">Free Spin 抽寶箱發放卡<br>細節流程與後台規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.1</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.2</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -1246,20 +1246,24 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="sub-title">需 PM / 上司決策</div>
-  <div class="oq-item pm"><div class="oq-owner">PM DECISION</div><div class="oq-q">每幣值 × 5 階段的 face_value / 次數 / max_conversion 實際數值由誰定？是否需先出一份「公版押注段 × 幣別」對照表（可沿用既有共用押注段）。</div></div>
-  <div class="oq-item pm"><div class="oq-owner">PM DECISION · 已定調（v2.0）</div><div class="oq-q">✅ 入帳目標：<strong>一律主錢包真金、可立即提領</strong>（移除 wallet_target / bonus_ratio / 受限紅利）。遊戲列表 v1 鎖卡模板。<strong>⚠ 仍待補</strong>：真金直發的<strong>防濫用規則</strong>（領取資格 / 頻率 / 額度 / 黑名單），以及任務獎勵 RTP 佔比 / 派彩上限。</div></div>
+  <div class="callout success" style="margin-bottom:16px;"><strong>📌 v2.2 收斂（2026-06-23）：</strong>P1 數值、真金防濫用方向、任務獎勵 RTP 佔比三項已拍板。完整決策追溯彙整見 <em>cmb_dev_master_roadmap_v1.1.html §11</em>，本章僅留結論。</div>
+  <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>P1 每幣值 × 5 階段 face_value / 次數 / max_conversion → 沿用公版押注段預設</strong>：次數全段 = 10、max_conversion = face_value × 10、每轉押注與 face_value 由系統自動算（唯讀），營運可逐段微調。對照表見 §07「公版押注段 × 幣別 · face_value 對照表」。</div></div>
+  <div class="oq-item pm"><div class="oq-owner">PM DECISION · 已定調（v2.0）</div><div class="oq-q">✅ 入帳目標：<strong>一律主錢包真金、可立即提領</strong>（移除 wallet_target / bonus_ratio / 受限紅利）。遊戲列表 v1 鎖卡模板。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">✅ 已決方向（2026-06-23）</div><div class="oq-q"><strong>真金直發防濫用：本卡屬桶1（押注衍生）靠數值（max_conversion 封頂）把關，不需獨立風控模組。</strong>獨立防濫用參數（領取資格 / 頻率 / 額度 / 黑名單）deferred，依賴未來「7 日登入獎勵（桶2）」功能再一併導入。框架對齊 GP 邊界＋活動分桶＋新手蜜月 7 天（見 CRM-ARCH v1.4 / roadmap §11）。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">✅ 已決（2026-06-23）</div><div class="oq-q"><strong>任務獎勵 RTP 佔比 / 派彩上限：單筆＝max_conversion 封頂；活動整體 RTP 佔比硬上限 = 3pt</strong>（動態 RTP 安全閥，超過降權 / 停發；取代舊「≤2%」靜態鐵則）。</div></div>
   <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">已決（v2.1）</div><div class="oq-q">✅ 採<strong>發卡 +N 天相對制 · 自然日 · GMT+8 · N 鎖卡模板</strong>。（原「相對制 vs 綁活動結束日絕對制」決策已定案。）</div></div>
 
   <div class="sub-title" style="margin-top:24px;">需與 AWC / 平台確認</div>
+  <div class="callout info"><strong>🔗 canonical 唯一來源（2026-06-23）：</strong>以下 AWC（集成商）項目（CreateFreeSpin 押注帶入、Bet=0 入帳、SetActiveFreeSpin、LoginWithoutRedirect 頻率 / 過期卡、注單回呼 campaign_id、結算回灌）<strong>以《integration_consolidated_checklist_v2.html》為唯一 canonical 清單，本章不重複維護</strong>，下列僅為對齊參考。MPS / Jackpot Combo（M1/M2）非 AWC，不在此清單，見 roadmap 第二階段探詢區。</div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">CreateFreeSpin 是否能帶入「每轉押注（coin_size / multiplier）」？若不能，押注大小如何決定（AWC 預設綁定 reference？）。</div></div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">結算「最大上限 max_conversion」封頂<strong>一律由我方結算層自套 min()</strong>，不依賴 AWC。確認 Bet=0 中獎注單可正常處理入帳。</div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN · 方向已定（v2.1）</div><div class="oq-q">跳轉後 FREE SPIN 啟用機制：<strong>已定採「跳轉前綁定 reference_id 指定啟用」</strong>（不再靠 AWC 進場自動識別）。<strong>仍待確認</strong>：AWC 是否提供「指定啟用 / <span class="mono">SetActiveFreeSpin</span>」API；若無，改由<strong>我方一次性 Token 綁 reference_id、平台開局反查</strong>備援。</div></div>
+  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN · 待釐清（2026-06-23 方向更新）</div><div class="oq-q">跳轉後 FREE SPIN 啟用機制：<strong>請 AWC 釐清 <span class="mono">SetActiveFreeSpin</span> 能否帶入 <span class="mono">reference_id</span></strong> 指定該卡 → 跳轉後即可<strong>主動開始進行 Free Spin 遊戲</strong>。<strong>若 AWC 不支援亦可接受</strong>——退回備援：<strong>玩家需自背包點擊執行</strong>該卡。（canonical 見 checklist B3）</div></div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">LoginWithoutRedirect 一次性連結：同玩家短時間多卡 / 連點的取連結頻率限制與失效重取建議。</div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">過期卡是否仍可呼叫 LoginWithoutRedirect？有效期判定點在「持有階段」還是「進遊戲當下」。</div></div>
+  <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">✅ 已決（2026-06-23）· 效期</div><div class="oq-q"><strong>過期卡不可呼叫 LoginWithoutRedirect</strong>；有效期<strong>於每次下注當下判斷</strong>，若該卡已失效 → <strong>直接結算給錢、不再起新局</strong>。（待 AWC 對齊其過期卡行為；canonical 見 checklist B4）</div></div>
   <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">已決（v1.1）</div><div class="oq-q">✅ 不需要「作廢 / 更新已發 free spin」API——已定調已發卡不變更，擴充走補發新卡。此項從待確認移除。</div></div>
   <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">已決（v2.0）</div><div class="oq-q">✅ 對接層級已收斂：<strong>走既有注單通道</strong>（非 Promotion Tool / Seamless 二選一）。發卡 CreateFreeSpin、跳轉 LoginWithoutRedirect、結算 place_bet(Bet=0/Win)、對帳 getTransactionByUpdateDate。由 CRM-ARCH v1.3 統一定義。</div></div>
   <div class="oq-item" style="border-left-color:var(--green,#5ABF7A);"><div class="oq-owner" style="color:var(--green,#5ABF7A);">已決（v2.0）</div><div class="oq-q">✅ 整合拓樸：第一階段＝經 AWC 集成（Combo↔AWC↔平台），<strong>注單通道發獎、不需 Promotion Tool / Bonus / CPS</strong>。</div></div>
-  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN（見 AWC-TOPO v2 A2）</div><div class="oq-q">結算注單回呼<strong>是否帶回 ref_free_voucher_id / campaign_id</strong> 供歸卡對帳？（已不問 Bonus 入帳 / bonus_ratio / roll-over。）</div></div>
+  <div class="oq-item awc"><div class="oq-owner">AWC ALIGN（canonical 見 checklist A3）</div><div class="oq-q">結算注單回呼<strong>帶回 ref_free_voucher_id / campaign_id / item_id（道具id）</strong> 供歸卡對帳。<strong>（2026-06-23：CRM 獎勵明細（現金獎＋FS 卡）另存 CRM 端獎勵表、不透過 AWC；主注單只需帶 campaign_id / item_id 供我方歸戶。已不問 Bonus 入帳 / bonus_ratio / roll-over。）</strong></div></div>
   <div class="oq-item fc"><div class="oq-owner">BD · 逐平台開通</div><div class="oq-q">哪些目標平台接受任務功能 / Bet=0 注單？覆蓋率？每個開通平台備妥 RTP 佔比揭露。（FC：天成 / AWC / 菲律賓合規站多半開放，少數小商戶不收。）</div></div>
   <div class="oq-item awc"><div class="oq-owner">AWC ALIGN</div><div class="oq-q">結算回灌：我方應以 GetFreeSpinRecordByTime / GetFreeSpinSendDetail 拉注單，還是 AWC 主動回 callback？結算時間差（建議查 5–10 分鐘前）對「整卡結束才給獎」的時序影響。</div></div>
 </section>
@@ -1267,8 +1271,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.1 · CONFIDENTIAL 2026<br>
-  CMB · CRM 生態 / 推廣規格 · 與抽寶箱 v3.3 / CRM-ARCH v1.3 / AWC-TOPO v2 對齊<br>
+  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.2 · CONFIDENTIAL 2026<br>
+  CMB · CRM 生態 / 推廣規格 · 與抽寶箱 v3.4 / CRM-ARCH v1.4 / AWC-TOPO v2 對齊<br>
+  v2.2 修訂（2026-06-23）：§10 待確認收斂——P1 face_value 沿用公版預設、真金防濫用屬桶1數值把關（獨立風控 deferred）、任務獎勵 RTP 單筆封頂+活動 3pt 硬上限三項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
+  v2.2 增補（2026-06-23 · AWC 釐清）：效期改「✅ 已決」——過期卡不可呼叫 LoginWithoutRedirect、每次下注判定失效即直接結算給錢；啟用機制請 AWC 釐清 SetActiveFreeSpin 能否帶 reference_id（不支援則背包手動備援）；結算注單回呼補 item_id（道具id），CRM 獎勵明細另存表不透過 AWC<br>
   v2.1 修訂：有效期定案（發卡 +N 天 · 自然日 · GMT+8 · N 鎖卡模板）；啟動改為跳轉前綁定 reference_id 指定啟用（SetActiveFreeSpin / Token 綁定備援）；補 §04 後台 wireframe 與 §05 玩家背包前台稿<br>
   v2.0 修訂：結算改走「注單通道（Bet=0/Win→主錢包真金）」，移除 BONUS 錢包 / wallet_target / bonus_ratio / 流水 / Promotion Tool；新增真金防濫用 + 逐平台開通
 </div>
