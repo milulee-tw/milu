@@ -522,6 +522,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .oq-item.awc .oq-owner { color: var(--blue); }
 .oq-item.pm { border-left-color: var(--purple); }
 .oq-item.pm .oq-owner { color: var(--purple); }
+.oq-item.data { border-left-color: var(--teal); }
+.oq-item.data .oq-owner { color: var(--teal); }
 
 /* ─── LOG TABLE ─── */
 .log-item {
@@ -590,7 +592,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CRM-ROADMAP · V1.1</span>
+  <span class="nav-brand">CRM-ROADMAP · V1.2</span>
   <a class="nav-item active" href="#overview">策略思路</a>
   <a class="nav-item" href="#logic">留存邏輯鏈</a>
   <a class="nav-item" href="#scope">功能盤點</a>
@@ -599,6 +601,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <a class="nav-item" href="#kpi">KPI</a>
   <a class="nav-item" href="#risk">財務/風險</a>
   <a class="nav-item" href="#rtpctrl">風控基建</a>
+  <a class="nav-item" href="#tagseg">玩家Tag</a>
   <a class="nav-item" href="#openq">待確認</a>
   <div class="topnav-meta">
     <span class="topnav-meta-item" id="topnav-date"></span>
@@ -617,7 +620,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-meta">
       <div class="sidebar-meta-row">
         <span class="sidebar-meta-label">VERSION</span>
-        <span class="sidebar-meta-val">v1.1</span>
+        <span class="sidebar-meta-val">v1.2</span>
       </div>
       <div class="sidebar-meta-row">
         <span class="sidebar-meta-label">DATE</span>
@@ -739,9 +742,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
     </div>
 
+    <div class="sidebar-section open" data-section="tagseg">
+      <button class="sidebar-section-btn" onclick="navTo('tagseg')">
+        <span class="sidebar-section-num">09</span>
+        玩家分群 Tag 機制
+        <span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#tagseg">運作流程</a>
+        <a class="sidebar-sub-link" href="#tagseg">雙軌更新 + 介面契約</a>
+        <a class="sidebar-sub-link" href="#tagseg">Task + 後台看板</a>
+      </div>
+    </div>
+
     <div class="sidebar-section open" data-section="openq">
       <button class="sidebar-section-btn" onclick="navTo('openq')">
-        <span class="sidebar-section-num">09</span>
+        <span class="sidebar-section-num">10</span>
         已鎖定 vs 待確認
         <span class="sidebar-chevron">›</span>
       </button>
@@ -763,7 +779,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · STRATEGY PROPOSAL · 2026</div>
   <h1>CRM <span>ROADMAP</span></h1>
-  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.1</div>
+  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.2</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> 策略提案</div>
     <div class="cover-pill"><strong>北極星</strong> 次日 D1 留存</div>
@@ -919,7 +935,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <tbody>
       <tr><td>抽寶箱 v1</td><td>✅ 已拍板</td><td class="dim">每日重置引擎，起跑線（W0）</td></tr>
       <tr><td>簽到系統</td><td>🟢 獨立 Wave（W2）</td><td class="dim">D1 核心，改發碎片湊卡（非直接發現金）；簽到另外拆成一個 Wave</td></tr>
-      <tr><td>Tag（新玩家/斷簽/高押量）</td><td>🟢 保留（W1）</td><td class="dim">精準投放地基；越早建越划算</td></tr>
+      <tr><td>Tag（新玩家/斷簽/高押量）</td><td>🟢 保留·改設計（W1）</td><td class="dim">精準投放地基；<strong>分群判斷改由數據組提供</strong>、平台接收+套用（非自動打標），越早建越划算（詳見 §09）</td></tr>
       <tr><td>斷簽處理</td><td>🟢 保留·改設計</td><td class="dim">改為補簽卡續簽（隨簽到 W2），取消「斷簽召回禮包」</td></tr>
       <tr><td>抽寶箱第二段（道具獎勵庫+卡+背包）</td><td>🟢 保留（W1）</td><td class="dim">CRM 共用基建，另立規格；卡水管已建</td></tr>
       <tr><td>排行榜（個人 + 全線路）</td><td>🟢 保留·提前（W3）</td><td class="dim">含日即時排名賽（net win），即時競賽地基；與大獎回放同 Wave</td></tr>
@@ -946,7 +962,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout info">
-    <strong>設計原則</strong>：各 Wave 時程依複雜度不等（<strong>約 4–6 週，下方為估算、待開發團隊校準</strong>）。<em style="color:var(--gold-light);font-style:normal">🅐 線＝後端主力（一個 Wave 一顆重引擎）</em>；<em style="color:var(--purple);font-style:normal">🅑 線＝前端 / Unity 並行</em>。後端重引擎依序 Tag → 排行榜 → 風控/動態RTP → 任務 → 即時競賽，不重疊。
+    <strong>設計原則</strong>：各 Wave 時程依複雜度不等（<strong>約 4–6 週，下方為估算、待開發團隊校準</strong>）。<em style="color:var(--gold-light);font-style:normal">🅐 線＝後端主力（一個 Wave 一顆重引擎）</em>；<em style="color:var(--purple);font-style:normal">🅑 線＝前端 / Unity 並行</em>。後端依序 Tag 同步 → 排行榜 → 風控/動態RTP → 任務 → 即時競賽，不重疊（Tag 改接收數據組分群、相對輕，詳見 §09）。
   </div>
 
   <div class="timeline">
@@ -962,9 +978,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-phase">WAVE 1 · D1 地基 + 投放基建 · 約 5 週</div>
-      <div class="tl-title">Tag 引擎 + 抽寶箱第二段</div>
+      <div class="tl-title">Tag 接收/同步 + 抽寶箱第二段</div>
       <div class="tl-tasks">
-        <span class="tl-task eng">🅐 Tag 引擎（自動打標 + 斷簽偵測）</span>
+        <span class="tl-task eng">🅐 Tag 接收/同步引擎（數據組分群：每日批次 + RTP 即時）</span>
+        <span class="tl-task data">🅐 數據組對接管線（介面契約 · 詳見 §09）</span>
         <span class="tl-task design">🅑 抽寶箱第二段：道具獎勵庫 + FREE SPIN 卡 + 背包</span>
       </div>
     </div>
@@ -1033,7 +1050,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">時程估算（待開發團隊校準）</div>
   <div class="cost-block">
     <div class="cost-row"><span class="cost-label">W0 · 抽寶箱 v1（現金獎，最重單一基建）</span><span class="cost-val">約 6 週</span></div>
-    <div class="cost-row"><span class="cost-label">W1 · Tag 引擎 + 抽寶箱第二段</span><span class="cost-val">約 5 週</span></div>
+    <div class="cost-row"><span class="cost-label">W1 · Tag 接收/同步 + 抽寶箱第二段</span><span class="cost-val">約 5 週</span></div>
     <div class="cost-row"><span class="cost-label">W2 · 簽到系統 + 補簽卡</span><span class="cost-val">約 4 週</span></div>
     <div class="cost-row"><span class="cost-label">W3 · 排行榜（個人 + 全線路）+ 大獎回放（後端較重）</span><span class="cost-val">約 6 週</span></div>
     <div class="cost-row"><span class="cost-label">W4 · 風控與動態RTP基建（重後端基建）</span><span class="cost-val">約 6 週</span></div>
@@ -1042,7 +1059,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="cost-row total"><span class="cost-label">W0 → W6 連續推進合計</span><span class="cost-val highlight">約 36 週（≈ 8 個月）</span></div>
   </div>
   <div class="callout warn">
-    <strong>⚠ 工時為估算，需開發團隊校準</strong>：後端較重的是 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）、W4（風控與動態RTP基建）四個 Wave；簽到（W2）複用 v1 背包/庫存水管、相對輕。<strong>通知中心、品牌門面</strong>放到後續、活動量起來後加入，不計入上表。Wave 間可部分前後重疊（前端先動），實際總時程以開發評估為準。
+    <strong>⚠ 工時為估算，需開發團隊校準</strong>：後端較重的是 W0（抽寶箱基建）、W3（排行榜引擎）、W4（風控與動態RTP基建）；W1 改為接收數據組分群（Tag 同步），較原「自動打標」規劃輕；簽到（W2）複用 v1 背包/庫存水管、相對輕。<strong>通知中心、品牌門面</strong>放到後續、活動量起來後加入，不計入上表。Wave 間可部分前後重疊（前端先動），實際總時程以開發評估為準。
   </div>
 
   <div class="sub-title">排程關鍵理由</div>
@@ -1057,7 +1074,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout warn">
-    <strong>⚠ 負載提醒</strong>：後端較重集中在 W0（抽寶箱基建）、W1（Tag 引擎）、W3（排行榜引擎）、W4（風控與動態RTP基建）四個 Wave，需吃滿 1.5–2 後端。<strong>W4 切勿與 W3 排行榜引擎重疊</strong>——兩者都是重後端，疊在一起會卡死。簽到（W2）複用抽寶箱 v1 的背包/道具庫存水管，相對輕、不是從零。
+    <strong>⚠ 負載提醒</strong>：後端較重集中在 W0（抽寶箱基建）、W3（排行榜引擎）、W4（風控與動態RTP基建），需吃滿 1.5–2 後端；W1（Tag 接收/同步）改接收數據組分群、相對輕。<strong>W4 切勿與 W3 排行榜引擎重疊</strong>——兩者都是重後端，疊在一起會卡死。簽到（W2）複用抽寶箱 v1 的背包/道具庫存水管，相對輕、不是從零。
   </div>
 </section>
 
@@ -1186,7 +1203,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <thead><tr><th>Wave</th><th>主要驗證指標</th></tr></thead>
     <tbody>
       <tr><td class="mono">W0</td><td class="dim">單日 Spin 數（活動 vs 對照組）、活動參與率、完整循環完成率、D1 變化</td></tr>
-      <tr><td class="mono">W1</td><td class="dim">Tag 覆蓋率、FREE SPIN 卡使用率（抽寶箱第二段）</td></tr>
+      <tr><td class="mono">W1</td><td class="dim">Tag 覆蓋率、Tag 同步成功率（每日批次 / RTP 即時）、投放命中率、FREE SPIN 卡使用率（抽寶箱第二段）</td></tr>
       <tr><td class="mono">W2</td><td class="dim">D1 留存 ↑、簽到完成率、碎片→卡兌換率、補簽卡使用率</td></tr>
       <tr><td class="mono">W3</td><td class="dim">個人/全線路榜開啟率、日賽參與率、大獎回放觀看率</td></tr>
       <tr><td class="mono">W4</td><td class="dim">邊際守線達成率、活動超發攔截次數、92% 地板觸發次數、自動節流反應延遲</td></tr>
@@ -1405,10 +1422,154 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="callout info">最小方案先求<strong>守住全線路總邊際</strong>、快上線；per-player 動態 RTP 與預測式預警留到中後期、依數據與合規評估再開。</div>
 </section>
 
-<!-- ═══════════ 09 OPEN QUESTIONS ═══════════ -->
-<section class="section" id="openq">
+<!-- ═══════════ 09 PLAYER TAG SEGMENTATION ═══════════ -->
+<section class="section" id="tagseg">
   <div class="section-header">
     <span class="section-num">09</span>
+    <span class="section-title">玩家分群 Tag 機制</span>
+    <span class="section-title-en">PLAYER TAGGING · W1</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">開發目的 · WHY</div>
+    <div class="hypo-text">所有「精準投放」的地基。平台<strong>不自己計算分群</strong>，而是<strong>接收數據組算好的玩家 Tag</strong>，存起來、供活動模板的 usertype 欄位投放使用。<strong>RTP 相關 Tag 即時更新</strong>（搭 §08 風控即時管線），其餘分群 Tag <strong>每日批次更新</strong>。屬 W1 投放地基，因即時軌複用 §08 管線，故編排於 §08 之後便於對照。</div>
+  </div>
+
+  <div class="callout warn">
+    <strong>⚠ 架構校正：「自動打標」→「接收 + 套用」</strong><br>
+    早期 Roadmap 把 W1 寫成「Tag 引擎（自動打標）」＝平台自己跑規則算分群。實際分工是：<strong>分群判斷（誰屬於哪個 Tag）由數據組負責計算</strong>，平台只負責<strong>接收 → 儲存 → 投放查詢</strong>。白話：數據組是「驗血實驗室」貼標籤，平台是「門診醫生」拿標籤決定投哪個活動，不自己驗血。此校正讓 W1 後端變輕（免建分群運算），但多一條「與數據組的串接」依賴。
+  </div>
+
+  <div class="sub-title">In Scope / Out of Scope（本版界線）</div>
+  <div class="info-grid-2">
+    <div class="info-card">
+      <div class="info-card-title">✅ In Scope（W1 平台做）</div>
+      <div class="info-card-desc">① Tag 接收/同步服務（每日批次 + RTP 即時）<br>② Tag 儲存（玩家↔Tag，含生效/到期）<br>③ Tag 投放查詢 API（活動模板 usertype 欄位）<br>④ Tag 後台檢視看板</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🚫 Out of Scope（本版不做）</div>
+      <div class="info-card-desc">① 分群「判斷邏輯」（由數據組負責，平台不算）<br>② per-player 個人化 RTP 調整（屬 §08 完整方案、後期）<br>③ 平台端自建行為打標規則引擎</div>
+    </div>
+  </div>
+
+  <!-- 運作流程 -->
+  <div class="sub-title">運作流程：從數據組分群到活動投放</div>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">數據組算分群</div>
+        <div class="flow-step-desc">判斷誰屬於哪個 Tag</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">雙軌輸出</div>
+        <div class="flow-step-desc">RTP相關＝即時<br>其餘＝每日批次</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">平台接收 / 同步</div>
+        <div class="flow-step-desc">接收服務寫入 Tag 庫</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">Tag 儲存（含時效）</div>
+        <div class="flow-step-desc">玩家↔Tag，含生效/到期</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">活動投放查詢</div>
+        <div class="flow-step-desc">usertype 欄位 → 查 Tag</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 06</div>
+        <div class="flow-step-title">玩家看到 / 可參加</div>
+        <div class="flow-step-desc">對應分群活動</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 雙軌更新 -->
+  <div class="sub-title">雙軌更新機制：即時 vs 每日批次</div>
+  <div class="body-text">依 Tag 對「即時性」的需求分兩軌。<strong>RTP 相關 Tag</strong> 因牽動 §08 動態 RTP 與發獎節流，須即時；其餘行為分群每日一次足矣。</div>
+  <table class="spec-table">
+    <thead><tr><th>更新軌道</th><th>適用 Tag（範例）</th><th>頻率 / 來源</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag-pill tag-req">即時軌</span></td><td class="dim">RTP 相關：per-player 累積獎勵 RTP、邊際 / 流失預警、個人化 RTP 分群</td><td class="dim">數據組即時事件 → 搭 §08 風控即時上報管線，秒級更新</td></tr>
+      <tr><td><span class="tag-pill tag-opt">每日軌</span></td><td class="dim">新玩家、斷簽、高押量、回流、沉睡 等行為分群</td><td class="dim">數據組每日批次對照表，平台每日同步一次（T+1）</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">即時軌<strong>不另建新通道</strong>：RTP 相關 Tag 直接搭 §08 風控與動態 RTP 基建的即時上報管線，省一條基建。每日軌走輕量批次同步，最簡單、對帳容易。</div>
+
+  <!-- 介面契約 -->
+  <div class="sub-title">與數據組的介面契約（SDD 先定死）</div>
+  <div class="body-text">這是串接的「精準藍圖」，<strong>須與數據組先敲定欄位與規則</strong>，否則後面一直返工：</div>
+  <table class="spec-table">
+    <thead><tr><th>欄位 / 約定</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">player_id</td><td class="dim">玩家唯一識別</td></tr>
+      <tr><td class="mono">tag_id</td><td class="dim">分群代碼（對應雙方共識的 Tag 清單與定義）</td></tr>
+      <tr><td class="mono">valid_from / valid_to</td><td class="dim">Tag 生效與到期時間（平台依此自動失效，免堆積過期分群）</td></tr>
+      <tr><td class="mono">updated_at</td><td class="dim">本筆分群的計算時間（對帳 / 排序用）</td></tr>
+      <tr><td>更新模式</td><td class="dim">每日軌＝全量覆蓋快照；即時軌＝增量異動推送（兩者各自定死）</td></tr>
+      <tr><td>一玩家多 Tag</td><td class="dim">允許同時帶多個 Tag；投放時可「任一符合」或「全部符合」</td></tr>
+      <tr><td>Tag 清單與定義</td><td class="dim">由數據組維護「有哪些 Tag、各代表什麼」；新增 / 異動需雙方同步</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Task -->
+  <div class="sub-title">Task 任務清單與職能單位</div>
+  <table class="spec-table">
+    <thead><tr><th>Task</th><th>職能</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td>數據組對接管線</td><td><span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-data">資料</span></td><td class="dim">與數據組約定介面契約；每日批次 + RTP 即時兩軌傳輸通道</td></tr>
+      <tr><td>Tag 接收 / 同步服務</td><td><span class="tag-pill tag-eng">後端</span></td><td class="dim">接收數據組輸出寫入 Tag 庫；每日全量覆蓋、即時增量更新</td></tr>
+      <tr><td>Tag 儲存（含時效）</td><td><span class="tag-pill tag-eng">後端</span> <span class="tag-pill tag-data">資料</span></td><td class="dim">玩家↔Tag 對照表，含 valid_from/to，自動失效過期 Tag</td></tr>
+      <tr><td>Tag 投放查詢 API</td><td><span class="tag-pill tag-eng">後端</span></td><td class="dim">活動模板 usertype 欄位呼叫：查某玩家 Tag / 某活動可投放名單</td></tr>
+      <tr><td>Tag 後台檢視看板</td><td><span class="tag-pill tag-design">前端後台</span></td><td class="dim">查某玩家身上的 Tag、某 Tag 涵蓋人數、活動投放預覽</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>🏗 基礎建設備註（先做不然全卡）</strong>：① <strong>即時軌通道複用 §08 風控即時管線</strong>，須在 §08 基建規劃時一併預留 Tag 事件欄位；② 與數據組的<strong>傳輸金鑰 / API 認證</strong>須先就位。這兩項沒先做，後面投放全卡。
+  </div>
+
+  <!-- UI/UX -->
+  <div class="sub-title">UI/UX：Tag 後台檢視看板（營運後台）</div>
+  <div class="body-text">營運可查單一玩家的 Tag、各 Tag 的涵蓋人數，並在活動模板的 usertype 欄位直接挑 Tag 投放（下表為模擬看板）：</div>
+  <table class="spec-table">
+    <thead><tr><th>Tag</th><th>軌道</th><th>涵蓋人數</th><th>來源 / 更新</th><th>可投放活動</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">new_player</td><td><span class="tag-pill tag-opt">每日</span></td><td>12,480</td><td class="dim">數據組 · 今日 03:00</td><td class="dim">新手簽到 / 首抽寶箱</td></tr>
+      <tr><td class="mono">churn_risk</td><td><span class="tag-pill tag-opt">每日</span></td><td>3,210</td><td class="dim">數據組 · 今日 03:00</td><td class="dim">補簽召回 / 回流任務</td></tr>
+      <tr><td class="mono">rtp_margin_alert</td><td><span class="tag-pill tag-req">即時</span></td><td>156</td><td class="dim">數據組 · 即時（§08 管線）</td><td class="dim">動態 RTP 補償 / 發獎節流</td></tr>
+    </tbody>
+  </table>
+
+  <!-- BDD 帶過 -->
+  <div class="sub-title">✨ 測試驅動驗收（BDD 情境 · 提案帶過）</div>
+  <div class="body-text">正式開案時補齊紅綠燈；此處先列三條關鍵情境，確保商業邏輯與容錯被涵蓋：</div>
+  <table class="spec-table">
+    <thead><tr><th>情境</th><th>Given–When–Then</th></tr></thead>
+    <tbody>
+      <tr><td>正常流（每日批次）</td><td class="dim"><strong>Given</strong> 數據組每日 03:00 送出全量對照表 <strong>When</strong> 平台同步服務收檔 <strong>Then</strong> Tag 庫全量覆蓋、過期 Tag 自動失效、活動投放即時生效</td></tr>
+      <tr><td>即時流（RTP Tag）</td><td class="dim"><strong>Given</strong> 玩家累積獎勵 RTP 觸門檻 <strong>When</strong> 數據組即時推 rtp_margin_alert <strong>Then</strong> 平台秒級更新該玩家 Tag、§08 風控據此補償 / 節流</td></tr>
+      <tr><td>異常流（數據組斷線 / 格式錯）</td><td class="dim"><strong>Given</strong> 某日批次未送達或格式異常 <strong>When</strong> 同步服務驗檔失敗 <strong>Then</strong> 沿用上一版快照、不清空 Tag 庫、告警營運，投放不中斷</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>v1.2 新增</strong>：本章為 v1.2 補入，把原 W1「Tag 引擎（自動打標）」校正為「接收數據組分群 + 雙軌更新」，並補齊運作流程、介面契約與後台看板。Tag 清單與分群判斷邏輯由數據組維護，細項見 §10 待確認。
+  </div>
+</section>
+
+<!-- ═══════════ 10 OPEN QUESTIONS ═══════════ -->
+<section class="section" id="openq">
+  <div class="section-header">
+    <span class="section-num">10</span>
     <span class="section-title">已鎖定 vs 待確認</span>
     <span class="section-title-en">LOCKED vs OPEN</span>
   </div>
@@ -1423,6 +1584,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>即時競賽計分</td><td class="dim">net win（當日淨贏分），短週期結算發 FREE SPIN 卡</td></tr>
       <tr><td>總邊際管理</td><td class="dim">動態總邊際管理：活動+遊戲 RTP 總和守 ≈96.7%、邊際 ≈3.3%、92% 硬地板、超線自動節流（灰色市場）；任務間 bet 不重複計入（詳見 §08）</td></tr>
       <tr><td>抽寶箱兩段上線</td><td class="dim">第一段現金獎先上線；第二段道具/卡/背包/後台另立規格</td></tr>
+      <tr><td>玩家分群 Tag</td><td class="dim">分群判斷由數據組提供、平台接收+套用（非自動打標）；RTP 相關 Tag 即時更新（搭 §08 管線）、其餘每日批次同步（詳見 §09）</td></tr>
     </tbody>
   </table>
 
@@ -1443,6 +1605,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="oq-owner">PM DECISION</div>
     <div class="oq-q">任務系統：日/週任務目標與獎勵配比（納入 §08 動態總邊際管理框架）、挑戰/地圖任務關卡數/指定遊戲清單/各關寶箱內容、bet 不重複計入判定邏輯、特殊活動（週末/節慶/usertype 投放）觸發條件與 RTP 調降幅度。</div>
   </div>
+  <div class="oq-item data">
+    <div class="oq-owner">DATA 數據組</div>
+    <div class="oq-q">玩家 Tag：Tag 清單與定義、各 Tag 的分群判斷邏輯（數據組 owns）、一玩家可同時帶幾個 Tag、Tag 到期規則、即時軌可容忍延遲；介面契約欄位（player_id / tag_id / valid_from·to / updated_at）、每日「全量覆蓋」vs 即時「增量推送」、哪些 Tag 歸 RTP 即時軌。</div>
+  </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC ALIGN</div>
     <div class="oq-q">Free Bonus 卡的 Unity in-game bonus 觸發整合；FREE SPIN 卡 LoginWithoutRedirect 跳轉與各星 bet / 帶遊戲 list 設定（隨抽寶箱第二段規格提出）。</div>
@@ -1452,7 +1618,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  SLOT CRM 後續開發 Roadmap 提案 · V1.1 · CONFIDENTIAL 2026<br>
+  SLOT CRM 後續開發 Roadmap 提案 · V1.2 · CONFIDENTIAL 2026<br>
   CMB · 菲律賓市場 · 框架文件，各功能細節於對應 Wave 啟動前以獨立需求文件呈現
 </div>
 

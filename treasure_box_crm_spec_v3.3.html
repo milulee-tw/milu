@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 CRM 功能規格書 v3.4</title>
+<title>抽寶箱 CRM 功能規格書 v3.5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -828,7 +828,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CHEST SPEC · V3.4</span>
+  <span class="nav-brand">CHEST SPEC · V3.5</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">玩法機制</a>
   <a class="nav-item" href="#prizes">獎勵設計</a>
@@ -858,7 +858,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.4</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.5</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
@@ -986,7 +986,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CRM FEATURE SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>功能規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.4</div>
+  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.5</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>活動類型</strong> CRM 留存機制</div>
     <div class="cover-pill"><strong>解鎖條件</strong> 累積總押注金額</div>
@@ -1059,6 +1059,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout success">
+    <strong>v3.5 修訂（玩家分群 Tag 來源校正，2026-06-23）：</strong>明確 <em>usertype tag 投放</em> 的分群判斷<strong>由數據組提供</strong>，抽寶箱（平台）只負責<strong>接收 + 套用作投放、不自動打標</strong>；分群更新採<strong>雙軌</strong>——RTP 相關 tag 即時、其餘行為分群每日批次。實際 tag 供給隨 <strong>CRM Roadmap §09「玩家分群 Tag 機制」/ W1「Tag 接收·同步」</strong>上線（抽寶箱 W0 先保留欄位能力，未供給前留空＝全體投放）。對齊 <em>CRM_Roadmap_提案 v1.2</em>。
+  </div>
+
+  <div class="callout success">
     <strong>v3.4 修訂（待確認收斂，2026-06-23）：</strong>§13「需上司決策」四項已拍板並改標「✅ 已決」——① 每格增量門檻 ₱50~₱1,000（累積 ₱3,600）→ 核准；② 固定獎池 ₱37 / RTP 1.028% → 核准；③ 後台「第幾抽權重」介面 → v1 即開放營運後台自助調整；④ v1 觀察期 → 觀察 2 週 ＋ D1 留存相對對照組 +3~5pt 達標進 v2。AWC 項註明 <strong>canonical 唯一來源＝《integration_consolidated_checklist_v2.html》</strong>。完整決策追溯彙整見 <em>cmb_dev_master_roadmap_v1.1.html §11</em>。
   </div>
 
@@ -1083,7 +1087,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         ✅ 攤開 → 洗牌動態 → 背面蓋牌選格 流程<br>
         ✅ 獎項組成：小獎×5、中獎×2、大獎×1、最終獎×1<br>
         ✅ 累積押注解鎖（每格增量門檻，內部累積至 ₱3,600）<br>
-        ✅ 現金獎寶箱（保留 usertype 指定玩家 tag 能力）<br>
+        ✅ 現金獎寶箱（保留 usertype 指定玩家 tag 能力；分群 tag 由數據組提供、平台接收+套用）<br>
         ✅ 9 格 3×3 陣列、每日 00:00 重置<br>
         ✅ 後台抽獎設定改為「第幾抽權重」模式<br>
         ✅ AWC place_bet 入帳對接<br>
@@ -1350,7 +1354,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="info-card-title">📋 LAYER 02 · 活動模板</div>
       <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
         每個寶箱活動是一張「配方」：解鎖條件、9格獎池、第幾抽權重、活動期間<br>
-        <span style="color:var(--gold-light);font-size:11px;">v1：usertype 玩家 tag 投放欄位（保留指定玩家能力）</span>
+        <span style="color:var(--gold-light);font-size:11px;">v1：usertype 玩家 tag 投放欄位（保留指定玩家能力）<br>分群 tag 由<strong>數據組</strong>提供、平台接收+套用（非自動打標）；雙軌：RTP 即時 / 其餘每日批次（見 CRM Roadmap §09）</span>
       </div>
     </div>
     <div class="info-card" style="border-left:3px solid var(--teal);">
@@ -1499,7 +1503,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
         <tr><td>2.1</td><td>建立 reward_catalog 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">登記所有獎品類型：R_CASH_1 / R_CASH_3 / R_CASH_8 / R_CASH_18，預留 R_FS_* 欄位結構</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;font-size:9px;">v2預留</span></td></tr>
-        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[], start_date, end_date, status</td><td></td></tr>
+        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[]（值由數據組分群提供）, start_date, end_date, status</td><td class="dim">usertype_tags 來源＝數據組（每日批次 / RTP 即時），平台接收+套用、不自算</td></tr>
         <tr><td>2.3</td><td>建立 player_progress 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_id + campaign_id + date 為複合主鍵；today_wager, cell_states[], shuffle_result, created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.4</td><td>建立 reward_grant 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發放收據：player_id, campaign_id, cell_index, reward_id, amount, awc_txn_id, status(pending/active/failed), created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.5</td><td>建立 MongoDB Index</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_progress: {player_id, date} compound index；reward_grant: {player_id, status} index</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
@@ -2384,7 +2388,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <td>玩家分群</td>
           <td class="v1-val">✅ 保留 usertype tag 投放能力</td>
           <td class="v2-val">✓ 沿用擴充</td>
-          <td class="dim">v1 即可指定玩家 tag 投放</td>
+          <td class="dim">v1 即可指定玩家 tag 投放；分群 tag 由數據組提供（接收+套用，非自動打標），實際供給隨 Roadmap W1「Tag 接收·同步」上線</td>
         </tr>
         <tr>
           <td>對帳口徑</td>
@@ -2749,7 +2753,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.4 · CONFIDENTIAL 2026<br>
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.5 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）<br>
   v3.4 修訂（2026-06-23）：§13 待確認收斂——門檻 ₱50~1,000、獎池 ₱37/RTP1.028%、權重 v1 後台自助、觀察期 2 週+D1相對+3~5pt 四項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
   v3.4 增補（2026-06-23 · AWC 釐清）：place_bet 主注單欄位補 item_id（道具id）+ bonus_type（獲獎類型編號）；Bet=0 入主錢包為我方既定機制不需詢問；CRM 獎勵明細另存表不透過 AWC；get_bet_summary 可分離但需加 bonus_type 編號<br>
