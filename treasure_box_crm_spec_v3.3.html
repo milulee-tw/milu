@@ -284,6 +284,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   border-bottom:1px solid rgba(255,255,255,0.04);
 }
 .spec-table td.mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);}
+.ui-doc-spec .mono,.callout .mono{font-family:'DM Mono',monospace;font-size:11px;}
 .spec-table td.dim{color:var(--text-secondary);}
 .spec-table tr:hover td{background:rgba(255,255,255,0.015);}
 
@@ -695,6 +696,49 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   background:transparent;color:var(--text-secondary);
   border:1px solid var(--border);
 }
+.admin-btn.disabled{opacity:0.4;cursor:not-allowed;}
+/* —— UI 設計說明：左截圖 / 右操作說明 —— */
+.ui-doc-row{
+  display:grid;grid-template-columns:minmax(300px,0.95fr) 1fr;
+  gap:18px;align-items:stretch;margin-bottom:16px;
+  background:var(--dark-2);border:1px solid var(--border);
+  border-radius:8px;padding:16px;
+}
+.ui-doc-shot{
+  background:var(--dark);border:1px dashed var(--border-bright);
+  border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:12px;
+  justify-content:center;
+}
+.ui-doc-shot-cap{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--text-dim);letter-spacing:0.14em;text-transform:uppercase;text-align:center;
+}
+.ui-doc-spec{display:flex;flex-direction:column;gap:10px;}
+.ui-doc-spec-h{font-size:13px;color:var(--gold-light);font-weight:600;}
+.ui-doc-spec dl{display:grid;grid-template-columns:96px 1fr;gap:7px 12px;margin:0;}
+.ui-doc-spec dt{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--text-secondary);letter-spacing:0.06em;padding-top:1px;
+}
+.ui-doc-spec dd{margin:0;font-size:12px;color:var(--text-primary);line-height:1.7;}
+.line-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  padding:5px 11px;border-radius:4px;margin:3px 4px 3px 0;
+  border:1px solid var(--border);
+}
+.line-chip.on{background:rgba(212,168,67,0.14);color:var(--gold-light);border-color:var(--border-bright);}
+.line-chip.off{background:transparent;color:var(--text-dim);}
+.line-chip.dis{background:var(--dark-3);color:var(--text-dim);border-style:dashed;}
+@media(max-width:768px){.ui-doc-row{grid-template-columns:1fr;}.ui-doc-spec dl{grid-template-columns:84px 1fr;}}
+.ui-doc-shot img{width:100%;border-radius:6px;display:block;}
+.ui-shot-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:6px 0 8px;}
+.ui-shot-fig{background:var(--dark-2);border:1px solid var(--border);border-radius:8px;padding:10px;margin:0;}
+.ui-shot-fig img{width:100%;border:1px solid var(--border);border-radius:6px;display:block;}
+.ui-shot-fig figcaption{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-secondary);letter-spacing:0.06em;margin-top:8px;text-align:center;}
+.ui-shot-missing{padding:26px 14px;text-align:center;color:var(--text-dim);font-size:11px;border:1px dashed var(--border-bright);border-radius:6px;background:var(--dark);line-height:1.8;}
+.ui-shot-missing .mono{color:var(--gold-light);}
+@media(max-width:768px){.ui-shot-gallery{grid-template-columns:1fr;}}
 .admin-rtp-bar{
   display:flex;align-items:center;gap:12px;margin-bottom:6px;
 }
@@ -922,6 +966,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="sidebar-subsections">
         <a class="sidebar-sub-link" href="#backend">後台功能模組</a>
         <a class="sidebar-sub-link" href="#backend">設定畫面示意</a>
+        <a class="sidebar-sub-link" href="#backend">UI 設計說明（線路投放）</a>
         <a class="sidebar-sub-link" href="#backend">功能規格補充</a>
       </div>
     </div>
@@ -1059,7 +1104,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout success">
-    <strong>v3.8 修訂（新增線路投放設定，2026-06-24）：</strong>補上原本缺漏的 <strong>「活動線路（平台／站台）投放設定」</strong>——每檔活動可在後台勾選要投放的<strong>平台線路（多選）</strong>，線路清單為<strong>預定義「已開通 Bet=0 的平台」清單</strong>（由後端維護、不可自由輸入）。新增 <em>campaign.platform_lines[]</em> 欄位（§03 資料結構 / Phase 2 Task 2.2）、§07 後台「線路投放」設定區塊與功能規格列、§02 線路資格判定（<strong>先於受眾 tag 比對</strong>）、Phase 3 Task 3.14 線路閘門（Line Gate）與 Phase 5 Task 5.10 後台線路設定。規則：<strong>線路為必選（至少 1 條）、留空＝活動無法上線（存檔擋下）</strong>；玩家所在線路不在活動清單內＝該活動不顯示、押注不計入（玩家無感）。多活動衝突仍依 <strong>DA tag Priority</strong> 解析，線路只負責<strong>先收斂候選活動</strong>（先比線路、再比受眾 tag、最後 Priority）。並明確化<strong>「擇一原則」</strong>：玩家同一時間<strong>只會進行 1 檔抽寶箱活動</strong>（最高 Priority 那檔），落選活動不顯示 icon、押注不計入（§02 衝突解析列、Phase 3 Task 3.13、§07 後台符合規則）。
+    <strong>v3.8 修訂（新增線路投放設定，2026-06-24）：</strong>補上原本缺漏的 <strong>「活動線路（平台／站台）投放設定」</strong>——每檔活動可在後台勾選要投放的<strong>平台線路（多選）</strong>，線路清單為<strong>預定義「已開通 Bet=0 的平台」清單</strong>（由後端維護、不可自由輸入）。新增 <em>campaign.platform_lines[]</em> 欄位（§03 資料結構 / Phase 2 Task 2.2）、§07 後台「線路投放」設定區塊與功能規格列、§02 線路資格判定（<strong>先於受眾 tag 比對</strong>）、Phase 3 Task 3.14 線路閘門（Line Gate）與 Phase 5 Task 5.10 後台線路設定。規則：<strong>線路為必選（至少 1 條）、留空＝活動無法上線（存檔擋下）</strong>；玩家所在線路不在活動清單內＝該活動不顯示、押注不計入（玩家無感）。多活動衝突仍依 <strong>DA tag Priority</strong> 解析，線路只負責<strong>先收斂候選活動</strong>（先比線路、再比受眾 tag、最後 Priority）。並明確化<strong>「擇一原則」</strong>：玩家同一時間<strong>只會進行 1 檔抽寶箱活動</strong>（最高 Priority 那檔），落選活動不顯示 icon、押注不計入（§02 衝突解析列、Phase 3 Task 3.13、§07 後台符合規則）。另於 §07 新增<strong>「後台 UI 設計說明（線路投放）」</strong>區塊（左截圖／右操作與 UI 元件規格），左欄畫面依 design 原型 <em>後台管理介面.dc.html</em> 還原（淺色主題、金色 accent bar＋必填 badge、🔒 未開通線路），並補上整體版面對照（列表頁欄位／表單兩欄式），供美術與 Client Web 同仁照做。
   </div>
 
   <div class="callout success">
@@ -2185,6 +2230,116 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <button class="admin-btn primary">上線活動</button>
       </div>
     </div>
+  </div>
+
+  <div class="sub-title">後台 UI 設計說明 · 線路投放（v3.8 新增）</div>
+  <div class="callout info">
+    <strong>給美術與 Client Web 同仁：</strong>左欄為畫面示意（依 design 原型 <span class="mono" style="color:var(--gold-light);">後台管理介面.dc.html</span> 還原；<strong>實際採淺色主題</strong>），右欄為對應的<strong>操作流程與 UI 元件規格</strong>（元件類型／命名／狀態／規則／文案 key）。線路投放放在活動表單「基本資料」與「受眾 tag」之間，<strong>標題用金色 accent bar ＋右上「必填」badge 強調</strong>（其他區塊為靛色 accent bar）。元件命名請沿用右欄 <span class="mono" style="color:var(--gold-light);">UI_Name</span>。
+  </div>
+
+  <div class="callout">
+    <strong>整體版面對照（原型）：</strong>① <strong>活動列表頁</strong>欄位＝CAMPAIGN ID／活動名稱／活動期間／<strong>受眾 TAG</strong>／RTP／狀態（上線·草稿·暫停·已結束）／操作（編輯·啟停）；右上有「＋建立新活動」與 Admin／Operator 角色切換。② <strong>建立／編輯表單為兩欄式</strong>：左欄依序為 基本資料 → <strong>線路投放</strong> → 受眾 tag → 解鎖門檻 → 抽獎權重；右欄 sticky 釘住 固定獎池組成 ＋ RTP 自動驗算 ＋「儲存草稿／上線活動」按鈕。線路投放即位於此流程第 2 段。
+  </div>
+
+  <!-- Row 1：線路投放 · 正常/已選狀態（淺色，還原 design 原型） -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 1 · 線路投放區塊（建立活動 · 已選狀態）</div>
+      <img src="design_assets/admin_02_create_top.png" alt="線路投放區塊 · 已選狀態（建立活動頂部）" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;">
+          <span style="width:4px;height:18px;background:#E0B23A;border-radius:2px;"></span>
+          <strong style="font-size:15px;">線路投放</strong>
+          <span style="font-size:11px;color:#9AA0AB;">平台/站台線路 · 必選 · 多選 · 預定義清單</span>
+          <span style="margin-left:auto;font-size:10px;font-weight:700;color:#9A6B0B;background:#FBEFC8;padding:3px 10px;border-radius:6px;">必填</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;">
+          <span style="font-size:12px;color:#5A5F6B;font-weight:600;">投放線路</span>
+          <span style="font-size:11px;color:#8A8F9A;border:1px solid #E6E8EC;border-radius:8px;padding:6px 12px;">▾ 從清單勾選</span>
+        </div>
+        <div style="display:flex;gap:11px;flex-wrap:wrap;margin-bottom:16px;">
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#9A7B1A;background:#FBF3D6;border:1.5px solid #E6C55A;border-radius:9px;padding:9px 16px;">✓ LINE_A</span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#A8ACB5;background:#F4F5F7;border:1.5px dashed #D2D5DB;border-radius:9px;padding:9px 16px;">🔒 LINE_B <span style="font-size:10px;">（未開通 Bet=0·不可選）</span></span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#9A7B1A;background:#FBF3D6;border:1.5px solid #E6C55A;border-radius:9px;padding:9px 16px;">✓ LINE_C</span>
+        </div>
+        <div style="font-size:12px;color:#5A5F6B;font-weight:600;margin-bottom:5px;">線路規則</div>
+        <div style="font-size:12px;color:#8A8F9A;line-height:1.7;">清單＝<strong style="color:#C8860B;">已開通 Bet=0 的平台</strong>（後端維護）· 必選至少 1 條 · 未選＝無法上線</div>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_02_create_top.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">投放線路 · 多選下拉</div>
+      <dl>
+        <dt>UI_Name</dt><dd><span class="mono" style="color:var(--gold-light);">admin_line_multiselect</span></dd>
+        <dt>區塊標題</dt><dd><strong>金色 accent bar</strong>（#E0B23A）＋「線路投放」＋灰色副標＋右上「<strong>必填</strong>」黃色 badge（#FBEFC8 底 / #9A6B0B 字）</dd>
+        <dt>元件類型</dt><dd>多選下拉（multi-select / checkbox dropdown）；觸發鈕「▾ 從清單勾選」固定在欄位<strong>右上角</strong>，已選項以膠囊 chip 列於下方</dd>
+        <dt>操作</dt><dd>① 點右上「▾ 從清單勾選」展開清單 → ② 勾選 1～N 條 → ③ 已選以金色 chip 呈現；再點 chip 可取消</dd>
+        <dt>選項來源</dt><dd>預定義平台清單（後端 API 提供「已開通 Bet=0」的平台）；<strong>不可自由輸入</strong></dd>
+        <dt>狀態</dt><dd><span style="color:var(--gold-light);">已選</span>＝黃底（#FBF3D6）金描邊（#E6C55A）chip、前綴 ✓ ／ <span style="color:var(--text-dim);">未開通</span>＝灰底虛線、<strong>🔒 鎖頭 icon</strong>、不可點、註「未開通 Bet=0·不可選」 ／ 預設＝右上 placeholder「▾ 從清單勾選」</dd>
+        <dt>規則</dt><dd><strong>必選、至少 1 條</strong>；玩家所在線路須 ∈ 已選清單才看得到活動（見 §02 線路資格判定）</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.line.title</span> / <span class="mono">admin.line.required_badge</span> / <span class="mono">admin.line.placeholder</span> / <span class="mono">admin.line.disabled_hint</span> / <span class="mono">admin.line.rule_hint</span></dd>
+        <dt>美術資產</dt><dd>金色 accent bar、必填 badge、chip 金/灰兩態、🔒 鎖頭 icon、checkbox 勾選 ✓、dropdown 箭頭 ▾</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Row 2：線路投放 · 必選未填/錯誤狀態（規格定義，原型待補） -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 2 · 必選未填（驗證錯誤 · 規格定義，原型待補此狀態）</div>
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span style="width:4px;height:18px;background:#E0B23A;border-radius:2px;"></span>
+          <strong style="font-size:15px;">線路投放</strong>
+          <span style="margin-left:auto;font-size:10px;font-weight:700;color:#9A6B0B;background:#FBEFC8;padding:3px 10px;border-radius:6px;">必填</span>
+        </div>
+        <div style="border:1.5px solid #E0563A;border-radius:9px;padding:11px 14px;font-size:12px;color:#A8ACB5;margin-bottom:7px;">▾ 從清單勾選（尚未選擇）</div>
+        <div style="font-size:11px;color:#E0563A;margin-bottom:18px;">⚠ 請至少選擇 1 條投放線路</div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <span style="font-size:12px;color:#5A5F6B;border:1px solid #E6E8EC;border-radius:9px;padding:9px 20px;">儲存草稿</span>
+          <span style="font-size:12px;color:#fff;background:#6B6BE0;opacity:0.4;border-radius:9px;padding:9px 22px;">上線活動</span>
+        </div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">必選驗證 · 阻擋上線</div>
+      <dl>
+        <dt>觸發</dt><dd>未勾選任何線路時，點「上線活動」或失焦驗證（<strong>原型尚未含此狀態，需依本規格補做</strong>）</dd>
+        <dt>欄位狀態</dt><dd>輸入框紅框（#E0563A）＋下方紅字提示「請至少選擇 1 條投放線路」</dd>
+        <dt>按鈕狀態</dt><dd><strong>「上線活動」維持 disabled</strong>（半透明、不可點）直到至少選 1 條；「儲存草稿」可照常存（草稿允許未選）</dd>
+        <dt>規則</dt><dd>與「受眾 tag 留空＝全體」<strong>相反</strong>——線路留空＝無法上線，避免誤投放到沒指定的線路</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.line.error_required</span></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="sub-title" style="font-size:14px;margin-top:24px;">原型完整畫面（參考截圖 · design 後台管理介面.dc.html）</div>
+  <div class="ui-shot-gallery">
+    <figure class="ui-shot-fig">
+      <img src="design_assets/admin_01_list.png" alt="活動列表頁" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_01_list.png</span><br>活動列表頁（CAMPAIGN ID／受眾 TAG／RTP／狀態／操作）</div>
+      <figcaption>① 活動列表頁 · 狀態篩選＋角色切換</figcaption>
+    </figure>
+    <figure class="ui-shot-fig">
+      <img src="design_assets/admin_02_create_top.png" alt="建立活動 · 基本資料＋線路投放＋固定獎池" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_02_create_top.png</span><br>建立活動 · 基本資料＋線路投放＋固定獎池</div>
+      <figcaption>② 建立活動（上）· 線路投放在第 2 段</figcaption>
+    </figure>
+    <figure class="ui-shot-fig">
+      <img src="design_assets/admin_03_line_audience.png" alt="線路投放＋受眾 tag＋解鎖門檻＋RTP 驗算" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_03_line_audience.png</span><br>線路投放＋受眾 tag＋解鎖門檻＋RTP 驗算</div>
+      <figcaption>③ 線路規則＋受眾 tag＋門檻＋RTP（右欄 sticky）</figcaption>
+    </figure>
+    <figure class="ui-shot-fig">
+      <img src="design_assets/admin_04_draw_weights.png" alt="抽獎權重設定 · 第幾抽" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_04_draw_weights.png</span><br>抽獎權重設定 · 第幾抽（每列合計 100）</div>
+      <figcaption>④ 抽獎權重設定 · 第幾抽（合計 100 校驗）</figcaption>
+    </figure>
+  </div>
+  <div class="callout" style="font-size:12px;">
+    <strong>截圖檔放置位置：</strong>請把 design 原型的 4 張截圖存到 repo 的 <span class="mono" style="color:var(--gold-light);">design_assets/</span> 資料夾，檔名照上方標示（<span class="mono">admin_01_list.png</span> ~ <span class="mono">admin_04_draw_weights.png</span>），存好後重新整理即顯示真實截圖；未放入前自動顯示還原示意，不影響閱讀。
   </div>
 
   <div class="sub-title">後台功能規格補充</div>
