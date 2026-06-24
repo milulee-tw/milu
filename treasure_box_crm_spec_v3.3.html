@@ -208,6 +208,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   display:flex;gap:12px;flex-wrap:wrap;
   justify-content:center;position:relative;
 }
+.cover-proto-links{
+  display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+  justify-content:center;position:relative;margin-top:22px;
+}
+.cover-proto-label{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--text-dim);
+}
+.cover-proto-link{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.06em;
+  color:var(--gold-light);text-decoration:none;
+  padding:8px 16px;border-radius:20px;
+  border:1px solid var(--border-bright);background:rgba(212,168,67,0.06);
+  transition:background 0.15s,border-color 0.15s;
+}
+.cover-proto-link:hover{background:rgba(212,168,67,0.14);border-color:var(--gold);}
 .badge{
   font-family:'DM Mono',monospace;font-size:10px;
   letter-spacing:0.12em;padding:5px 12px;border-radius:2px;
@@ -1043,6 +1059,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <span class="badge badge-v1">V1 現金獎 + 完整基建</span>
     <span class="badge badge-scope">V2 編輯工具 + 背包</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
+  </div>
+  <div class="cover-proto-links">
+    <span class="cover-proto-label">原型連結</span>
+    <a class="cover-proto-link" href="%E6%8A%BD%E5%AF%B6%E7%AE%B1%20CRM%20%E6%B5%AE%E5%8B%95icon%20%E5%8E%9F%E5%9E%8B.html" target="_blank" rel="noopener">🎮 前台原型 · 浮動 icon 抽寶箱 ↗</a>
+    <a class="cover-proto-link" href="%E6%8A%BD%E5%AF%B6%E7%AE%B1%E5%BE%8C%E5%8F%B0%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2.html" target="_blank" rel="noopener">🛠 後台原型 · 後台管理介面 ↗</a>
   </div>
 </div>
 
@@ -1904,7 +1925,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <!-- ═══ v3.1 新增：美術設計頁面與狀態清單 ═══ -->
   <div class="sub-title" id="ui-artspec" style="margin-top:40px;">美術設計頁面與狀態清單（v3.1 新增）</div>
   <div class="callout info">
-    <strong>設計依據：</strong>本清單依互動原型 <em>《抽寶箱 CRM 浮動icon 原型.html》</em>（同資料夾）盤點，共 <strong>7 個畫面組（P1–P7，其中 P6 為主題風格）</strong>。下方各區塊<strong>左側為原型截圖示意、右側為功能/狀態說明表</strong>；美術請搭配原型實際操作確認動態節奏。原型畫布為直式手機 <strong>430 × 932（@1x）</strong>，切圖建議輸出 @2x／@3x。<br>
+    <strong>設計依據：</strong>本清單依互動原型 <a href="%E6%8A%BD%E5%AF%B6%E7%AE%B1%20CRM%20%E6%B5%AE%E5%8B%95icon%20%E5%8E%9F%E5%9E%8B.html" target="_blank" rel="noopener" style="color:var(--gold-light);"><em>《抽寶箱 CRM 浮動icon 原型.html》</em> ↗</a>（同資料夾，可點開）盤點，共 <strong>7 個畫面組（P1–P7，其中 P6 為主題風格）</strong>。下方各區塊<strong>左側為原型截圖示意、右側為功能/狀態說明表</strong>；美術請搭配原型實際操作確認動態節奏。原型畫布為直式手機 <strong>430 × 932（@1x）</strong>，切圖建議輸出 @2x／@3x。<br>
     <strong>不在設計範圍：</strong>① 原型右下角調整面板（Tweaks，原型工具）；② 背景 slot 遊戲畫面（僅為示意）；③ 原型內「⏩ 示範：快速集滿」連結（demo 專用）。
   </div>
 
@@ -2076,7 +2097,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout info">
-    <strong>後台設計原則：</strong>v1 後台聚焦在「活動設定」與「異常處理」，不包含數據分析儀表板（由數據組另拉）。v2 可在此架構上擴充活動模板複製、分眾投放設定等功能。
+    <strong>後台設計原則：</strong>v1 後台聚焦在「活動設定」與「異常處理」，不包含數據分析儀表板（由數據組另拉）。v2 可在此架構上擴充活動模板複製、分眾投放設定等功能。<br>
+    <strong>互動原型：</strong><a href="%E6%8A%BD%E5%AF%B6%E7%AE%B1%E5%BE%8C%E5%8F%B0%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2.html" target="_blank" rel="noopener" style="color:var(--gold-light);">《抽寶箱後台管理介面.html》 ↗</a>（同資料夾，可點開）——下方畫面示意與「UI 設計說明」即依此原型還原。
   </div>
 
   <div class="sub-title">後台功能模組</div>
