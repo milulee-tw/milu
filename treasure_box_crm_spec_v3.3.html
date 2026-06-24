@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 CRM 功能規格書 v3.7</title>
+<title>抽寶箱 CRM 功能規格書 v3.8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -828,7 +828,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CHEST SPEC · V3.7</span>
+  <span class="nav-brand">CHEST SPEC · V3.8</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">玩法機制</a>
   <a class="nav-item" href="#prizes">獎勵設計</a>
@@ -858,7 +858,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.7</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.8</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
@@ -986,7 +986,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CRM FEATURE SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>功能規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.7</div>
+  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.8</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>活動類型</strong> CRM 留存機制</div>
     <div class="cover-pill"><strong>解鎖條件</strong> 累積總押注金額</div>
@@ -1056,6 +1056,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">功能定位：本次切版核心原則</div>
   <div class="callout">
     <strong>玩家面 v1 只發現金獎，但後端基建一次做滿、AWC API 一次串完。</strong>v1 的 <em>place_bet</em> 與 v2 才會用到的 <em>LoginWithoutRedirect</em> 等需求<strong>一次性打包提交給 AWC 集成商</strong>，避免分兩次串接造成重複的開發、溝通與等待成本。FREE SPIN 卡的「水管」（資料表 + AWC API + max win 上限設定）在 v1 就建好，<strong>實際發卡與使用體驗留到 v2</strong>。
+  </div>
+
+  <div class="callout success">
+    <strong>v3.8 修訂（新增線路投放設定，2026-06-24）：</strong>補上原本缺漏的 <strong>「活動線路（平台／站台）投放設定」</strong>——每檔活動可在後台勾選要投放的<strong>平台線路（多選）</strong>，線路清單為<strong>預定義「已開通 Bet=0 的平台」清單</strong>（由後端維護、不可自由輸入）。新增 <em>campaign.platform_lines[]</em> 欄位（§03 資料結構 / Phase 2 Task 2.2）、§07 後台「線路投放」設定區塊與功能規格列、§02 線路資格判定（<strong>先於受眾 tag 比對</strong>）、Phase 3 Task 3.14 線路閘門（Line Gate）與 Phase 5 Task 5.10 後台線路設定。規則：<strong>線路為必選（至少 1 條）、留空＝活動無法上線（存檔擋下）</strong>；玩家所在線路不在活動清單內＝該活動不顯示、押注不計入（玩家無感）。多活動衝突仍依 <strong>DA tag Priority</strong> 解析，線路只負責<strong>先收斂候選活動</strong>（先比線路、再比受眾 tag、最後 Priority）。並明確化<strong>「擇一原則」</strong>：玩家同一時間<strong>只會進行 1 檔抽寶箱活動</strong>（最高 Priority 那檔），落選活動不顯示 icon、押注不計入（§02 衝突解析列、Phase 3 Task 3.13、§07 後台符合規則）。
   </div>
 
   <div class="callout success">
@@ -1384,6 +1388,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <strong>背包水管於 v1 一併建立：</strong>除上述四層外，v1 基建另建 <em>inventory（背包）</em> 與 <em>item_use_log（道具使用紀錄）</em> 兩張資料表，並串妥 AWC <em>LoginWithoutRedirect</em> API；FREE SPIN 卡的儲存／跳轉欄位先就位，<strong>實際發卡與背包使用體驗於 v2 啟用</strong>，屆時不需再動資料層與 AWC。
   </div>
 
+  <div class="sub-title">線路資格判定（這檔活動在哪些線路上）</div>
+  <div class="callout info">
+    <strong>規則（2026-06-24）：</strong>每個抽寶箱活動在後台勾選要投放的<strong>平台線路（platform_lines[]，多選）</strong>；線路清單為<strong>預定義「已開通 Bet=0 的平台」清單</strong>（由後端維護，營運只能從清單勾選、不可自由輸入）。玩家當下所在的線路<strong>必須落在活動的線路清單內</strong>，才會看到並能參與該活動。<strong>線路判定先於受眾 tag 判定</strong>——線路只負責先收斂「這條線路上有哪些候選活動」，再進受眾 tag 與 Priority 解析。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th>項目</th><th>設計</th></tr></thead>
+    <tbody>
+      <tr><td>線路設定</td><td class="dim">後台活動設定 <strong style="font-family:'DM Mono',monospace;color:var(--gold-light);">campaign.platform_lines[]</strong>，從預定義平台清單勾選 1～N 條；<strong>必選、至少 1 條</strong></td></tr>
+      <tr><td>線路清單來源</td><td class="dim"><strong>預定義清單（後端維護）</strong>＝「已商務開通『任務功能 / Bet=0』＋ 完成 RTP 揭露」的平台；未開通的平台<strong>不會出現在可選清單</strong>，從源頭防止投放到不能發獎的線路</td></tr>
+      <tr><td>比對邏輯</td><td class="dim">玩家所在線路 ∈ 活動 platform_lines[] 即通過線路閘門；<strong>不在清單內＝該活動不顯示、押注不計入</strong>（玩家無感、不報錯）</td></tr>
+      <tr><td>留空處理</td><td class="dim"><strong>線路為必選</strong>：未勾選任何線路＝活動無法上線（存檔即擋下，與「受眾 tag 留空＝全體」相反，避免誤投放）</td></tr>
+      <tr><td>與受眾 tag 的順序</td><td class="dim">① 先比<strong>線路</strong>（收斂候選活動）→ ② 再比<strong>受眾 tag</strong> → ③ 多活動衝突依 <strong>DA tag Priority</strong> 取最高那組</td></tr>
+      <tr><td>判定時機</td><td class="dim">① 活動載入（GET /chest/status，決定 icon／活動是否出現）；② place_bet 累積前（決定是否計入）。線路資訊來自 AWC callback 帶回的平台識別</td></tr>
+    </tbody>
+  </table>
+
   <div class="sub-title">受眾 tag 資格判定（誰能玩這個抽寶箱）</div>
   <div class="callout info">
     <strong>規則（2026-06-23 與後端對齊）：</strong>每個抽寶箱活動在後台設「受眾 tag」；玩家身上的 tag <strong>由 DA（數據組）提供</strong>，中台<strong>不自己跑排程算資格</strong>，只負責比對「玩家 tag 是否符合活動受眾 tag」——符合才會有該活動（顯示 icon＋押注計入＋可觸發翻牌）。tag 同步機制見 <em>CRM Roadmap §09 / W1「Tag 接收·同步」</em>。
@@ -1394,7 +1414,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>受眾 tag 設定</td><td class="dim">後台活動設定 <strong style="font-family:'DM Mono',monospace;color:var(--gold-light);">campaign.usertype_tags[]</strong>，可填 1～N 個 tag；<strong>留空＝全體玩家可玩</strong></td></tr>
       <tr><td>玩家 tag 來源</td><td class="dim"><strong>DA（數據組）提供</strong>，平台接收+套用（非自動打標）；RTP 相關即時、其餘每日批次同步。<strong>各 tag 的 Priority（優先序）亦由 DA 排定</strong></td></tr>
       <tr><td>比對邏輯</td><td class="dim">玩家 tag ∩ 活動受眾 tag ≠ ∅ 即符合該活動；<strong>支援多 tag</strong>（玩家可同時帶多個、活動可設多個受眾 tag）</td></tr>
-      <tr><td>多活動衝突解析<br>（Priority）</td><td class="dim">玩家同時符合<strong>多個活動</strong>時，BE 依「玩家身上<strong>最高 Priority 的符合 tag</strong>」決定跑哪一組活動；tag Priority 由 DA 排定。同優先序時依活動建立順序（後台可指定）</td></tr>
+      <tr><td>多活動衝突解析<br>（Priority）</td><td class="dim">玩家同時符合<strong>多個活動</strong>時，BE 依「玩家身上<strong>最高 Priority 的符合 tag</strong>」決定跑哪一組活動；tag Priority 由 DA 排定。同優先序時依活動建立順序（後台可指定）。<br><strong>⭐ 擇一原則：玩家同一時間只會進行 1 檔抽寶箱活動</strong>（最高 Priority 那檔）；其餘符合的活動<strong>不顯示 icon、押注不計入</strong>，玩家無感（不並行、不疊加）</td></tr>
       <tr><td>符合 →</td><td class="dim">顯示抽寶箱 icon／彈窗、押注累積計入該 campaign、可觸發翻牌</td></tr>
       <tr><td>不符合 →</td><td class="dim">不顯示該活動 icon、押注不計入該 campaign（玩家無感、不報錯）</td></tr>
       <tr><td>判定時機</td><td class="dim">① 活動載入（GET /chest/status，決定 icon／活動是否出現）；② place_bet 累積前（決定是否計入）。玩家 tag 異動於下次同步後生效</td></tr>
@@ -1410,29 +1430,35 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="flow-step" style="min-width:400px;">
         <div class="flow-step-num">1 · AWC CALLBACK</div>
         <div class="flow-step-title">收到 place_bet 回調</div>
-        <div class="flow-step-desc">AWC 在每次押注後回傳 game_account、bet_amount、game_code</div>
+        <div class="flow-step-desc">AWC 在每次押注後回傳 game_account、bet_amount、game_code、平台/線路識別</div>
       </div>
       <div class="flow-arrow-down">↓</div>
       <div class="flow-step highlight" style="min-width:400px;">
-        <div class="flow-step-num">2 · AUDIENCE CHECK</div>
+        <div class="flow-step-num">2 · LINE CHECK</div>
+        <div class="flow-step-title">線路資格判定（先收斂候選活動）</div>
+        <div class="flow-step-desc">取玩家所在線路，篩出 platform_lines[] 含該線路的活動。玩家線路不在任何活動清單內 → 不計入、直接結束（玩家無感）。線路通過才進受眾 tag 判定</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight" style="min-width:400px;">
+        <div class="flow-step-num">3 · AUDIENCE CHECK</div>
         <div class="flow-step-title">受眾資格判定（符合才計入）</div>
         <div class="flow-step-desc">取玩家 tag（DA 同步）∩ 活動受眾 tag；活動受眾 tag 留空＝全體通過。符合多個活動時依 DA tag Priority 取最高那組。不符 → 不計入該 campaign、直接結束（玩家無感）</div>
       </div>
       <div class="flow-arrow-down">↓</div>
       <div class="flow-step" style="min-width:400px;">
-        <div class="flow-step-num">3 · PROGRESS UPDATE</div>
+        <div class="flow-step-num">4 · PROGRESS UPDATE</div>
         <div class="flow-step-title">累積押注金額至玩家進度表</div>
         <div class="flow-step-desc">UPDATE player_progress SET today_wager += bet_amount WHERE player_id AND campaign_id AND date = today</div>
       </div>
       <div class="flow-arrow-down">↓</div>
       <div class="flow-step highlight" style="min-width:400px;">
-        <div class="flow-step-num">4 · THRESHOLD CHECK</div>
+        <div class="flow-step-num">5 · THRESHOLD CHECK</div>
         <div class="flow-step-title">檢查是否達下一門檻 → 記翻牌次數</div>
         <div class="flow-step-desc">計算 unlocked_flips = 累積門檻中 ≤ today_wager 的數量；若較前次增加且為今日首次取得任何機會：執行洗牌寫入（若尚未）。可翻次數 = unlocked_flips − opened_count</div>
       </div>
       <div class="flow-arrow-down">↓</div>
       <div class="flow-step" style="min-width:400px;">
-        <div class="flow-step-num">5 · PUSH NOTIFICATION</div>
+        <div class="flow-step-num">6 · PUSH NOTIFICATION</div>
         <div class="flow-step-title">通知前端可翻次數更新</div>
         <div class="flow-step-desc">回傳最新「可翻次數」，前端有剩餘次數時所有未開格發光、提示玩家可自由翻任一格</div>
       </div>
@@ -1537,7 +1563,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
         <tr><td>2.1</td><td>建立 reward_catalog 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">登記所有獎品類型：R_CASH_1 / R_CASH_3 / R_CASH_8 / R_CASH_18，預留 R_FS_* 欄位結構</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;font-size:9px;">v2預留</span></td></tr>
-        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[]（值由數據組分群提供）, start_date, end_date, status</td><td class="dim">usertype_tags 來源＝數據組（每日批次 / RTP 即時），平台接收+套用、不自算</td></tr>
+        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, <strong>platform_lines[]（投放線路·預定義平台清單·必選）</strong>, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[]（值由數據組分群提供）, start_date, end_date, status</td><td class="dim">usertype_tags 來源＝數據組（每日批次 / RTP 即時），平台接收+套用、不自算；<strong>platform_lines[] 只能取自「已開通 Bet=0」的預定義平台清單</strong></td></tr>
         <tr><td>2.3</td><td>建立 player_progress 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_id + campaign_id + date 為複合主鍵；today_wager, cell_states[], shuffle_result, created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.4</td><td>建立 reward_grant 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發放收據：player_id, campaign_id, cell_index, reward_id, amount, awc_txn_id, status(pending/active/failed), created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.5</td><td>建立 MongoDB Index</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_progress: {player_id, date} compound index；reward_grant: {player_id, status} index</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
@@ -1564,7 +1590,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>3.10</td><td>背包查詢 API（GET /inventory）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">回傳玩家目前持有道具清單，含道具類型、數量、可使用遊戲列表、有效期限</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
         <tr><td>3.11</td><td>背包使用 API（POST /inventory/use，道具使用跳轉）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證道具有效 → 呼叫 AWC LoginWithoutRedirect（帶 Token + GameId）→ 取得一次性 URL → 回傳前端 → 更新 item_use_log（AWC 已於 v1 串妥）</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
         <tr><td>3.12</td><td>道具過期排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日檢查 inventory 中 expire_at < now 的道具，更新 status = expired</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
-        <tr><td>3.13</td><td>受眾資格判定邏輯（Audience Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家 tag（DA 同步表）∩ campaign.usertype_tags[]：符合才顯示活動／計入押注，留空＝全體；<strong>支援多 tag</strong>，玩家符合多活動時依 <strong>DA 排定 tag Priority 取最高優先那組</strong>（同序依活動建立順序）；<strong>閘門先於 3.1 押注累積執行</strong>。中台不自算分群，玩家 tag／Priority 同步依 Roadmap W1「Tag 接收·同步」</td><td><span class="tag-pill" style="background:rgba(58,191,176,0.12);color:#70DFD0;">DA 對接</span></td></tr>
+        <tr><td>3.13</td><td>受眾資格判定邏輯（Audience Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家 tag（DA 同步表）∩ campaign.usertype_tags[]：符合才顯示活動／計入押注，留空＝全體；<strong>支援多 tag</strong>，玩家符合多活動時依 <strong>DA 排定 tag Priority 取最高優先那組</strong>（同序依活動建立順序）；<strong>擇一原則：同一時間只跑 1 檔，落選活動不顯示 icon、押注不計入</strong>；<strong>閘門先於 3.1 押注累積執行</strong>。中台不自算分群，玩家 tag／Priority 同步依 Roadmap W1「Tag 接收·同步」</td><td><span class="tag-pill" style="background:rgba(58,191,176,0.12);color:#70DFD0;">DA 對接</span></td></tr>
+        <tr><td>3.14</td><td>線路資格判定邏輯（Line Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家所在線路（AWC callback 帶回）∈ campaign.platform_lines[]：在清單內才顯示活動／計入押注，不在＝玩家無感不報錯；<strong>閘門先於 3.13 受眾判定執行</strong>（先比線路收斂候選活動，再比受眾 tag、再 Priority）。platform_lines[] 必選、取自「已開通 Bet=0」預定義平台清單</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -1595,7 +1622,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
         <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
-        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、期間、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
+        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、期間、<strong>投放線路（platform_lines · 必選 · 多選）</strong>、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
         <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
         <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
         <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
@@ -1603,6 +1630,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
         <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
         <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>5.10</td><td>後台線路投放設定（platform_lines）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">活動表單提供「投放線路」多選元件，選項來自<strong>預定義「已開通 Bet=0」平台清單</strong>（後端維護）；<strong>必選、未選擋存檔上線</strong>。維護該清單的小後台（新增/下架平台）一併建好</td><td></td></tr>
       </tbody>
     </table>
   </div>
@@ -2013,6 +2041,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 活動列表（狀態篩選）<br>
         · 新增 / 編輯活動<br>
+        · 線路投放設定（多選 · 必選）<br>
         · 啟動 / 暫停活動<br>
         · RTP 即時試算驗證<br>
         <span style="color:var(--purple);font-size:11px;">v2：活動模板複製</span>
@@ -2073,6 +2102,16 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         </div>
       </div>
 
+      <div class="admin-section-divider">線路投放（平台/站台線路 · 必選 · 多選 · 預定義清單）</div>
+      <div class="admin-form-row">
+        <div class="admin-label">投放線路</div>
+        <div class="admin-input"><span style="color:var(--gold-light);font-family:'DM Mono',monospace;">✓ LINE_A</span> &nbsp; <span style="color:var(--gold-light);font-family:'DM Mono',monospace;">✓ LINE_C</span> &nbsp; <span style="color:var(--text-dim);font-family:'DM Mono',monospace;">□ LINE_B（未開通 Bet=0·不可選）</span> &nbsp; <span style="color:var(--text-dim);">▾ 從清單勾選</span></div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-label">線路規則</div>
+        <div class="admin-input">清單＝<span style="color:var(--gold-light);">已開通 Bet=0 的平台</span>（後端維護）· <strong>必選至少 1 條</strong> · <span style="color:var(--text-dim);">未選＝無法上線</span></div>
+      </div>
+
       <div class="admin-section-divider">受眾 tag（資格投放 · 符合才看得到 · tag 由 DA 提供）</div>
       <div class="admin-form-row">
         <div class="admin-label">受眾 TAG</div>
@@ -2080,7 +2119,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
       <div class="admin-form-row">
         <div class="admin-label">符合規則</div>
-        <div class="admin-input">支援多 tag · 多活動衝突依 <span style="color:#C8A0F0;">DA tag Priority</span> 取最高 · <span style="color:var(--text-dim);">留空＝全體玩家可玩</span></div>
+        <div class="admin-input">支援多 tag · 多活動衝突依 <span style="color:#C8A0F0;">DA tag Priority</span> 取最高 · <span style="color:var(--gold-light);">玩家同時只跑 1 檔（落選活動無感）</span> · <span style="color:var(--text-dim);">留空＝全體玩家可玩</span></div>
       </div>
 
       <div class="admin-section-divider">解鎖門檻設定（每格增量，單位：披索；內部累積至 ₱3,600）</div>
@@ -2152,7 +2191,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <table class="spec-table">
     <thead><tr><th>功能</th><th>描述</th><th>v1</th><th>v2預留</th></tr></thead>
     <tbody>
-      <tr><td>活動建立表單</td><td class="dim">填寫期間、每格增量門檻、固定獎池、第幾抽權重、受眾 tag（資格投放）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>活動建立表單</td><td class="dim">填寫期間、<strong>投放線路</strong>、每格增量門檻、固定獎池、第幾抽權重、受眾 tag（資格投放）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>線路投放設定（platform_lines）</td><td class="dim">從<strong>預定義「已開通 Bet=0」平台清單</strong>多選投放線路；<strong>必選、未選擋上線</strong>，玩家所在線路不在清單＝活動無感。維護平台清單的小後台一併納入</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：依線路差異化獎池</td></tr>
       <tr><td>抽獎權重設定（第幾抽）</td><td class="dim">從第1抽到第9抽各自設定四種獎項權重，支援獎項歸零自動重算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>注單篩選（bonus_type）</td><td class="dim">依獎勵類型分離注單，對帳用</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>RTP 自動試算</td><td class="dim">填完獎勵即時顯示 RTP%，超出範圍警示</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
@@ -2799,7 +2839,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.7 · CONFIDENTIAL 2026<br>
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.8 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）<br>
   v3.4 修訂（2026-06-23）：§13 待確認收斂——門檻 ₱50~1,000、獎池 ₱37/RTP1.028%、權重 v1 後台自助、觀察期 2 週+D1相對+3~5pt 四項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
   v3.4 增補（2026-06-23 · AWC 釐清）：place_bet 主注單欄位補 item_id（道具id）+ bonus_type（獲獎類型編號）；Bet=0 入主錢包為我方既定機制不需詢問；CRM 獎勵明細另存表不透過 AWC；get_bet_summary 可分離但需加 bonus_type 編號<br>
