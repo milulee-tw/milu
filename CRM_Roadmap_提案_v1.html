@@ -592,7 +592,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CRM-ROADMAP · V1.2</span>
+  <span class="nav-brand">CRM-ROADMAP · V1.3</span>
   <a class="nav-item active" href="#overview">策略思路</a>
   <a class="nav-item" href="#logic">留存邏輯鏈</a>
   <a class="nav-item" href="#scope">功能盤點</a>
@@ -620,7 +620,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-meta">
       <div class="sidebar-meta-row">
         <span class="sidebar-meta-label">VERSION</span>
-        <span class="sidebar-meta-val">v1.2</span>
+        <span class="sidebar-meta-val">v1.3</span>
       </div>
       <div class="sidebar-meta-row">
         <span class="sidebar-meta-label">DATE</span>
@@ -779,7 +779,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · STRATEGY PROPOSAL · 2026</div>
   <h1>CRM <span>ROADMAP</span></h1>
-  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.2</div>
+  <div class="cover-sub">SLOT CRM 後續開發順序與雙線排程提案 · V1.3</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> 策略提案</div>
     <div class="cover-pill"><strong>北極星</strong> 次日 D1 留存</div>
@@ -1516,8 +1516,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td class="mono">tag_id</td><td class="dim">分群代碼（對應雙方共識的 Tag 清單與定義）</td></tr>
       <tr><td class="mono">valid_from / valid_to</td><td class="dim">Tag 生效與到期時間（平台依此自動失效，免堆積過期分群）</td></tr>
       <tr><td class="mono">updated_at</td><td class="dim">本筆分群的計算時間（對帳 / 排序用）</td></tr>
+      <tr><td class="mono">priority</td><td class="dim">各 tag 的優先序，<strong>由數據組排定</strong>；玩家同時符合多個活動時，平台 / BE 依此取「最高優先的符合 tag」決定跑哪一組活動</td></tr>
       <tr><td>更新模式</td><td class="dim">每日軌＝全量覆蓋快照；即時軌＝增量異動推送（兩者各自定死）</td></tr>
-      <tr><td>一玩家多 Tag</td><td class="dim">允許同時帶多個 Tag；投放時可「任一符合」或「全部符合」</td></tr>
+      <tr><td>一玩家多 Tag</td><td class="dim">允許同時帶多個 Tag；活動投放「任一符合」即符合，<strong>多活動衝突時依 tag priority 解析</strong>（取最高優先）</td></tr>
       <tr><td>Tag 清單與定義</td><td class="dim">由數據組維護「有哪些 Tag、各代表什麼」；新增 / 異動需雙方同步</td></tr>
     </tbody>
   </table>
@@ -1562,7 +1563,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </tbody>
   </table>
   <div class="callout">
-    <strong>v1.2 新增</strong>：本章為 v1.2 補入，把原 W1「Tag 引擎（自動打標）」校正為「接收數據組分群 + 雙軌更新」，並補齊運作流程、介面契約與後台看板。Tag 清單與分群判斷邏輯由數據組維護，細項見 §10 待確認。
+    <strong>v1.2 新增</strong>：本章為 v1.2 補入，把原 W1「Tag 引擎（自動打標）」校正為「接收數據組分群 + 雙軌更新」，並補齊運作流程、介面契約與後台看板。Tag 清單與分群判斷邏輯由數據組維護，細項見 §10 待確認。<strong>v1.3 補</strong>：多 tag 支援與 <strong>DA 排定 tag priority</strong>（玩家符合多活動時依此解析跑哪組），介面契約新增 <span style="font-family:'DM Mono',monospace;color:var(--gold-light);">priority</span> 欄位。
   </div>
 </section>
 
@@ -1607,7 +1608,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
   <div class="oq-item data">
     <div class="oq-owner">DATA 數據組</div>
-    <div class="oq-q">玩家 Tag：Tag 清單與定義、各 Tag 的分群判斷邏輯（數據組 owns）、一玩家可同時帶幾個 Tag、Tag 到期規則、即時軌可容忍延遲；介面契約欄位（player_id / tag_id / valid_from·to / updated_at）、每日「全量覆蓋」vs 即時「增量推送」、哪些 Tag 歸 RTP 即時軌。</div>
+    <div class="oq-q">玩家 Tag：Tag 清單與定義、各 Tag 的分群判斷邏輯（數據組 owns）、一玩家可同時帶幾個 Tag、Tag 到期規則、即時軌可容忍延遲；介面契約欄位（player_id / tag_id / valid_from·to / updated_at / <strong>priority</strong>）、每日「全量覆蓋」vs 即時「增量推送」、哪些 Tag 歸 RTP 即時軌、<strong>各 tag 的 priority 排序（決定玩家符合多活動時跑哪組）與同優先序的決勝規則</strong>。</div>
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">AWC ALIGN</div>
@@ -1618,7 +1619,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  SLOT CRM 後續開發 Roadmap 提案 · V1.2 · CONFIDENTIAL 2026<br>
+  SLOT CRM 後續開發 Roadmap 提案 · V1.3 · CONFIDENTIAL 2026<br>
   CMB · 菲律賓市場 · 框架文件，各功能細節於對應 Wave 啟動前以獨立需求文件呈現
 </div>
 
