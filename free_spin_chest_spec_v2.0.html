@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Spin 抽寶箱發放卡規格書 · CMB · v2.1</title>
+<title>Free Spin 抽寶箱發放卡規格書 · CMB · v2.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -266,7 +266,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- TOP NAV -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">FS-SPEC · V2.2</span>
+  <span class="nav-brand">FS-SPEC · V2.3</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#terms">名詞與資料模型</a>
   <a class="nav-item" href="#lifecycle">卡片生命週期</a>
@@ -292,7 +292,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">Free Spin 抽寶箱發放卡<br>細節流程與後台規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.2</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.3</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -383,7 +383,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · FEATURE SPEC · 2026</div>
   <h1>FREE <span>SPIN</span> 卡</h1>
-  <div class="cover-sub">FREE SPIN CARD · 抽寶箱發放、細節流程與後台規格 · V2.1（有效期定案 · reference_id 指定啟用 · 補 UI 視覺稿）</div>
+  <div class="cover-sub">FREE SPIN CARD · 抽寶箱發放、細節流程與後台規格 · V2.3（有效期定案 · reference_id 指定啟用 · 補背包/後台原型 UI 完整說明）</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> CRM 周邊 · 非現金獎勵</div>
     <div class="cover-pill"><strong>來源</strong> 抽寶箱 第二階段</div>
@@ -929,6 +929,121 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>⑦ 動作列</td><td class="dim">儲存草稿 / 啟用</td><td class="dim"><strong>啟用後</strong>才可被抽寶箱獎池引用；<strong>已發卡走快照、不受後續修改影響</strong></td></tr>
     </tbody>
   </table>
+
+  <!-- ===== 原型 UI 補充用樣式（左圖右說 + 後台 light screenshot） ===== -->
+  <style>
+    .proto-split{display:grid;grid-template-columns:1.25fr 0.95fr;gap:20px;align-items:start;margin-bottom:8px;}
+    @media(max-width:900px){.proto-split{grid-template-columns:1fr;}}
+    .adm{background:#f4f6fb;border:1px solid #d8dde8;border-radius:10px;overflow:hidden;font-size:11px;color:#2a2f3a;display:flex;min-height:280px;}
+    .adm-side{width:118px;background:#fff;border-right:1px solid #e6e9f0;padding:12px 0;flex-shrink:0;}
+    .adm-brand{font-size:9px;font-weight:800;color:#5b4cc4;padding:0 12px 10px;letter-spacing:.04em;line-height:1.5;}
+    .adm-mi{padding:7px 12px;color:#6b7280;font-size:10px;}
+    .adm-mi.on{background:#eef0fb;color:#5b4cc4;font-weight:700;border-left:2px solid #5b4cc4;}
+    .adm-main{flex:1;padding:14px 16px;overflow-x:auto;}
+    .adm-h{font-size:15px;font-weight:800;color:#1a1f2b;margin:2px 0 3px;}
+    .adm-subt{font-size:8px;color:#9aa1ad;letter-spacing:.12em;margin-bottom:2px;}
+    .adm-desc{font-size:9px;color:#8a91a0;line-height:1.5;margin-bottom:10px;max-width:74%;}
+    .adm-btn{background:#5b4cc4;color:#fff;font-size:10px;padding:6px 12px;border-radius:6px;font-weight:700;float:right;}
+    .adm-base{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap;align-items:center;}
+    .adm-bcard{flex:1;min-width:62px;background:#fff;border:1px solid #e6e9f0;border-radius:8px;padding:7px 4px;text-align:center;}
+    .adm-stars{color:#e0a93a;font-weight:700;font-size:11px;}
+    .adm-bval{font-size:15px;font-weight:800;color:#1a1f2b;}
+    .adm-bsub{font-size:7px;color:#9aa1ad;}
+    .adm-cur span{font-size:8px;padding:2px 6px;border-radius:4px;background:#eef0fb;color:#5b4cc4;margin-left:3px;}
+    .adm-cur span.off{background:#f0f2f6;color:#aab;}
+    .adm-stats{display:flex;gap:8px;margin:10px 0;}
+    .adm-stat{flex:1;background:#fff;border:1px solid #e6e9f0;border-radius:8px;padding:7px 10px;}
+    .adm-stat b{display:block;font-size:15px;color:#1a1f2b;}
+    .adm-stat i{font-size:8px;color:#9aa1ad;font-style:normal;}
+    .adm-tbl{width:100%;border-collapse:collapse;font-size:9px;background:#fff;border:1px solid #e6e9f0;border-radius:8px;min-width:520px;}
+    .adm-tbl th{background:#fafbfd;color:#9aa1ad;text-align:left;padding:6px 8px;font-weight:600;font-size:8px;letter-spacing:.04em;}
+    .adm-tbl td{padding:7px 8px;border-top:1px solid #f0f2f6;color:#2a2f3a;vertical-align:middle;}
+    .adm-nm{font-weight:700;color:#1a1f2b;}
+    .adm-nm i{display:block;font-size:7px;color:#9aa1ad;font-weight:400;font-style:normal;}
+    .adm-id{font-family:'DM Mono',monospace;background:#eef0fb;color:#5b4cc4;padding:2px 6px;border-radius:4px;font-size:8px;}
+    .adm-on{color:#16a34a;background:#e9f9ef;padding:2px 7px;border-radius:10px;font-size:8px;white-space:nowrap;}
+    .adm-draft{color:#8a91a0;background:#f0f2f6;padding:2px 7px;border-radius:10px;font-size:8px;}
+    .adm-act{color:#5b4cc4;font-size:9px;}
+    .adm-exp{background:#fafbfd;}
+    .adm-exp .adm-h2{font-size:8px;color:#8a91a0;padding:4px 0 6px;}
+    .adm-tbl2{width:100%;border-collapse:collapse;font-size:8px;}
+    .adm-tbl2 th{color:#aab;text-align:left;padding:3px 6px;font-weight:600;}
+    .adm-tbl2 td{padding:4px 6px;border-top:1px solid #eef0f4;}
+  </style>
+
+  <div class="sub-title">後台原型畫面 · FREE SPIN 卡發放管理列表（左圖右說）</div>
+  <div class="body-text">下圖依 <strong>FREE SPIN 卡獎勵後台設計原型</strong> 重繪「發放管理」<strong>列表頁</strong>（對應上方「型錄複用」視角）：上半為 <em>道具基礎值（1★–5★ 每轉押注 × 幣別）</em>、中段統計、下半為<strong>發放卡清單</strong>，每張卡可展開查看「引用此卡的抽寶箱活動」。左為原型畫面、右為逐區 UI 功能說明。</div>
+
+  <div class="proto-split">
+    <!-- 左：後台原型畫面 -->
+    <div class="adm">
+      <div class="adm-side">
+        <div class="adm-brand">CMB · CRM<br><span style="font-size:7px;color:#aab;font-weight:400;">REWARD BACKOFFICE</span></div>
+        <div class="adm-mi">儀表板</div>
+        <div class="adm-mi">抽寶箱活動</div>
+        <div class="adm-mi on">FREE SPIN 卡</div>
+        <div class="adm-mi">現金獎模板</div>
+        <div class="adm-mi">玩家背包</div>
+        <div class="adm-mi">對帳報表</div>
+      </div>
+      <div class="adm-main">
+        <span class="adm-btn">＋ 新增發放卡</span>
+        <div class="adm-subt">NON_CASH › FREE SPIN</div>
+        <div class="adm-h">FREE SPIN 卡 · 發放管理</div>
+        <div class="adm-desc">每張發放卡就是一個獨立的獎勵道具，擁有唯一獎勵道具 ID。抽寶箱活動設定獎項時，直接引用所需的獎勵道具 ID。</div>
+
+        <div style="font-size:8px;color:#9aa1ad;margin:6px 0 2px;">道具基礎值 · 1★–5★ 固定每轉押注　<span class="adm-cur"><span>THB</span><span class="off">PHP</span><span class="off">IDR</span><span class="off">VND</span><span class="off">USD</span></span>　<span style="color:#5b4cc4;">編輯基礎值</span></div>
+        <div class="adm-base">
+          <div class="adm-bcard"><div class="adm-stars">1★</div><div class="adm-bval">2</div><div class="adm-bsub">每轉押注</div></div>
+          <div class="adm-bcard"><div class="adm-stars">2★</div><div class="adm-bval">5</div><div class="adm-bsub">每轉押注</div></div>
+          <div class="adm-bcard"><div class="adm-stars">3★</div><div class="adm-bval">10</div><div class="adm-bsub">每轉押注</div></div>
+          <div class="adm-bcard"><div class="adm-stars">4★</div><div class="adm-bval">20</div><div class="adm-bsub">每轉押注</div></div>
+          <div class="adm-bcard"><div class="adm-stars">5★</div><div class="adm-bval">50</div><div class="adm-bsub">每轉押注</div></div>
+        </div>
+
+        <div class="adm-stats">
+          <div class="adm-stat"><b>5</b><i>發放卡總數</i></div>
+          <div class="adm-stat"><b>4</b><i>已啟用</i></div>
+          <div class="adm-stat"><b>6</b><i>引用中活動</i></div>
+          <div class="adm-stat"><b>16,250</b><i>累計發卡</i></div>
+        </div>
+
+        <table class="adm-tbl">
+          <thead><tr><th>發放卡名稱</th><th>獎勵道具ID</th><th>星級</th><th>次數</th><th>有效期</th><th>使用活動</th><th>狀態</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr><td class="adm-nm">標準入門卡<i>已發 4,200 張</i></td><td><span class="adm-id">RWD_FS_1001</span></td><td class="adm-stars">1★<br><span style="font-size:7px;color:#9aa1ad;">2 THB/轉</span></td><td>2 次</td><td>發卡 +7 天</td><td>● 1 個活動</td><td><span class="adm-on">已啟用</span></td><td class="adm-act">修改</td></tr>
+            <tr><td class="adm-nm">標準中階卡<i>已發 8,200 張</i></td><td><span class="adm-id">RWD_FS_1002</span></td><td class="adm-stars">3★<br><span style="font-size:7px;color:#9aa1ad;">10 THB/轉</span></td><td>4 次</td><td>發卡 +7 天</td><td>● 2 個活動</td><td><span class="adm-on">已啟用</span></td><td class="adm-act">修改</td></tr>
+            <tr class="adm-exp"><td colspan="8"><div class="adm-h2">使用此發放卡的抽寶箱活動 · 2 個活動（<span class="adm-id">RWD_FS_1002</span> 引用卡）</div>
+              <table class="adm-tbl2"><thead><tr><th>CAMPAIGN_ID</th><th>活動名稱</th><th>發卡數 · 期間</th><th>狀態</th></tr></thead>
+              <tbody>
+                <tr><td><span class="adm-id">CHEST0615</span></td><td>六月抽寶箱</td><td>5,100 · 2026/06/15–06/30</td><td><span class="adm-act" style="color:#16a34a;">進行中</span></td></tr>
+                <tr><td><span class="adm-id">CHEST0601</span></td><td>端午加碼抽寶箱</td><td>3,100 · 2026/06/01–06/10</td><td style="color:#9aa1ad;">已結算</td></tr>
+              </tbody></table></td></tr>
+            <tr><td class="adm-nm">高額 VIP 卡<i>已發 1,540 張</i></td><td><span class="adm-id">RWD_FS_1003</span></td><td class="adm-stars">5★<br><span style="font-size:7px;color:#9aa1ad;">50 THB/轉</span></td><td>3 次</td><td>發卡 +5 天</td><td>● 2 個活動</td><td><span class="adm-on">已啟用</span></td><td class="adm-act">修改</td></tr>
+            <tr><td class="adm-nm">週末閃電卡<i>已發 3,310 張</i></td><td><span class="adm-id">RWD_FS_1004</span></td><td class="adm-stars">3★<br><span style="font-size:7px;color:#9aa1ad;">10 THB/轉</span></td><td>6 次</td><td>發卡 +3 天</td><td>● 1 個活動</td><td><span class="adm-on">已啟用</span></td><td class="adm-act">修改</td></tr>
+            <tr><td class="adm-nm">新手七日卡<i>已發 0 張</i></td><td><span class="adm-id">RWD_FS_1005</span></td><td class="adm-stars">2★<br><span style="font-size:7px;color:#9aa1ad;">5 THB/轉</span></td><td>2 次</td><td>發卡 +14 天</td><td style="color:#9aa1ad;">0 個活動</td><td><span class="adm-draft">草稿</span></td><td class="adm-act">修改</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 右：UI 功能說明 -->
+    <div>
+      <table class="spec-table">
+        <thead><tr><th>UI 區塊</th><th>功能說明</th></tr></thead>
+        <tbody>
+          <tr><td>左側選單</td><td class="dim">儀表板 / 抽寶箱活動 / <strong>FREE SPIN 卡</strong> / 現金獎模板 / 玩家背包 / 對帳報表——後台模組導覽</td></tr>
+          <tr><td>＋ 新增發放卡</td><td class="dim">建立一張新發放卡（選星級 → 次數 → 有效期 → 可玩遊戲 → 幣別 BET）</td></tr>
+          <tr><td>道具基礎值（1★–5★）</td><td class="dim">各星級「<strong>固定每轉押注</strong>」基準值，依幣別（THB/PHP/IDR/VND/USD）分頁；玩家對各星級保留自設值、<strong>不隨活動變動</strong>；「編輯基礎值」可改</td></tr>
+          <tr><td>統計列</td><td class="dim">發放卡總數 / 已啟用 / 引用中活動 / 累計發卡</td></tr>
+          <tr><td>發放卡清單</td><td class="dim">名稱＋已發張數 / <strong>獎勵道具ID（RWD_FS_xxxx）</strong> / 星級＋每轉押注 / 次數 / 有效期（發卡 +N 天）/ 使用活動數 / 狀態 / 修改</td></tr>
+          <tr><td>展開「引用活動」</td><td class="dim">CAMPAIGN_ID / 活動名稱 / 發卡數＋期間 / 狀態（進行中·已結算）；<strong>一張卡可被多個活動引用＝型錄複用</strong></td></tr>
+          <tr><td>狀態</td><td class="dim"><strong>草稿</strong>（未啟用·0 引用）/ <strong>已啟用</strong>（可被抽寶箱獎池引用）</td></tr>
+        </tbody>
+      </table>
+      <div class="callout info" style="margin-top:8px;"><strong>術語對應</strong>：原型「獎勵道具ID（<span class="mono">RWD_FS_xxxx</span>）」＝本規格的 <span class="mono">reward_id</span>（型錄項，§02）；「星級 1★–5★」對應 <span class="mono">R_FS_1STAR～5STAR</span> 道具基礎值。發卡即寫死快照、<strong>已發卡不受後續修改</strong>（§03）。</div>
+    </div>
+  </div>
 </section>
 
 <!-- 05 BAG -->
@@ -1010,6 +1125,104 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout success"><strong>操作流程說明</strong>：點卡片 → 卡內展開<strong>遊戲牆</strong> → 選一款（<strong>必選</strong>，未選按鈕維持灰態）→ 開始 → 系統帶該卡 <span class="mono">reference_id</span> 指定啟用 → 跳轉遊戲。<br><strong>Corner case · 續玩同卡</strong>：未用完的卡（如 5/10）續玩時帶<strong>同一 <span class="mono">reference_id</span></strong>，繼續扣同一局數池、<strong>不另開新卡</strong>。</div>
+
+  <div class="sub-title">背包前台原型 · UI 完整說明（左圖右說）</div>
+  <div class="body-text">下方依 <strong>背包前台操作原型</strong> 重繪「我的背包 · FREE SPIN」實際畫面（手機版）。此原型較上方示意更新：以「<em>攜帶遊戲（必選一個）</em>」取代卡內展開，並新增「<em>目前累積獎金 / 已達上限封頂</em>」即時顯示。左為原型畫面、右為逐區 UI 功能說明。</div>
+
+  <div class="proto-split" style="grid-template-columns:340px 1fr;">
+    <!-- 左：背包原型畫面 -->
+    <div class="mock" style="max-width:none;">
+      <div class="mock-head"><span>🔴 我的背包 · FREE SPIN</span><span>3 張可用　✕</span></div>
+      <div style="display:flex;gap:16px;border-bottom:1px solid var(--border);margin-bottom:12px;font-size:12px;">
+        <span style="padding-bottom:8px;border-bottom:2px solid var(--gold);color:var(--gold-light);font-weight:700;">免費旋轉卡</span>
+        <span style="padding-bottom:8px;color:var(--text-dim);">道具</span>
+        <span style="padding-bottom:8px;color:var(--text-dim);">免費遊戲卡</span>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <span style="font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(212,168,67,0.14);color:var(--gold-light);border:1px solid var(--border-bright);">可使用 3</span>
+        <span style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">已過期 1</span>
+      </div>
+      <div class="fs-card" style="border-color:var(--gold);">
+        <div class="fs-card-top">
+          <span style="display:flex;align-items:center;gap:8px;"><span style="width:30px;height:30px;border-radius:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:#1a1206;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:11px;">100</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">3★</span></span></span>
+          <span class="fs-card-badge" style="background:rgba(212,168,67,0.16);color:var(--gold-light);">使用中</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;margin-bottom:8px;">
+          <div class="fs-row"><span>每轉押注</span><b>6 PHP</b></div>
+          <div class="fs-row"><span>最大獎金</span><b style="color:#7ADFA0;">600 PHP</b></div>
+          <div class="fs-row"><span>已用 / 次數</span><b><span style="color:var(--gold-light);">5</span> / 10</b></div>
+          <div class="fs-row"><span>剩餘時間</span><b>2天 04:11</b></div>
+        </div>
+        <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;"><span style="color:var(--text-secondary);">目前累積獎金　<b style="color:var(--gold-light);font-size:13px;">600 PHP</b></span><span style="font-size:9px;padding:3px 8px;border-radius:10px;background:rgba(212,168,67,0.16);color:var(--gold-light);">已達上限封頂</span></div>
+          <div style="height:5px;border-radius:3px;background:var(--dark-4);overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,var(--gold-light),var(--gold));"></div></div>
+          <div style="font-size:9px;color:var(--text-dim);margin-top:5px;">來自已抽 720 PHP · 超過上限 120 不計入 · 結算以上限 600 PHP 為準</div>
+        </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:5px;">攜帶遊戲（必選一個）</div>
+        <div class="fs-games">
+          <span class="fs-game-chip" style="border-color:var(--gold);color:var(--gold-light);">Cashier Wins ✓</span>
+          <span class="fs-game-chip">Golden Wish</span>
+          <span class="fs-game-chip">Wild Buffalo</span>
+          <span class="fs-game-chip">Thunder of Zeus</span>
+          <span class="fs-game-chip">Anubis Rising</span>
+        </div>
+        <div class="fs-btn">進入遊戲 ▶</div>
+      </div>
+
+      <!-- 卡 2：全新未使用（收合摘要） -->
+      <div class="fs-card">
+        <div class="fs-card-top">
+          <span style="display:flex;align-items:center;gap:8px;"><span style="width:26px;height:26px;border-radius:6px;background:var(--dark-4);color:var(--gold-light);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:10px;">50</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">2★</span></span></span>
+          <span class="fs-card-badge">全新未使用</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;">
+          <div class="fs-row"><span>每轉押注</span><b>5 PHP</b></div>
+          <div class="fs-row"><span>最大獎金</span><b>500 PHP</b></div>
+          <div class="fs-row"><span>已用 / 次數</span><b>0 / 10</b></div>
+          <div class="fs-row"><span>剩餘時間</span><b>6天 22:30</b></div>
+        </div>
+        <div style="font-size:9px;color:var(--text-dim);margin-top:8px;text-align:center;">▾ 點卡片展開 → 選攜帶遊戲 → 進入遊戲</div>
+      </div>
+
+      <!-- 卡 3：即將到期 < 24h（收合摘要） -->
+      <div class="fs-card" style="border-color:var(--red);">
+        <div class="fs-card-top">
+          <span style="display:flex;align-items:center;gap:8px;"><span style="width:26px;height:26px;border-radius:6px;background:var(--dark-4);color:#F0907A;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:10px;">200</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">4★</span></span></span>
+          <span class="fs-card-badge" style="background:rgba(224,90,58,0.16);color:#F0907A;">即將到期</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;">
+          <div class="fs-row"><span>每轉押注</span><b>20 PHP</b></div>
+          <div class="fs-row"><span>最大獎金</span><b>2,000 PHP</b></div>
+          <div class="fs-row"><span>已用 / 次數</span><b>2 / 10</b></div>
+          <div class="fs-row"><span>剩餘時間</span><b style="color:#F0907A;">⏱ 18:42:09（&lt; 24h）</b></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:10px;color:var(--text-dim);padding:8px 0 2px;border-top:1px dashed var(--border);margin-top:4px;">切換「已過期 1」分頁 → 過期卡為<strong style="color:var(--text-secondary);">唯讀</strong>、不可進入遊戲</div>
+    </div>
+
+    <!-- 右：UI 功能說明 -->
+    <div>
+      <table class="spec-table">
+        <thead><tr><th>UI 區塊</th><th>功能說明</th></tr></thead>
+        <tbody>
+          <tr><td>分頁 Tabs</td><td class="dim">免費旋轉卡 / 道具 / 免費遊戲卡——背包道具分類；本頁為「免費旋轉卡」</td></tr>
+          <tr><td>狀態篩選</td><td class="dim">可使用 / 已過期，依卡 <span class="mono">valid_to</span> 與剩餘次數過濾</td></tr>
+          <tr><td>卡片標頭</td><td class="dim">免費旋轉 ×N（N＝<span class="mono">num_of_rounds</span>）＋星級徽章＋狀態徽章</td></tr>
+          <tr><td>卡片狀態</td><td class="dim"><strong>使用中</strong>（已開打，續玩帶同 <span class="mono">reference_id</span>）/ <strong>全新未使用</strong>（0 次已用，收合摘要）/ <strong>即將到期</strong>（&lt; 24h 紅字倒數）/ <strong>已過期</strong>（在「已過期」分頁、唯讀不可進入）</td></tr>
+          <tr><td>每轉押注</td><td class="dim"><span class="mono">coin_size × multiplier</span>，含幣別（例 6 PHP）</td></tr>
+          <tr><td>最大獎金</td><td class="dim"><span class="mono">max_conversion</span> 封頂金額（例 600 PHP）</td></tr>
+          <tr><td>已用 / 次數</td><td class="dim"><span class="mono">rounds_left / num_of_rounds</span>，顯示剩餘可玩次數</td></tr>
+          <tr><td>剩餘時間</td><td class="dim"><span class="mono">valid_to − now</span> 倒數；&lt; 24h 轉紅提示</td></tr>
+          <tr><td>目前累積獎金 + 封頂</td><td class="dim">本卡<strong>即時累積派彩</strong>；達 <span class="mono">max_conversion</span> 顯示「已達上限封頂」、進度條滿格</td></tr>
+          <tr><td>上限說明列</td><td class="dim">「來自已抽 X · 超過上限 Y 不計入 · 結算以上限為準」——呼應 §03 結算上限（我方自套 min 封頂）</td></tr>
+          <tr><td>攜帶遊戲（必選一個）</td><td class="dim"><span class="mono">game_ids[]</span> 圖示牆，<strong>必選一款</strong>；對應 §05 需求 5「跳轉前綁 reference_id 指定啟用」</td></tr>
+          <tr><td>進入遊戲 CTA</td><td class="dim">觸發跳轉流程（綁 reference_id → LoginWithoutRedirect 取一次性入口）；未選遊戲時 disabled 灰態</td></tr>
+        </tbody>
+      </table>
+      <div class="callout info" style="margin-top:8px;"><strong>與上方示意差異</strong>：原型把「卡內展開選遊戲」改為卡底「<strong>攜帶遊戲（必選一個）</strong>」，並新增「<strong>累積獎金 / 已達上限封頂</strong>」即時呈現——對齊 §03 結算上限與 §05 reference_id 指定啟用。</div>
+    </div>
+  </div>
 
   <div class="sub-title">需求 5 · 跳轉到指定遊戲（Reload 流程 · v2.1：跳轉前綁定 reference_id 指定啟用）</div>
   <div class="flow-wrap">
@@ -1271,7 +1484,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.2 · CONFIDENTIAL 2026<br>
+  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.3 · CONFIDENTIAL 2026<br>
+  v2.3 修訂（2026-06-24）：依「背包前台操作原型」「FREE SPIN 卡獎勵後台設計原型」補 §04（後台發放管理列表）與 §05（背包前台）的原型畫面重繪＋逐區 UI 功能說明（左圖右說）；後台導入「道具基礎值（1★–5★×幣別）＋發放卡（RWD_FS_xxxx）＋引用活動」視角，背包補「累積獎金封頂／攜帶遊戲必選一個」<br>
   CMB · CRM 生態 / 推廣規格 · 與抽寶箱 v3.4 / CRM-ARCH v1.4 / AWC-TOPO v2 對齊<br>
   v2.2 修訂（2026-06-23）：§10 待確認收斂——P1 face_value 沿用公版預設、真金防濫用屬桶1數值把關（獨立風控 deferred）、任務獎勵 RTP 單筆封頂+活動 3pt 硬上限三項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
   v2.2 增補（2026-06-23 · AWC 釐清）：效期改「✅ 已決」——過期卡不可呼叫 LoginWithoutRedirect、每次下注判定失效即直接結算給錢；啟用機制請 AWC 釐清 SetActiveFreeSpin 能否帶 reference_id（不支援則背包手動備援）；結算注單回呼補 item_id（道具id），CRM 獎勵明細另存表不透過 AWC<br>
