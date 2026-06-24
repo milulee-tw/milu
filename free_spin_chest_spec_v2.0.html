@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Spin 抽寶箱發放卡規格書 · CMB · v2.3</title>
+<title>Free Spin 抽寶箱發放卡規格書 · CMB · v2.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -266,7 +266,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- TOP NAV -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">FS-SPEC · V2.3</span>
+  <span class="nav-brand">FS-SPEC · V2.4</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#terms">名詞與資料模型</a>
   <a class="nav-item" href="#lifecycle">卡片生命週期</a>
@@ -292,7 +292,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">Free Spin 抽寶箱發放卡<br>細節流程與後台規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.3</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v2.4</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -383,7 +383,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · FEATURE SPEC · 2026</div>
   <h1>FREE <span>SPIN</span> 卡</h1>
-  <div class="cover-sub">FREE SPIN CARD · 抽寶箱發放、細節流程與後台規格 · V2.3（有效期定案 · reference_id 指定啟用 · 補背包/後台原型 UI 完整說明）</div>
+  <div class="cover-sub">FREE SPIN CARD · 抽寶箱發放、細節流程與後台規格 · V2.4（補背包/後台原型 UI 說明 · 前台13語系/後台中英文案表 · 移除舊背包 mock）</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> CRM 周邊 · 非現金獎勵</div>
     <div class="cover-pill"><strong>來源</strong> 抽寶箱 第二階段</div>
@@ -972,7 +972,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </style>
 
   <div class="sub-title">後台原型畫面 · FREE SPIN 卡發放管理列表（左圖右說）</div>
-  <div class="body-text">下圖依 <strong>FREE SPIN 卡獎勵後台設計原型</strong> 重繪「發放管理」<strong>列表頁</strong>（對應上方「型錄複用」視角）：上半為 <em>道具基礎值（1★–5★ 每轉押注 × 幣別）</em>、中段統計、下半為<strong>發放卡清單</strong>，每張卡可展開查看「引用此卡的抽寶箱活動」。左為原型畫面、右為逐區 UI 功能說明。</div>
+  <div class="body-text">下圖依 <strong>FREE SPIN 卡獎勵後台設計原型</strong> 重繪「發放管理」<strong>列表頁</strong>（對應上方「型錄複用」視角）：上半為 <em>道具基礎值（1★–5★ 每轉押注 × 幣別）</em>、中段統計、下半為<strong>發放卡清單</strong>，每張卡可展開查看「引用此卡的抽寶箱活動」。左為原型畫面、右為逐區 UI 功能說明。 <a href="後台獎勵系統 (standalone).html" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px;font-size:12px;padding:5px 12px;border:1px solid var(--border-bright);border-radius:6px;color:var(--gold-light);text-decoration:none;background:rgba(212,168,67,0.08);">🔗 開啟 FREE SPIN 卡設定後台互動原型（新視窗）↗</a></div>
 
   <div class="proto-split">
     <!-- 左：後台原型畫面 -->
@@ -1044,6 +1044,49 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="callout info" style="margin-top:8px;"><strong>術語對應</strong>：原型「獎勵道具ID（<span class="mono">RWD_FS_xxxx</span>）」＝本規格的 <span class="mono">reward_id</span>（型錄項，§02）；「星級 1★–5★」對應 <span class="mono">R_FS_1STAR～5STAR</span> 道具基礎值。發卡即寫死快照、<strong>已發卡不受後續修改</strong>（§03）。</div>
     </div>
   </div>
+
+  <div class="sub-title">後台文案 · 多國語系（中英對照）</div>
+  <div class="body-text">FREE SPIN 卡發放後台所有介面文字 ×<strong>2 語系（en / zh-Hant）</strong>對照（依 FREE SPIN 卡設定後台原型）。後台為營運內部工具，僅需中英。</div>
+  <table class="spec-table" style="max-width:760px;">
+    <thead><tr><th>區塊</th><th>zh-Hant</th><th>en</th></tr></thead>
+    <tbody>
+      <tr><td>選單</td><td>儀表板</td><td>Dashboard</td></tr>
+      <tr><td>選單</td><td>抽寶箱活動</td><td>Treasure Box Campaigns</td></tr>
+      <tr><td>選單</td><td>FREE SPIN 卡</td><td>FREE SPIN Cards</td></tr>
+      <tr><td>選單</td><td>現金獎模板</td><td>Cash Prize Templates</td></tr>
+      <tr><td>選單</td><td>玩家背包</td><td>Player Backpack</td></tr>
+      <tr><td>選單</td><td>對帳報表</td><td>Reconciliation Reports</td></tr>
+      <tr><td>標題</td><td>FREE SPIN 卡 · 發放管理</td><td>FREE SPIN Card · Issuance Management</td></tr>
+      <tr><td>按鈕</td><td>＋ 新增發放卡</td><td>＋ New Issuance Card</td></tr>
+      <tr><td>區段</td><td>道具基礎值</td><td>Item Base Value</td></tr>
+      <tr><td>區段</td><td>固定每轉押注</td><td>Fixed Bet per Spin</td></tr>
+      <tr><td>連結</td><td>編輯基礎值</td><td>Edit Base Value</td></tr>
+      <tr><td>統計</td><td>發放卡總數</td><td>Total Cards</td></tr>
+      <tr><td>統計</td><td>已啟用</td><td>Active</td></tr>
+      <tr><td>統計</td><td>引用中活動</td><td>Referencing Campaigns</td></tr>
+      <tr><td>統計</td><td>累計發卡</td><td>Total Issued</td></tr>
+      <tr><td>表頭</td><td>發放卡名稱</td><td>Card Name</td></tr>
+      <tr><td>表頭</td><td>獎勵道具ID</td><td>Reward Item ID</td></tr>
+      <tr><td>表頭</td><td>星級</td><td>Star Tier</td></tr>
+      <tr><td>表頭</td><td>次數</td><td>Rounds</td></tr>
+      <tr><td>表頭</td><td>有效期</td><td>Validity</td></tr>
+      <tr><td>表頭</td><td>使用活動</td><td>Used in Campaigns</td></tr>
+      <tr><td>表頭</td><td>狀態</td><td>Status</td></tr>
+      <tr><td>表頭</td><td>操作</td><td>Action</td></tr>
+      <tr><td>列文字</td><td>已發 {n} 張</td><td>{n} issued</td></tr>
+      <tr><td>列文字</td><td>發卡 +{n} 天</td><td>+{n} days from issuance</td></tr>
+      <tr><td>列文字</td><td>{n} 個活動</td><td>{n} campaign(s)</td></tr>
+      <tr><td>狀態</td><td>已啟用</td><td>Active</td></tr>
+      <tr><td>狀態</td><td>草稿</td><td>Draft</td></tr>
+      <tr><td>操作</td><td>修改</td><td>Edit</td></tr>
+      <tr><td>展開標題</td><td>使用此發放卡的抽寶箱活動</td><td>Treasure-box campaigns using this card</td></tr>
+      <tr><td>展開表頭</td><td>活動名稱</td><td>Campaign Name</td></tr>
+      <tr><td>展開表頭</td><td>發卡數 · 期間</td><td>Cards Issued · Period</td></tr>
+      <tr><td>展開狀態</td><td>進行中</td><td>Ongoing</td></tr>
+      <tr><td>展開狀態</td><td>已結算</td><td>Settled</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info"><strong>i18n 備註</strong>：① <span class="mono">CAMPAIGN_ID / NON_CASH / FREE SPIN / RWD_FS_xxxx</span> 等代碼為系統識別碼，不翻譯。② 數字、幣別、日期為動態值不進文案表。③ 繁中為文案基準（source）。</div>
 </section>
 
 <!-- 05 BAG -->
@@ -1056,78 +1099,23 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
   <div class="sub-title">需求 4 · 背包顯示欄位</div>
   <div class="body-text">背包資料來源以我方快照為主、<em>GetFreeSpinSendDetail</em> 為對帳校驗；玩家點開背包即可看到每張卡的全部細節。</div>
-  <div class="info-grid-2">
-    <div>
-      <table class="spec-table">
-        <thead><tr><th>背包顯示</th><th>欄位 / 來源</th></tr></thead>
-        <tbody>
-          <tr><td>多少押注額</td><td class="mono">coin_size × multiplier（每轉押注）</td></tr>
-          <tr><td>剩餘 / 總次數</td><td class="mono">rounds_left / num_of_rounds</td></tr>
-          <tr><td>最大獎金金額</td><td class="mono">max_conversion</td></tr>
-          <tr><td>可玩哪些遊戲</td><td class="mono">game_ids[]（圖示牆）</td></tr>
-          <tr><td>剩餘可使用時間</td><td class="mono">valid_to − now（倒數；&lt; 24h 紅色提示）</td></tr>
-          <tr><td>狀態</td><td class="mono">全新未使用 / 使用中 / 即將到期</td></tr>
-          <tr><td>最終入帳</td><td class="mono">主錢包真金（無流水）</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <div class="mock">
-        <div class="mock-head"><span>🎒 我的背包 · FREE SPIN</span><span>3 張</span></div>
+  <table class="spec-table" style="max-width:580px;">
+    <thead><tr><th>背包顯示</th><th>欄位 / 來源</th></tr></thead>
+    <tbody>
+      <tr><td>多少押注額</td><td class="mono">coin_size × multiplier（每轉押注）</td></tr>
+      <tr><td>剩餘 / 總次數</td><td class="mono">rounds_left / num_of_rounds</td></tr>
+      <tr><td>最大獎金金額</td><td class="mono">max_conversion</td></tr>
+      <tr><td>可玩哪些遊戲</td><td class="mono">game_ids[]（圖示牆）</td></tr>
+      <tr><td>剩餘可使用時間</td><td class="mono">valid_to − now（倒數；&lt; 24h 紅色提示）</td></tr>
+      <tr><td>狀態</td><td class="mono">全新未使用 / 使用中 / 即將到期 / 已過期</td></tr>
+      <tr><td>最終入帳</td><td class="mono">主錢包真金（無流水）</td></tr>
+    </tbody>
+  </table>
 
-        <!-- 卡 1：使用中 5/10 · 卡片內展開選遊戲 -->
-        <div class="fs-card" style="border-color:var(--gold);">
-          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge" style="background:rgba(212,168,67,0.16);color:var(--gold-light);">使用中</span></div>
-          <div class="fs-row"><span>每轉押注</span><b>10 THB</b></div>
-          <div class="fs-row"><span>已用 / 總次數</span><b><span style="color:var(--gold-light);">5</span> / 10（剩 5 次可續玩）</b></div>
-          <div class="fs-row"><span>最大獎金</span><b>1,000 THB</b></div>
-          <div class="fs-row"><span>最終入帳</span><b>主錢包真金（無流水）</b></div>
-          <div class="fs-row"><span>剩餘時間</span><b>2 天 04:12</b></div>
-          <div style="border-top:1px dashed var(--border);margin:10px 0 8px;padding-top:8px;font-size:10px;color:var(--text-dim);">▾ 展開選遊戲（點圖示選一款）</div>
-          <div class="fs-games">
-            <span class="fs-game-chip" style="background:rgba(212,168,67,0.18);color:var(--gold-light);border-color:var(--gold);font-weight:700;">Fortune Tiger ✓</span>
-            <span class="fs-game-chip">Mahjong Ways</span>
-            <span class="fs-game-chip">Fortune Ox</span>
-            <span class="fs-game-chip">+2</span>
-          </div>
-          <div class="fs-btn">開始 ▶</div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center;">已選 Fortune Tiger → 按鈕亮起；續玩帶<strong style="color:var(--text-secondary);">同一 reference_id</strong>、續扣同池</div>
-        </div>
-
-        <!-- 卡 2：即將到期 倒數 <24h -->
-        <div class="fs-card" style="border-color:var(--red);">
-          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge" style="background:rgba(224,90,58,0.16);color:#F0907A;">即將到期</span></div>
-          <div class="fs-row"><span>每轉押注</span><b>20 THB</b></div>
-          <div class="fs-row"><span>已用 / 總次數</span><b>2 / 10</b></div>
-          <div class="fs-row"><span>最大獎金</span><b>2,000 THB</b></div>
-          <div class="fs-row"><span>剩餘時間</span><b style="color:#F0907A;">⏱ 18:42:09（&lt; 24h）</b></div>
-          <div class="fs-btn">選遊戲並開始 ▶</div>
-        </div>
-
-        <!-- 卡 3：全新未使用 10/10 · 展開但未選 → 按鈕灰態 -->
-        <div class="fs-card">
-          <div class="fs-card-top"><span class="fs-card-name">FREE SPIN ×10</span><span class="fs-card-badge">全新未使用</span></div>
-          <div class="fs-row"><span>每轉押注</span><b>5 THB</b></div>
-          <div class="fs-row"><span>已用 / 總次數</span><b>0 / 10</b></div>
-          <div class="fs-row"><span>最大獎金</span><b>500 THB</b></div>
-          <div class="fs-row"><span>剩餘時間</span><b>6 天 22:30</b></div>
-          <div style="border-top:1px dashed var(--border);margin:10px 0 8px;padding-top:8px;font-size:10px;color:var(--text-dim);">▾ 展開選遊戲（尚未選擇）</div>
-          <div class="fs-games">
-            <span class="fs-game-chip">Lucky Neko</span>
-            <span class="fs-game-chip">Mahjong Ways</span>
-            <span class="fs-game-chip">+3</span>
-          </div>
-          <div class="fs-btn" style="background:var(--dark-4);color:var(--text-dim);border:1px solid var(--border);">開始 ▶（請先選遊戲）</div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center;">未選遊戲時按鈕為 <strong style="color:var(--text-secondary);">disabled 灰態</strong>，必須先選一款才能開始</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout success"><strong>操作流程說明</strong>：點卡片 → 卡內展開<strong>遊戲牆</strong> → 選一款（<strong>必選</strong>，未選按鈕維持灰態）→ 開始 → 系統帶該卡 <span class="mono">reference_id</span> 指定啟用 → 跳轉遊戲。<br><strong>Corner case · 續玩同卡</strong>：未用完的卡（如 5/10）續玩時帶<strong>同一 <span class="mono">reference_id</span></strong>，繼續扣同一局數池、<strong>不另開新卡</strong>。</div>
+  <div class="callout success"><strong>操作流程說明</strong>：開背包 → 選卡 → 卡底「<strong>攜帶遊戲（必選一個）</strong>」選一款（未選按鈕維持 disabled 灰態）→ <strong>進入遊戲</strong> → 系統帶該卡 <span class="mono">reference_id</span> 指定啟用 → 跳轉遊戲。<br><strong>Corner case · 續玩同卡</strong>：未用完的卡（如 5/10）續玩時帶<strong>同一 <span class="mono">reference_id</span></strong>，繼續扣同一局數池、<strong>不另開新卡</strong>。</div>
 
   <div class="sub-title">背包前台原型 · UI 完整說明（左圖右說）</div>
-  <div class="body-text">下方依 <strong>背包前台操作原型</strong> 重繪「我的背包 · FREE SPIN」實際畫面（手機版）。此原型較上方示意更新：以「<em>攜帶遊戲（必選一個）</em>」取代卡內展開，並新增「<em>目前累積獎金 / 已達上限封頂</em>」即時顯示。左為原型畫面、右為逐區 UI 功能說明。</div>
+  <div class="body-text">下方依 <strong>背包前台操作原型</strong> 重繪「我的背包 · FREE SPIN」實際畫面（手機版）。此原型較上方示意更新：以「<em>攜帶遊戲（必選一個）</em>」取代卡內展開，並新增「<em>目前累積獎金 / 已達上限封頂</em>」即時顯示。左為原型畫面、右為逐區 UI 功能說明。 <a href="遊戲背包頁原型.html" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px;font-size:12px;padding:5px 12px;border:1px solid var(--border-bright);border-radius:6px;color:var(--gold-light);text-decoration:none;background:rgba(212,168,67,0.08);">🔗 開啟背包前台互動原型（新視窗）↗</a></div>
 
   <div class="proto-split" style="grid-template-columns:340px 1fr;">
     <!-- 左：背包原型畫面 -->
@@ -1223,6 +1211,39 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="callout info" style="margin-top:8px;"><strong>與上方示意差異</strong>：原型把「卡內展開選遊戲」改為卡底「<strong>攜帶遊戲（必選一個）</strong>」，並新增「<strong>累積獎金 / 已達上限封頂</strong>」即時呈現——對齊 §03 結算上限與 §05 reference_id 指定啟用。</div>
     </div>
   </div>
+
+  <div class="sub-title">背包前台 · 多國語系文案表（13 語系）</div>
+  <div class="body-text">背包前台所有玩家可見文字 ×<strong>13 語系</strong>翻譯（依背包前台操作原型）。語系：en / zh-Hant / zh-Hans / th / ko-KR / pt / vi / id / my-MM / es-ES / tr-TR / ja-JP / bn。<code>{n}</code> 為數值代入。</div>
+  <div style="overflow-x:auto;margin-bottom:24px;">
+  <table class="spec-table" style="min-width:1680px;font-size:11px;">
+    <thead><tr>
+      <th>用途 (key)</th><th>en</th><th>zh-Hant</th><th>zh-Hans</th><th>th</th><th>ko-KR</th><th>pt</th><th>vi</th><th>id</th><th>my-MM</th><th>es-ES</th><th>tr-TR</th><th>ja-JP</th><th>bn</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>背包標題</td><td>My Backpack</td><td>我的背包</td><td>我的背包</td><td>กระเป๋าของฉัน</td><td>내 가방</td><td>Minha Mochila</td><td>Túi của tôi</td><td>Tas Saya</td><td>ကျွန်ုပ်၏အိတ်</td><td>Mi Mochila</td><td>Çantam</td><td>マイバッグ</td><td>আমার ব্যাগ</td></tr>
+      <tr><td>分頁·免費旋轉卡</td><td>Free Spin Cards</td><td>免費旋轉卡</td><td>免费旋转卡</td><td>การ์ดฟรีสปิน</td><td>프리스핀 카드</td><td>Cartões de Giros Grátis</td><td>Thẻ Quay Miễn Phí</td><td>Kartu Putaran Gratis</td><td>အခမဲ့လည်ပတ်ကတ်</td><td>Tarjetas de Giros Gratis</td><td>Bedava Dönüş Kartları</td><td>フリースピンカード</td><td>ফ্রি স্পিন কার্ড</td></tr>
+      <tr><td>分頁·道具</td><td>Items</td><td>道具</td><td>道具</td><td>ไอเทม</td><td>아이템</td><td>Itens</td><td>Vật phẩm</td><td>Item</td><td>ပစ္စည်းများ</td><td>Objetos</td><td>Eşyalar</td><td>アイテム</td><td>আইটেম</td></tr>
+      <tr><td>分頁·免費遊戲卡</td><td>Free Game Cards</td><td>免費遊戲卡</td><td>免费游戏卡</td><td>การ์ดเกมฟรี</td><td>무료 게임 카드</td><td>Cartões de Jogo Grátis</td><td>Thẻ Trò Chơi Miễn Phí</td><td>Kartu Game Gratis</td><td>အခမဲ့ဂိမ်းကတ်</td><td>Tarjetas de Juego Gratis</td><td>Bedava Oyun Kartları</td><td>無料ゲームカード</td><td>ফ্রি গেম কার্ড</td></tr>
+      <tr><td>篩選·可使用</td><td>Available</td><td>可使用</td><td>可使用</td><td>ใช้ได้</td><td>사용 가능</td><td>Disponível</td><td>Khả dụng</td><td>Tersedia</td><td>အသုံးပြုနိုင်</td><td>Disponible</td><td>Kullanılabilir</td><td>利用可能</td><td>উপলব্ধ</td></tr>
+      <tr><td>篩選·已過期</td><td>Expired</td><td>已過期</td><td>已过期</td><td>หมดอายุ</td><td>만료됨</td><td>Expirado</td><td>Đã hết hạn</td><td>Kedaluwarsa</td><td>သက်တမ်းကုန်</td><td>Caducado</td><td>Süresi Doldu</td><td>期限切れ</td><td>মেয়াদোত্তীর্ণ</td></tr>
+      <tr><td>可用張數徽章</td><td>{n} available</td><td>{n} 張可用</td><td>{n} 张可用</td><td>ใช้ได้ {n} ใบ</td><td>{n}장 사용 가능</td><td>{n} disponíveis</td><td>{n} thẻ khả dụng</td><td>{n} tersedia</td><td>{n} ခု အသုံးပြုနိုင်</td><td>{n} disponibles</td><td>{n} kullanılabilir</td><td>{n}枚利用可能</td><td>{n}টি উপলব্ধ</td></tr>
+      <tr><td>卡名·免費旋轉</td><td>Free Spins ×{n}</td><td>免費旋轉 ×{n}</td><td>免费旋转 ×{n}</td><td>ฟรีสปิน ×{n}</td><td>프리스핀 ×{n}</td><td>Giros Grátis ×{n}</td><td>Quay Miễn Phí ×{n}</td><td>Putaran Gratis ×{n}</td><td>အခမဲ့လည်ပတ် ×{n}</td><td>Giros Gratis ×{n}</td><td>Bedava Dönüş ×{n}</td><td>フリースピン ×{n}</td><td>ফ্রি স্পিন ×{n}</td></tr>
+      <tr><td>狀態·使用中</td><td>In Use</td><td>使用中</td><td>使用中</td><td>กำลังใช้งาน</td><td>사용 중</td><td>Em Uso</td><td>Đang dùng</td><td>Sedang Digunakan</td><td>အသုံးပြုနေဆဲ</td><td>En Uso</td><td>Kullanımda</td><td>使用中</td><td>ব্যবহৃত হচ্ছে</td></tr>
+      <tr><td>狀態·全新未使用</td><td>Unused</td><td>全新未使用</td><td>全新未使用</td><td>ยังไม่ได้ใช้</td><td>미사용</td><td>Não Usado</td><td>Chưa dùng</td><td>Belum Digunakan</td><td>မသုံးရသေး</td><td>Sin Usar</td><td>Kullanılmamış</td><td>未使用</td><td>অব্যবহৃত</td></tr>
+      <tr><td>狀態·即將到期</td><td>Expiring Soon</td><td>即將到期</td><td>即将到期</td><td>ใกล้หมดอายุ</td><td>곧 만료</td><td>Expira em Breve</td><td>Sắp hết hạn</td><td>Segera Berakhir</td><td>မကြာမီကုန်ဆုံးမည်</td><td>Caduca Pronto</td><td>Yakında Doluyor</td><td>まもなく期限切れ</td><td>শীঘ্রই মেয়াদ শেষ</td></tr>
+      <tr><td>每轉押注</td><td>Bet per Spin</td><td>每轉押注</td><td>每转押注</td><td>เดิมพันต่อสปิน</td><td>스핀당 베팅</td><td>Aposta por Giro</td><td>Cược mỗi vòng</td><td>Taruhan per Putaran</td><td>တစ်ပတ်လျှင်လောင်းကြေး</td><td>Apuesta por Giro</td><td>Dönüş Başına Bahis</td><td>スピンあたりベット</td><td>প্রতি স্পিনে বাজি</td></tr>
+      <tr><td>最大獎金</td><td>Max Win</td><td>最大獎金</td><td>最大奖金</td><td>รางวัลสูงสุด</td><td>최대 당첨금</td><td>Ganho Máximo</td><td>Thắng tối đa</td><td>Kemenangan Maks</td><td>အများဆုံးဆုကြေး</td><td>Ganancia Máxima</td><td>Maks Kazanç</td><td>最大賞金</td><td>সর্বোচ্চ জয়</td></tr>
+      <tr><td>已用 / 次數</td><td>Used / Rounds</td><td>已用 / 次數</td><td>已用 / 次数</td><td>ใช้แล้ว / รอบ</td><td>사용 / 횟수</td><td>Usados / Rodadas</td><td>Đã dùng / Lượt</td><td>Terpakai / Putaran</td><td>သုံးပြီး / အကြိမ်</td><td>Usados / Rondas</td><td>Kullanılan / Tur</td><td>使用 / 回数</td><td>ব্যবহৃত / রাউন্ড</td></tr>
+      <tr><td>剩餘時間</td><td>Time Left</td><td>剩餘時間</td><td>剩余时间</td><td>เวลาที่เหลือ</td><td>남은 시간</td><td>Tempo Restante</td><td>Thời gian còn lại</td><td>Sisa Waktu</td><td>ကျန်ချိန်</td><td>Tiempo Restante</td><td>Kalan Süre</td><td>残り時間</td><td>অবশিষ্ট সময়</td></tr>
+      <tr><td>目前累積獎金</td><td>Current Winnings</td><td>目前累積獎金</td><td>当前累积奖金</td><td>เงินรางวัลสะสมปัจจุบัน</td><td>현재 누적 당첨금</td><td>Ganhos Acumulados</td><td>Tiền thưởng tích lũy</td><td>Total Kemenangan Saat Ini</td><td>လက်ရှိစုဆောင်းဆုကြေး</td><td>Ganancias Actuales</td><td>Mevcut Kazanç</td><td>現在の累計賞金</td><td>বর্তমান জমা পুরস্কার</td></tr>
+      <tr><td>已達上限封頂</td><td>Max Cap Reached</td><td>已達上限封頂</td><td>已达上限封顶</td><td>ถึงขีดจำกัดสูงสุด</td><td>상한 도달</td><td>Limite Atingido</td><td>Đã đạt giới hạn</td><td>Batas Maks Tercapai</td><td>အမြင့်ဆုံးကန့်သတ်ချက်ရောက်</td><td>Límite Alcanzado</td><td>Üst Sınıra Ulaşıldı</td><td>上限到達</td><td>সর্বোচ্চ সীমায় পৌঁছেছে</td></tr>
+      <tr><td>上限提示</td><td>Amount over the cap is not counted; settled at the cap</td><td>超過上限不計入，結算以上限為準</td><td>超过上限不计入，结算以上限为准</td><td>ส่วนที่เกินขีดจำกัดจะไม่ถูกนับ ชำระตามขีดจำกัด</td><td>상한 초과분은 미포함, 상한 기준으로 정산</td><td>O excedente ao limite não é contado; liquidado no limite</td><td>Phần vượt giới hạn không được tính; quyết toán theo giới hạn</td><td>Kelebihan dari batas tidak dihitung; diselesaikan pada batas</td><td>ကန့်သတ်ချက်ကျော်လွန်သည်ကို မရေတွက်ပါ၊ ကန့်သတ်ချက်အတိုင်း ရှင်းလင်းသည်</td><td>El excedente del límite no se cuenta; se liquida en el límite</td><td>Sınırı aşan kısım sayılmaz; sınır üzerinden ödenir</td><td>上限超過分は計上されず、上限で精算</td><td>সীমার অতিরিক্ত অংশ গণনা করা হয় না; সীমা অনুযায়ী নিষ্পত্তি</td></tr>
+      <tr><td>攜帶遊戲（必選一個）</td><td>Choose a Game (required)</td><td>攜帶遊戲（必選一個）</td><td>携带游戏（必选一个）</td><td>เลือกเกม (ต้องเลือก 1)</td><td>게임 선택 (필수)</td><td>Escolha um Jogo (obrigatório)</td><td>Chọn trò chơi (bắt buộc)</td><td>Pilih Game (wajib)</td><td>ဂိမ်းရွေးပါ (မဖြစ်မနေ)</td><td>Elige un Juego (obligatorio)</td><td>Oyun Seç (zorunlu)</td><td>ゲームを選択（必須）</td><td>একটি গেম বাছুন (আবশ্যক)</td></tr>
+      <tr><td>進入遊戲 (CTA)</td><td>Enter Game</td><td>進入遊戲</td><td>进入游戏</td><td>เข้าเกม</td><td>게임 입장</td><td>Entrar no Jogo</td><td>Vào trò chơi</td><td>Masuk Game</td><td>ဂိမ်းဝင်ရန်</td><td>Entrar al Juego</td><td>Oyuna Gir</td><td>ゲームに入る</td><td>গেমে প্রবেশ করুন</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout info"><strong>i18n 備註</strong>：① 數字 / 幣別 / 倒數時間為動態值，不進文案表（依玩家錢包幣別與系統格式化）。② 翻譯為初稿，上線前送各語系母語者校稿；繁中為文案基準（source）。③ 與抽寶箱規格第 14 章 i18n 語系欄位一致。</div>
 
   <div class="sub-title">需求 5 · 跳轉到指定遊戲（Reload 流程 · v2.1：跳轉前綁定 reference_id 指定啟用）</div>
   <div class="flow-wrap">
@@ -1484,7 +1505,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.3 · CONFIDENTIAL 2026<br>
+  FREE SPIN 抽寶箱發放卡 · 細節流程與後台規格書 · V2.4 · CONFIDENTIAL 2026<br>
+  v2.4 修訂（2026-06-24）：移除 §05 舊背包 mock（保留新原型完整版）；新增「背包前台多國語系文案表（13 語系：en/zh-Hant/zh-Hans/th/ko-KR/pt/vi/id/my-MM/es-ES/tr-TR/ja-JP/bn）」與「後台文案中英對照（en/zh-Hant）」；§04 / §05 各加「開啟互動原型（新視窗）」連結，指向 repo 內原型 HTML（後台獎勵系統 / 遊戲背包頁原型）<br>
   v2.3 修訂（2026-06-24）：依「背包前台操作原型」「FREE SPIN 卡獎勵後台設計原型」補 §04（後台發放管理列表）與 §05（背包前台）的原型畫面重繪＋逐區 UI 功能說明（左圖右說）；後台導入「道具基礎值（1★–5★×幣別）＋發放卡（RWD_FS_xxxx）＋引用活動」視角，背包補「累積獎金封頂／攜帶遊戲必選一個」<br>
   CMB · CRM 生態 / 推廣規格 · 與抽寶箱 v3.4 / CRM-ARCH v1.4 / AWC-TOPO v2 對齊<br>
   v2.2 修訂（2026-06-23）：§10 待確認收斂——P1 face_value 沿用公版預設、真金防濫用屬桶1數值把關（獨立風控 deferred）、任務獎勵 RTP 單筆封頂+活動 3pt 硬上限三項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
