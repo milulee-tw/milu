@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 CRM 功能規格書 v3.8</title>
+<title>抽寶箱 CRM 功能規格書 v4.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -888,7 +888,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CHEST SPEC · V3.8</span>
+  <span class="nav-brand">CHEST SPEC · V4.0</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">玩法機制</a>
   <a class="nav-item" href="#prizes">獎勵設計</a>
@@ -918,7 +918,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.8</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v4.0</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
@@ -1047,7 +1047,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CRM FEATURE SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>功能規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V3.8</div>
+  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V4.0</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>活動類型</strong> CRM 留存機制</div>
     <div class="cover-pill"><strong>解鎖條件</strong> 累積總押注金額</div>
@@ -1122,6 +1122,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">功能定位：本次切版核心原則</div>
   <div class="callout">
     <strong>玩家面 v1 只發現金獎，但後端基建一次做滿、AWC API 一次串完。</strong>v1 的 <em>place_bet</em> 與 v2 才會用到的 <em>LoginWithoutRedirect</em> 等需求<strong>一次性打包提交給 AWC 集成商</strong>，避免分兩次串接造成重複的開發、溝通與等待成本。FREE SPIN 卡的「水管」（資料表 + AWC API + max win 上限設定）在 v1 就建好，<strong>實際發卡與使用體驗留到 v2</strong>。
+  </div>
+
+  <div class="callout success">
+    <strong>v4.0 新增（2026-06-26 開案）：</strong>依 2026-06-26 開案會議補充下列項目——<strong>①（§02）每日 reset 為固定 24 小時週期、活動總週期依設定（如兩週）；不同活動 ID 可各自設定 reset 時間點（非全站統一），以 Server +8 為基準。② （§02／§03）每套幣值（如泰銖 THB）獨立設定對應門檻、獎池與規則，「幣值」納入 campaign 設定維度。③ （§03）抽獎機率數據由設計端提供，系統據以計算 RTP。④ （§04）受眾標籤與線路清單由數據組提供、後端直接抓取，不開放後台新增；強化分群機制（依大客等標籤投放差異化活動與獎項組合，列第一階段）。⑤ （§06）強化主題換皮——明列每換一套主題需重畫的元件清單；第一階段先一套主題、節慶主題後續前端寫死再加。⑥ （§07）新增「活動上線審核」模組與「審核人員」分層權限；上線中活動禁止直接編輯（須先下架／暫停）；新增 UAT 測試帳號自助修改自身線路與標籤。⑦ （§08）發獎失敗等異常以 Telegram 通知，初期人工處理、穩定後再自動化。⑧ （§05）開發時程目標 8 月底送 QA（非硬性）。</strong>各異動處標「v4.0 新增（2026-06-26 開案）」。
+  </div>
+
+  <div class="callout success">
+    <strong>v3.9 修訂（主題版型換皮系統 + 前台活動期間呈現，2026-06-25）：</strong>新增<strong>「主題版型換皮系統」</strong>與<strong>「前台活動期間呈現」</strong>。採<strong>「主題換皮」架構</strong>——把<strong>玩法配方</strong>（門檻、9 格獎池、第幾抽權重、RTP）與<strong>視覺主題</strong>（icon、背景、9 格格子美術、開獎動畫、文案、主色）<strong>完全解耦</strong>，campaign 新增 <em>theme_id</em> 欄位（§04／§07／Phase 2 Task 2.2）。新增後台「版型主題」單選下拉（<em>admin_theme_select</em>，含縮圖預覽）＋「倒數啟動天數」（<em>countdown_lead_days</em>，預設 3）；§06 玩家端面板頂部新增「活動期間」元件（日期區間／最後 N 天倒數）與「主題換皮說明」；§05 補主題 asset loader／活動期間元件／4 套主題資產包等 Task；§07 新增「主題資產對應規範（給美術）」。<br><strong>核心原則：① 主題只換視覺，玩法／數值／RTP 一律不變、後端邏輯零改動；② 開獎動畫為「無屬性」——一套通用演出時間軸（容器開啟→光爆→獎品彈出），各主題只替換美術 sprite 與音效；③ 預定義 4 套主題：</strong><em>treasure_box</em> 抽寶箱（常駐／通用）、<em>gold_egg</em> 抽金蛋（復活節）、<em>red_envelope</em> 抽紅包（春節）、<em>xmas_gift</em> 聖誕禮物（聖誕，可替換為其他節慶）。
   </div>
 
   <div class="callout success">
@@ -1281,6 +1289,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <strong>UI 顯示原則：</strong>玩家畫面<strong>只顯示「再押 ₱X 解鎖下一次機會」</strong>（X = 下一門檻 − today_wager），進度條呈現「本階段進度」；<strong>永遠不顯示 ₱3,600 累積總門檻</strong>，讓玩家覺得每階段都好達成（詳見第 06 章 UI）。
   </div>
 
+  <div class="callout info">
+    <strong>幣值維度（v4.0 新增 · 2026-06-26 開案 · C3）：</strong><strong>每套幣值（如泰銖 THB）獨立設定對應的解鎖門檻、獎池與規則</strong>——不同幣值不是匯率換算，而是各自一套配方（門檻數列、9 格獎池金額、RTP 區間皆獨立）。後台活動設定以<strong>「幣值」為一個設定維度</strong>（見 §03 資料結構 / §07 後台），同一活動概念可依幣值各開一組設定。
+  </div>
+
   <div class="threshold-row header">
     <div>格子</div>
     <div>增量門檻</div>
@@ -1296,8 +1308,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="info-grid-3">
     <div class="info-card">
       <div class="info-card-icon">🕛</div>
-      <div class="info-card-title">每日 00:00 重置</div>
-      <div class="info-card-desc">當日累積押注（today_wager）清零，獎項組合重新產生並重新洗牌。最終獎位置每日動態隨機，不再固定於特定格</div>
+      <div class="info-card-title">每日 reset（固定 24 小時週期）</div>
+      <div class="info-card-desc">每日 reset 為<strong>固定 24 小時週期</strong>：當日累積押注（today_wager）清零，獎項組合重新產生並重新洗牌。最終獎位置每日動態隨機，不再固定於特定格<br><span style="color:var(--gold-light);font-size:11px;">v4.0 新增（2026-06-26 開案）：活動「總週期」另依活動設定（如兩週）</span></div>
     </div>
     <div class="info-card">
       <div class="info-card-icon">⏸️</div>
@@ -1311,9 +1323,20 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </div>
   </div>
 
+  <div class="callout info">
+    <strong>重置週期與時間點（v4.0 新增 · 2026-06-26 開案）：</strong><br>
+    <strong>① 固定 24 小時週期（C1）：</strong>每日 reset 為固定 24 小時循環；活動「總週期」則依各活動設定（例：兩週檔期），到期即整檔結束（搭配 §06 活動期間元件呈現）。<br>
+    <strong>② Reset 時間點可逐活動設定（C2）：</strong><strong>不同活動 ID 可各自設定 reset 時間點</strong>（非全站統一），以 <em>Server +8</em> 為基準。例如 A 活動 00:00 reset、B 活動 06:00 reset，互不影響。<br>
+    <span style="color:var(--text-dim);font-size:11px;">＊備註：後續評估「依各線路時區調整 reset 時間」的可行性（暫以 Server +8 為準）。</span>
+  </div>
+
   <div class="sub-title">玩家路徑分析</div>
   <div class="callout info">
     <strong>動態洗牌＋自由翻格：</strong>最終獎位置每日隨機洗牌且面朝下，玩家不知落點。由於翻牌次數可用於任一未開格，<strong>最終獎不再綁定特定門檻位置</strong>——玩家有機會在前段就翻中，也可能留到最後；要拿到最終獎，前提仍是累積足夠押注換到該次翻牌機會（最多 9 次＝₱3,600）。此設計兼顧每日新鮮感、公平性與「自選挖寶」的期待感。
+  </div>
+
+  <div class="callout warn">
+    <strong>版型主題僅影響視覺呈現（v3.9）：</strong>版型主題僅影響視覺呈現，核心循環與數值不受影響；iFrame 依 <em>campaign.theme_id</em> 載入對應 asset bundle，可熱更新、不需重出遊戲版本。換主題只替換 icon／背景／9 格美術／開獎演出／文案／主色，<strong>門檻、9 格獎池、第幾抽權重、RTP 與後端邏輯一律不變</strong>（詳見 §04 技術架構、§07 主題資產對應規範）。
   </div>
 </section>
 
@@ -1375,6 +1398,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     翻完 9 格的人必得 ₱37，RTP 恆為 1.028%；逐抽權重的作用是「把大獎／最終獎壓到後段」，控制<strong>早退玩家</strong>的 RTP 暴露。
   </div>
 
+  <div class="callout info">
+    <strong>機率數據來源（v4.0 新增 · 2026-06-26 開案 · C5）：</strong>各獎項的<strong>抽中機率數據由設計端（企劃）提供</strong>，系統據以計算 RTP 並於後台即時試算驗證是否落在容許區間（0.9%–1.1%）；系統不自行決定機率，僅依設計端給定的權重表運算。<br>
+    <strong>幣值維度（C3）：</strong>上述獎池（₱37）與門檻（₱3,600）為披索（PHP）範例；<strong>每套幣值（如泰銖 THB）獨立一組獎池與門檻設定</strong>，各自驗算 RTP，互不換算（見 §02 幣值維度、§07 後台「幣值」設定）。
+  </div>
+
   <div class="sub-title">9 格逐抽期望值與 RTP 佔比</div>
   <table class="spec-table">
     <thead>
@@ -1432,6 +1460,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="info-card-title">📋 LAYER 02 · 活動模板</div>
       <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
         每個寶箱活動是一張「配方」：解鎖條件、9格獎池、第幾抽權重、活動期間<br>
+        <span style="color:var(--gold-light);font-size:11px;">v3.9：新增 <strong>theme_id（版型主題）</strong>＋ <strong>countdown_lead_days（倒數啟動天數，預設 3）</strong>欄位；theme_id 只決定視覺換皮、不影響配方數值</span><br>
         <span style="color:var(--gold-light);font-size:11px;">v1：usertype 玩家 tag 投放欄位（保留指定玩家能力）<br>分群 tag 由<strong>數據組</strong>提供、平台接收+套用（非自動打標）；雙軌：RTP 即時 / 其餘每日批次（見 CRM Roadmap §09）</span>
       </div>
     </div>
@@ -1452,6 +1481,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
   <div class="callout info">
     <strong>背包水管於 v1 一併建立：</strong>除上述四層外，v1 基建另建 <em>inventory（背包）</em> 與 <em>item_use_log（道具使用紀錄）</em> 兩張資料表，並串妥 AWC <em>LoginWithoutRedirect</em> API；FREE SPIN 卡的儲存／跳轉欄位先就位，<strong>實際發卡與背包使用體驗於 v2 啟用</strong>，屆時不需再動資料層與 AWC。
+  </div>
+
+  <div class="callout warn">
+    <strong>版型主題換皮架構（v3.9）：</strong>版型主題僅影響視覺呈現，核心循環與數值不受影響；iFrame 依 <em>campaign.theme_id</em> 載入對應 asset bundle，可熱更新、不需重出遊戲版本。玩法配方（門檻／9 格獎池／第幾抽權重／RTP）與視覺主題（icon／背景／9 格格子美術／開獎動畫／文案／主色）<strong>完全解耦</strong>：activity 模板只新增一個 <em>theme_id</em> 字串欄位指向預定義主題，<strong>後端發獎、洗牌、權重、對帳邏輯零改動</strong>。開獎動畫採<strong>「無屬性」</strong>設計——一套通用演出時間軸（容器開啟→光爆→獎品彈出）由前端固定實作，各主題只替換美術 sprite 序列與音效（命名見 §07 主題資產對應規範），不為任何主題新增動畫程式。
   </div>
 
   <div class="sub-title">線路資格判定（這檔活動在哪些線路上）</div>
@@ -1486,6 +1519,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>判定時機</td><td class="dim">① 活動載入（GET /chest/status，決定 icon／活動是否出現）；② place_bet 累積前（決定是否計入）。玩家 tag 異動於下次同步後生效</td></tr>
     </tbody>
   </table>
+  <div class="callout info">
+    <strong>資料來源一致性（v4.0 新增 · 2026-06-26 開案 · B2）：</strong><strong>受眾標籤清單與線路清單皆由數據組（DA）提供、後端直接抓取，不開放後台新增／自由輸入</strong>——後台只能從這兩份清單勾選，以確保各系統間的標籤與線路定義一致、避免人工輸入造成資料分歧。新增標籤或線路需走數據組／後端維護流程。
+  </div>
+
+  <div class="callout info">
+    <strong>分群機制（v4.0 新增 · 2026-06-26 開案 · C6 · 第一階段範圍）：</strong>依玩家標籤（如<strong>大客</strong>等分群）設定<strong>差異化的抽獎活動與不同獎項組合</strong>——同一時間可有多檔針對不同分群的活動，玩家依其標籤（＋線路、Priority 解析）落入對應的那一檔。此分群投放能力<strong>列為第一階段範圍</strong>（標籤值與分群由數據組提供，平台只比對套用，見上方 B2）。
+  </div>
+
   <div class="callout warn">
     <strong>⚠ W0／W1 時序：</strong>抽寶箱（W0）先把受眾 tag 欄位與比對邏輯做好；真正的玩家 tag 供給隨 <strong>Roadmap W1「Tag 接收·同步」</strong>上線。在 DA 供給就緒前，活動受眾 tag <strong>留空＝全體可玩</strong>，不卡 W0 上線。
   </div>
@@ -1629,7 +1670,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
         <tr><td>2.1</td><td>建立 reward_catalog 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">登記所有獎品類型：R_CASH_1 / R_CASH_3 / R_CASH_8 / R_CASH_18，預留 R_FS_* 欄位結構</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;font-size:9px;">v2預留</span></td></tr>
-        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, <strong>platform_lines[]（投放線路·預定義平台清單·必選）</strong>, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[]（值由數據組分群提供）, start_date, end_date, status</td><td class="dim">usertype_tags 來源＝數據組（每日批次 / RTP 即時），平台接收+套用、不自算；<strong>platform_lines[] 只能取自「已開通 Bet=0」的預定義平台清單</strong></td></tr>
+        <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, <strong>currency（幣值·v4.0，每幣值獨立配方）</strong>, theme_id（版型主題·預定義單選）, countdown_lead_days（倒數啟動天數·預設 3）, <strong>reset_time（每日 reset 時間點·Server+8·v4.0 逐活動設定）</strong>, total_cycle（活動總週期）, platform_lines[]（投放線路·預定義平台清單·必選）, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[]（值由數據組分群提供）, start_date, end_date, status, <strong>review_status（審核狀態·v4.0：draft/pending/approved/online）</strong></td><td class="dim">usertype_tags／platform_lines 來源＝數據組提供、後端直接抓取、不開放後台新增（v4.0 B2）；<strong>每套 currency 各自一組門檻／獎池／RTP</strong></td></tr>
         <tr><td>2.3</td><td>建立 player_progress 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_id + campaign_id + date 為複合主鍵；today_wager, cell_states[], shuffle_result, created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.4</td><td>建立 reward_grant 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發放收據：player_id, campaign_id, cell_index, reward_id, amount, awc_txn_id, status(pending/active/failed), created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.5</td><td>建立 MongoDB Index</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_progress: {player_id, date} compound index；reward_grant: {player_id, status} index</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
@@ -1650,7 +1691,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>3.4</td><td>翻格 API（POST /chest/open）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證格子狀態合法 → 呼叫 AWC place_bet 派現金 → 等回成功 → 寫 reward_grant(active) → 更新 cell_state</td><td></td></tr>
         <tr><td>3.5</td><td>重試機制（Retry Queue）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">AWC 呼叫失敗時 reward_grant 維持 pending，背景排程重試至成功為止</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>3.6</td><td>冪等性保護</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">同一格重複翻格請求（前端重傳）需被正確攔截，不重複派獎</td><td></td></tr>
-        <tr><td>3.7</td><td>每日重置排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日 00:00 UTC+8 清空當日 player_progress，不清歷史 reward_grant</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>3.7</td><td>每日重置排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">固定 24 小時週期清空當日 player_progress，不清歷史 reward_grant。<strong>v4.0：reset 時間點改為逐活動可設定（campaign.reset_time · Server +8），非全站統一</strong>（後續評估依線路時區調整）</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>3.8</td><td>查詢玩家寶箱狀態 API（GET /chest/status）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">回傳當日進度、各格解鎖狀態、已翻格獎勵，供前端渲染</td><td></td></tr>
         <tr><td>3.9</td><td>FREE SPIN 卡派發邏輯</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">翻格結果為 FREE SPIN 卡時，寫入 inventory 資料表，不呼叫 AWC place_bet，改以道具形式儲存（實際發卡）</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
         <tr><td>3.10</td><td>背包查詢 API（GET /inventory）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">回傳玩家目前持有道具清單，含道具類型、數量、可使用遊戲列表、有效期限</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
@@ -1658,6 +1699,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>3.12</td><td>道具過期排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日檢查 inventory 中 expire_at < now 的道具，更新 status = expired</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>3.13</td><td>受眾資格判定邏輯（Audience Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家 tag（DA 同步表）∩ campaign.usertype_tags[]：符合才顯示活動／計入押注，留空＝全體；<strong>支援多 tag</strong>，玩家符合多活動時依 <strong>DA 排定 tag Priority 取最高優先那組</strong>（同序依活動建立順序）；<strong>擇一原則：同一時間只跑 1 檔，落選活動不顯示 icon、押注不計入</strong>；<strong>閘門先於 3.1 押注累積執行</strong>。中台不自算分群，玩家 tag／Priority 同步依 Roadmap W1「Tag 接收·同步」</td><td><span class="tag-pill" style="background:rgba(58,191,176,0.12);color:#70DFD0;">DA 對接</span></td></tr>
         <tr><td>3.14</td><td>線路資格判定邏輯（Line Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家所在線路（AWC callback 帶回）∈ campaign.platform_lines[]：在清單內才顯示活動／計入押注，不在＝玩家無感不報錯；<strong>閘門先於 3.13 受眾判定執行</strong>（先比線路收斂候選活動，再比受眾 tag、再 Priority）。platform_lines[] 必選、取自「已開通 Bet=0」預定義平台清單</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>3.15</td><td>主題 asset bundle 載入機制（theme_id → 對應素材包）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">維護預定義主題清單（treasure_box / gold_egg / red_envelope / xmas_gift），GET /chest/status 與 iFrame 載入時依 campaign.theme_id 回傳對應 asset bundle URL（icon／背景／9 格美術／開獎 sprite／SFX／文案 key／主色 token）；<strong>僅換素材包路徑、不動玩法數值</strong>，支援熱更新不需重出遊戲版本</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>3.16</td><td>Telegram 異常通知（v4.0）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發獎失敗等異常事件推送到 Telegram 告警群組／機器人；<strong>初期人工處理（人工確認＋手動重試），穩定後再規劃自動化</strong>（對應 §08 B4）</td><td class="dim">後端 Wayne / Eric</td></tr>
       </tbody>
     </table>
   </div>
@@ -1679,6 +1722,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>4.11</td><td>遊戲選擇彈窗實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊 FREE SPIN 卡後跳出可選遊戲列表（依後台設定的 GameId 清單），顯示遊戲縮圖+名稱</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
         <tr><td>4.12</td><td>道具使用跳轉流程實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">玩家選擇遊戲後呼叫後端 API，取得 AWC 跳轉 URL，執行跳轉進入遊戲</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
         <tr><td>4.13</td><td>洗牌動態動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">攤開階段→點擊開始遊戲→獎項集中中央→洗牌動畫→分散到9格背面蓋牌，整段動畫流暢度為關鍵體驗</td><td></td></tr>
+        <tr><td>4.14</td><td>主題換皮 asset loader</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">依 theme_id 動態載入 icon／背景／9 格格子美術／開獎 sprite／SFX／文案／主色 token，套用到固定版位；<strong>共用一套「無屬性」開獎動畫時間軸（容器開啟→光爆→獎品彈出），各主題只抽換 sprite 與音效</strong>，不為主題寫新動畫</td><td><span class="tag-pill tag-v1">✓ 納入</span></td></tr>
+        <tr><td>4.15</td><td>活動期間元件（日期區間＋最後 N 天倒數）</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">面板頂部顯示活動期間；平常態顯示日期區間（例 07/01–09/30），活動結束前 countdown_lead_days 天自動切換為動態倒數（剩 N 天 HH:MM:SS）；以伺服器時間為準、跨日 00:00 翻轉、結束瞬間顯示已結束、維護中隱藏倒數顯示維護中</td><td><span class="tag-pill tag-v1">✓ 納入</span></td></tr>
+        <tr><td>4.16</td><td>4 套主題資產包（icon／背景／格子／開獎 sprite／SFX）＋命名規範</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">產出 treasure_box / gold_egg / red_envelope / xmas_gift 四套主題資產包，含浮動 icon、背景/主色 token、9 格格子美術（locked/unlocked）、套用無屬性動畫的開獎 sprite 序列、SFX、文案 key；命名格式 theme_{theme_id}_{asset}（見 §07 主題資產對應規範）</td><td></td></tr>
+        <tr><td>4.17</td><td>前台活動期間元件 UI 設計稿</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">日期區間態與最後 N 天倒數態兩款視覺；倒數以金色強調製造急迫感，並含已結束／維護中兩種狀態</td><td></td></tr>
       </tbody>
     </table>
   </div>
@@ -1688,7 +1735,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
         <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
-        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、期間、<strong>投放線路（platform_lines · 必選 · 多選）</strong>、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
+        <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、<strong>版型主題下拉（theme_id · 單選預定義 · 含縮圖預覽）</strong>、期間、<strong>倒數提前天數（countdown_lead_days · 預設 3）</strong>、<strong>投放線路（platform_lines · 必選 · 多選）</strong>、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
         <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
         <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
         <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
@@ -1697,6 +1744,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
         <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
         <tr><td>5.10</td><td>後台線路投放設定（platform_lines）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">活動表單提供「投放線路」多選元件，選項來自<strong>預定義「已開通 Bet=0」平台清單</strong>（後端維護）；<strong>必選、未選擋存檔上線</strong>。維護該清單的小後台（新增/下架平台）一併建好</td><td></td></tr>
+        <tr><td>5.11</td><td>後台版型主題下拉＋縮圖預覽（theme_id）＋倒數提前天數</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">基本資料區「活動名稱」後加「版型主題」單選下拉（admin_theme_select，選項＝後端預定義主題清單、不可自由輸入，選中右側顯示縮圖預覽）；「活動期間」後加「倒數啟動天數」（countdown_lead_days，預設 3）。後台主題下拉＋縮圖預覽 UI 設計稿一併產出</td><td></td></tr>
+        <tr><td>5.12</td><td>活動上線審核流程＋分層權限（v4.0 · B1）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動狀態機加 pending/approved；「提交審核 → 審核人員核准 → 上線」流程；新增 <strong>Reviewer 審核人員角色</strong>，審核權限獨立於運營/操作（分層權限），避免單帳號全包</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
+        <tr><td>5.13</td><td>上線中禁止編輯（v4.0 · C4）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">上線中活動鎖定編輯，須先下架/暫停才可改；緊急調整：先暫停 → 確認 → 恢復</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
+        <tr><td>5.14</td><td>UAT 測試帳號自助改線路/標籤（v4.0 · B3）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">UAT 工具頁：測試帳號（is_tester）可自助修改自身線路與標籤，供 QA 驗證線路閘門/受眾/分群，不依賴外部工具</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢 · 標籤/線路定義 數據組 國清/虹瑜</td></tr>
+        <tr><td>5.15</td><td>幣值維度設定（v4.0 · C3）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動表單「基本資料」加「幣值」下拉；每套幣值（PHP／THB…）獨立門檻/獎池/規則並各自驗算 RTP，不做匯率換算</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
       </tbody>
     </table>
   </div>
@@ -1711,11 +1763,18 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>6.4</td><td>上線監控設定</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td><td class="dim">設定 reward_grant pending 數量 alert，AWC 失敗率 alert</td><td></td></tr>
         <tr><td>6.5</td><td>數據 Log 驗收</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">確認 Section 10 所列 Log 事件均正確上報，欄位無缺失</td><td></td></tr>
         <tr><td>6.6</td><td>正式上線與觀察期</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">先上單一活動版本觀察 2 週，數字健康後再評估 v2 分眾擴充</td><td></td></tr>
+        <tr><td>6.7</td><td>審核流程＋分層權限驗收（v4.0）</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證「提交審核→核准→上線」流程；確認運營帳號無法自審自上、上線中無法直接編輯</td><td></td></tr>
+        <tr><td>6.8</td><td>UAT 工具驗收（v4.0）</td><td><span class="tag-pill tag-data">📊 數據組</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">以 UAT 帳號自助切換線路/標籤，驗證線路閘門、受眾資格、分群投放正確</td><td class="dim">國清 / 虹瑜</td></tr>
+        <tr><td>6.9</td><td>Telegram 異常通知測試（v4.0）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">模擬發獎失敗，確認 Telegram 告警送達、可人工確認並手動重試</td><td class="dim">Wayne / Eric</td></tr>
       </tbody>
     </table>
   </div>
 
   <div class="sub-title" style="margin-top:32px;">開發時程建議</div>
+  <div class="callout info">
+    <strong>時程目標（v4.0 新增 · 2026-06-26 開案 · A2）：</strong><strong>目標 8 月底送 QA（非硬性目標）</strong>，依實際開發進度滾動調整。<br>
+    <strong>職能分配：</strong>後端＝<strong>Wayne / Eric</strong>；後台前端頁面＝<strong>劉暢</strong>；數據（標籤／線路清單、Log、UAT 驗收）＝<strong>國清 / 虹瑜</strong>。本次新增功能（審核流程、UAT 工具、幣值維度、Telegram 通知）已併入上方各 Phase Task。
+  </div>
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-dot active"></div>
@@ -1751,6 +1810,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span class="tl-task pm">9宮格畫面+洗牌動畫</span>
         <span class="tl-task pm">背包UI+跳轉流程</span>
         <span class="tl-task eng">後台活動表單+新版抽獎設定</span>
+        <span class="tl-task eng">審核流程+分層權限（v4.0）</span>
+        <span class="tl-task eng">UAT 工具（v4.0）</span>
+        <span class="tl-task eng">幣值維度（v4.0）</span>
       </div>
     </div>
     <div class="tl-item">
@@ -1766,12 +1828,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-phase">PHASE 05 · 第 7–8 週</div>
-      <div class="tl-title">測試驗收 + 上線</div>
+      <div class="tl-title">測試驗收 + 上線（目標 8 月底送 QA · 非硬性）</div>
       <div class="tl-tasks">
         <span class="tl-task pm">Tester 白名單完整循環測試</span>
         <span class="tl-task eng">QA 功能測試</span>
         <span class="tl-task data">Log 驗收</span>
         <span class="tl-task inf">監控 Alert</span>
+        <span class="tl-task eng">審核/UAT 驗收（v4.0）</span>
+        <span class="tl-task eng">Telegram 通知測試（v4.0）</span>
         <span class="tl-task pm">正式上線</span>
       </div>
     </div>
@@ -1801,6 +1865,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         </div>
 
         <div class="chest-container">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;margin-bottom:10px;border:1px solid var(--border);border-radius:8px;background:rgba(212,168,67,0.04);">
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--text-dim);">活動期間</span>
+            <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);">🔥 剩 2 天 11:23:45</span>
+          </div>
           <div class="chest-header">
             <div class="chest-title">🎁 每日寶箱</div>
             <div class="chest-progress-info">翻開 <span>3</span> / 9</div>
@@ -1834,6 +1902,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <tr><td>格子·可翻（有可翻次數）</td><td class="dim">有剩餘可翻次數時，<strong>所有未開格</strong>同時發光並顯示「點我翻開」</td><td class="dim">點擊任一未開格即執行翻格、扣 1 次可翻次數，觸發翻轉動畫</td></tr>
           <tr><td>格子·已翻開</td><td class="dim">顯示獲得的獎勵金額，綠色邊框</td><td class="dim">點擊可再次查看獎勵，不重複派獎</td></tr>
           <tr><td>最終獎格</td><td class="dim">翻開後特殊金色光效爆發（位置每日動態洗牌、面朝下，玩家自選翻中才揭曉）</td><td class="dim">全螢幕特效動畫，顯示恭喜彈窗</td></tr>
+          <tr><td>活動期間元件（v3.9）</td><td class="dim">面板頂部；平常態顯示日期區間（例「活動期間 07/01–09/30」），活動結束前 countdown_lead_days（預設 3）天自動切換為動態倒數（例「剩 2 天 11:23:45」），以金色強調製造急迫感</td><td class="dim">倒數每秒更新；以伺服器時間為準、跨日 00:00 翻轉；活動結束瞬間顯示已結束；暫停維護中時隱藏倒數顯示維護中</td></tr>
           <tr><td>進度條</td><td class="dim">以「已累積 / 本階段目標」呈現（如 300/500），永遠不顯示 ₱3,600 累積總額</td><td class="dim">每次押注後即時更新</td></tr>
           <tr><td>重置倒計時</td><td class="dim">距當日 00:00 的剩餘時間</td><td class="dim">每秒更新，顯示 HH:MM:SS</td></tr>
         </tbody>
@@ -1920,6 +1989,95 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </table>
   <div class="callout warn">
     <strong>實作備註（防抖）：</strong>同一秒內多格同時解鎖時做防抖（debounce），只跳一次氣泡，避免連續彈出干擾體驗。
+  </div>
+
+  <!-- ═══ v3.9 新增：活動期間元件 UI 功能說明 ═══ -->
+  <div class="sub-title" style="margin-top:40px;">活動期間元件 · UI 功能說明（v3.9 新增）</div>
+  <div class="callout info">
+    <strong>元件用途：</strong>於玩家端寶箱面板頂部呈現本檔活動的時間狀態，平常顯示日期區間，活動尾聲自動轉為倒數計時製造急迫感。倒數提前天數由後台 <em>countdown_lead_days</em>（預設 3）控制。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:150px;">狀態</th><th>顯示內容</th><th>規則</th></tr></thead>
+    <tbody>
+      <tr><td>平常態</td><td class="dim">「活動期間 07/01–09/30」日期區間</td><td class="dim">距活動結束 &gt; countdown_lead_days 天時顯示</td></tr>
+      <tr><td>倒數態（最後 N 天）</td><td class="dim">動態倒數「剩 2 天 11:23:45」，<strong>用金色強調製造急迫感</strong></td><td class="dim">活動結束前 countdown_lead_days 天自動切換；每秒更新</td></tr>
+      <tr><td>已結束</td><td class="dim">顯示「活動已結束」</td><td class="dim">活動結束瞬間即時切換</td></tr>
+      <tr><td>維護中</td><td class="dim">隱藏倒數、改顯示「維護中」</td><td class="dim">活動暫停／維護時</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>實作備註：</strong>資料以<strong>伺服器時間</strong>為準（非裝置本地時間）；倒數<strong>跨日 00:00 翻轉</strong>（天數 −1、時分秒重置）；活動結束瞬間顯示已結束；暫停維護中時隱藏倒數、顯示維護中。
+  </div>
+
+  <!-- ═══ v3.9 新增：主題換皮說明 ═══ -->
+  <div class="sub-title" style="margin-top:40px;">主題換皮說明（v3.9 新增）</div>
+  <div class="callout info">
+    <strong>同一面板、不同主題：</strong>同一寶箱面板在不同 <em>theme_id</em> 下，<strong>icon／背景／9 格美術／開獎演出／文案皆換皮，但版位與互動完全一致</strong>——玩家的操作流程、格子位置、按鈕行為、進度條與活動期間元件都不變，只有視覺與文案隨主題替換。開獎演出共用一套<strong>無屬性動畫</strong>（容器開啟→光爆→獎品彈出），各主題僅替換 sprite 與音效。
+  </div>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:150px;">主題（theme_id）</th>
+          <th>主色</th>
+          <th>icon</th>
+          <th>開獎隱喻</th>
+          <th>主要文案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>抽寶箱<br><span class="mono" style="font-size:10px;color:var(--gold-light);">treasure_box</span><br><span class="tag-pill tag-v1" style="font-size:9px;">常駐／通用</span></td>
+          <td class="dim">金黑（gold / dark）</td>
+          <td class="dim">🎁 寶箱</td>
+          <td class="dim">開箱：箱蓋彈開、金光爆發</td>
+          <td class="dim">「每日寶箱」「開始遊戲」「恭喜獲得最終大獎！」</td>
+        </tr>
+        <tr>
+          <td>抽金蛋<br><span class="mono" style="font-size:10px;color:var(--gold-light);">gold_egg</span><br><span class="tag-pill" style="font-size:9px;background:rgba(90,191,122,0.12);color:#7ADFA0;">復活節</span></td>
+          <td class="dim">金＋嫩綠（easter）</td>
+          <td class="dim">🥚 金蛋</td>
+          <td class="dim">敲蛋：蛋殼裂開、彩光迸出</td>
+          <td class="dim">「每日金蛋」「敲開金蛋」「恭喜敲中黃金大獎！」</td>
+        </tr>
+        <tr>
+          <td>抽紅包<br><span class="mono" style="font-size:10px;color:var(--gold-light);">red_envelope</span><br><span class="tag-pill tag-req" style="font-size:9px;">春節</span></td>
+          <td class="dim">紅＋金（CNY）</td>
+          <td class="dim">🧧 紅包</td>
+          <td class="dim">拆封：紅包翻開、金幣灑落</td>
+          <td class="dim">「每日紅包」「拆開紅包」「恭喜搶到大紅包！」</td>
+        </tr>
+        <tr>
+          <td>聖誕禮物<br><span class="mono" style="font-size:10px;color:var(--gold-light);">xmas_gift</span><br><span class="tag-pill tag-v2" style="font-size:9px;">聖誕·可替換節慶</span></td>
+          <td class="dim">紅綠＋雪白（xmas）</td>
+          <td class="dim">🎄 禮物盒</td>
+          <td class="dim">拆禮物：緞帶解開、雪花飄落</td>
+          <td class="dim">「每日禮物」「拆開禮物」「恭喜拆中聖誕大獎！」</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 四套主題僅視覺／文案不同，<strong>門檻、9 格獎池、第幾抽權重、RTP 與後端邏輯完全相同</strong>。版位、互動、活動期間元件一致；開獎共用無屬性動畫。各主題需提供的資產與命名見 §07「主題資產對應規範（給美術）」。</div>
+
+  <div class="sub-title" style="font-size:13px;margin-top:24px;">每換一套主題 · 美術需重畫的元件清單（v4.0 新增 · 2026-06-26 開案 · C7）</div>
+  <div class="callout info">
+    <strong>換一套主題＝重畫下列元件（版位／尺寸不變、只換皮）：</strong>美術依此清單逐項替換即可組成一套完整主題；其餘版位、互動、動畫時間軸沿用不動。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:200px;">需重畫元件</th><th>說明</th><th>對應</th></tr></thead>
+    <tbody>
+      <tr><td>浮動入口 icon</td><td class="dim">主畫面常駐入口 icon（一般態＋發光態）</td><td class="dim">P1</td></tr>
+      <tr><td>展開面板背景</td><td class="dim">遊戲中心／寶箱彈窗的背景圖與裝飾層、主色票</td><td class="dim">P2 / P3</td></tr>
+      <tr><td>寶箱 9 格底圖</td><td class="dim">9 格格子美術（牌背 locked／牌面框 unlocked）</td><td class="dim">P3</td></tr>
+      <tr><td>翻格 / 洗牌動畫序列</td><td class="dim">翻格 flip、洗牌 swirl 的主題化序列幀／分層素材（套用同一無屬性時間軸）</td><td class="dim">P3</td></tr>
+      <tr><td>最終大獎爆發特效</td><td class="dim">最終獎全螢幕爆發（confetti／光爆／主題化獎勵卡）</td><td class="dim">P4</td></tr>
+      <tr><td>結算畫面背景</td><td class="dim">今日全部抽完結算卡的背景／插圖（主題化）</td><td class="dim">P7</td></tr>
+      <tr><td>按鈕與邊框</td><td class="dim">主／次按鈕、欄位邊框、進度條軌道與填充配色（主題色系）</td><td class="dim">全頁</td></tr>
+      <tr><td>文案字串</td><td class="dim">面板標題、按鈕、恭喜語等主題化文字（見 §07 文案 key）</td><td class="dim">全頁</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>階段策略：</strong><strong>第一階段先做一套主題（treasure_box）</strong>；節慶主題（萬聖節／聖誕等）<strong>後續再加，採前端寫死方式</strong>（hard-code 對應素材組），<strong>避免後台設定過度複雜</strong>。待主題數量成長且需求穩定，再評估是否升級為後台可上傳的素材組管理（v2）。
   </div>
 
   <!-- ═══ v3.1 新增：美術設計頁面與狀態清單 ═══ -->
@@ -2124,12 +2282,31 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
     </div>
     <div class="info-card" style="border-color:rgba(212,168,67,0.3);">
-      <div class="info-card-title" style="color:var(--gold-light);">👥 帳號權限</div>
+      <div class="info-card-title" style="color:var(--gold-light);">👥 帳號權限（分層）</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · Admin：全操作<br>
         · Operator：查看+啟停<br>
-        · 不可改獎勵參數（Operator）<br>
+        · <strong style="color:var(--gold-light);">Reviewer 審核人員：審核上線（v4.0）</strong><br>
+        · 審核權限獨立、單一帳號不全包<br>
         <span style="color:var(--purple);font-size:11px;">v2：更細粒度權限</span>
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(224,150,58,0.3);">
+      <div class="info-card-title" style="color:var(--orange);">🔐 上線審核（v4.0）</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 活動上線前須經審核<br>
+        · 提交審核 → 審核人員核准 → 上線<br>
+        · 審核權限獨立於運營/操作<br>
+        · 上線中禁止直接編輯（須先下架/暫停）
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(58,191,176,0.3);">
+      <div class="info-card-title" style="color:var(--teal);">🧪 UAT 測試工具（v4.0）</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · UAT 測試帳號可<strong>自助修改自身線路與標籤</strong><br>
+        · 供 QA 測試不同線路/分群<br>
+        · 不依賴外部工具<br>
+        · 僅作用於測試帳號
       </div>
     </div>
     <div class="info-card" style="border-color:rgba(58,191,176,0.3);">
@@ -2139,6 +2316,15 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         　一般注單 / CHEST_REWARD（現金獎） / FREE_SPIN（道具）<br>
         · 支援日期區間查詢<br>
         · 對應 AWC get_bet_summary 的 bonus_type 分離欄位
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(176,132,216,0.3);">
+      <div class="info-card-title" style="color:#C8A0F0;">🎨 版型主題</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 預定義主題下拉（單選）<br>
+        · 選中顯示縮圖預覽<br>
+        · 只換視覺、不動玩法數值<br>
+        <span style="color:var(--purple);font-size:11px;">v2：營運自上傳素材組主題</span>
       </div>
     </div>
   </div>
@@ -2161,12 +2347,27 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <div class="admin-input">寶箱活動 · Q3 2026</div>
       </div>
       <div class="admin-form-row">
+        <div class="admin-label">幣值<br><span style="font-size:8px;color:var(--text-dim);">currency · v4.0</span></div>
+        <div class="admin-input"><span style="color:var(--gold-light);">PHP 披索</span> &nbsp; <span style="color:var(--text-dim);">▾ 每套幣值（PHP／THB…）獨立設定門檻·獎池·規則</span></div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-label">版型主題<br><span style="font-size:8px;color:var(--text-dim);">admin_theme_select</span></div>
+        <div class="admin-input-group" style="align-items:center;">
+          <div class="admin-input" style="flex:1;"><span style="color:var(--gold-light);">🎁 抽寶箱（treasure_box）</span> &nbsp; <span style="color:var(--text-dim);">▾ 預定義主題單選</span></div>
+          <div style="flex:0 0 56px;height:38px;border:1px solid var(--border-bright);border-radius:6px;background:rgba(212,168,67,0.06);display:flex;align-items:center;justify-content:center;font-size:18px;" title="主題縮圖預覽">🎁</div>
+        </div>
+      </div>
+      <div class="admin-form-row">
         <div class="admin-label">活動期間</div>
         <div class="admin-input-group">
           <div class="admin-input" style="flex:1;">2026/07/01</div>
           <div style="padding:9px 4px;color:var(--text-dim);">→</div>
           <div class="admin-input" style="flex:1;">2026/09/30</div>
         </div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-label">倒數啟動天數<br><span style="font-size:8px;color:var(--text-dim);">countdown_lead_days</span></div>
+        <div class="admin-input"><span style="color:var(--gold-light);">3</span> &nbsp; <span style="color:var(--text-dim);">天 · 活動結束前幾天前台自動由日期區間切換為倒數計時（預設 3）</span></div>
       </div>
 
       <div class="admin-section-divider">線路投放（平台/站台線路 · 必選 · 多選 · 預定義清單）</div>
@@ -2249,18 +2450,107 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
       <div class="admin-btn-row">
         <button class="admin-btn secondary">儲存草稿</button>
-        <button class="admin-btn primary">上線活動</button>
+        <button class="admin-btn primary">提交審核</button>
       </div>
+      <div class="body-text" style="font-size:11px;color:var(--text-dim);margin-top:6px;text-align:right;">v4.0：「上線活動」改為「提交審核」→ 經審核人員核准後才上線（見下方審核流程）</div>
     </div>
   </div>
 
-  <div class="sub-title">後台 UI 設計說明 · 線路投放（v3.8 新增）</div>
+  <div class="sub-title">活動上線審核流程（v4.0 新增 · 2026-06-26 開案 · B1 / C4）</div>
+  <div class="callout info">
+    <strong>① 上線需審核（B1）：</strong>活動上線前<strong>須經審核流程</strong>——運營建立／編輯活動後「提交審核」，由具<strong>審核人員（Reviewer）角色</strong>者核准才能上線。<strong>審核權限獨立於一般運營／操作權限（分層權限管理）</strong>，避免單一帳號同時擁有建立＋審核＋上線的全部權限。
+  </div>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-step"><div class="flow-step-num">STEP 01</div><div class="flow-step-title">📝 建立／編輯</div><div class="flow-step-desc">運營填寫活動<br>儲存草稿</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step highlight"><div class="flow-step-num">STEP 02</div><div class="flow-step-title">📤 提交審核</div><div class="flow-step-desc">送出審核<br>狀態＝待審核</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="flow-step-num">STEP 03</div><div class="flow-step-title">🔐 審核人員核准</div><div class="flow-step-desc">Reviewer 檢視<br>核准／退回</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step success"><div class="flow-step-num">STEP 04</div><div class="flow-step-title">🚀 上線</div><div class="flow-step-desc">核准後才上線<br>退回則回草稿</div></div>
+    </div>
+  </div>
+  <div class="callout warn">
+    <strong>② 上線中禁止直接編輯（C4）：</strong><strong>上線中的活動不可直接編輯</strong>，須<strong>先下架或暫停才能修改</strong>；緊急調整時<strong>先暫停 → 確認無誤 → 再恢復</strong>，避免線上活動在玩家進行中被改動造成爭議或資料不一致。
+  </div>
+  <div class="callout info">
+    <strong>③ UAT 測試工具（B3）：</strong>提供 <strong>UAT 測試帳號可自助修改自身「線路」與「標籤」</strong>的功能，供 QA 在測試環境自行切換線路／分群以驗證線路閘門、受眾資格與分群投放，<strong>不依賴外部工具、不需數據組逐次配合</strong>。此功能<strong>僅作用於 UAT 測試帳號</strong>（is_tester=true），不影響正式玩家資料。
+  </div>
+
+  <div class="sub-title">後台 UI 設計說明 · 線路投放 + 版型主題（v3.9 更新）</div>
   <div class="callout info">
     <strong>給美術與 Client Web 同仁：</strong>左欄為畫面示意（依 design 原型 <span class="mono" style="color:var(--gold-light);">後台管理介面.dc.html</span> 還原；<strong>實際採淺色主題</strong>），右欄為對應的<strong>操作流程與 UI 元件規格</strong>（元件類型／命名／狀態／規則／文案 key）。線路投放放在活動表單「基本資料」與「受眾 tag」之間，<strong>標題用金色 accent bar ＋右上「必填」badge 強調</strong>（其他區塊為靛色 accent bar）。元件命名請沿用右欄 <span class="mono" style="color:var(--gold-light);">UI_Name</span>。
   </div>
 
   <div class="callout">
-    <strong>整體版面對照（原型）：</strong>① <strong>活動列表頁</strong>欄位＝CAMPAIGN ID／活動名稱／活動期間／<strong>受眾 TAG</strong>／RTP／狀態（上線·草稿·暫停·已結束）／操作（編輯·啟停）；右上有「＋建立新活動」與 Admin／Operator 角色切換。② <strong>建立／編輯表單為兩欄式</strong>：左欄依序為 基本資料 → <strong>線路投放</strong> → 受眾 tag → 解鎖門檻 → 抽獎權重；右欄 sticky 釘住 固定獎池組成 ＋ RTP 自動驗算 ＋「儲存草稿／上線活動」按鈕。線路投放即位於此流程第 2 段。
+    <strong>整體版面對照（原型）：</strong>① <strong>活動列表頁</strong>欄位＝CAMPAIGN ID／活動名稱／<strong>主題</strong>／活動期間／<strong>受眾 TAG</strong>／RTP／狀態（上線·草稿·暫停·已結束）／操作（編輯·啟停）；右上有「＋建立新活動」與 Admin／Operator 角色切換。② <strong>建立／編輯表單為兩欄式</strong>：左欄依序為 <strong>基本資料（CAMPAIGN ID → 活動名稱 → 幣值 → 版型主題 → 活動期間 → 倒數啟動天數）</strong> → <strong>線路投放</strong> → 受眾 tag → 解鎖門檻 → 抽獎權重；右欄 sticky 釘住 固定獎池組成 ＋ RTP 自動驗算 ＋「儲存草稿／上線活動」按鈕。線路投放即位於此流程第 2 段。
+  </div>
+
+  <!-- Row 0a：版型主題下拉（v3.9 新增） -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 版型主題下拉（建立活動 · 基本資料）</div>
+      <img src="design_assets/admin_05_theme.png" alt="版型主題下拉 · 基本資料（建立活動）" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;">
+          <span style="width:4px;height:18px;background:#5A5FE0;border-radius:2px;"></span>
+          <strong style="font-size:15px;">版型主題</strong>
+          <span style="font-size:11px;color:#9AA0AB;">預定義主題 · 單選</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:11px;">
+          <div style="flex:1;display:flex;align-items:center;justify-content:space-between;border:1.5px solid #E6C55A;background:#FBF3D6;border-radius:9px;padding:10px 14px;">
+            <span style="font-family:'DM Mono',monospace;font-size:13px;color:#9A7B1A;">🎁 抽寶箱（treasure_box）</span>
+            <span style="font-size:12px;color:#8A8F9A;">▾</span>
+          </div>
+          <div style="flex:0 0 60px;height:48px;border:1.5px solid #E6C55A;border-radius:9px;background:#FFF7E0;display:flex;align-items:center;justify-content:center;font-size:24px;" title="主題縮圖預覽">🎁</div>
+        </div>
+        <div style="font-size:12px;color:#8A8F9A;line-height:1.7;">只換視覺、不動數值（門檻／獎池／權重／RTP 不變）</div>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_05_theme.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">版型主題 · 單選下拉</div>
+      <dl>
+        <dt>UI_Name</dt><dd><span class="mono" style="color:var(--gold-light);">admin_theme_select</span></dd>
+        <dt>元件類型</dt><dd>單選下拉（single-select）；選中後<strong>右側顯示主題縮圖預覽方塊</strong></dd>
+        <dt>操作</dt><dd>① 點下拉 → ② 從預定義清單選 1 個主題 → ③ 右側縮圖即時更新</dd>
+        <dt>選項來源</dt><dd>後端預定義主題清單（<span class="mono">treasure_box</span> / <span class="mono">gold_egg</span> / <span class="mono">red_envelope</span> / <span class="mono">xmas_gift</span>）；<strong>不可自由輸入</strong></dd>
+        <dt>規則</dt><dd><strong>只控制前台換皮</strong>（icon／背景／9 格／開獎演出／文案），<strong>不影響</strong>門檻、獎池、權重、RTP</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.theme.title</span> / <span class="mono">admin.theme.option_{theme_id}</span> / <span class="mono">admin.theme.hint</span></dd>
+        <dt>美術資產</dt><dd>4 個主題縮圖、下拉箭頭 ▾、縮圖預覽框</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Row 0b：倒數啟動天數（v3.9 新增） -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 倒數啟動天數（基本資料）</div>
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;">
+          <span style="width:4px;height:18px;background:#5A5FE0;border-radius:2px;"></span>
+          <strong style="font-size:15px;">倒數啟動天數</strong>
+          <span style="font-size:11px;color:#9AA0AB;">活動期間呈現</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px;">
+          <div style="width:72px;border:1.5px solid #E6E8EC;border-radius:9px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:15px;color:#1A1D26;text-align:center;">3</div>
+          <span style="font-size:13px;color:#5A5F6B;">天</span>
+        </div>
+        <div style="font-size:12px;color:#8A8F9A;line-height:1.7;">活動結束前 N 天，前台由日期區間自動切換為倒數計時</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">倒數啟動天數 · 數字輸入</div>
+      <dl>
+        <dt>UI_Name</dt><dd><span class="mono" style="color:var(--gold-light);">admin_countdown_lead_days</span></dd>
+        <dt>元件類型</dt><dd>數字輸入框，<strong>預設 3</strong>，後綴「天」</dd>
+        <dt>規則</dt><dd>活動結束前 N 天，前台由日期區間<strong>自動切換為倒數計時</strong>；對應 §06 活動期間元件</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.countdown.title</span> / <span class="mono">admin.countdown.hint</span></dd>
+      </dl>
+    </div>
   </div>
 
   <!-- Row 1：線路投放 · 正常/已選狀態（淺色，還原 design 原型） -->
@@ -2310,23 +2600,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <!-- Row 2：線路投放 · 必選未填/錯誤狀態（規格定義，原型待補） -->
   <div class="ui-doc-row">
     <div class="ui-doc-shot">
-      <div class="ui-doc-shot-cap">截圖 2 · 必選未填（驗證錯誤 · 規格定義，原型待補此狀態）</div>
-      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
-        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
-          <span style="width:4px;height:18px;background:#E0B23A;border-radius:2px;"></span>
-          <strong style="font-size:15px;">線路投放</strong>
-          <span style="margin-left:auto;font-size:10px;font-weight:700;color:#9A6B0B;background:#FBEFC8;padding:3px 10px;border-radius:6px;">必填</span>
-        </div>
-        <div style="border:1.5px solid #E0563A;border-radius:9px;padding:11px 14px;font-size:12px;color:#A8ACB5;margin-bottom:7px;">▾ 從清單勾選（尚未選擇）</div>
-        <div style="font-size:11px;color:#E0563A;margin-bottom:18px;">⚠ 請至少選擇 1 條投放線路</div>
-        <div style="display:flex;gap:10px;justify-content:flex-end;">
-          <span style="font-size:12px;color:#5A5F6B;border:1px solid #E6E8EC;border-radius:9px;padding:9px 20px;">儲存草稿</span>
-          <span style="font-size:12px;color:#fff;background:#6B6BE0;opacity:0.4;border-radius:9px;padding:9px 22px;">上線活動</span>
-        </div>
-      </div>
+      <div class="ui-doc-shot-cap">截圖 2 · 線路投放（已選）＋受眾 tag · 後台原型實截（admin_06_line_audience.png）；驗證錯誤態見右欄規格（原型尚未含此態）</div>
+      <img src="design_assets/admin_06_line_audience.png" alt="線路投放（已選）＋受眾 tag · 後台原型實截" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;background:var(--dark-3);border:1px dashed var(--border-bright);border-radius:8px;padding:28px 18px;text-align:center;font-size:11px;color:var(--text-dim);line-height:1.7;">放入 <span class="mono" style="color:var(--gold-light);">design_assets/admin_06_line_audience.png</span><br>線路投放（已選）＋受眾 tag（後台原型實截）</div>
     </div>
     <div class="ui-doc-spec">
-      <div class="ui-doc-spec-h">必選驗證 · 阻擋上線</div>
+      <div class="ui-doc-spec-h">必選驗證 · 阻擋上線（規格定義 · 原型待補）</div>
       <dl>
         <dt>觸發</dt><dd>未勾選任何線路時，點「上線活動」或失焦驗證（<strong>原型尚未含此狀態，需依本規格補做</strong>）</dd>
         <dt>欄位狀態</dt><dd>輸入框紅框（#E0563A）＋下方紅字提示「請至少選擇 1 條投放線路」</dd>
@@ -2345,9 +2624,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <figcaption>① 活動列表頁 · 狀態篩選＋角色切換</figcaption>
     </figure>
     <figure class="ui-shot-fig">
-      <img src="design_assets/admin_02_create_top.png" alt="建立活動 · 基本資料＋線路投放＋固定獎池" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_02_create_top.png</span><br>建立活動 · 基本資料＋線路投放＋固定獎池</div>
-      <figcaption>② 建立活動（上）· 線路投放在第 2 段</figcaption>
+      <img src="design_assets/admin_02_create_top.png" alt="建立活動（上）· 基本資料含版型主題 → 線路投放（需依新原型重截）" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_02_create_top.png</span><br>建立活動（上）· 基本資料含版型主題 → 線路投放（⚠ 需依新原型重截）</div>
+      <figcaption>② 建立活動（上）· 基本資料含版型主題 → 線路投放<br><span style="color:var(--text-dim);font-size:10px;">⚠ 需依新原型重截</span></figcaption>
     </figure>
     <figure class="ui-shot-fig">
       <img src="design_assets/admin_03_line_audience.png" alt="線路投放＋受眾 tag＋解鎖門檻＋RTP 驗算" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
@@ -2359,9 +2638,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_04_draw_weights.png</span><br>抽獎權重設定 · 第幾抽（每列合計 100）</div>
       <figcaption>④ 抽獎權重設定 · 第幾抽（合計 100 校驗）</figcaption>
     </figure>
+    <figure class="ui-shot-fig">
+      <img src="design_assets/admin_05_theme.png" alt="版型主題下拉＋縮圖預覽＋倒數啟動天數" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="ui-shot-missing" style="display:none;">放入 <span class="mono">design_assets/admin_05_theme.png</span><br>版型主題下拉＋縮圖預覽＋倒數啟動天數</div>
+      <figcaption>⑤ 版型主題下拉＋縮圖預覽＋倒數啟動天數</figcaption>
+    </figure>
   </div>
   <div class="callout" style="font-size:12px;">
-    <strong>截圖檔放置位置：</strong>請把 design 原型的 4 張截圖存到 repo 的 <span class="mono" style="color:var(--gold-light);">design_assets/</span> 資料夾，檔名照上方標示（<span class="mono">admin_01_list.png</span> ~ <span class="mono">admin_04_draw_weights.png</span>），存好後重新整理即顯示真實截圖；未放入前自動顯示還原示意，不影響閱讀。
+    <strong>截圖檔放置位置：</strong>請把 design 原型的截圖存到 repo 的 <span class="mono" style="color:var(--gold-light);">design_assets/</span> 資料夾，檔名照上方標示（<span class="mono">admin_01_list.png</span> ~ <span class="mono">admin_05_theme.png</span>），存好後重新整理即顯示真實截圖；未放入前自動顯示還原示意，不影響閱讀。<strong>版型主題上線後，<span class="mono">admin_02_create_top.png</span> 需依新原型重截，並新增 <span class="mono">admin_05_theme.png</span>。</strong>
   </div>
 
   <div class="sub-title">後台功能規格補充</div>
@@ -2370,11 +2654,17 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <tbody>
       <tr><td>活動建立表單</td><td class="dim">填寫期間、<strong>投放線路</strong>、每格增量門檻、固定獎池、第幾抽權重、受眾 tag（資格投放）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>線路投放設定（platform_lines）</td><td class="dim">從<strong>預定義「已開通 Bet=0」平台清單</strong>多選投放線路；<strong>必選、未選擋上線</strong>，玩家所在線路不在清單＝活動無感。維護平台清單的小後台一併納入</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：依線路差異化獎池</td></tr>
+      <tr><td>版型主題設定（theme_id）</td><td class="dim">從<strong>預定義主題清單單選</strong>（treasure_box / gold_egg / red_envelope / xmas_gift），選中顯示縮圖預覽，控制前台換皮；<strong>不可自由輸入、不影響玩法數值</strong></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：營運可自上傳素材</td></tr>
+      <tr><td>活動期間倒數設定（countdown_lead_days）</td><td class="dim">設定前台由日期區間轉倒數的提前天數（預設 3），控制活動尾聲的急迫感呈現</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>抽獎權重設定（第幾抽）</td><td class="dim">從第1抽到第9抽各自設定四種獎項權重，支援獎項歸零自動重算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>注單篩選（bonus_type）</td><td class="dim">依獎勵類型分離注單，對帳用</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>RTP 自動試算</td><td class="dim">填完獎勵即時顯示 RTP%，超出範圍警示</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>獎勵內容編輯工具</td><td class="dim">編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list</td><td class="dim">—</td><td><span class="tag-pill tag-v2">v2 擴充</span></td></tr>
       <tr><td>活動啟停</td><td class="dim">一鍵上線/暫停，暫停時前端顯示維護中</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>活動上線審核流程（v4.0 · B1）</td><td class="dim">活動上線前須「提交審核」→ 由<strong>審核人員（Reviewer）核准</strong>才上線；審核權限<strong>獨立於運營/操作（分層權限）</strong>，避免單一帳號全包</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多級審核／審核紀錄稽核</td></tr>
+      <tr><td>上線中禁止編輯（v4.0 · C4）</td><td class="dim"><strong>上線中活動禁止直接編輯，須先下架／暫停才能修改</strong>；緊急調整先暫停 → 確認無誤 → 再恢復</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>UAT 測試帳號自助改線路/標籤（v4.0 · B3）</td><td class="dim">UAT 測試帳號可<strong>自助修改自身線路與標籤</strong>，供 QA 測試不同線路/分群，不依賴外部工具；僅作用於測試帳號（is_tester）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>幣值維度設定（v4.0 · C3）</td><td class="dim">活動設定以<strong>「幣值」為一設定維度</strong>（PHP／THB…）；<strong>每套幣值獨立設定門檻、獎池與規則</strong>，各自驗算 RTP，不做匯率換算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多幣值批次複製</td></tr>
       <tr><td>Pending 異常列表</td><td class="dim">查詢發放失敗紀錄，手動觸發重試</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>帳號權限管理</td><td class="dim">Admin / Operator 兩種角色</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">細粒度擴充</td></tr>
       <tr><td>活動模板複製</td><td class="dim">複製現有活動為新版本，只改參數</td><td class="dim">—（設定檔管理）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
@@ -2383,6 +2673,24 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>月結對帳儀表板</td><td class="dim">視覺化活動成本 vs GGR 拆帳</td><td class="dim">—（數據組另拉）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
     </tbody>
   </table>
+
+  <div class="sub-title">主題資產對應規範（給美術）（v3.9 新增）</div>
+  <div class="callout info">
+    <strong>每套主題需提供以下資產：</strong>4 套預定義主題（<span class="mono" style="color:var(--gold-light);">treasure_box / gold_egg / red_envelope / xmas_gift</span>）<strong>各自提供一整組</strong>，版位與互動共用、僅視覺替換。命名格式統一為 <span class="mono" style="color:var(--gold-light);">theme_{theme_id}_{asset}</span>（例 <span class="mono">theme_gold_egg_icon</span>、<span class="mono">theme_red_envelope_cell_locked</span>）。開獎 sprite 序列<strong>套用同一套「無屬性」開獎動畫時間軸</strong>（容器開啟→光爆→獎品彈出），美術只需依該節奏出對應幀，不為主題新增動畫邏輯。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:150px;">資產項目</th><th>內容說明</th><th>命名格式</th></tr></thead>
+    <tbody>
+      <tr><td>浮動 icon</td><td class="dim">主畫面常駐入口 icon（含一般態＋發光態）</td><td class="mono">theme_{theme_id}_icon</td></tr>
+      <tr><td>背景／主色 token</td><td class="dim">彈窗背景圖＋主色／漸層色票 token（主色、進度條色、強調色）</td><td class="mono">theme_{theme_id}_bg ／ theme_{theme_id}_color</td></tr>
+      <tr><td>9 格格子美術（locked）</td><td class="dim">未翻開（鎖定／牌背）格子美術</td><td class="mono">theme_{theme_id}_cell_locked</td></tr>
+      <tr><td>9 格格子美術（unlocked）</td><td class="dim">已翻開（牌面框）格子美術</td><td class="mono">theme_{theme_id}_cell_unlocked</td></tr>
+      <tr><td>開獎 sprite 序列</td><td class="dim">套用<strong>無屬性開獎動畫</strong>（容器開啟→光爆→獎品彈出）的分層／序列幀素材</td><td class="mono">theme_{theme_id}_reveal_seq</td></tr>
+      <tr><td>SFX 音效</td><td class="dim">開獎／翻格／最終獎音效（對應通用動畫時間軸節點）</td><td class="mono">theme_{theme_id}_sfx_{event}</td></tr>
+      <tr><td>文案 key</td><td class="dim">主題化文案字串（面板標題、按鈕、恭喜語等），對應 §14 i18n key 的主題覆寫</td><td class="mono">theme_{theme_id}_text_{key}</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 上表為「單一主題」需提供的一組資產；4 套主題依此 ×4。版位、尺寸切版規格沿用 §06 美術資產清單（同版位只換皮）。v2 開放營運自上傳素材組主題時，沿用同一命名規範與資產清單。</div>
 </section>
 
 <!-- ═══════════ 08 KPI ═══════════ -->
@@ -2484,6 +2792,16 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="kpi-val">0.9–1.1%</div>
       <div class="kpi-desc">滾動實際派彩 ÷ 活動觸發押注，持續監控是否在預算區間內</div>
     </div>
+    <div class="kpi-card">
+      <div class="kpi-label">節慶檔期參與率提升（v3.9）</div>
+      <div class="kpi-val">+10%↑</div>
+      <div class="kpi-desc">節慶主題檔期（金蛋／紅包／聖誕）活動參與率相對常駐版（treasure_box）的提升幅度，驗證換皮對節慶氛圍的加成</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">倒數區間轉化率提升（v3.9）</div>
+      <div class="kpi-val">+15%↑</div>
+      <div class="kpi-desc">最後 3 天倒數區間的抽獎轉化率相對非倒數區間的提升幅度，驗證活動期間倒數元件的急迫感效果</div>
+    </div>
   </div>
 
   <div class="sub-title">異常警示指標（需即時告警）</div>
@@ -2500,6 +2818,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="info-card-title" style="color:var(--orange);">⚠️ 參與率驟降</div>
       <div class="info-card-desc">日參與率較前7日均值下降 30% 以上，可能有前端顯示問題</div>
     </div>
+  </div>
+
+  <div class="callout info">
+    <strong>異常通知與處理（v4.0 新增 · 2026-06-26 開案 · B4）：</strong>發獎失敗等異常<strong>透過 Telegram 通知</strong>相關人員（綁定告警群組／機器人）；<strong>初期採人工手動處理</strong>（人工確認、手動重試），<strong>待功能穩定後再規劃自動化</strong>（自動重試／自動補發策略）。對應 §05 開發 Task「Telegram 異常通知」與 Phase 6 監控設定。
   </div>
 
   <div class="callout">
@@ -2589,6 +2911,31 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
     </div>
   </div>
+
+  <div class="sub-title">主題系統與活動期間元件成本（v3.9 新增）</div>
+  <div class="cost-block">
+    <div class="cost-row">
+      <span class="cost-label">主題系統一次性（無屬性動畫引擎＋asset loader）</span>
+      <span class="cost-val">前端約 1–2 週（一次性，建好後可重用）</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">每套主題美術素材包（icon／背景／格子／開獎 sprite／SFX）</span>
+      <span class="cost-val">美術約 2–3 人天 / 套 × 4 套</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">活動期間元件（日期區間＋最後 N 天倒數）</span>
+      <span class="cost-val">前端約 2–3 人天</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">後端</span>
+      <span class="cost-val">僅新增 theme_id / countdown_lead_days 欄位＋bundle 對應（小）</span>
+    </div>
+    <div class="cost-row total">
+      <span class="cost-label">取捨</span>
+      <span class="cost-val highlight">動畫引擎一次性投入，後續每套節慶主題只增量美術素材</span>
+    </div>
+  </div>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 「無屬性」開獎動畫為一次性基建，之後新增任何節慶主題都只需出一組美術素材包，不再重寫動畫，邊際成本低。</div>
 </section>
 
 <!-- ═══════════ 10 COMPARISON ═══════════ -->
@@ -2664,6 +3011,18 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <td class="v1-val">✅ 完整建立（含背包水管六層）</td>
           <td class="v2-val">✓ 沿用（僅新增資料）</td>
           <td class="dim">v1 一次做滿，v2 不需動資料層</td>
+        </tr>
+        <tr>
+          <td>版型主題</td>
+          <td class="v1-val">✅ 預定義 4 套下拉換皮、共用無屬性開獎動畫</td>
+          <td class="v2-val">＋ 營運自上傳素材＋客製動畫＋主題 × 分眾</td>
+          <td class="dim">theme_id 只換視覺、不動玩法數值</td>
+        </tr>
+        <tr>
+          <td>活動期間呈現</td>
+          <td class="v1-val">✅ 日期區間＋最後 3 天倒數</td>
+          <td class="v2-val">＋ 倒數結束最後衝刺特效＋推播</td>
+          <td class="dim">countdown_lead_days 控制轉倒數提前天數</td>
         </tr>
       </tbody>
     </table>
@@ -3016,8 +3375,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 CRM 功能規格書 · LUCKY CHEST V3.8 · CONFIDENTIAL 2026<br>
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V4.0 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）<br>
+  v4.0（2026-06-26 開案）：補充開案會議項目——§02 每日 reset 固定 24h 週期＋總週期依設定、reset 時間點逐活動可設（Server+8）；§02/§03 幣值維度（每幣值獨立門檻/獎池/規則）；§03 機率數據由設計端提供；§04 受眾標籤與線路清單由數據組提供、後端直抓不開放後台新增、強化分群（大客差異化·第一階段）；§06 主題換皮重畫元件清單＋第一階段一套主題、節慶主題前端寫死；§07 上線審核流程＋審核人員分層權限＋上線中禁編輯＋UAT 自助改線路標籤；§08 異常 Telegram 通知（初期人工）；§05 目標 8 月底送 QA，新增 Task 與職能分配（後端 Wayne/Eric、後台 劉暢、數據 國清/虹瑜）<br>
+  v3.9.2（2026-06-25）：§07 線路投放「截圖 2」左欄改用後台原型實截 admin_06_line_audience.png（線路投放已選＋受眾 tag），取代原手繪錯誤態示意；必選驗證錯誤態改標「規格定義·原型待補」<br>
+  v3.9.1（2026-06-25）：§07 後台 UI 設計說明補上版型主題下拉（admin_theme_select）與倒數啟動天數（admin_countdown_lead_days）UI 元件規格；截圖區新增 admin_05_theme、admin_02 標註待重截<br>
+  v3.9（2026-06-25）：新增主題版型換皮系統（theme_id，預定義 4 套·無屬性開獎動畫）與前台活動期間呈現（日期區間＋最後 N 天倒數），後台基本資料區加版型主題下拉與倒數提前天數設定<br>
   v3.4 修訂（2026-06-23）：§13 待確認收斂——門檻 ₱50~1,000、獎池 ₱37/RTP1.028%、權重 v1 後台自助、觀察期 2 週+D1相對+3~5pt 四項改標「✅ 已決」；AWC 項註明 canonical＝integration_consolidated_checklist_v2；完整追溯見 roadmap §11<br>
   v3.4 增補（2026-06-23 · AWC 釐清）：place_bet 主注單欄位補 item_id（道具id）+ bonus_type（獲獎類型編號）；Bet=0 入主錢包為我方既定機制不需詢問；CRM 獎勵明細另存表不透過 AWC；get_bet_summary 可分離但需加 bonus_type 編號<br>
   v3.3 修訂：現金獎改走「注單通道（Bet=0/Win→主錢包真金）」，移除 wallet_target 雙錢包 / Bonus 入帳；新增逐平台開通 + 真金防濫用
