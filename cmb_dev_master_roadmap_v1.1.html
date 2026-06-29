@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMB 開發總路線圖 · Master Build Order · v1.2</title>
+<title>CMB 開發總路線圖 · Master Build Order · v1.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -115,7 +115,59 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 .phase-chip.infra{background:var(--orange);color:var(--dark);}
 .phase-chip.ship{background:var(--green);color:var(--dark);}
 .phase-goal{font-size:12px;color:var(--text-secondary);}
-@media(max-width:900px){body.layout-side .sidebar{display:none;}body.layout-side .main-wrap{margin-left:0;padding-top:var(--topnav-h);}.info-grid-3,.info-grid-2{grid-template-columns:1fr;}.page{padding:0 16px 80px;}.spec-table{font-size:11px;}}
+/* sprint schedule · gantt */
+.gantt{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:18px 0 8px;background:var(--dark-2);}
+.gantt-head,.gantt-row{display:grid;grid-template-columns:210px repeat(8,1fr);}
+.gantt-head{position:sticky;top:0;background:var(--dark-3);border-bottom:1px solid var(--border);z-index:1;}
+.gantt-head .cell{padding:8px 6px;text-align:center;border-left:1px solid rgba(255,255,255,0.04);}
+.gantt-head .cell.lbl{text-align:left;padding-left:14px;border-left:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--text-secondary);display:flex;align-items:center;}
+.s-num{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--gold-light);display:block;}
+.s-date{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);display:block;margin-top:2px;}
+.gantt-row{border-bottom:1px solid rgba(255,255,255,0.04);min-height:42px;position:relative;}
+.gantt-row:hover{background:rgba(255,255,255,0.015);}
+.g-lbl{padding:8px 10px 8px 14px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);}
+.g-lbl-main{font-size:12px;font-weight:700;color:var(--text-primary);line-height:1.3;}
+.g-lbl-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:2px;}
+.g-track{grid-column:2 / 10;display:grid;grid-template-columns:repeat(8,1fr);align-items:center;padding:6px 0;}
+.bar{height:24px;border-radius:5px;display:flex;align-items:center;padding:0 9px;font-size:11px;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.3);}
+.bar.infra{background:linear-gradient(90deg,#E0763A,#E0963A);color:#1a0e06;}
+.bar.hub{background:linear-gradient(90deg,#D4A843,#F0CC72);}
+.bar.be{background:linear-gradient(90deg,#4FA86A,#6ED093);}
+.bar.fe{background:linear-gradient(90deg,#4178C0,#5FA0E0);color:#fff;}
+.bar.art{background:linear-gradient(90deg,#9268C0,#B68CE0);color:#fff;}
+.bar.pm{background:linear-gradient(90deg,#8B7420,#B89A40);color:#fff;}
+.bar.ship{background:linear-gradient(90deg,#3A9E5A,#5ABF7A);color:#06210e;font-weight:700;border:1px solid #7ADFA0;}
+.gantt-vlines{position:absolute;inset:0;display:grid;grid-template-columns:210px repeat(8,1fr);pointer-events:none;}
+.gantt-vlines span{border-left:1px solid rgba(255,255,255,0.035);}
+.gantt-vlines span:nth-child(1){border-left:none;}
+.legend .sw{width:14px;height:10px;border-radius:2px;display:inline-block;}
+/* sprint cards */
+.sprint-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
+.sprint-card{background:var(--dark-2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+.sprint-card.ship{border-color:var(--border-bright);background:rgba(212,168,67,0.04);}
+.sc-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;}
+.sc-num{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--gold-light);}
+.sc-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);}
+.sc-goal{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:12px;line-height:1.4;}
+.sc-track{display:flex;gap:8px;margin-bottom:8px;font-size:12px;line-height:1.55;}
+.sc-track .role{flex-shrink:0;width:58px;}
+.sc-track .work{color:var(--text-secondary);}
+.sc-exit{margin-top:10px;padding:9px 11px;background:rgba(90,191,122,0.07);border-left:2px solid var(--green);border-radius:0 4px 4px 0;font-size:12px;line-height:1.55;}
+.sc-exit .lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#7ADFA0;display:block;margin-bottom:3px;}
+.sc-exit .txt{color:var(--text-primary);}
+.infra-mark{color:#F0907A;font-weight:700;}
+/* P1 白話 + v1 取捨 */
+.task-name{font-weight:700;color:var(--text-primary);display:block;margin-bottom:3px;}
+.tech-line{color:var(--text-secondary);display:block;margin-bottom:7px;}
+.baijia{display:block;border-left:2px solid var(--gold);padding:5px 0 5px 10px;background:rgba(212,168,67,0.05);border-radius:0 3px 3px 0;}
+.baijia-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;color:var(--gold);display:block;margin-bottom:2px;}
+.baijia-text{color:var(--gold-light);font-size:12px;line-height:1.6;}
+.v-must{background:rgba(224,90,58,0.16);color:#F0907A;border:1px solid rgba(224,90,58,0.32);font-weight:700;}
+.v-thin{background:rgba(58,191,176,0.14);color:#7AD8CC;border:1px solid rgba(58,191,176,0.3);}
+.v-defer{background:rgba(255,255,255,0.05);color:var(--text-dim);border:1px solid rgba(255,255,255,0.08);}
+.v-note{display:block;font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.5;}
+.decided-chip{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:2px;background:rgba(90,191,122,0.16);color:#7ADFA0;border:1px solid rgba(90,191,122,0.32);display:inline-block;letter-spacing:0.04em;white-space:nowrap;}
+@media(max-width:900px){body.layout-side .sidebar{display:none;}body.layout-side .main-wrap{margin-left:0;padding-top:var(--topnav-h);}.info-grid-3,.info-grid-2{grid-template-columns:1fr;}.page{padding:0 16px 80px;}.spec-table{font-size:11px;}.sprint-grid{grid-template-columns:1fr;}.gantt-head,.gantt-row,.gantt-vlines{grid-template-columns:120px repeat(8,1fr);}}
 </style>
 </head>
 <body class="layout-side">
@@ -127,10 +179,11 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 </div>
 
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CMB · ROADMAP V1.2</span>
+  <span class="nav-brand">CMB · ROADMAP V1.3</span>
   <a class="nav-item active" href="#intro">如何使用</a>
   <a class="nav-item" href="#dep">依賴總覽</a>
   <a class="nav-item" href="#matrix">機制矩陣</a>
+  <a class="nav-item" href="#sprint">Sprint 排程</a>
   <a class="nav-item" href="#p0">P0 對外</a>
   <a class="nav-item" href="#p1">P1 基建</a>
   <a class="nav-item" href="#p2">P2 中台</a>
@@ -148,7 +201,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="sidebar-brand">CMB · BUILD ORDER</div>
     <div class="sidebar-title">開發總路線圖<br>Master Build Order</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.2</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v1.3</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -159,15 +212,16 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     <div class="sidebar-section"><button class="sidebar-section-btn active" onclick="navTo('intro')"><span class="sidebar-section-num">00</span>如何使用本文件</button></div>
     <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('dep')"><span class="sidebar-section-num">01</span>依賴總覽圖</button></div>
     <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('matrix')"><span class="sidebar-section-num">02</span>機制全景矩陣</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p0')"><span class="sidebar-section-num">03</span>P0 對外決策關卡</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p1')"><span class="sidebar-section-num">04</span>P1 共用基礎建設</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p2')"><span class="sidebar-section-num">05</span>P2 中台 + MPS adapter</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p3')"><span class="sidebar-section-num">06</span>P3 抽寶箱 v1 現金獎</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p4')"><span class="sidebar-section-num">07</span>P4 Free Spin 發卡結算</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p5')"><span class="sidebar-section-num">08</span>P5 抽寶箱 v2 背包</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p6')"><span class="sidebar-section-num">09</span>P6 對帳 / 監控 / 上線</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('byrole')"><span class="sidebar-section-num">10</span>職能視圖（每人一覽）</button></div>
-    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('openq')"><span class="sidebar-section-num">11</span>對外待確認彙整</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('sprint')"><span class="sidebar-section-num">03</span>Sprint 排程視圖</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p0')"><span class="sidebar-section-num">04</span>P0 對外決策關卡</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p1')"><span class="sidebar-section-num">05</span>P1 共用基礎建設</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p2')"><span class="sidebar-section-num">06</span>P2 中台 + MPS adapter</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p3')"><span class="sidebar-section-num">07</span>P3 抽寶箱 v1 現金獎</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p4')"><span class="sidebar-section-num">08</span>P4 Free Spin 發卡結算</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p5')"><span class="sidebar-section-num">09</span>P5 抽寶箱 v2 背包</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('p6')"><span class="sidebar-section-num">10</span>P6 對帳 / 監控 / 上線</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('byrole')"><span class="sidebar-section-num">11</span>職能視圖（每人一覽）</button></div>
+    <div class="sidebar-section"><button class="sidebar-section-btn" onclick="navTo('openq')"><span class="sidebar-section-num">12</span>對外待確認彙整</button></div>
   </nav>
 </aside>
 
@@ -262,6 +316,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <div class="section-header"><span class="section-num">01</span><span class="section-title">依賴總覽圖</span><span class="section-title-en">DEPENDENCY MAP</span></div>
   <div class="callout success"><strong>分階段路由定調（v1.1 修正 · 2026/06/17）</strong>：<strong>第一階段主路由＝集成商型（AWC），以「注單通道」發獎</strong>——獎勵用 <span class="mono">Bet=0/Win=X</span> 注單表達、入主錢包真金，<strong>不需 Promotion Tool / Bonus 錢包 / CPS</strong>（國清向 FC 釐清；見 CRM-ROUTE v2.0）。抽寶箱、Free Spin 規格本就照 AWC API 撰寫，最快上線。<strong>MPS 直連＝第二階段戰略目標</strong>。守則：本階段把 AWC 嚴格關在 adapter 內，勿讓其邏輯滲進中台 L1 或活動層，第二階段換 MPS 才便宜。</div>
   <div class="body-text">由上而下＝先到後。<strong>P0 對外關卡未過、P1 基建未就位，下游全部不能動</strong>。抽寶箱 v1（現金獎）是第一個能上線的閉環；Free Spin 卡是「商品」，必須先存在，抽寶箱 v2（用卡跳轉）才能做。</div>
+  <div class="callout success"><span class="decided-chip">✅ 已決（2026-06-26 開案）</span> <strong>整體時程</strong>：抽寶箱 v1 <strong>目標 8 月底送 QA（非硬性目標）</strong>；實際上線視 QA 與觀察期，<strong>誠實估約 9 月初（S5）</strong>，v2 約 10 月中（S8）。後端 1.5 人為瓶頸，逐 Sprint 拆解見「03 Sprint 排程視圖」。</div>
   <div class="flow">
     <div class="flow-step gate">
       <div class="flow-badge">P0 · GATE</div>
@@ -431,10 +486,179 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <div class="callout danger"><strong>三條會卡死全案、需集成商「書面回覆」的決策題</strong>：① 注單發獎欄位（<span class="mono">place_bet</span> 帶 <span class="mono">campaign_id</span>、<span class="mono">Bet=0</span> 中獎注單、回呼帶 <span class="mono">ref_voucher_id</span>）＋逐平台開通盤點；② 跳轉後 Free Spin 觸發方式（B3：集成商自動 vs 另呼叫）；③ 過期卡判定（B4）。另：player mapping 與集成商加密簽章屬我方 <span class="tag-pill tag-infra">P1 基建</span>，沒先做發獎／對帳全對不到人。</div>
 </section>
 
+<!-- 03 SPRINT SCHEDULE (新增 · 2026-06-26 開案) -->
+<section class="section" id="sprint">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Sprint 排程視圖（含甘特圖）</span><span class="section-title-en">SPRINT SCHEDULE</span></div>
+  <div class="callout warn"><strong>重要前提</strong>：以 <strong>6/29 起算、每段 2 週</strong>；<span class="tag-pill tag-infra">⚠️基建</span>＝獨立估時、獨立驗收，不併進活動 Task 算；<strong>後端 1.5 人為瓶頸</strong>（Wayne 另兼補單漏單優化＝非 CRM 範疇，故 CRM 後端產能約 1.5 人）；<strong>數值為粗估，待後端組長現場校準</strong>。</div>
+
+  <div class="sub-title">甘特時間軸</div>
+  <div class="body-text">以 <strong>6/29 起算、每段 2 週</strong>。橫條＝該工作在哪幾個 Sprint 進行；後端那幾條因 <em>1.5 人是瓶頸</em> 幾乎是接力序列，前端／美術／PM 圍著它錯開。<em>數值為粗估，待後端組長現場校準。</em></div>
+  <div class="legend">
+    <span><span class="sw" style="background:linear-gradient(90deg,#E0763A,#E0963A);"></span>⚠️基建</span>
+    <span><span class="sw" style="background:linear-gradient(90deg,#D4A843,#F0CC72);"></span>中台</span>
+    <span><span class="sw" style="background:linear-gradient(90deg,#4FA86A,#6ED093);"></span>後端業務</span>
+    <span><span class="sw" style="background:linear-gradient(90deg,#4178C0,#5FA0E0);"></span>前端</span>
+    <span><span class="sw" style="background:linear-gradient(90deg,#9268C0,#B68CE0);"></span>美術</span>
+    <span><span class="sw" style="background:linear-gradient(90deg,#8B7420,#B89A40);"></span>PM/對外</span>
+    <span><span class="sw" style="background:linear-gradient(90deg,#3A9E5A,#5ABF7A);"></span>🚀上線</span>
+  </div>
+
+  <div class="gantt">
+    <div class="gantt-head">
+      <div class="cell lbl">工作線 ＼ Sprint</div>
+      <div class="cell"><span class="s-num">S1</span><span class="s-date">6/29–7/11</span></div>
+      <div class="cell"><span class="s-num">S2</span><span class="s-date">7/14–7/25</span></div>
+      <div class="cell"><span class="s-num">S3</span><span class="s-date">7/28–8/8</span></div>
+      <div class="cell"><span class="s-num">S4</span><span class="s-date">8/11–8/22</span></div>
+      <div class="cell"><span class="s-num">S5</span><span class="s-date">8/25–9/5</span></div>
+      <div class="cell"><span class="s-num">S6</span><span class="s-date">9/8–9/19</span></div>
+      <div class="cell"><span class="s-num">S7</span><span class="s-date">9/22–10/3</span></div>
+      <div class="cell"><span class="s-num">S8</span><span class="s-date">10/6–10/17</span></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">PM／對外</span><span class="g-lbl-sub">P0 GATE</span></div>
+      <div class="g-track"><div class="bar pm" style="grid-column:1 / 3;">G3/G6 需求書 · G7 開通盤點</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">數據</span><span class="g-lbl-sub">D0 受眾／線路資料源</span></div>
+      <div class="g-track"><div class="bar be" style="grid-column:1 / 2;background:linear-gradient(90deg,#2E9C8E,#4FCBBC);">D0 受眾標籤／線路清單</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">美術</span><span class="g-lbl-sub">3F0 寶箱設計稿</span></div>
+      <div class="g-track"><div class="bar art" style="grid-column:1 / 3;">寶箱 UI／洗牌動畫腳本</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">⚠️ 後端基建①</span><span class="g-lbl-sub">I1 · I6 · I7</span></div>
+      <div class="g-track"><div class="bar infra" style="grid-column:1 / 2;">player mapping＋建表</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">⚠️ 後端基建②</span><span class="g-lbl-sub">I2 · I3 · I4 · I5 · I8 · I9</span></div>
+      <div class="g-track"><div class="bar infra" style="grid-column:2 / 3;">簽章／排程／冪等／reserve／權限／UAT 工具</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">後端中台</span><span class="g-lbl-sub">H1 · H2 · H3</span></div>
+      <div class="g-track"><div class="bar hub" style="grid-column:2 / 4;">adapter／L1／AWC 現金注單通道</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">後端 寶箱v1</span><span class="g-lbl-sub">3B1–3B6 ＋ 後台</span></div>
+      <div class="g-track"><div class="bar be" style="grid-column:3 / 5;">押注／洗牌／翻格派現金／重試</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">前端 寶箱v1</span><span class="g-lbl-sub">3F1–3F3 ＋ 後台前端</span></div>
+      <div class="g-track"><div class="bar fe" style="grid-column:3 / 5;">寶箱主畫面／翻格動畫／API 串接</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">驗收上線</span><span class="g-lbl-sub">P6 · 6V1/6V2/6V4/6V6</span></div>
+      <div class="g-track"><div class="bar ship" style="grid-column:5 / 6;">🚀 抽寶箱 v1 送 QA＋上線觀察期</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">美術 v2</span><span class="g-lbl-sub">5F0 · 4F1</span></div>
+      <div class="g-track"><div class="bar art" style="grid-column:6 / 7;">背包 UI／卡片視覺</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">⚠️ 後端 FS①</span><span class="g-lbl-sub">FS 基建補做 ＋ 4B1/4B4</span></div>
+      <div class="g-track"><div class="bar infra" style="grid-column:6 / 7;">FS 排程／快照表＋發卡流程</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">後端 FS②</span><span class="g-lbl-sub">4B2/4B3/4B5 ＋ H3b</span></div>
+      <div class="g-track"><div class="bar be" style="grid-column:7 / 8;">整卡結算封頂／Bet=0 入帳</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">前端 背包</span><span class="g-lbl-sub">4F1 · 4F2</span></div>
+      <div class="g-track"><div class="bar fe" style="grid-column:7 / 8;">背包 UI／跳轉導頁</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">後端 寶箱v2</span><span class="g-lbl-sub">5B1/5B2/5A1</span></div>
+      <div class="g-track"><div class="bar be" style="grid-column:8 / 9;">卡派發／背包 API</div></div>
+    </div>
+    <div class="gantt-row"><div class="gantt-vlines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="g-lbl"><span class="g-lbl-main">前端 v2 ＋ 上線</span><span class="g-lbl-sub">5F1 · 5F2</span></div>
+      <div class="g-track"><div class="bar ship" style="grid-column:8 / 9;">🚀 抽寶箱 v2 背包＋跳轉上線</div></div>
+    </div>
+  </div>
+  <div class="body-text" style="margin-top:6px;"><strong>人名對位</strong>：後端＝<em>Wayne、Eric</em>（CRM 後端產能約 1.5 人）· 前端＝<em>劉暢</em>（遊戲 web 前端，主責後台頁面＋抽寶箱前台）· 數據＝<em>國清、虹瑜</em>（提供受眾標籤／線路清單）。補單漏單優化、線路／US 功能屬平台既有開發，不納入本路線圖。</div>
+
+  <div class="callout danger"><strong>會議要攤開的落差</strong>：<span style="color:var(--text-primary);">記憶中的「8 月底做完抽寶箱含基建」落在 <strong>S4／S5 之間</strong>；但 1.5 後端誠實估，v1 要到 <strong>S5 初（≈9 月初）</strong>才上得了線。<strong>目標 8 月底送 QA（非硬性目標）</strong>，實際上線視 QA 與觀察期而定。要把上線往前拉只有三招：① 基建再 MVP 瘦身；② 0.5 後端補到接近 1.0；③ 砍 v1 範圍。</span></div>
+
+  <div class="sub-title">八個 Sprint 拆解（含 Exit 完成定義）</div>
+  <div class="body-text">每個 Sprint 的「<strong>完成定義（Exit）</strong>」就是工單驗收標準，可在 Story 會議當收尾檢核點。<span class="infra-mark">⚠️＝基建</span>，獨立估時、獨立驗收，不併進活動 Task 算。</div>
+
+  <div class="sprint-grid">
+    <div class="sprint-card">
+      <div class="sc-head"><span class="sc-num">S1</span><span class="sc-date">6/29–7/11 · 地基①</span></div>
+      <div class="sc-goal">打地基第一刀：認得出「誰」＋建好帳本骨架＋備妥分群名單</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-infra">⚠️後端</span></span><span class="work">I1 player mapping（薄切：先首發平台）＋ I6 型錄/campaign 主檔 ＋ I7 資料層建表</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-data">數據</span></span><span class="work">D0 受眾標籤／線路清單資料源（國清／虹瑜提供、後端直接抓取、不開放後台新增）<span class="decided-chip" style="margin-left:6px;">✅ 已決 06-26</span></span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-art">美術</span></span><span class="work">3F0 寶箱 UI 設計稿（解鎖/翻格/洗牌動畫腳本）啟動</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-fe">前端</span></span><span class="work">後台框架殼（不卡後端先行）</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-pm">PM</span></span><span class="work">G3/G6 需求書送 AWC、G7 逐平台開通盤點啟動</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">測試帳號可由 CRM 查到平台 player ID；campaign／型錄可寫入；受眾標籤／線路清單資料源就緒；寶箱設計稿一審過。</span></div>
+    </div>
+    <div class="sprint-card">
+      <div class="sc-head"><span class="sc-num">S2</span><span class="sc-date">7/14–7/25 · 地基②</span></div>
+      <div class="sc-goal">取得跟平台對話的「通行證」＋防呆保險＋中台介面＋測試自助工具</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-infra">⚠️後端</span></span><span class="work">I2 AWC 簽章 ＋ I3（每日重置）＋ I4（翻格冪等）＋ I5 reserve 活動級 ＋ I8 後台權限＋審核流程 ＋ H1 adapter 介面/路由</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-infra">⚠️後端</span></span><span class="work">I9 UAT 測試帳號自助工具（測試帳號自改自身線路／標籤，供 QA、不依賴外部工具）<span class="decided-chip" style="margin-left:6px;">✅ 已決 06-26</span></span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-art">美術</span></span><span class="work">3F0 完稿交付 ＋ 切圖資產清單</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-fe">前端</span></span><span class="work">後台活動列表／建立頁</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-pm">PM</span></span><span class="work">收 AWC G3/G6 書面回覆、G4 零押注確認</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">簽章可對 AWC 打通；reserve 可鎖額；後台可登入分權＋審核人員可審核；UAT 帳號可自助改線路／標籤。</span></div>
+    </div>
+    <div class="sprint-card">
+      <div class="sc-head"><span class="sc-num">S3</span><span class="sc-date">7/28–8/8 · 中台＋發獎通道</span></div>
+      <div class="sc-goal">中台能依分群事件觸發、現金能進主錢包</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-be">後端</span></span><span class="work">H2 中台 L1（<strong>分群</strong>/觸發/設值/風控/防濫用）＋ H3 AWC adapter 現金注單通道 ＋ 3B1 押注累積 ＋ 3B2 翻牌解鎖</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-fe">前端</span></span><span class="work">3F1 入口＋寶箱主畫面（串 mock）</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-art">美術</span></span><span class="work">切圖／動畫資產交付</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">中台能依分群事件觸發；Bet=0/Win 現金注單測試可入主錢包；押注累積／解鎖可驗。</span></div>
+    </div>
+    <div class="sprint-card">
+      <div class="sc-head"><span class="sc-num">S4</span><span class="sc-date">8/11–8/22 · 寶箱閉環</span></div>
+      <div class="sc-goal">抽寶箱 v1 端到端打通＋後台可營運</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-be">後端</span></span><span class="work">3B3 洗牌權重 ＋ 3B4 翻格派現金 API ＋ 3B5 重試 ＋ 3B6 查詢 ＋ 3A1–3A3 後台（後端）</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-fe">前端</span></span><span class="work">3F2 翻格/洗牌動畫/進度條 ＋ 3F3 API 串接 ＋ 3A 後台前端</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">端到端「押注→解鎖→翻格→派現金→重置」全通；後台可建/停活動、即時試算 RTP。<strong>目標 8 月底送 QA（非硬性目標）</strong>。</span></div>
+    </div>
+    <div class="sprint-card ship">
+      <div class="sc-head"><span class="sc-num">S5</span><span class="sc-date">8/25–9/5 · 送 QA／上線 🚀</span></div>
+      <div class="sc-goal">v1 送 QA＋驗收＋誠實估約 9 月初上線＋觀察期</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-be">後端</span></span><span class="work">6V2 AWC 對帳驗證＋重試壓測 ＋ 6V4 發獎失敗 Telegram 告警</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-data">數據</span></span><span class="work">6V3 對帳彙整 ＋ 6V5 Log 驗收</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-pm">PM</span></span><span class="work">6V1 tester 白名單循環 ＋ 6V6 上線觀察 2 週</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">🚀 抽寶箱 v1 現金獎送 QA、誠實估約 9 月初上線，進入 2 週觀察期（D1 留存相對對照組 +3~5pt 才進 v2）。</span></div>
+    </div>
+    <div class="sprint-card">
+      <div class="sc-head"><span class="sc-num">S6</span><span class="sc-date">9/8–9/19 · FS 卡能力①</span></div>
+      <div class="sc-goal">把「Free Spin 卡」這個獎勵商品做出來</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-infra">⚠️後端</span></span><span class="work">補做 FS 基建切片（FS 結算過期掃描、跳轉節流、快照表）＋ 4B1 發卡流程 ＋ 4B4 後台獎勵清單工具</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-art">美術</span></span><span class="work">4F1 背包卡片視覺 ＋ 5F0 背包 UI 設計稿</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-pm">PM</span></span><span class="work">填 face_value 矩陣數值</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">可發出一張 FS 卡進背包（含 reference_id 冪等）。</span></div>
+    </div>
+    <div class="sprint-card">
+      <div class="sc-head"><span class="sc-num">S7</span><span class="sc-date">9/22–10/3 · FS 結算②</span></div>
+      <div class="sc-goal">卡到期結算、封頂入主錢包真金</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-be">後端</span></span><span class="work">4B2 整卡結算封頂 ＋ 4B3 Bet=0 結算入帳 ＋ 4B5 BDD/TDD ＋ H3b CreateFreeSpin adapter</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-fe">前端</span></span><span class="work">4F1 背包 UI ＋ 4F2 跳轉</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-data">數據</span></span><span class="work">4D1 對帳（以我方自記為主）</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">整卡到期結算、封頂入主錢包真金可驗（T1–T8 測試過）。</span></div>
+    </div>
+    <div class="sprint-card ship">
+      <div class="sc-head"><span class="sc-num">S8</span><span class="sc-date">10/6–10/17 · v2 上線 🚀</span></div>
+      <div class="sc-goal">抽寶箱翻卡→背包→跳轉，v2 上線</div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-be">後端</span></span><span class="work">5B1 卡派發 ＋ 5B2 背包 API ＋ 5A1 後台編輯工具</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-fe">前端</span></span><span class="work">5F1 背包 icon/主頁/遊戲選擇彈窗 ＋ 5F2 道具跳轉</span></div>
+      <div class="sc-track"><span class="role"><span class="tag-pill tag-art">美術</span></span><span class="work">5F0 完稿</span></div>
+      <div class="sc-exit"><span class="lbl">EXIT 完成定義</span><span class="txt">🚀 抽寶箱 v2 翻卡→背包→跳轉上線；整體 v1≈S5（9 月初）、v2≈S8（10 月中）。</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- P0 -->
 <section class="section" id="p0">
-  <div class="section-header"><span class="section-num">03</span><span class="section-title">P0 · 對外決策關卡</span><span class="section-title-en">PHASE 0 · GATE</span></div>
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">P0 · 對外決策關卡</span><span class="section-title-en">PHASE 0 · GATE</span></div>
   <div class="phase-head"><span class="phase-chip gate">P0 · GATE</span><span class="phase-goal">目標：敲定對接對象與技術前提，未過不發任何工程需求書。可與 P1 平行先跑。</span></div>
+  <div class="callout success"><span class="decided-chip">✅ 已決（2026-06-26 開案）</span> <strong>時程定調</strong>：抽寶箱 v1 <strong>目標 8 月底送 QA（非硬性目標）</strong>；實際上線視 QA 與觀察期而定，<strong>誠實估約 9 月初（S5）</strong>。後端 1.5 人為瓶頸，詳見「03 Sprint 排程視圖」甘特圖。</div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
     <tbody>
@@ -452,33 +676,141 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P1 -->
 <section class="section" id="p1">
-  <div class="section-header"><span class="section-num">04</span><span class="section-title">P1 · 共用基礎建設</span><span class="section-title-en">PHASE 1 · SHARED INFRA</span></div>
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">P1 · 共用基礎建設</span><span class="section-title-en">PHASE 1 · SHARED INFRA</span></div>
   <div class="phase-head"><span class="phase-chip infra">P1 · 基建</span><span class="phase-goal">目標：把所有活動共用的地基做滿。⚠️ 全標基建，沒就位下游全卡。</span></div>
+  <div class="legend">
+    <span><span class="tag-pill v-must">必做</span> v1 上線前一定要有</span>
+    <span><span class="tag-pill v-thin">薄切</span> v1 先做最小範圍，其餘後補</span>
+    <span><span class="tag-pill v-defer">延後</span> v2 才需要、可延到後段</span>
+    <span><span class="baijia-label" style="border:none;padding:0;">白話</span> 給非技術夥伴秒懂的人話說明</span>
+  </div>
   <table class="spec-table">
-    <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
+    <thead><tr><th style="width:4%">#</th><th style="width:46%">Task ＋ 白話說明</th><th style="width:8%">職能</th><th style="width:24%">v1 取捨</th><th style="width:18%">來源</th></tr></thead>
     <tbody>
-      <tr><td class="mono">I1</td><td>player mapping（CRM ↔ 各平台玩家 ID）</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">對映表 + 維護流程 + 查詢 API + 異常處理。沒它發獎/對帳對不到人。~16–26 人天，先於任何 adapter。</td><td><span class="tag-pill tag-src">[ARCH §07]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I2</td><td>AWC 加密 / 簽章模組（金鑰安全存放）</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">MD5(params+KeyG)+隨機字元；AgentId / AgentKey / KeyG 安全存放。發卡結算的前提。</td><td><span class="tag-pill tag-src">[FS 1.1][AWC §F]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I3</td><td>排程 cron（結算 / 過期 / 每日重置）</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">統一排程框架：FS 結算過期掃描 + 抽寶箱每日 00:00 重置 + 道具過期。</td><td><span class="tag-pill tag-src">[FS 1.2][BOX 3.7/3.12]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I4</td><td>一次性 Token / 防重放 + 冪等</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">跳轉節流、連結重取、reference_id 冪等（AWC 102 視為成功）、翻格冪等。</td><td><span class="tag-pill tag-src">[FS 1.3][BOX 3.6]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I5</td><td>reserve 保留額度機制</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">發放當下鎖額，待平台結算回報核銷/釋放，防 async 空窗超發。</td><td><span class="tag-pill tag-src">[ARCH §03]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I6</td><td>資料層：reward_catalog 型錄 + campaign 主檔</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">R_CASH_* + 預留 R_FS_*；campaign（門檻/獎池/權重/usertype/期間/status）。跨活動共用型錄。</td><td><span class="tag-pill tag-src">[BOX 2.1/2.2][FS 2.1]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I7</td><td>資料層：player_progress / reward_grant / inventory / item_use_log + Index</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">抽寶箱六層表（含背包水管）一次做滿；player_free_spin_card 快照表。MongoDB 複合索引。</td><td><span class="tag-pill tag-src">[BOX 2.3–2.8][FS 2.1]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
-      <tr><td class="mono">I8</td><td>後台帳號權限（Admin / Operator）</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">區分全操作 vs 只查看+啟停。後台共用基建。</td><td><span class="tag-pill tag-src">[BOX 5.6]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
+      <tr>
+        <td class="mono">D0</td>
+        <td>
+          <span class="task-name">受眾標籤／線路清單資料源 <span class="decided-chip" style="margin-left:6px;">✅ 已決 06-26</span></span>
+          <span class="tech-line">由<strong>數據組（國清／虹瑜）提供</strong>、後端直接抓取、<strong>不開放後台新增</strong>。為 H2 分群與 3A1 受眾設定的<strong>前置依賴</strong>。排在 S1。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">分群要用的「玩家標籤」和「線路清單」由數據組整理成一份名冊，後端直接讀，後台不另外新增。沒做 → 分群抽獎與受眾設定<strong>沒有名單可選</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-data">數據</span></td>
+        <td><span class="tag-pill v-must">必做</span><span class="v-note">H2／3A1 的前置；S1 先就緒。</span></td>
+        <td><span class="tag-pill tag-src">[ARCH §03][BOX 5.x]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I1</td>
+        <td>
+          <span class="task-name">player mapping（玩家身分對照表）<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span></span>
+          <span class="tech-line">CRM ↔ 各平台玩家 ID 對映表 ＋ 維護流程 ＋ 查詢 API ＋ 異常處理。沒它發獎／對帳對不到人。~16–26 人天，先於任何 adapter。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">把「CRM 的玩家 ID」和「各平台的玩家 ID」綁成一張翻譯對照表，像「員工編號 ↔ 門禁卡號」。沒做 → 發獎、對帳<strong>找不到人</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-must">必做</span><span class="v-note">薄切：先支援首發平台、基本查詢 API，異常先記 log 人工處理。</span></td>
+        <td><span class="tag-pill tag-src">[ARCH §07]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I2</td>
+        <td>
+          <span class="task-name">AWC 加密／簽章模組（金鑰安全存放）<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span></span>
+          <span class="tech-line">MD5(params+KeyG)+隨機字元；AgentId／AgentKey／KeyG 安全存放。發卡結算的前提。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">跟 AWC 講話前要先「蓋章＋上鎖」，證明這筆請求是你發的、沒被竄改。沒做 → 對 AWC 任何指令都<strong>被拒收</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-must">必做</span></td>
+        <td><span class="tag-pill tag-src">[FS 1.1][AWC §F]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I3</td>
+        <td>
+          <span class="task-name">排程 cron（結算／過期／每日重置）<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span> <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></span>
+          <span class="tech-line">統一排程框架：FS 結算過期掃描 ＋ 抽寶箱每日 00:00 重置 ＋ 道具過期。<strong>每日 reset 為固定 24h、依活動 ID 設定各自 reset 時間點、以 Server +8 為基準並評估各線路時區</strong>。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">設定系統「到點自動做事」的鬧鐘：到期結算、每天固定 24h 重置寶箱、清過期道具；每個活動可設自己的重置時間點，以 Server +8 為準、再看各線路時區。沒做 → 該重置／結算的全要<strong>人工手動</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-thin">薄切</span><span class="v-note">v1 只需「抽寶箱每日重置」；FS 結算過期掃描延到 v2。</span></td>
+        <td><span class="tag-pill tag-src">[FS 1.2][BOX 3.7/3.12]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I4</td>
+        <td>
+          <span class="task-name">一次性 Token／防重放 ＋ 冪等<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span></span>
+          <span class="tech-line">跳轉節流、連結重取、reference_id 冪等（AWC 102 視為成功）、翻格冪等。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">防「重複扣／重複發」的保險：同一動作不小心送兩次，系統只認一次。沒做 → 玩家<strong>重複領獎</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-thin">薄切</span><span class="v-note">v1 只需「翻格冪等」；跳轉節流／連結重取延到 v2。</span></td>
+        <td><span class="tag-pill tag-src">[FS 1.3][BOX 3.6]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I5</td>
+        <td>
+          <span class="task-name">reserve 保留額度機制<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span></span>
+          <span class="tech-line">發放當下鎖額，待平台結算回報核銷／釋放，防 async 空窗超發。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">發獎瞬間先「凍結」一筆預算，確認入帳再核銷，防止還沒收到回報就又超發。沒做 → 空窗期會<strong>超發、爆預算</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-must">必做</span><span class="v-note">已簡化為「活動級預算池」（抽到上限停發），較輕。</span></td>
+        <td><span class="tag-pill tag-src">[ARCH §03]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I6</td>
+        <td>
+          <span class="task-name">資料層：reward_catalog 型錄 ＋ campaign 主檔<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span> <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></span>
+          <span class="tech-line">R_CASH_* ＋ 預留 R_FS_*；campaign（門檻／獎池／權重／usertype／期間／status）。跨活動共用型錄。<strong>campaign 增加幣值維度，每套幣值獨立門檻與規則</strong>。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">兩張設定表：獎品菜單（有哪些獎可發）＋活動規則卡（門檻、獎池、機率、給誰玩、起迄、開關）；同一活動可依不同幣值各設一套門檻與規則。沒做 → 後台<strong>無法建活動、設定要發什麼獎</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-must">必做</span></td>
+        <td><span class="tag-pill tag-src">[BOX 2.1/2.2][FS 2.1]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I7</td>
+        <td>
+          <span class="task-name">資料層：進度／發獎／背包帳本 ＋ Index<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span></span>
+          <span class="tech-line">player_progress／reward_grant／inventory／item_use_log；抽寶箱六層表（含背包水管）一次做滿；player_free_spin_card 快照表。MongoDB 複合索引。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">一組「帳本」：記玩家進度、發獎收據、背包道具、使用紀錄；＋索引（目錄頁）讓查詢變快。沒做 → 系統<strong>記不住任何事、整個活動失憶</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-thin">薄切</span><span class="v-note">v1 先做進度／發獎表；背包 inventory 與 FS 快照表是 v2 部分，可後補。</span></td>
+        <td><span class="tag-pill tag-src">[BOX 2.3–2.8][FS 2.1]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I8</td>
+        <td>
+          <span class="task-name">後台帳號權限 ＋ 活動上線審核流程<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span> <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></span>
+          <span class="tech-line">區分全操作 vs 只查看＋啟停；<strong>新增「審核人員」角色，與運營／操作權限分層</strong>；<strong>活動上線前須經審核</strong>。後台共用基建。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">後台分權限：運營／操作可編輯與啟停，<strong>但活動要上線得先送「審核人員」核可</strong>，三種角色分層把關。沒做 → 誰都能直接把活動推上線，<strong>營運風險</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-must">必做</span><span class="v-note">範圍小；審核流程含「上線前須過審」。</span></td>
+        <td><span class="tag-pill tag-src">[BOX 5.6]</span></td>
+      </tr>
+      <tr>
+        <td class="mono">I9</td>
+        <td>
+          <span class="task-name">UAT 測試帳號自助工具<span class="tag-pill tag-infra" style="margin-left:6px;">⚠️基建</span> <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></span>
+          <span class="tech-line">測試帳號可<strong>自改自身線路與標籤</strong>，供 QA 測試、<strong>不依賴外部工具</strong>。排在 S2。</span>
+          <span class="baijia"><span class="baijia-label">白話</span><span class="baijia-text">給測試人員一個自助小工具，能自己把測試帳號切到不同線路、貼上不同標籤來驗各種情境，不用再求外部系統幫忙。沒做 → QA <strong>每換一個情境都要找人改資料</strong>。</span></span>
+        </td>
+        <td><span class="tag-pill tag-be">後端</span></td>
+        <td><span class="tag-pill v-thin">薄切</span><span class="v-note">排 S2；先支援自改線路／標籤。</span></td>
+        <td><span class="tag-pill tag-src">[QA / 開案 06-26]</span></td>
+      </tr>
     </tbody>
   </table>
-  <div class="callout danger"><strong>⚠️ 基建特別備註</strong>：I1（player mapping）、I2（AWC 簽章）、I3（排程）這三項是「沒先做、其他人一行都動不了」的硬地基。<strong>排程上必須排在所有業務邏輯之前，且建議獨立估時、獨立驗收</strong>，不可併進活動 Task 一起算。</div>
+  <div class="callout danger"><strong>⚠️ 基建特別備註</strong>：I1（player mapping）、I2（AWC 簽章）、I3（排程）這三項是「沒先做、其他人一行都動不了」的硬地基。<strong>排程上必須排在所有業務邏輯之前，且建議獨立估時、獨立驗收</strong>，不可併進活動 Task 一起算。D0（受眾／線路資料源）為 H2 分群與 3A1 受眾設定的前置依賴，須 S1 先就緒。</div>
 </section>
 
 <!-- P2 -->
 <section class="section" id="p2">
-  <div class="section-header"><span class="section-num">05</span><span class="section-title">P2 · 中台 L1 + MPS adapter</span><span class="section-title-en">PHASE 2 · HUB + ADAPTER</span></div>
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">P2 · 中台 L1 + MPS adapter</span><span class="section-title-en">PHASE 2 · HUB + ADAPTER</span></div>
   <div class="phase-head"><span class="phase-chip">P2 · 中台</span><span class="phase-goal">目標：發放決策層與「集成商型（AWC）adapter」就位（第一階段首發），活動才有發獎管道。MPS 直連 adapter 留第二階段。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
     <tbody>
       <tr><td class="mono">H1</td><td>adapter 統一介面 + 路由</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">grantReward / launchGame / settle / queryStatus / revoke 五大指令契約 + 按平台路由。</td><td><span class="tag-pill tag-src">[ARCH §04]</span></td><td></td></tr>
-      <tr><td class="mono">H2</td><td>中台 L1：分群 / 觸發 / 設值 / 風控 + 防濫用</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">campaign 編排、獎勵金額 / 指定遊戲設值、風控 + reserve + <strong>防濫用（領取資格 / 頻率 / 黑名單）</strong>。獎勵即真金、平台流水鎖已不擋，防濫用由此補。</td><td><span class="tag-pill tag-src">[ARCH §03]</span></td><td></td></tr>
+      <tr><td class="mono">H2</td><td>中台 L1：分群 / 觸發 / 設值 / 風控 + 防濫用 <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></td><td><span class="tag-pill tag-be">後端</span></td><td class="dim"><strong>「分群機制」為第一階段明確範圍——依玩家群體差異化抽獎活動</strong>（分群名單源自 D0 受眾標籤／線路清單）。campaign 編排、獎勵金額 / 指定遊戲設值、風控 + reserve + <strong>防濫用（領取資格 / 頻率 / 黑名單）</strong>。獎勵即真金、平台流水鎖已不擋，防濫用由此補。</td><td><span class="tag-pill tag-src">[ARCH §03]</span></td><td></td></tr>
       <tr><td class="mono">H3</td><td>AWC 集成商 adapter（注單通道發獎 + 加解密簽章）</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">封裝 AWC：CreateFreeSpin / <strong>Bet=0/Win 中獎注單</strong> / 注單回呼對帳（campaign_id / ref_voucher_id）；加解密簽章、GMT-4。<strong>不對接 Promotion Tool / Bonus 入帳</strong>。依賴 G3/G6 書面確認。</td><td><span class="tag-pill tag-src">[ARCH §04/§06][AWC §A/C]</span></td><td><span class="tag-pill tag-gate">依賴 G3/G6</span></td></tr>
       <tr><td class="mono">H3b</td><td>MPS 直連 adapter（第二階段）</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">送 {campaign_id, win, 指定遊戲}，平台結算入主錢包。<strong>第二階段加，中台 H1/H2 不動</strong>。依賴 G2。</td><td><span class="tag-pill tag-src">[ARCH §07]</span></td><td><span class="tag-pill tag-v2">第二階段</span></td></tr>
       <tr><td class="mono">H4</td><td>revoke() 按 reward 型別定義</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">Free Spin 已發卡＝best-effort 不保證；各 adapter 明示支援/不支援。</td><td><span class="tag-pill tag-src">[ARCH §04]</span></td><td></td></tr>
@@ -489,7 +821,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P3 -->
 <section class="section" id="p3">
-  <div class="section-header"><span class="section-num">06</span><span class="section-title">P3 · 抽寶箱 v1 現金獎</span><span class="section-title-en">PHASE 3 · TREASURE BOX v1</span></div>
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">P3 · 抽寶箱 v1 現金獎</span><span class="section-title-en">PHASE 3 · TREASURE BOX v1</span></div>
   <div class="phase-head"><span class="phase-chip ship">P3 · 上線①</span><span class="phase-goal">目標：第一個可上線的完整閉環（押注→翻格→派現金）。全垂直：後端＋前端＋美術＋後台。</span></div>
   <div class="sub-title">後端 · 業務邏輯</div>
   <table class="spec-table">
@@ -507,7 +839,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
     <tbody>
-      <tr><td class="mono">3F0</td><td>寶箱 UI 設計稿（含洗牌動畫腳本）</td><td><span class="tag-pill tag-art">美術</span></td><td class="dim">3×3 佈局、解鎖/翻格動畫、進度條、最終獎光效；P1–P7 狀態頁。</td><td><span class="tag-pill tag-src">[BOX 4.1/§06]</span></td><td></td></tr>
+      <tr><td class="mono">3F0</td><td>寶箱 UI 設計稿（含洗牌動畫腳本）<span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></td><td><span class="tag-pill tag-art">美術</span></td><td class="dim">3×3 佈局、解鎖/翻格動畫、進度條、最終獎光效；P1–P7 狀態頁。<strong>跨遊戲／跨平台相容、版面以直版為主、第一階段一套主題、節慶主題前端寫死</strong>。</td><td><span class="tag-pill tag-src">[BOX 4.1/§06]</span></td><td></td></tr>
       <tr><td class="mono">3F1</td><td>入口按鈕 + 寶箱主畫面</td><td><span class="tag-pill tag-fe">前端</span></td><td class="dim">浮動入口紅點；3×3 三態渲染、進度條、「再押 ₱X 解鎖」。</td><td><span class="tag-pill tag-src">[BOX 4.2/4.3]</span></td><td></td></tr>
       <tr><td class="mono">3F2</td><td>翻格 + 洗牌動畫 + 進度條 + 倒數</td><td><span class="tag-pill tag-fe">前端</span></td><td class="dim">翻轉、金額飛出、最終獎爆發；洗牌動畫流暢度為關鍵體驗；重置倒計時。</td><td><span class="tag-pill tag-src">[BOX 4.4–4.6/4.13]</span></td><td></td></tr>
       <tr><td class="mono">3F3</td><td>API 串接</td><td><span class="tag-pill tag-fe">前端</span></td><td class="dim">串 GET /chest/status、POST /chest/open。</td><td><span class="tag-pill tag-src">[BOX 4.7]</span></td><td></td></tr>
@@ -517,8 +849,8 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
     <tbody>
-      <tr><td class="mono">3A1</td><td>活動列表 / 建立編輯 / 啟停</td><td><span class="tag-pill tag-be">後端</span> <span class="tag-pill tag-fe">前端</span></td><td class="dim">門檻、獎池、第幾抽權重、usertype tag；暫停顯示維護中。</td><td><span class="tag-pill tag-src">[BOX 5.1/5.2/5.4]</span></td><td></td></tr>
-      <tr><td class="mono">3A2</td><td>RTP 即時試算 + 抽獎權重設定</td><td><span class="tag-pill tag-be">後端</span> <span class="tag-pill tag-fe">前端</span></td><td class="dim">填獎自動算 RTP%（0.9–1.1% 區間）；第幾抽權重模式 UI。</td><td><span class="tag-pill tag-src">[BOX 5.3/5.7]</span></td><td></td></tr>
+      <tr><td class="mono">3A1</td><td>活動列表 / 建立編輯 / 啟停 <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></td><td><span class="tag-pill tag-be">後端</span> <span class="tag-pill tag-fe">前端</span></td><td class="dim">門檻、獎池、第幾抽權重、usertype tag、<strong>受眾設定（分群，依玩家群體差異化抽獎，名單源自 D0）</strong>；暫停顯示維護中。<strong>上線活動禁止直接編輯，須下架／暫停後才能改</strong>。</td><td><span class="tag-pill tag-src">[BOX 5.1/5.2/5.4]</span></td><td></td></tr>
+      <tr><td class="mono">3A2</td><td>RTP 即時試算 + 抽獎權重設定 <span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></td><td><span class="tag-pill tag-be">後端</span> <span class="tag-pill tag-fe">前端</span></td><td class="dim">填獎自動算 RTP%（0.9–1.1% 區間）；第幾抽權重模式 UI。<strong>RTP 驗算之機率數據由設計端提供</strong>。</td><td><span class="tag-pill tag-src">[BOX 5.3/5.7]</span></td><td></td></tr>
       <tr><td class="mono">3A3</td><td>發放異常查詢 + 手動重試</td><td><span class="tag-pill tag-be">後端</span> <span class="tag-pill tag-fe">前端</span></td><td class="dim">查 reward_grant pending/failed，支援手動觸發重試。</td><td><span class="tag-pill tag-src">[BOX 5.5]</span></td><td></td></tr>
       <tr><td class="mono">3A4</td><td>道具發放設定（水管，v1 建欄位）</td><td><span class="tag-pill tag-be">後端</span> <span class="tag-pill tag-fe">前端</span></td><td class="dim">v1 即建：哪些獎項發 FS 卡、局數、有效期、GameId、max win。v2 啟用。</td><td><span class="tag-pill tag-src">[BOX 5.8]</span></td><td><span class="tag-pill tag-v2">v2預留</span></td></tr>
     </tbody>
@@ -528,7 +860,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P4 -->
 <section class="section" id="p4">
-  <div class="section-header"><span class="section-num">07</span><span class="section-title">P4 · Free Spin 發卡 + 結算</span><span class="section-title-en">PHASE 4 · FREE SPIN</span></div>
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">P4 · Free Spin 發卡 + 結算</span><span class="section-title-en">PHASE 4 · FREE SPIN</span></div>
   <div class="phase-head"><span class="phase-chip">P4 · 能力</span><span class="phase-goal">目標：把「Free Spin 卡」這個獎勵商品＋結算服務做出來，供抽寶箱 v2（與未來活動）發放。</span></div>
   <div class="sub-title">後端 · 發卡與結算</div>
   <table class="spec-table">
@@ -555,7 +887,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P5 -->
 <section class="section" id="p5">
-  <div class="section-header"><span class="section-num">08</span><span class="section-title">P5 · 抽寶箱 v2 背包 + 卡使用</span><span class="section-title-en">PHASE 5 · TREASURE BOX v2</span></div>
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">P5 · 抽寶箱 v2 背包 + 卡使用</span><span class="section-title-en">PHASE 5 · TREASURE BOX v2</span></div>
   <div class="phase-head"><span class="phase-chip ship">P5 · 上線②</span><span class="phase-goal">目標：抽寶箱翻出 Free Spin 卡 → 背包 → 用卡跳轉。依賴 P4 卡能力已存在。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -573,7 +905,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- P6 -->
 <section class="section" id="p6">
-  <div class="section-header"><span class="section-num">09</span><span class="section-title">P6 · 對帳 / 監控 / 上線驗收</span><span class="section-title-en">PHASE 6 · RECONCILE & LAUNCH</span></div>
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">P6 · 對帳 / 監控 / 上線驗收</span><span class="section-title-en">PHASE 6 · RECONCILE & LAUNCH</span></div>
   <div class="phase-head"><span class="phase-chip">P6 · 收尾</span><span class="phase-goal">目標：跨活動的對帳、reserve 核銷、監控告警、Log 驗收與上線觀察。</span></div>
   <table class="spec-table">
     <thead><tr><th>#</th><th>Task</th><th>職能</th><th>說明</th><th>來源</th><th>標記</th></tr></thead>
@@ -581,7 +913,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
       <tr><td class="mono">6V1</td><td>Tester 白名單完整循環測試</td><td><span class="tag-pill tag-pm">PM</span> <span class="tag-pill tag-be">後端</span></td><td class="dim">is_tester 帳號走解鎖→翻格→派獎→重置。</td><td><span class="tag-pill tag-src">[BOX 6.1]</span></td><td></td></tr>
       <tr><td class="mono">6V2</td><td>AWC 對帳欄位驗證 + 重試壓測</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">bonus_type / campaign_id 在 get_bet_summary 可分離；模擬失敗驗 retry 不重複派。</td><td><span class="tag-pill tag-src">[BOX 6.2/6.3]</span></td><td></td></tr>
       <tr><td class="mono">6V3</td><td>對帳彙整 + reserve 核銷</td><td><span class="tag-pill tag-data">數據</span></td><td class="dim">跨端收據歸戶、promotionId/campaign_id 對齊、reserve 釋放/核銷。</td><td><span class="tag-pill tag-src">[ARCH §03][AWC §E]</span></td><td></td></tr>
-      <tr><td class="mono">6V4</td><td>上線監控告警</td><td><span class="tag-pill tag-be">後端</span></td><td class="dim">reward_grant pending 數量 alert、AWC 失敗率 alert。</td><td><span class="tag-pill tag-src">[BOX 6.4]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
+      <tr><td class="mono">6V4</td><td>上線監控告警（發獎失敗 → Telegram）<span class="decided-chip" style="margin-left:4px;">✅ 已決 06-26</span></td><td><span class="tag-pill tag-be">後端</span></td><td class="dim"><strong>發獎失敗 → Telegram 通知（初期手動處理，後續再自動化）</strong>；含 reward_grant pending 數量、AWC 失敗率監控。</td><td><span class="tag-pill tag-src">[BOX 6.4]</span></td><td><span class="tag-pill tag-infra">⚠️基建</span></td></tr>
       <tr><td class="mono">6V5</td><td>數據 Log 驗收</td><td><span class="tag-pill tag-data">數據</span></td><td class="dim">確認埋點事件均上報、欄位無缺（BOX §10 + FS §09）。</td><td><span class="tag-pill tag-src">[BOX 6.5][FS §09]</span></td><td></td></tr>
       <tr><td class="mono">6V6</td><td>正式上線與觀察期</td><td><span class="tag-pill tag-pm">PM</span></td><td class="dim">單一活動先觀察 2 週，數字健康再評估分眾擴充。</td><td><span class="tag-pill tag-src">[BOX 6.6]</span></td><td></td></tr>
     </tbody>
@@ -590,15 +922,16 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- 09 BY ROLE -->
 <section class="section" id="byrole">
-  <div class="section-header"><span class="section-num">10</span><span class="section-title">職能視圖（每人一覽自己的線）</span><span class="section-title-en">BY ROLE</span></div>
+  <div class="section-header"><span class="section-num">11</span><span class="section-title">職能視圖（每人一覽自己的線）</span><span class="section-title-en">BY ROLE</span></div>
   <div class="body-text">同一份內容，換成「每個職能跨階段一覽」。給組長分工、給成員看自己這條線用。</div>
+  <div class="callout success"><span class="decided-chip">✅ 已決（2026-06-26 開案）</span> <strong>人名對位</strong>：<span class="tag-pill tag-be">後端</span> <strong>Wayne、Eric</strong>（Wayne 另兼補單漏單優化＝非 CRM 範疇，故 CRM 後端產能約 <strong>1.5 人</strong>）· <span class="tag-pill tag-fe">前端</span> <strong>劉暢</strong>（遊戲 web 前端，主責後台頁面）＋抽寶箱前台前端 · <span class="tag-pill tag-data">數據</span> <strong>國清、虹瑜</strong>（提供受眾標籤／線路清單）。<strong>補單漏單優化、線路／US 功能屬平台既有開發，不納入本 CRM 路線圖。</strong></div>
 
-  <div class="sub-title"><span class="tag-pill tag-be">後端 / 基建</span> 主力，貫穿全程</div>
+  <div class="sub-title"><span class="tag-pill tag-be">後端 / 基建</span> 主力，貫穿全程 · <span style="color:var(--text-secondary);font-weight:400;font-size:13px;">Wayne、Eric（CRM 產能 ≈ 1.5 人）</span></div>
   <table class="spec-table">
     <thead><tr><th>階段</th><th>負責</th></tr></thead>
     <tbody>
       <tr><td class="mono">P0</td><td class="dim">G4 零押注合法性</td></tr>
-      <tr><td class="mono">P1 ⚠️</td><td class="dim">I1 player mapping · I2 AWC 簽章 · I3 排程 · I4 Token/冪等 · I5 reserve · I6/I7 資料層 · I8 權限</td></tr>
+      <tr><td class="mono">P1 ⚠️</td><td class="dim">I1 player mapping · I2 AWC 簽章 · I3 排程 · I4 Token/冪等 · I5 reserve · I6/I7 資料層 · I8 權限＋上線審核流程 · I9 UAT 測試帳號自助工具</td></tr>
       <tr><td class="mono">P2</td><td class="dim">H1 介面路由 · H2 中台 L1 · H3 AWC adapter（首發）· H4 revoke ·（H3b MPS adapter＝第二階段）</td></tr>
       <tr><td class="mono">P3</td><td class="dim">3B1–3B6 押注/洗牌/翻格派現金/重試/查詢 · 3A1–3A4 後台</td></tr>
       <tr><td class="mono">P4</td><td class="dim">4B1–4B5 發卡/結算/注單入主錢包/清單工具/TDD</td></tr>
@@ -607,7 +940,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     </tbody>
   </table>
 
-  <div class="sub-title"><span class="tag-pill tag-fe">前端</span></div>
+  <div class="sub-title"><span class="tag-pill tag-fe">前端</span> · <span style="color:var(--text-secondary);font-weight:400;font-size:13px;">劉暢（遊戲 web 前端，主責後台頁面）＋抽寶箱前台前端</span></div>
   <table class="spec-table">
     <thead><tr><th>階段</th><th>負責</th></tr></thead>
     <tbody>
@@ -616,6 +949,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
       <tr><td class="mono">P5</td><td class="dim">5F1 背包 icon/主頁/遊戲選擇彈窗 · 5F2 道具跳轉</td></tr>
     </tbody>
   </table>
+  <div class="callout info"><strong>前端小註記（Unity 串接）</strong>：抽寶箱前台與 Unity 的串接＝<strong>前端只需提供一個 URL 給 web 端串接</strong>，工作量極小。</div>
 
   <div class="sub-title"><span class="tag-pill tag-art">美術 / UI</span></div>
   <table class="spec-table">
@@ -627,10 +961,11 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
     </tbody>
   </table>
 
-  <div class="sub-title"><span class="tag-pill tag-data">數據</span></div>
+  <div class="sub-title"><span class="tag-pill tag-data">數據</span> · <span style="color:var(--text-secondary);font-weight:400;font-size:13px;">國清、虹瑜（提供受眾標籤／線路清單）</span></div>
   <table class="spec-table">
     <thead><tr><th>階段</th><th>負責</th></tr></thead>
     <tbody>
+      <tr><td class="mono">P1</td><td class="dim">D0 受眾標籤／線路清單資料源（提供、後端直接抓取、不開放後台新增；H2 分群／3A1 受眾設定前置）</td></tr>
       <tr><td class="mono">P4</td><td class="dim">4D1 Free Spin 對帳比對</td></tr>
       <tr><td class="mono">P6</td><td class="dim">6V3 對帳彙整+reserve 核銷 · 6V5 Log 驗收</td></tr>
     </tbody>
@@ -649,7 +984,7 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 
 <!-- 10 OPEN QUESTIONS -->
 <section class="section" id="openq">
-  <div class="section-header"><span class="section-num">11</span><span class="section-title">對外待確認彙整（去重）</span><span class="section-title-en">OPEN QUESTIONS</span></div>
+  <div class="section-header"><span class="section-num">12</span><span class="section-title">對外待確認彙整（去重）</span><span class="section-title-en">OPEN QUESTIONS</span></div>
   <div class="body-text">把四份文件的待確認去重，按對象分組。<strong>本章為全專案「已決事項」的唯一完整追溯處（決策總帳）；其他源規格只留結論與指向本章。</strong>第一階段＝AWC，故 AWC 確認最優先；MPS 屬第二階段。</div>
 
   <div class="callout success"><strong>📌 決策總帳更新（2026-06-23 收斂）：</strong>本次將四份源規格殘留的「待確認」逐項收斂。已決項在此處保留完整結論，源規格僅留指向；AWC（集成商）項的 canonical 唯一清單＝<strong>《integration_consolidated_checklist_v2.html》</strong>，本章與源規格皆不重複維護其細項。</div>
@@ -683,8 +1018,9 @@ body.layout-side .sidebar{display:flex;}body.layout-side .topnav{display:none;}b
 </div>
 
 <div class="doc-footer">
-  CMB 開發總路線圖 · Master Build Order · V1.2 · CONFIDENTIAL 2026<br>
+  CMB 開發總路線圖 · Master Build Order · V1.3 · CONFIDENTIAL 2026<br>
   來源：CRM 中台架構 v1.4 · 抽寶箱 v3.4 · Free Spin 卡 v2.2 · AWC-TOPO v2 · CRM-ROUTE v2.0 · integration_consolidated_checklist v2<br>
+  v1.3（2026-06-26 開案會議）：新增 Sprint 排程視圖＋甘特圖；P1 加白話＋v1 取捨欄；新增 I9（UAT 測試帳號自助工具）/D0（受眾標籤／線路清單資料源）、I8 擴充上線審核、6V4 改 Telegram；時程改 8 月底送 QA（非硬）；人名對位更新（後端 Wayne/Eric ≈1.5 人、前端 劉暢、數據 國清/虹瑜）<br>
   v1.2 修訂（2026-06-23）：§11 升為決策總帳——face_value 沿用公版、RTP 單筆封頂+活動 3pt 硬上限、防濫用桶1數值把關、卡有效期相對制、CRM 中台自建、player mapping CRM 自維、寶箱 ₱37/RTP1.028%、門檻 ₱50~1000、權重 v1 後台自助、觀察期 2週+D1相對+3~5pt、reserve 活動級預算池等改標「✅ 已決」；MPS/Jackpot 第二階段標「提前探詢」；AWC 項 canonical＝integration_consolidated_checklist_v2<br>
   v1.2 增補（2026-06-23 · AWC 釐清）：注單入帳為我方既定機制（補 item_id + bonus_type 編號、獎勵明細另存表不透過 AWC）、get_bet_summary 可分離需加編號、FS 過期卡每次下注判定失效即結算——改標「✅ 已決」；僅餘 SetActiveFreeSpin 帶 reference_id（B3）、逐平台開通（F3）、拓樸（F1）待 AWC/BD 回覆<br>
   v1.1 修訂：獎勵改走「注單通道（Bet=0/Win→主錢包真金）」，移除 Bonus 入帳 / 流水 / CPS；新增 G7 逐平台開通 + 真金防濫用<br>
