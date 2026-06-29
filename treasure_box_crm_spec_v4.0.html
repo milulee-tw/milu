@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 CRM 功能規格書 v4.0</title>
+<title>抽寶箱 CRM 功能規格書 v4.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -888,7 +888,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CHEST SPEC · V4.0</span>
+  <span class="nav-brand">CHEST SPEC · V4.1</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">玩法機制</a>
   <a class="nav-item" href="#prizes">獎勵設計</a>
@@ -918,7 +918,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v4.0</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v4.1</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
@@ -1047,7 +1047,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CRM FEATURE SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>功能規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V4.0</div>
+  <div class="cover-sub">LUCKY CHEST · CRM RETENTION ACTIVITY · V4.1</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>活動類型</strong> CRM 留存機制</div>
     <div class="cover-pill"><strong>解鎖條件</strong> 累積總押注金額</div>
@@ -1125,7 +1125,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout success">
-    <strong>v4.0 新增（2026-06-26 開案）：</strong>依 2026-06-26 開案會議補充下列項目——<strong>①（§02）每日 reset 為固定 24 小時週期、活動總週期依設定（如兩週）；不同活動 ID 可各自設定 reset 時間點（非全站統一），以 Server +8 為基準。② （§02／§03）每套幣值（如泰銖 THB）獨立設定對應門檻、獎池與規則，「幣值」納入 campaign 設定維度。③ （§03）抽獎機率數據由設計端提供，系統據以計算 RTP。④ （§04）受眾標籤與線路清單由數據組提供、後端直接抓取，不開放後台新增；強化分群機制（依大客等標籤投放差異化活動與獎項組合，列第一階段）。⑤ （§06）強化主題換皮——明列每換一套主題需重畫的元件清單；第一階段先一套主題、節慶主題後續前端寫死再加。⑥ （§07）新增「活動上線審核」模組與「審核人員」分層權限；上線中活動禁止直接編輯（須先下架／暫停）；新增 UAT 測試帳號自助修改自身線路與標籤。⑦ （§08）發獎失敗等異常以 Telegram 通知，初期人工處理、穩定後再自動化。⑧ （§05）開發時程目標 8 月底送 QA（非硬性）。</strong>各異動處標「v4.0 新增（2026-06-26 開案）」。
+    <strong>v4.0 新增（2026-06-26 開案）：</strong>依 2026-06-26 開案會議補充下列項目——<strong>①（§02）每日 reset 為固定 24 小時週期、活動總週期依設定（如兩週）；不同活動 ID 可各自設定 reset 時間點（非全站統一），以 Server +8 為基準。② （§02／§03）每套幣值（如泰銖 THB）獨立設定對應門檻、獎池與規則，「幣值」納入 campaign 設定維度。③ （§03）抽獎機率數據由設計端提供，系統據以計算 RTP。④ （§04）受眾標籤與線路清單由數據組提供、後端直接抓取，不開放後台新增；強化分群機制（依大客等標籤投放差異化活動與獎項組合，列第一階段）。⑤ （§06）強化主題換皮——明列每換一套主題需重畫的元件清單；第一階段先一套主題、節慶主題後續前端寫死再加。⑥ （§07）新增「活動上線審核」模組與「審核人員」分層權限；上線中活動禁止直接編輯（須先下架／暫停）。⑦ （§08）發獎失敗等異常以 Telegram 通知，初期人工處理、穩定後再自動化。⑧ （§05）開發時程目標 8 月底送 QA（非硬性）。</strong>各異動處標「v4.0 新增（2026-06-26 開案）」。
   </div>
 
   <div class="callout success">
@@ -1290,7 +1290,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout info">
-    <strong>幣值維度（v4.0 新增 · 2026-06-26 開案 · C3）：</strong><strong>每套幣值（如泰銖 THB）獨立設定對應的解鎖門檻、獎池與規則</strong>——不同幣值不是匯率換算，而是各自一套配方（門檻數列、9 格獎池金額、RTP 區間皆獨立）。後台活動設定以<strong>「幣值」為一個設定維度</strong>（見 §03 資料結構 / §07 後台），同一活動概念可依幣值各開一組設定。
+    <strong>幣值維度（v4.0 新增 · 2026-06-26 開案 · C3）：</strong><strong>每套幣值（如泰銖 THB）獨立設定對應的解鎖門檻、獎池與規則</strong>——不同幣值不是匯率換算，而是各自一套配方（門檻數列、9 格獎池金額、RTP 區間皆獨立）。後台活動設定以<strong>「幣值」為一個設定維度</strong>（見 §03 資料結構 / §07 後台），同一活動概念可依幣值各開一組設定。<br><span style="color:var(--gold-light);font-size:11px;">v4.1（2026-06-26 對齊後台原型）：以上門檻、獎池、RTP 皆為<strong>單一貨幣</strong>的設定；一檔活動可配置<strong>多貨幣</strong>，各貨幣獨立設定、RTP 各自驗算（後台以 currency tabs 切換，見 §07 多貨幣設定）。</span>
   </div>
 
   <div class="threshold-row header">
@@ -1327,7 +1327,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <strong>重置週期與時間點（v4.0 新增 · 2026-06-26 開案）：</strong><br>
     <strong>① 固定 24 小時週期（C1）：</strong>每日 reset 為固定 24 小時循環；活動「總週期」則依各活動設定（例：兩週檔期），到期即整檔結束（搭配 §06 活動期間元件呈現）。<br>
     <strong>② Reset 時間點可逐活動設定（C2）：</strong><strong>不同活動 ID 可各自設定 reset 時間點</strong>（非全站統一），以 <em>Server +8</em> 為基準。例如 A 活動 00:00 reset、B 活動 06:00 reset，互不影響。<br>
-    <span style="color:var(--text-dim);font-size:11px;">＊備註：後續評估「依各線路時區調整 reset 時間」的可行性（暫以 Server +8 為準）。</span>
+    <span style="color:var(--text-dim);font-size:11px;">＊備註：後續評估「依各線路時區調整 reset 時間」的可行性（暫以 Server +8 為準）。</span><br>
+    <strong style="color:var(--gold-light);">v4.1（2026-06-26 對齊後台原型）：</strong>每日 reset 為<strong>固定 24h 週期</strong>；<strong>reset 時間點可依活動（campaign）各自設定</strong>、以 Server <em>UTC+8</em> 為準、<strong>精確至秒</strong>。後台「基本資料」新增「<strong>每日重置時間</strong>」欄位（<span class="mono">admin_daily_reset_time</span>），一番賞累積門檻即於該時間點每日歸零（見 §07 表單）。
   </div>
 
   <div class="sub-title">玩家路徑分析</div>
@@ -1400,7 +1401,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
   <div class="callout info">
     <strong>機率數據來源（v4.0 新增 · 2026-06-26 開案 · C5）：</strong>各獎項的<strong>抽中機率數據由設計端（企劃）提供</strong>，系統據以計算 RTP 並於後台即時試算驗證是否落在容許區間（0.9%–1.1%）；系統不自行決定機率，僅依設計端給定的權重表運算。<br>
-    <strong>幣值維度（C3）：</strong>上述獎池（₱37）與門檻（₱3,600）為披索（PHP）範例；<strong>每套幣值（如泰銖 THB）獨立一組獎池與門檻設定</strong>，各自驗算 RTP，互不換算（見 §02 幣值維度、§07 後台「幣值」設定）。
+    <strong>幣值維度（C3）：</strong>上述獎池（₱37）與門檻（₱3,600）為披索（PHP）範例；<strong>每套幣值（如泰銖 THB）獨立一組獎池與門檻設定</strong>，各自驗算 RTP，互不換算（見 §02 幣值維度、§07 後台「幣值」設定）。<br>
+    <strong style="color:var(--gold-light);">v4.1（2026-06-26 對齊後台原型）：</strong>以上門檻、獎池、RTP 皆為<strong>單一貨幣</strong>的設定；一檔活動可配置<strong>多貨幣</strong>，各貨幣獨立設定、RTP 各自驗算（後台以 currency tabs 切換，見 §07 多貨幣設定）。
   </div>
 
   <div class="sub-title">9 格逐抽期望值與 RTP 佔比</div>
@@ -1739,7 +1741,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
         <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
         <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
-        <tr><td>5.6</td><td>後台帳號權限設定</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">區分 Admin（全操作）、Operator（只可查看+啟停，不可改獎勵參數）</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
+        <tr><td>5.6</td><td>後台帳號權限設定（頁面可見性 · v4.1）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim"><strong>頁面可見性模型</strong>：角色（Admin／Operator／Reviewer）＝一組可見頁面集合；Admin 可新增帳號並指派可見頁面，頁內不做欄位級切分</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
         <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
         <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
@@ -1747,8 +1749,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>5.11</td><td>後台版型主題下拉＋縮圖預覽（theme_id）＋倒數提前天數</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">基本資料區「活動名稱」後加「版型主題」單選下拉（admin_theme_select，選項＝後端預定義主題清單、不可自由輸入，選中右側顯示縮圖預覽）；「活動期間」後加「倒數啟動天數」（countdown_lead_days，預設 3）。後台主題下拉＋縮圖預覽 UI 設計稿一併產出</td><td></td></tr>
         <tr><td>5.12</td><td>活動上線審核流程＋分層權限（v4.0 · B1）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動狀態機加 pending/approved；「提交審核 → 審核人員核准 → 上線」流程；新增 <strong>Reviewer 審核人員角色</strong>，審核權限獨立於運營/操作（分層權限），避免單帳號全包</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
         <tr><td>5.13</td><td>上線中禁止編輯（v4.0 · C4）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">上線中活動鎖定編輯，須先下架/暫停才可改；緊急調整：先暫停 → 確認 → 恢復</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
-        <tr><td>5.14</td><td>UAT 測試帳號自助改線路/標籤（v4.0 · B3）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">UAT 工具頁：測試帳號（is_tester）可自助修改自身線路與標籤，供 QA 驗證線路閘門/受眾/分群，不依賴外部工具</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢 · 標籤/線路定義 數據組 國清/虹瑜</td></tr>
-        <tr><td>5.15</td><td>幣值維度設定（v4.0 · C3）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動表單「基本資料」加「幣值」下拉；每套幣值（PHP／THB…）獨立門檻/獎池/規則並各自驗算 RTP，不做匯率換算</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
+        <tr><td>5.14</td><td>幣值維度設定（v4.0 · C3）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動表單「基本資料」加「幣值」下拉；每套幣值（PHP／THB…）獨立門檻/獎池/規則並各自驗算 RTP，不做匯率換算</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
       </tbody>
     </table>
   </div>
@@ -1764,8 +1765,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>6.5</td><td>數據 Log 驗收</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">確認 Section 10 所列 Log 事件均正確上報，欄位無缺失</td><td></td></tr>
         <tr><td>6.6</td><td>正式上線與觀察期</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">先上單一活動版本觀察 2 週，數字健康後再評估 v2 分眾擴充</td><td></td></tr>
         <tr><td>6.7</td><td>審核流程＋分層權限驗收（v4.0）</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證「提交審核→核准→上線」流程；確認運營帳號無法自審自上、上線中無法直接編輯</td><td></td></tr>
-        <tr><td>6.8</td><td>UAT 工具驗收（v4.0）</td><td><span class="tag-pill tag-data">📊 數據組</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">以 UAT 帳號自助切換線路/標籤，驗證線路閘門、受眾資格、分群投放正確</td><td class="dim">國清 / 虹瑜</td></tr>
-        <tr><td>6.9</td><td>Telegram 異常通知測試（v4.0）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">模擬發獎失敗，確認 Telegram 告警送達、可人工確認並手動重試</td><td class="dim">Wayne / Eric</td></tr>
+        <tr><td>6.8</td><td>Telegram 異常通知測試（v4.0）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">模擬發獎失敗，確認 Telegram 告警送達、可人工確認並手動重試</td><td class="dim">Wayne / Eric</td></tr>
       </tbody>
     </table>
   </div>
@@ -1773,7 +1773,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title" style="margin-top:32px;">開發時程建議</div>
   <div class="callout info">
     <strong>時程目標（v4.0 新增 · 2026-06-26 開案 · A2）：</strong><strong>目標 8 月底送 QA（非硬性目標）</strong>，依實際開發進度滾動調整。<br>
-    <strong>職能分配：</strong>後端＝<strong>Wayne / Eric</strong>；後台前端頁面＝<strong>劉暢</strong>；數據（標籤／線路清單、Log、UAT 驗收）＝<strong>國清 / 虹瑜</strong>。本次新增功能（審核流程、UAT 工具、幣值維度、Telegram 通知）已併入上方各 Phase Task。
+    <strong>職能分配：</strong>後端＝<strong>Wayne / Eric</strong>；後台前端頁面＝<strong>劉暢</strong>；數據（標籤／線路清單、Log 驗收）＝<strong>國清 / 虹瑜</strong>。本次新增功能（審核流程、幣值維度、Telegram 通知）已併入上方各 Phase Task。
   </div>
   <div class="timeline">
     <div class="tl-item">
@@ -1811,7 +1811,6 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span class="tl-task pm">背包UI+跳轉流程</span>
         <span class="tl-task eng">後台活動表單+新版抽獎設定</span>
         <span class="tl-task eng">審核流程+分層權限（v4.0）</span>
-        <span class="tl-task eng">UAT 工具（v4.0）</span>
         <span class="tl-task eng">幣值維度（v4.0）</span>
       </div>
     </div>
@@ -1834,7 +1833,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span class="tl-task eng">QA 功能測試</span>
         <span class="tl-task data">Log 驗收</span>
         <span class="tl-task inf">監控 Alert</span>
-        <span class="tl-task eng">審核/UAT 驗收（v4.0）</span>
+        <span class="tl-task eng">審核驗收（v4.0）</span>
         <span class="tl-task eng">Telegram 通知測試（v4.0）</span>
         <span class="tl-task pm">正式上線</span>
       </div>
@@ -2172,14 +2171,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="artspec-row">
     <div class="artspec-shot">
       <div class="phone-frame"><img src="axure_assets/P5_tutorial.png" alt="P5 新手教學 原型截圖" loading="lazy"></div>
-      <div class="shot-caption">P5 · 新手教學 步驟 1（原型示意）</div>
+      <div class="shot-caption">P5 · 新手教學 步驟 1（原型示意）<br><span style="color:var(--text-dim);font-size:10px;">⚠ 原型尚未同步，需依新文案重截</span></div>
     </div>
     <div class="artspec-detail">
       <table class="spec-table">
         <thead><tr><th style="width:140px;">元件</th><th>視覺規格</th><th>動態需求</th></tr></thead>
         <tbody>
           <tr><td>遮罩＋spotlight</td><td class="dim">半透明教學遮罩；步驟 1 在進度條位置挖洞聚焦＋指示箭頭 ⬆</td><td class="dim">spotlight 隨版面自動對位</td></tr>
-          <tr><td>教學卡·步驟 1</td><td class="dim">📊 插圖＋標題「押注就能集滿累積條」＋說明文＋按鈕「跳過」「下一步」＋步驟圓點指示。<strong>※ 說明文需配合新機制由「解鎖一格寶箱」改為「解鎖一次翻牌機會、自選任一格翻開」</strong>（原型尚未同步）</td><td class="dim">卡片彈入</td></tr>
+          <tr><td>教學卡·步驟 1</td><td class="dim">📊 插圖＋標題「押注就能集滿累積條」＋說明文＋按鈕「跳過」「下一步」＋步驟圓點指示。<strong>※ 步驟 1 文案＝「解鎖一次翻牌機會、可自選任一格翻開」</strong>（配合新機制，由舊文案「解鎖一格寶箱」改寫）。<strong style="color:var(--gold-light);">原型尚未同步，<span class="mono">axure_assets/P5_tutorial.png</span> 需依此文案重截。</strong></td><td class="dim">卡片彈入</td></tr>
           <tr><td>教學卡·步驟 2</td><td class="dim">寶箱🎁→👑＋金額 的示意小動畫＋星光粒子＋標題「每天都有機會抽中最大獎！」＋說明文＋按鈕「開始抽寶箱 🎉」</td><td class="dim">示意動畫 loop、星光閃爍</td></tr>
         </tbody>
       </table>
@@ -2189,7 +2188,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title" style="font-size:13px;">P6 · 主題風格（需定稿）</div>
   <div class="body-text">原型內建三套換色風格：<strong>糖果（預設）／藍紫／金黑</strong>。糖果版色票示意——背景 <em>#8FD0FF→#C9B8FF→#FFD6EC</em>、彈窗 <em>#FFD3EC→#C9B8FF→#AEE3FF</em>、格子 <em>#8C6CF0→#6242CC</em>、進度條 <em>#FF8EC4→#FFD86B</em>。</div>
   <div class="callout warn">
-    <strong>需 PM＋美術決策：</strong>首發以<strong>單一主題</strong>定稿（建議從三風格擇一深化）；「多主題換膚」列 v2 評估，避免 v1 美術量 ×3。
+    <strong>需 PM＋美術決策（v4.1 對齊 v4.0 策略）：</strong>首發<strong>先做 1 套（treasure_box）</strong>定稿；<strong>節慶 3 套（gold_egg／red_envelope／xmas_gift）後續再加、採前端寫死</strong>。<strong>總資產量＝換皮元件 × 套數</strong>——詳見下方〈美術資產清單〉之<strong>多主題資產增量換算表</strong>（哪些整張重畫 ×4、哪些重上色 ×4、哪些共用 ×1）。
   </div>
 
   <div class="sub-title" style="font-size:13px;">P7 · 今日全部抽完結算畫面（v3.2 新增｜9 格全開觸發）</div>
@@ -2219,6 +2218,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="sub-title" id="ui-assets" style="margin-top:32px;">美術資產清單（Asset List）</div>
+  <div class="callout info">
+    <strong>本清單數量＝首發單一主題（<span class="mono" style="color:var(--gold-light);">treasure_box</span>）的量（×1）。</strong>節慶主題（gold_egg／red_envelope／xmas_gift）後續再加時的資產增量，見下方〈多主題資產增量換算表〉。
+  </div>
   <table class="spec-table">
     <thead><tr><th style="width:36px;">#</th><th>資產項目</th><th>數量/規格</th><th>備註</th></tr></thead>
     <tbody>
@@ -2244,6 +2246,35 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="callout">
     <strong>動效分工原則：</strong>洗牌／翻格／爆發等動效由 🌐 前端Web 以程式動畫實作（CSS/JS），美術提供<strong>分層靜態素材＋動態節奏示意</strong>（以原型為準）；若評估後需序列幀（sprite sheet）再另行開工項。
   </div>
+
+  <div class="sub-title" style="margin-top:32px;">多主題資產增量換算表（v4.1 新增 · 2026-06-26 對齊後台原型）</div>
+  <div class="callout info">
+    <strong>用途：</strong>上方〈美術資產清單〉為<strong>單一主題（×1）</strong>的量。若做滿 <strong>4 套主題</strong>（<span class="mono" style="color:var(--gold-light);">treasure_box／gold_egg／red_envelope／xmas_gift</span>），下表說明每一類資產的增量倍率——<strong>整張重畫 ×4</strong>（造型隨主題全變）、<strong>重上色 ×4</strong>（版位/形狀不變、只換色票）、<strong>共用 ×1</strong>（跨主題沿用同一份）。對齊 §07〈主題資產對應規範〉「換皮 8 類元件」。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:130px;">增量類別</th><th>倍率</th><th>涵蓋資產項目</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:var(--red);">整張重畫</strong></td>
+        <td class="mono" style="color:var(--red);">×4</td>
+        <td class="dim">浮動 icon、彈窗背景＋裝飾層、牌背＋牌面框、獎項 icon（小/中/大/最終）、洗牌素材、翻格特效、結算卡背景</td>
+        <td class="dim">造型隨主題完全不同，每套各畫一張；對應換皮元件 icon／背景／格子／開獎特效</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--gold-light);">重上色</strong></td>
+        <td class="mono" style="color:var(--gold-light);">×4</td>
+        <td class="dim">進度環、進度條、按鈕組（主/次）、Confetti 色票</td>
+        <td class="dim">版位／形狀／結構不變，僅換主色與色票，依主題各出一份配色</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--teal);">共用</strong></td>
+        <td class="mono" style="color:var(--teal);">×1</td>
+        <td class="dim">氣泡框、遊戲中心面板、COMING SOON／敬請期待 badge、鎖頭 icon、教學卡插圖、多語系字體</td>
+        <td class="dim">跨主題沿用同一份，不隨主題增加</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 總資產量＝<strong>共用（×1）</strong>＋<strong>（整張重畫 ＋ 重上色）× 套數</strong>。首發僅 treasure_box 一套；節慶 3 套後續再加、採前端寫死（見 P6 主題風格、§07 主題資產對應規範）。</div>
 </section>
 
 <!-- ═══════════ 07 BACKEND ═══════════ -->
@@ -2267,8 +2298,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         · 活動列表（狀態篩選）<br>
         · 新增 / 編輯活動<br>
         · 線路投放設定（多選 · 必選）<br>
+        · <strong style="color:var(--gold-light);">多貨幣設定（currency tabs · 各貨幣獨立門檻/獎池/RTP · v4.1）</strong><br>
         · 啟動 / 暫停活動<br>
-        · RTP 即時試算驗證<br>
+        · RTP 即時試算驗證（依當前貨幣）<br>
         <span style="color:var(--purple);font-size:11px;">v2：活動模板複製</span>
       </div>
     </div>
@@ -2282,13 +2314,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
     </div>
     <div class="info-card" style="border-color:rgba(212,168,67,0.3);">
-      <div class="info-card-title" style="color:var(--gold-light);">👥 帳號權限（分層）</div>
+      <div class="info-card-title" style="color:var(--gold-light);">👥 帳號權限（頁面可見性 · v4.1）</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
-        · Admin：全操作<br>
-        · Operator：查看+啟停<br>
-        · <strong style="color:var(--gold-light);">Reviewer 審核人員：審核上線（v4.0）</strong><br>
-        · 審核權限獨立、單一帳號不全包<br>
-        <span style="color:var(--purple);font-size:11px;">v2：更細粒度權限</span>
+        · <strong style="color:var(--gold-light);">角色＝一組「可見頁面」集合</strong><br>
+        · Admin：可見全部頁面＋新增/設定帳號<br>
+        · Operator：營運管理頁面<br>
+        · Reviewer：活動審查頁面<br>
+        · <strong>頁面內不再做欄位級切分</strong><br>
+        <span style="color:var(--purple);font-size:11px;">v2：更細粒度（頁內動作級）權限</span>
       </div>
     </div>
     <div class="info-card" style="border-color:rgba(224,150,58,0.3);">
@@ -2301,20 +2334,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
     </div>
     <div class="info-card" style="border-color:rgba(58,191,176,0.3);">
-      <div class="info-card-title" style="color:var(--teal);">🧪 UAT 測試工具（v4.0）</div>
-      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
-        · UAT 測試帳號可<strong>自助修改自身線路與標籤</strong><br>
-        · 供 QA 測試不同線路/分群<br>
-        · 不依賴外部工具<br>
-        · 僅作用於測試帳號
-      </div>
-    </div>
-    <div class="info-card" style="border-color:rgba(58,191,176,0.3);">
       <div class="info-card-title" style="color:var(--teal);">📒 注單查詢（對帳）</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 依 bonus_type 篩選：<br>
         　一般注單 / CHEST_REWARD（現金獎） / FREE_SPIN（道具）<br>
         · 支援日期區間查詢<br>
+        · <strong style="color:var(--gold-light);">支援幣值維度（依 currency 篩選對帳 · v4.1）</strong><br>
         · 對應 AWC get_bet_summary 的 bonus_type 分離欄位
       </div>
     </div>
@@ -2325,6 +2350,33 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         · 選中顯示縮圖預覽<br>
         · 只換視覺、不動玩法數值<br>
         <span style="color:var(--purple);font-size:11px;">v2：營運自上傳素材組主題</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title">後台導覽結構（v4.1 新增 · 2026-06-26 對齊後台原型）</div>
+  <div class="callout info">
+    <strong>導覽分兩大群組 ＋ 頂部「檢視角色」切換：</strong>後台側邊導覽分為「<strong>營運管理</strong>」與「<strong>系統設定</strong>」兩群；頂部提供「<strong>檢視角色</strong>」切換（<span class="mono">Admin／Operator／Reviewer</span> 預覽），可預覽不同角色看到的<strong>可見頁面</strong>（對應頁面可見性權限模型）。
+  </div>
+  <div class="info-grid-3">
+    <div class="info-card" style="border-color:rgba(90,191,122,0.3);">
+      <div class="info-card-title" style="color:#7ADFA0;">🗂 營運管理</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 活動管理（列表／新增／編輯／啟停）<br>
+        · 活動審查（待審查佇列／唯讀檢視／通過·駁回）
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(212,168,67,0.3);">
+      <div class="info-card-title" style="color:var(--gold-light);">⚙️ 系統設定</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 帳號權限（後台帳號管理／頁面可見性指派）
+      </div>
+    </div>
+    <div class="info-card" style="border-color:rgba(74,143,224,0.3);">
+      <div class="info-card-title" style="color:#90C0F0;">👁 檢視角色切換</div>
+      <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
+        · 頂部下拉：Admin／Operator／Reviewer<br>
+        · 預覽各角色的可見頁面範圍
       </div>
     </div>
   </div>
@@ -2347,8 +2399,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <div class="admin-input">寶箱活動 · Q3 2026</div>
       </div>
       <div class="admin-form-row">
-        <div class="admin-label">幣值<br><span style="font-size:8px;color:var(--text-dim);">currency · v4.0</span></div>
-        <div class="admin-input"><span style="color:var(--gold-light);">PHP 披索</span> &nbsp; <span style="color:var(--text-dim);">▾ 每套幣值（PHP／THB…）獨立設定門檻·獎池·規則</span></div>
+        <div class="admin-label">多貨幣設定<br><span style="font-size:8px;color:var(--text-dim);">currency tabs · v4.1</span></div>
+        <div class="admin-input" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+          <span class="line-chip on">PHP 披索 ✓ 預設</span>
+          <span class="line-chip off">THB 泰銖</span>
+          <span class="line-chip off">＋ 新增貨幣</span>
+          <span style="color:var(--text-dim);font-size:11px;">▾ 切換 tab：下方「解鎖門檻 / 獎池組成 / RTP」各自獨立載入該貨幣設定，RTP 依當前貨幣即時計算</span>
+        </div>
       </div>
       <div class="admin-form-row">
         <div class="admin-label">版型主題<br><span style="font-size:8px;color:var(--text-dim);">admin_theme_select</span></div>
@@ -2358,12 +2415,16 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         </div>
       </div>
       <div class="admin-form-row">
-        <div class="admin-label">活動期間</div>
+        <div class="admin-label">活動期間<br><span style="font-size:8px;color:var(--text-dim);">精確至秒（UTC+8）</span></div>
         <div class="admin-input-group">
-          <div class="admin-input" style="flex:1;">2026/07/01</div>
+          <div class="admin-input" style="flex:1;">2026/07/01 00:00:00</div>
           <div style="padding:9px 4px;color:var(--text-dim);">→</div>
-          <div class="admin-input" style="flex:1;">2026/09/30</div>
+          <div class="admin-input" style="flex:1;">2026/09/30 23:59:59</div>
         </div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-label">每日重置時間<br><span style="font-size:8px;color:var(--text-dim);">admin_daily_reset_time · v4.1</span></div>
+        <div class="admin-input"><span style="color:var(--gold-light);font-family:'DM Mono',monospace;">00:00:00</span> &nbsp; <span style="color:var(--text-dim);">type=time · UTC+8 · 精確至秒 · 一番賞累積門檻每日歸零的時間點，以 Server 時間 UTC+8 為準；可依活動各自設定</span></div>
       </div>
       <div class="admin-form-row">
         <div class="admin-label">倒數啟動天數<br><span style="font-size:8px;color:var(--text-dim);">countdown_lead_days</span></div>
@@ -2390,7 +2451,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <div class="admin-input">支援多 tag · 多活動衝突依 <span style="color:#C8A0F0;">DA tag Priority</span> 取最高 · <span style="color:var(--gold-light);">玩家同時只跑 1 檔（落選活動無感）</span> · <span style="color:var(--text-dim);">留空＝全體玩家可玩</span></div>
       </div>
 
-      <div class="admin-section-divider">解鎖門檻設定（每格增量，單位：披索；內部累積至 ₱3,600）</div>
+      <div class="admin-section-divider">解鎖門檻設定（每格增量，單位：披索；內部累積至 ₱3,600）<span style="font-size:9px;color:var(--gold-light);font-weight:400;">　· 當前貨幣 tab：PHP 披索（切換貨幣 tab 各自一套門檻）</span></div>
       <div class="admin-prize-grid">
         <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 1</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">50</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
         <div class="admin-prize-cell"><div class="admin-prize-cell-num">格 2</div><div class="admin-prize-cell-input">₱<span style="color:var(--gold-light);">100</span></div><div class="admin-prize-cell-sub">增量門檻</div></div>
@@ -2432,7 +2493,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <strong>重要：</strong>每完成一抽，該格抽到的獎項數量 -1。當某獎項數量歸零時，後續抽次該獎項的權重自動歸零，系統依剩餘獎項比例重新分配。第9抽將由剩餘獎項決定，無特殊保底。
       </div>
 
-      <div class="admin-section-divider">RTP 自動驗算</div>
+      <div class="admin-section-divider">RTP 自動驗算<span style="font-size:9px;color:var(--gold-light);font-weight:400;">　· 依當前貨幣 tab（PHP 披索）即時計算；切換貨幣各自驗算</span></div>
       <div class="admin-rtp-bar">
         <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);">0.9%</span>
         <div class="admin-rtp-track">
@@ -2474,8 +2535,105 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="callout warn">
     <strong>② 上線中禁止直接編輯（C4）：</strong><strong>上線中的活動不可直接編輯</strong>，須<strong>先下架或暫停才能修改</strong>；緊急調整時<strong>先暫停 → 確認無誤 → 再恢復</strong>，避免線上活動在玩家進行中被改動造成爭議或資料不一致。
   </div>
+
+  <div class="sub-title">活動審查頁規格（v4.1 新增 · 2026-06-26 對齊後台原型）</div>
   <div class="callout info">
-    <strong>③ UAT 測試工具（B3）：</strong>提供 <strong>UAT 測試帳號可自助修改自身「線路」與「標籤」</strong>的功能，供 QA 在測試環境自行切換線路／分群以驗證線路閘門、受眾資格與分群投放，<strong>不依賴外部工具、不需數據組逐次配合</strong>。此功能<strong>僅作用於 UAT 測試帳號</strong>（is_tester=true），不影響正式玩家資料。
+    <strong>審查頁＝ Reviewer 角色的可見頁面。</strong>設定者「提交審核」後，活動進入<strong>待審查佇列</strong>；Reviewer 以<strong>唯讀</strong>方式檢視完整設定，操作僅有「<strong>通過·上線</strong>」與「<strong>駁回</strong>」。Reviewer 仍負責活動審查，但權限以<strong>頁面可見性</strong>控管（見〈帳號權限〉）。
+  </div>
+
+  <!-- 審查頁 ① 待審查佇列（含空狀態） -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 活動審查 · 待審查佇列與空狀態</div>
+      <img src="design_assets/admin_08_review_list.png" alt="活動審查 · 待審查佇列與空狀態" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;">
+          <span style="width:4px;height:18px;background:#5A5FE0;border-radius:2px;"></span>
+          <strong style="font-size:15px;">活動審查 · 待審查佇列</strong>
+        </div>
+        <div style="border:1.5px dashed #D2D5DB;border-radius:9px;padding:34px 14px;text-align:center;color:#9AA0AB;font-size:13px;line-height:1.8;">
+          📭<br>目前沒有待審查的活動<br><span style="font-size:12px;">設定者送審後出現在這裡</span>
+        </div>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_08_review_list.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">① 待審查佇列</div>
+      <dl>
+        <dt>內容</dt><dd>列出所有<strong>狀態＝待審查（pending）</strong>的活動，供 Reviewer 逐筆檢視</dd>
+        <dt>空狀態</dt><dd>佇列為空時顯示空狀態文案「<strong>目前沒有待審查的活動／設定者送審後出現在這裡</strong>」</dd>
+        <dt>進入點</dt><dd>設定者於活動表單按「提交審核」→ 活動進入此佇列</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.review.queue_title</span> / <span class="mono">admin.review.empty</span></dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- 審查頁 ② 唯讀檢視＋通過/駁回 -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 活動審查 · 唯讀檢視與通過/駁回</div>
+      <img src="design_assets/admin_09_review_detail.png" alt="活動審查 · 唯讀檢視與通過/駁回" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span style="width:4px;height:18px;background:#5A5FE0;border-radius:2px;"></span>
+          <strong style="font-size:15px;">審查檢視</strong>
+          <span style="font-size:11px;color:#9AA0AB;">唯讀</span>
+        </div>
+        <div style="font-size:12px;color:#5A5F6B;line-height:1.9;background:#F7F8FA;border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+          門檻 · 獎池 · RTP · 線路 · 受眾 · 權重<br><span style="color:#9AA0AB;">（完整設定，僅供檢視、不可編輯）</span>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <span style="font-size:12px;font-weight:700;color:#fff;background:#E0563A;border-radius:7px;padding:9px 16px;">駁回</span>
+          <span style="font-size:12px;font-weight:700;color:#fff;background:#2FA86A;border-radius:7px;padding:9px 16px;">通過 · 上線</span>
+        </div>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_09_review_detail.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">② 唯讀檢視 ＋ ③ 操作</div>
+      <dl>
+        <dt>唯讀檢視</dt><dd>查看活動<strong>完整設定（唯讀）</strong>，含<strong>門檻／獎池／RTP／線路／受眾／權重</strong>，不可在此編輯</dd>
+        <dt>操作</dt><dd>僅兩個動作：「<strong style="color:var(--green);">通過·上線</strong>」（核准後活動上線）／「<strong style="color:var(--red);">駁回</strong>」</dd>
+        <dt>多貨幣</dt><dd>含多貨幣的活動，各貨幣門檻／獎池／RTP 皆於唯讀檢視內可切換查看</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.review.readonly</span> / <span class="mono">admin.review.approve</span> / <span class="mono">admin.review.reject</span></dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- 審查頁 ③ 駁回回流 -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 駁回回流 · 活動管理顯示駁回原因可重新送審</div>
+      <img src="design_assets/admin_10_rejected.png" alt="駁回回流 · 活動管理顯示駁回原因可重新送審" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span style="width:4px;height:18px;background:#E0563A;border-radius:2px;"></span>
+          <strong style="font-size:15px;">活動管理 · 被駁回的活動</strong>
+        </div>
+        <div style="background:#FDECE7;border:1px solid #F4B7A6;border-radius:9px;padding:12px 14px;font-size:12px;color:#B23A1A;line-height:1.8;margin-bottom:12px;">
+          ⚠ 此活動曾被駁回，請修改後重新送審。<br>駁回原因：RTP 超出容許區間，請調整獎池。
+        </div>
+        <div style="display:flex;justify-content:flex-end;">
+          <span style="font-size:12px;font-weight:700;color:#fff;background:#5A5FE0;border-radius:7px;padding:9px 16px;">重新送審</span>
+        </div>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_10_rejected.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">④ 駁回回流</div>
+      <dl>
+        <dt>駁回原因</dt><dd>Reviewer 駁回時<strong>需填「駁回原因」</strong>（必填）</dd>
+        <dt>回流</dt><dd>被駁回活動回到設定者「<strong>活動管理</strong>」，並顯示「<strong>此活動曾被駁回，請修改後重新送審。駁回原因：…</strong>」</dd>
+        <dt>重新送審</dt><dd>設定者修改後可<strong>重新送審</strong>，再次進入待審查佇列</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.review.reject_reason</span> / <span class="mono">admin.review.rejected_notice</span> / <span class="mono">admin.review.resubmit</span></dd>
+      </dl>
+    </div>
   </div>
 
   <div class="sub-title">後台 UI 設計說明 · 線路投放 + 版型主題（v3.9 更新）</div>
@@ -2484,7 +2642,45 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </div>
 
   <div class="callout">
-    <strong>整體版面對照（原型）：</strong>① <strong>活動列表頁</strong>欄位＝CAMPAIGN ID／活動名稱／<strong>主題</strong>／活動期間／<strong>受眾 TAG</strong>／RTP／狀態（上線·草稿·暫停·已結束）／操作（編輯·啟停）；右上有「＋建立新活動」與 Admin／Operator 角色切換。② <strong>建立／編輯表單為兩欄式</strong>：左欄依序為 <strong>基本資料（CAMPAIGN ID → 活動名稱 → 幣值 → 版型主題 → 活動期間 → 倒數啟動天數）</strong> → <strong>線路投放</strong> → 受眾 tag → 解鎖門檻 → 抽獎權重；右欄 sticky 釘住 固定獎池組成 ＋ RTP 自動驗算 ＋「儲存草稿／上線活動」按鈕。線路投放即位於此流程第 2 段。
+    <strong>整體版面對照（原型）：</strong>① <strong>活動列表頁</strong>欄位＝CAMPAIGN ID／活動名稱／<strong>主題</strong>／活動期間／<strong>受眾 TAG</strong>／RTP／狀態（上線·草稿·暫停·已結束）／操作（編輯·啟停）；右上有「＋建立新活動」與<strong>檢視角色切換（Admin／Operator／Reviewer）</strong>。② <strong>建立／編輯表單為兩欄式</strong>：左欄依序為 <strong>基本資料（CAMPAIGN ID → 活動名稱 → 多貨幣設定（currency tabs） → 版型主題 → 活動期間 → 每日重置時間 → 倒數啟動天數）</strong> → <strong>線路投放</strong> → 受眾 tag → 解鎖門檻 → 抽獎權重；右欄 sticky 釘住 固定獎池組成 ＋ RTP 自動驗算 ＋「儲存草稿／上線活動」按鈕。線路投放即位於此流程第 2 段。
+  </div>
+
+  <!-- Row 0z：多貨幣設定（v4.1 新增 · 對齊後台原型） -->
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 多貨幣設定（currency tabs · 建立活動）</div>
+      <img src="design_assets/admin_07_multicurrency.png" alt="多貨幣設定 · currency tabs 與各貨幣門檻/獎池/RTP" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span style="width:4px;height:18px;background:#5A5FE0;border-radius:2px;"></span>
+          <strong style="font-size:15px;">多貨幣設定</strong>
+          <span style="font-size:11px;color:#9AA0AB;">currency tabs · 各貨幣獨立</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#9A7B1A;background:#FBF3D6;border:1.5px solid #E6C55A;border-radius:8px 8px 0 0;padding:8px 14px;">PHP 披索 ✓</span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#A8ACB5;background:#F4F5F7;border:1.5px solid #E6E8EC;border-radius:8px 8px 0 0;padding:8px 14px;">THB 泰銖</span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#A8ACB5;background:#F4F5F7;border:1.5px dashed #D2D5DB;border-radius:8px 8px 0 0;padding:8px 14px;">＋ 新增貨幣</span>
+        </div>
+        <div style="font-size:12px;color:#5A5F6B;line-height:1.9;background:#F7F8FA;border-radius:8px;padding:12px 14px;">
+          當前貨幣：<strong style="color:#9A7B1A;">PHP 披索</strong><br>
+          各抽次累積門檻 · 獎池組成 · RTP 即時驗算<br>
+          <span style="color:#9AA0AB;">（切換 tab 各自一套；RTP 依當前貨幣即時計算）</span>
+        </div>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_07_multicurrency.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">多貨幣設定 · currency tabs</div>
+      <dl>
+        <dt>元件類型</dt><dd>頂部 <strong>currency tabs</strong>（PHP 為預設）＋「＋ 新增貨幣」；切換 tab 切換整套貨幣設定</dd>
+        <dt>每貨幣</dt><dd>各自一套<strong>各抽次累積門檻 / 獎池組成 / RTP 即時驗算</strong>；獎勵類型含<strong>現金與 Free Spin</strong></dd>
+        <dt>RTP</dt><dd><strong>RTP 依當前貨幣即時計算</strong>，各貨幣各自驗算是否落在容許區間</dd>
+        <dt>規則</dt><dd>一檔 campaign 內含多貨幣，各貨幣<strong>獨立設定、互不換算</strong>（非匯率換算）</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.currency.tab</span> / <span class="mono">admin.currency.add</span></dd>
+      </dl>
+    </div>
   </div>
 
   <!-- Row 0a：版型主題下拉（v3.9 新增） -->
@@ -2645,8 +2841,60 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     </figure>
   </div>
   <div class="callout" style="font-size:12px;">
-    <strong>截圖檔放置位置：</strong>請把 design 原型的截圖存到 repo 的 <span class="mono" style="color:var(--gold-light);">design_assets/</span> 資料夾，檔名照上方標示（<span class="mono">admin_01_list.png</span> ~ <span class="mono">admin_05_theme.png</span>），存好後重新整理即顯示真實截圖；未放入前自動顯示還原示意，不影響閱讀。<strong>版型主題上線後，<span class="mono">admin_02_create_top.png</span> 需依新原型重截，並新增 <span class="mono">admin_05_theme.png</span>。</strong>
+    <strong>截圖檔放置位置：</strong>請把 design 原型的截圖存到 repo 的 <span class="mono" style="color:var(--gold-light);">design_assets/</span> 資料夾，檔名照上方標示（<span class="mono">admin_01_list.png</span> ~ <span class="mono">admin_05_theme.png</span>），存好後重新整理即顯示真實截圖；未放入前自動顯示還原示意，不影響閱讀。<strong>版型主題上線後，<span class="mono">admin_02_create_top.png</span> 需依新原型重截，並新增 <span class="mono">admin_05_theme.png</span>。</strong><br>
+    <strong style="color:var(--gold-light);">v4.1 對齊後台原型新增截圖：</strong><span class="mono">admin_07_multicurrency.png</span>（多貨幣設定）、<span class="mono">admin_08_review_list.png</span>（待審查佇列）、<span class="mono">admin_09_review_detail.png</span>（唯讀檢視·通過/駁回）、<span class="mono">admin_10_rejected.png</span>（駁回回流）、<span class="mono">admin_11_permissions.png</span>（頁面可見性權限）——同樣放入 <span class="mono" style="color:var(--gold-light);">design_assets/</span> 後自動顯示。
   </div>
+
+  <div class="sub-title">後台帳號管理與頁面可見性權限（v4.1 新增 · 2026-06-26 對齊後台原型）</div>
+  <div class="callout info">
+    <strong>權限機制＝「頁面可見性」模型：</strong>原型的權限以<strong>頁面可見性</strong>控管——<strong>角色＝一組可見頁面的集合</strong>，<strong>頁面內不再做欄位級權限切分</strong>。<strong>Admin 可新增帳號並指派可見頁面</strong>。Reviewer 仍負責活動審查，但敘述由「動作級」改為「<strong>頁面級</strong>」（可見＝可進該頁操作、不可見＝該頁不出現於導覽）。
+  </div>
+
+  <div class="ui-doc-row">
+    <div class="ui-doc-shot">
+      <div class="ui-doc-shot-cap">截圖 · 頁面可見性權限（帳號/角色/可見頁面與對照表）</div>
+      <img src="design_assets/admin_11_permissions.png" alt="頁面可見性權限 · 帳號/角色/可見頁面與對照表" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;">
+      <div style="background:#fff;border:1px solid #E6E8EC;border-radius:12px;padding:18px 20px;font-family:-apple-system,'Segoe UI',sans-serif;color:#1A1D26;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span style="width:4px;height:18px;background:#5A5FE0;border-radius:2px;"></span>
+          <strong style="font-size:15px;">後台帳號管理</strong>
+          <span style="margin-left:auto;font-size:11px;color:#fff;background:#5A5FE0;border-radius:6px;padding:5px 12px;">＋ 新增帳號</span>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="color:#9AA0AB;text-align:left;"><th style="padding:6px 4px;font-weight:600;">帳號</th><th style="padding:6px 4px;font-weight:600;">角色</th><th style="padding:6px 4px;font-weight:600;">可見頁面</th></tr></thead>
+          <tbody style="color:#1A1D26;">
+            <tr style="border-top:1px solid #EEF0F3;"><td style="padding:7px 4px;">admin01</td><td style="padding:7px 4px;">Admin</td><td style="padding:7px 4px;color:#5A5F6B;">全部頁面＋帳號權限</td></tr>
+            <tr style="border-top:1px solid #EEF0F3;"><td style="padding:7px 4px;">op01</td><td style="padding:7px 4px;">Operator</td><td style="padding:7px 4px;color:#5A5F6B;">活動管理</td></tr>
+            <tr style="border-top:1px solid #EEF0F3;"><td style="padding:7px 4px;">rev01</td><td style="padding:7px 4px;">Reviewer</td><td style="padding:7px 4px;color:#5A5F6B;">活動審查</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:7px;text-align:center;">↑ 還原示意（未偵測到真實截圖 <span class="mono" style="color:var(--gold-light);">design_assets/admin_11_permissions.png</span>，放入後自動顯示）</div>
+      </div>
+    </div>
+    <div class="ui-doc-spec">
+      <div class="ui-doc-spec-h">後台帳號管理</div>
+      <dl>
+        <dt>新增帳號</dt><dd><strong>Admin 可新增帳號</strong>並指派<strong>角色</strong>與<strong>可見頁面</strong></dd>
+        <dt>角色</dt><dd>Admin／Operator／Reviewer，每個角色＝一組<strong>可見頁面集合</strong></dd>
+        <dt>可見頁面</dt><dd>可見＝該頁出現在導覽且可操作；不可見＝該頁不出現</dd>
+        <dt>切分層級</dt><dd><strong>頁面級</strong>（非動作級）；頁內不再細分欄位權限</dd>
+        <dt>文案 key</dt><dd><span class="mono">admin.account.add</span> / <span class="mono">admin.account.role</span> / <span class="mono">admin.account.visible_pages</span></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="sub-title" style="font-size:14px;">頁面可見性對照表</div>
+  <table class="spec-table">
+    <thead><tr><th>帳號（範例）</th><th>角色</th><th>可見頁面</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">admin01</td><td><strong style="color:var(--gold-light);">Admin</strong></td><td class="dim">營運管理（活動管理／活動審查）＋系統設定（帳號權限）＝<strong>全部頁面</strong></td></tr>
+      <tr><td class="mono">op01</td><td><strong style="color:#7ADFA0;">Operator</strong></td><td class="dim">活動管理（列表／新增／編輯／啟停／多貨幣設定）</td></tr>
+      <tr><td class="mono">rev01</td><td><strong style="color:#90C0F0;">Reviewer</strong></td><td class="dim">活動審查（待審查佇列／唯讀檢視／通過·駁回）</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 角色＝可見頁面集合；同一帳號可由 Admin 調整其可見頁面。Reviewer 僅可見「活動審查」頁，仍負責活動審查，但以頁面可見性控管、非動作級權限。</div>
 
   <div class="sub-title">後台功能規格補充</div>
   <table class="spec-table">
@@ -2663,10 +2911,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>活動啟停</td><td class="dim">一鍵上線/暫停，暫停時前端顯示維護中</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>活動上線審核流程（v4.0 · B1）</td><td class="dim">活動上線前須「提交審核」→ 由<strong>審核人員（Reviewer）核准</strong>才上線；審核權限<strong>獨立於運營/操作（分層權限）</strong>，避免單一帳號全包</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多級審核／審核紀錄稽核</td></tr>
       <tr><td>上線中禁止編輯（v4.0 · C4）</td><td class="dim"><strong>上線中活動禁止直接編輯，須先下架／暫停才能修改</strong>；緊急調整先暫停 → 確認無誤 → 再恢復</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
-      <tr><td>UAT 測試帳號自助改線路/標籤（v4.0 · B3）</td><td class="dim">UAT 測試帳號可<strong>自助修改自身線路與標籤</strong>，供 QA 測試不同線路/分群，不依賴外部工具；僅作用於測試帳號（is_tester）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
-      <tr><td>幣值維度設定（v4.0 · C3）</td><td class="dim">活動設定以<strong>「幣值」為一設定維度</strong>（PHP／THB…）；<strong>每套幣值獨立設定門檻、獎池與規則</strong>，各自驗算 RTP，不做匯率換算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多幣值批次複製</td></tr>
+      <tr><td>多貨幣設定（currency tabs · v4.1）</td><td class="dim">一檔 campaign <strong>內含多貨幣</strong>，以 <strong>currency tabs 切換</strong>（PHP 預設）；每貨幣各自一套<strong>門檻／獎池組成／RTP 即時驗算</strong>，獎勵類型含現金與 Free Spin；各貨幣獨立、互不換算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多貨幣批次複製</td></tr>
       <tr><td>Pending 異常列表</td><td class="dim">查詢發放失敗紀錄，手動觸發重試</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
-      <tr><td>帳號權限管理</td><td class="dim">Admin / Operator 兩種角色</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">細粒度擴充</td></tr>
+      <tr><td>帳號權限管理（頁面可見性 · v4.1）</td><td class="dim"><strong>頁面可見性模型</strong>：角色（Admin／Operator／Reviewer）＝一組可見頁面集合；<strong>Admin 可新增帳號並指派可見頁面</strong>，頁內不做欄位級切分（含頁面可見性對照表）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：頁內動作級權限</td></tr>
       <tr><td>活動模板複製</td><td class="dim">複製現有活動為新版本，只改參數</td><td class="dim">—（設定檔管理）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
       <tr><td>受眾 tag 資格設定（gating）</td><td class="dim">設定活動受眾 tag，符合的玩家才看得到／可玩；<strong>支援多 tag</strong>，tag 由 DA（數據組）提供、平台只比對。留空＝全體</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">多活動衝突依 DA tag Priority 解析</td></tr>
       <tr><td>分眾差異化內容</td><td class="dim">不同受眾（LOW / MID / HIGH）給不同獎池／門檻的差異化投放</td><td class="dim">—</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
@@ -3375,9 +3622,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 CRM 功能規格書 · LUCKY CHEST V4.0 · CONFIDENTIAL 2026<br>
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V4.1 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）<br>
-  v4.0（2026-06-26 開案）：補充開案會議項目——§02 每日 reset 固定 24h 週期＋總週期依設定、reset 時間點逐活動可設（Server+8）；§02/§03 幣值維度（每幣值獨立門檻/獎池/規則）；§03 機率數據由設計端提供；§04 受眾標籤與線路清單由數據組提供、後端直抓不開放後台新增、強化分群（大客差異化·第一階段）；§06 主題換皮重畫元件清單＋第一階段一套主題、節慶主題前端寫死；§07 上線審核流程＋審核人員分層權限＋上線中禁編輯＋UAT 自助改線路標籤；§08 異常 Telegram 通知（初期人工）；§05 目標 8 月底送 QA，新增 Task 與職能分配（後端 Wayne/Eric、後台 劉暢、數據 國清/虹瑜）<br>
+  v4.1（2026-06-26）：對齊新版後台原型——多貨幣架構、每日重置時間欄、權限改頁面可見性模型、補活動審查頁細節（含截圖佔位 admin_07~admin_11）與後台導覽結構；移除 UAT 測試工具（移交獨立工具規格）；美術資產清單釐清 1 套 vs 4 套主題換算。<br>
+  v4.0（2026-06-26 開案）：補充開案會議項目——§02 每日 reset 固定 24h 週期＋總週期依設定、reset 時間點逐活動可設（Server+8）；§02/§03 幣值維度（每幣值獨立門檻/獎池/規則）；§03 機率數據由設計端提供；§04 受眾標籤與線路清單由數據組提供、後端直抓不開放後台新增、強化分群（大客差異化·第一階段）；§06 主題換皮重畫元件清單＋第一階段一套主題、節慶主題前端寫死；§07 上線審核流程＋審核人員分層權限＋上線中禁編輯；§08 異常 Telegram 通知（初期人工）；§05 目標 8 月底送 QA，新增 Task 與職能分配（後端 Wayne/Eric、後台 劉暢、數據 國清/虹瑜）<br>
   v3.9.2（2026-06-25）：§07 線路投放「截圖 2」左欄改用後台原型實截 admin_06_line_audience.png（線路投放已選＋受眾 tag），取代原手繪錯誤態示意；必選驗證錯誤態改標「規格定義·原型待補」<br>
   v3.9.1（2026-06-25）：§07 後台 UI 設計說明補上版型主題下拉（admin_theme_select）與倒數啟動天數（admin_countdown_lead_days）UI 元件規格；截圖區新增 admin_05_theme、admin_02 標註待重截<br>
   v3.9（2026-06-25）：新增主題版型換皮系統（theme_id，預定義 4 套·無屬性開獎動畫）與前台活動期間呈現（日期區間＋最後 N 天倒數），後台基本資料區加版型主題下拉與倒數提前天數設定<br>
