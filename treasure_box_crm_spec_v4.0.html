@@ -8,27 +8,196 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
+  /* ── 金色主色 ── */
   --gold: #D4A843;
   --gold-light: #F0CC72;
   --gold-dim: #8B6914;
+
+  /* ── 背景層 ── */
   --dark: #0D0E12;
   --dark-2: #161820;
   --dark-3: #1E2028;
   --dark-4: #262830;
   --dark-5: #2E3040;
+
+  /* ── 邊框 ── */
   --border: rgba(212,168,67,0.18);
   --border-bright: rgba(212,168,67,0.45);
+
+  /* ── 文字 ── */
   --text-primary: #F0EDE6;
   --text-secondary: #9A9488;
   --text-dim: #5A5650;
+
+  /* ── 狀態主色（邊框/點綴用） ── */
   --red: #E05A3A;
   --teal: #3ABFB0;
   --blue: #4A8FE0;
   --green: #5ABF7A;
   --purple: #B084D8;
   --orange: #E0963A;
+
+  /* ── 金色透明填充 / 光暈 ── */
+  --gold-fill: rgba(212,168,67,0.12);
+  --gold-fill-weak: rgba(212,168,67,0.1);
+  --gold-fill-faint: rgba(212,168,67,0.06);
+  --gold-line: rgba(212,168,67,0.03);
+  --gold-glow: rgba(212,168,67,0.25);
+  --gold-glow-faint: rgba(212,168,67,0.07);
+  --gold-fill-dot: rgba(212,168,67,0.2);
+  --border-kpi: rgba(212,168,67,0.35);
+
+  /* ── 中性疊加（hover / 細分隔線） ── */
+  --overlay-hover: rgba(255,255,255,0.03);
+  --overlay-row: rgba(255,255,255,0.04);
+  --overlay-faint: rgba(255,255,255,0.015);
+  --overlay-pill: rgba(255,255,255,0.02);
+
+  /* ── 陰影 / 半透明面板背景 ── */
+  --shadow: rgba(0,0,0,0.5);
+  --topnav-bg: rgba(13,14,18,0.92);
+
+  /* ── 狀態亮色文字 ── */
+  --green-bright: #7ADFA0;
+  --blue-bright: #90C0F0;
+  --purple-bright: #C8A0F0;
+  --red-bright: #F0907A;
+  --teal-bright: #70DFD0;
+
+  /* ── 狀態透明填充 ── */
+  --green-fill: rgba(90,191,122,0.12);
+  --green-fill-weak: rgba(90,191,122,0.1);
+  --green-fill-faint: rgba(90,191,122,0.06);
+  --green-line: rgba(90,191,122,0.25);
+  --blue-fill: rgba(74,143,224,0.12);
+  --blue-fill-weak: rgba(74,143,224,0.1);
+  --blue-glow: rgba(74,143,224,0.05);
+  --purple-fill: rgba(176,132,216,0.12);
+  --purple-line: rgba(176,132,216,0.25);
+  --purple-glow: rgba(176,132,216,0.04);
+  --red-fill: rgba(224,90,58,0.12);
+  --red-fill-weak: rgba(224,90,58,0.1);
+  --red-fill-strong: rgba(224,90,58,0.15);
+  --red-fill-faint: rgba(224,90,58,0.06);
+  --red-line: rgba(224,90,58,0.25);
+  --red-line-strong: rgba(224,90,58,0.3);
+  --teal-fill: rgba(58,191,176,0.12);
+
+  /* ── 抽寶箱專用元件變數（prize / chest / admin / tag-web 等） ── */
+  --gold-fill-mid: rgba(212,168,67,0.14);
+  --gold-border-mid: rgba(212,168,67,0.3);
+  --gold-border-strong: rgba(212,168,67,0.4);
+  --gold-border-vivid: rgba(212,168,67,0.6);
+  --green-line-strong: rgba(90,191,122,0.3);
+  --blue-line: rgba(74,143,224,0.25);
+  --blue-line-strong: rgba(74,143,224,0.3);
+  --purple-line-weak: rgba(176,132,216,0.2);
+  --purple-line-strong: rgba(176,132,216,0.3);
+  --purple-fill-faint: rgba(176,132,216,0.08);
+  --orange-fill: rgba(224,150,58,0.14);
+  --orange-bright: #E0B070;
+  --overlay-border: rgba(255,255,255,0.07);
+  --shadow-strong: rgba(0,0,0,0.6);
+
   --sidebar-w: 280px;
   --topnav-h: 48px;
+}
+
+/* ═══════════════════════════════════════
+   亮色主題：白底 + 琥珀/古銅金（目標 WCAG AA）
+   覆寫上方同一批變數，暗色完全不受影響
+═══════════════════════════════════════ */
+html[data-theme="light"] {
+  /* ── 金色主色：白底加深成古銅/琥珀金 ── */
+  --gold: #9A6B00;
+  --gold-light: #8A5E00;
+  --gold-dim: #C9A24E;
+
+  /* ── 背景層：白／暖淺灰系 ── */
+  --dark: #FAFAF7;
+  --dark-2: #F2EEE4;
+  --dark-3: #F4F1EA;
+  --dark-4: #ECE7DB;
+  --dark-5: #E4DECF;
+
+  /* ── 邊框：白底需加深的古銅金 ── */
+  --border: rgba(154,107,0,0.25);
+  --border-bright: rgba(154,107,0,0.5);
+
+  /* ── 文字：暖深色 ── */
+  --text-primary: #2A2722;
+  --text-secondary: #5C564C;
+  --text-dim: #7C766A;
+
+  /* ── 狀態主色：白底加深以保留對比 ── */
+  --red: #D24A2A;
+  --teal: #2A9D8F;
+  --blue: #2F73C4;
+  --green: #3DA35D;
+  --purple: #9457C4;
+  --orange: #C77A1A;
+
+  /* ── 金色透明填充 / 光暈 ── */
+  --gold-fill: rgba(184,134,11,0.18);
+  --gold-fill-weak: rgba(184,134,11,0.14);
+  --gold-fill-faint: rgba(184,134,11,0.1);
+  --gold-line: rgba(184,134,11,0.12);
+  --gold-glow: rgba(184,134,11,0.18);
+  --gold-glow-faint: rgba(184,134,11,0.08);
+  --gold-fill-dot: rgba(184,134,11,0.25);
+  --border-kpi: rgba(154,107,0,0.45);
+
+  /* ── 中性疊加：白底改用深色疊加 ── */
+  --overlay-hover: rgba(0,0,0,0.03);
+  --overlay-row: rgba(0,0,0,0.08);
+  --overlay-faint: rgba(0,0,0,0.025);
+  --overlay-pill: rgba(0,0,0,0.02);
+
+  /* ── 陰影 / 半透明面板背景 ── */
+  --shadow: rgba(0,0,0,0.15);
+  --topnav-bg: rgba(250,250,247,0.92);
+
+  /* ── 狀態亮色文字：白底加深至 AA ── */
+  --green-bright: #237A4A;
+  --blue-bright: #2563B0;
+  --purple-bright: #7A3FA8;
+  --red-bright: #C0431F;
+  --teal-bright: #1F7A72;
+
+  /* ── 狀態透明填充：對應加深主色的淺洗色 ── */
+  --green-fill: rgba(61,163,93,0.16);
+  --green-fill-weak: rgba(61,163,93,0.12);
+  --green-fill-faint: rgba(61,163,93,0.1);
+  --green-line: rgba(61,163,93,0.4);
+  --blue-fill: rgba(47,115,196,0.14);
+  --blue-fill-weak: rgba(47,115,196,0.1);
+  --blue-glow: rgba(47,115,196,0.06);
+  --purple-fill: rgba(148,87,196,0.14);
+  --purple-line: rgba(148,87,196,0.4);
+  --purple-glow: rgba(148,87,196,0.05);
+  --red-fill: rgba(210,74,42,0.12);
+  --red-fill-weak: rgba(210,74,42,0.1);
+  --red-fill-strong: rgba(210,74,42,0.15);
+  --red-fill-faint: rgba(210,74,42,0.08);
+  --red-line: rgba(210,74,42,0.3);
+  --red-line-strong: rgba(210,74,42,0.4);
+  --teal-fill: rgba(42,157,143,0.14);
+
+  /* ── 抽寶箱專用元件變數（亮色覆寫） ── */
+  --gold-fill-mid: rgba(184,134,11,0.2);
+  --gold-border-mid: rgba(154,107,0,0.4);
+  --gold-border-strong: rgba(154,107,0,0.5);
+  --gold-border-vivid: rgba(154,107,0,0.65);
+  --green-line-strong: rgba(61,163,93,0.45);
+  --blue-line: rgba(47,115,196,0.4);
+  --blue-line-strong: rgba(47,115,196,0.45);
+  --purple-line-weak: rgba(148,87,196,0.35);
+  --purple-line-strong: rgba(148,87,196,0.45);
+  --purple-fill-faint: rgba(148,87,196,0.12);
+  --orange-fill: rgba(199,122,26,0.16);
+  --orange-bright: #B5651A;
+  --overlay-border: rgba(0,0,0,0.1);
+  --shadow-strong: rgba(0,0,0,0.2);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -55,10 +224,10 @@ body.layout-side .topnav  { display: none; }
 body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 .layout-toggle {
-  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  position: fixed; bottom: 88px; right: 24px; z-index: 200;
   display: flex; background: var(--dark-3);
   border: 1px solid var(--border-bright); border-radius: 6px;
-  overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  overflow: hidden; box-shadow: 0 4px 24px var(--shadow);
 }
 .layout-toggle-btn {
   font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em;
@@ -67,13 +236,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   display: flex; align-items: center; gap: 6px;
 }
 .layout-toggle-btn:hover { color: var(--text-secondary); }
-.layout-toggle-btn.active { background: rgba(212,168,67,0.12); color: var(--gold-light); }
+.layout-toggle-btn.active { background: var(--gold-fill); color: var(--gold-light); }
 .layout-toggle-divider { width: 1px; background: var(--border); align-self: stretch; }
 
 /* ═══ TOP NAV ═══ */
 .topnav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(13,14,18,0.92); border-bottom: 1px solid var(--border);
+  background: var(--topnav-bg); border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px); padding: 0 40px; height: var(--topnav-h);
   overflow-x: auto; align-items: center; gap: 0;
 }
@@ -111,9 +280,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .sidebar-meta-row { display: flex; align-items: center; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; }
 .sidebar-meta-label { color: var(--text-dim); }
 .sidebar-meta-val { color: var(--text-secondary); }
-.sidebar-meta-val.status-active { color: #7ADFA0; background: rgba(90,191,122,0.1); padding: 2px 7px; border-radius: 2px; }
-.sidebar-meta-val.status-draft { color: var(--gold-light); background: rgba(212,168,67,0.1); padding: 2px 7px; border-radius: 2px; }
-.sidebar-meta-val.status-review { color: #90C0F0; background: rgba(74,143,224,0.1); padding: 2px 7px; border-radius: 2px; }
+.sidebar-meta-val.status-active { color: var(--green-bright); background: var(--green-fill-weak); padding: 2px 7px; border-radius: 2px; }
+.sidebar-meta-val.status-draft { color: var(--gold-light); background: var(--gold-fill-weak); padding: 2px 7px; border-radius: 2px; }
+.sidebar-meta-val.status-review { color: var(--blue-bright); background: var(--blue-fill-weak); padding: 2px 7px; border-radius: 2px; }
 .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0 80px; }
 .sidebar-nav::-webkit-scrollbar{width:3px;}
 .sidebar-section { margin-bottom: 2px; }
@@ -123,8 +292,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   color: var(--text-secondary); background: none; border: none; cursor: pointer;
   text-align: left; text-decoration: none; transition: all .2s; border-left: 2px solid transparent;
 }
-.sidebar-section-btn:hover { color: var(--text-secondary); background: rgba(255,255,255,0.03); }
-.sidebar-section-btn.active { color: var(--gold-light); border-left-color: var(--gold); background: rgba(212,168,67,0.06); }
+.sidebar-section-btn:hover { color: var(--text-secondary); background: var(--overlay-hover); }
+.sidebar-section-btn.active { color: var(--gold-light); border-left-color: var(--gold); background: var(--gold-fill-faint); }
 .sidebar-section-num { font-size: 10px; color: var(--text-dim); flex-shrink: 0; width: 20px; }
 .sidebar-section-btn.active .sidebar-section-num { color: var(--gold); }
 .sidebar-chevron { margin-left: auto; font-size: 10px; color: var(--text-dim); transition: transform .2s; flex-shrink: 0; }
@@ -139,10 +308,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .main-wrap { transition: margin-left .3s, padding-top .3s; min-height: 100vh; }
 
 /* ═══ EXTRA UTILITIES (template) ═══ */
-.badge-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; border: 1px solid rgba(176,132,216,0.25); }
-.tag-pm { background: rgba(74,143,224,0.12); color: #90C0F0; }
-.tag-design { background: rgba(176,132,216,0.12); color: #C8A0F0; }
-.tag-web { background: rgba(224,150,58,0.14); color: #E0B070; }
+.badge-v2 { background: var(--purple-fill); color: var(--purple-bright); border: 1px solid var(--purple-line); }
+.tag-pm { background: var(--blue-fill); color: var(--blue-bright); }
+.tag-design { background: var(--purple-fill); color: var(--purple-bright); }
+.tag-web { background: var(--orange-fill); color: var(--orange-bright); }
 .callout.success { border-left-color: var(--green); }
 .oq-item.pm { border-left-color: var(--purple); }
 .oq-item.pm .oq-owner { color: var(--purple); }
@@ -163,15 +332,15 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .cover-bg{
   position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 30%,rgba(212,168,67,0.07) 0%,transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%,rgba(74,143,224,0.05) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 40% at 80% 70%,rgba(176,132,216,0.04) 0%,transparent 60%);
+    radial-gradient(ellipse 80% 60% at 50% 30%,var(--gold-glow-faint) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%,var(--blue-glow) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%,var(--purple-glow) 0%,transparent 60%);
 }
 .cover-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px);
+    linear-gradient(var(--gold-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gold-line) 1px,transparent 1px);
   background-size:60px 60px;
 }
 .cover-tag{
@@ -185,7 +354,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   font-size:clamp(52px,10vw,96px);
   letter-spacing:0.06em;line-height:0.95;
   color:var(--gold-light);
-  text-shadow:0 0 80px rgba(212,168,67,0.25);
+  text-shadow:0 0 80px var(--gold-glow);
   margin-bottom:12px;position:relative;
 }
 .cover h1 span{color:var(--text-primary);}
@@ -201,7 +370,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   font-family:'DM Mono',monospace;font-size:10px;
   letter-spacing:0.1em;color:var(--text-secondary);
   padding:7px 14px;border:1px solid var(--border);
-  border-radius:20px;background:rgba(255,255,255,0.02);
+  border-radius:20px;background:var(--overlay-pill);
 }
 .cover-pill strong{color:var(--gold-light);}
 .cover-badges{
@@ -220,18 +389,18 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.06em;
   color:var(--gold-light);text-decoration:none;
   padding:8px 16px;border-radius:20px;
-  border:1px solid var(--border-bright);background:rgba(212,168,67,0.06);
+  border:1px solid var(--border-bright);background:var(--gold-fill-faint);
   transition:background 0.15s,border-color 0.15s;
 }
-.cover-proto-link:hover{background:rgba(212,168,67,0.14);border-color:var(--gold);}
+.cover-proto-link:hover{background:var(--gold-fill-mid);border-color:var(--gold);}
 .badge{
   font-family:'DM Mono',monospace;font-size:10px;
   letter-spacing:0.12em;padding:5px 12px;border-radius:2px;
   text-transform:uppercase;
 }
-.badge-v1{background:rgba(90,191,122,0.12);color:#7ADFA0;border:1px solid rgba(90,191,122,0.25);}
-.badge-scope{background:rgba(212,168,67,0.1);color:var(--gold-light);border:1px solid var(--border);}
-.badge-conf{background:rgba(224,90,58,0.1);color:#F0907A;border:1px solid rgba(224,90,58,0.25);}
+.badge-v1{background:var(--green-fill);color:var(--green-bright);border:1px solid var(--green-line);}
+.badge-scope{background:var(--gold-fill-weak);color:var(--gold-light);border:1px solid var(--border);}
+.badge-conf{background:var(--red-fill-weak);color:var(--red-bright);border:1px solid var(--red-line);}
 
 /* ─── LAYOUT ─── */
 .page{max-width:1040px;margin:0 auto;padding:0 40px 120px;}
@@ -297,12 +466,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 }
 .spec-table td{
   padding:11px 14px;color:var(--text-primary);
-  border-bottom:1px solid rgba(255,255,255,0.04);
+  border-bottom:1px solid var(--overlay-row);
 }
 .spec-table td.mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);}
 .ui-doc-spec .mono,.callout .mono{font-family:'DM Mono',monospace;font-size:11px;}
 .spec-table td.dim{color:var(--text-secondary);}
-.spec-table tr:hover td{background:rgba(255,255,255,0.015);}
+.spec-table tr:hover td{background:var(--overlay-faint);}
 
 /* ─── ARTSPEC: 原型截圖 + 說明 兩欄版型 ─── */
 .artspec-row{display:flex;gap:26px;align-items:flex-start;margin-bottom:30px;}
@@ -314,7 +483,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   border:1px solid var(--border-bright);
   border-radius:18px;padding:7px;
   background:linear-gradient(160deg,var(--dark-3),var(--dark-2));
-  box-shadow:0 10px 34px rgba(0,0,0,0.45);
+  box-shadow:0 10px 34px var(--shadow);
 }
 .phone-frame img{width:100%;display:block;border-radius:12px;}
 .phone-frame.dual{display:flex;flex-direction:column;gap:7px;}
@@ -331,13 +500,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   padding:3px 8px;border-radius:2px;letter-spacing:0.08em;
   display:inline-block;
 }
-.tag-v1{background:rgba(90,191,122,0.12);color:#7ADFA0;}
-.tag-v2{background:rgba(176,132,216,0.12);color:#C8A0F0;}
-.tag-req{background:rgba(224,90,58,0.12);color:#F0907A;}
-.tag-opt{background:rgba(74,143,224,0.12);color:#90C0F0;}
-.tag-data{background:rgba(58,191,176,0.12);color:#70DFD0;}
-.tag-eng{background:rgba(212,168,67,0.12);color:var(--gold-light);}
-.tag-inf{background:rgba(224,90,58,0.15);color:#F0907A;border:1px solid rgba(224,90,58,0.3);}
+.tag-v1{background:var(--green-fill);color:var(--green-bright);}
+.tag-v2{background:var(--purple-fill);color:var(--purple-bright);}
+.tag-req{background:var(--red-fill);color:var(--red-bright);}
+.tag-opt{background:var(--blue-fill);color:var(--blue-bright);}
+.tag-data{background:var(--teal-fill);color:var(--teal-bright);}
+.tag-eng{background:var(--gold-fill);color:var(--gold-light);}
+.tag-inf{background:var(--red-fill-strong);color:var(--red-bright);border:1px solid var(--red-line-strong);}
 
 /* ─── FLOW DIAGRAM ─── */
 .flow-wrap{margin-bottom:32px;overflow-x:auto;}
@@ -356,9 +525,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 }
 .flow-step-title{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
 .flow-step-desc{font-size:11px;color:var(--text-secondary);line-height:1.5;}
-.flow-step.highlight{border-color:var(--gold);background:rgba(212,168,67,0.06);}
-.flow-step.warn{border-color:var(--red);background:rgba(224,90,58,0.06);}
-.flow-step.success{border-color:var(--green);background:rgba(90,191,122,0.06);}
+.flow-step.highlight{border-color:var(--gold);background:var(--gold-fill-faint);}
+.flow-step.warn{border-color:var(--red);background:var(--red-fill-faint);}
+.flow-step.success{border-color:var(--green);background:var(--green-fill-faint);}
 .flow-arrow{
   color:var(--text-dim);font-size:18px;padding:0 8px;flex-shrink:0;
 }
@@ -380,7 +549,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   position:relative;cursor:pointer;
   transition:border-color .2s,background .2s;
 }
-.prize-cell:hover{border-color:var(--gold);background:rgba(212,168,67,0.05);}
+.prize-cell:hover{border-color:var(--gold);background:var(--gold-fill-faint);}
 .prize-cell-num{
   font-family:'DM Mono',monospace;font-size:9px;
   color:var(--text-dim);letter-spacing:0.2em;
@@ -390,22 +559,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .prize-cell-type{font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
 .prize-cell-val{font-family:'DM Mono',monospace;font-size:18px;color:var(--gold-light);font-weight:500;}
 .prize-cell-unlock{font-size:10px;color:var(--text-dim);margin-top:6px;}
-.prize-cell.small{border-color:rgba(74,143,224,0.25);}
-.prize-cell.small .prize-cell-val{color:#90C0F0;}
-.prize-cell.medium{border-color:rgba(90,191,122,0.25);}
-.prize-cell.medium .prize-cell-val{color:#7ADFA0;}
-.prize-cell.large{border-color:rgba(212,168,67,0.4);}
+.prize-cell.small{border-color:var(--blue-line);}
+.prize-cell.small .prize-cell-val{color:var(--blue-bright);}
+.prize-cell.medium{border-color:var(--green-line);}
+.prize-cell.medium .prize-cell-val{color:var(--green-bright);}
+.prize-cell.large{border-color:var(--gold-border-strong);}
 .prize-cell.large .prize-cell-val{color:var(--gold-light);}
 .prize-cell.jackpot{
-  border-color:rgba(212,168,67,0.6);
-  background:rgba(212,168,67,0.05);
+  border-color:var(--gold-border-vivid);
+  background:var(--gold-fill-faint);
 }
 .prize-cell.jackpot .prize-cell-val{color:var(--gold-light);font-size:22px;}
 .jackpot-indicator{
   position:absolute;top:6px;right:8px;
   font-family:'DM Mono',monospace;font-size:8px;
   color:var(--gold);letter-spacing:0.1em;
-  background:rgba(212,168,67,0.12);
+  background:var(--gold-fill);
   padding:2px 6px;border-radius:2px;
 }
 
@@ -415,9 +584,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   display:grid;grid-template-columns:60px 100px 1fr 80px 80px 80px;
   gap:10px;align-items:center;
   padding:8px 12px;border-radius:3px;
-  border-bottom:1px solid rgba(255,255,255,0.04);
+  border-bottom:1px solid var(--overlay-row);
 }
-.threshold-row:hover{background:rgba(255,255,255,0.02);}
+.threshold-row:hover{background:var(--overlay-pill);}
 .threshold-row.header{
   font-family:'DM Mono',monospace;font-size:9px;
   color:var(--text-dim);letter-spacing:0.12em;
@@ -447,13 +616,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .compare-table th.v2-col{color:var(--purple);}
 .compare-table td{
   padding:11px 16px;
-  border-bottom:1px solid rgba(255,255,255,0.04);
+  border-bottom:1px solid var(--overlay-row);
   vertical-align:top;
 }
 .compare-table td:first-child{color:var(--text-secondary);font-weight:500;}
-.compare-table .v1-val{color:#7ADFA0;}
-.compare-table .v2-val{color:#C8A0F0;}
-.compare-table tr:hover td{background:rgba(255,255,255,0.015);}
+.compare-table .v1-val{color:var(--green-bright);}
+.compare-table .v2-val{color:var(--purple-bright);}
+.compare-table tr:hover td{background:var(--overlay-faint);}
 .check{color:var(--green);}
 .cross{color:var(--text-dim);}
 .plus{color:var(--orange);}
@@ -470,7 +639,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   width:12px;height:12px;border-radius:50%;
   background:var(--dark-3);border:2px solid var(--gold-dim);
 }
-.tl-dot.active{border-color:var(--gold);background:rgba(212,168,67,0.2);}
+.tl-dot.active{border-color:var(--gold);background:var(--gold-fill-dot);}
 .tl-phase{
   font-family:'DM Mono',monospace;font-size:9px;
   color:var(--gold);letter-spacing:0.2em;margin-bottom:6px;
@@ -497,7 +666,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .kpi-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:8px;}
 .kpi-val{font-family:'DM Mono',monospace;font-size:28px;color:var(--gold-light);font-weight:500;margin-bottom:4px;}
 .kpi-desc{font-size:11px;color:var(--text-secondary);line-height:1.6;}
-.kpi-card.primary{border-color:rgba(212,168,67,0.35);}
+.kpi-card.primary{border-color:var(--border-kpi);}
 
 /* ─── COST TABLE ─── */
 .cost-block{
@@ -506,7 +675,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 }
 .cost-row{
   display:flex;justify-content:space-between;align-items:center;
-  padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+  padding:8px 0;border-bottom:1px solid var(--overlay-row);
   font-size:13px;
 }
 .cost-row:last-child{border-bottom:none;}
@@ -523,7 +692,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   width:320px;margin:0 auto 32px;
   background:var(--dark-2);border:1px solid var(--border);
   border-radius:28px;overflow:hidden;
-  box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04);
+  box-shadow:0 24px 80px var(--shadow-strong),0 0 0 1px var(--overlay-row);
 }
 .mockup-statusbar{
   background:var(--dark);padding:14px 24px 8px;
@@ -551,7 +720,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 /* Treasure chest UI */
 .chest-container{
-  background:rgba(212,168,67,0.04);
+  background:var(--gold-fill-faint);
   border:1px solid var(--border);
   border-radius:12px;padding:16px;
   margin-bottom:12px;
@@ -593,20 +762,20 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 }
 .chest-cell{
   background:var(--dark-4);
-  border:1px solid rgba(255,255,255,0.07);
+  border:1px solid var(--overlay-border);
   border-radius:8px;padding:10px 6px;
   text-align:center;position:relative;
   min-height:72px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
 }
 .chest-cell.unlocked{
-  border-color:rgba(212,168,67,0.3);
-  background:rgba(212,168,67,0.06);
+  border-color:var(--gold-border-mid);
+  background:var(--gold-fill-faint);
   cursor:pointer;
 }
 .chest-cell.opened{
-  border-color:rgba(90,191,122,0.3);
-  background:rgba(90,191,122,0.05);
+  border-color:var(--green-line-strong);
+  background:var(--green-fill-faint);
 }
 .chest-cell.locked{opacity:0.5;}
 .chest-cell-num{
@@ -619,11 +788,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   font-weight:600;
 }
 .chest-cell.unlocked .chest-cell-val{color:var(--gold-light);}
-.chest-cell.opened .chest-cell-val{color:#7ADFA0;}
+.chest-cell.opened .chest-cell-val{color:var(--green-bright);}
 .chest-cell.locked .chest-cell-val{color:var(--text-dim);}
 .chest-cell-unlock-req{font-size:8px;color:var(--text-dim);margin-top:2px;}
 .jackpot-glow{
-  box-shadow:0 0 12px rgba(212,168,67,0.3);
+  box-shadow:0 0 12px var(--gold-border-mid);
   border-color:var(--gold) !important;
 }
 
@@ -632,7 +801,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   display:flex;align-items:center;gap:6px;
   font-size:10px;color:var(--text-dim);
   padding:8px 12px;
-  background:rgba(255,255,255,0.03);
+  background:var(--overlay-hover);
   border-radius:6px;margin-top:8px;
 }
 
@@ -654,8 +823,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   font-family:'DM Mono',monospace;font-size:9px;
   padding:3px 10px;border-radius:2px;margin-left:auto;
 }
-.admin-status.active{background:rgba(90,191,122,0.12);color:#7ADFA0;}
-.admin-status.draft{background:rgba(212,168,67,0.12);color:var(--gold-light);}
+.admin-status.active{background:var(--green-fill);color:var(--green-bright);}
+.admin-status.draft{background:var(--gold-fill);color:var(--gold-light);}
 .admin-body{padding:20px;}
 .admin-form-row{
   display:grid;grid-template-columns:160px 1fr;
@@ -743,7 +912,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   padding:5px 11px;border-radius:4px;margin:3px 4px 3px 0;
   border:1px solid var(--border);
 }
-.line-chip.on{background:rgba(212,168,67,0.14);color:var(--gold-light);border-color:var(--border-bright);}
+.line-chip.on{background:var(--gold-fill-mid);color:var(--gold-light);border-color:var(--border-bright);}
 .line-chip.off{background:transparent;color:var(--text-dim);}
 .line-chip.dis{background:var(--dark-3);color:var(--text-dim);border-style:dashed;}
 @media(max-width:768px){.ui-doc-row{grid-template-columns:1fr;}.ui-doc-spec dl{grid-template-columns:84px 1fr;}}
@@ -785,10 +954,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .log-item{
   display:grid;grid-template-columns:180px 100px 1fr;
   gap:12px;padding:10px 12px;
-  border-bottom:1px solid rgba(255,255,255,0.04);
+  border-bottom:1px solid var(--overlay-row);
   font-size:12px;
 }
-.log-item:hover{background:rgba(255,255,255,0.015);}
+.log-item:hover{background:var(--overlay-faint);}
 .log-item.header{
   font-family:'DM Mono',monospace;font-size:9px;
   color:var(--text-dim);letter-spacing:0.12em;text-transform:uppercase;
@@ -859,8 +1028,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   display:inline-flex;align-items:center;gap:6px;
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:0.1em;color:var(--purple);
-  background:rgba(176,132,216,0.08);
-  border:1px solid rgba(176,132,216,0.2);
+  background:var(--purple-fill-faint);
+  border:1px solid var(--purple-line-weak);
   padding:3px 10px;border-radius:2px;
   margin-left:8px;vertical-align:middle;
 }
@@ -875,9 +1044,54 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   .compare-wrap{overflow-x:scroll;}
   .admin-form-row{grid-template-columns:1fr;}
 }
+
+/* ═══ THEME TOGGLE（亮/暗主題切換 · 右下角浮動圓鈕；獨立於頂部列模式切換） ═══ */
+body{transition:background .3s,color .3s;}
+.theme-toggle{
+  position:fixed;bottom:24px;right:24px;z-index:210;
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:var(--dark-3);border:1px solid var(--border-bright);color:var(--gold-light);
+  box-shadow:0 4px 24px var(--shadow);
+  transition:background .25s,color .25s,border-color .25s,transform .25s,box-shadow .25s;
+  -webkit-appearance:none;appearance:none;
+}
+.theme-toggle:hover{
+  border-color:var(--gold);color:var(--gold);background:var(--gold-fill);
+  transform:translateY(-2px) rotate(-12deg);box-shadow:0 6px 28px var(--shadow);
+}
+.theme-toggle svg{width:20px;height:20px;display:block;}
+.theme-toggle .icon-sun{display:block;}
+.theme-toggle .icon-moon{display:none;}
+html[data-theme="light"] .theme-toggle .icon-sun{display:none;}
+html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
+@media print{.theme-toggle,.layout-toggle{display:none !important;}}
 </style>
+<script>
+/* ═══ FOUC 防閃：盡早把 data-theme 設到 <html>（spec-theme → 系統 → 暗色） ═══ */
+(function(){
+  try {
+    var stored = localStorage.getItem('spec-theme');
+    var theme = stored || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
 </head>
 <body class="layout-side">
+
+<!-- ═══════════ THEME TOGGLE（亮/暗主題切換 · 與頂部列模式切換為獨立邏輯） ═══════════ -->
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換亮/暗主題" title="切換亮/暗主題">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
 
 <!-- ═══════════ LAYOUT TOGGLE ═══════════ -->
 <div class="layout-toggle">
@@ -1166,8 +1380,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
   <div class="sub-title">版本規劃一覽</div>
   <div class="info-grid-2">
-    <div class="info-card" style="border-color:rgba(90,191,122,0.3);">
-      <div class="info-card-title" style="color:#7ADFA0;">v1 · 本次主開發（現金獎 + 完整基建）</div>
+    <div class="info-card" style="border-color:var(--green-line-strong);">
+      <div class="info-card-title" style="color:var(--green-bright);">v1 · 本次主開發（現金獎 + 完整基建）</div>
       <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
         ✅ 動態洗牌 9 宮格（非固定位置）<br>
         ✅ 攤開 → 洗牌動態 → 背面蓋牌選格 流程<br>
@@ -1183,8 +1397,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         ✅ 玩家進度 log 追蹤、發放紀錄、對帳結構
       </div>
     </div>
-    <div class="info-card" style="border-color:rgba(176,132,216,0.3);">
-      <div class="info-card-title" style="color:#C8A0F0;">v2 · 後續擴充</div>
+    <div class="info-card" style="border-color:var(--purple-line-strong);">
+      <div class="info-card-title" style="color:var(--purple-bright);">v2 · 後續擴充</div>
       <div class="info-card-desc" style="margin-top:8px;line-height:1.8;">
         ✅ 獎勵內容編輯工具（可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list）<br>
         ✅ 背包系統顯示<br>
@@ -1354,18 +1568,18 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
   <div class="info-grid-4">
     <div class="info-card">
-      <div class="info-card-val" style="color:#90C0F0;">💙 ₱1</div>
+      <div class="info-card-val" style="color:var(--blue-bright);">💙 ₱1</div>
       <div class="info-card-label">小獎 ×5格</div>
     </div>
     <div class="info-card">
-      <div class="info-card-val" style="color:#7ADFA0;">💚 ₱3</div>
+      <div class="info-card-val" style="color:var(--green-bright);">💚 ₱3</div>
       <div class="info-card-label">中獎 ×2格</div>
     </div>
     <div class="info-card">
       <div class="info-card-val" style="color:var(--gold-light);">🌟 ₱8</div>
       <div class="info-card-label">大獎 ×1格</div>
     </div>
-    <div class="info-card" style="border-color:rgba(212,168,67,0.4);">
+    <div class="info-card" style="border-color:var(--gold-border-strong);">
       <div class="info-card-val">👑 ₱18</div>
       <div class="info-card-label">最終獎 ×1格（原 Jackpot）</div>
     </div>
@@ -1640,8 +1854,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <span class="tag-pill tag-web">🌐 前端Web</span>
     <span class="tag-pill tag-data">📊 數據組</span>
     <span class="tag-pill tag-req">🖥 基礎建設</span>
-    <span class="tag-pill tag-v1" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM/企劃</span>
-    <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 UI設計</span>
+    <span class="tag-pill tag-v1" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM/企劃</span>
+    <span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 UI設計</span>
   </div>
 
   <div class="tab-bar">
@@ -1657,11 +1871,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <table class="spec-table">
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
-        <tr><td>1.1</td><td>送出 place_bet 新增欄位需求書</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">請求 AWC 新增 bonus_type / campaign_id 欄位，bet_amount=0 零押注交易確認</td><td class="dim">需書面確認</td></tr>
+        <tr><td>1.1</td><td>送出 place_bet 新增欄位需求書</td><td><span class="tag-pill" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM</span></td><td class="dim">請求 AWC 新增 bonus_type / campaign_id 欄位，bet_amount=0 零押注交易確認</td><td class="dim">需書面確認</td></tr>
         <tr><td>1.2</td><td>確認零押注交易合法性</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">確認 AWC 平台商能正確處理 bet_amount=0 的純派發交易</td><td class="dim tag-req" style="background:none;padding:0;color:var(--red);">⚠️ 基礎建設前置</td></tr>
-        <tr><td>1.3</td><td>確認每日對帳口徑</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">確認 get_bet_summary 是否能分離活動派彩 vs 一般 GGR</td><td class="dim">需 AWC 確認</td></tr>
+        <tr><td>1.3</td><td>確認每日對帳口徑</td><td><span class="tag-pill" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM</span></td><td class="dim">確認 get_bet_summary 是否能分離活動派彩 vs 一般 GGR</td><td class="dim">需 AWC 確認</td></tr>
         <tr><td>1.4</td><td>確認 Callback 規格</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">place_bet 回調中可取得 bet_amount、game_account、game_code 確認</td><td></td></tr>
-        <tr><td>1.5</td><td>送出 v2 背包系統 AWC 需求書</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">提前告知 AWC：v2 需要串接 LoginWithoutRedirect API 取得遊戲跳轉 URL，請求排期確認</td><td class="dim" style="color:var(--orange);">⚠️ 與 v2 開發平行進行，不等 v1 完成</td></tr>
+        <tr><td>1.5</td><td>送出 v2 背包系統 AWC 需求書</td><td><span class="tag-pill" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM</span></td><td class="dim">提前告知 AWC：v2 需要串接 LoginWithoutRedirect API 取得遊戲跳轉 URL，請求排期確認</td><td class="dim" style="color:var(--orange);">⚠️ 與 v2 開發平行進行，不等 v1 完成</td></tr>
         <tr><td>1.6</td><td>確認 LoginWithoutRedirect 規格</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">確認 AWC 的 LoginWithoutRedirect 回傳格式、Token 有效期、一次性 URL 限制</td><td class="dim">需 AWC 配合</td></tr>
       </tbody>
     </table>
@@ -1671,7 +1885,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <table class="spec-table">
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
-        <tr><td>2.1</td><td>建立 reward_catalog 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">登記所有獎品類型：R_CASH_1 / R_CASH_3 / R_CASH_8 / R_CASH_18，預留 R_FS_* 欄位結構</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;font-size:9px;">v2預留</span></td></tr>
+        <tr><td>2.1</td><td>建立 reward_catalog 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">登記所有獎品類型：R_CASH_1 / R_CASH_3 / R_CASH_8 / R_CASH_18，預留 R_FS_* 欄位結構</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);font-size:9px;">v2預留</span></td></tr>
         <tr><td>2.2</td><td>建立 campaign 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">活動配方表：campaign_id, name, <strong>currency（幣值·v4.0，每幣值獨立配方）</strong>, theme_id（版型主題·預定義單選）, countdown_lead_days（倒數啟動天數·預設 3）, <strong>reset_time（每日 reset 時間點·Server+8·v4.0 逐活動設定）</strong>, total_cycle（活動總週期）, platform_lines[]（投放線路·預定義平台清單·必選）, unlock_thresholds[]（增量）, prize_pool, draw_weights[]（第幾抽權重）, usertype_tags[]（值由數據組分群提供）, start_date, end_date, status, <strong>review_status（審核狀態·v4.0：draft/pending/approved/online）</strong></td><td class="dim">usertype_tags／platform_lines 來源＝數據組提供、後端直接抓取、不開放後台新增（v4.0 B2）；<strong>每套 currency 各自一組門檻／獎池／RTP</strong></td></tr>
         <tr><td>2.3</td><td>建立 player_progress 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">player_id + campaign_id + date 為複合主鍵；today_wager, cell_states[], shuffle_result, created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>2.4</td><td>建立 reward_grant 資料表</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發放收據：player_id, campaign_id, cell_index, reward_id, amount, awc_txn_id, status(pending/active/failed), created_at</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
@@ -1699,7 +1913,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>3.10</td><td>背包查詢 API（GET /inventory）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">回傳玩家目前持有道具清單，含道具類型、數量、可使用遊戲列表、有效期限</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
         <tr><td>3.11</td><td>背包使用 API（POST /inventory/use，道具使用跳轉）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證道具有效 → 呼叫 AWC LoginWithoutRedirect（帶 Token + GameId）→ 取得一次性 URL → 回傳前端 → 更新 item_use_log（AWC 已於 v1 串妥）</td><td><span class="tag-pill tag-v2">v2 啟用</span></td></tr>
         <tr><td>3.12</td><td>道具過期排程</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">每日檢查 inventory 中 expire_at < now 的道具，更新 status = expired</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
-        <tr><td>3.13</td><td>受眾資格判定邏輯（Audience Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家 tag（DA 同步表）∩ campaign.usertype_tags[]：符合才顯示活動／計入押注，留空＝全體；<strong>支援多 tag</strong>，玩家符合多活動時依 <strong>DA 排定 tag Priority 取最高優先那組</strong>（同序依活動建立順序）；<strong>擇一原則：同一時間只跑 1 檔，落選活動不顯示 icon、押注不計入</strong>；<strong>閘門先於 3.1 押注累積執行</strong>。中台不自算分群，玩家 tag／Priority 同步依 Roadmap W1「Tag 接收·同步」</td><td><span class="tag-pill" style="background:rgba(58,191,176,0.12);color:#70DFD0;">DA 對接</span></td></tr>
+        <tr><td>3.13</td><td>受眾資格判定邏輯（Audience Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家 tag（DA 同步表）∩ campaign.usertype_tags[]：符合才顯示活動／計入押注，留空＝全體；<strong>支援多 tag</strong>，玩家符合多活動時依 <strong>DA 排定 tag Priority 取最高優先那組</strong>（同序依活動建立順序）；<strong>擇一原則：同一時間只跑 1 檔，落選活動不顯示 icon、押注不計入</strong>；<strong>閘門先於 3.1 押注累積執行</strong>。中台不自算分群，玩家 tag／Priority 同步依 Roadmap W1「Tag 接收·同步」</td><td><span class="tag-pill" style="background:var(--teal-fill);color:var(--teal-bright);">DA 對接</span></td></tr>
         <tr><td>3.14</td><td>線路資格判定邏輯（Line Gate）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">取玩家所在線路（AWC callback 帶回）∈ campaign.platform_lines[]：在清單內才顯示活動／計入押注，不在＝玩家無感不報錯；<strong>閘門先於 3.13 受眾判定執行</strong>（先比線路收斂候選活動，再比受眾 tag、再 Priority）。platform_lines[] 必選、取自「已開通 Bet=0」預定義平台清單</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>3.15</td><td>主題 asset bundle 載入機制（theme_id → 對應素材包）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">維護預定義主題清單（treasure_box / gold_egg / red_envelope / xmas_gift），GET /chest/status 與 iFrame 載入時依 campaign.theme_id 回傳對應 asset bundle URL（icon／背景／9 格美術／開獎 sprite／SFX／文案 key／主色 token）；<strong>僅換素材包路徑、不動玩法數值</strong>，支援熱更新不需重出遊戲版本</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
         <tr><td>3.16</td><td>Telegram 異常通知（v4.0）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">發獎失敗等異常事件推送到 Telegram 告警群組／機器人；<strong>初期人工處理（人工確認＋手動重試），穩定後再規劃自動化</strong>（對應 §08 B4）</td><td class="dim">後端 Wayne / Eric</td></tr>
@@ -1711,14 +1925,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <table class="spec-table">
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
-        <tr><td>4.1</td><td>寶箱 UI 設計稿輸出</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">3×3格子佈局、解鎖動畫、翻格動畫、進度條、最終獎光效設計稿</td><td></td></tr>
+        <tr><td>4.1</td><td>寶箱 UI 設計稿輸出</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">3×3格子佈局、解鎖動畫、翻格動畫、進度條、最終獎光效設計稿</td><td></td></tr>
         <tr><td>4.2</td><td>寶箱入口按鈕（遊戲內 UI）</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">遊戲主畫面顯示寶箱快捷入口（含未翻格提示紅點）</td><td></td></tr>
         <tr><td>4.3</td><td>寶箱主畫面實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">3×3 Grid、依「可翻次數」渲染格子三態（鎖定/可翻/已翻）、進度條、剩餘可翻次數與「再押 ₱X 解鎖下一次機會」</td><td></td></tr>
         <tr><td>4.4</td><td>翻格動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊翻格翻轉動畫、獎勵金額飛出、最終獎特效（爆發光效）</td><td></td></tr>
         <tr><td>4.5</td><td>進度條即時更新</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">每次 Spin 後更新進度條；達門檻取得新翻牌次數時，所有未開格發光提示可翻</td><td></td></tr>
         <tr><td>4.6</td><td>重置倒計時顯示</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">顯示距今日 00:00 重置還有多少時間，製造急迫感</td><td></td></tr>
         <tr><td>4.7</td><td>API 串接</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">串接 GET /chest/status 取狀態，串接 POST /chest/open 翻格</td><td></td></tr>
-        <tr><td>4.8</td><td>背包 UI 設計稿</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">主畫面背包 icon、背包列表頁、道具卡片樣式、遊戲選擇彈窗設計稿</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>4.8</td><td>背包 UI 設計稿</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">主畫面背包 icon、背包列表頁、道具卡片樣式、遊戲選擇彈窗設計稿</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
         <tr><td>4.9</td><td>主畫面背包 icon 實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">固定顯示於主畫面，持有道具時顯示數量紅點提示</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
         <tr><td>4.10</td><td>背包主頁面實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">列出所有持有道具，顯示道具名稱、數量、有效期限、使用按鈕</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
         <tr><td>4.11</td><td>遊戲選擇彈窗實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">點擊 FREE SPIN 卡後跳出可選遊戲列表（依後台設定的 GameId 清單），顯示遊戲縮圖+名稱</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
@@ -1726,8 +1940,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <tr><td>4.13</td><td>洗牌動態動畫實作</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">攤開階段→點擊開始遊戲→獎項集中中央→洗牌動畫→分散到9格背面蓋牌，整段動畫流暢度為關鍵體驗</td><td></td></tr>
         <tr><td>4.14</td><td>主題換皮 asset loader</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">依 theme_id 動態載入 icon／背景／9 格格子美術／開獎 sprite／SFX／文案／主色 token，套用到固定版位；<strong>共用一套「無屬性」開獎動畫時間軸（容器開啟→光爆→獎品彈出），各主題只抽換 sprite 與音效</strong>，不為主題寫新動畫</td><td><span class="tag-pill tag-v1">✓ 納入</span></td></tr>
         <tr><td>4.15</td><td>活動期間元件（日期區間＋最後 N 天倒數）</td><td><span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">面板頂部顯示活動期間；平常態顯示日期區間（例 07/01–09/30），活動結束前 countdown_lead_days 天自動切換為動態倒數（剩 N 天 HH:MM:SS）；以伺服器時間為準、跨日 00:00 翻轉、結束瞬間顯示已結束、維護中隱藏倒數顯示維護中</td><td><span class="tag-pill tag-v1">✓ 納入</span></td></tr>
-        <tr><td>4.16</td><td>4 套主題資產包（icon／背景／格子／開獎 sprite／SFX）＋命名規範</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">產出 treasure_box / gold_egg / red_envelope / xmas_gift 四套主題資產包，含浮動 icon、背景/主色 token、9 格格子美術（locked/unlocked）、套用無屬性動畫的開獎 sprite 序列、SFX、文案 key；命名格式 theme_{theme_id}_{asset}（見 §07 主題資產對應規範）</td><td></td></tr>
-        <tr><td>4.17</td><td>前台活動期間元件 UI 設計稿</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">日期區間態與最後 N 天倒數態兩款視覺；倒數以金色強調製造急迫感，並含已結束／維護中兩種狀態</td><td></td></tr>
+        <tr><td>4.16</td><td>4 套主題資產包（icon／背景／格子／開獎 sprite／SFX）＋命名規範</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">產出 treasure_box / gold_egg / red_envelope / xmas_gift 四套主題資產包，含浮動 icon、背景/主色 token、9 格格子美術（locked/unlocked）、套用無屬性動畫的開獎 sprite 序列、SFX、文案 key；命名格式 theme_{theme_id}_{asset}（見 §07 主題資產對應規範）</td><td></td></tr>
+        <tr><td>4.17</td><td>前台活動期間元件 UI 設計稿</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">日期區間態與最後 N 天倒數態兩款視覺；倒數以金色強調製造急迫感，並含已結束／維護中兩種狀態</td><td></td></tr>
       </tbody>
     </table>
   </div>
@@ -1736,17 +1950,17 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <table class="spec-table">
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
-        <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
+        <tr><td>5.1</td><td>後台活動列表頁</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">顯示所有活動、狀態（草稿/上線/已結束）、快速操作（編輯/啟停）</td><td></td></tr>
         <tr><td>5.2</td><td>後台活動建立/編輯表單</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填寫：活動名稱、<strong>版型主題下拉（theme_id · 單選預定義 · 含縮圖預覽）</strong>、期間、<strong>倒數提前天數（countdown_lead_days · 預設 3）</strong>、<strong>投放線路（platform_lines · 必選 · 多選）</strong>、每格增量門檻（9格）、固定獎池組成、第幾抽權重、usertype tag</td><td></td></tr>
         <tr><td>5.3</td><td>後台 RTP 即時試算</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">填完獎勵後自動計算 RTP%，顯示是否在容許區間（0.9%–1.1%）</td><td></td></tr>
         <tr><td>5.4</td><td>後台活動啟停控制</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">可隨時將活動切為暫停狀態，暫停中玩家寶箱顯示維護中</td><td></td></tr>
         <tr><td>5.5</td><td>後台發放異常查詢</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">查詢 reward_grant 中 status=pending/failed 的紀錄，支援手動重試觸發</td><td></td></tr>
         <tr><td>5.6</td><td>後台帳號權限設定（頁面可見性 · v4.1）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim"><strong>頁面可見性模型</strong>：角色（Admin／Operator／Reviewer）＝一組可見頁面集合；Admin 可新增帳號並指派可見頁面，頁內不做欄位級切分</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td></tr>
-        <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
+        <tr><td>5.7</td><td>後台抽獎設定改版（第幾抽權重模式）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">詳見第 07 章後台規劃「抽獎權重設定（第幾抽）」說明</td><td></td></tr>
         <tr><td>5.8</td><td>後台道具發放設定（水管）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">v1 即建好欄位：可設定哪些獎項發放 FREE SPIN 卡、局數、有效期限、GameId 清單、max win 上限</td><td></td></tr>
-        <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
-        <tr><td>5.10</td><td>後台線路投放設定（platform_lines）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">活動表單提供「投放線路」多選元件，選項來自<strong>預定義「已開通 Bet=0」平台清單</strong>（後端維護）；<strong>必選、未選擋存檔上線</strong>。維護該清單的小後台（新增/下架平台）一併建好</td><td></td></tr>
-        <tr><td>5.11</td><td>後台版型主題下拉＋縮圖預覽（theme_id）＋倒數提前天數</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">🎨 設計</span></td><td class="dim">基本資料區「活動名稱」後加「版型主題」單選下拉（admin_theme_select，選項＝後端預定義主題清單、不可自由輸入，選中右側顯示縮圖預覽）；「活動期間」後加「倒數啟動天數」（countdown_lead_days，預設 3）。後台主題下拉＋縮圖預覽 UI 設計稿一併產出</td><td></td></tr>
+        <tr><td>5.9</td><td>獎勵內容編輯工具</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">可編輯 FREE SPIN 卡各星 bet 設定、可帶遊戲 list，供營運自助調整道具內容</td><td><span class="tag-pill tag-v2">v2</span></td></tr>
+        <tr><td>5.10</td><td>後台線路投放設定（platform_lines）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">活動表單提供「投放線路」多選元件，選項來自<strong>預定義「已開通 Bet=0」平台清單</strong>（後端維護）；<strong>必選、未選擋存檔上線</strong>。維護該清單的小後台（新增/下架平台）一併建好</td><td></td></tr>
+        <tr><td>5.11</td><td>後台版型主題下拉＋縮圖預覽（theme_id）＋倒數提前天數</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span> <span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">🎨 設計</span></td><td class="dim">基本資料區「活動名稱」後加「版型主題」單選下拉（admin_theme_select，選項＝後端預定義主題清單、不可自由輸入，選中右側顯示縮圖預覽）；「活動期間」後加「倒數啟動天數」（countdown_lead_days，預設 3）。後台主題下拉＋縮圖預覽 UI 設計稿一併產出</td><td></td></tr>
         <tr><td>5.12</td><td>活動上線審核流程＋分層權限（v4.0 · B1）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動狀態機加 pending/approved；「提交審核 → 審核人員核准 → 上線」流程；新增 <strong>Reviewer 審核人員角色</strong>，審核權限獨立於運營/操作（分層權限），避免單帳號全包</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
         <tr><td>5.13</td><td>上線中禁止編輯（v4.0 · C4）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">上線中活動鎖定編輯，須先下架/暫停才可改；緊急調整：先暫停 → 確認 → 恢復</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
         <tr><td>5.14</td><td>幣值維度設定（v4.0 · C3）</td><td><span class="tag-pill tag-eng">🛠 後端</span> <span class="tag-pill tag-web">🌐 前端Web</span></td><td class="dim">活動表單「基本資料」加「幣值」下拉；每套幣值（PHP／THB…）獨立門檻/獎池/規則並各自驗算 RTP，不做匯率換算</td><td class="dim">後端 Wayne / Eric · 後台頁面 劉暢</td></tr>
@@ -1758,13 +1972,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <table class="spec-table">
       <thead><tr><th>#</th><th>Task 項目</th><th>職能</th><th>說明</th><th>備註</th></tr></thead>
       <tbody>
-        <tr><td>6.1</td><td>Tester 帳號白名單測試</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">使用 is_tester=true 帳號完整走過一個解鎖→翻格→派獎→重置循環</td><td></td></tr>
+        <tr><td>6.1</td><td>Tester 帳號白名單測試</td><td><span class="tag-pill" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">使用 is_tester=true 帳號完整走過一個解鎖→翻格→派獎→重置循環</td><td></td></tr>
         <tr><td>6.2</td><td>AWC 對帳欄位驗證</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">確認 bonus_type / campaign_id 欄位在 get_bet_summary 中可正確分離</td><td></td></tr>
         <tr><td>6.3</td><td>重試機制壓力測試</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">模擬 AWC 失敗場景，驗證 retry queue 正確執行且不重複派獎</td><td></td></tr>
         <tr><td>6.4</td><td>上線監控設定</td><td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td><td class="dim">設定 reward_grant pending 數量 alert，AWC 失敗率 alert</td><td></td></tr>
         <tr><td>6.5</td><td>數據 Log 驗收</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">確認 Section 10 所列 Log 事件均正確上報，欄位無缺失</td><td></td></tr>
-        <tr><td>6.6</td><td>正式上線與觀察期</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span></td><td class="dim">先上單一活動版本觀察 2 週，數字健康後再評估 v2 分眾擴充</td><td></td></tr>
-        <tr><td>6.7</td><td>審核流程＋分層權限驗收（v4.0）</td><td><span class="tag-pill" style="background:rgba(212,168,67,0.12);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證「提交審核→核准→上線」流程；確認運營帳號無法自審自上、上線中無法直接編輯</td><td></td></tr>
+        <tr><td>6.6</td><td>正式上線與觀察期</td><td><span class="tag-pill" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM</span></td><td class="dim">先上單一活動版本觀察 2 週，數字健康後再評估 v2 分眾擴充</td><td></td></tr>
+        <tr><td>6.7</td><td>審核流程＋分層權限驗收（v4.0）</td><td><span class="tag-pill" style="background:var(--gold-fill);color:var(--gold-light);">📋 PM</span> <span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">驗證「提交審核→核准→上線」流程；確認運營帳號無法自審自上、上線中無法直接編輯</td><td></td></tr>
         <tr><td>6.8</td><td>Telegram 異常通知測試（v4.0）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">模擬發獎失敗，確認 Telegram 告警送達、可人工確認並手動重試</td><td class="dim">Wayne / Eric</td></tr>
       </tbody>
     </table>
@@ -1864,7 +2078,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         </div>
 
         <div class="chest-container">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;margin-bottom:10px;border:1px solid var(--border);border-radius:8px;background:rgba(212,168,67,0.04);">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;margin-bottom:10px;border:1px solid var(--border);border-radius:8px;background:var(--gold-fill-faint);">
             <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--text-dim);">活動期間</span>
             <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-light);">🔥 剩 2 天 11:23:45</span>
           </div>
@@ -2033,7 +2247,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           <td class="dim">「每日寶箱」「開始遊戲」「恭喜獲得最終大獎！」</td>
         </tr>
         <tr>
-          <td>抽金蛋<br><span class="mono" style="font-size:10px;color:var(--gold-light);">gold_egg</span><br><span class="tag-pill" style="font-size:9px;background:rgba(90,191,122,0.12);color:#7ADFA0;">復活節</span></td>
+          <td>抽金蛋<br><span class="mono" style="font-size:10px;color:var(--gold-light);">gold_egg</span><br><span class="tag-pill" style="font-size:9px;background:var(--green-fill);color:var(--green-bright);">復活節</span></td>
           <td class="dim">金＋嫩綠（easter）</td>
           <td class="dim">🥚 金蛋</td>
           <td class="dim">敲蛋：蛋殼裂開、彩光迸出</td>
@@ -2292,8 +2506,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
   <div class="sub-title">後台功能模組</div>
   <div class="info-grid-3">
-    <div class="info-card" style="border-color:rgba(90,191,122,0.3);">
-      <div class="info-card-title" style="color:#7ADFA0;">📋 活動管理</div>
+    <div class="info-card" style="border-color:var(--green-line-strong);">
+      <div class="info-card-title" style="color:var(--green-bright);">📋 活動管理</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 活動列表（狀態篩選）<br>
         · 新增 / 編輯活動<br>
@@ -2304,8 +2518,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span style="color:var(--purple);font-size:11px;">v2：活動模板複製</span>
       </div>
     </div>
-    <div class="info-card" style="border-color:rgba(74,143,224,0.3);">
-      <div class="info-card-title" style="color:#90C0F0;">🔧 異常處理</div>
+    <div class="info-card" style="border-color:var(--blue-line-strong);">
+      <div class="info-card-title" style="color:var(--blue-bright);">🔧 異常處理</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · Pending 發放列表<br>
         · 手動重試觸發<br>
@@ -2313,7 +2527,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         · AWC 回傳 Log 查看
       </div>
     </div>
-    <div class="info-card" style="border-color:rgba(212,168,67,0.3);">
+    <div class="info-card" style="border-color:var(--gold-border-mid);">
       <div class="info-card-title" style="color:var(--gold-light);">👥 帳號權限（頁面可見性 · v4.1）</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · <strong style="color:var(--gold-light);">角色＝一組「可見頁面」集合</strong><br>
@@ -2343,8 +2557,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         · 對應 AWC get_bet_summary 的 bonus_type 分離欄位
       </div>
     </div>
-    <div class="info-card" style="border-color:rgba(176,132,216,0.3);">
-      <div class="info-card-title" style="color:#C8A0F0;">🎨 版型主題</div>
+    <div class="info-card" style="border-color:var(--purple-line-strong);">
+      <div class="info-card-title" style="color:var(--purple-bright);">🎨 版型主題</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 預定義主題下拉（單選）<br>
         · 選中顯示縮圖預覽<br>
@@ -2359,21 +2573,21 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <strong>導覽分兩大群組 ＋ 頂部「檢視角色」切換：</strong>後台側邊導覽分為「<strong>營運管理</strong>」與「<strong>系統設定</strong>」兩群；頂部提供「<strong>檢視角色</strong>」切換（<span class="mono">Admin／Operator／Reviewer</span> 預覽），可預覽不同角色看到的<strong>可見頁面</strong>（對應頁面可見性權限模型）。
   </div>
   <div class="info-grid-3">
-    <div class="info-card" style="border-color:rgba(90,191,122,0.3);">
-      <div class="info-card-title" style="color:#7ADFA0;">🗂 營運管理</div>
+    <div class="info-card" style="border-color:var(--green-line-strong);">
+      <div class="info-card-title" style="color:var(--green-bright);">🗂 營運管理</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 活動管理（列表／新增／編輯／啟停）<br>
         · 活動審查（待審查佇列／唯讀檢視／通過·駁回）
       </div>
     </div>
-    <div class="info-card" style="border-color:rgba(212,168,67,0.3);">
+    <div class="info-card" style="border-color:var(--gold-border-mid);">
       <div class="info-card-title" style="color:var(--gold-light);">⚙️ 系統設定</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 帳號權限（後台帳號管理／頁面可見性指派）
       </div>
     </div>
-    <div class="info-card" style="border-color:rgba(74,143,224,0.3);">
-      <div class="info-card-title" style="color:#90C0F0;">👁 檢視角色切換</div>
+    <div class="info-card" style="border-color:var(--blue-line-strong);">
+      <div class="info-card-title" style="color:var(--blue-bright);">👁 檢視角色切換</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
         · 頂部下拉：Admin／Operator／Reviewer<br>
         · 預覽各角色的可見頁面範圍
@@ -2411,7 +2625,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <div class="admin-label">版型主題<br><span style="font-size:8px;color:var(--text-dim);">admin_theme_select</span></div>
         <div class="admin-input-group" style="align-items:center;">
           <div class="admin-input" style="flex:1;"><span style="color:var(--gold-light);">🎁 抽寶箱（treasure_box）</span> &nbsp; <span style="color:var(--text-dim);">▾ 預定義主題單選</span></div>
-          <div style="flex:0 0 56px;height:38px;border:1px solid var(--border-bright);border-radius:6px;background:rgba(212,168,67,0.06);display:flex;align-items:center;justify-content:center;font-size:18px;" title="主題縮圖預覽">🎁</div>
+          <div style="flex:0 0 56px;height:38px;border:1px solid var(--border-bright);border-radius:6px;background:var(--gold-fill-faint);display:flex;align-items:center;justify-content:center;font-size:18px;" title="主題縮圖預覽">🎁</div>
         </div>
       </div>
       <div class="admin-form-row">
@@ -2444,11 +2658,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <div class="admin-section-divider">受眾 tag（資格投放 · 符合才看得到 · tag 由 DA 提供）</div>
       <div class="admin-form-row">
         <div class="admin-label">受眾 TAG</div>
-        <div class="admin-input"><span style="color:#C8A0F0;font-family:'DM Mono',monospace;">churn_risk</span> &nbsp; <span style="color:#C8A0F0;font-family:'DM Mono',monospace;">new_player</span> &nbsp; <span style="color:var(--text-dim);">＋ 加 tag</span></div>
+        <div class="admin-input"><span style="color:var(--purple-bright);font-family:'DM Mono',monospace;">churn_risk</span> &nbsp; <span style="color:var(--purple-bright);font-family:'DM Mono',monospace;">new_player</span> &nbsp; <span style="color:var(--text-dim);">＋ 加 tag</span></div>
       </div>
       <div class="admin-form-row">
         <div class="admin-label">符合規則</div>
-        <div class="admin-input">支援多 tag · 多活動衝突依 <span style="color:#C8A0F0;">DA tag Priority</span> 取最高 · <span style="color:var(--gold-light);">玩家同時只跑 1 檔（落選活動無感）</span> · <span style="color:var(--text-dim);">留空＝全體玩家可玩</span></div>
+        <div class="admin-input">支援多 tag · 多活動衝突依 <span style="color:var(--purple-bright);">DA tag Priority</span> 取最高 · <span style="color:var(--gold-light);">玩家同時只跑 1 檔（落選活動無感）</span> · <span style="color:var(--text-dim);">留空＝全體玩家可玩</span></div>
       </div>
 
       <div class="admin-section-divider">解鎖門檻設定（每格增量，單位：披索；內部累積至 ₱3,600）<span style="font-size:9px;color:var(--gold-light);font-weight:400;">　· 當前貨幣 tab：PHP 披索（切換貨幣 tab 各自一套門檻）</span></div>
@@ -2477,14 +2691,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
           </tr>
         </thead>
         <tbody>
-          <tr><td>第 1 抽</td><td class="mono" style="color:#90C0F0;">70</td><td class="mono" style="color:#7ADFA0;">30</td><td class="mono">0</td><td class="mono">0</td><td class="dim"></td></tr>
-          <tr><td>第 2 抽</td><td class="mono" style="color:#90C0F0;">65</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">0</td><td class="mono">0</td><td class="dim"></td></tr>
-          <tr><td>第 3 抽</td><td class="mono" style="color:#90C0F0;">60</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">5</td><td class="mono">0</td><td class="dim">大獎開始開放</td></tr>
-          <tr><td>第 4 抽</td><td class="mono" style="color:#90C0F0;">55</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">10</td><td class="mono">0</td><td class="dim"></td></tr>
-          <tr><td>第 5 抽</td><td class="mono" style="color:#90C0F0;">50</td><td class="mono" style="color:#7ADFA0;">35</td><td class="mono">15</td><td class="mono">0</td><td class="dim"></td></tr>
-          <tr><td>第 6 抽</td><td class="mono" style="color:#90C0F0;">45</td><td class="mono" style="color:#7ADFA0;">30</td><td class="mono">25</td><td class="mono">0</td><td class="dim"></td></tr>
-          <tr><td>第 7 抽</td><td class="mono" style="color:#90C0F0;">30</td><td class="mono" style="color:#7ADFA0;">25</td><td class="mono">30</td><td class="mono" style="color:var(--gold-light);">15</td><td class="dim">最終獎開始開放</td></tr>
-          <tr><td>第 8 抽</td><td class="mono" style="color:#90C0F0;">25</td><td class="mono" style="color:#7ADFA0;">25</td><td class="mono">30</td><td class="mono" style="color:var(--gold-light);">20</td><td class="dim"></td></tr>
+          <tr><td>第 1 抽</td><td class="mono" style="color:var(--blue-bright);">70</td><td class="mono" style="color:var(--green-bright);">30</td><td class="mono">0</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 2 抽</td><td class="mono" style="color:var(--blue-bright);">65</td><td class="mono" style="color:var(--green-bright);">35</td><td class="mono">0</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 3 抽</td><td class="mono" style="color:var(--blue-bright);">60</td><td class="mono" style="color:var(--green-bright);">35</td><td class="mono">5</td><td class="mono">0</td><td class="dim">大獎開始開放</td></tr>
+          <tr><td>第 4 抽</td><td class="mono" style="color:var(--blue-bright);">55</td><td class="mono" style="color:var(--green-bright);">35</td><td class="mono">10</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 5 抽</td><td class="mono" style="color:var(--blue-bright);">50</td><td class="mono" style="color:var(--green-bright);">35</td><td class="mono">15</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 6 抽</td><td class="mono" style="color:var(--blue-bright);">45</td><td class="mono" style="color:var(--green-bright);">30</td><td class="mono">25</td><td class="mono">0</td><td class="dim"></td></tr>
+          <tr><td>第 7 抽</td><td class="mono" style="color:var(--blue-bright);">30</td><td class="mono" style="color:var(--green-bright);">25</td><td class="mono">30</td><td class="mono" style="color:var(--gold-light);">15</td><td class="dim">最終獎開始開放</td></tr>
+          <tr><td>第 8 抽</td><td class="mono" style="color:var(--blue-bright);">25</td><td class="mono" style="color:var(--green-bright);">25</td><td class="mono">30</td><td class="mono" style="color:var(--gold-light);">20</td><td class="dim"></td></tr>
           <tr><td>第 9 抽</td><td class="mono dim" colspan="4" style="text-align:center;">依剩餘獎項數量自動計算</td><td class="dim">無特殊保底</td></tr>
         </tbody>
       </table>
@@ -2890,8 +3104,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <thead><tr><th>帳號（範例）</th><th>角色</th><th>可見頁面</th></tr></thead>
     <tbody>
       <tr><td class="mono">admin01</td><td><strong style="color:var(--gold-light);">Admin</strong></td><td class="dim">營運管理（活動管理／活動審查）＋系統設定（帳號權限）＝<strong>全部頁面</strong></td></tr>
-      <tr><td class="mono">op01</td><td><strong style="color:#7ADFA0;">Operator</strong></td><td class="dim">活動管理（列表／新增／編輯／啟停／多貨幣設定）</td></tr>
-      <tr><td class="mono">rev01</td><td><strong style="color:#90C0F0;">Reviewer</strong></td><td class="dim">活動審查（待審查佇列／唯讀檢視／通過·駁回）</td></tr>
+      <tr><td class="mono">op01</td><td><strong style="color:var(--green-bright);">Operator</strong></td><td class="dim">活動管理（列表／新增／編輯／啟停／多貨幣設定）</td></tr>
+      <tr><td class="mono">rev01</td><td><strong style="color:var(--blue-bright);">Reviewer</strong></td><td class="dim">活動審查（待審查佇列／唯讀檢視／通過·駁回）</td></tr>
     </tbody>
   </table>
   <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 角色＝可見頁面集合；同一帳號可由 Admin 調整其可見頁面。Reviewer 僅可見「活動審查」頁，仍負責活動審查，但以頁面可見性控管、非動作級權限。</div>
@@ -2914,10 +3128,10 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <tr><td>多貨幣設定（currency tabs · v4.1）</td><td class="dim">一檔 campaign <strong>內含多貨幣</strong>，以 <strong>currency tabs 切換</strong>（PHP 預設）；每貨幣各自一套<strong>門檻／獎池組成／RTP 即時驗算</strong>，獎勵類型含現金與 Free Spin；各貨幣獨立、互不換算</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多貨幣批次複製</td></tr>
       <tr><td>Pending 異常列表</td><td class="dim">查詢發放失敗紀錄，手動觸發重試</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>帳號權限管理（頁面可見性 · v4.1）</td><td class="dim"><strong>頁面可見性模型</strong>：角色（Admin／Operator／Reviewer）＝一組可見頁面集合；<strong>Admin 可新增帳號並指派可見頁面</strong>，頁內不做欄位級切分（含頁面可見性對照表）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：頁內動作級權限</td></tr>
-      <tr><td>活動模板複製</td><td class="dim">複製現有活動為新版本，只改參數</td><td class="dim">—（設定檔管理）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
+      <tr><td>活動模板複製</td><td class="dim">複製現有活動為新版本，只改參數</td><td class="dim">—（設定檔管理）</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">v2 擴充</span></td></tr>
       <tr><td>受眾 tag 資格設定（gating）</td><td class="dim">設定活動受眾 tag，符合的玩家才看得到／可玩；<strong>支援多 tag</strong>，tag 由 DA（數據組）提供、平台只比對。留空＝全體</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">多活動衝突依 DA tag Priority 解析</td></tr>
-      <tr><td>分眾差異化內容</td><td class="dim">不同受眾（LOW / MID / HIGH）給不同獎池／門檻的差異化投放</td><td class="dim">—</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
-      <tr><td>月結對帳儀表板</td><td class="dim">視覺化活動成本 vs GGR 拆帳</td><td class="dim">—（數據組另拉）</td><td><span class="tag-pill" style="background:rgba(176,132,216,0.12);color:#C8A0F0;">v2 擴充</span></td></tr>
+      <tr><td>分眾差異化內容</td><td class="dim">不同受眾（LOW / MID / HIGH）給不同獎池／門檻的差異化投放</td><td class="dim">—</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">v2 擴充</span></td></tr>
+      <tr><td>月結對帳儀表板</td><td class="dim">視覺化活動成本 vs GGR 拆帳</td><td class="dim">—（數據組另拉）</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">v2 擴充</span></td></tr>
     </tbody>
   </table>
 
@@ -3054,7 +3268,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">異常警示指標（需即時告警）</div>
   <div class="info-grid-3">
     <div class="info-card" style="border-left:3px solid var(--red);">
-      <div class="info-card-title" style="color:#F0907A;">⚠️ 發放失敗率</div>
+      <div class="info-card-title" style="color:var(--red-bright);">⚠️ 發放失敗率</div>
       <div class="info-card-desc">reward_grant pending 數量 > 正常值的 3 倍，或失敗率 > 1%，立即告警</div>
     </div>
     <div class="info-card" style="border-left:3px solid var(--orange);">
@@ -3278,8 +3492,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="sub-title">預估開發時程對比</div>
   <div class="info-grid-2">
     <div class="info-card" style="border-color:rgba(90,191,122,0.35);">
-      <div class="info-card-title" style="color:#7ADFA0;">v1 開發週期</div>
-      <div style="font-family:'DM Mono',monospace;font-size:32px;color:#7ADFA0;margin:12px 0;">12–14 週</div>
+      <div class="info-card-title" style="color:var(--green-bright);">v1 開發週期</div>
+      <div style="font-family:'DM Mono',monospace;font-size:32px;color:var(--green-bright);margin:12px 0;">12–14 週</div>
       <div class="info-card-desc" style="line-height:1.8;">
         · AWC 完整需求一次提交 + 資料層（含背包水管）：2–3週<br>
         · 核心業務邏輯（洗牌+第幾抽權重+派獎）：3–4週<br>
@@ -3289,8 +3503,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       </div>
     </div>
     <div class="info-card" style="border-color:rgba(176,132,216,0.35);">
-      <div class="info-card-title" style="color:#C8A0F0;">v2 增量開發週期（在 v1 基礎上）</div>
-      <div style="font-family:'DM Mono',monospace;font-size:32px;color:#C8A0F0;margin:12px 0;">+3–4 週</div>
+      <div class="info-card-title" style="color:var(--purple-bright);">v2 增量開發週期（在 v1 基礎上）</div>
+      <div style="font-family:'DM Mono',monospace;font-size:32px;color:var(--purple-bright);margin:12px 0;">+3–4 週</div>
       <div class="info-card-desc" style="line-height:1.8;">
         水管已通，無需再碰 AWC：<br>
         · 獎勵內容編輯工具：1–2週<br>
@@ -3780,6 +3994,35 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
   });
 });
+
+// ═══ THEME TOGGLE（亮/暗主題；獨立 key：spec-theme） ═══
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  function apply(theme){
+    root.setAttribute('data-theme', theme);
+    if (btn) btn.setAttribute('aria-label', theme === 'light' ? '切換為暗色主題' : '切換為亮色主題');
+  }
+  apply(root.getAttribute('data-theme') || 'dark');
+  if (btn) {
+    btn.addEventListener('click', function(){
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      apply(next);
+      try { localStorage.setItem('spec-theme', next); } catch (e) {}
+    });
+  }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: light)');
+    var onChange = function(e){
+      var hasPref;
+      try { hasPref = localStorage.getItem('spec-theme'); } catch (err) { hasPref = null; }
+      if (hasPref) return;
+      apply(e.matches ? 'light' : 'dark');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
+})();
 </script>
 </body>
 </html>
