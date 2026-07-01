@@ -9,27 +9,159 @@
 <style>
 /* ─── CSS VARIABLES ─── */
 :root {
+  /* ── 金色主色 ── */
   --gold: #D4A843;
   --gold-light: #F0CC72;
   --gold-dim: #8B6914;
+
+  /* ── 背景層 ── */
   --dark: #0D0E12;
   --dark-2: #161820;
   --dark-3: #1E2028;
   --dark-4: #262830;
   --dark-5: #2E3040;
+
+  /* ── 邊框 ── */
   --border: rgba(212,168,67,0.18);
   --border-bright: rgba(212,168,67,0.45);
+
+  /* ── 文字 ── */
   --text-primary: #F0EDE6;
   --text-secondary: #9A9488;
   --text-dim: #5A5650;
+
+  /* ── 狀態主色（邊框/點綴用） ── */
   --red: #E05A3A;
   --teal: #3ABFB0;
   --blue: #4A8FE0;
   --green: #5ABF7A;
   --purple: #B084D8;
   --orange: #E0963A;
+
+  /* ── 金色透明填充 / 光暈 ── */
+  --gold-fill: rgba(212,168,67,0.12);
+  --gold-fill-weak: rgba(212,168,67,0.1);
+  --gold-fill-faint: rgba(212,168,67,0.06);
+  --gold-line: rgba(212,168,67,0.03);
+  --gold-glow: rgba(212,168,67,0.25);
+  --gold-glow-faint: rgba(212,168,67,0.07);
+  --gold-fill-dot: rgba(212,168,67,0.2);
+  --border-kpi: rgba(212,168,67,0.35);
+
+  /* ── 中性疊加（hover / 細分隔線） ── */
+  --overlay-hover: rgba(255,255,255,0.03);
+  --overlay-row: rgba(255,255,255,0.04);
+  --overlay-faint: rgba(255,255,255,0.015);
+  --overlay-pill: rgba(255,255,255,0.02);
+
+  /* ── 陰影 / 半透明面板背景 ── */
+  --shadow: rgba(0,0,0,0.5);
+  --topnav-bg: rgba(13,14,18,0.92);
+
+  /* ── 狀態亮色文字 ── */
+  --green-bright: #7ADFA0;
+  --blue-bright: #90C0F0;
+  --purple-bright: #C8A0F0;
+  --red-bright: #F0907A;
+  --teal-bright: #70DFD0;
+
+  /* ── 狀態透明填充 ── */
+  --green-fill: rgba(90,191,122,0.12);
+  --green-fill-weak: rgba(90,191,122,0.1);
+  --green-fill-faint: rgba(90,191,122,0.06);
+  --green-line: rgba(90,191,122,0.25);
+  --blue-fill: rgba(74,143,224,0.12);
+  --blue-fill-weak: rgba(74,143,224,0.1);
+  --blue-glow: rgba(74,143,224,0.05);
+  --purple-fill: rgba(176,132,216,0.12);
+  --purple-line: rgba(176,132,216,0.25);
+  --purple-glow: rgba(176,132,216,0.04);
+  --red-fill: rgba(224,90,58,0.12);
+  --red-fill-weak: rgba(224,90,58,0.1);
+  --red-fill-strong: rgba(224,90,58,0.15);
+  --red-fill-faint: rgba(224,90,58,0.06);
+  --red-line: rgba(224,90,58,0.25);
+  --red-line-strong: rgba(224,90,58,0.3);
+  --teal-fill: rgba(58,191,176,0.12);
+
+  /* ── 金色漸層按鈕文字（亮色時覆寫成淺色） ── */
+  --on-gold: #1a1206;
+
   --sidebar-w: 280px;
   --topnav-h: 48px;
+}
+
+/* ═══════════════════════════════════════
+   亮色主題：白底 + 琥珀/古銅金（目標 WCAG AA）
+   覆寫上方同一批變數，暗色完全不受影響
+═══════════════════════════════════════ */
+html[data-theme="light"] {
+  --gold: #9A6B00;
+  --gold-light: #8A5E00;
+  --gold-dim: #C9A24E;
+
+  --dark: #FAFAF7;
+  --dark-2: #F2EEE4;
+  --dark-3: #F4F1EA;
+  --dark-4: #ECE7DB;
+  --dark-5: #E4DECF;
+
+  --border: rgba(154,107,0,0.25);
+  --border-bright: rgba(154,107,0,0.5);
+
+  --text-primary: #2A2722;
+  --text-secondary: #5C564C;
+  --text-dim: #7C766A;
+
+  --red: #D24A2A;
+  --teal: #2A9D8F;
+  --blue: #2F73C4;
+  --green: #3DA35D;
+  --purple: #9457C4;
+  --orange: #C77A1A;
+
+  --gold-fill: rgba(184,134,11,0.18);
+  --gold-fill-weak: rgba(184,134,11,0.14);
+  --gold-fill-faint: rgba(184,134,11,0.1);
+  --gold-line: rgba(184,134,11,0.12);
+  --gold-glow: rgba(184,134,11,0.18);
+  --gold-glow-faint: rgba(184,134,11,0.08);
+  --gold-fill-dot: rgba(184,134,11,0.25);
+  --border-kpi: rgba(154,107,0,0.45);
+
+  --overlay-hover: rgba(0,0,0,0.03);
+  --overlay-row: rgba(0,0,0,0.08);
+  --overlay-faint: rgba(0,0,0,0.025);
+  --overlay-pill: rgba(0,0,0,0.02);
+
+  --shadow: rgba(0,0,0,0.15);
+  --topnav-bg: rgba(250,250,247,0.92);
+
+  --green-bright: #237A4A;
+  --blue-bright: #2563B0;
+  --purple-bright: #7A3FA8;
+  --red-bright: #C0431F;
+  --teal-bright: #1F7A72;
+
+  --green-fill: rgba(61,163,93,0.16);
+  --green-fill-weak: rgba(61,163,93,0.12);
+  --green-fill-faint: rgba(61,163,93,0.1);
+  --green-line: rgba(61,163,93,0.4);
+  --blue-fill: rgba(47,115,196,0.14);
+  --blue-fill-weak: rgba(47,115,196,0.1);
+  --blue-glow: rgba(47,115,196,0.06);
+  --purple-fill: rgba(148,87,196,0.14);
+  --purple-line: rgba(148,87,196,0.4);
+  --purple-glow: rgba(148,87,196,0.05);
+  --red-fill: rgba(210,74,42,0.12);
+  --red-fill-weak: rgba(210,74,42,0.1);
+  --red-fill-strong: rgba(210,74,42,0.15);
+  --red-fill-faint: rgba(210,74,42,0.08);
+  --red-line: rgba(210,74,42,0.3);
+  --red-line-strong: rgba(210,74,42,0.4);
+  --teal-fill: rgba(42,157,143,0.14);
+
+  --on-gold: #FAFAF7;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -40,6 +172,7 @@ body{
   font-weight:400;
   line-height:1.7;
   font-size:14px;
+  transition: background .3s, color .3s;
 }
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:var(--dark-2);}
@@ -52,14 +185,14 @@ body.layout-top .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
 body.layout-side .sidebar { display: flex; }
 body.layout-side .topnav  { display: none; }
 body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
-.layout-toggle { position: fixed; bottom: 28px; right: 28px; z-index: 200; display: flex; background: var(--dark-3); border: 1px solid var(--border-bright); border-radius: 6px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
+.layout-toggle { position: fixed; bottom: 88px; right: 24px; z-index: 200; display: flex; background: var(--dark-3); border: 1px solid var(--border-bright); border-radius: 6px; overflow: hidden; box-shadow: 0 4px 24px var(--shadow); }
 .layout-toggle-btn { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; padding: 8px 14px; cursor: pointer; color: var(--text-dim); background: none; border: none; transition: all .2s; display: flex; align-items: center; gap: 6px; }
 .layout-toggle-btn:hover { color: var(--text-secondary); }
-.layout-toggle-btn.active { background: rgba(212,168,67,0.12); color: var(--gold-light); }
+.layout-toggle-btn.active { background: var(--gold-fill); color: var(--gold-light); }
 .layout-toggle-divider { width: 1px; background: var(--border); align-self: stretch; }
 
 /* TOP NAV */
-.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,14,18,0.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); padding: 0 40px; height: var(--topnav-h); overflow-x: auto; align-items: center; gap: 0; }
+.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--topnav-bg); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); padding: 0 40px; height: var(--topnav-h); overflow-x: auto; align-items: center; gap: 0; }
 .topnav::-webkit-scrollbar{height:2px;}
 .nav-brand { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 0.15em; white-space: nowrap; margin-right: 32px; flex-shrink: 0; }
 .nav-item { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); padding: 0 14px; height: var(--topnav-h); display: flex; align-items: center; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all .2s; text-decoration: none; }
@@ -75,13 +208,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .sidebar-meta-row { display: flex; align-items: center; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; }
 .sidebar-meta-label { color: var(--text-dim); }
 .sidebar-meta-val { color: var(--text-secondary); }
-.sidebar-meta-val.status-draft { color: var(--gold-light); background: rgba(212,168,67,0.1); padding: 2px 7px; border-radius: 2px; }
+.sidebar-meta-val.status-draft { color: var(--gold-light); background: var(--gold-fill-weak); padding: 2px 7px; border-radius: 2px; }
 .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0 80px; }
 .sidebar-nav::-webkit-scrollbar{width:3px;}
 .sidebar-section { margin-bottom: 2px; }
 .sidebar-section-btn { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: var(--text-secondary); background: none; border: none; cursor: pointer; text-align: left; text-decoration: none; transition: all .2s; border-left: 2px solid transparent; }
-.sidebar-section-btn:hover { color: var(--text-secondary); background: rgba(255,255,255,0.03); }
-.sidebar-section-btn.active { color: var(--gold-light); border-left-color: var(--gold); background: rgba(212,168,67,0.06); }
+.sidebar-section-btn:hover { color: var(--text-secondary); background: var(--overlay-hover); }
+.sidebar-section-btn.active { color: var(--gold-light); border-left-color: var(--gold); background: var(--gold-fill-faint); }
 .sidebar-section-num { font-size: 10px; color: var(--text-dim); flex-shrink: 0; width: 20px; }
 .sidebar-section-btn.active .sidebar-section-num { color: var(--gold); }
 .sidebar-chevron { margin-left: auto; font-size: 10px; color: var(--text-dim); transition: transform .2s; flex-shrink: 0; }
@@ -108,20 +241,24 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 
 /* COVER */
 .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; padding: 60px 40px; text-align: center; }
-.cover-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 30%,rgba(212,168,67,0.07) 0%,transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%,rgba(74,143,224,0.05) 0%,transparent 60%), radial-gradient(ellipse 40% 40% at 80% 70%,rgba(176,132,216,0.04) 0%,transparent 60%); }
-.cover-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px); background-size: 60px 60px; }
+.cover-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 30%,var(--gold-glow-faint) 0%,transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%,var(--blue-glow) 0%,transparent 60%), radial-gradient(ellipse 40% 40% at 80% 70%,var(--purple-glow) 0%,transparent 60%); }
+.cover-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--gold-line) 1px,transparent 1px), linear-gradient(90deg,var(--gold-line) 1px,transparent 1px); background-size: 60px 60px; }
 .cover-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; border: 1px solid var(--border-bright); padding: 6px 18px; border-radius: 2px; margin-bottom: 36px; position: relative; }
-.cover h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px,10vw,96px); letter-spacing: 0.06em; line-height: 0.95; color: var(--gold-light); text-shadow: 0 0 80px rgba(212,168,67,0.25); margin-bottom: 12px; position: relative; }
+.cover h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px,10vw,96px); letter-spacing: 0.06em; line-height: 0.95; color: var(--gold-light); text-shadow: 0 0 80px var(--gold-glow); margin-bottom: 12px; position: relative; }
 .cover h1 span { color: var(--text-primary); }
 .cover-sub { font-size: 14px; color: var(--text-secondary); letter-spacing: 0.1em; margin-bottom: 56px; position: relative; }
 .cover-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; position: relative; margin-bottom: 60px; }
-.cover-pill { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--text-secondary); padding: 7px 14px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,0.02); }
+.cover-pill { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--text-secondary); padding: 7px 14px; border: 1px solid var(--border); border-radius: 20px; background: var(--overlay-pill); }
 .cover-pill strong { color: var(--gold-light); }
 .cover-badges { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; position: relative; }
+.cover-proto-links { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: center; position: relative; margin-top: 22px; }
+.cover-proto-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
+.cover-proto-link { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--gold-light); text-decoration: none; padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-bright); background: var(--gold-fill-faint); transition: background 0.15s, border-color 0.15s; }
+.cover-proto-link:hover { background: var(--gold-fill); border-color: var(--gold); }
 .badge { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 2px; text-transform: uppercase; }
-.badge-v1 { background: rgba(90,191,122,0.12); color: #7ADFA0; border: 1px solid rgba(90,191,122,0.25); }
-.badge-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; border: 1px solid rgba(176,132,216,0.25); }
-.badge-conf { background: rgba(224,90,58,0.1); color: #F0907A; border: 1px solid rgba(224,90,58,0.25); }
+.badge-v1 { background: var(--green-fill); color: var(--green-bright); border: 1px solid var(--green-line); }
+.badge-v2 { background: var(--purple-fill); color: var(--purple-bright); border: 1px solid var(--purple-line); }
+.badge-conf { background: var(--red-fill-weak); color: var(--red-bright); border: 1px solid var(--red-line); }
 
 /* HYPOTHESIS */
 .hypo-block { background: var(--dark-3); border: 1px solid var(--border); border-left: 3px solid var(--gold); padding: 24px 28px; border-radius: 0 4px 4px 0; margin-bottom: 28px; }
@@ -142,22 +279,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 /* TABLE */
 .spec-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }
 .spec-table th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--text-secondary); text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); background: var(--dark-3); }
-.spec-table td { padding: 11px 14px; color: var(--text-primary); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+.spec-table td { padding: 11px 14px; color: var(--text-primary); border-bottom: 1px solid var(--overlay-row); vertical-align: top; }
 .spec-table td.mono { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold-light); }
 .spec-table td.dim { color: var(--text-secondary); }
-.spec-table tr:hover td { background: rgba(255,255,255,0.015); }
+.spec-table tr:hover td { background: var(--overlay-faint); }
 
 /* TAG PILLS */
 .tag-pill { font-family: 'DM Mono', monospace; font-size: 9px; padding: 3px 8px; border-radius: 2px; letter-spacing: 0.08em; display: inline-block; white-space:nowrap; }
-.tag-v1 { background: rgba(90,191,122,0.12); color: #7ADFA0; }
-.tag-v2 { background: rgba(176,132,216,0.12); color: #C8A0F0; }
-.tag-req { background: rgba(224,90,58,0.12); color: #F0907A; }
-.tag-opt { background: rgba(74,143,224,0.12); color: #90C0F0; }
-.tag-data { background: rgba(58,191,176,0.12); color: #70DFD0; }
-.tag-eng { background: rgba(212,168,67,0.12); color: var(--gold-light); }
-.tag-inf { background: rgba(224,90,58,0.15); color: #F0907A; border: 1px solid rgba(224,90,58,0.3); }
-.tag-pm { background: rgba(74,143,224,0.12); color: #90C0F0; }
-.tag-design { background: rgba(176,132,216,0.12); color: #C8A0F0; }
+.tag-v1 { background: var(--green-fill); color: var(--green-bright); }
+.tag-v2 { background: var(--purple-fill); color: var(--purple-bright); }
+.tag-req { background: var(--red-fill); color: var(--red-bright); }
+.tag-opt { background: var(--blue-fill); color: var(--blue-bright); }
+.tag-data { background: var(--teal-fill); color: var(--teal-bright); }
+.tag-eng { background: var(--gold-fill); color: var(--gold-light); }
+.tag-inf { background: var(--red-fill-strong); color: var(--red-bright); border: 1px solid var(--red-line-strong); }
+.tag-pm { background: var(--blue-fill); color: var(--blue-bright); }
+.tag-design { background: var(--purple-fill); color: var(--purple-bright); }
 .check { color: var(--green); }
 .cross { color: var(--text-dim); }
 .plus { color: var(--orange); }
@@ -169,9 +306,9 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .flow-step-num { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 6px; }
 .flow-step-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
 .flow-step-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
-.flow-step.highlight { border-color: var(--gold); background: rgba(212,168,67,0.06); }
-.flow-step.warn { border-color: var(--red); background: rgba(224,90,58,0.06); }
-.flow-step.success { border-color: var(--green); background: rgba(90,191,122,0.06); }
+.flow-step.highlight { border-color: var(--gold); background: var(--gold-fill-faint); }
+.flow-step.warn { border-color: var(--red); background: var(--red-fill-faint); }
+.flow-step.success { border-color: var(--green); background: var(--green-fill-faint); }
 .flow-arrow { color: var(--text-dim); font-size: 18px; padding: 0 8px; flex-shrink: 0; }
 .flow-arrow-down { text-align: center; color: var(--text-dim); font-size: 18px; padding: 8px 0; margin: 0 auto; }
 .flow-v { display: flex; flex-direction: column; gap: 0; align-items: center; }
@@ -216,8 +353,8 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .oq-item.pm .oq-owner { color: var(--purple); }
 
 /* LOG */
-.log-item { display: grid; grid-template-columns: 200px 110px 1fr; gap: 12px; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 12px; }
-.log-item:hover { background: rgba(255,255,255,0.015); }
+.log-item { display: grid; grid-template-columns: 200px 110px 1fr; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--overlay-row); font-size: 12px; }
+.log-item:hover { background: var(--overlay-faint); }
 .log-item.header { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid var(--border); background: var(--dark-3); }
 .log-event { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold-light); }
 .log-owner { font-size: 10px; }
@@ -229,12 +366,12 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 .fs-card { background: var(--dark-3); border: 1px solid var(--border-bright); border-radius: 8px; padding: 14px; margin-bottom: 12px; position:relative; }
 .fs-card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .fs-card-name { font-size: 13px; font-weight:700; color: var(--gold-light); }
-.fs-card-badge { font-family:'DM Mono',monospace; font-size:9px; padding:3px 8px; border-radius:10px; background:rgba(90,191,122,0.14); color:#7ADFA0; }
+.fs-card-badge { font-family:'DM Mono',monospace; font-size:9px; padding:3px 8px; border-radius:10px; background:var(--green-fill); color:var(--green-bright); }
 .fs-row { display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:var(--text-secondary); }
 .fs-row b { color: var(--text-primary); font-weight:500; }
 .fs-games { display:flex; gap:5px; flex-wrap:wrap; margin:8px 0; }
 .fs-game-chip { font-size:10px; padding:3px 8px; border-radius:4px; background:var(--dark-4); color:var(--text-secondary); border:1px solid var(--border); }
-.fs-btn { width:100%; text-align:center; padding:9px; border-radius:6px; background:linear-gradient(180deg,var(--gold-light),var(--gold)); color:#1a1206; font-weight:700; font-size:12px; margin-top:8px; }
+.fs-btn { width:100%; text-align:center; padding:9px; border-radius:6px; background:linear-gradient(180deg,var(--gold-light),var(--gold)); color:var(--on-gold); font-weight:700; font-size:12px; margin-top:8px; }
 
 /* FOOTER */
 .doc-footer { text-align: center; padding: 60px 40px; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.15em; line-height: 2; }
@@ -253,9 +390,63 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   .page { padding: 0 20px 80px; }
   .log-item { grid-template-columns: 1fr; gap:4px; }
 }
+
+/* ═══════════════════════════════════════
+   THEME TOGGLE（亮/暗主題切換 · 右下角浮動圓鈕）
+═══════════════════════════════════════ */
+.theme-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 210;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; background: var(--dark-3);
+  border: 1px solid var(--border-bright); color: var(--gold-light);
+  box-shadow: 0 4px 24px var(--shadow);
+  transition: background .25s, color .25s, border-color .25s, transform .25s, box-shadow .25s;
+  -webkit-appearance: none; appearance: none;
+}
+.theme-toggle:hover {
+  border-color: var(--gold); color: var(--gold); background: var(--gold-fill);
+  transform: translateY(-2px) rotate(-12deg); box-shadow: 0 6px 28px var(--shadow);
+}
+.theme-toggle svg { width: 20px; height: 20px; display: block; }
+.theme-toggle .icon-sun  { display: block; }
+.theme-toggle .icon-moon { display: none; }
+html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
+html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+/* ─── PRINT：隱藏浮動控制鈕 ─── */
+@media print {
+  .theme-toggle, .layout-toggle { display: none !important; }
+}
 </style>
+<script>
+/* ═══════════ FOUC 防閃白：在 CSS 之後盡早把 data-theme 設到 <html> ═══════════
+   優先序：localStorage("spec-theme") → 系統 prefers-color-scheme → 暗色
+   （與「頂部列模式切換」的 spec-layout 是兩套獨立 key，互不干擾） */
+(function(){
+  try {
+    var stored = localStorage.getItem('spec-theme');
+    var theme = stored
+      || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
 </head>
 <body class="layout-side">
+
+<!-- ═══════════ THEME TOGGLE（亮/暗主題切換 · 與頂部列模式切換為獨立邏輯） ═══════════ -->
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換亮/暗主題" title="切換亮/暗主題">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
 
 <!-- LAYOUT TOGGLE -->
 <div class="layout-toggle">
@@ -394,6 +585,11 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <span class="badge badge-v1">抽寶箱 V1 基建一次做滿</span>
     <span class="badge badge-v2">V2 啟用發放</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
+  </div>
+  <div class="cover-proto-links">
+    <span class="cover-proto-label">原型連結</span>
+    <a class="cover-proto-link" href="遊戲背包頁原型.html" target="_blank" rel="noopener">🎮 前台原型 · 遊戲背包頁 ↗</a>
+    <a class="cover-proto-link" href="後台獎勵系統 (standalone).html" target="_blank" rel="noopener">🛠 後台原型 · 獎勵清單工具 ↗</a>
   </div>
 </div>
 
@@ -812,13 +1008,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">① 獎勵類別</div>
     <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;width:max-content;margin-bottom:18px;">
       <span style="font-size:12px;padding:8px 18px;color:var(--text-secondary);background:var(--dark-3);">現金獎 CASH</span>
-      <span style="font-size:12px;padding:8px 18px;color:#1a1206;background:linear-gradient(180deg,var(--gold-light),var(--gold));font-weight:700;">非現金獎 NON_CASH ●</span>
+      <span style="font-size:12px;padding:8px 18px;color:var(--on-gold);background:linear-gradient(180deg,var(--gold-light),var(--gold));font-weight:700;">非現金獎 NON_CASH ●</span>
     </div>
 
     <!-- 2. 幣別分頁 -->
     <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">② 幣別（各自保留數值）</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;">
-      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:rgba(212,168,67,0.12);color:var(--gold-light);border:1px solid var(--border-bright);">THB ●</span>
+      <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--gold-fill);color:var(--gold-light);border:1px solid var(--border-bright);">THB ●</span>
       <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">PHP</span>
       <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">IDR</span>
       <span style="font-size:11px;padding:5px 14px;border-radius:4px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">VND</span>
@@ -888,7 +1084,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <!-- 5. 有效期模式 -->
     <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">⑤ 有效期模式</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;">
-      <div style="display:flex;align-items:center;gap:10px;background:rgba(212,168,67,0.06);border:1px solid var(--border-bright);border-radius:6px;padding:10px 12px;">
+      <div style="display:flex;align-items:center;gap:10px;background:var(--gold-fill-faint);border:1px solid var(--border-bright);border-radius:6px;padding:10px 12px;">
         <span style="color:var(--gold-light);">◉</span>
         <span style="font-size:12px;color:var(--text-primary);font-weight:500;">發卡 +N 天（相對 · 預設）</span>
         <span style="font-size:12px;color:var(--text-secondary);">N =</span>
@@ -906,13 +1102,13 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
     <!-- 6. 入帳目標 -->
     <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">⑥ 入帳目標（固定 · 不可編輯）</div>
     <div style="margin-bottom:18px;">
-      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 14px;border-radius:20px;background:rgba(90,191,122,0.12);color:#7ADFA0;border:1px solid rgba(90,191,122,0.25);">🏦 主錢包真金 · 無流水</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 14px;border-radius:20px;background:var(--green-fill);color:var(--green-bright);border:1px solid var(--green-line);">🏦 主錢包真金 · 無流水</span>
     </div>
 
     <!-- 7. 動作列 -->
     <div style="display:flex;gap:10px;border-top:1px solid var(--border);padding-top:16px;">
       <span style="font-size:12px;padding:9px 22px;border-radius:6px;background:var(--dark-4);border:1px solid var(--border-bright);color:var(--text-secondary);">儲存草稿</span>
-      <span style="font-size:12px;padding:9px 22px;border-radius:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:#1a1206;font-weight:700;">啟用</span>
+      <span style="font-size:12px;padding:9px 22px;border-radius:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:var(--on-gold);font-weight:700;">啟用</span>
     </div>
   </div>
 
@@ -972,7 +1168,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   </style>
 
   <div class="sub-title">後台原型畫面 · FREE SPIN 卡發放管理列表（左圖右說）</div>
-  <div class="body-text">下圖依 <strong>FREE SPIN 卡獎勵後台設計原型</strong> 重繪「發放管理」<strong>列表頁</strong>（對應上方「型錄複用」視角）：上半為 <em>道具基礎值（1★–5★ 每轉押注 × 幣別）</em>、中段統計、下半為<strong>發放卡清單</strong>，每張卡可展開查看「引用此卡的抽寶箱活動」。左為原型畫面、右為逐區 UI 功能說明。 <a href="後台獎勵系統 (standalone).html" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px;font-size:12px;padding:5px 12px;border:1px solid var(--border-bright);border-radius:6px;color:var(--gold-light);text-decoration:none;background:rgba(212,168,67,0.08);">🔗 開啟 FREE SPIN 卡設定後台互動原型（新視窗）↗</a></div>
+  <div class="body-text">下圖依 <strong>FREE SPIN 卡獎勵後台設計原型</strong> 重繪「發放管理」<strong>列表頁</strong>（對應上方「型錄複用」視角）：上半為 <em>道具基礎值（1★–5★ 每轉押注 × 幣別）</em>、中段統計、下半為<strong>發放卡清單</strong>，每張卡可展開查看「引用此卡的抽寶箱活動」。左為原型畫面、右為逐區 UI 功能說明。 <a href="後台獎勵系統 (standalone).html" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px;font-size:12px;padding:5px 12px;border:1px solid var(--border-bright);border-radius:6px;color:var(--gold-light);text-decoration:none;background:var(--gold-fill-faint);">🔗 開啟 FREE SPIN 卡設定後台互動原型（新視窗）↗</a></div>
 
   <div class="proto-split">
     <!-- 左：後台原型畫面 -->
@@ -1115,7 +1311,7 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
   <div class="callout success"><strong>操作流程說明</strong>：開背包 → 選卡 → 卡底「<strong>攜帶遊戲（必選一個）</strong>」選一款（未選按鈕維持 disabled 灰態）→ <strong>進入遊戲</strong> → 系統帶該卡 <span class="mono">reference_id</span> 指定啟用 → 跳轉遊戲。<br><strong>Corner case · 續玩同卡</strong>：未用完的卡（如 5/10）續玩時帶<strong>同一 <span class="mono">reference_id</span></strong>，繼續扣同一局數池、<strong>不另開新卡</strong>。</div>
 
   <div class="sub-title">背包前台原型 · UI 完整說明（左圖右說）</div>
-  <div class="body-text">下方依 <strong>背包前台操作原型</strong> 重繪「我的背包 · FREE SPIN」實際畫面（手機版）。此原型較上方示意更新：以「<em>攜帶遊戲（必選一個）</em>」取代卡內展開，並新增「<em>目前累積獎金 / 已達上限封頂</em>」即時顯示。左為原型畫面、右為逐區 UI 功能說明。 <a href="遊戲背包頁原型.html" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px;font-size:12px;padding:5px 12px;border:1px solid var(--border-bright);border-radius:6px;color:var(--gold-light);text-decoration:none;background:rgba(212,168,67,0.08);">🔗 開啟背包前台互動原型（新視窗）↗</a></div>
+  <div class="body-text">下方依 <strong>背包前台操作原型</strong> 重繪「我的背包 · FREE SPIN」實際畫面（手機版）。此原型較上方示意更新：以「<em>攜帶遊戲（必選一個）</em>」取代卡內展開，並新增「<em>目前累積獎金 / 已達上限封頂</em>」即時顯示。左為原型畫面、右為逐區 UI 功能說明。 <a href="遊戲背包頁原型.html" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px;font-size:12px;padding:5px 12px;border:1px solid var(--border-bright);border-radius:6px;color:var(--gold-light);text-decoration:none;background:var(--gold-fill-faint);">🔗 開啟背包前台互動原型（新視窗）↗</a></div>
 
   <div class="proto-split" style="grid-template-columns:340px 1fr;">
     <!-- 左：背包原型畫面 -->
@@ -1127,22 +1323,22 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
         <span style="padding-bottom:8px;color:var(--text-dim);">免費遊戲卡</span>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <span style="font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(212,168,67,0.14);color:var(--gold-light);border:1px solid var(--border-bright);">可使用 3</span>
+        <span style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--gold-fill);color:var(--gold-light);border:1px solid var(--border-bright);">可使用 3</span>
         <span style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--dark-4);color:var(--text-secondary);border:1px solid var(--border);">已過期 1</span>
       </div>
       <div class="fs-card" style="border-color:var(--gold);">
         <div class="fs-card-top">
-          <span style="display:flex;align-items:center;gap:8px;"><span style="width:30px;height:30px;border-radius:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:#1a1206;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:11px;">100</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">3★</span></span></span>
-          <span class="fs-card-badge" style="background:rgba(212,168,67,0.16);color:var(--gold-light);">使用中</span>
+          <span style="display:flex;align-items:center;gap:8px;"><span style="width:30px;height:30px;border-radius:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));color:var(--on-gold);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:11px;">100</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">3★</span></span></span>
+          <span class="fs-card-badge" style="background:var(--gold-fill);color:var(--gold-light);">使用中</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;margin-bottom:8px;">
           <div class="fs-row"><span>每轉押注</span><b>6 PHP</b></div>
-          <div class="fs-row"><span>最大獎金</span><b style="color:#7ADFA0;">600 PHP</b></div>
+          <div class="fs-row"><span>最大獎金</span><b style="color:var(--green-bright);">600 PHP</b></div>
           <div class="fs-row"><span>已用 / 次數</span><b><span style="color:var(--gold-light);">5</span> / 10</b></div>
           <div class="fs-row"><span>剩餘時間</span><b>2天 04:11</b></div>
         </div>
         <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;"><span style="color:var(--text-secondary);">目前累積獎金　<b style="color:var(--gold-light);font-size:13px;">600 PHP</b></span><span style="font-size:9px;padding:3px 8px;border-radius:10px;background:rgba(212,168,67,0.16);color:var(--gold-light);">已達上限封頂</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;"><span style="color:var(--text-secondary);">目前累積獎金　<b style="color:var(--gold-light);font-size:13px;">600 PHP</b></span><span style="font-size:9px;padding:3px 8px;border-radius:10px;background:var(--gold-fill);color:var(--gold-light);">已達上限封頂</span></div>
           <div style="height:5px;border-radius:3px;background:var(--dark-4);overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,var(--gold-light),var(--gold));"></div></div>
           <div style="font-size:9px;color:var(--text-dim);margin-top:5px;">來自已抽 720 PHP · 超過上限 120 不計入 · 結算以上限 600 PHP 為準</div>
         </div>
@@ -1175,14 +1371,14 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
       <!-- 卡 3：即將到期 < 24h（收合摘要） -->
       <div class="fs-card" style="border-color:var(--red);">
         <div class="fs-card-top">
-          <span style="display:flex;align-items:center;gap:8px;"><span style="width:26px;height:26px;border-radius:6px;background:var(--dark-4);color:#F0907A;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:10px;">200</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">4★</span></span></span>
-          <span class="fs-card-badge" style="background:rgba(224,90,58,0.16);color:#F0907A;">即將到期</span>
+          <span style="display:flex;align-items:center;gap:8px;"><span style="width:26px;height:26px;border-radius:6px;background:var(--dark-4);color:var(--red-bright);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:10px;">200</span><span class="fs-card-name">免費旋轉 ×10　<span style="font-size:10px;color:var(--gold-light);">4★</span></span></span>
+          <span class="fs-card-badge" style="background:var(--red-fill-strong);color:var(--red-bright);">即將到期</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;">
           <div class="fs-row"><span>每轉押注</span><b>20 PHP</b></div>
           <div class="fs-row"><span>最大獎金</span><b>2,000 PHP</b></div>
           <div class="fs-row"><span>已用 / 次數</span><b>2 / 10</b></div>
-          <div class="fs-row"><span>剩餘時間</span><b style="color:#F0907A;">⏱ 18:42:09（&lt; 24h）</b></div>
+          <div class="fs-row"><span>剩餘時間</span><b style="color:var(--red-bright);">⏱ 18:42:09（&lt; 24h）</b></div>
         </div>
       </div>
 
@@ -1518,6 +1714,35 @@ body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
 </div><!-- /main-wrap -->
 
 <script>
+// ═══════════ THEME TOGGLE（亮/暗主題；獨立 key：spec-theme） ═══════════
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  function apply(theme){
+    root.setAttribute('data-theme', theme);
+    if (btn) btn.setAttribute('aria-label', theme === 'light' ? '切換為暗色主題' : '切換為亮色主題');
+  }
+  apply(root.getAttribute('data-theme') || 'dark');
+  if (btn) {
+    btn.addEventListener('click', function(){
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      apply(next);
+      try { localStorage.setItem('spec-theme', next); } catch (e) {}
+    });
+  }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: light)');
+    var onChange = function(e){
+      var hasPref;
+      try { hasPref = localStorage.getItem('spec-theme'); } catch (err) { hasPref = null; }
+      if (hasPref) return;
+      apply(e.matches ? 'light' : 'dark');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
+})();
+
 function setLayout(mode) {
   document.body.className = 'layout-' + mode;
   document.getElementById('btn-side').classList.toggle('active', mode === 'side');
