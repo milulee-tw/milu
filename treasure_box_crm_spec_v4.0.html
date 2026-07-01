@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 CRM 功能規格書 v4.1</title>
+<title>抽寶箱 CRM 功能規格書 v4.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -1132,7 +1132,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">抽寶箱 CRM<br>功能規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v4.1</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v4.2</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-review">REVIEW</span></div>
@@ -1187,7 +1187,10 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         <a class="sidebar-sub-link" href="#ui">玩家端畫面</a>
         <a class="sidebar-sub-link" href="#ui">iFrame 入口與展開</a>
         <a class="sidebar-sub-link" href="#ui">進場與提示觸發</a>
+        <a class="sidebar-sub-link" href="#art-style-base">整體美術風格基準</a>
         <a class="sidebar-sub-link" href="#ui-artspec">美術設計頁面清單</a>
+        <a class="sidebar-sub-link" href="#theme-settle">各主題結算畫面</a>
+        <a class="sidebar-sub-link" href="#theme-prizes">各主題獎項物品</a>
         <a class="sidebar-sub-link" href="#ui-assets">美術資產清單</a>
       </div>
     </div>
@@ -2222,6 +2225,49 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <strong>實作備註：</strong>資料以<strong>伺服器時間</strong>為準（非裝置本地時間）；倒數<strong>跨日 00:00 翻轉</strong>（天數 −1、時分秒重置）；活動結束瞬間顯示已結束；暫停維護中時隱藏倒數、顯示維護中。
   </div>
 
+  <!-- ═══ v4.2 新增：整體美術風格基準 ═══ -->
+  <div class="sub-title" id="art-style-base" style="margin-top:40px;">整體美術風格基準（v4.2 新增 · 2026-06-30）</div>
+  <div class="callout info">
+    <strong>為什麼要先定基準：</strong>4 套主題雖各有色系與符號，但<strong>渲染質感必須一致</strong>——否則玩家在不同檔期會覺得是「不同等級的兩個產品」。本節定義<strong>全主題共通的「品質／渲染基準」</strong>：美術不論畫哪一套主題，質感規格都套這一份；只有<strong>色系與物件造型</strong>才依各主題替換。下方〈主題換皮說明〉與 P6 各主題定稿，皆繼承此基準。
+  </div>
+  <div class="callout warn">
+    <strong>風格定位（PM＋美術 2026-06-30 定）：</strong>對標附件參考圖——<strong>夢幻星空紫 × 糖果光澤 3D 的休閒精品風（casual battle-pass premium）</strong>：深紫藍星空漸層底、圓潤糖果光澤的立體寶箱與獎品、寶石切面節點、彩虹金屬質感的特殊件（如 Bonus Bank 保險箱），金色統一代表價值。整體要「<strong>亮、甜、有魔幻感、有景深</strong>」，<strong>不要</strong>暗沉賭場感、扁平 flat 或粗獷寫實。
+  </div>
+
+  <!-- 風格參考圖 ＋ 重點摘要 -->
+  <div style="display:flex;gap:26px;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;">
+    <div style="flex:0 0 320px;max-width:100%;">
+      <div class="phone-frame">
+        <img src="design_assets/style_reference.png" alt="整體風格參考 · DIY Pass 星空紫通行證（糖果光澤 3D 寶箱、寶石節點、彩虹保險箱）" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:240px;border-radius:12px;background:linear-gradient(160deg,#3a2a6b,#1e2a6b);text-align:center;padding:22px;color:#dcd6ff;">
+          <div style="font-size:32px;margin-bottom:12px;">🖼️</div>
+          <div style="font-size:12px;line-height:1.8;">請把附件風格參考圖存成<br><span class="mono" style="color:var(--gold-light);">design_assets/style_reference.png</span><br>放入後此處自動顯示</div>
+        </div>
+      </div>
+      <div class="shot-caption">風格參考 · DIY Pass 通行證（夢幻星空紫 · 糖果光澤 3D 寶箱）</div>
+    </div>
+    <div style="flex:1;min-width:260px;">
+      <div class="callout info" style="margin-top:0;">
+        <strong>從參考圖要萃取的，是「質感與色調」不是「玩法版位」：</strong>① 深紫藍<strong>星空漸層底</strong>＋星點/星塵；② 立體寶箱/獎品的<strong>糖果光澤 3D</strong>（強高光、圓潤厚實）；③ 寶石切面節點與膠囊票券按鈕；④ <strong>彩虹金屬（iridescent）</strong>特殊件；⑤ 金色＝價值的統一語彙。<strong>DIY Pass 通行證只是質感範例，不是要照抄戰令玩法或版位</strong>——本活動版位、互動一律以原型為準。
+      </div>
+    </div>
+  </div>
+
+  <table class="spec-table">
+    <thead><tr><th style="width:120px;">風格維度</th><th>規格要求（全主題共通）</th><th>參考圖對應</th></tr></thead>
+    <tbody>
+      <tr><td>底層背景</td><td class="dim"><strong>深紫藍星空夜色漸層</strong>（頂部深藍紫 → 中段紫紅星雲），疊<strong>星點／星塵</strong>與柔和光暈；可帶粉紫雲層平台襯托主視覺</td><td class="dim">參考圖的星空紫底＋粉紫雲台</td></tr>
+      <tr><td>物件渲染</td><td class="dim">主物件（寶箱、獎品、保險箱）為<strong>圓潤糖果光澤 3D</strong>：飽滿厚實、強高光（specular）＋邊緣光（rim light）＋接觸陰影；材質有反光與果凍般通透感，避免扁平色塊或粗獷寫實</td><td class="dim">多色立體寶箱、金幣堆、保險箱</td></tr>
+      <tr><td>光暈 / Bloom</td><td class="dim">高價值與互動元件外圈加<strong>柔光暈（glow / bloom）</strong>；特殊件用<strong>彩虹金屬（iridescent）反光</strong>；越高價值越亮</td><td class="dim">彩虹保險箱、發光寶箱與按鈕</td></tr>
+      <tr><td>景深層次</td><td class="dim">前景獎品／寶箱、中景 UI 卡片、背景星空氛圍<strong>三層分離</strong>；用模糊散景（bokeh）與星塵光點堆疊空間感</td><td class="dim">雲台前景＋星空背景分層</td></tr>
+      <tr><td>粒子光效</td><td class="dim">平時：漂浮<strong>星塵／光點</strong>；慶祝時：升級為彩帶＋光爆＋金幣雨（見 P4／P7）</td><td class="dim">背景星點、金幣灑落</td></tr>
+      <tr><td>主色與強調</td><td class="dim">全站以<strong>紫／藍為基底</strong>、粉紫／洋紅點綴、<strong>綠色</strong>作「免費／進度／前進」；「<strong>價值感</strong>」一律以<strong>金色</strong>（金幣／金框／金光）統一強調。高飽和但甜潤不刺眼</td><td class="dim">紫底＋金幣＋金色 Royal Pass</td></tr>
+      <tr><td>UI 元件</td><td class="dim">圓潤卡片、<strong>膠囊票券按鈕</strong>（免費＝淡紫票／進階＝金票）、<strong>寶石切面節點</strong>、漸層填充進度條、亮邊描線；按鈕有立體厚度＋頂部高光＋按壓回饋</td><td class="dim">Free／Royal Pass 票券、寶石節點、進度條</td></tr>
+      <tr><td>字體</td><td class="dim">粗體圓潤無襯線、白色帶<strong>深色描邊＋柔光</strong>；重點字（獎名／金額／通行證名）用金色或主題色高亮並放大；沿用第 14 章多語系字體（Noto Sans 系列）</td><td class="dim">DIY Pass／Royal Pass 金字</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 切圖規格沿用原型：直式手機 <strong>430×932（@1x）</strong>，輸出 <strong>@2x／@3x</strong>；3D 物件建議<strong>去背 PNG 帶透明軟陰影</strong>，方便在不同主題背景上重用。此基準為「質感層」，與下方「主題層（色系／造型）」分開維護。</div>
+
   <!-- ═══ v3.9 新增：主題換皮說明 ═══ -->
   <div class="sub-title" style="margin-top:40px;">主題換皮說明（v3.9 新增）</div>
   <div class="callout info">
@@ -2241,7 +2287,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tbody>
         <tr>
           <td>抽寶箱<br><span class="mono" style="font-size:10px;color:var(--gold-light);">treasure_box</span><br><span class="tag-pill tag-v1" style="font-size:9px;">常駐／通用</span></td>
-          <td class="dim">金黑（gold / dark）</td>
+          <td class="dim">藍紫（purple / blue）</td>
           <td class="dim">🎁 寶箱</td>
           <td class="dim">開箱：箱蓋彈開、金光爆發</td>
           <td class="dim">「每日寶箱」「開始遊戲」「恭喜獲得最終大獎！」</td>
@@ -2399,11 +2445,123 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     </div>
   </div>
 
-  <div class="sub-title" style="font-size:13px;">P6 · 主題風格（需定稿）</div>
-  <div class="body-text">原型內建三套換色風格：<strong>糖果（預設）／藍紫／金黑</strong>。糖果版色票示意——背景 <em>#8FD0FF→#C9B8FF→#FFD6EC</em>、彈窗 <em>#FFD3EC→#C9B8FF→#AEE3FF</em>、格子 <em>#8C6CF0→#6242CC</em>、進度條 <em>#FF8EC4→#FFD86B</em>。</div>
+  <div class="sub-title" style="font-size:13px;">P6 · 主題風格（定稿 v4.2 · 2026-06-30）</div>
+  <div class="body-text">4 套主題＝<strong>treasure_box（藍紫·常駐）／gold_egg（復活節）／red_envelope（春節）／xmas_gift（聖誕）</strong>；皆套用上方〈整體美術風格基準〉的質感層，僅替換色系與物件造型。<span style="color:var(--text-dim);">（原型另內建糖果／藍紫／金黑三套換色僅為示意，正式以本節 4 套為準。）</span></div>
   <div class="callout warn">
-    <strong>需 PM＋美術決策（v4.1 對齊 v4.0 策略）：</strong>首發<strong>先做 1 套（treasure_box）</strong>定稿；<strong>節慶 3 套（gold_egg／red_envelope／xmas_gift）後續再加、採前端寫死</strong>。<strong>總資產量＝換皮元件 × 套數</strong>——詳見下方〈美術資產清單〉之<strong>多主題資產增量換算表</strong>（哪些整張重畫 ×4、哪些重上色 ×4、哪些共用 ×1）。
+    <strong>階段策略（v4.1 對齊 v4.0）：</strong>首發<strong>先做 1 套（treasure_box）</strong>定稿；<strong>節慶 3 套（gold_egg／red_envelope／xmas_gift）後續再加、採前端寫死</strong>。<strong>總資產量＝換皮元件 × 套數</strong>——見下方〈美術資產清單〉之<strong>多主題資產增量換算表</strong>。下方 P6-A／P6-B 提供 4 套<strong>全主題</strong>的描述，美術可先聚焦 treasure_box、其餘 3 套作為後續排程依據。
   </div>
+
+  <!-- ═══ v4.2 新增：P6-A 各主題結算畫面美術描述 ═══ -->
+  <div class="sub-title" id="theme-settle" style="font-size:13px;margin-top:24px;">P6-A · 4 套主題 · 結算畫面美術描述（v4.2 新增）</div>
+  <div class="callout info">
+    <strong>「結算畫面」含兩個全螢幕慶祝時刻：</strong>① <strong>P4 最終大獎爆發</strong>（翻中最終獎那一格，可能在中途觸發）；② <strong>P7 今日全部抽完結算</strong>（9 格翻完的收尾）。兩者<strong>共用同一套無屬性演出時間軸</strong>（遮罩→彩帶→主視覺進場→獎勵/結算卡），僅替換主題美術。下表逐主題定義<strong>背景／主視覺容器／慶祝特效／卡片樣式／主色票</strong>，皆繼承〈整體美術風格基準〉。
+  </div>
+
+  <!-- treasure_box -->
+  <div class="body-text" style="font-size:12px;margin-bottom:6px;"><strong style="color:var(--purple-bright);">① treasure_box · 抽寶箱（藍紫·常駐）</strong></div>
+  <table class="spec-table">
+    <thead><tr><th style="width:120px;">元素</th><th>美術描述</th></tr></thead>
+    <tbody>
+      <tr><td>結算背景</td><td class="dim"><strong>深紫藍星空寶庫</strong>，紫藍漸層底＋星點星塵，中央自寶箱溢出暖金光柱；四周漂浮金幣與寶石散景</td></tr>
+      <tr><td>主視覺容器</td><td class="dim">P4＝藍紫大寶箱<strong>箱蓋全開</strong>、內部金光噴發＋👑 升起；P7＝🎊＋寶箱旁堆滿今日戰利金幣山</td></tr>
+      <tr><td>慶祝特效</td><td class="dim">金色彩帶 ＋ 金幣雨 ＋ 中央光爆（bloom）</td></tr>
+      <tr><td>卡片樣式</td><td class="dim">深紫底＋金描邊框，金色立體描邊字</td></tr>
+      <tr><td>主色票</td><td class="dim">藍紫 <span class="mono">#6B4FD6</span>／靛藍 <span class="mono">#2A1B5E</span>／金 <span class="mono">#FFD86B</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- gold_egg -->
+  <div class="body-text" style="font-size:12px;margin:14px 0 6px;"><strong style="color:var(--green-bright);">② gold_egg · 抽金蛋（復活節）</strong></div>
+  <table class="spec-table">
+    <thead><tr><th style="width:120px;">元素</th><th>美術描述</th></tr></thead>
+    <tbody>
+      <tr><td>結算背景</td><td class="dim">嫩綠草原＋粉彩漸層天空（仍保留深色基準的景深壓角），漂浮彩蛋光球與小花散景</td></tr>
+      <tr><td>主視覺容器</td><td class="dim">P4＝大金蛋<strong>裂開</strong>、彩光由裂縫迸射＋👑；P7＝🎊＋草地上一籃滿滿彩蛋</td></tr>
+      <tr><td>慶祝特效</td><td class="dim">彩色碎蛋殼 ＋ 粉彩彩帶 ＋ 花瓣飄落</td></tr>
+      <tr><td>卡片樣式</td><td class="dim">奶油白＋嫩綠圓角卡，金蛋紋飾邊角</td></tr>
+      <tr><td>主色票</td><td class="dim">金 <span class="mono">#F5C542</span>／嫩綠 <span class="mono">#A8E063</span>／粉 <span class="mono">#FFC9DE</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- red_envelope -->
+  <div class="body-text" style="font-size:12px;margin:14px 0 6px;"><strong style="color:var(--red);">③ red_envelope · 抽紅包（春節）</strong></div>
+  <table class="spec-table">
+    <thead><tr><th style="width:120px;">元素</th><th>美術描述</th></tr></thead>
+    <tbody>
+      <tr><td>結算背景</td><td class="dim">中國紅漸層底＋金色雲紋／燈籠裝飾，漂浮金元寶與銅錢散景</td></tr>
+      <tr><td>主視覺容器</td><td class="dim">P4＝大紅包<strong>翻開</strong>、金幣金元寶噴湧而出＋👑；P7＝🎊＋滿地金元寶＋金色「福」字</td></tr>
+      <tr><td>慶祝特效</td><td class="dim">金幣雨 ＋ 紅金煙火 ＋ 金色彩帶</td></tr>
+      <tr><td>卡片樣式</td><td class="dim">紅底金回紋邊框，燙金字</td></tr>
+      <tr><td>主色票</td><td class="dim">中國紅 <span class="mono">#D7261E</span>／金 <span class="mono">#FFD700</span>／暗紅 <span class="mono">#8B0000</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- xmas_gift -->
+  <div class="body-text" style="font-size:12px;margin:14px 0 6px;"><strong style="color:var(--teal);">④ xmas_gift · 聖誕禮物（聖誕·可替換節慶）</strong></div>
+  <table class="spec-table">
+    <thead><tr><th style="width:120px;">元素</th><th>美術描述</th></tr></thead>
+    <tbody>
+      <tr><td>結算背景</td><td class="dim">夜藍雪景＋聖誕樹燈光與極光光帶，飄雪散景（深色基準天然契合）</td></tr>
+      <tr><td>主視覺容器</td><td class="dim">P4＝大禮物盒<strong>緞帶散開</strong>、盒內金光噴出＋👑；P7＝🎊＋雪地禮物堆＋聖誕燈串</td></tr>
+      <tr><td>慶祝特效</td><td class="dim">雪花飄落 ＋ 紅綠金彩帶 ＋ 星光閃爍</td></tr>
+      <tr><td>卡片樣式</td><td class="dim">雪白底＋紅綠描邊，緞帶裝飾角</td></tr>
+      <tr><td>主色票</td><td class="dim">聖誕紅 <span class="mono">#C0392B</span>／常綠 <span class="mono">#1E7A46</span>／雪白 <span class="mono">#F5F9FF</span>／金 <span class="mono">#FFD86B</span></td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>P4 與 P7 的差異（美術需各出一版）：</strong>P4 是「翻中最終獎那一格」的<strong>單格爆發</strong>、主角是 👑 最終獎；P7 是「9 格全翻完」的<strong>當日收尾結算</strong>、主角是 🎊＋倒數計時卡。兩者共用慶祝特效素材，但<strong>主視覺與文案不同</strong>（見 P4／P7 規格與第 14 章 i18n）。
+
+  </div>
+
+  <!-- ═══ v4.2 新增：P6-B 各主題獎項物品說明 ═══ -->
+  <div class="sub-title" id="theme-prizes" style="font-size:13px;margin-top:24px;">P6-B · 4 套主題 · 小／中／大／最終獎 物品說明（v4.2 新增）</div>
+  <div class="callout info">
+    <strong>分級原則：</strong>① 每階用「<strong>不同實體獎品</strong>」由樸素 → 華麗分級，玩家一眼看出價值差；② <strong>4 階剪影必須明顯區分</strong>，在格內小尺寸（約 96×96pt）仍可辨識；③ 金額字（<span class="mono">₱1／₱3／₱8／₱18</span>）統一樣式疊在物品下方；④ 最終獎一律加 👑 與最強光暈。對應〈美術資產清單〉#9「獎項 icon ×4」與 §07 主題資產命名（<span class="mono">prize_{tier}</span>）。
+  </div>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:150px;">主題</th>
+          <th>小獎 <span class="mono">₱1</span></th>
+          <th>中獎 <span class="mono">₱3</span></th>
+          <th>大獎 <span class="mono">₱8</span></th>
+          <th>最終獎 <span class="mono">₱18</span> 👑</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--purple-bright);">treasure_box</strong><br><span class="dim" style="font-size:10px;">藍紫寶箱</span></td>
+          <td class="dim">3–4 枚散落暗金<strong>銅幣</strong>，霧面、無寶石</td>
+          <td class="dim">鼓起的<strong>銀幣袋</strong>／小疊銀幣，束口繩</td>
+          <td class="dim">滿出的<strong>金幣堆</strong>＋2–3 顆彩色寶石（紅藍綠）</td>
+          <td class="dim"><strong>鑲鑽皇冠</strong>安座於溢滿金幣寶石的小寶箱上，強金光暈</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green-bright);">gold_egg</strong><br><span class="dim" style="font-size:10px;">復活節金蛋</span></td>
+          <td class="dim">1 顆素色淡彩<strong>小蛋</strong></td>
+          <td class="dim">2–3 顆<strong>描花彩蛋</strong>＋緞帶結</td>
+          <td class="dim"><strong>金色大彩蛋</strong>＋花環，微裂透金光</td>
+          <td class="dim"><strong>鑲寶石皇家金蛋</strong>（金蛋座＋頂端皇冠），裂縫噴金光</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red);">red_envelope</strong><br><span class="dim" style="font-size:10px;">春節紅包</span></td>
+          <td class="dim">3–4 枚方孔<strong>銅錢</strong></td>
+          <td class="dim">一疊銅錢＋1 顆<strong>小金元寶</strong></td>
+          <td class="dim"><strong>金元寶堆</strong>＋金條，紅金緞帶</td>
+          <td class="dim"><strong>聚寶盆／金元寶王座</strong>滿溢金銀，金龍環繞</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--teal);">xmas_gift</strong><br><span class="dim" style="font-size:10px;">聖誕禮物</span></td>
+          <td class="dim">1 顆<strong>糖果／薑餅人</strong>小禮</td>
+          <td class="dim">2–3 個<strong>小禮物盒</strong>＋糖果拐杖</td>
+          <td class="dim"><strong>大禮物盒</strong>＋金鈴鐺＋裝飾球</td>
+          <td class="dim"><strong>黃金禮物盒</strong>（金緞帶鑲寶石）＋頂端發光星星</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 物品造型隨主題全變（屬「整張重畫 ×4」類，見〈多主題資產增量換算表〉）；金額數字與底框樣式則跨主題共用版位。各物品同時用於 P3 攤牌/翻開時的格內 icon 與 P4 最終獎卡。</div>
 
   <div class="sub-title" style="font-size:13px;">P7 · 今日全部抽完結算畫面（v3.2 新增｜9 格全開觸發）</div>
   <div class="artspec-row">
@@ -2446,7 +2604,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td>6</td><td>彈窗背景框＋標題列＋關閉鈕＋裝飾層</td><td class="dim">×1 組</td><td class="dim">P3</td></tr>
       <tr><td>7</td><td>進度條（軌道＋漸層填充）</td><td class="dim">×1 組</td><td class="dim">P3，與 P1 進度環同色系</td></tr>
       <tr><td>8</td><td>牌背 ×1＋牌面框（小/中/大獎共框換色）＋最終獎特殊框</td><td class="dim">背 ×1、面框 ×2 種</td><td class="dim">P3，獎項結構見第 03 章</td></tr>
-      <tr><td>9</td><td>獎項 icon（小獎/中獎/大獎/最終獎👑）</td><td class="dim">×4</td><td class="dim">P3/P4</td></tr>
+      <tr><td>9</td><td>獎項 icon（小獎/中獎/大獎/最終獎👑）</td><td class="dim">×4</td><td class="dim">P3/P4，<strong>各主題實際物品造型見 P6-B</strong></td></tr>
       <tr><td>10</td><td>鎖頭 icon</td><td class="dim">×1</td><td class="dim">P3 鎖定態</td></tr>
       <tr><td>11</td><td>按鈕組：主按鈕（開始遊戲/收下）＋次按鈕（跳過/下一步）</td><td class="dim">主/次 ×各 1 套（含 disabled 態）</td><td class="dim">P3/P4/P5</td></tr>
       <tr><td>12</td><td>洗牌動畫素材</td><td class="dim">單格牌素材＋動態示意</td><td class="dim">P3，動畫由前端程式實作，美術出分層素材</td></tr>
@@ -3836,8 +3994,9 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 CRM 功能規格書 · LUCKY CHEST V4.1 · CONFIDENTIAL 2026<br>
+  抽寶箱 CRM 功能規格書 · LUCKY CHEST V4.2 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 兩階段實作（v1 現金獎 + 完整基建 / v2 編輯工具 + 背包）<br>
+  v4.2（2026-06-30）：補強 §06 美術描述讓美術可直接設計——新增〈整體美術風格基準〉（對標附件參考圖 DIY Pass：夢幻星空紫×糖果光澤 3D 的休閒精品風，含風格參考圖佔位 style_reference.png 與 8 維度質感規格）；P6 由「需定稿」升為定稿，新增 P6-A 4 套主題結算畫面（P4／P7）美術描述、P6-B 4 套主題小/中/大/最終獎物品分級說明（不同實體獎品）；treasure_box 主色由金黑改為<strong>藍紫</strong>（對齊星空紫風格）；側欄新增三個美術子連結。<br>
   v4.1（2026-06-26）：對齊新版後台原型——多貨幣架構、每日重置時間欄、權限改頁面可見性模型、補活動審查頁細節（含截圖佔位 admin_07~admin_11）與後台導覽結構；移除 UAT 測試工具（移交獨立工具規格）；美術資產清單釐清 1 套 vs 4 套主題換算。<br>
   v4.0（2026-06-26 開案）：補充開案會議項目——§02 每日 reset 固定 24h 週期＋總週期依設定、reset 時間點逐活動可設（Server+8）；§02/§03 幣值維度（每幣值獨立門檻/獎池/規則）；§03 機率數據由設計端提供；§04 受眾標籤與線路清單由數據組提供、後端直抓不開放後台新增、強化分群（大客差異化·第一階段）；§06 主題換皮重畫元件清單＋第一階段一套主題、節慶主題前端寫死；§07 上線審核流程＋審核人員分層權限＋上線中禁編輯；§08 異常 Telegram 通知（初期人工）；§05 目標 8 月底送 QA，新增 Task 與職能分配（後端 Wayne/Eric、後台 劉暢、數據 國清/虹瑜）<br>
   v3.9.2（2026-06-25）：§07 線路投放「截圖 2」左欄改用後台原型實截 admin_06_line_audience.png（線路投放已選＋受眾 tag），取代原手繪錯誤態示意；必選驗證錯誤態改標「規格定義·原型待補」<br>
