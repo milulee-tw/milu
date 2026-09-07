@@ -248,9 +248,12 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   </div>
 
   <div class="note info">
-    <strong>Scripts are assigned round-robin, not at random.</strong> The first new player receives
-    script 1, the second receives script 2, and so on. This keeps sample sizes even across all
-    100 scripts, which is what makes the later comparison between scripts meaningful.
+    <strong>Scripts are assigned at random, on first use.</strong> The first time a player bets in a band, the
+    server draws one of that pool's 100 scripts at random — no ordering, no counter, nothing an outside
+    observer could predict. When scripts are later compared, only those with enough players behind them
+    are read; thin samples are not used to draw conclusions.<br>
+    <strong>A Free Game counts as one spin.</strong> The triggering spin and all of its free spins consume one
+    step of the script and count as one recorded bet; the big-win limit is checked once for the whole round.
   </div>
 
   <div class="note ok">
@@ -326,19 +329,18 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="card hi">
       <div class="card-k">Gate 4 · Big Win</div>
       <div class="card-v">≥ 3</div>
-      <div class="card-d">A Big Win is a spin paying <strong>10× bet or more</strong>. Frequent small wins alone do not feel rewarding.</div>
+      <div class="card-d">A Big Win is a spin paying <strong>10× bet or more</strong>; a Free Game round counts as one spin, judged on its total. Frequent small wins alone do not feel rewarding.</div>
     </div>
     <div class="card hi">
-      <div class="card-k">Gate 5 · Max single win</div>
+      <div class="card-k">Gate 5 · Max single win (a Free Game round counts as one spin)</div>
       <div class="card-v">&lt; 500×</div>
       <div class="card-d">No outsized win during the new-player window — cost stays predictable and the later drop-off is less jarring.</div>
     </div>
   </div>
 
   <div class="note info">
-    <strong>Gate 5 applies on two measures:</strong> no single spin may reach 500× bet, and no
-    single Free Game round may reach 500× bet in total. Checking only the individual spin would
-    miss sequences where each Free Game spin is modest but the total is not.
+    <strong>Gate 5 is measured per spin, where a Free Game round counts as one spin</strong> judged on its
+    total payout. This naturally covers sequences where each free spin is modest but the round's total is not.
   </div>
 </div>
 
@@ -429,8 +431,8 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     </div>
     <div class="card ok">
       <div class="card-k">Layer 2 · Structural</div>
-      <div class="card-t">Low-stake pool is bet-capped</div>
-      <div class="card-d">The favourable pool is only reachable below THB 50 per spin, capping the theoretical take at roughly THB 368 across the 300-spin window.</div>
+      <div class="card-t">THB 50 is the pool boundary</div>
+      <div class="card-d">Not a bet cap — any bet of THB 50 or more simply lands in the negative-expectation pool. Below it, the expected take across 300 spins is roughly THB 368, and even at the 105% RTP ceiling no more than about THB 735.</div>
     </div>
     <div class="card ok">
       <div class="card-k">Layer 3 · At source</div>
@@ -583,8 +585,8 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
       In play they are not — and the logs show precisely why. <strong>Scripts that underperform are
       retired and replaced</strong>; the characteristics that made the strong ones work are carried
       into the next generation.<br>
-      This is only possible because scripts are handed out round-robin: with comparable sample sizes
-      across all 100, the comparison is valid rather than anecdotal.
+      Comparisons are only drawn where a script has accumulated enough players to make them valid
+      rather than anecdotal; scripts with thin samples wait until they have.
     </div>
   </div>
 
@@ -597,7 +599,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="card">
       <div class="card-ico">02</div>
       <div class="card-t">Which sequences work best?</div>
-      <div class="card-d">Spins and completion rate compared across all 100 scripts in each pool, with even sample sizes making the comparison valid.</div>
+      <div class="card-d">Spins and completion rate compared across the scripts in each pool — only scripts with enough players behind them are compared, so the result is valid rather than anecdotal.</div>
     </div>
     <div class="card">
       <div class="card-ico">03</div>
@@ -617,7 +619,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 </div><!-- /wrap -->
 
 <div class="foot">
-  New Player Experience Scripts · Feature Brief V3.1 · Confidential 2026<br>
+  New Player Experience Scripts · Feature Brief V4.1 · Confidential 2026<br>
   Force / Combo Gaming
 </div>
 

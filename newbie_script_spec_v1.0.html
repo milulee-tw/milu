@@ -832,13 +832,13 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">NES-SPEC · V3.1</span>
+  <span class="nav-brand">NES-SPEC · V4.1</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">新手判定</a>
   <a class="nav-item" href="#script">腳本產製</a>
   <a class="nav-item" href="#flow">技術流程</a>
   <a class="nav-item" href="#tasks">開發 Task</a>
-  <a class="nav-item" href="#logs">埋點與分析</a>
+  <a class="nav-item" href="#logs">事件紀錄與分析</a>
   <a class="nav-item" href="#risk">風險控管</a>
   <a class="nav-item" href="#comparison">範圍與後續</a>
   <a class="nav-item" href="#openq">待確認</a>
@@ -857,7 +857,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="sidebar-brand">CMB · SPEC DOC</div>
     <div class="sidebar-title">新手機率體驗腳本<br>規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v3.1</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">v4.1</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -929,7 +929,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
     <div class="sidebar-section" data-section="logs">
       <button class="sidebar-section-btn" onclick="navTo('logs')">
-        <span class="sidebar-section-num">06</span>Log 埋點與資料分析<span class="sidebar-chevron">›</span>
+        <span class="sidebar-section-num">06</span>Log 事件紀錄與資料分析<span class="sidebar-chevron">›</span>
       </button>
       <div class="sidebar-subsections">
         <a class="sidebar-sub-link" href="#logs">綁定紀錄</a>
@@ -983,10 +983,10 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="cover-grid"></div>
   <div class="cover-tag">CMB · FEATURE SPEC · 2026</div>
   <h1>新手<span>機率體驗</span>腳本</h1>
-  <div class="cover-sub">Newbie Scripted Experience System · V3.1</div>
+  <div class="cover-sub">Newbie Scripted Experience System · V4.1</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>類型</strong> 機率 / 伺服器機制</div>
-    <div class="cover-pill"><strong>版本</strong> v3.1</div>
+    <div class="cover-pill"><strong>版本</strong> v4.1</div>
     <div class="cover-pill"><strong>平台</strong> Force / Combo Gaming</div>
     <div class="cover-pill"><strong>市場</strong> 非認證市場限定</div>
   </div>
@@ -1012,7 +1012,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="hypo-text">
       玩家對一款遊戲的去留，在<strong>最初的 300 局</strong>就已經決定——這也是現行數據顯示的主要遊玩手數區間。原生 RNG 只保證「長期平均」，
       不保證「任何一個新手的前幾百局」；本案把新手的<strong>前 300 局</strong>結果，改為由
-      <em>預先篩選過、確認體感合格的固定序列</em>供應，將新手體驗從機率問題轉為可控參數。
+      <em>預先篩選過、確認手感合格的固定序列</em>供應，將新手體驗從機率問題轉為可控參數。
     </div>
   </div>
 
@@ -1020,7 +1020,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="info-card">
       <div class="info-card-icon">🎯</div>
       <div class="info-card-title">主要目標</div>
-      <div class="info-card-desc"><strong>提升新手的人均累計手數</strong>——讓玩家在這款遊戲多轉幾局。</div>
+      <div class="info-card-desc"><strong>提升新手的人均累計手數</strong>——讓玩家在這款遊戲多押幾局（以有押注的局數計，Free Game 的免費局不計）。</div>
     </div>
     <div class="info-card">
       <div class="info-card-icon">🧪</div>
@@ -1041,13 +1041,15 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     留存是整個新手漏斗（拉新來源、儲值流程、活動、市場波動、其他遊戲競爭）共同作用的結果，
     <strong>不是本機制單獨能決定的</strong>。用留存判定本案成效，等於拿一個我們控制不了的指標來打分數。<br>
     D1／D3 留存<strong>仍會記錄、仍會凍 baseline</strong>（成本為零），但<strong>降為次要觀察指標</strong>——
-    日後若要驗證「手數 → 留存」的關聯性，資料已經在那裡。
+    日後若要驗證「手數 → 留存」的關聯性，資料已經在那裡。<br><br>
+    <strong>預期的提升從哪裡來</strong>：本案的機制在第 300 局就切回原生 RNG，所以「人均手數上升」的主要來源應是<em>降低 300 局內的早期流失</em>——
+    判讀以「300 局完成率」與「流失點位曲線」為主；300 局之後的手數變化列為觀察項，不作為本案成效的判定依據。
   </div>
 
   <div class="sub-title">背景問題點</div>
   <div class="body-text">
     slot 的基準 RTP 約 <strong>96.7%</strong>，這是「跑很多很多局之後」的平均值。對只玩了 200~300 局的新手來說，
-    實際體感完全由運氣決定——同一款遊戲，有人前 100 局吃到兩次 Free Game，有人 300 局連一次都沒有。
+    實際感受完全由運氣決定——同一款遊戲，有人前 100 局吃到兩次 Free Game，有人 300 局連一次都沒有。
     後者幾乎不會有第二天。<strong>我們無法控制單一新手的運氣，但可以控制他拿到的那一份結果序列。</strong>
   </div>
 
@@ -1070,8 +1072,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         <tr><th>條件</th><th class="v1-col">低額池 · bet &lt; THB 50</th><th class="v2-col">高額池 · bet ≥ THB 50</th></tr>
       </thead>
       <tbody>
-        <tr><td>整套 RTP</td><td class="v1-val">100 ~ 105%</td><td class="v2-val">98 ~ 100%</td></tr>
-        <tr><td>最大單筆獎</td><td class="v1-val">&lt; 500x</td><td class="v2-val">&lt; 500x</td></tr>
+        <tr><td>整套 RTP</td><td class="v1-val">100% ≤ RTP ≤ 105%</td><td class="v2-val">98% ≤ RTP &lt; 100%</td></tr>
+        <tr><td>最大單局獎<br><span class="dim" style="font-size:11px">一次 Free Game 整段算一局</span></td><td class="v1-val">&lt; 500x</td><td class="v2-val">&lt; 500x</td></tr>
         <tr><td>Free Game</td><td class="v1-val">≥ 1 次</td><td class="v2-val">≥ 1 次</td></tr>
         <tr><td>Big Win（≥ 10x bet）</td><td class="v1-val">≥ 3 次</td><td class="v2-val">≥ 3 次</td></tr>
         <tr><td>Hit Rate</td><td class="v1-val">&gt; 35%</td><td class="v2-val">&gt; 35%</td></tr>
@@ -1081,13 +1083,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     </table>
   </div>
   <div class="callout success">
+    <span class="dim">RTP 剛好 100% 的段落屬低額池；全文其他處的「100~105%／98~100%」為概略寫法，邊界歸屬以 §03 C1 為準。</span><br>
     <strong>兩池同時上線</strong>（原規劃分兩階段，經開發評估「100 套腳本半天即可完成」後合併）。
     高額池期望值為負，<em>套利誘因在上線第一天就被消除</em>，不需再依賴監控與水池補位。
   </div>
   <div class="callout warn">
     <strong>buy bonus 不在腳本範圍內</strong>：玩家購買 Free Game（buy bonus）的那一局<strong>直接走原生 RNG</strong>，
-    且<strong>不消耗腳本進度</strong>——腳本序列保持完整，五項體感條件的保證不被挖空。
-    該局埋點標記 <code>buy_bonus = true</code>，分析時排除。
+    且<strong>不消耗腳本進度</strong>——腳本序列保持完整，五項手感條件的保證不被挖空。
+    該局事件紀錄標記 <code>buy_bonus = true</code>，分析時排除。
   </div>
 
   <div class="sub-title">上線範圍與適用政策</div>
@@ -1105,14 +1108,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="info-card">
       <div class="info-card-icon">💱</div>
       <div class="info-card-title">適用幣別</div>
-      <div class="info-card-desc"><strong>目前僅開放 THB</strong>，其他幣別玩家一律阻擋、走原生 RNG；後續擴充為全幣值。</div>
+      <div class="info-card-desc"><strong>目前僅開放 THB</strong>，其他幣別玩家不套用腳本、走原生 RNG；後續擴充為全幣值。</div>
     </div>
   </div>
 
   <div class="callout warn">
     <strong>v1 的兩道範圍限制（同時成立才會啟用腳本）</strong><br>
     ① <strong>遊戲</strong>：僅 <code>Lucky Paws 財神貓</code>；<br>
-    ② <strong>幣別</strong>：玩家錢包幣別必須為 <strong>THB</strong>——<em>THB 以外的玩家一律阻擋，直接走原生 RNG、不配發腳本、不寫綁定表</em>。<br>
+    ② <strong>幣別</strong>：玩家錢包幣別必須為 <strong>THB</strong>——<em>THB 以外的玩家一律不套用腳本，直接走原生 RNG、不配發腳本、不寫綁定表</em>。<br>
     後續擴充為全幣值時，各幣別的分池門檻依〈多幣別分池門檻對照表〉（見 §02）啟用即可，<strong>腳本內容與機制邏輯不需改動</strong>。<br>
     <span style="color:var(--red-bright)"><strong>對驗證的影響</strong>：適用範圍同時限縮「單一遊戲 × 單一幣別」，
     可取得的新手樣本數會顯著少於預期，驗證期可能因此拉長——須由數據組重新推算（見 §09 Q12）。</span>
@@ -1122,7 +1125,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <strong>新遊戲開發 SOP 異動（本案最大的長期影響）</strong><br>
     「後續所有新遊戲都要有新手腳本」代表本機制<em>不是一次性專案</em>，而是<strong>新遊戲開發流程的固定環節</strong>。
     連帶要求：<br>
-    ① <strong>server 快測與 200 套腳本產出，升格為新遊戲的標準交付項</strong>（與賠率表、數學驗證同級）；<br>
+    ① <strong>server 快速測試（以下簡稱快測）與 200 套腳本產出，升格為新遊戲的標準交付項</strong>（與賠率表、數學驗證同級）；<br>
     ② 腳本產製須<strong>排進新遊戲開發時程</strong>，不得等遊戲上線後才補做；<br>
     ③ 遊戲賠率表或數學版本一有異動，腳本須<strong>連動重產</strong>（見 §03 交付規範）。
   </div>
@@ -1130,7 +1133,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="callout info">
     <strong>首波以財神貓單款驗證的附帶好處</strong>：v1 雖不設對照組（見 §06），
     但在單款驗證期間，<em>其他未啟用腳本的遊戲可作為同期參考基準</em>——
-    雖非嚴謹對照（各遊戲的手數基準本就不同），仍能提供一層旁證。
+    雖非嚴謹對照（各遊戲的手數基準本就不同），仍能提供一層側面參考。
   </div>
 
   <div class="sub-title">適用邊界（不可跨越）</div>
@@ -1142,8 +1145,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   </div>
   <div class="callout info">
     <strong>與大獎限制的關係</strong>：本機制<strong>不凌駕於既有的大獎限制之上</strong>。大獎限制分兩層——<br>
-    <strong>① 源頭層</strong>：腳本篩選時就排除超過 500 倍的獎，<em>腳本裡根本不存在超大獎</em>；<br>
-    <strong>② 系統層</strong>：線路總水池的大獎限制順位仍在腳本之前，被擋下時腳本該局讓位、砍為 low win（見 §04）。
+    <strong>① 源頭層</strong>：腳本篩選時就排除 500 倍（含）以上的獎，<em>腳本裡根本不存在超大獎</em>；<br>
+    <strong>② 系統層</strong>：線路總水池的大獎限制順位仍在腳本之前，被擋下時該局不用腳本結果、砍為 low win（見 §04）。
   </div>
 </section>
 
@@ -1224,14 +1227,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="fnode decide">
       <div class="fnode-num">CHECK 03</div>
       <div class="fnode-title">綁定表查到紀錄了嗎？</div>
-      <div class="fnode-desc">用來區分「全新」「跑到一半」「已跑完」三種狀態</div>
+      <div class="fnode-desc">先查綁定表、再查注單——因為「跑到一半」「已跑完」只存在綁定表裡，這兩種人的注單都不是 0，若先查注單會被誤判為不適用</div>
     </div>
     <div class="fsplit three">
       <div class="fcol">
         <span class="fbadge neu">查無紀錄</span>
-        <div class="fnode highlight">
-          <div class="fnode-title">認定為新手</div>
-          <div class="fnode-desc">進入流程二：配發腳本</div>
+        <div class="fnode">
+          <div class="fnode-title">還不知道是不是新手</div>
+          <div class="fnode-desc">往下進 CHECK 04 查注單</div>
         </div>
       </div>
       <div class="fcol">
@@ -1249,7 +1252,35 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         </div>
       </div>
     </div>
-    <div class="fmerge">三種狀態各自往下，之後每一局都走 §04 的每局主流程</div>
+    <div class="farrow-t">↓ 只有「查無紀錄」往下</div>
+    <div class="fnode decide">
+      <div class="fnode-num">CHECK 04</div>
+      <div class="fnode-title">查注單：這位玩家在這款遊戲的歷史局數是否為 0？</div>
+      <div class="fnode-desc">
+        以 CMB 自有注單為準，<strong>不分幣別、不分線路</strong>——只要在這款遊戲玩過任何一局（含線路開關關閉期間、幣別不符期間用原生 RNG 玩的局）都不算新手
+      </div>
+    </div>
+    <div class="fsplit">
+      <div class="fcol">
+        <span class="fbadge no">歷史局數 &gt; 0</span>
+        <div class="fnode warn">
+          <div class="fnode-num">END</div>
+          <div class="fnode-title">不適用，走原生 RNG</div>
+          <div class="fnode-desc">不建立綁定列。<strong>財神貓上線前既有的 THB 玩家全部屬此類</strong>；曾在開關關閉或幣別不符期間玩過的人也屬此類，<em>之後永久不適用</em>（這是刻意結果，不是漏洞）</div>
+        </div>
+      </div>
+      <div class="fcol">
+        <span class="fbadge yes">歷史局數 = 0</span>
+        <div class="fnode highlight">
+          <div class="fnode-title">認定為新手，建立綁定列</div>
+          <div class="fnode-desc">
+            寫入一列：兩池 <code>script_id = null</code>、<code>low_seq = high_seq = total_bets = 0</code>、記錄 <code>created_at</code>。<br>
+            <strong>此時尚未配發任何腳本</strong>——腳本在首次下注時才配發（流程二）
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fmerge">「新手（已建列）」與「未跑完」兩種狀態，之後每一局都走 §04 的每局主流程；「已跑完」與「不適用」從此不再介入</div>
   </div>
 
   <div class="sub-title">多幣別分池門檻對照表</div>
@@ -1271,7 +1302,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       <tr><td>USD</td><td class="mono">2.00</td><td>IDR</td><td class="mono">10,000.00</td><td>GEL</td><td class="mono">4.00</td></tr>
       <tr><td>TWD</td><td class="mono">30.00</td><td>kIDR</td><td class="mono">10.00</td><td>GHS</td><td class="mono">20.00</td></tr>
       <tr><td>TWDp(100:1)</td><td class="mono">3,000.00</td><td>RUB</td><td class="mono">100.00</td><td>KES</td><td class="mono">200.00</td></tr>
-      <tr><td>TWDv(130:1)</td><td class="mono">3,000.00</td><td>SGD</td><td class="mono">2.00</td><td>KZT</td><td class="mono">500.00</td></tr>
+      <tr><td>TWDv(130:1)</td><td class="mono">3,900.00 <span class="tag-pill tag-opt" style="font-size:10px">待營運確認</span></td><td>SGD</td><td class="mono">2.00</td><td>KZT</td><td class="mono">500.00</td></tr>
       <tr><td>BDT</td><td class="mono">100.00</td><td style="background:var(--accent-fill-weak)"><strong>THB</strong> <span class="tag-pill tag-v1">v1 啟用</span></td><td class="mono" style="background:var(--accent-fill-weak)">50.00</td><td>NGN</td><td class="mono">2,000.00</td></tr>
       <tr><td>BND</td><td class="mono">2.00</td><td>VND</td><td class="mono">20,000.00</td><td>NOK</td><td class="mono">10.00</td></tr>
       <tr><td>BRL</td><td class="mono">8.00</td><td>kVND</td><td class="mono">20.00</td><td>NZD</td><td class="mono">2.00</td></tr>
@@ -1295,52 +1326,49 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="callout info">
     <strong>此表為固定參數，不隨匯率浮動</strong>：門檻值由營運核定並寫死於設定，
     <em>不做即時匯率換算</em>——避免同一位玩家因匯率變動而在兩個池之間來回跳動，破壞腳本序列的連續性。
-    需要調整時以設定變更處理，並註明生效時點。
+    需要調整時以設定變更處理，並註明生效時點。<br>
+    <span class="dim">TWDv(130:1) 原表列 3,000，依 TWD 30 × 130 應為 3,900，本版先依比例更正並標「待營運確認」（見 §09 Q19）；其餘 8 個帶計價比例的幣別已程式驗算相符。</span>
   </div>
 
-  <div class="sub-title">流程二：腳本配發（輪流發，確保每套人數均勻）</div>
+  <div class="sub-title">流程二：腳本配發（隨機配發 · 用到才配發）</div>
   <div class="body-text">
-    配發方式採<strong>輪流發（round-robin）</strong>而非隨機抽：<strong>每款遊戲的每個池各維護一個計數器</strong>，
-    第 1 位新手拿第 1 套、第 2 位拿第 2 套……第 101 位回到第 1 套。
-    <em>目的是讓 100 套腳本的樣本數幾乎一致</em>——否則三個月後分析「哪一套讓人玩最久」時，
-    會出現「某套只有 12 個人用過、數字完全不可信」的問題。<br><br>
-    <strong>採「用到才發」（懶配發）</strong>：玩家第一次用該區間的 bet 下注時，才從該池配發。
+    配發方式採<strong>均勻隨機</strong>：玩家第一次用某個區間的 bet 下注時，Server 從該池的 100 套中<strong>隨機抽一套</strong>給他。
+    <em>不維護任何配發計數器、不依順序配發</em>，每一套被抽到的機率相同。<br>
+    <strong>隨機源要求</strong>：必須用 Server 端正規的亂數產生器；<strong>不得用 <code>player_id</code>、時間戳等可推導的值取餘數</strong>——
+    否則同一批註冊的帳號會拿到相鄰編號，形成可被觀察的規律。<br><br>
+    <strong>採「用到才配發」</strong>：玩家第一次用該區間的 bet 下注時，才從該池配發。
     若玩家全程小額、從未壓到 THB 50 以上，就<em>不會佔用高額池的配發名額</em>——
-    否則會出現「高額池第 37 套發出去 500 次、實際只有 12 人真的跑過」的假樣本問題。
+    否則會出現「高額池第 37 套發出去 500 次、實際只有 12 人真的跑過」的假樣本問題。<br><br>
+    <strong>樣本數的取捨</strong>：隨機配發<em>不保證</em>各套的使用人數相近（人數越少落差越大，例：某池只有 1,000 人時，各套人數可能在 3~19 之間）。
+    因此 §06「哪一套最好」的橫向比較須設<strong>單套最低樣本數門檻</strong>，未達門檻的套不下結論。
   </div>
 
   <div class="fdiag">
     <div class="fdiag-cap">FLOW 02 · SCRIPT ASSIGNMENT</div>
     <div class="fnode start">
       <div class="fnode-num">START</div>
-      <div class="fnode-title">確認為新手（來自流程一），且首次用到某區間的 bet</div>
+      <div class="fnode-title">綁定列已存在（來自流程一），且這一局是首次用到某區間的 bet</div>
       <div class="fnode-desc">bet &lt; THB 50 → 低額池；bet ≥ THB 50 → 高額池</div>
     </div>
     <div class="farrow">↓</div>
     <div class="fnode">
       <div class="fnode-num">STEP 01</div>
-      <div class="fnode-title">讀取該遊戲「該池」的配發計數器</div>
-      <div class="fnode-desc">計數器為 <code>game_id × pool</code> 層級、全線路共用一組（分線路輪替列入後續版本）</div>
-    </div>
-    <div class="farrow">↓</div>
-    <div class="fnode">
-      <div class="fnode-num">STEP 02</div>
-      <div class="fnode-title">取得腳本編號</div>
-      <div class="fnode-desc"><code>script_id = (counter mod 100) + 1</code>，取完立即 +1 並落庫（需具備並發安全，見 §05）<br>
-      兩池的編號<strong>各自計算、可以不同</strong>（例：低額池第 07 套 ＋ 高額池第 42 套）</div>
+      <div class="fnode-title">從該池隨機抽一套</div>
+      <div class="fnode-desc"><code>script_id = 該池 1~100 均勻隨機</code>。不讀取、不更新任何共用狀態，<strong>沒有並發問題</strong>；<br>
+      兩池<strong>各自抽、可以不同</strong>（例：低額池第 07 套 ＋ 高額池第 42 套），同一套被多人抽到是正常現象</div>
     </div>
     <div class="farrow">↓</div>
     <div class="fnode highlight">
-      <div class="fnode-num">STEP 03</div>
-      <div class="fnode-title">寫入綁定表</div>
-      <div class="fnode-desc">記錄該池的 <code>script_id</code>、<code>assigned_at</code>，該池進度歸 0；<br>
-      另一池的欄位<strong>留空</strong>，等玩家真的用到該區間 bet 時再配發</div>
+      <div class="fnode-num">STEP 02</div>
+      <div class="fnode-title">填入綁定列</div>
+      <div class="fnode-desc">寫入該池的 <code>script_id</code> 與配發時間（<code>low_assigned_at</code> 或 <code>high_assigned_at</code>），該池進度維持 0；<br>
+      另一池的欄位<strong>仍為 null</strong>，等玩家真的用到該區間 bet 時再配發</div>
     </div>
     <div class="farrow">↓</div>
     <div class="fnode success">
       <div class="fnode-num">END</div>
-      <div class="fnode-title">綁定完成，開始供應腳本結果</div>
-      <div class="fnode-desc">後續每一局進入 §04 每局主流程</div>
+      <div class="fnode-title">配發完成，這一局就以該套第 1 局結算</div>
+      <div class="fnode-desc">接回 §04 每局主流程的 CHECK 02</div>
     </div>
   </div>
 
@@ -1372,7 +1400,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         bet &lt; THB 50 → 取低額池第 <code>low_seq + 1</code> 局，<code>low_seq += 1</code><br>
         bet ≥ THB 50 → 取高額池第 <code>high_seq + 1</code> 局，<code>high_seq += 1</code><br>
         兩者皆使 <code>total_bets += 1</code>。進度以「<strong>局</strong>」為單位，不是金額或時間：<br>
-        · 一次 Free Game 的觸發局與其後所有免費局，<strong>合計依實際局數計算</strong><br>
+        · 一次 Free Game（觸發局＋其後所有免費局）<strong>整段算 1 局</strong>；免費局本身<strong>不計入</strong>該池進度、也不計入 <code>total_bets</code><br>
         · 被大獎限制砍為 low win 的那一局，<strong>進度照樣 +1</strong>（見 §04）<br>
         · <strong>buy bonus 的那一局不消耗任何進度、也不計入 <code>total_bets</code></strong>（見 §04）
       </div>
@@ -1415,7 +1443,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     ① <strong>失去的是「保證」，不是「體驗」</strong>——腳本本身是從快測結果篩出的正常序列，
     「前 120 局沒有 FG」的機率與原生 RNG 相當，<em>切換者的最壞情況約等於原生 RNG，而非更差</em>；<br>
     ② <strong>會切換的人剛好是最不需要保護的族群</strong>——新手很少一開始就壓大注，
-    中途加碼通常代表玩得順、本來就沒有流失風險；本機制要救的是連續乾局想離開的人，那群人不會加碼；<br>
+    中途加碼通常代表玩得順、本來就沒有流失風險；本機制要救的是連續沒中獎、想離開的人，那群人不會加碼；<br>
     ③ <strong>若改為「兩池都跑滿 300」，優待期長度會變成玩家可控</strong>（切一次就從 300 變 600），
     成本不可控，且違背「300 局為合適區間」的數據結論。<br><br>
     <strong>補償措施</strong>：新增監控指標<strong>跨區間切換率</strong>（見 §07 M8）——
@@ -1425,7 +1453,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="callout success">
     <strong>300 局＝至少一次 Free Game</strong><br>
     每一套腳本的 300 局都保證 <code>FG ≥ 1</code>（見 §03 C3），因此<strong>全程維持在同一個區間的玩家，
-    在 300 局內必定至少看到一次 Free Game</strong>。
+    在 300 局內必定至少看到一次 Free Game</strong>（唯一例外：該觸發局被大獎限制擋下，見 §04 E1；風險二評估其發生率接近 0）。<br>
+    <span class="dim">因為一次 Free Game 整段只算 1 局，300 局的「實際轉動次數」會多於 300（例：3 次 FG 各 10 個免費局 ＝ 330 轉）；成本不受影響（RTP 以 bet 計），但成效指標的計算方式須與此一致（見 §06）。</span>
   </div>
 
   <div class="callout">
@@ -1447,15 +1476,17 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="hypo-label">本章重點 · KEY</div>
     <div class="hypo-text">
       每款遊戲要備妥 <em>200 套腳本</em>（低額池 100 套 ＋ 高額池 100 套），每套是<strong>連續的 300 局結果</strong>，
-      且每一套都必須同時通過<strong>五項體感條件</strong>。
+      且每一套都必須同時通過<strong>五項手感條件</strong>。
     </div>
   </div>
 
   <div class="sub-title">腳本結構：一套 = 連續 300 局</div>
   <div class="body-text">
     一套腳本就是一份「第 1 局到第 300 局分別出什麼結果」的清單。它記錄的是<strong>倍數與盤面</strong>，
-    不是金額——玩家壓多少，就把倍數乘上去。<strong>低額池與高額池的結構完全相同，只有 RTP 區間不同。</strong>
-    下圖為單套腳本的體感示意（每格代表 5 局）：
+    不是金額——玩家壓多少，就把倍數乘上去。<strong>低額池與高額池的結構完全相同，只有 RTP 區間不同。</strong><br>
+    <strong>腳本以「押注局」為單位</strong>：一套 300 筆，一次 Free Game 整段是其中<em>一筆</em>——這一筆是巢狀資料，內含<strong>整段總倍數、免費局數、每個免費局的盤面與贏分</strong>；
+    Server 判大獎限制與派彩用整段總倍數，遊戲端逐局呈現用免費局明細。<br>
+    下圖為單套腳本的手感示意（每格代表 5 局）：
   </div>
 
   <div class="strip"><i></i><i></i><i class="w"></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i></i><i class="w"></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i class="w"></i><i></i><i class="fg"></i><i class="fg"></i><i class="fg"></i><i></i><i class="w"></i><i></i><i class="w"></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i class="w"></i><i></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i class="w"></i><i></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i></i><i class="fg"></i><i class="fg"></i><i class="fg"></i><i></i><i></i><i class="w"></i><i></i><i class="w"></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i class="w"></i><i class="w"></i><i></i></div>
@@ -1474,16 +1505,16 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       <tr>
         <td>C1</td>
         <td>整套 RTP</td>
-        <td class="mono">100% ~ 105%</td>
-        <td class="mono">98% ~ 100%</td>
-        <td class="dim">低額池讓玩家小賺、體感上「這款對我不錯」；<strong>高額池刻意設在 100% 以下，讓期望值對玩家為負</strong>，從結構上消除套利誘因。</td>
+        <td class="mono">100% ≤ RTP ≤ 105%</td>
+        <td class="mono">98% ≤ RTP &lt; 100%</td>
+        <td class="dim">低額池讓玩家小賺、感受上「這款對我不錯」；<strong>高額池刻意設在 100% 以下，讓期望值對玩家為負</strong>，從結構上消除套利誘因。</td>
       </tr>
       <tr>
         <td>C2</td>
         <td>Hit Rate（中獎局佔比）</td>
         <td class="mono">&gt; 35%</td>
         <td class="mono">&gt; 35%</td>
-        <td class="dim">決定「手感」。RTP 再高，若集中在少數幾局，中間的乾局一樣會讓人離開。<br><strong>門檻由 40% 下修為 35%</strong>——實際撈取 server 快測結果後，能同時滿足其餘四項且 hit rate 達 40% 的窗口過少（見下方說明）。</td>
+        <td class="dim">決定「手感」。RTP 再高，若集中在少數幾局，中間連續沒中獎的局一樣會讓人離開。<br><strong>門檻由 40% 下修為 35%</strong>——實際取得 server 快測結果後，能同時滿足其餘四項且 hit rate 達 40% 的段落過少（見下方說明）。<br><span class="dim">分母的「局」以一次 Free Game 整段算一局計。</span></td>
       </tr>
       <tr>
         <td>C3</td>
@@ -1494,7 +1525,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       </tr>
       <tr>
         <td>C4</td>
-        <td>最大單筆獎</td>
+        <td>最大單局獎<br><span class="dim" style="font-size:11px">一次 Free Game 整段算一局</span></td>
         <td class="mono">&lt; 500x</td>
         <td class="mono">&lt; 500x</td>
         <td class="dim">避免新手期就吃到超大獎——一來成本不可控，二來吃完大獎後續落差過大，反而讓人不想再玩。</td>
@@ -1511,7 +1542,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
   <div class="callout warn">
     <strong>C4 的邊界是「嚴格小於」</strong>：<code>&lt; 500x</code> ——<strong>499x 合格、500x 不合格</strong>。
-    此處刻意與專案其他文件慣用的 <code>≤</code> 不同，QA 撰寫邊界值案例時請特別注意。
+    此處刻意與專案其他文件慣用的 <code>≤</code> 不同，QA 撰寫邊界值案例時請特別注意。<br>
+    <strong>C1 的邊界歸屬</strong>：RTP 剛好 100% 的段落<strong>屬低額池</strong>（低額池 <code>100% ≤ RTP ≤ 105%</code>、高額池 <code>98% ≤ RTP &lt; 100%</code>）；同一段落<strong>不得同時放入兩池</strong>，高額池的期望值因此對玩家一律為負。
   </div>
 
   <div class="callout info">
@@ -1521,23 +1553,25 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   </div>
 
   <div class="callout warn">
-    <strong>五項條件同時成立的窗口本就稀少</strong>：一段 300 局要同時滿足
+    <strong>五項條件同時成立的段落本就稀少</strong>：一段 300 局要同時滿足
     「RTP 落在 2~5 個百分點的窄區間、hit rate &gt; 35%、至少 1 次 FG、至少 3 次 Big Win、且沒有任何一筆 ≥ 500x」。<br><br>
-    <strong>hit rate 門檻由 40% 下修為 35% 的理由</strong>：實際撈取 server 快測結果後發現，
-    能同時滿足其餘四項、hit rate 又達 40% 的窗口<em>數量過少</em>。
-    這代表 40% 已落在該遊戲 hit rate 分布的尾端——<strong>硬守 40% 只會讓候選集中在極端窗口</strong>，
-    而那些窗口很可能在其他面向（例如獎項分布過於集中）並不理想，反而不利於體感。
+    <strong>hit rate 門檻由 40% 下修為 35% 的理由</strong>：實際取得 server 快測結果後發現，
+    能同時滿足其餘四項、hit rate 又達 40% 的段落<em>數量過少</em>。
+    這代表 40% 已落在該遊戲 hit rate 分布的尾端——<strong>硬守 40% 只會讓候選集中在極端段落</strong>，
+    而那些段落很可能在其他面向（例如獎項分布過於集中）並不理想，反而不利於手感。
     下修至 35% 後候選數量回到合理水準，樣本也更具代表性。<br><br>
-    須評估現行 <strong>server 快測</strong>母體是否足以篩出 200 套，不足時加大母體重跑（見 §09 Q5）。
+    須評估現行 <strong>server 快測</strong>母體（可供切段挑選的連續局數總量）是否足以篩出 200 套，不足時加大母體重跑（見 §09 Q5）。
   </div>
 
   <div class="callout warn">
-    <strong>C4「500 倍」的認定口徑（兩個都要卡）</strong><br>
-    ① <strong>單局</strong>：任一局的 <code>win ÷ bet</code> 必須 &lt; 500 倍<br>
-    ② <strong>單次 Free Game 總和</strong>：一次 FG 從觸發到結束的累計贏分 ÷ bet 必須 &lt; 500 倍<br>
-    僅卡單局會漏掉「FG 內每局都不大、加總卻很大」的情況。<br><br>
-    <strong>C5「Big Win」的認定口徑</strong>：單局 <code>win ≥ 10 × bet</code> 即計 1 次。
-    Free Game 期間的每一局<em>各自認定</em>；FG 總和不另計為一次 Big Win（避免與 C4 的口徑混淆）。
+    <strong>C4「500 倍」與 C5「Big Win」的認定方式（以「局」為單位；一次 Free Game 整段算一局）</strong><br>
+    本規格所稱的「一局」＝一次一般轉動，<strong>或</strong>一次 Free Game 整段（觸發局＋其後所有免費局）。<br>
+    ① <strong>C4</strong>：任一局的 <code>win ÷ bet</code> 必須 &lt; 500 倍；Free Game 局以<em>整段累計贏分 ÷ 觸發局 bet</em> 計。
+    整段視為一局，自然涵蓋「免費局每局都不大、加總卻很大」的情況，不需再另設第二條規則。<br>
+    ② <strong>C5</strong>：任一局 <code>win ≥ 10 × bet</code> 即計 1 次 Big Win；Free Game 局以<em>整段累計贏分</em>認定，整段 ≥ 10 倍計 <strong>1 次</strong>（不再拆成免費局各自認定）。<br><br>
+    <span style="color:var(--red-bright)"><strong>對既有快測結果的影響</strong>：C4 由「單局＋FG 總和兩個都卡」改為「FG 整段視為一局」，篩選結果實質相同；
+    但 C5 由「免費局各自認定」改為「整段認定一次」，會讓每套的 Big Win 次數<em>變少</em>——server 須以新的認定方式重新篩選，
+    先前已篩出的候選不可直接沿用（見 §09 Q5）。</span>
   </div>
 
   <div class="sub-title">流程四：腳本產製（server 快測 → 篩選定案 → 載入）</div>
@@ -1546,12 +1580,12 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="fnode start">
       <div class="fnode-num">STEP 01</div>
       <div class="fnode-title">server 跑該遊戲的快測</div>
-      <div class="fnode-desc">產出一份「照順序排好」的大量局數結果，作為取樣母體</div>
+      <div class="fnode-desc">產出一份「照順序排好」的大量局數結果，作為取樣母體（可供切段挑選的連續局數總量）；輸出須能辨識每一次 Free Game 的觸發局與其免費局的歸屬</div>
     </div>
     <div class="farrow">↓</div>
     <div class="fnode">
       <div class="fnode-num">STEP 02</div>
-      <div class="fnode-title">切出候選段落：每段連續 300 局</div>
+      <div class="fnode-title">切出候選段落：每段連續 300 個押注局（一次 Free Game 整段算一局）</div>
       <div class="fnode-desc">
         必須<strong>照原順序整段取</strong>，不可東挑西湊。<br>
         原因：Free Game 的觸發局與其後的免費局是綁在一起的，拆散會出現「免費局憑空出現」或「觸發卻沒免費局」。
@@ -1581,7 +1615,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="fnode decide">
       <div class="fnode-num">STEP 04</div>
       <div class="fnode-title">候選池是否 ≥ 100 套且彼此有差異？（每池各自檢查）</div>
-      <div class="fnode-desc">兩套腳本重複的局數不得超過 200 局（避免 100 套長得幾乎一樣，後續分析無從比較）</div>
+      <div class="fnode-desc">兩套腳本重複的局數不得超過 200 局（避免 100 套長得幾乎一樣，後續分析無從比較）。<span class="dim">此門檻仍允許兩套有三分之二相同，是否收緊見 §09 Q18</span></div>
     </div>
     <div class="fsplit">
       <div class="fcol">
@@ -1595,7 +1629,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         <span class="fbadge yes">足夠</span>
         <div class="fnode highlight">
           <div class="fnode-title">各池定案 100 套，編號 01~100</div>
-          <div class="fnode-desc">附上每套的體感指標表（RTP／hit rate／FG 次數與位置／Big Win 次數／最大獎）</div>
+          <div class="fnode-desc">附上每套的手感指標表（RTP／hit rate／FG 次數與位置／Big Win 次數／最大獎）</div>
         </div>
       </div>
     </div>
@@ -1615,8 +1649,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <tbody>
       <tr><td>檔案單位</td><td class="dim">一款遊戲一份，內含<strong>低額池 100 套 ＋ 高額池 100 套</strong>，每套 300 局；不可混放多款遊戲</td></tr>
       <tr><td>版本綁定</td><td class="dim">腳本檔綁定遊戲版號與數學版號；遊戲賠率表一改動，腳本必須重產</td></tr>
-      <tr><td>指標附表</td><td class="dim">每套腳本需附 RTP／hit rate／FG 觸發次數／FG 首次觸發在第幾局／<strong>Big Win 次數與位置</strong>／最大獎倍數，供 §06 分析使用</td></tr>
-      <tr><td>異動規則</td><td class="dim">已上線的腳本內容<strong>不得修改</strong>；需調整時整批換版並改 <code>script_pool_version</code>，既有玩家仍跑原版本</td></tr>
+      <tr><td>指標附表</td><td class="dim">每套腳本需附 RTP／hit rate／FG 觸發次數／FG 首次觸發在第幾局／<strong>Big Win 次數與位置</strong>／最大獎倍數，供 §06 分析使用；每一局標明是否為 Free Game 局及其免費局數</td></tr>
+      <tr><td>異動規則</td><td class="dim">已上線的腳本內容<strong>不得修改</strong>；需調整時整批換版並改 <code>script_pool_version</code>，既有玩家仍跑原版本。<strong>舊版本腳本檔不得刪除</strong>——玩家可能隔數週回來續跑，且分析要能回溯當時內容</td></tr>
       <tr><td>保密層級</td><td class="dim">腳本內容屬最高機密，不得進入任何前端封包或客戶端可讀範圍</td></tr>
     </tbody>
   </table>
@@ -1646,14 +1680,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="fnode decide">
       <div class="fnode-num">CHECK 01</div>
       <div class="fnode-title">此玩家在此遊戲有生效中的腳本嗎？</div>
-      <div class="fnode-desc">綁定表存在且 <code>total_bets &lt; 300</code></div>
+      <div class="fnode-desc">三個條件同時成立：綁定列存在（流程一建立）<strong>且</strong> <code>total_bets &lt; 300</code> <strong>且</strong> 該 <code>line_id</code> 的新手腳本開關為開</div>
     </div>
     <div class="fsplit">
       <div class="fcol">
         <span class="fbadge no">沒有</span>
         <div class="fnode warn">
           <div class="fnode-title">走原生 RNG</div>
-          <div class="fnode-desc">與現行邏輯完全相同，結算後結束</div>
+          <div class="fnode-desc">無綁定列或已達 300 → 與現行邏輯完全相同，結算後結束。<br><strong>開關為關</strong> → 該局走原生 RNG、進度不前進、<strong>綁定列保留</strong>（開關重開後可續跑，E9）</div>
         </div>
       </div>
       <div class="fcol">
@@ -1676,7 +1710,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
           <div class="fnode-title">走原生 RNG，<strong>不消耗進度</strong></div>
           <div class="fnode-desc">
             兩池進度與 <code>total_bets</code> 皆<strong>不變</strong>；<br>
-            埋點標記 <code>buy_bonus = true</code>，分析時排除
+            事件紀錄標記 <code>buy_bonus = true</code>，分析時排除
           </div>
         </div>
       </div>
@@ -1691,7 +1725,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="fnode decide">
       <div class="fnode-num">CHECK 01-C</div>
       <div class="fnode-title">這一局的 bet 落在哪個區間？</div>
-      <div class="fnode-desc">以<strong>當下這一局</strong>的下注額判定，不是進場時的 bet；門檻依玩家錢包幣別查〈多幣別分池門檻對照表〉（§02），v1 僅 THB＝50</div>
+      <div class="fnode-desc">以<strong>當下這一局</strong>的下注額判定，不是進場時的 bet；門檻依玩家錢包幣別查〈多幣別分池門檻對照表〉（§02），v1 僅 THB＝50。<br><span class="dim">Free Game 的免費局不會走到這一步——整段 FG 以觸發局的 bet 與池結算（見 CHECK 02）</span></div>
     </div>
     <div class="fsplit">
       <div class="fcol">
@@ -1709,20 +1743,21 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         </div>
       </div>
     </div>
-    <div class="farrow-t">↓ 若該池尚未配發，先執行 FLOW 02 懶配發</div>
+    <div class="farrow-t">↓ 若該池 <code>script_id</code> 仍為 null，先執行流程二配發（用到才配發）</div>
     <div class="fnode decide">
       <div class="fnode-num">CHECK 02</div>
       <div class="fnode-title">該局淨贏是否超過線路總水池餘額？</div>
-      <div class="fnode-desc"><strong>大獎限制優先</strong>——判斷式 <code>win − bet &gt; 目前總水池餘額</code>；依現行機制判斷，本規格不改動大獎限制邏輯</div>
+      <div class="fnode-desc"><strong>大獎限制優先</strong>——判斷式 <code>win − bet &gt; 目前總水池餘額</code>；判斷式沿用現行機制、本規格不改判斷式，<strong>但 Free Game 的判定單位改為整段、時點改為觸發局結算前</strong>（這需要既有大獎限制配合，見 §09 Q6）。<br><strong>Free Game 整段判一次</strong>：腳本已載明這一局的整段總倍數，Server 在<em>觸發局結算前</em>就以「整段總 win − 觸發局 bet」判定；免費局不逐局判。<span class="dim">（需遊戲端確認能在觸發前攔下，見 §09 Q6）</span></div>
     </div>
     <div class="fsplit">
       <div class="fcol">
         <span class="fbadge no">超過 · 觸發限制</span>
         <div class="fnode warn">
-          <div class="fnode-title">腳本讓位，砍為 low win</div>
+          <div class="fnode-title">不用腳本結果，砍為 low win</div>
           <div class="fnode-desc">
             該局 win 被<strong>砍為 low win</strong>（<code>≈ 0</code>，玩家端等同未中獎），確保總水池不會小於 0；<br>
-            腳本第 N+1 局的內容<strong>作廢、不保留</strong>
+            腳本第 N+1 局的內容<strong>作廢、不保留</strong>；<br>
+            若這一局是 Free Game 觸發局，<strong>整段 FG 一併作廢、玩家端顯示未中獎、不進入 FG</strong>，仍只消耗 1 局
           </div>
         </div>
       </div>
@@ -1730,17 +1765,18 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         <span class="fbadge yes">未超過</span>
         <div class="fnode highlight">
           <div class="fnode-title">照腳本結果派彩</div>
-          <div class="fnode-desc">倍數 × 玩家當下 bet</div>
+          <div class="fnode-desc">倍數 × 玩家當下 bet。<br>Free Game 局＝整段總倍數 × 觸發局 bet；免費局逐局的盤面與贏分由遊戲端照腳本內容呈現，Server 不再逐局進本流程</div>
         </div>
       </div>
     </div>
     <div class="farrow-t">兩條路徑合流 ↓</div>
     <div class="fnode">
       <div class="fnode-num">STEP 03</div>
-      <div class="fnode-title">該池進度 +1、總進度 +1，並落庫</div>
+      <div class="fnode-title">該池進度 +1、總進度 +1，並寫入資料庫</div>
       <div class="fnode-desc">
         <code>low_seq += 1</code> 或 <code>high_seq += 1</code>，同時 <code>total_bets += 1</code>。<br>
-        <strong>無論該局是否被大獎限制砍過，進度一律前進</strong>；被砍的局標記 <code>override_flag = true</code>
+        <strong>無論該局是否被大獎限制砍過，進度一律前進</strong>；被砍的局標記 <code>override_flag = true</code>。<br>
+        一次 Free Game 整段只 +1（在觸發局結算時加）
       </div>
     </div>
     <div class="farrow">↓</div>
@@ -1771,7 +1807,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <strong>為什麼被砍掉的局不能「保留下來下次再吃」</strong><br>
     若被大獎限制擋下時腳本進度停住、等水池回補後再吃回那一局，等於告訴玩家
     「<strong>只要在水池吃緊時下注，好局就會被存起來</strong>」——這個規律會被測出來並被利用。
-    因此本規格採「<strong>擋下即消耗</strong>」，並以 <code>override_flag</code> 記錄，讓數據分析時可以把這些局剔除。
+    因此本規格採「<strong>被擋下的那一局照樣算一局</strong>」，並以 <code>override_flag</code> 記錄，讓數據分析時可以把這些局剔除。
   </div>
 
   <div class="sub-title">總水池的運作方式（理解大獎限制的前提）</div>
@@ -1804,7 +1840,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         </div>
       </div>
     </div>
-    <div class="farrow-t">↓ 每一局派彩前都先檢查</div>
+    <div class="farrow-t">↓ 每一局派彩前都先檢查（一次 Free Game 整段算一局，於觸發局判）</div>
     <div class="fnode decide">
       <div class="fnode-num">大獎限制</div>
       <div class="fnode-title">若 <code>win − bet &gt; 目前總水池餘額</code></div>
@@ -1830,6 +1866,16 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     完整推導見 §07 風險二。
   </div>
 
+  <div class="sub-title">Free Game 整段的入帳與中斷</div>
+  <div class="callout warn">
+    <strong>一次 Free Game 在觸發局結算時一次入帳</strong>：Server 在 CHECK 02 判過大獎限制後，
+    把<em>整段總 win</em>一次派給玩家、進度 +1、事件紀錄整段寫入（觸發局一筆＋免費局各一筆，見 §06）。
+    免費局的動畫<strong>純呈現</strong>——遊戲端照腳本內的免費局明細逐局播放，播放期間 Server 不再介入、不再逐局結算。<br><br>
+    <strong>FG 播放中斷線／中離／換裝置</strong>：錢已到帳、進度已 +1，玩家不會少拿也不會多拿；重連後由遊戲端從中斷的免費局續播，或直接顯示該段結果（依遊戲端現行做法，兩者皆可）。
+    Server 端不存在「一局裡有幾個未播完的免費局」這種狀態，E2／E6 對 FG 整段的處理即為「已結算，只補畫面」。<br>
+    <span class="dim">為什麼不逐免費局入帳：那會讓「整段判一次大獎限制」失去意義，且回到逐局狀態機。遊戲端現行 FG 的入帳方式仍需確認（§09 Q6）。</span>
+  </div>
+
   <div class="sub-title">流程六：中離與重連</div>
   <div class="fdiag">
     <div class="fdiag-cap">FLOW 06 · RECONNECT</div>
@@ -1847,7 +1893,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="fnode success">
       <div class="fnode-num">STEP 02</div>
       <div class="fnode-title">重新進入後，從中斷處續跑</div>
-      <div class="fnode-desc">跑到第 120 局離開，回來就是第 121 局。<strong>不重置、不重抽、不換套</strong></div>
+      <div class="fnode-desc">跑到第 120 局離開，回來就是第 121 局。<strong>不重置、不重抽、不換套</strong>。若第 120 局是 Free Game 且播到一半，該段已於觸發時入帳，回來只補播畫面（見上節）</div>
     </div>
   </div>
 
@@ -1883,14 +1929,15 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       <tr><th>#</th><th>異常狀況</th><th>處理方式</th><th>進度是否前進</th></tr>
     </thead>
     <tbody>
-      <tr><td>E1</td><td>觸發大獎限制</td><td class="dim">該局 win 砍為 low win（<code>≈ 0</code>，玩家端＝未中獎），標記 <code>override</code></td><td><span class="tag-pill tag-v1">前進</span></td></tr>
-      <tr><td>E2</td><td>斷線 / 中離 / 換裝置</td><td class="dim">以 Server 進度為準，續跑</td><td><span class="tag-pill tag-opt">維持原值</span></td></tr>
+      <tr><td>E1</td><td>觸發大獎限制</td><td class="dim">該局 win 砍為 low win（<code>≈ 0</code>，玩家端＝未中獎），標記 <code>override</code>；若為 Free Game 觸發局，整段 FG 一併作廢、不進入 FG</td><td><span class="tag-pill tag-v1">前進</span></td></tr>
+      <tr><td>E2</td><td>斷線 / 中離 / 換裝置</td><td class="dim">以 Server 進度為準，續跑；FG 播放中斷線＝該段已入帳，只補播畫面</td><td><span class="tag-pill tag-opt">維持原值</span></td></tr>
       <tr><td>E3</td><td>腳本檔讀取失敗</td><td class="dim">降級原生 RNG，告警</td><td><span class="tag-pill tag-req">不前進</span></td></tr>
       <tr><td>E4</td><td>同一玩家同款遊戲並發多請求</td><td class="dim">以進度欄位做原子性遞增，禁止兩局吃到同一個 seq</td><td><span class="tag-pill tag-v1">各自前進</span></td></tr>
-            <tr><td>E5</td><td>玩家中途改變 bet</td><td class="dim">跨區間時<strong>自動切換到對應池</strong>；首次用到該池從第 1 局起，再度用到則接續（見 FLOW 03）</td><td><span class="tag-pill tag-v1">對應池前進</span></td></tr>
+      <tr><td>E5</td><td>玩家中途改變 bet</td><td class="dim">跨區間時<strong>自動切換到對應池</strong>；首次用到該池從第 1 局起，再度用到則接續（見 FLOW 03）</td><td><span class="tag-pill tag-v1">對應池前進</span></td></tr>
+      <tr><td>E6</td><td>該局遊戲流程中斷（未結算）</td><td class="dim">依現行未結算局處理機制，補結算後才計入進度。FG 整段於觸發局結算，免費局播放中斷不屬「未結算」</td><td><span class="tag-pill tag-opt">補算後前進</span></td></tr>
       <tr><td>E7</td><td>玩家購買 buy bonus</td><td class="dim">該局走原生 RNG，標記 <code>buy_bonus = true</code></td><td><span class="tag-pill tag-req">不前進</span></td></tr>
       <tr><td>E8</td><td>某池進度已達 300 但總計數未滿</td><td class="dim">理論上不會發生（該池滿 300 時 <code>total_bets</code> 必已達 300）；若出現代表計數不一致，觸發告警並降級原生 RNG</td><td><span class="tag-pill tag-req">告警</span></td></tr>
-      <tr><td>E6</td><td>該局遊戲流程中斷（未結算）</td><td class="dim">依現行未結算局處理機制，補結算後才計入進度</td><td><span class="tag-pill tag-opt">補算後前進</span></td></tr>
+      <tr><td>E9</td><td>線路開關在玩家有綁定後被關閉<br><span class="tag-pill tag-req">本版新增</span></td><td class="dim">該局走原生 RNG；綁定列與進度<strong>保留</strong>，開關重開後從中斷處續跑。關閉期間玩的局不計入 <code>total_bets</code></td><td><span class="tag-pill tag-opt">不前進 · 保留</span></td></tr>
     </tbody>
   </table>
 </section>
@@ -1905,7 +1952,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
   <div class="callout warn">
     <strong>基礎建設優先</strong>：標記 <span class="tag-pill tag-req">⚠️ 基礎建設</span> 的項目是其他所有 Task 的前置，
-    必須先完成才能開始功能開發。其中「綁定表」與「配發計數器」是全新資料結構，非既有系統可沿用。
+    必須先完成才能開始功能開發。其中「綁定表」是全新資料結構，非既有系統可沿用。
   </div>
 
   <div class="sub-title">A · 基礎建設</div>
@@ -1917,25 +1964,25 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       <tr>
         <td>A1</td><td>腳本檔存放與版本管理</td>
         <td><span class="tag-pill tag-eng">🛠 後端</span></td>
-        <td class="dim">腳本檔進版控、綁遊戲版號與數學版號；提供 <code>script_pool_version</code></td>
+        <td class="dim">腳本檔進版控、綁遊戲版號與數學版號；提供 <code>script_pool_version</code>。<strong>舊版本不得刪除</strong>（既有玩家續跑、分析回溯都要用）</td>
         <td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td>
       </tr>
       <tr>
         <td>A2</td><td>玩家腳本綁定表（新表）</td>
         <td><span class="tag-pill tag-eng">🛠 後端</span></td>
-        <td class="dim">主鍵 <code>player_id × game_id</code>；<strong>雙池欄位</strong>（兩組 script_id／low_seq／high_seq／total_bets／switched），欄位見 §06</td>
+        <td class="dim">主鍵 <code>player_id × game_id</code>；<strong>雙池欄位</strong>（兩組 script_id／low_seq／high_seq／total_bets／switched／created_at／兩組 assigned_at），欄位見 §06</td>
         <td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td>
       </tr>
       <tr>
-        <td>A3</td><td>配發計數器（並發安全）</td>
+        <td>A3</td><td>腳本配發隨機源</td>
         <td><span class="tag-pill tag-eng">🛠 後端</span></td>
-        <td class="dim">每款遊戲<strong>每池各一組</strong>（共 2 組）；同時多人進場時不得重複配發同一編號或跳號</td>
+        <td class="dim">從該池 1~100 <strong>均勻隨機</strong>抽一套；須用 Server 端正規亂數產生器，<strong>不得以 player_id、時間戳等可推導值取餘數</strong>。不維護計數器、無並發需求</td>
         <td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td>
       </tr>
       <tr>
         <td>A4</td><td>線路層級開關</td>
         <td><span class="tag-pill tag-eng">🛠 後端</span></td>
-        <td class="dim">以 <code>line_id</code> 為單位開關，<strong>預設關閉</strong>；<strong>僅接受開單提需求啟動、不提供後台自助開啟</strong>；認證市場永久關閉</td>
+        <td class="dim">以 <code>line_id</code> 為單位開關，<strong>預設關閉</strong>；<strong>僅接受開單提需求啟動、不提供後台自助開啟</strong>；認證市場永久關閉。<strong>每一局都要檢查</strong>（不只進場時），關閉時已綁定玩家的進度保留（E9）</td>
         <td><span class="tag-pill tag-req">⚠️ 基礎建設</span></td>
       </tr>
       <tr>
@@ -1954,14 +2001,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     </thead>
     <tbody>
       <tr><td>B0</td><td>適用範圍前置檢查</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim"><strong>遊戲＝Lucky Paws 且幣別＝THB</strong> 才進入後續流程；其餘直接走原生 RNG。幣別門檻表建為設定檔，後續擴充時只開啟對應幣別</td><td class="mono">FLOW 01</td></tr>
-      <tr><td>B1</td><td>新手判定邏輯</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">依 <code>player × game</code> 歷史局數判定三種狀態</td><td class="mono">FLOW 01</td></tr>
-      <tr><td>B2</td><td>腳本配發（雙池輪流發 · 懶配發）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">玩家首次用到該區間 bet 時才配發該池；取號、+1、寫綁定表，需具原子性</td><td class="mono">FLOW 02</td></tr>
-      <tr><td>B3</td><td>每局選池、取用與派彩</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim"><strong>依當下 bet 選池</strong>（THB 50 為界）→ 取該池第 N+1 局 → 倍數 × 當下 bet</td><td class="mono">FLOW 05</td></tr>
-      <tr><td>B4</td><td>大獎限制順位介接</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">先過大獎限制再用腳本；被擋下時砍為 low win 並標記 <code>override</code></td><td class="mono">FLOW 05</td></tr>
+      <tr><td>B1</td><td>新手判定邏輯</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim"><strong>先查綁定表</strong>（有紀錄→未跑完續跑／已跑完不介入），<strong>查無紀錄再查注單</strong>（歷史局數＝0→建立綁定列、兩池 script_id 為 null；&gt;0→不適用、不建列）</td><td class="mono">FLOW 01</td></tr>
+      <tr><td>B2</td><td>腳本配發（雙池隨機配發 · 用到才配發）</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">玩家首次用到該區間 bet 時才配發該池；隨機抽一套後填入綁定列的該池 script_id 與 assigned_at</td><td class="mono">FLOW 02</td></tr>
+      <tr><td>B3</td><td>每局選池、取用與派彩</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim"><strong>依當下 bet 選池</strong>（THB 50 為界）→ 取該池第 N+1 局 → 倍數 × 當下 bet；<strong>Free Game 整段算一局</strong>，以觸發局的 bet 與池結算</td><td class="mono">FLOW 05</td></tr>
+      <tr><td>B4</td><td>大獎限制順位介接</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">先過大獎限制再用腳本；被擋下時砍為 low win 並標記 <code>override</code>。Free Game 於觸發局結算前以整段總 win 判一次</td><td class="mono">FLOW 05</td></tr>
       <tr><td>B5</td><td>進度原子遞增</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">禁止兩局吃到同一個進度值（E4）；池進度與 <code>total_bets</code> 須同批次更新</td><td class="mono">FLOW 05</td></tr>
       <tr><td>B6</td><td>結束與切回 RNG</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim"><code>total_bets</code> 達 300 → 寫 <code>completed_at</code>，之後不再介入。<strong>無重跑邏輯</strong></td><td class="mono">FLOW 03</td></tr>
       <tr><td>B7</td><td>異常降級與告警</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">任何異常一律降級原生 RNG，不得卡住玩家</td><td class="mono">FLOW 07</td></tr>
-      <tr><td>B8</td><td>埋點寫入</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">綁定事件與逐局事件，欄位見 §06</td><td class="mono">§06</td></tr>
+      <tr><td>B8</td><td>事件紀錄寫入</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">綁定事件與逐局事件，欄位見 §06</td><td class="mono">§06</td></tr>
       <tr><td>B9</td><td>buy bonus 排除</td><td><span class="tag-pill tag-eng">🛠 後端</span></td><td class="dim">識別 buy bonus 局 → 走原生 RNG、<strong>不消耗任何進度、不計入 <code>total_bets</code></strong>、標記 <code>buy_bonus</code></td><td class="mono">FLOW 05</td></tr>
     </tbody>
   </table>
@@ -1973,14 +2020,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     </thead>
     <tbody>
       <tr><td>C1</td><td>快測母體產出</td><td><span class="tag-pill tag-eng">🛠 Server</span></td><td class="dim">依遊戲數學版本跑出足量連續局數結果；<strong>兩池 RTP 區間不同，需分別篩選</strong></td><td class="dim">量不足需可加大重跑</td></tr>
-      <tr><td>C2</td><td>五條件篩選與 <strong>200 套</strong>定案</td><td><span class="tag-pill tag-eng">🛠 Server</span></td><td class="dim">C1~C5 全過＋重複局數 ≤ 200；低額池 100 套（RTP 100~105%）＋高額池 100 套（RTP 98~100%）</td><td class="dim">附每套指標表</td></tr>
-      <tr><td>C3</td><td>腳本指標附表</td><td><span class="tag-pill tag-eng">🛠 Server</span></td><td class="dim">RTP／hit rate／FG 次數與首次位置／<strong>Big Win 次數與位置</strong>／最大獎</td><td class="dim">§06 分析依據</td></tr>
-      <tr><td>C4</td><td>上線前 30 天 baseline 凍結</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim"><strong>人均累計手數（平均＋中位數）</strong>、首日手數、300 局完成率為主；D1／D3 留存、首日流水為次要觀察項。依遊戲別分開</td><td><span class="tag-pill tag-req">⚠️ 上線前必完成</span></td></tr>
+      <tr><td>C2</td><td>五條件篩選與 <strong>200 套</strong>定案</td><td><span class="tag-pill tag-eng">🛠 Server</span></td><td class="dim">C1~C5 全過＋重複局數 ≤ 200；低額池 100 套（100% ≤ RTP ≤ 105%）＋高額池 100 套（98% ≤ RTP &lt; 100%）。<strong>C4／C5 以「Free Game 整段算一局」認定</strong>（見 §03）</td><td class="dim">附每套指標表</td></tr>
+      <tr><td>C3</td><td>腳本指標附表</td><td><span class="tag-pill tag-eng">🛠 Server</span></td><td class="dim">RTP／hit rate／FG 次數與首次位置／<strong>Big Win 次數與位置</strong>／最大獎；每局標明是否為 Free Game 局及其免費局數</td><td class="dim">§06 分析依據</td></tr>
+      <tr><td>C4</td><td>上線前 30 天 baseline 凍結</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim"><strong>人均累計手數（平均＋中位數）</strong>、首日手數、300 局完成率為主；D1／D3 留存、首日流水為次要觀察項。依遊戲別分開，<strong>且只計 THB 錢包的新手</strong>（與 v1 適用範圍一致）；手數以「有押注的局」計、免費局不計</td><td><span class="tag-pill tag-req">⚠️ 上線前必完成</span></td></tr>
       <tr><td>C5</td><td>分析報表建置</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">腳本 × 手數交叉表（分池）、<strong>流失點位分佈曲線</strong>、override 佔比監控、buy bonus 局排除邏輯</td><td class="dim">上線後兩週內</td></tr>
       <tr><td>C6</td><td>風險監控與告警</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">見 §07 監控門檻</td><td><span class="tag-pill tag-req">⚠️ 與上線同步</span></td></tr>
       <tr><td>C7</td><td>篩選條件驗收</td><td><span class="tag-pill tag-pm">📋 企劃</span></td><td class="dim">抽驗 server 交付的 200 套是否確實符合 C1~C5（含 &lt;500x 嚴格小於的邊界）</td><td class="dim">每池抽樣 ≥ 20 套</td></tr>
-            <tr><td>C8</td><td>驗收案例撰寫</td><td><span class="tag-pill tag-pm">📋 QA</span></td><td class="dim">涵蓋 E1~E8 八種異常＋跨遊戲判定五種情境＋三種下注行為的 300 局跑法（含跨區間切換的碎片情境）</td><td class="dim">需可在測試環境模擬水池餘額不足</td></tr>
-      <tr><td>C9</td><td>驗證樣本量估算</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">以財神貓現行日均新手數，推算累積到足以判斷<strong>人均手數差異</strong>所需的天數</td><td><span class="tag-pill tag-req">⚠️ 上線前必做</span></td></tr>
+            <tr><td>C8</td><td>驗收案例撰寫</td><td><span class="tag-pill tag-pm">📋 QA</span></td><td class="dim">涵蓋 E1~E9 九種異常＋跨遊戲判定五種情境＋三種下注行為的 300 局跑法（含跨區間切換的碎片情境）</td><td class="dim">需可在測試環境模擬水池餘額不足</td></tr>
+      <tr><td>C9</td><td>驗證樣本量估算</td><td><span class="tag-pill tag-data">📊 數據組</span></td><td class="dim">以財神貓現行日均新手數，推算累積到足以判斷<strong>人均手數差異</strong>所需的天數；一併估算<strong>高額池未切換者</strong>的預期人數（決定高額池能否做套別比較）</td><td><span class="tag-pill tag-req">⚠️ 上線前必做</span></td></tr>
     </tbody>
   </table>
 </section>
@@ -1989,7 +2036,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 <section class="section" id="logs">
   <div class="section-header">
     <span class="section-num">06</span>
-    <span class="section-title">Log 埋點與資料分析</span>
+    <span class="section-title">事件紀錄與資料分析</span>
     <span class="section-title-en">LOGGING &amp; ANALYSIS</span>
   </div>
 
@@ -1997,7 +2044,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="hypo-label">本章重點 · KEY</div>
     <div class="hypo-text">
       這一章是本專案的<strong>真正產出</strong>。腳本本身只是手段，
-      <em>「什麼樣的節奏能讓新手多玩幾局」這個答案</em>才是資產——而答案完全取決於埋點有沒有埋對。
+      <em>「什麼樣的節奏能讓新手多玩幾局」這個答案</em>才是資產——而答案完全取決於事件紀錄有沒有記對。
     </div>
   </div>
 
@@ -2011,22 +2058,25 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="log-item"><span class="log-event">high_script_id</span><span class="log-owner"><span class="tag-pill tag-data">INT</span></span><span class="log-desc">高額池配發到的腳本編號 01~100；未配發為 null</span></div>
   <div class="log-item"><span class="log-event">script_pool_version</span><span class="log-owner"><span class="tag-pill tag-data">STR</span></span><span class="log-desc">腳本池版本；換版後仍能追溯當時內容</span></div>
   <div class="log-item"><span class="log-event">low_seq / high_seq</span><span class="log-owner"><span class="tag-pill tag-data">INT</span></span><span class="log-desc">各池目前進度 0~300（首次用到該池從 0 起算）</span></div>
-  <div class="log-item"><span class="log-event">total_bets</span><span class="log-owner"><span class="tag-pill tag-req">INT</span></span><span class="log-desc"><strong>累積押注次數 0~300</strong>（不分池、不含 buy bonus）；達 300 即結束新手體驗</span></div>
+  <div class="log-item"><span class="log-event">total_bets</span><span class="log-owner"><span class="tag-pill tag-req">INT</span></span><span class="log-desc"><strong>累積押注次數 0~300</strong>（不分池、不含 buy bonus、<strong>不含免費局</strong>——一次 Free Game 整段只算 1）；達 300 即結束新手體驗</span></div>
   <div class="log-item"><span class="log-event">switched</span><span class="log-owner"><span class="tag-pill tag-req">BOOL</span></span><span class="log-desc"><strong>本版新增</strong>：該玩家是否曾跨區間切換過。為 true 者兩套腳本皆未跑完、五項條件保證不成立，<strong>分析時需與未切換者分開統計</strong></span></div>
   <div class="log-item"><span class="log-event">line_id</span><span class="log-owner"><span class="tag-pill tag-data">STR</span></span><span class="log-desc">線路；分析時需分線路檢視</span></div>
-  <div class="log-item"><span class="log-event">assigned_at</span><span class="log-owner"><span class="tag-pill tag-data">TS</span></span><span class="log-desc">配發時間（UTC+8）</span></div>
+  <div class="log-item"><span class="log-event">created_at</span><span class="log-owner"><span class="tag-pill tag-data">TS</span></span><span class="log-desc">綁定列建立時間（流程一認定為新手當下，UTC+8）；此時兩池皆未配發</span></div>
+  <div class="log-item"><span class="log-event">low_assigned_at / high_assigned_at</span><span class="log-owner"><span class="tag-pill tag-data">TS</span></span><span class="log-desc">各池配發時間（首次用到該區間 bet 當下）；未配發為 null。「拿到腳本的人數」以任一欄非 null 計</span></div>
   <div class="log-item"><span class="log-event">completed_at</span><span class="log-owner"><span class="tag-pill tag-data">TS</span></span><span class="log-desc">跑完 300 局的時間；未完成為 null</span></div>
 
-  <div class="sub-title">逐局紀錄（每一局一筆）</div>
+  <div class="sub-title">逐局紀錄（每個押注局一筆；免費局另各留一筆）</div>
   <div class="log-item header">
     <span>欄位</span><span>型別</span><span>說明</span>
   </div>
-  <div class="log-item"><span class="log-event">round_id</span><span class="log-owner"><span class="tag-pill tag-eng">KEY</span></span><span class="log-desc">對應注單；可回溯實際派彩</span></div>
+  <div class="log-item"><span class="log-event">round_id</span><span class="log-owner"><span class="tag-pill tag-eng">KEY</span></span><span class="log-desc">對應注單；可回溯實際派彩。免費局沒有注單，記所屬觸發局的 round_id</span></div>
+  <div class="log-item"><span class="log-event">spin_index</span><span class="log-owner"><span class="tag-pill tag-eng">KEY</span></span><span class="log-desc"><strong>本版新增</strong>：與 round_id 共同構成主鍵。押注局（含 FG 觸發局）＝0，免費局＝1..n</span></div>
   <div class="log-item"><span class="log-event">pool</span><span class="log-owner"><span class="tag-pill tag-req">ENUM</span></span><span class="log-desc"><strong>關鍵欄位</strong>：這一局用的是 <code>low</code> 或 <code>high</code> 池；分析時必須分池統計</span></div>
-  <div class="log-item"><span class="log-event">script_id / seq</span><span class="log-owner"><span class="tag-pill tag-data">INT</span></span><span class="log-desc">這一局吃的是第幾套的第幾局</span></div>
-  <div class="log-item"><span class="log-event">bet / win</span><span class="log-owner"><span class="tag-pill tag-data">NUM</span></span><span class="log-desc">實際下注與派彩金額</span></div>
-  <div class="log-item"><span class="log-event">multiplier</span><span class="log-owner"><span class="tag-pill tag-data">NUM</span></span><span class="log-desc">該局倍數；用於驗證是否與腳本一致</span></div>
-  <div class="log-item"><span class="log-event">is_fg</span><span class="log-owner"><span class="tag-pill tag-data">BOOL</span></span><span class="log-desc">是否為 Free Game 局（含觸發局）</span></div>
+  <div class="log-item"><span class="log-event">script_id / seq</span><span class="log-owner"><span class="tag-pill tag-data">INT</span></span><span class="log-desc">這一局吃的是第幾套的第幾局；同一次 Free Game 的免費局與觸發局 seq 相同</span></div>
+  <div class="log-item"><span class="log-event">bet / win</span><span class="log-owner"><span class="tag-pill tag-data">NUM</span></span><span class="log-desc">實際下注與派彩金額。FG 觸發局列：bet＝實際押注、win＝<strong>整段總贏分</strong>（與派彩一致）；免費局列：<strong>bet = 0</strong>、win＝該免費局贏分（僅供分佈追溯）</span></div>
+  <div class="log-item"><span class="log-event">multiplier</span><span class="log-owner"><span class="tag-pill tag-data">NUM</span></span><span class="log-desc">該局倍數；用於驗證是否與腳本一致。FG 觸發局列＝整段總倍數</span></div>
+  <div class="log-item"><span class="log-event">is_fg</span><span class="log-owner"><span class="tag-pill tag-data">BOOL</span></span><span class="log-desc">是否屬於一次 Free Game（觸發局與其免費局皆為 true）</span></div>
+  <div class="log-item"><span class="log-event">free_spin</span><span class="log-owner"><span class="tag-pill tag-req">BOOL</span></span><span class="log-desc"><strong>本版新增</strong>：true＝免費局。<strong>免費局每一局各留一筆</strong>供追溯 FG 內的贏分分佈，但<strong>不前進進度、不計入 total_bets</strong>；<strong>手數、完成率、所有金額與 RTP 統計（M1／M4）一律排除</strong>，只在分析 FG 內贏分分佈時使用</span></div>
   <div class="log-item"><span class="log-event">override_flag</span><span class="log-owner"><span class="tag-pill tag-req">BOOL</span></span><span class="log-desc"><strong>關鍵欄位</strong>：該局是否被大獎限制砍為 low win；分析時需排除</span></div>
   <div class="log-item"><span class="log-event">buy_bonus</span><span class="log-owner"><span class="tag-pill tag-req">BOOL</span></span><span class="log-desc"><strong>關鍵欄位</strong>：該局是否為購買 Free Game；為 true 時走原生 RNG 且不消耗進度，分析時必須排除</span></div>
   <div class="log-item"><span class="log-event">fallback_reason</span><span class="log-owner"><span class="tag-pill tag-data">STR</span></span><span class="log-desc">降級原因；正常為 null</span></div>
@@ -2038,14 +2088,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       <tr>
         <td><span class="tag-pill tag-req">主指標</span></td>
         <td><strong>人均累計手數</strong></td>
-        <td class="mono">該遊戲新手的總手數 ÷ 新手人數<br>（平均值 <strong>與中位數並列</strong>）</td>
+        <td class="mono">該遊戲新手的總押注局數 ÷ 新手人數<br>（平均值 <strong>與中位數並列</strong>）<br><span class="dim" style="font-family:inherit">只計有押注的局，免費局不計，與 total_bets 同一計算方式；baseline 須採同一計算方式（Q7）</span></td>
         <td class="dim">本案唯一的成效判定依據。<strong>務必同時看中位數</strong>——平均值容易被少數重度玩家拉高，只看平均可能誤判成功。</td>
       </tr>
       <tr>
         <td><span class="tag-pill tag-opt">次指標</span></td>
         <td>300 局完成率</td>
-        <td class="mono">total_bets 達 300 的人數 ÷ 拿到腳本的人數</td>
-        <td class="dim">新手體驗長度固定，分母分子都在我方資料內、不受外部變因影響，是抗干擾最強的輔助指標。</td>
+        <td class="mono">total_bets 達 300 的人數 ÷ 至少有一池已配發（low_assigned_at 或 high_assigned_at 任一非 null）的人數</td>
+        <td class="dim">分母不含「建了綁定列但一局都沒轉」的人。新手體驗長度固定，分母分子都在我方資料內、不受外部變因影響，是抗干擾最強的輔助指標。</td>
       </tr>
       <tr>
         <td><span class="tag-pill tag-opt">次指標</span></td>
@@ -2067,12 +2117,12 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="info-card">
       <div class="info-card-icon">①</div>
       <div class="info-card-title">整體有沒有用</div>
-      <div class="info-card-desc">上線後新手<strong>人均手數</strong>（平均＋中位數），對比上線前 30 天 baseline。同期其他未啟用的遊戲可作旁證參考。</div>
+      <div class="info-card-desc">上線後新手<strong>人均手數</strong>（平均＋中位數），對比上線前 30 天 baseline。同期其他未啟用的遊戲可作側面參考。</div>
     </div>
     <div class="info-card">
       <div class="info-card-icon">②</div>
       <div class="info-card-title">哪一套最好</div>
-      <div class="info-card-desc">各池 100 套 × 人均手數與完成率交叉表。因採輪流發、樣本數相近可直接橫向比較；<strong>兩池須分開統計</strong>。</div>
+      <div class="info-card-desc">各池 100 套 × 人均手數與完成率交叉表。<strong>兩池須分開統計</strong>。因採隨機配發，各套樣本數不保證相近——<strong>單套樣本數 n &lt; 30 者不納入比較</strong>；高額池母數小、又須排除切換者，<em>可能長期達不到門檻，屆時不對高額池下「哪一套最好」的結論</em>。</div>
     </div>
     <div class="info-card">
       <div class="info-card-icon">③</div>
@@ -2094,13 +2144,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <strong>統計時須排除</strong>：<code>override_flag = true</code> 與 <code>buy_bonus = true</code> 的局。<br><br>
     <strong>分析尺度</strong>：橫軸一律用<strong>腳本內位置</strong>（<code>low_seq</code>／<code>high_seq</code>），
     不要用 <code>total_bets</code>——兩者對「全程同一池」的玩家相同，但對<strong>跨區間切換者</strong>會錯位。<br>
-    <strong>主分析只取 <code>switched = false</code> 的玩家</strong>（兩者一致、腳本完整跑完），
-    切換者另外分群檢視，避免不完整的片段汙染 FG 落點的結論。
+    <strong>主分析只取 <code>switched = false</code> 的玩家</strong>，<em>不論是否跑完 300 局</em>（中途離開的人正是流失曲線要看的對象），
+    切換者另外分群檢視，避免不完整的片段干擾 FG 落點的結論。<br>
+    <strong>Free Game 那一格的解讀</strong>：一次 FG 整段算 1 局，玩家在該格實際花的時間與轉數比其他格多；畫流失曲線時該格會「壓縮」，結論方向不受影響，但比較 FG 前後的流失率時要記得這一點。
   </div>
 
   <div class="callout info">
     <strong>資料清洗原則</strong>：<code>override_flag = true</code> 的局數佔比若超過該腳本總局數的 <strong>2%</strong>，
-    該玩家樣本應標記為「受大獎限制汙染」，在做腳本橫向比較時排除——否則會把水池餘額的狀況誤判成腳本的效果。<br>
+    該玩家樣本應標記為「受大獎限制影響」，在做腳本橫向比較時排除——否則會把水池餘額的狀況誤判成腳本的效果。<br>
     <strong>門檻訂在 2% 的理由</strong>：腳本源頭已無 &gt;500x 的獎，正常情況下應極少觸發大獎限制；
     一旦佔比明顯上升，代表的是<em>該線路水池餘額不足</em>，而非腳本本身的問題。
   </div>
@@ -2118,8 +2169,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="hypo-label">已知風險 · KNOWN RISK</div>
     <div class="hypo-text">
       本版本<strong>依 bet 大小分兩個池</strong>：高額池 RTP 設在 98~100%，<em>期望值對玩家為負</em>，
-      「開新帳號壓大注刷腳本」<strong>無利可圖</strong>；低額池雖為 100~105%，但 bet 上限被壓在 THB 50 以下，
-      可取得的金額極為有限。<strong>套利風險在本版本已從結構上消除。</strong>
+      「開新帳號壓大注刷腳本」<strong>無利可圖</strong>；低額池雖為 100~105%，但 bet 一到 THB 50 就落入高額池，
+      能享受正期望的下注額極為有限。<strong>套利風險在本版本已從結構上消除。</strong>
     </div>
   </div>
 
@@ -2130,11 +2181,11 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
   <table class="spec-table">
     <thead>
-      <tr><th>池</th><th>RTP 均值</th><th>玩家期望</th><th>300 局最大總下注</th><th>玩家最多能拿走</th><th>套利評估</th></tr>
+      <tr><th>池</th><th>RTP 均值</th><th>玩家期望</th><th>300 局最大總下注</th><th>300 局期望落袋</th><th>理論上限<br><span class="dim">（整套 RTP 頂到 105%）</span></th><th>套利評估</th></tr>
     </thead>
     <tbody>
-      <tr><td>低額池<br><span class="dim">bet &lt; THB 50</span></td><td class="mono">102.5%</td><td class="mono">+2.5%</td><td class="mono">THB 14,700<br><span class="dim">（49 × 300，理論上限）</span></td><td class="mono">≈ THB 368</td><td class="dim"><span class="tag-pill tag-v1">低</span> 須全程壓滿 THB 49 才能達到；養號成本遠高於收益</td></tr>
-      <tr><td>高額池<br><span class="dim">bet ≥ THB 50</span></td><td class="mono">99%</td><td class="mono"><strong>−1%</strong></td><td class="mono">無上限</td><td class="mono"><strong>負值</strong></td><td class="dim"><span class="tag-pill tag-v1">無</span> <strong>期望為負，壓越大注輸越多</strong>，套利誘因完全消失</td></tr>
+      <tr><td>低額池<br><span class="dim">bet &lt; THB 50</span></td><td class="mono">102.5%</td><td class="mono">+2.5%</td><td class="mono">THB 14,700<br><span class="dim">（49 × 300，理論上限）</span></td><td class="mono">≈ THB 368</td><td class="mono">≈ THB 735</td><td class="dim"><span class="tag-pill tag-v1">低</span> 須全程壓滿 THB 49 才能達到；開分身帳號的成本遠高於收益</td></tr>
+      <tr><td>高額池<br><span class="dim">bet ≥ THB 50</span></td><td class="mono">99%</td><td class="mono"><strong>−1%</strong></td><td class="mono">無上限</td><td class="mono"><strong>負值</strong></td><td class="mono">—</td><td class="dim"><span class="tag-pill tag-v1">無</span> <strong>期望為負，壓越大注輸越多</strong>，套利誘因完全消失</td></tr>
     </tbody>
   </table>
 
@@ -2142,8 +2193,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <strong>高額池是本版本最關鍵的設計</strong>：初版（單池全撒、300 局）在每局 THB 200 時，單一帳號的期望落袋約 THB 1,500、
     公司相對損失約 THB 3,480，對工作室構成穩定收益模型。改為雙池後，<em>任何想靠大注刷腳本的行為都會落進 99% 的高額池</em>——
     期望值為負，<strong>壓越大注輸越多</strong>。<br><br>
-    低額池雖仍為正期望，但受 THB 50 的 bet 上限箝制，即使全程壓滿、跑完 300 局，理論最大落袋也僅約 <strong>THB 368</strong>，
-    <strong>遠低於養號的人力與帳號成本</strong>。
+    低額池雖仍為正期望，但 THB 50 是分池界線——壓到 50 以上就進負期望的高額池，能享受正期望的單局下注最多 THB 49。即使全程壓滿 49、跑完 300 局，期望落袋也僅約 <strong>THB 368</strong>；就算整套 RTP 頂到 105% 上限，也只有約 <strong>THB 735</strong>，
+    <strong>遠低於開分身帳號的人力與帳號成本</strong>。<span class="dim">（單筆最大獎另受 C4 限制：499 × 49 ≈ THB 24,000，但那是單一腳本的極端值，不改變期望值結論）</span>
   </div>
 
   <div class="sub-title">風險二：新手腳本對總水池的消耗（已評估 · 不成立）</div>
@@ -2203,8 +2254,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="farrow">↓</div>
     <div class="fnode success">
       <div class="fnode-num">LAYER 2 · 結構層</div>
-      <div class="fnode-title">低額池的 bet 上限 THB 50</div>
-      <div class="fnode-desc">低額池雖為正期望，但單局下注被箝制在 THB 50 以下，300 局理論最大落袋約 THB 368——<strong>遠低於養號成本</strong>。</div>
+      <div class="fnode-title">THB 50 的分池界線</div>
+      <div class="fnode-desc">不是 bet 上限——玩家可以壓任何金額，但一到 THB 50 就落入負期望的高額池。能享受正期望的單局下注最多 THB 49，300 局期望落袋約 THB 368、理論上限約 THB 735——<strong>遠低於開分身帳號的成本</strong>。</div>
     </div>
     <div class="farrow">↓</div>
     <div class="fnode">
@@ -2243,10 +2294,10 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
       <tr><th>#</th><th>監控項目</th><th>告警門檻（建議值）</th><th>意義</th></tr>
     </thead>
     <tbody>
-      <tr><td>M1</td><td>新手期單帳號淨贏</td><td class="mono">&gt; 300 × 該帳號平均 bet × 10%</td><td class="dim">單帳號吃到明顯超出腳本設計的收益（低額池上限 +2.5%、高額池為負），可能為腳本異常或帳號異常</td></tr>
+      <tr><td>M1</td><td>新手期單帳號淨贏</td><td class="mono">&gt; 300 × 該帳號平均 bet × 10%</td><td class="dim">單帳號吃到明顯超出腳本設計的收益（低額池均值 +2.5%、上限 +5%；高額池為負），可能為腳本異常或帳號異常。<strong>以 bet 加權計算</strong>——同池內 bet 可在 1~49 間變動，個人實際 RTP 本就會偏離腳本 RTP，門檻留 10% 即為此預留</td></tr>
             <tr><td>M2</td><td>新手期平均下注額</td><td class="mono">週環比 &gt; +50%</td><td class="dim">新手突然變得敢壓大注；雙池後獲利誘因已消除，但仍是行為異常訊號</td></tr>
-      <tr><td>M2-B</td><td>下注額卡在門檻邊緣<br><span class="tag-pill tag-req">本版新增</span></td><td class="mono">bet 落在 THB 45~49 的<br>局數佔比 &gt; 30%</td><td class="dim"><strong>最直接的套利特徵</strong>：有人發現 THB 50 是分池界線，刻意壓在界線下方吃低額池的 102.5%</td></tr>
-      <tr><td>M3</td><td>單日新增新手數</td><td class="mono">日環比 &gt; +100%</td><td class="dim">批次養號的最直接訊號</td></tr>
+      <tr><td>M2-B</td><td>下注額卡在門檻邊緣<br><span class="tag-pill tag-req">本版新增</span></td><td class="mono">bet 落在 THB 45~49 的<br>局數佔比 &gt; 30%</td><td class="dim"><strong>最直接的套利特徵</strong>：有人發現 THB 50 是分池界線，刻意壓在界線下方吃低額池的 102.5%。<span class="dim">前提是財神貓的 bet 檔位確實有 45~49 這一段，若檔位是離散的（例：10／20／50）本項須改為「壓在 50 以下最高檔位的佔比」（見 §09 Q17）</span></td></tr>
+      <tr><td>M3</td><td>單日新增新手數</td><td class="mono">日環比 &gt; +100%</td><td class="dim">批次開分身帳號的最直接訊號</td></tr>
       <tr><td>M4</td><td>新手期實際 RTP<br><span class="dim">（分池統計）</span></td><td class="mono">低額池偏離 100~105%<br>高額池偏離 98~100%</td><td class="dim">高於預期＝腳本或大獎限制邏輯有誤；低於預期＝大獎限制過度介入（水池餘額不足），體驗目標未達成</td></tr>
       <tr><td>M5</td><td>override 佔比</td><td class="mono">&gt; 2%</td><td class="dim">大獎限制頻繁介入＝該線路水池餘額不足，新手體驗設計正被稀釋，需檢討水池初始值</td></tr>
             <tr><td>M6</td><td>同裝置／同 IP 新手數</td><td class="mono">單日 &gt; 5 個</td><td class="dim">工作室特徵；GP 端資料有限，能取到多少算多少</td></tr>
@@ -2259,7 +2310,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <strong>版本演進說明</strong>：初版規劃為「先全量單池上線、高額池列為第二階段」，
     代價是上線後至第二階段前存在可量化的套利空間（每局 THB 200 時單帳號約 THB 1,500）。
     經開發評估「<em>100 套腳本半天即可完成</em>」後，改為<strong>雙池同時上線</strong>——
-    這個決定以極低的額外成本，直接消除了初版最大的風險敞口。
+    這個決定以極低的額外成本，直接消除了初版最大的風險。
   </div>
 </section>
 
@@ -2288,8 +2339,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         </tr>
         <tr>
           <td>腳本池</td>
-          <td class="v1-val"><strong>雙池 200 套</strong>：低額 100 套（100~105%）＋高額 100 套（98~100%），每套 300 局</td>
-          <td class="v2-val">依分析結果汰換表現差的腳本、擴充池數</td>
+          <td class="v1-val"><strong>雙池 200 套</strong>：低額 100 套（100% ≤ RTP ≤ 105%）＋高額 100 套（98% ≤ RTP &lt; 100%），每套 300 局</td>
+          <td class="v2-val">依分析結果汰換表現差的腳本、擴充池數（第一次檢視時點見 §09 Q3）</td>
         </tr>
         <tr>
           <td>bet 判定</td>
@@ -2308,8 +2359,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         </tr>
         <tr>
           <td>配發方式</td>
-          <td class="v1-val">兩池各自輪流發、<strong>用到才發</strong>；首次用到該池從第 1 局起</td>
-          <td class="v2-val">依線路各自輪流發，避免地區偏斜</td>
+          <td class="v1-val">兩池各自<strong>隨機配發</strong>、<strong>用到才配發</strong>；首次用到該池從第 1 局起</td>
+          <td class="v2-val">視各套樣本分佈，評估是否改為分線路配發</td>
         </tr>
         <tr>
           <td>buy bonus</td>
@@ -2328,7 +2379,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         </tr>
         <tr>
           <td>套利防線</td>
-          <td class="v1-val"><strong>五層全上</strong>：高額池負期望 ＋ 低額 bet 上限 ＋ &lt;500x ＋ 大獎限制 ＋ 監控</td>
+          <td class="v1-val"><strong>五層全上</strong>：高額池負期望 ＋ THB 50 分池界線 ＋ &lt;500x ＋ 大獎限制 ＋ 監控</td>
           <td class="v2-val">依監控結果微調門檻</td>
         </tr>
         <tr>
@@ -2348,7 +2399,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="callout success">
     <strong>本版完成定義</strong>：新手進入任一啟用線路的遊戲能依當下 bet 拿到<strong>正確池</strong>的腳本、
     300 局內結果與腳本一致（被大獎限制砍過的局除外）、<strong>buy bonus 局確實走 RNG 且不消耗進度、不計入 total_bets</strong>、
-    <code>total_bets</code> 達 300 能正確結束且不重跑、跨區間切換時新池從第 1 局起、埋點資料完整可<strong>分池</strong>分析、八種異常（E1~E8）皆不影響玩家轉動。
+    一次 Free Game 整段只消耗 1 局且以觸發局的 bet 與池結算、<code>total_bets</code> 達 300 能正確結束且不重跑、跨區間切換時新池從第 1 局起、線路開關關閉時已綁定玩家的進度保留、事件紀錄資料完整可<strong>分池</strong>分析、九種異常（E1~E9）皆不影響玩家轉動。
   </div>
 </section>
 
@@ -2367,11 +2418,11 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   </div>
   <div class="oq-item done">
     <div class="oq-owner">✓ 已定案 · Q2</div>
-    <div class="oq-q"><strong>雙池上線時程</strong>：原規劃高額池列為第二階段，經開發評估「100 套腳本半天即可完成」後，改為<strong>雙池同時上線</strong>。初版的套利風險敞口因此不存在，「臨時淨贏上限」亦不需要。</div>
+    <div class="oq-q"><strong>雙池上線時程</strong>：原規劃高額池列為第二階段，經開發評估「100 套腳本半天即可完成」後，改為<strong>雙池同時上線</strong>。初版的套利風險因此不存在，「臨時淨贏上限」亦不需要。</div>
   </div>
   <div class="oq-item pm">
     <div class="oq-owner">PM DECISION · Q3</div>
-    <div class="oq-q">腳本池汰換週期：200 套上線後是否定期換版（例：每季）？換版時既有未跑完的玩家維持原版本，是否確認？<br><strong>⚠️ 英文客戶版已承諾「表現差的腳本會被汰換、findings 會分享」</strong>，但本項仍列於 §08「後續版本·尚未排程」——建議至少定出第一次檢視的時點（例如上線後第 4 週），否則對客戶的承諾會落空。</div>
+    <div class="oq-q">腳本池汰換週期：200 套上線後是否定期換版（例：每季）？第一次檢視的時點是哪一天？<span class="dim">（「換版時既有未跑完的玩家維持原版本」已於 §03 交付規範寫死，不在本題範圍）</span><br><strong>⚠️ 英文客戶版已承諾「表現差的腳本會被汰換、findings 會分享」</strong>，但本項仍列於 §08「後續版本·尚未排程」——建議至少定出第一次檢視的時點（例如上線後第 4 週），否則對客戶的承諾會落空。</div>
   </div>
   <div class="oq-item done">
     <div class="oq-owner">✓ 已定案 · Q4</div>
@@ -2381,23 +2432,23 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   <div class="sub-title" style="margin-top:24px;">需跨組確認</div>
   <div class="oq-item">
     <div class="oq-owner">Server / 後端 · Q5</div>
-    <div class="oq-q"><strong>server 快測</strong>的母體規模與交付時程：條件已增為<strong>五項</strong>（新增 Big Win ≥ 3），且需<strong>兩個 RTP 區間各 100 套、合計 200 套</strong>。目前資料量是否足夠？高額池（98~100%）與低額池（100~105%）哪一邊比較難湊？不足時加大重跑的成本為何？<br><strong>hit rate 已由 40% 下修為 35%</strong>（實測 40% 的合格窗口過少），請確認下修後候選數量是否已足夠，或仍需加大母體。</div>
+    <div class="oq-q"><strong>server 快測</strong>的母體規模與交付時程：條件已增為<strong>五項</strong>（新增 Big Win ≥ 3），且需<strong>兩個 RTP 區間各 100 套、合計 200 套</strong>。目前資料量是否足夠？高額池（98~100%）與低額池（100~105%）哪一邊比較難湊？不足時加大重跑的成本為何？<br><strong>hit rate 已由 40% 下修為 35%</strong>（實測 40% 的合格段落過少），請確認下修後候選數量是否已足夠，或仍需加大母體。<br><strong>V4.0 新增</strong>：C4／C5 改為「Free Game 整段算一局」認定（§03），C5 的 Big Win 次數會因此變少——請確認<strong>上次快測是用哪種認定方式</strong>判 500x 與 Big Win；若不是整段認定，既有候選須重篩，並回報重篩後是否仍足以湊出 200 套。</div>
   </div>
   <div class="oq-item awc">
     <div class="oq-owner">後端 · Q6</div>
-    <div class="oq-q">大獎限制介接：判斷發生在哪一層？腳本取用與大獎限制判斷的先後順序如何實作？是否能取得「該局是否被砍為 low win」的明確回傳值供 <code>override_flag</code> 使用？</div>
+    <div class="oq-q">大獎限制介接：判斷發生在哪一層？腳本取用與大獎限制判斷的先後順序如何實作？是否能取得「該局是否被砍為 low win」的明確回傳值供 <code>override_flag</code> 使用？<br><strong>V4.0 新增</strong>：Free Game 改為<strong>整段判一次、在觸發局結算前判</strong>——請確認遊戲端能否在觸發前就被 Server 攔下、直接呈現未中獎；若 FG 是前端播完動畫才回報結果，此做法做不到，須另議。<br><strong>V4.1 新增</strong>：本規格採「觸發局結算時整段總 win 一次入帳、免費局純播畫面」（§04〈Free Game 整段的入帳與中斷〉）——請一併確認遊戲端現行 FG 是整段一次入帳還是逐免費局入帳，以及重連時能否從中斷的免費局續播。</div>
   </div>
   <div class="oq-item">
     <div class="oq-owner">數據組 · Q7</div>
-    <div class="oq-q">baseline 凍結日期：需在上線前 30 天啟動，請確認起算日與可取得的欄位粒度（能否分遊戲別、分線路）。</div>
+    <div class="oq-q">baseline 凍結日期：需在上線前 30 天啟動，請確認起算日與可取得的欄位細分程度（能否分遊戲別、分線路、<strong>分幣別</strong>——baseline 須限縮到 THB 錢包的新手才與上線後可比）。<br><strong>另請確認</strong>：「多數玩家的遊玩手數區間在 300 局」這個數字，當初是用<em>注單數</em>還是<em>轉動數（含免費局）</em>統計的？本規格的 total_bets 與主指標都以注單數計，baseline 須採同一計算方式。</div>
   </div>
   <div class="oq-item done">
     <div class="oq-owner">✓ 已定案 · Q8</div>
     <div class="oq-q"><strong>線路開關控管</strong>：開關<strong>綁定線路、預設關閉</strong>，<strong>僅接受開單提需求才啟動</strong>，不提供後台自助開啟。認證市場線路永久保持關閉。</div>
   </div>
-  <div class="oq-item awc">
-    <div class="oq-owner">後端 · Q9</div>
-    <div class="oq-q"><strong>Free Game 進行中某一局被擋下的處理</strong>：若大獎限制擋下的是 Free Game 當中的某一局（該局 win 砍為 <code>≈ 0</code>），剩餘的免費局是<em>照常跑完</em>、還是整段 FG 中止？本規格傾向依現行機制照常跑完（每局各自判斷），但需確認既有遊戲是否已有明確行為，若無則須定義——這是 QA 唯一還無法寫出預期結果的案例。<br><span style="color:var(--text-dim);font-size:12px;">（原 Q9「low win 具體定義」已確認：幾乎為 0、可視為 0，內容移入 §04）</span></div>
+  <div class="oq-item done">
+    <div class="oq-owner">✓ 已定案 · Q9</div>
+    <div class="oq-q"><strong>Free Game 與大獎限制的關係</strong>：一次 Free Game 整段算 1 局；大獎限制對整段<strong>判一次</strong>、在觸發局結算前判，被擋下則整段作廢、玩家端顯示未中獎、不進入 FG（內容已寫入 §03、§04）。「FG 進行中某一局被擋下」的情境因此不再存在。<span style="color:var(--text-dim);font-size:12px;">（遊戲端能否在觸發前攔下，併入 Q6 確認）</span></div>
   </div>
   <div class="oq-item pm">
     <div class="oq-owner">營運 · Q10</div>
@@ -2415,13 +2466,29 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     <div class="oq-owner">機率組 · Q13</div>
     <div class="oq-q"><strong>Big Win 的定義是否與原力現行標準一致</strong>：本規格採 <code>win ≥ 10 × bet</code>。若公司內部（或各遊戲）已有既定的 Big Win／Mega Win 分級，請以既有定義為準並回填本規格，避免同一個詞在不同文件指涉不同倍數。</div>
   </div>
+  <div class="oq-item">
+    <div class="oq-owner">後端 · Q14</div>
+    <div class="oq-q"><strong>buy bonus 的識別方式</strong>：Server 端如何判定「這一局是 buy bonus」？是否所有遊戲都有統一的旗標可用？若某些遊戲沒有 buy bonus 功能，該欄位固定為 false 即可。</div>
+  </div>
   <div class="oq-item pm">
     <div class="oq-owner">PM DECISION · Q15</div>
     <div class="oq-q"><strong>全幣值擴充的時程與順序</strong>：v1 僅開放 THB。後續要一次全開，還是依線路玩家數依序開放（例：先 PHP、再 VND）？建議依序開放並各自觀察，但這會延長取得全量數據的時間。</div>
   </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">後端 · Q16 <span class="tag-pill tag-req">本版新增</span></div>
+    <div class="oq-q"><strong>同一個 player_id 能否中途更換錢包幣別</strong>：CHECK 00 的幣別判定只在進場做一次，之後每局是依「玩家錢包幣別」查門檻表。若一個帳號只會綁一種幣別則無問題；若可中途更換，須比照線路開關改為每局檢查。</div>
+  </div>
+  <div class="oq-item awc">
+    <div class="oq-owner">後端 / 機率組 · Q17 <span class="tag-pill tag-req">本版新增</span></div>
+    <div class="oq-q"><strong>財神貓的 bet 檔位</strong>：§07 M2-B「bet 落在 THB 45~49」與風險一「49 × 300」都假設 bet 可連續取值。請提供實際檔位表；若為離散檔位（例：10／20／50），M2-B 改為「壓在 50 以下最高檔位的佔比」、風險一的理論上限依最高檔位重算。</div>
+  </div>
   <div class="oq-item">
-    <div class="oq-owner">後端 · Q14</div>
-    <div class="oq-q"><strong>buy bonus 的識別方式</strong>：Server 端如何判定「這一局是 buy bonus」？是否所有遊戲都有統一的旗標可用？若某些遊戲沒有 buy bonus 功能，該欄位固定為 false 即可。</div>
+    <div class="oq-owner">Server / 數據組 · Q18 <span class="tag-pill tag-req">本版新增</span></div>
+    <div class="oq-q"><strong>腳本重疊門檻是否收緊</strong>：§03 STEP 04 允許兩套重複 ≤ 200 局（三分之二相同）。從同一條快測流切段，相鄰兩套可能只差 100 局，對「哪一套最好」而言不是獨立樣本。建議評估收緊至 ≤ 100 局；若候選不足以支撐，維持 200 但在分析時把高度重疊的套視為同一組。</div>
+  </div>
+  <div class="oq-item pm">
+    <div class="oq-owner">營運 · Q19 <span class="tag-pill tag-req">本版新增</span></div>
+    <div class="oq-q"><strong>TWDv(130:1) 門檻</strong>：原表列 3,000，依 TWD 30 × 130 應為 3,900。本版已依比例改為 3,900 並標「待營運確認」；若 3,000 是刻意取整，請回覆後改回並在表下註明理由。</div>
   </div>
 
 </section>
@@ -2429,9 +2496,19 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 </div><!-- /page -->
 
 <div class="doc-footer">
-  新手機率體驗腳本規格書 · V3.1 · CONFIDENTIAL 2026<br>
+  新手機率體驗腳本規格書 · V4.1 · CONFIDENTIAL 2026<br>
   Force / Combo Gaming<br>
   <span style="color:var(--text-dim);font-size:9px;">
+    V4.1 · <strong>第二輪盤點修訂（12 項）</strong>：①腳本檔明訂以「押注局」為單位、FG 局為巢狀一筆（整段總倍數＋免費局明細），FLOW 04 快測輸出須辨識 FG 歸屬、切段改為 300 個押注局，C3 同步（A1／C4）；②新增 §04〈Free Game 整段的入帳與中斷〉——觸發局結算時整段一次入帳、免費局純播畫面、斷線只補畫面，FLOW 06／E2／E6 同步，Q6 補問遊戲端現行入帳方式（A2 甲案）；③CHECK 02「不改動大獎限制邏輯」改為「不改判斷式、但 FG 判定單位改整段」，FLOW 05-B 補註（B1）；④逐局紀錄新增 spin_index 與 round_id 共同為主鍵，明訂觸發局列 win＝整段總贏分、免費局列 bet=0，free_spin 排除範圍擴及所有金額統計（B2）；⑤完成率分母統一為 assigned_at 任一非 null（B3）；⑥§01 表與 §08 的 RTP 區間改為不等式寫法並註明邊界以 C1 為準（C1）；⑦「排除超過 500 倍」改「500 倍（含）以上」（C2）；⑧FG 保證補 E1 例外（C3）；⑨§06 贅字（C5）；⑩Q14／Q15 順序（C6）。中簡報同步「阻擋」兩處（C7）。<br>
+    V4.0 · <strong>審閱修訂＋機制認定方式變更＋配發改隨機</strong>（依 2026-09-03 審閱報告 10 項與自查 10 項）：
+①<strong>新手判定重寫</strong>（H1／H2）——FLOW 01 改為「先查綁定表、查無紀錄再查注單」，注單歷史局數＝0 才認定為新手並<em>立即建立綁定列</em>（兩池 script_id 為 null），腳本在首次下注時才配發；上線前既有 THB 玩家、開關關閉或幣別不符期間玩過的人一律不適用（F5）。
+②<strong>Free Game 整段算 1 局</strong>（H3）——免費局不計入進度與 total_bets、以觸發局的 bet 與池結算、大獎限制對整段判一次且在觸發局結算前判（被擋下則整段作廢、不進入 FG）；C4／C5 認定方式改為以「局」為單位（FG 整段 ≥10x 計 1 次 Big Win）；逐局紀錄新增 free_spin 欄，免費局各留一筆但不前進進度。
+③<strong>配發改為均勻隨機</strong>——移除配發計數器與 A3 並發需求，A3 改為隨機源要求（不得以 player_id／時間戳取餘數）；§06 假設②新增單套樣本 n&lt;30 不納入比較、高額池可能長期不足。
+④<strong>線路開關每局檢查</strong>（M4）——FLOW 05 CHECK 01 加開關條件，關閉時進度保留，新增 E9；異常表重排為 E1~E9。
+⑤<strong>分析與指標</strong>——主指標與 total_bets 同以「有押注的局」計；完成率分母改為「至少一池已配發」；主分析取未切換者不論是否跑完（M1）；baseline 限縮 THB（M3）；§01 補「提升來源＝降低 300 局內早期流失」。
+⑥<strong>數字與文字</strong>——風險一「最多能拿走」改為「期望落袋」並新增理論上限 735（L1）；C1 邊界明訂 100% 屬低額池（L2）；TWDv 依比例改 3,900 待營運確認（L3）；「低額池 bet 上限」全文更正為「分池界線」（N1）；Q3 移除已定案內容（N4）；A1／交付規範補「舊版不得刪除」（N5）；E 表排序修正（N7）。
+⑦<strong>待確認</strong>——Q9 結案；Q5／Q6／Q7 補問認定方式、FG 攔截時點、baseline 幣別與單位；新增 Q16 幣別可否中途更換、Q17 bet 檔位、Q18 重疊門檻、Q19 TWDv。
+⑧<strong>全文用語</strong>——依「只寫台灣開發現場會講的話」規範替換：懶配發→用到才配發、落庫→寫入資料庫、埋點→事件紀錄、體感→手感／感受、窗口→段落、乾局→連續沒中獎、養號→開分身帳號、撈取→取得、敞口→風險、口徑→認定方式、擋下即消耗→被擋下的那一局照樣算一局、腳本讓位→不用腳本結果、阻擋→不套用腳本；快測／母體首次出現加註。<br>
     V3.1 · <strong>C2 hit rate 門檻由 &gt; 40% 下修為 &gt; 35%</strong>（兩池皆同）：實際撈取 server 快測結果後，能同時滿足其餘四項且 hit rate 達 40% 的窗口數量過少，代表 40% 已落在該遊戲 hit rate 分布的尾端；硬守 40% 只會讓候選集中在極端窗口、其他面向未必理想。下修後候選數量回到合理水準且樣本更具代表性。§01 雙池對照表、§03 C2 與篩選難度說明、§09 Q5 同步更新<br>
     V3.0 · <strong>新手體驗長度由 600 局改為 300 局（機制核心變更）</strong>：①依現行數據「多數玩家的遊玩手數區間為 300 局」，新手體驗改為<strong>累積押注次數 300 局為硬上限</strong>（<code>total_bets</code>，不分池、<strong>不重跑、不延長</strong>），取代原「兩池各 300 局、合計 600 局、滿 300 歸零重跑同一套」；②跨區間切換時<strong>新池從自己的第 1 局起跑</strong>、再度用到同一池則接續，反覆切換不會延長優待期；③<strong>buy bonus 不計入 total_bets</strong>；④<strong>原〈風險三 第二輪重跑可被預測〉隨改版消除</strong>（同一套腳本在單一玩家身上只出現一次），該節改為「已消除」說明；⑤新增監控 <strong>M8 跨區間切換率</strong>並於 §02 明列「切換者五項條件保證失效」的取捨理由（失去的是保證非體驗、切換者為最不需保護的族群、兩池都跑滿會讓優待期變成玩家可控）；⑥埋點 <code>total_seq</code>→<code>total_bets</code>、移除 <code>round</code>、新增 <code>switched</code>；⑦風險金額依 300 局重算（低額池理論最大落袋 THB 750→<strong>368</strong>）；⑧「600 局完成率」改為「300 局完成率」、§06 分析尺度改為主分析只取未切換者<br>
     V2.4 · <strong>適用範圍限縮與多幣別門檻定案</strong>：①v1 適用範圍明訂為「<strong>Lucky Paws 財神貓 × 僅 THB 幣別</strong>」兩項條件同時成立才啟用，<strong>THB 以外的玩家一律阻擋、走原生 RNG、不配發腳本也不寫綁定表</strong>；後續擴充為全幣值；②§02 新增〈<strong>多幣別分池門檻對照表</strong>〉共 <strong>62 種幣別</strong>（THB 50 為基準），定為<strong>固定參數、不隨匯率浮動</strong>（避免玩家因匯率變動在兩池間跳動而破壞腳本連續性），擴充時只需開啟對應幣別、機制與腳本內容不需改動；③FLOW 01 新增 CHECK 00 前置範圍檢查、§05 新增 Task B0、§08 新增〈適用範圍〉列；④§09 Q1 標記已定案（門檻表已提供），Q12 補註「單一遊戲 × 單一幣別」雙重限縮對樣本量的影響，新增 Q15 全幣值擴充時程與順序<br>

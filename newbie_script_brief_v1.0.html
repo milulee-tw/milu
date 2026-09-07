@@ -190,7 +190,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   <h2>96.7% 是<span>長期平均</span>，不是任何一個新手的體驗</h2>
   <div class="blk-lead">
     同一款遊戲、同樣的數學設定，兩位新手的前 300 局可能天差地遠：
-    一位早早吃到 Free Game、手感順暢；另一位連續乾局、<em>第一天就走了</em>。
+    一位早早吃到 Free Game、手感順暢；另一位連續沒中獎、<em>第一天就走了</em>。
     後者不是我們設計失誤，而是機率的必然——<strong>而我們現在對這件事完全沒有干預手段</strong>。
   </div>
 
@@ -235,7 +235,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   <h2>兩個腳本池，<span>依下注額分流</span></h2>
   <div class="blk-lead">
     從 <strong>server 跑出的遊戲快測結果</strong>中，切出一段一段<strong>連續的 300 局</strong>，
-    每一段都必須通過<strong>五項體感檢驗</strong>，合格的才收進腳本池。腳本池分兩種——
+    每一段都必須通過<strong>五項手感檢驗</strong>，合格的才收進腳本池。腳本池分兩種——
     <em>低額池</em>（bet &lt; THB 50）與<em>高額池</em>（bet ≥ THB 50），各 100 套。
     玩家每一局依當下下注額取對應池的結果，<strong>累積押注滿 300 局</strong>後結束。
   </div>
@@ -277,8 +277,9 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   </div>
 
   <div class="note info">
-    <strong>「輪流發」而不是隨機抽</strong>：第 1 位新手拿第 1 套、第 2 位拿第 2 套……第 101 位回到第 1 套。
-    這樣每套的使用人數幾乎一樣多，三個月後才有辦法公平比較「哪一套留得住人」。
+    <strong>隨機配發、用到才配發</strong>：玩家第一次用某個區間的 bet 下注時，Server 從該池 100 套中隨機抽一套，不維護任何順序或計數器。
+    代價是各套的使用人數不保證相近——比較「哪一套留得住人」時，單套樣本數不足 30 人的不下結論。<br>
+    <strong>一次 Free Game 整段算 1 局</strong>：觸發局＋其後所有免費局只消耗 1 局、只算 1 次押注；大獎限制對整段判一次。
   </div>
 
   <div class="note ok">
@@ -289,18 +290,18 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   </div>
 
   <div class="note warn">
-    <strong>中途切換 bet 區間的玩家，體感保證會失效——這是評估後接受的取捨</strong><br>
+    <strong>中途切換 bet 區間的玩家，手感保證會失效——這是評估後接受的取捨</strong><br>
     五項條件是針對「一整套完整的 300 局」驗證的。中途切換的人會拿到兩段不完整的片段
     （例如低額前 120 局 ＋ 高額前 180 局），兩套都沒跑完。<br>
     仍然接受的理由：① <strong>失去的是「保證」不是「體驗」</strong>——腳本本身是正常序列，
     切換者的最壞情況約等於原生隨機，不會更差；② <strong>會中途加碼的人，本來就是玩得順、沒有流失風險的那群</strong>，
-    而我們要救的是連續乾局想離開的人，那群人不會加碼。<br>
+    而我們要救的是連續沒中獎、想離開的人，那群人不會加碼。<br>
     已加上<strong>「跨區間切換率」監控</strong>，若實際比例高於預期再回頭調整。
   </div>
 
   <div class="note warn">
     <strong>買 Free Game（buy bonus）不算在內</strong>：玩家付費購買 Free Game 的那一局<strong>直接走原生隨機</strong>，
-    而且<strong>不消耗腳本進度</strong>——腳本序列保持完整，不會被挖掉幾局而破壞體感設計。
+    而且<strong>不消耗腳本進度</strong>——腳本序列保持完整，不會被挖掉幾局而破壞手感設計。
   </div>
 </div>
 
@@ -317,7 +318,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="card hi">
       <div class="card-k">條件 1 · 整套 RTP · 低額池</div>
       <div class="card-v">100~105%</div>
-      <div class="card-d">bet &lt; THB 50。讓新手小賺，體感上「這款對我不錯」。</div>
+      <div class="card-d">bet &lt; THB 50。讓新手小賺，感受上「這款對我不錯」。</div>
     </div>
     <div class="card" style="border-color:var(--blue);background:var(--blue-fill)">
       <div class="card-k">條件 1 · 整套 RTP · 高額池</div>
@@ -329,7 +330,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="card hi">
       <div class="card-k">條件 2 · 中獎頻率</div>
       <div class="card-v">&gt; 35%</div>
-      <div class="card-d">決定手感。避免獎全集中在少數幾局、中間全是乾局。</div>
+      <div class="card-d">決定手感。避免獎全集中在少數幾局、中間全是沒中獎的局。</div>
     </div>
     <div class="card hi">
       <div class="card-k">條件 3 · Free Game</div>
@@ -339,19 +340,19 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="card hi">
       <div class="card-k">條件 4 · Big Win</div>
       <div class="card-v">≥ 3 次</div>
-      <div class="card-d">單局贏 <strong>10 倍以上</strong>算一次。光是「一直中但都很小」，玩家一樣沒感覺。</div>
+      <div class="card-d">單局贏 <strong>10 倍以上</strong>算一次（一次 Free Game 整段算一局、以整段總贏分認定）。光是「一直中但都很小」，玩家一樣沒感覺。</div>
     </div>
     <div class="card hi">
-      <div class="card-k">條件 5 · 最大獎</div>
+      <div class="card-k">條件 5 · 最大單局獎（FG 整段算一局）</div>
       <div class="card-v">&lt; 500x</div>
       <div class="card-d">不讓新手期就吃到超大獎——成本不可控，吃完之後落差過大反而讓人不想再玩。</div>
     </div>
   </div>
 
   <div class="note warn">
-    <strong>條件變嚴，篩選難度顯著提高</strong>：一段 300 局要同時滿足「RTP 落在窄區間、中獎率超過四成、
+    <strong>條件變嚴，篩選難度顯著提高</strong>：一段 300 局要同時滿足「RTP 落在窄區間、中獎率超過 35%、
     至少一次 Free Game、至少三次 Big Win、且沒有任何一筆到 500 倍」——合格的段落會少很多。<br>
-    <strong>中獎頻率門檻已由 40% 下修為 35%</strong>：實際撈取快測結果後發現 40% 的合格段落太少，
+    <strong>中獎頻率門檻已由 40% 下修為 35%</strong>：實際取得快測結果後發現 40% 的合格段落太少，
     代表這個數字已落在遊戲本身分布的尾端，硬守只會讓候選集中在極端值。
     需確認 <strong>server 快測</strong>的資料量是否足以篩出 <strong>200 套</strong>（兩池各 100 套）。
   </div>
@@ -360,7 +361,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 <!-- ══ 04 安全順位 ══ -->
 <div class="blk">
   <div class="blk-num">04 · 安全邊界</div>
-  <h2>大獎限制<span>永遠優先</span>，腳本讓位</h2>
+  <h2>大獎限制<span>永遠優先</span>，該局不用腳本結果</h2>
   <div class="blk-lead">
     這套機制<strong>不凌駕於任何既有的風控之上</strong>。大獎限制分兩層：
     <em>源頭層</em>是腳本篩選時就排除 500 倍以上的獎、腳本裡根本沒有超大獎；
@@ -402,7 +403,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 
   <div class="note warn">
     <strong>v1 有兩道範圍限制</strong>：① 遊戲僅 <strong>Lucky Paws 財神貓</strong>；
-    ② 幣別<strong>僅 THB</strong>——其他幣別的玩家一律阻擋、直接走原生隨機，不發腳本。
+    ② 幣別<strong>僅 THB</strong>——其他幣別的玩家不套用腳本、直接走原生隨機。
     後續擴充為全幣值時，62 種幣別的門檻已經定好（THB 50 為基準、固定值不隨匯率浮動），
     <strong>只要開啟對應幣別即可，機制和腳本內容都不用改</strong>。<br>
     <span style="color:var(--red-bright)"><strong>但要注意</strong>：範圍同時限縮「單一遊戲 × 單一幣別」，
@@ -446,13 +447,13 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
       <text x="160" y="50" font-family="DM Mono, monospace" font-size="15" fill="var(--red-bright)" text-anchor="middle">+1,500</text>
       <text x="160" y="184" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">初版 · 單池</text>
       <text x="160" y="202" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">每局 THB 200 × 300 局</text>
-      <text x="160" y="220" font-family="DM Sans, sans-serif" font-size="12" fill="var(--red-bright)" text-anchor="middle">穩定獲利 → 值得養號</text>
+      <text x="160" y="220" font-family="DM Sans, sans-serif" font-size="12" fill="var(--red-bright)" text-anchor="middle">穩定獲利 → 值得刷帳號</text>
       <!-- 柱2：本版低額池 -->
       <rect x="330" y="135" width="140" height="25" rx="4" fill="var(--orange)"/>
       <text x="400" y="125" font-family="DM Mono, monospace" font-size="15" fill="var(--orange)" text-anchor="middle">+368</text>
       <text x="400" y="184" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">本版 · 低額池</text>
       <text x="400" y="202" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">全程壓滿 THB 49 × 300 局</text>
-      <text x="400" y="220" font-family="DM Sans, sans-serif" font-size="12" fill="var(--orange)" text-anchor="middle">低於養號成本</text>
+      <text x="400" y="220" font-family="DM Sans, sans-serif" font-size="12" fill="var(--orange)" text-anchor="middle">低於刷帳號成本</text>
       <!-- 柱3：本版高額池（負） -->
       <rect x="570" y="160" width="140" height="40" rx="4" fill="var(--green)"/>
       <text x="640" y="185" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--bg)" text-anchor="middle">本版 · 高額池</text>
@@ -474,8 +475,8 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     </div>
     <div class="card ok">
       <div class="card-k">防線 2 · 結構層</div>
-      <div class="card-t">低額池 bet 上限</div>
-      <div class="card-d">低額池雖是正期望，但單局壓不到 THB 50，300 局理論上限僅約 368。</div>
+      <div class="card-t">THB 50 分池界線</div>
+      <div class="card-d">不是 bet 上限——壓到 50 以上就進負期望的高額池。能享受正期望的單局最多 THB 49，300 局期望落袋約 368、就算 RTP 頂到 105% 也只有約 735。</div>
     </div>
     <div class="card ok">
       <div class="card-k">防線 3 · 源頭層</div>
@@ -510,7 +511,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   <h2>原本要分兩階段，<span>現在一次上完</span></h2>
   <div class="blk-lead">
     高額池原本列為第二階段。開發評估「<strong>100 套腳本半天就能完成</strong>」後改為一次上線——
-    <em>以極低的額外成本，直接消除了初版最大的風險敞口</em>。
+    <em>以極低的額外成本，直接消除了初版最大的風險</em>。
   </div>
 
   <table class="tbl">
@@ -519,7 +520,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     </thead>
     <tbody>
             <tr><td class="dim">適用遊戲</td><td><strong>Lucky Paws 財神貓</strong>單款驗證</td><td>推廣至各遊戲；新遊戲一律標配</td></tr>
-      <tr><td class="dim">適用幣別</td><td><strong>僅 THB</strong>（門檻 50）· 其他幣別玩家一律阻擋</td><td>擴充至<strong>全幣值</strong>；62 種幣別門檻已備妥</td></tr>
+      <tr><td class="dim">適用幣別</td><td><strong>僅 THB</strong>（門檻 50）· 其他幣別玩家不套用腳本</td><td>擴充至<strong>全幣值</strong>；62 種幣別門檻已備妥</td></tr>
       <tr><td class="dim">腳本池</td><td><strong>雙池 200 套</strong>（低額 100＋高額 100）</td><td>依分析結果汰換表現差的腳本</td></tr>
       <tr><td class="dim">下注額判定</td><td><span class="tag g">逐局判定 · THB 50 為界</span></td><td>門檻依實際數據調整，可能細分三段</td></tr>
       <tr><td class="dim">體驗長度</td><td><strong>累積押注 300 局</strong>（不重跑、不延長）</td><td>依手數數據調整長度；視切換率決定是否調整跨區間規則</td></tr>
@@ -626,7 +627,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="card">
       <div class="card-ico">②</div>
       <div class="card-t">哪一套最好</div>
-      <div class="card-d">各池 100 套 × 人均手數與完成率交叉比較；輪流發讓樣本數相近，可直接橫向比。</div>
+      <div class="card-d">各池 100 套 × 人均手數與完成率交叉比較；隨機配發下各套人數不一，<strong>單套樣本不足 30 人者不納入</strong>，高額池可能長期不足、屆時不對高額池下結論。</div>
     </div>
     <div class="card">
       <div class="card-ico">③</div>
@@ -653,7 +654,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div>
       <div class="dec-t">高額池的排程 · 已定案</div>
       <div class="dec-d">原列為第二階段，經開發評估「100 套腳本半天即可完成」後改為<strong>與低額池同時上線</strong>。
-      初版的套利風險敞口因此<strong>從未發生</strong>，「臨時淨贏上限」也不需要了。</div>
+      初版的套利風險因此<strong>從未發生</strong>，「臨時淨贏上限」也不需要了。</div>
     </div>
   </div>
   <div class="dec done">
@@ -689,12 +690,12 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
       <div class="card warn">
         <div class="card-k">營運</div>
         <div class="card-t">各幣別門檻對照表</div>
-        <div class="card-d">THB 50 為基準，PHP／VND 等值門檻須核定。<strong>沒有對照表，非泰銖線路無法判定用哪個池。</strong></div>
+        <div class="card-d">62 種幣別的門檻已核定（THB 50 為基準）並寫入規格書。<strong>僅 TWDv(130:1) 依比例更正為 3,900，待營運確認。</strong></div>
       </div>
       <div class="card warn">
         <div class="card-k">Server</div>
         <div class="card-t">確認能篩出 200 套</div>
-        <div class="card-d">條件增為五項且分兩個 RTP 區間，合格段落大幅減少。<strong>server 快測</strong>的資料量不足時需加大重跑。</div>
+        <div class="card-d">條件增為五項且分兩個 RTP 區間，合格段落大幅減少；且 Big Win 改以「Free Game 整段算一局」認定、次數會變少，<strong>既有候選須重篩</strong>。<strong>server 快測</strong>的資料量不足時需加大重跑。</div>
       </div>
       <div class="card warn">
         <div class="card-k">數據組</div>
@@ -707,9 +708,9 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 </div><!-- /wrap -->
 
 <div class="foot">
-  新手機率體驗腳本 · 決策簡報 V3.1 · CONFIDENTIAL 2026<br>
+  新手機率體驗腳本 · 決策簡報 V4.1 · CONFIDENTIAL 2026<br>
   Force / Combo Gaming<br>
-  <span style="letter-spacing:.1em">完整規格請見《新手機率體驗腳本規格書 NES-SPEC V3.1》</span>
+  <span style="letter-spacing:.1em">完整規格請見《新手機率體驗腳本規格書 NES-SPEC V4.1》</span>
 </div>
 
 <script>
