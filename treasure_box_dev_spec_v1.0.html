@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 開發交付版規格書 DEV V1.31</title>
+<title>抽寶箱 開發交付版規格書 DEV V1.33</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -1242,7 +1242,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
 
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="topnav" id="topnav">
-  <span class="nav-brand">CHEST DEV SPEC · V1.31</span>
+  <span class="nav-brand">CHEST DEV SPEC · V1.33</span>
   <a class="nav-item active" href="#overview">概要</a>
   <a class="nav-item" href="#mechanic">玩法機制</a>
   <a class="nav-item" href="#prizes">獎勵設計</a>
@@ -1275,7 +1275,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="sidebar-brand">CMB · DEV SPEC</div>
     <div class="sidebar-title">抽寶箱<br>開發交付版規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.31</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.33</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">SOURCE</span><span class="sidebar-meta-val">完整版 V5.3</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
@@ -1464,7 +1464,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <div class="cover-grid"></div>
   <div class="cover-tag">CHEST · DEV DELIVERY SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>開發交付版規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.31 · 源自完整版 V5.3</div>
+  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.33 · 源自完整版 V5.3</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>文件定位</strong> 開發交付版（後端／前端／美術／QA）</div>
     <div class="cover-pill"><strong>內容範圍</strong> 需求目的・系統行為・驗收標準</div>
@@ -1473,7 +1473,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="cover-pill"><strong>市場</strong> 菲律賓（披索）</div>
   </div>
   <div class="cover-badges">
-    <span class="badge badge-v1">DEV V1.31 · 開發交付版</span>
+    <span class="badge badge-v1">DEV V1.33 · 開發交付版</span>
     <span class="badge badge-scope">源自完整版 V5.3</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
   </div>
@@ -1509,6 +1509,40 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>2026-09-14</td>
+          <td>DEV V1.33</td>
+          <td><a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a>／<a href="#admin-version" style="color:var(--gold-light);">§13 一</a>／<a href="#effect-timing" style="color:var(--gold-light);">§13 三</a>／<a href="#review-fsm" style="color:var(--gold-light);">§13 四·五</a>／<a href="#backend" style="color:var(--gold-light);">§06</a>／<a href="#camp-overlap" style="color:var(--gold-light);">§06 重疊硬擋</a>／<a href="#template-list" style="color:var(--gold-light);">§06 一</a>／<a href="#i18n" style="color:var(--gold-light);">§11</a></td>
+          <td><strong style="color:var(--gold-light);">QA 複測未通過 → 活動列表「活動狀態」與「版本狀態」正式拆成兩個欄位顯示；並回推活動複製的版號規則。</strong><span class="dim">（來源：QA 2026-09-14 複測回報；Milu 同日拍板。）</span><br>
+          <strong style="color:var(--red-bright);">【A · 兩欄拆開 · 本版主軸】① 根因</strong>——DEV V1.23 雖已把「活動狀態／版本狀態」定義為兩個<strong>資料欄位</strong>，卻同時保留 DEV V1.20 的「<strong>UI 仍不顯示審查中／待生效 badge、版本狀態只在活動表單 Tab 4 呈現</strong>」，等於只要求資料層拆、畫面仍只有一欄。開發因此把版本狀態塞進那唯一一欄，造成 QA 連兩次回報同一批問題。<strong style="color:var(--orange-bright);">本版明文作廢該句，DEV V1.20 的這項拍板自本版起不再適用。</strong><br>
+          <strong>② 活動列表欄位改動</strong>——原「狀態」欄<strong>改名為「活動狀態」</strong>，右側<strong style="color:var(--gold-light);">新增「版本狀態」欄</strong>（位置：活動狀態欄與版本欄之間）。<br>
+          <strong>③ 活動狀態收斂為四態</strong>：<strong>未運行／運行中／已暫停／已結束</strong>——原六態中的「草稿／送審中／已核准」描述的是設定而非活動對玩家的開關，一律收斂為「未運行」。<br>
+          <strong>④ 版本狀態五態（新訂）</strong>：<strong>無／草稿／修改待審核／駁回／已核准</strong>——「無」要印出「無」二字不留白；「駁回」在營運一動手編輯時自動回到「草稿」；「已核准」＝選了隔日生效、正在等次一個每日重置時點，生效瞬間自動回「無」。<br>
+          <strong>⑤ 兩欄互不覆蓋、可自由組合</strong>——典型組合「<strong style="color:var(--red-bright);">活動狀態＝運行中 ＋ 版本狀態＝修改待審核</strong>」正是 QA 打回來的情境。<br>
+          <strong>⑥ 一律依「活動狀態」判定的三件事</strong>：⏸／▶ 按鈕是否顯示、活動狀態 chips 篩選、活動倒數欄顯示什麼；<strong style="color:var(--orange-bright);">這三件事完全不看版本狀態</strong>。倒數欄新訂顯示規則：運行中＝真倒數、未運行＝「未上線」、已暫停＝「已暫停」、已結束＝「已結束」。<br>
+          <strong>⑦ 篩選 chips 拆成兩列</strong>——第一列「活動狀態」、第二列「版本狀態」，各自帶數量、可同時使用（AND），「清除篩選」同時清掉兩列。<br>
+          <strong>⑧ 狀態機與圖</strong>——<a href="#review-fsm" style="color:var(--gold-light);">§13 五</a>標題改為「活動狀態四態 × 版本狀態五態」；<strong>FIG.16 重畫為四態</strong>，<strong style="color:var(--gold-light);">新增 FIG.16-1 版本狀態機（五態）</strong>。<br>
+          <strong>⑨ 連帶口徑改寫（判定結果不變，只換成新欄位講）</strong>——§06 活動重疊硬擋「比對對象」、§06 模板「使用中活動 N」與模板刪除 N 的同一套查詢、模板展開子列表的活動狀態 badge 值域、§11 狀態名稱翻譯範圍。<br>
+          <strong>⑩ i18n 後台術語新增／停用</strong>——新增 <span class="mono">admin.status.not_started</span>、<span class="mono">admin.vstatus.*</span>（5 個）、<span class="mono">admin.col.campaign_status／version_status</span>、<span class="mono">admin.camp.countdown.not_started／paused／ended</span>；<strong style="color:var(--orange-bright);">停用</strong> <span class="mono">admin.status.draft／in_review／approved</span> 作為活動狀態值。<strong>玩家端 51 組多語系 key 不受影響</strong>（本版全部改動都在後台，後台術語僅 zh-TW／en）。<br>
+          <strong style="color:var(--red-bright);">【B · 複本版號回推】⑪ 活動複製改回「按下第一次『儲存草稿』才建立活動並取得 Campaign ID 與 V1」</strong>——<strong>推翻 DEV V1.32 條目⑤的「點複製跳出表單當下即為 V1」</strong>（Milu 2026-09-14 拍板改採此案）。點「複製」只是把來源設定帶進表單，此時<strong>版本欄空白、活動狀態空白</strong>；好處是點了複製又關掉<strong>不會留下空草稿</strong>。四處同步：<a href="#admin-version" style="color:var(--gold-light);">§13 一</a>／<a href="#review-fsm" style="color:var(--gold-light);">§13 四</a>／§06 版面對照／§07 比較表。</td>
+        </tr>
+        <tr>
+          <td>2026-09-14</td>
+          <td>DEV V1.32</td>
+          <td><a href="#effect-timing" style="color:var(--gold-light);">§13 三</a>／<a href="#admin-version" style="color:var(--gold-light);">§13 一</a>／<a href="#review-fsm" style="color:var(--gold-light);">§13 四</a>／<a href="#template-list" style="color:var(--gold-light);">§06 一</a>／<a href="#template-editor" style="color:var(--gold-light);">§06 二</a>／<a href="#template-new" style="color:var(--gold-light);">§06 三</a>／<a href="#template-version" style="color:var(--gold-light);">§06 六</a>／<a href="#review-page" style="color:var(--gold-light);">§06 審查頁</a>／<a href="#comparison" style="color:var(--gold-light);">§07</a></td>
+          <td><strong style="color:var(--gold-light);">依 QA 於 UAT 的實測結果，把規格對齊實作：活動版號規則整套反轉 ＋ 模板 ID 格式與顯示位置全面收斂。</strong><span class="dim">（來源：QA 2026-09-11 於 Game Backstage UAT v1.0.1 實測、Oliver 同日確認；本版<strong>不要求開發改任何一行程式</strong>，全部是規格跟著實作走。）</span><br>
+          <strong style="color:var(--red-bright);">【A · 活動版號】① 改為「設定有變動就 +1、核准不產生版號」</strong>（<a href="#effect-timing" style="color:var(--gold-light);">§13 三 · 版本流水號</a> 整列重寫，<strong>推翻 DEV V1.23～V1.31 的「核准才產號、儲存草稿不佔號、首次核准產生 V1」整套敘述</strong>）——每按一次「儲存草稿」或「提交審查」，內容有變即 +1 並寫快照；<strong>Admin 核准只做一件事：把送審的那一版切換為運行中版本</strong>。連續編輯多次則每存一次 +1、<strong>送審送最新那一版</strong>，中間版本有版號有快照但從未上線；駁回後再改同樣每存一次 +1。實測依據：複本存檔送審後即為 V1（未核准）、運行中活動送審 V3→V4 而<strong>核准後仍為 V4</strong>、草稿活動未經核准已累積至 V6。<br>
+          <strong style="color:var(--orange-bright);">② 「待生效版本」語意跟著變</strong>——舊文指「核准後才會拿到版號的那一版」，本版起<strong>每一版都有版號，待生效版本＝目前送審中、尚未被核准切換為運行中的那一版</strong>。開發不可沿用舊理解。<br>
+          <strong>③ Tab 4 版本下拉的收錄與標示（新訂）</strong>——<strong>全部版本都收</strong>（含從未上線的中間版本）；<strong style="color:var(--gold-light);">只在玩家實際在跑的那一版加「運行中」標記</strong>，不另外區分「曾核准過」與「只存過草稿」；每一版都有快照可看。<br>
+          <strong>④ 活動列表「版本」欄維持顯示最新版號</strong>，但明寫<strong style="color:var(--red-bright);">「此欄是最新版號、不等於玩家正在跑的版本」</strong>（列表可能顯示 V6 而玩家實際跑 V4），並指向 Tab 4 查證。<br>
+          <strong>⑤ 活動複製的複本＝V1</strong>（四處同步：<a href="#admin-version" style="color:var(--gold-light);">§13 一</a>／<a href="#review-fsm" style="color:var(--gold-light);">§13 四</a>／§06 版面對照／§07 比較表）——原寫「版本＝未建立（尚未核准）」廢除；<strong style="color:var(--gold-light);">點「複製」跳出表單的那一刻複本就已建立並配好 V1</strong>。已知代價：點了複製又直接關掉會留下一筆 V1 空草稿，需自行刪除。<br>
+          <strong style="color:var(--orange-bright);">⑥ 修改紀錄 DEV V1.23 條目⑨直接修正原文</strong>——依 Milu 拍板，<strong>此為本文件「歷史條目一律不動」慣例的唯一例外</strong>，理由是該條的舊文字會讓開發照著做出錯誤實作；已於該條標明推翻範圍與原文內容。<br>
+          <strong style="color:var(--red-bright);">【B · 模板 ID】⑦ 格式改為「24 碼字串、由後端產生、規格不規定格式」</strong>（<a href="#template-list" style="color:var(--gold-light);">§06 一</a>，原寫 <span class="mono">TPL_0001</span>＝TPL_ ＋四位流水號）——實作直接使用資料庫的內部識別碼（例 <span class="mono">6aa3572a8812a4a2599c978b</span>），<strong>從未產生 TPL_ 流水號</strong>；Milu 拍板<strong>接受現況、不要求開發另做一組短編號</strong>。連帶「軟刪除不回收號碼」改寫為「已刪除的 ID 不得被新模板取得」（24 碼天然唯一，後端不需另做回收防護）。<br>
+          <strong>⑧ 模板 ID 只在「模板列表」露出</strong>——<strong style="color:var(--red-bright);">§06 二〈模板編輯器欄位 · 模板 ID（唯讀）〉整列移除</strong>、<strong>§06 三 新增模板頁的 ID placeholder 與對應 BDD 移除</strong>（實作皆無此欄位，Milu 拍板接受現況、不要求補做）。<br>
+          <strong>⑨ 畫面顯示格式改為「一律用名稱、不掛 ID」</strong>（<a href="#template-version" style="color:var(--gold-light);">§06 六 · 名稱不是 key</a> 改寫為逐畫面規定，原「一律採 TPL_0003 · 忠誠加碼 V2」廢除）：<strong>模板列表</strong>＝唯一顯示 ID 處；<strong>活動 Tab 2 下拉</strong>＝<strong>名稱 · RTP</strong>（維持實作現況，挑模板時 RTP 對判斷有幫助，不帶 ID 與版號）；<strong>快照明細</strong>（Tab 3／Tab 4／審查頁彈窗）＝<strong style="color:var(--gold-light);">名稱 · 快照版號 · ID 前 8 碼</strong>——版號留下是因為快照要對帳、ID 前 8 碼留下是同名時唯一的分辨依據。§13 三〈引用模板版本〉與各處示意圖同步。<br>
+          <strong style="color:var(--orange-bright);">⑩ 同名模板的分辨（我方主動補）</strong>——「允許重名」保留，但因畫面只剩名稱，<strong>凡以名稱呈現模板的畫面須先檢查是否有同名者，只有同名的那幾筆才在名稱後接上 ID 前 8 碼</strong>，沒有同名時一律只顯示名稱。不補這條的話，兩個同名模板在 Tab 2 下拉完全無法分辨，而<strong style="color:var(--red-bright);">選錯模板等於發錯真金數值</strong>。<strong>此項需前端多一段同名偵測，屬新增的小功能</strong>。<br>
+          <strong>【C · 勘誤】⑪ §06 二〈模板名稱〉的「變更名稱須送審核准後才生效」移除</strong>——這是 DEV V1.31 把模板改為免審查時<strong>漏改的殘留</strong>，本版補修。</td>
+        </tr>
         <tr>
           <td>2026-09-11</td>
           <td>DEV V1.31</td>
@@ -1616,7 +1650,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
           <td><strong style="color:var(--gold-light);">功能異動 1 項｜規則缺口補寫 5 項｜衝突修訂 5 項｜勘誤 6 項（全案 Milu 拍板）</strong><br>
           <strong style="color:var(--red-bright);">【新規則】① 活動重疊硬擋（時間 × 線路）</strong>——新增 <a href="#camp-overlap" style="color:var(--gold-light);">§06〈活動重疊硬擋〉</a>：<strong>同一條線路、同一段時間內只允許存在 1 檔抽寶箱活動</strong>。重疊定義＝時間閉區間有交集 <strong>且</strong> 線路集合有交集；比對對象＝所有<strong>未結束</strong>活動（送審中／已核准／運行中／已暫停，<strong>草稿與已結束不比對</strong>，編輯時排除自己）；<strong>檢查兩道</strong>——送審時擋送審、<strong>核准時重跑</strong>（因 V1.20 核准即生效，送審到核准之間局勢會變）；錯誤提示須<strong>指名衝突對象、僅列實際交集的線路與重疊區段</strong>；Tab 1 chip 紅框＋<strong>審查頁必須顯示衝突清單</strong>；<strong>不提供強制略過</strong>。連帶：<a href="#behavior" style="color:var(--gold-light);">§04 一</a>〈擇一原則／多檔判定〉降級為<strong>防禦性 fallback</strong>、<a href="#logs" style="color:var(--gold-light);">§08</a> 新增 <strong>E10「活動因擇一原則被排除」</strong>事件。<span class="dim">理由：v1 無營運自訂優先序（v2），重疊時後開的活動 100% 靜默失效——押注 0、發放 0、後台零提示，且該線路遊戲內 RTP 已為活動調降，錢挪走卻沒發回玩家，違反 §14 二逐族群守恆；Tab 1「全部加入」一鍵 29 條線路更讓製造重疊成為預設路徑。</span><br>
           <strong style="color:var(--gold-light);">【規則缺口】</strong>②<strong>「保護」的範圍</strong>（<a href="#pause-freeze" style="color:var(--gold-light);">§13 一之一</a>）＝<strong>只保護已解鎖未翻的次數讓玩家翻完</strong>，保護期間<strong>新押注不再累計、不再解鎖新次數</strong>；活動暫停與適用線路被移除<strong>共用同一套定義</strong>（原「正常遊玩」語意過寬）。<strong style="color:var(--red-bright);">【本項已於 DEV V1.24 整套廢除——暫停改為對全體立即生效、已解鎖次數一律沒收，現行規則見上方 V1.24 紀錄與 §13 一之一 ②-2。】</strong>③<strong>面板跨每日重置</strong>（<a href="#reset-freeze" style="color:var(--gold-light);">§05 新節</a>）＝<strong>前端盤面凍結反灰、擋翻牌、hint 提示，關閉重開即取得新活動日</strong>；<strong style="color:var(--red-bright);">後端 today_wager 照常歸零並累計新活動日押注</strong>（不因面板未關而暫停累積，否則玩家進度憑空消失）；<strong>不要求玩家重新登入</strong>（§12 一同步補實作口徑）。④<strong>today_wager 計入範圍寫死</strong>（<a href="#behavior" style="color:var(--gold-light);">§04 一</a>）＝<strong>buy bonus 全額計入</strong>；<strong>Free Game 免費局不計入</strong>；<strong style="color:var(--red-bright);">本活動自己派發的 Bet=0 獎勵注單絕不計入</strong>（避免發獎→加進度→再發獎的自迴圈）。⑤<strong>改重置時間當次的活動日長度</strong>＝24h ± 位移量屬預期行為、不違反 C1；<strong>E7 事件須帶本次使用的 reset_time 與版本</strong>供 §15 O4 警報豁免。⑥<strong>歷程列產生時點</strong>（<a href="#player-history" style="color:var(--gold-light);">§05</a>）＝以<strong>注單確立</strong>為準：派獎確認中<strong>不產生列</strong>、重試成功才寫入、明確失敗與超限失敗<strong>皆不產生列</strong>、人工補發以<strong>實際補發注單時間</strong>為準。<br>
-          <strong style="color:var(--orange-bright);">【衝突修訂】</strong>⑦<strong>活動狀態 vs 版本狀態拆為兩個欄位</strong>（<a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a>）——編輯運行中活動只讓<strong>版本狀態</strong>轉送審中、<strong>活動狀態維持運行中</strong>，故 <strong>⏸ 暫停鈕不再消失</strong>、狀態 chips 也篩得到；按鈕顯示／篩選／狀態欄一律依<strong>活動狀態</strong>判定；FIG.16 補述「圖上沒有『運行中→送審中』是正確的」。<span class="dim">（原表「草稿／送審中／已核准／已結束不顯示暫停鈕」與 V1.20「暫停／運行不受鎖定影響、任何時候都必須能按」直接互斥，一檔正在發真金的活動會失去止血入口。）</span>⑧<strong>配置決定時點前移至「當日首次開啟寶箱面板」</strong>（<a href="#behavior" style="color:var(--gold-light);">§04 二</a>／§03／§12）——原寫「首次取得翻牌機會時」，但 §05 P3 <strong>攤牌階段就要顯示 9 格獎項金額</strong>，而攤牌發生在玩家尚未押注時，配置根本還沒決定；並補「先押注後開面板」＝<strong>押注照常累計、開面板時一次回補已跨門檻的次數</strong>。⑨<strong>活動版號改「核准時才產生」</strong>（<a href="#admin-version" style="color:var(--gold-light);">§13 三</a>）——與 §06 六模板版本控制<strong>統一口徑</strong>，儲存草稿不佔號、駁回不佔號、首次核准產生 V1；活動複製的複本改為「版本＝未建立」。<span class="dim">（舊規則會讓反覆存草稿跳到 V7 但只核准過 1 版，且草稿沒有快照可放進 Tab 4。）</span>⑩<strong>明確失敗不重試</strong>（<a href="#awc" style="color:var(--gold-light);">§09 一</a>／§10）——該列正名為「<strong>逾時（結果未知）可重試（上限 5 次）</strong>」並明寫明確失敗直接退次終止；<span class="dim">V1.16 拆分時 §09／§10 未同步，後端照舊文會對明確失敗也重試，違反 A8 口徑並有重複發獎風險。</span>⑪<strong>§04 二〈當日不變〉補主詞</strong>——限定為「<strong>對已鎖定的該玩家而言</strong>」，避免被讀成 V1.20 已廢除的「所有變更隔日生效」。<br>
+          <strong style="color:var(--orange-bright);">【衝突修訂】</strong>⑦<strong>活動狀態 vs 版本狀態拆為兩個欄位</strong>（<a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a>）——編輯運行中活動只讓<strong>版本狀態</strong>轉送審中、<strong>活動狀態維持運行中</strong>，故 <strong>⏸ 暫停鈕不再消失</strong>、狀態 chips 也篩得到；按鈕顯示／篩選／狀態欄一律依<strong>活動狀態</strong>判定；FIG.16 補述「圖上沒有『運行中→送審中』是正確的」。<span class="dim">（原表「草稿／送審中／已核准／已結束不顯示暫停鈕」與 V1.20「暫停／運行不受鎖定影響、任何時候都必須能按」直接互斥，一檔正在發真金的活動會失去止血入口。）</span>⑧<strong>配置決定時點前移至「當日首次開啟寶箱面板」</strong>（<a href="#behavior" style="color:var(--gold-light);">§04 二</a>／§03／§12）——原寫「首次取得翻牌機會時」，但 §05 P3 <strong>攤牌階段就要顯示 9 格獎項金額</strong>，而攤牌發生在玩家尚未押注時，配置根本還沒決定；並補「先押注後開面板」＝<strong>押注照常累計、開面板時一次回補已跨門檻的次數</strong>。⑨<strong style="text-decoration:line-through;">活動版號改「核准時才產生」</strong>（<a href="#effect-timing" style="color:var(--gold-light);">§13 三</a>）<strong style="color:var(--red-bright);">【本項已於 DEV V1.32 全數推翻，以下為修正後內容】</strong>——<strong style="color:var(--gold-light);">活動版號＝設定有變動（儲存草稿或送審）就 +1；核准不產生版號，只決定哪一版切換為運行中版本</strong>；活動複製的複本<strong>建立當下即為 V1</strong>。<span class="dim">（原條文為「與 §06 六統一口徑、儲存草稿不佔號、駁回不佔號、首次核准產生 V1、複本版本＝未建立」，經 2026-09-11 UAT 實測與 Oliver 確認，實作從來就不是這樣運作，故依 Milu 拍板直接修正本條原文——此為本文件「修改紀錄歷史條目一律不動」慣例的<strong>唯一例外</strong>，理由是舊文字會讓開發照著做出錯誤實作。）</span>⑩<strong>明確失敗不重試</strong>（<a href="#awc" style="color:var(--gold-light);">§09 一</a>／§10）——該列正名為「<strong>逾時（結果未知）可重試（上限 5 次）</strong>」並明寫明確失敗直接退次終止；<span class="dim">V1.16 拆分時 §09／§10 未同步，後端照舊文會對明確失敗也重試，違反 A8 口徑並有重複發獎風險。</span>⑪<strong>§04 二〈當日不變〉補主詞</strong>——限定為「<strong>對已鎖定的該玩家而言</strong>」，避免被讀成 V1.20 已廢除的「所有變更隔日生效」。<br>
           <strong style="color:var(--teal);">【勘誤】</strong>⑫<strong>標籤池 BDD 去除「含百分位區間」</strong>並補反向斷言「畫面不得出現 <span class="mono">np–np</span> 字樣」（原 BDD 與 V1.21 拍板互斥，QA 會把正確實作判為 fail）。⑬<strong>i18n 條數 45 → 48</strong>——V1.19 新增的 <em>tb_history_btn</em>／<em>crm_item_history</em> 未計入，實際為 <strong>47</strong>（逐表清點：2+10+17+4+7+7），加本版新增 <em>tb_reset_reopen</em> 共 <strong>48</strong>；「錯誤與空狀態」表頭 3 條 → <strong>7 條</strong>。⑭<strong>進度條示例 300/550 → 300/360</strong>（示範數列累積 ₱300 的下一階為 ₱360；V1.13 曾列勘誤但數字未實際改到）。⑮<strong>示範模板補「目標 RTP 是意圖值、驗算值另計」說明</strong>並列出四組驗算值（1.01／1.50／2.02／0.98%），明定 <strong>QA 以驗算值為準</strong>。⑯<strong>交叉引用與漏列補正</strong>：標籤資料供給時點 §16 → <strong>§10</strong>；活動 Tab 3 唯讀摘要套用「<span class="mono">TPL_xxxx</span> · 名稱 版號」格式；§06 整體版面對照補上<strong>活動類型欄與篩選下拉</strong>；美術增量換算表「共用」列補上<strong>歷程入口 icon（#18）</strong>。<br>
           <strong style="color:var(--red-bright);">【模板列表欄位移除】</strong>⑰<strong>「押注比例（betRatio）」與「貨幣（chips）」兩欄自模板列表移除</strong>（對齊後台原型 v2 現況）——兩者<strong>仍存在於模板編輯器</strong>（押注比例唯讀屬性、貨幣為 currency tabs）；連帶清除全文「顯示於模板列表」的描述句，<strong>審查頁模板送審卡片同步移除「已啟用幣別 chips」</strong>（幣別明細於唯讀彈窗內即可看到）。</td>
         </tr>
@@ -1804,7 +1838,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   </div>
 
   <details class="fold">
-    <summary>章節對照表 · 完整版 V5.3 → 開發版 DEV V1.31<span class="fold-hint">（與完整版對照時才需展開）</span></summary>
+    <summary>章節對照表 · 完整版 V5.3 → 開發版 DEV V1.33<span class="fold-hint">（與完整版對照時才需展開）</span></summary>
     <div class="fold-body">
       <table class="spec-table compact">
         <thead><tr><th style="width:190px;">完整版章節</th><th style="width:150px;">本文件章節</th><th>處理方式</th></tr></thead>
@@ -3393,7 +3427,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="info-card" style="border-color:var(--green-line-strong);">
       <div class="info-card-title" style="color:var(--green-bright);">📋 活動列表</div>
       <div class="info-card-desc" style="line-height:1.8;margin-top:8px;">
-        · 活動列表（狀態 chips 篩選＋線路／日期）<br>
+         · 活動列表（<strong style="color:var(--gold-light);">活動狀態／版本狀態 兩列 chips</strong> 篩選＋線路／日期）<br>
         · 新增 / 編輯 / 複製活動<br>
         · 四分頁表單（基本設定／標籤與配置／獎項與門檻／版本）<br>
         · 活動倒數即時計時<br>
@@ -3520,7 +3554,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <thead><tr><th style="width:180px;">項目</th><th>規格</th></tr></thead>
     <tbody>
       <tr><td>列表新增欄位</td><td class="dim">活動列表在「<strong>版型</strong>」欄<strong>左側</strong>新增「<strong>活動類型</strong>」欄，顯示該活動的玩法類型（v1 皆為「抽寶箱」）。</td></tr>
-      <tr><td>篩選</td><td class="dim">篩選列<strong>新增「活動類型」下拉</strong>，與既有狀態 chips／線路下拉／日期區間並列，可組合篩選。</td></tr>
+      <tr><td>篩選</td><td class="dim">篩選列<strong>新增「活動類型」下拉</strong>，與既有<strong style="color:var(--gold-light);">狀態 chips 兩列（活動狀態／版本狀態，DEV V1.33）</strong>／線路下拉／日期區間並列，可組合篩選。</td></tr>
       <tr><td>建立流程</td><td class="dim">點「<strong>建立新活動</strong>」後，<strong>先出現「活動類型選擇」下拉</strong>；<strong>目前僅「抽寶箱」一項</strong>。選定後才進入活動表單。</td></tr>
       <tr><td>表單內呈現</td><td class="dim">進入表單後，<strong>活動類型以唯讀方式顯示</strong>（不可於表單內變更）。需改類型＝另建一檔活動。</td></tr>
       <tr><td>架構預留</td><td class="dim">活動類型須為<strong>可擴充的列舉</strong>；新增一種玩法時，只需登錄新類型並掛上其表單／模板頁，<strong>列表、篩選、審核狀態機、版本快照、權限矩陣一律沿用</strong>。</td></tr>
@@ -3619,9 +3653,9 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <div class="admin-form-row">
         <div class="admin-label">本活動用到的模板</div>
         <div class="admin-input" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-          <span class="line-chip on">TPL_0001 · 標準模板 A V1 · RTP 1.03% ✓</span>
-          <span class="line-chip on">TPL_0003 · 忠誠加碼 V1 · RTP 1.50% ✓</span>
-          <span class="line-chip on">TPL_0004 · 救援高倍 V1 · RTP 2.00% ✓</span>
+          <span class="line-chip on">標準模板 A　快照 V1　· 6aa3572a ✓</span>
+          <span class="line-chip on">忠誠加碼　快照 V1　· 6aa26a93 ✓</span>
+          <span class="line-chip on">救援高倍　快照 V1　· 6aa1f04c ✓</span>
           <span style="color:var(--text-dim);font-size:11px;">各卡片顯示各貨幣門檻/獎項/RTP 驗算結果 · <span style="color:var(--gold-light);">前往模板管理 →</span>（不可在活動內直接編輯）</span>
         </div>
       </div>
@@ -3633,9 +3667,9 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       </div>
       <div class="admin-form-row">
         <div class="admin-label">V1 快照明細</div>
-        <div class="admin-input" style="line-height:1.9;">目標 RTP：1.03%／1.50%／2.00%<br>標籤規則數量：<strong>2 組規則 ＋ 預設</strong> — 大客 AND 正常 → 忠誠加碼｜大客 AND 慘輸 → 救援高倍｜＋預設 → 標準模板 A<br>開始：2026/07/01 00:00:00　結束：2026/09/30 23:59:59<br>使用模板數量：<strong>3 個</strong>（<span class="mono">TPL_0001</span> · 標準模板 A V1、<span class="mono">TPL_0003</span> · 忠誠加碼 V1、<span class="mono">TPL_0004</span> · 救援高倍 V1——<strong>須為「模板 ID · 名稱 版號」格式</strong>，DEV V1.20）</div>
+        <div class="admin-input" style="line-height:1.9;">目標 RTP：1.03%／1.50%／2.00%<br>標籤規則數量：<strong>2 組規則 ＋ 預設</strong> — 大客 AND 正常 → 忠誠加碼｜大客 AND 慘輸 → 救援高倍｜＋預設 → 標準模板 A<br>開始：2026/07/01 00:00:00　結束：2026/09/30 23:59:59<br>使用模板數量：<strong>3 個</strong>（標準模板 A　快照 V1　· <span class="mono">6aa3572a</span>、忠誠加碼　快照 V1　· <span class="mono">6aa26a93</span>、救援高倍　快照 V1　· <span class="mono">6aa1f04c</span>——<strong>須為「名稱 · 快照版號 · ID 前 8 碼」格式</strong>，DEV V1.32 改，原為「模板 ID · 名稱 版號」）</div>
       </div>
-      <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ UI 不再顯示「運行中/待生效」badge；current/pending 概念保留於資料層，UI 以「版本下拉＋快照明細」呈現（見 DEV §13）。</div>
+      <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 版號欄不掛「運行中/待生效」badge；<strong style="color:var(--gold-light);">待生效版本的進度改由活動列表的「版本狀態」獨立欄位呈現（DEV V1.33）</strong>，各版完整設定仍以「版本下拉＋快照明細」查看（見 DEV §13）。</div>
 
       <div class="admin-btn-row">
         <button class="admin-btn secondary">儲存草稿</button>
@@ -3706,7 +3740,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <thead><tr><th style="width:150px;">項目</th><th>規則</th></tr></thead>
     <tbody>
       <tr><td><strong>重疊定義</strong></td><td class="dim">兩檔活動<strong style="color:var(--gold-light);">同時滿足</strong>下列兩項即為「重疊」：<br>① <strong>時間區間有交集</strong>——起訖為<strong>閉區間</strong>、精確至秒（UTC+8）；判定式：<span class="mono">NOT (A.迄 &lt; B.起 OR B.迄 &lt; A.起)</span>。<br>② <strong>適用線路集合有交集</strong>——兩檔的適用路線清單存在<strong>至少 1 條相同線路</strong>。<br><strong style="color:var(--green-bright);">正常接檔不會被誤擋：</strong>A 迄 <span class="mono">09/30 23:59:59</span>、B 起 <span class="mono">10/01 00:00:00</span> 無交集，可正常排檔。</td></tr>
-      <tr><td><strong>比對對象</strong></td><td class="dim">與本檔<strong>以外</strong>的所有<strong>未結束活動</strong>比對，狀態＝<strong>送審中／已核准／運行中／已暫停</strong>。<br>· <strong style="color:var(--orange-bright);">草稿不納入比對</strong>——草稿尚無上線意圖，允許多人先各自打草稿；<strong>已結束不納入</strong>。<br>· 編輯既有活動時，<strong>比對排除自己</strong>（含自己的其他版本）。<br>· <strong style="color:var(--gold-light);">已暫停仍要比對</strong>——暫停是可隨時恢復的止血動作，不是退場。</td></tr>
+      <tr><td><strong>比對對象</strong><span class="tag-upd">2026-09-14</span></td><td class="dim">與本檔<strong>以外</strong>的所有<strong>未結束、且已有上線意圖</strong>的活動比對。<br><strong style="color:var(--gold-light);">DEV V1.33 依四態改寫（判定結果與原條文完全相同，只是換成新欄位講）：</strong>納入比對者＝<strong>活動狀態 ≠ 已結束</strong>，<strong>且</strong>該活動<strong>至少送審過一次或已被核准過</strong>。<br>· <strong style="color:var(--orange-bright);">從未送審過的新草稿不納入比對</strong>——尚無上線意圖，允許多人先各自打草稿；<strong>活動狀態＝已結束者不納入</strong>。<br>· <strong>已核准但還沒到起始時間者（活動狀態＝未運行）一定要納入</strong>——它已排定要上線。<br>· 編輯既有活動時，<strong>比對排除自己</strong>（含自己的其他版本）。<br>· <strong style="color:var(--gold-light);">已暫停仍要比對</strong>——暫停是可隨時恢復的止血動作，不是退場。</td></tr>
       <tr><td><strong style="color:var(--red-bright);">檢查時機（兩道，缺一不可）</strong></td><td class="dim"><strong>① 送審時</strong>——點「提交審查」即檢查；不通過則「提交審查」<strong>disabled ＋ 原因提示</strong>，不得送出。<br><strong>② 核准時（必要，不可省）</strong>——因 DEV V1.20 起<strong>核准即生效</strong>，送審後到核准前局勢可能已變（另一檔在這期間被核准）。Admin 點「核准並上線」時<strong>重跑同一份檢查</strong>；不通過則<strong style="color:var(--red-bright);">核准失敗</strong>並顯示同一份衝突清單，活動維持送審中，Admin 須<strong>駁回</strong>（原因必填）交回營運改期間或改線路。<strong style="color:var(--orange-bright);">系統不得自動駁回</strong>——駁回須留人為紀錄。<br>· <strong>儲存草稿不檢查</strong>（草稿允許任意填寫）。</td></tr>
       <tr><td><strong>錯誤提示</strong></td><td class="dim">阻擋時<strong style="color:var(--gold-light);">必須指名到底跟誰撞</strong>，不可只寫「有衝突」。文案 <span class="mono">admin.camp.overlap.blocked</span>：<br>「<strong>與 {campaign_id}（{campaign_name}）在線路 {lines} 於 {start} ~ {end} 重疊；同一線路同一時間只能有 1 檔抽寶箱活動。</strong>」<br>· 多檔同時衝突時<strong>逐檔列出</strong>；<br>· <span class="mono">{lines}</span> <strong>只列實際交集的線路</strong>（非整份清單）；<span class="mono">{start}~{end}</span> <strong>只列實際重疊的區段</strong>（非整段活動期間）。</td></tr>
       <tr><td><strong>UI 落點</strong></td><td class="dim">① <strong>Tab 1 適用路線區</strong>：衝突線路的 chip 轉<strong>紅框</strong>（<span class="mono">#E0563A</span>），區塊下方列出衝突清單；用「全選」一次加入多條所造成的衝突同樣即時標紅。<br>② <strong style="color:var(--gold-light);">審查頁必須顯示</strong>——待審卡片與「查看完整設定（唯讀）」彈窗皆須帶衝突清單，<strong>Admin 核准前一定看得到</strong>（現行審查頁只列主題／起訖／重置／線路，看不出跟誰撞）。<br>③ 阻擋時<strong>不清空</strong>已填內容，營運可直接改期間或移除線路後重試。</td></tr>
@@ -3770,7 +3804,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td><strong style="color:var(--red-bright);">佇列只有活動</strong></td><td class="dim">模板已改為<strong>免審查、儲存即生效</strong>（見〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照</a>〉），因此：<br>· <strong style="color:var(--red-bright);">移除「模板」類型的送審卡片</strong>（含類型標示、「現行名稱 → 送審名稱」對照、使用中活動 N 的顯示）。<br>· <strong>待審 badge 的計數改為只算活動</strong>（原「計數含兩類」廢除）。<br>· 卡片不再需要標示類型——佇列裡只有一種東西。<br>· <span class="dim">DEV V1.17～V1.23 關於模板送審卡片的條文一律作廢。</span></td></tr>
       <tr><td><strong style="color:var(--red-bright);">查看完整設定＝看快照</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 必改</span></td><td class="dim">「<strong>查看完整設定（唯讀）</strong>」彈窗內容：<strong>基本設定（主題／起訖／重置／線路）＋「標籤規則 → 模板對照」＋<span style="color:var(--gold-light);">該活動快照中的模板數值明細</span></strong>（門檻／獎項面額／四檔數量／權重／各啟用幣別）。<br>
       <strong style="color:var(--red-bright);">數值一律取自活動快照，不得即時去模板表查</strong>——快照在「儲存草稿」時就定案，模板此刻的內容可能已經不同；<strong>若顯示模板現值，Admin 核准的就不是實際會生效的數值</strong>。<br>
-      彈窗內每個模板需標示<strong>「<span class="mono">TPL_0003</span> · 忠誠加碼　快照版號 V2」</strong>，讓 Admin 知道自己看的是哪一版。<br>
+      彈窗內每個模板需標示<strong>「忠誠加碼　快照 V2　· <span class="mono">6aa3572a</span>」</strong>＝<strong>名稱 · 快照版號 · 模板 ID 前 8 碼</strong>（DEV V1.32 改格式，原為「TPL_0003 · 忠誠加碼 快照版號 V2」），讓 Admin 知道自己看的是哪一版、遇到同名模板也分辨得出來。<br>
       <span class="dim">※ 原條文「模板數值明細請至模板管理頁查看，審查頁不展開數值」<strong style="color:var(--red-bright);">廢除</strong>——模板管理頁顯示的是模板現值，與這檔活動實際會用的數值不一定相同，指過去會誤導。</span></td></tr>
       <tr><td><strong style="color:var(--gold-light);">生效時點單選</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 新增</span></td><td class="dim">卡片上「核准」鈕旁為<strong>必選的兩段單選：立即生效／隔日生效</strong>，<strong>預設選在「隔日生效」</strong>；未選不可按核准。<br>
       <strong style="color:var(--orange-bright);">只在「運行中活動的待生效版本」出現</strong>；新活動的首次核准<strong>不顯示此單選</strong>。<br>
@@ -3899,7 +3933,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   </div>
 
   <div class="callout">
-    <strong>整體版面對照（原型 v2）：</strong>① <strong>活動列表頁</strong>欄位＝<strong>活動名稱／CAMPAIGN ID／<span style="color:var(--gold-light);">活動類型</span>（位於「版型」欄左側；<span style="color:var(--red-bright);">DEV V1.23 補列</span>——本對照段原漏列，以〈活動類型擴充〉與 DEV §13 一為準）／版型／適用線路（chips）／起訖時間／重置／活動倒數（即時倒數計時，剩餘天數 <strong>≤</strong> 倒數啟動天數時轉紅）／狀態／版本／操作（編輯·複製<strong style="color:var(--gold-light);">·⏸／▶ 暫停／運行</strong>）</strong>；<strong>移除受眾 TAG 與 RTP 欄</strong>。<strong style="color:var(--gold-light);">「暫停／運行」為 DEV V1.7 新增</strong>（<strong>Operator 以上、皆彈窗二次確認</strong>，非一鍵啟停），<strong style="color:var(--gold-light);">DEV V1.8 起改為圖示按鈕（▶／⏸＋tooltip）並移除「查看」</strong>（詳情查閱走「編輯」；見 <a href="#camp-ops" style="color:var(--gold-light);">DEV §13 一之零</a>、<a href="#camp-pause" style="color:var(--gold-light);">一之一</a>）。篩選：<strong>狀態 chips（含各狀態數量）＋<span style="color:var(--gold-light);">活動類型下拉</span>（DEV V1.23 補列）＋線路下拉＋日期區間＋清除篩選</strong>。右上有「＋建立新活動」與<strong>檢視角色三段切換（最高權限／一般操作者／僅查看）</strong>（<strong style="color:var(--orange-bright);">檢視角色切換為原型專用，正式後台不做</strong>，見〈後台導覽結構〉）。<strong>活動複製</strong>：點「複製」直接開啟建立新活動表單（草稿），複本帶入<strong style="color:var(--red-bright);">除起訖時間外</strong>的全部設定、<strong>起訖時間帶預設值（隔日 00:00 起 14 天）</strong>、<strong style="color:var(--gold-light);">版本＝未建立（尚未核准，DEV V1.23）</strong>、ID 加 <span class="mono">_COPY</span>（DEV V1.31 改版，完整規則見 DEV §13 四）。② <strong>建立／編輯表單為四分頁</strong>（取代舊兩欄式＋右欄 sticky）：<strong>Tab 1 基本設定 → Tab 2 標籤與配置 → Tab 3 獎項與門檻（唯讀摘要）→ Tab 4 版本</strong>；門檻／權重／RTP／多貨幣皆移至模板編輯器。
+    <strong>整體版面對照（原型 v2）：</strong>① <strong>活動列表頁</strong>欄位＝<strong>活動名稱／CAMPAIGN ID／<span style="color:var(--gold-light);">活動類型</span>（位於「版型」欄左側；<span style="color:var(--red-bright);">DEV V1.23 補列</span>——本對照段原漏列，以〈活動類型擴充〉與 DEV §13 一為準）／版型／適用線路（chips）／起訖時間／重置／活動倒數（即時倒數計時，剩餘天數 <strong>≤</strong> 倒數啟動天數時轉紅）／<span style="color:var(--gold-light);">活動狀態</span>／<span style="color:var(--gold-light);">版本狀態</span>／版本／操作（編輯·複製<strong style="color:var(--gold-light);">·⏸／▶ 暫停／運行</strong>）</strong>；<strong>移除受眾 TAG 與 RTP 欄</strong>。<strong style="color:var(--red-bright);">DEV V1.33：原單一「狀態」欄拆為「活動狀態」＋「版本狀態」兩欄並列</strong>（值域與規則見 <a href="#status-two-fields" style="color:var(--gold-light);">DEV §13 一之一</a>）。<strong style="color:var(--gold-light);">「暫停／運行」為 DEV V1.7 新增</strong>（<strong>Operator 以上、皆彈窗二次確認</strong>，非一鍵啟停），<strong style="color:var(--gold-light);">DEV V1.8 起改為圖示按鈕（▶／⏸＋tooltip）並移除「查看」</strong>（詳情查閱走「編輯」；見 <a href="#camp-ops" style="color:var(--gold-light);">DEV §13 一之零</a>、<a href="#camp-pause" style="color:var(--gold-light);">一之一</a>）。篩選：<strong><span style="color:var(--gold-light);">狀態 chips 兩列</span>（第一列＝活動狀態：全部／未運行／運行中／已暫停／已結束；第二列＝版本狀態：全部／無／草稿／修改待審核／駁回／已核准；<strong style="color:var(--red-bright);">各自帶數量、可同時使用（AND）</strong>，DEV V1.33）＋<span style="color:var(--gold-light);">活動類型下拉</span>（DEV V1.23 補列）＋線路下拉＋日期區間＋清除篩選</strong>。右上有「＋建立新活動」與<strong>檢視角色三段切換（最高權限／一般操作者／僅查看）</strong>（<strong style="color:var(--orange-bright);">檢視角色切換為原型專用，正式後台不做</strong>，見〈後台導覽結構〉）。<strong>活動複製</strong>：點「複製」直接開啟建立新活動表單（草稿），複本帶入<strong style="color:var(--red-bright);">除起訖時間外</strong>的全部設定、<strong>起訖時間帶預設值（隔日 00:00 起 14 天）</strong>、<strong style="color:var(--gold-light);">按下第一次「儲存草稿」才建立活動並取得 V1（DEV V1.33）</strong>、ID 加 <span class="mono">_COPY</span>（完整規則見 DEV §13 四）。② <strong>建立／編輯表單為四分頁</strong>（取代舊兩欄式＋右欄 sticky）：<strong>Tab 1 基本設定 → Tab 2 標籤與配置 → Tab 3 獎項與門檻（唯讀摘要）→ Tab 4 版本</strong>；門檻／權重／RTP／多貨幣皆移至模板編輯器。
   </div>
 
   <!-- Row 0z：模板 × 多貨幣（多貨幣於模板編輯器設定） -->
@@ -4198,11 +4232,24 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <table class="spec-table">
     <thead><tr><th>欄位</th><th>說明</th></tr></thead>
     <tbody>
-      <tr><td><strong style="color:var(--gold-light);">模板 ID</strong><br><span class="dim" style="font-size:10px;">DEV V1.20 新增</span></td><td class="dim"><strong>系統自動產生的識別碼、營運不可編輯</strong>；格式 <span class="mono">TPL_0001</span>（固定前綴 <span class="mono">TPL_</span> ＋ <strong>四位流水號</strong>，第 10000 筆起自然進位為五位）。<strong style="color:var(--red-bright);">首次「儲存」時產生</strong>（DEV V1.31 勘誤——原寫「建立模板時產生」，與〈二、模板編輯器欄位〉及〈三、新增模板初始狀態〉的「儲存後自動產生」自相矛盾；<strong>正確口徑＝點「新增模板」進編輯器時尚未取號，按下第一次「儲存」才配號</strong>），配號後<strong>終生不變</strong>；<strong>軟刪除的模板不回收號碼</strong>（避免與歷程／對帳的舊資料撞號）；<strong>複製模板產生新的模板 ID</strong>。<strong style="color:var(--gold-light);">模板 ID 是活動引用、版本快照、獎勵歷程對帳的唯一主鍵</strong>；「模板名稱」僅供營運辨識，<strong>不得作為 key 使用</strong>。列表以「<span class="mono">TPL_0003</span>」樣式呈現於模板名稱欄下方小字或獨立欄位皆可，但<strong>必須可見且可複製</strong>。</td></tr>
-      <tr><td>模板名稱</td><td class="dim"><strong>營運自訂、可編輯</strong>（用途＝<strong style="color:var(--gold-light);">運營辨識</strong>，非系統 key）。<strong style="color:var(--orange-bright);">允許重名</strong>——因辨識主鍵為模板 ID；儲存時若與現有未刪除模板同名，顯示<strong>非阻擋性提示</strong>「已有同名模板（<span class="mono">TPL_xxxx</span>），確定要使用相同名稱？」，確認後仍可儲存。<strong style="color:var(--red-bright);">DEV V1.31：改名與其他欄位一樣，按「儲存」即生效、不需送審</strong>（原「須送審核准後才生效」廢除）；改名<strong>會產生新版號</strong>，但<strong style="color:var(--gold-light);">不影響任何已存在活動的數值</strong>（只有畫面顯示名跟著換），見下方〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照</a>〉。<span class="dim">名稱搜尋列屬 v2，v1 不提供搜尋 → <a href="#comparison" style="color:var(--gold-light);">§07</a></span></td></tr>
+      <tr><td><strong style="color:var(--gold-light);">模板 ID</strong><br><span class="dim" style="font-size:10px;">DEV V1.32 全列改寫</span><span class="tag-upd">2026-09-14</span></td><td class="dim">
+      <strong>系統自動產生的識別碼、營運不可編輯。</strong><br>
+      <strong style="color:var(--red-bright);">格式：由後端產生的 24 碼字串</strong>（例：<span class="mono">6aa3572a8812a4a2599c978b</span>），<strong style="color:var(--orange-bright);">本規格不規定格式</strong>——只要求「系統產生、營運不可編輯、全系統不重複、配號後終生不變」。<br>
+      <span class="dim">※ DEV V1.31 以前寫的是「<span class="mono">TPL_0001</span>＝TPL_ ＋四位流水號」，經 2026-09-11 UAT 實測，實作直接使用資料庫的內部識別碼，<strong>從未產生 TPL_ 流水號</strong>。DEV V1.32 依 Milu 拍板<strong>接受現況、不要求開發另做一組短編號</strong>，規格改為對齊實作。</span><br>
+      · <strong>產生時點</strong>：首次「儲存」時產生（不變）。<br>
+      · <strong>複製模板產生新的模板 ID</strong>（不變）。<br>
+      · <strong style="color:var(--red-bright);">「軟刪除不回收號碼」一條改寫</strong>：原條文是為流水號寫的（怕號碼被回收後與歷程舊資料撞號）；24 碼識別碼<strong>本來就不會重複發放</strong>，因此本條改為「<strong>已刪除模板的 ID 不得被任何新模板取得</strong>」，實作上由識別碼本身的唯一性保證，後端<strong>不需另做回收防護</strong>。<br>
+      <strong style="color:var(--gold-light);">模板 ID 是活動引用、版本快照、獎勵歷程對帳的唯一主鍵</strong>；「模板名稱」僅供營運辨識，<strong>不得作為 key 使用</strong>。<br>
+      <strong style="color:var(--red-bright);">顯示範圍（DEV V1.32 收斂）：模板 ID 只在「模板列表」露出</strong>，需<strong>可見且可複製</strong>（24 碼過長時列表可截斷顯示，但複製須取得完整值）。<strong>其餘畫面一律不顯示模板 ID</strong>，改用名稱——理由與各畫面的呈現格式見〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照 · 名稱不是 key</a>〉。</td></tr>
+      <tr><td>模板名稱</td><td class="dim"><strong>營運自訂、可編輯</strong>（用途＝<strong style="color:var(--gold-light);">運營辨識</strong>，非系統 key）。<strong style="color:var(--orange-bright);">允許重名</strong>——因辨識主鍵為模板 ID；儲存時若與現有未刪除模板同名，顯示<strong>非阻擋性提示</strong>「<strong>已有同名模板，確定要使用相同名稱？</strong>」（<span class="mono">admin.tpl.name_dup</span>），確認後仍可儲存。<br>
+      <strong style="color:var(--red-bright);">DEV V1.32 新增 · 同名時畫面須加上 ID 以供分辨：</strong>因本版起<strong>模板 ID 只在模板列表露出、其餘畫面一律用名稱</strong>，兩個同名模板在活動 Tab 2 下拉等處會完全無法分辨（<strong>選錯模板＝發錯真金數值</strong>）。因此：<br>
+      · 凡以名稱呈現模板的畫面，<strong>載入時先檢查目前清單中是否有同名者</strong>；<br>
+      · <strong style="color:var(--gold-light);">只有偵測到同名的那幾筆</strong>，在名稱後接上 <strong>ID 前 8 碼</strong>（例：「<span class="mono">忠誠加碼 · 6aa3572a</span>」）；<br>
+      · <strong>沒有同名時一律只顯示名稱</strong>，不加任何後綴——避免畫面平常就掛著看不懂的字串。<br>
+      · 適用範圍：活動 Tab 2 模板下拉與預設配置列、Tab 3 唯讀摘要、Tab 4 快照明細、審查頁「查看完整設定」彈窗。<strong style="color:var(--red-bright);">DEV V1.31：改名與其他欄位一樣，按「儲存」即生效、不需送審</strong>（原「須送審核准後才生效」廢除）；改名<strong>會產生新版號</strong>，但<strong style="color:var(--gold-light);">不影響任何已存在活動的數值</strong>（只有畫面顯示名跟著換），見下方〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照</a>〉。<span class="dim">名稱搜尋列屬 v2，v1 不提供搜尋 → <a href="#comparison" style="color:var(--gold-light);">§07</a></span></td></tr>
       <tr><td>目標 RTP</td><td class="dim">每模板自訂，<strong>純資訊顯示</strong>（<strong style="color:var(--orange-bright);">不做目標值校驗、不擋儲存與送審</strong>）</td></tr>
       <tr><td><strong>使用中活動</strong><br><span class="dim" style="font-size:10px;">顯示 N 檔</span></td><td class="dim">
-        <strong>① 顯示「N 檔」。N 的來源＝即時推導、非獨立欄位：</strong><span class="mono">N</span> ＝ 引用此模板的<strong>未結束活動</strong>數（狀態＝<strong>草稿／送審中／已核准／運行中／已暫停</strong>；<strong style="color:var(--orange-bright);">已結束不計入</strong>）。活動透過<strong>標籤規則</strong>或<strong>預設配置</strong>引用模板；<strong>N 由活動資料即時計算，不是後台手動維護的數字</strong>。<strong style="color:var(--gold-light);">此口徑與「<a href="#template-delete" style="color:var(--gold-light);">模板刪除規則</a>」的 N 完全同一套（同一查詢、同一定義），兩處不得各算各的</strong>。<br>
+        <strong>① 顯示「N 檔」。N 的來源＝即時推導、非獨立欄位：</strong><span class="mono">N</span> ＝ 引用此模板的<strong>未結束活動</strong>數（<strong style="color:var(--gold-light);">DEV V1.33 依四態改寫</strong>：<strong>活動狀態＝未運行／運行中／已暫停</strong>者皆計入，<strong>含還在草稿的活動</strong>；<strong style="color:var(--orange-bright);">只有活動狀態＝已結束不計入</strong>。<strong>本欄不看版本狀態</strong>）。活動透過<strong>標籤規則</strong>或<strong>預設配置</strong>引用模板；<strong>N 由活動資料即時計算，不是後台手動維護的數字</strong>。<strong style="color:var(--gold-light);">此口徑與「<a href="#template-delete" style="color:var(--gold-light);">模板刪除規則</a>」的 N 完全同一套（同一查詢、同一定義），兩處不得各算各的</strong>。<br>
         <strong>② 不可展開：</strong>「N 檔」<strong style="color:var(--orange-bright);">無展開箭頭、不可點擊展開</strong>（<span class="mono">N ＝ 0</span> 亦僅顯示「0 檔」）。<br>
         <span class="dim"><strong>v1 僅顯示「N 檔」純文字</strong>，無展開箭頭、不可點擊（N＝0 亦僅顯示「0 檔」）。展開明細屬 v2，見 <a href="#comparison" style="color:var(--gold-light);">§07 二</a>。</span></td></tr>
       <tr><td>操作</td><td class="dim">編輯 · 複製 · 刪除（受下方「<a href="#template-delete" style="color:var(--gold-light);">模板刪除規則</a>」限制）</td></tr>
@@ -4282,8 +4329,10 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <table class="spec-table">
     <thead><tr><th>欄位</th><th>說明</th></tr></thead>
     <tbody>
-      <tr><td><strong style="color:var(--gold-light);">模板 ID（唯讀）</strong><br><span class="dim" style="font-size:10px;">DEV V1.20 新增</span></td><td class="dim">顯示於<strong>編輯器頂部</strong>（模板名稱欄旁或上方），樣式 <span class="mono">TPL_0003</span>；<strong style="color:var(--red-bright);">不可編輯、不提供輸入框</strong>（灰底唯讀顯示＋一鍵複製）。<strong>新增模板時</strong>尚未取號，顯示 placeholder「<strong>儲存後自動產生</strong>」。編號規則見上方〈一、模板列表欄位 · 模板 ID〉。</td></tr>
-      <tr><td>模板名稱</td><td class="dim">文字輸入、<strong>可編輯</strong>（運營辨識用途，允許重名、同名時非阻擋性提示）。<strong style="color:var(--red-bright);">變更名稱須送審核准後才生效</strong>——未核准前全站（含模板列表、活動 Tab 3／Tab 4、審查頁卡片）<strong>一律顯示現行有效版本的舊名稱</strong>。</td></tr>
+      <tr><td><strong style="color:var(--red-bright);text-decoration:line-through;">模板 ID（唯讀）</strong><br><span class="dim" style="font-size:10px;">DEV V1.32 移除</span><span class="tag-upd">2026-09-14</span></td><td class="dim"><strong style="color:var(--red-bright);">本欄自 DEV V1.32 起不實作——模板編輯器（含新增模板頁）一律不顯示模板 ID，也不顯示任何 placeholder。</strong><br>
+      <span class="dim">原條文為「顯示於編輯器頂部、樣式 <span class="mono">TPL_0003</span>、灰底唯讀＋一鍵複製；新增模板時顯示 placeholder『儲存後自動產生』」。經 2026-09-11 UAT 實測，編輯器與新增頁皆無此欄位；Milu 拍板<strong>接受現況、不要求開發補做</strong>，故整條移除。</span><br>
+      <strong>要查模板 ID 請至模板列表</strong>（那裡仍需可見且可複製，見〈<a href="#template-list" style="color:var(--gold-light);">一、模板列表欄位 · 模板 ID</a>〉）。</td></tr>
+      <tr><td>模板名稱<span class="tag-upd">2026-09-14</span></td><td class="dim">文字輸入、<strong>可編輯</strong>（運營辨識用途，允許重名、同名時非阻擋性提示）。<br><strong style="color:var(--red-bright);">DEV V1.32 勘誤：改名按「儲存」即生效、不需送審</strong>——原條文「變更名稱須送審核准後才生效、未核准前全站顯示舊名稱」是 DEV V1.31 把模板改為免審查時<strong>漏改的殘留</strong>，以〈<a href="#template-list" style="color:var(--gold-light);">一、模板列表欄位 · 模板名稱</a>〉與〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照</a>〉為準：<strong>改名會產生新版號，全站立即改顯示新名稱，但不影響任何已存在活動的數值</strong>。</td></tr>
       <tr><td><strong>模板屬性（唯讀）</strong><br><span class="dim" style="font-size:10px;">押注比例／目標 RTP／終獎最早格</span></td><td class="dim"><strong>押注比例（betRatio）、目標 RTP、終獎最早格為「模板屬性」，v1 後台不提供編輯</strong>。<br>
       · <strong>目標 RTP</strong>：<strong>唯讀顯示</strong>，<strong style="color:var(--orange-bright);">僅供參考、不作為校驗基準</strong>（RTP 驗算已改為<strong>純資訊顯示</strong>，見下方「<a href="#prize-count" style="color:var(--gold-light);">獎項格數</a>」與「<a href="#rtp-info" style="color:var(--gold-light);">RTP 驗算與獎池總額（內移多貨幣區塊）</a>」）。<br>
       · <strong>押注比例</strong>：<strong style="color:var(--red-bright);">不顯示於模板列表（DEV V1.23 移除）</strong>，僅於<strong>模板編輯器</strong>內唯讀顯示。<strong>目標 RTP</strong>：顯示於<strong>模板列表</strong>與<strong>活動 Tab 3 卡片</strong>。<br>
@@ -4515,7 +4564,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td>各幣別 9 格累積門檻</td><td class="dim"><strong>空</strong>（每個幣別 tab 各自為空，不帶入 PHP 或任何既有模板的門檻）。</td></tr>
       <tr><td>四類獎項（小／中／大／終）</td><td class="dim"><strong>面額設定為空</strong>；<strong>四檔「數量」欄預填系統預設 5／2／1／1</strong>（屬系統預設值、非取自任何既有模板，不違反「不預帶既有模板數值」原則）。獎勵類型 v1 固定為現金、<strong>無類型選項</strong>。</td></tr>
       <tr><td>第 1~8 抽 × 4 類別權重表</td><td class="dim"><strong>全部空白</strong>——<strong style="color:var(--orange-bright);">不預填 0</strong>。預填 0 會產生「已填寫」的假資料錯覺，且整列為 0 本就無法通過儲存驗證。</td></tr>
-      <tr><td>版本歷程區塊<span class="tag-upd">2026-09-11</span></td><td class="dim"><strong style="color:var(--red-bright);">整塊不顯示（DEV V1.29 修訂）</strong>——新增模板時<strong>不渲染「版本歷程」區塊</strong>（含「未建立」badge、區塊標題與空狀態文字），<strong>不是顯示空狀態</strong>。<br>· 理由：新模板必然沒有任何版本，留一塊空區塊只是佔用版位。<br>· <strong>模板 ID 欄不受影響</strong>：仍顯示唯讀 placeholder「<strong>儲存後自動產生</strong>」（見〈<a href="#template-editor" style="color:var(--gold-light);">二、模板編輯器欄位</a>〉）。<br>· <strong style="color:var(--gold-light);">首次儲存產生 V1 之後（DEV V1.31 改口徑，原為「首次核准」）</strong>，該模板再次進入編輯器即屬「編輯既有模板」，<strong>版本歷程區塊正常顯示</strong>。<br>· <strong style="color:var(--red-bright);">DEV V1.31：區塊內不放任何說明文字</strong>（原「同一模板 ID 不換⋯產生新版號」一句已整句移除，見〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照</a>〉）。</td></tr>
+      <tr><td>版本歷程區塊<span class="tag-upd">2026-09-11</span></td><td class="dim"><strong style="color:var(--red-bright);">整塊不顯示（DEV V1.29 修訂）</strong>——新增模板時<strong>不渲染「版本歷程」區塊</strong>（含「未建立」badge、區塊標題與空狀態文字），<strong>不是顯示空狀態</strong>。<br>· 理由：新模板必然沒有任何版本，留一塊空區塊只是佔用版位。<br>· <strong style="color:var(--red-bright);">新增模板頁沒有模板 ID 欄、也沒有 placeholder</strong>（DEV V1.32 改——原寫「仍顯示唯讀 placeholder『儲存後自動產生』」，經 UAT 實測實作並無此欄位，Milu 拍板接受現況；模板 ID 只在<a href="#template-list" style="color:var(--gold-light);">模板列表</a>露出）。<br>· <strong style="color:var(--gold-light);">首次儲存產生 V1 之後（DEV V1.31 改口徑，原為「首次核准」）</strong>，該模板再次進入編輯器即屬「編輯既有模板」，<strong>版本歷程區塊正常顯示</strong>。<br>· <strong style="color:var(--red-bright);">DEV V1.31：區塊內不放任何說明文字</strong>（原「同一模板 ID 不換⋯產生新版號」一句已整句移除，見〈<a href="#template-version" style="color:var(--gold-light);">六、模板數值與活動快照</a>〉）。</td></tr>
     </tbody>
   </table>
 
@@ -4534,7 +4583,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="bdd-title">BDD 驗收情境 · 新增模板為全空白且首次儲存產生 V1<span class="tag-upd">2026-09-11</span></div>
     <b class="g">Given</b> 營運在模板管理頁點「<strong>新增模板</strong>」進入模板編輯器<br>
     <b class="w">When</b> 編輯器載入完成、尚未輸入任何內容<br>
-    <b class="t">Then</b> 名稱／備註／各幣別門檻／四類獎項／第 1~8 抽權重<strong>皆為空</strong>（權重非預填 0）；<strong style="color:var(--red-bright);">版本歷程區塊完全不顯示</strong>（DEV V1.29；不顯示「未建立」badge、不顯示空狀態文字）；模板 ID 顯示唯讀 placeholder「<strong>儲存後自動產生</strong>」；<strong style="color:var(--gold-light);">按下第一次「儲存」後才出現模板 ID 與 <span class="mono">V1</span></strong> 與更新時間戳（DEV V1.31：<strong style="color:var(--red-bright);">畫面上不得出現「提交審查」鈕</strong>——模板免審查）。
+    <b class="t">Then</b> 名稱／備註／各幣別門檻／四類獎項／第 1~8 抽權重<strong>皆為空</strong>（權重非預填 0）；<strong style="color:var(--red-bright);">版本歷程區塊完全不顯示</strong>（DEV V1.29；不顯示「未建立」badge、不顯示空狀態文字）；<strong style="color:var(--red-bright);">畫面上沒有模板 ID 欄、也沒有任何 ID placeholder</strong>（DEV V1.32）；<strong style="color:var(--gold-light);">按下第一次「儲存」後，模板管理列表即出現這一筆並帶有模板 ID 與 <span class="mono">V1</span></strong>（DEV V1.31：<strong style="color:var(--red-bright);">編輯器上不得出現「提交審查」鈕</strong>——模板免審查）。
   </div>
 
   <div class="sub-title" style="font-size:14px;">四、示範模板（四組）</div>
@@ -4592,10 +4641,20 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <table class="spec-table">
     <thead><tr><th style="width:180px;">機制</th><th>設計</th></tr></thead>
     <tbody>
-      <tr><td>模板編輯<strong>不換 ID</strong></td><td class="dim">同一<strong>模板 ID</strong>（<span class="mono">TPL_xxxx</span>，系統流水號、營運不可編輯，定義見〈<a href="#template-list" style="color:var(--gold-light);">一、模板列表欄位</a>〉）下反覆編輯，<strong>ID 終生不變</strong>。活動引用的是<strong>模板 ID</strong>，不因編輯（含<strong>改名</strong>）而斷開引用。</td></tr>
+      <tr><td>模板編輯<strong>不換 ID</strong></td><td class="dim">同一<strong>模板 ID</strong>（<strong>24 碼字串</strong>，由後端產生、營運不可編輯，定義見〈<a href="#template-list" style="color:var(--gold-light);">一、模板列表欄位</a>〉）下反覆編輯，<strong>ID 終生不變</strong>。活動引用的是<strong>模板 ID</strong>，不因編輯（含<strong>改名</strong>）而斷開引用。</td></tr>
       <tr><td><strong style="color:var(--red-bright);">免審查</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 新規則</span></td><td class="dim"><strong>模板的建立與編輯不走送審核准</strong>：編輯器按「<strong>儲存</strong>」通過欄位校驗即完成，<strong style="color:var(--gold-light);">當下就是模板的最新內容</strong>。<br>· <strong>沒有</strong>「草稿／送審中／已核准」三種狀態，<strong>沒有</strong>提交審查鈕，<strong>沒有</strong>駁回。<br>· 權限：<strong>操作(Operator) 以上可建立、編輯、儲存、刪除模板</strong>；不再有「模板核准」這項權限。<br>· <strong style="color:var(--orange-bright);">儲存時的欄位校驗一條都不放寬</strong>（四檔各 ≥ 1、獎項數量加總＝9、每列權重合計 &gt; 0、必填幣別須完整），見〈<a href="#template-new" style="color:var(--gold-light);">三、新增模板初始狀態</a>〉。<br>· <strong>操作紀錄仍要寫</strong>：誰、在什麼時間、把哪些欄位從什麼改成什麼（見 <a href="#logs" style="color:var(--gold-light);">DEV §10</a>）——少了人工審查這一關，事後追查只能靠紀錄。</td></tr>
       <tr><td><strong style="color:var(--gold-light);">版號＝每次儲存產生</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 改回</span></td><td class="dim"><strong>每按一次「儲存」就產生一個新版號</strong>（V1、V2…）並保留該版完整快照。首次儲存＝<strong>V1</strong>，同時配發模板 ID。<strong>DB 已有序號</strong>，後台顯示時轉為版號格式。<br><strong style="color:var(--red-bright);">此條取代 DEV V1.17／V1.20 的「核准才產生版號」</strong>；連帶 DEV V1.29 訂下的「版號相關文案不得出現『儲存』二字」<strong>一併廢除</strong>——本版起版號正是由儲存產生。</td></tr>
-      <tr><td><strong style="color:var(--gold-light);">名稱不是 key</strong></td><td class="dim">所有引用、快照、歷程與對帳一律以<strong>模板 ID ＋ <span class="mono">template_version</span></strong> 為準；<strong>模板名稱僅為顯示用途</strong>、可編輯、允許重名。凡畫面需標示模板處（活動 Tab 3 唯讀摘要、Tab 4 快照明細、模板列表），一律採「<strong><span class="mono">TPL_0003</span> · 忠誠加碼 V2</strong>」格式＝<strong>ID ＋ 名稱 ＋ 版號</strong>。<br><strong style="color:var(--orange-bright);">名稱一律顯示模板目前的最新名稱，不凍結歷史名稱</strong>——改名後連同舊活動的 Tab 4 快照明細也一併改顯示新名稱（<strong>快照的數值不變，變的只有顯示名</strong>）。理由：辨識主鍵是 ID，若各處凍結各自的舊名，同一個模板會在不同活動顯示不同名字、被誤認成兩個模板。<br><span class="dim">（DEV V1.20 的「改名亦須送審」隨免審查一併廢除。）</span></td></tr>
+      <tr><td><strong style="color:var(--gold-light);">名稱不是 key</strong><br><span class="dim" style="font-size:10px;">DEV V1.32 改寫顯示格式</span><span class="tag-upd">2026-09-14</span></td><td class="dim">所有引用、快照、歷程與對帳<strong>資料層一律以模板 ID ＋ <span class="mono">template_version</span> 為準</strong>（這一點不變）；<strong>模板名稱僅為顯示用途</strong>、可編輯、允許重名。<br>
+      <strong style="color:var(--red-bright);">但畫面顯示格式自 DEV V1.32 起改為「一律用名稱、不掛 ID」</strong>——原規定「一律採 <span class="mono">TPL_0003</span> · 忠誠加碼 V2＝ID ＋ 名稱 ＋ 版號」廢除，理由：實作的模板 ID 是 <strong>24 碼字串</strong>（<span class="mono">6aa3572a8812a4a2599c978b</span>），掛在畫面上人眼分辨不出來、只是佔版面。逐處規定如下：<br>
+      <table class="spec-table" style="margin-top:8px;">
+        <thead><tr><th style="width:210px;">畫面</th><th>顯示格式</th></tr></thead>
+        <tbody>
+          <tr><td><strong>模板列表</strong></td><td class="dim"><strong style="color:var(--gold-light);">唯一會顯示模板 ID 的地方</strong>：名稱欄 ＋ 獨立的模板 ID 欄（可截斷顯示，但複製須取得完整 24 碼）。</td></tr>
+          <tr><td><strong>活動 Tab 2</strong><span class="dim" style="font-size:10px;">（模板下拉與預設配置列）</span></td><td class="dim"><strong>「名稱 · RTP」</strong>（例：<span class="mono">忠誠加碼 · RTP 1.50%</span>）——<strong style="color:var(--orange-bright);">維持實作現況，DEV V1.32 拍板不改</strong>。此處是「挑模板」的畫面，顯示 RTP 對營運判斷有幫助；<strong>不帶 ID、不帶版號</strong>（挑選當下尚未拍快照，版號沒有意義）。</td></tr>
+          <tr><td><strong>快照明細</strong><span class="dim" style="font-size:10px;">（Tab 3 唯讀摘要／Tab 4 快照明細／審查頁「查看完整設定」彈窗）</span></td><td class="dim"><strong style="color:var(--gold-light);">「名稱　快照 Vn　· ID 前 8 碼」</strong>（例：<span class="mono">忠誠加碼　快照 V2　· 6aa3572a</span>）。<br><strong>版號必須留</strong>——快照是對帳用的，沒有版號就答不出「那天發的是哪一版數值」。<strong>ID 前 8 碼必須留</strong>——遇到同名模板時這是唯一的分辨依據。</td></tr>
+        </tbody>
+      </table>
+      <strong style="color:var(--orange-bright);">同名模板的額外處理見〈<a href="#template-list" style="color:var(--gold-light);">一、模板列表欄位 · 模板名稱</a>〉</strong>：偵測到同名時，Tab 2 下拉等只顯示名稱的地方才臨時接上 ID 前 8 碼。<br><strong style="color:var(--orange-bright);">名稱一律顯示模板目前的最新名稱，不凍結歷史名稱</strong>——改名後連同舊活動的 Tab 4 快照明細也一併改顯示新名稱（<strong>快照的數值不變，變的只有顯示名</strong>）。理由：辨識主鍵是 ID，若各處凍結各自的舊名，同一個模板會在不同活動顯示不同名字、被誤認成兩個模板。<br><span class="dim">（DEV V1.20 的「改名亦須送審」隨免審查一併廢除。）</span></td></tr>
       <tr><td>版本歷程<span class="tag-upd">2026-09-11</span></td><td class="dim"><strong>每版保留完整快照</strong>（門檻／獎項／權重／各貨幣設定；<strong>快照僅含已啟用幣別</strong>）。<strong>模板編輯器內重用活動 Tab 4 的模式呈現</strong>——<strong>版本下拉</strong>（格式「<span class="mono">V1（更新 2026-06-28 10:12）</span>」）＋<strong>該版快照明細</strong>。<br>
       <strong>顯示條件：</strong>此區塊<strong>只在「編輯既有模板」時顯示</strong>；<strong>新增模板時整塊不渲染</strong>（見〈<a href="#template-new" style="color:var(--gold-light);">三、新增模板初始狀態</a>〉）。判定依據＝<strong style="color:var(--red-bright);">該模板是否已有版號</strong>（DEV V1.31 改判定：原為「是否已有已核准版本」，免審查後改看有無版號＝有沒有儲存過）。<br>
       <strong style="color:var(--red-bright);">區塊不放任何說明文字（DEV V1.31）：</strong>原標題旁的「同一模板 ID 不換，核准後產生新版號」一句<strong>整句移除</strong>，區塊只保留標題、版本下拉與快照明細。理由：這句話在 V1.29 之後已連續改過兩次口徑，留著只會讓下一次改版又得回來修它；版號規則寫在本表〈版號＝每次儲存產生〉一列即可。</td></tr>
@@ -4604,7 +4663,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <strong>要重拍只有一個方法</strong>：回到活動編輯頁，再按一次「儲存草稿」。</td></tr>
       <tr><td><strong>送審前的比對提醒</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 新增</span></td><td class="dim">因為快照在儲存草稿時就定案，草稿若擱置一段時間，期間模板可能已被別人改過。<strong>按下「提交審查」時，系統逐一比對活動快照與各來源模板的目前內容</strong>：<br>
       · <strong>完全相同</strong> → 直接進入審查佇列，不打擾。<br>
-      · <strong style="color:var(--orange-bright);">有任何一個模板不同</strong> → 跳出彈窗，列出<strong>不一致的模板 ID ＋ 名稱 ＋ 快照版號 → 目前版號</strong>，並提供兩個選項：「<strong>重新帶入最新數值</strong>」（＝重拍快照後再送審）與「<strong>維持目前數值送審</strong>」（＝照原快照送審）。<strong>由營運決定，系統不自動選</strong>。<br>
+      · <strong style="color:var(--orange-bright);">有任何一個模板不同</strong> → 跳出彈窗，列出<strong>不一致的模板：名稱 ＋ ID 前 8 碼 ＋ 快照版號 → 目前版號</strong>（例：<span class="mono">忠誠加碼 · 6aa3572a　快照 V3 → 目前 V4</span>），並提供兩個選項：「<strong>重新帶入最新數值</strong>」（＝重拍快照後再送審）與「<strong>維持目前數值送審</strong>」（＝照原快照送審）。<strong>由營運決定，系統不自動選</strong>。<br>
       · 文案 key：<span class="mono">admin.camp.snapshot_diff_title</span>／<span class="mono">admin.camp.snapshot_diff_body</span>／<span class="mono">admin.camp.snapshot_reload</span>／<span class="mono">admin.camp.snapshot_keep</span>。<br>
       <strong>比對範圍僅限「本活動實際引用到的模板」</strong>，沒被這檔活動用到的模板改了不提醒。</td></tr>
       <tr><td><strong style="color:var(--gold-light);">改模板不影響現有活動</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 新增</span></td><td class="dim"><strong>編輯並儲存模板，對任何已存在的活動都沒有影響</strong>——不論該活動是草稿、送審中、已核准、運行中還是已暫停，一律繼續跑自己的快照。<br>
@@ -4633,13 +4692,13 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="bdd-title">BDD 驗收情境 · 送審前偵測到模板已被改過<span class="tag-upd">2026-09-11</span></div>
     <b class="g">Given</b> 營運在 9/01 建立活動並<strong>儲存草稿</strong>（快照拍下模板 A 的 <strong>V3</strong>），草稿擱置未送審；9/03 另一位營運改了模板 A 並儲存（模板現為 <strong>V4</strong>）<br>
     <b class="w">When</b> 9/05 營運回到該活動草稿按「<strong>提交審查</strong>」<br>
-    <b class="t">Then</b> ①跳出比對彈窗，列出「<span class="mono">TPL_00xx</span> · 模板 A　快照 V3 → 目前 V4」；②提供「<strong>重新帶入最新數值</strong>」與「<strong>維持目前數值送審</strong>」兩個選項、<strong style="color:var(--red-bright);">系統不自動替營運決定</strong>；③選「重新帶入」→ 快照更新為 V4 內容後才進審查佇列；④選「維持」→ 照 V3 快照進審查佇列，<strong>Admin 在審查頁看到的就是 V3 的數值</strong>；⑤若活動引用的模板全部未變動 → <strong>不跳彈窗、直接送審</strong>。
+    <b class="t">Then</b> ①跳出比對彈窗，列出「模板 A　· <span class="mono">6aa3572a</span>　快照 V3 → 目前 V4」；②提供「<strong>重新帶入最新數值</strong>」與「<strong>維持目前數值送審</strong>」兩個選項、<strong style="color:var(--red-bright);">系統不自動替營運決定</strong>；③選「重新帶入」→ 快照更新為 V4 內容後才進審查佇列；④選「維持」→ 照 V3 快照進審查佇列，<strong>Admin 在審查頁看到的就是 V3 的數值</strong>；⑤若活動引用的模板全部未變動 → <strong>不跳彈窗、直接送審</strong>。
   </div>
   <div class="bdd-card">
     <div class="bdd-title">BDD 驗收情境 · 模板改名不影響引用與追溯<span class="tag-upd">2026-09-11</span></div>
-    <b class="g">Given</b> 模板 <span class="mono">TPL_0003</span>（目前 V2、名稱「忠誠加碼」）被 2 檔活動引用<br>
+    <b class="g">Given</b> 模板 <span class="mono">6aa26a93…</span>（目前 V2、名稱「忠誠加碼」）被 2 檔活動引用<br>
     <b class="w">When</b> 營運將名稱改為「忠誠加碼-舊」並<strong>儲存</strong>（產生 <strong>V3</strong>，<strong>不需送審</strong>）<br>
-    <b class="t">Then</b> ①兩檔活動的<strong>引用不中斷</strong>（引用的是 <span class="mono">TPL_0003</span>，非名稱）；②活動 Tab 3／Tab 4 與模板列表<strong>一律改顯示「<span class="mono">TPL_0003</span> · 忠誠加碼-舊 V3」</strong>——<strong style="color:var(--orange-bright);">顯示名跟著換，但兩檔活動的門檻與獎項數值完全不變</strong>；③已發放獎勵仍可依 <strong>模板 ID ＋ <span class="mono">template_version</span></strong> 查回當時的數值。
+    <b class="t">Then</b> ①兩檔活動的<strong>引用不中斷</strong>（引用的是<strong>模板 ID</strong>，非名稱）；②活動 Tab 3／Tab 4 的快照明細<strong>一律改顯示「忠誠加碼-舊　快照 V2　· <span class="mono">6aa26a93</span>」</strong>（<strong style="color:var(--orange-bright);">顯示名換成新名稱，但快照版號仍是該活動當時存下的 V2、不會變成 V3</strong>）——<strong style="color:var(--orange-bright);">顯示名跟著換，但兩檔活動的門檻與獎項數值完全不變</strong>；③已發放獎勵仍可依 <strong>模板 ID ＋ <span class="mono">template_version</span></strong> 查回當時的數值。
   </div>
 
   <div class="sub-title" id="monitoring">監控與警報（Grafana + Telegram · 不做後台頁面）</div>
@@ -4719,9 +4778,9 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td>版本快照（下拉＋明細）</td><td class="dim">Tab 4 版本下拉切換（「V1（更新 2026-06-28 10:12）」）＋快照明細（目標 RTP／標籤規則數量含預設逐行／起訖／使用模板數量）；<strong>UI 不顯示運行中/待生效 badge</strong>（current/pending 保留於資料層）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>活動上線審核流程</td><td class="dim">活動上線前須「提交審查」→ 由<strong>最高權限（Admin）核准</strong>才上線；<strong>「送審」與「核准/上線」須不同角色（職責分離；Admin 自送審得自核、寫入 E9 紀錄）</strong>；<strong>駁回原因必填</strong></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：多級審核／稽核</td></tr>
       <tr><td>上線中的編輯規則（C4）<span class="tag-upd">2026-09-11</span></td><td class="dim"><strong>以 DEV §13 快照機制為準</strong>：編輯運行中活動<strong>產生「待生效版本」</strong>、不影響運行中快照與已參與玩家；<strong style="color:var(--gold-light);">Operator 與 Admin 皆可編輯運行中活動（DEV V1.20）</strong>；<strong>待生效版本須重新送審，經 Admin 核准；<span style="color:var(--red-bright);">生效時點由 Admin 於核准時選「立即／隔日」（DEV V1.31）</span></strong>（選隔日＝核准後不動、次一重置時點整批換版；選立即＝當下全體換版，已鎖定者次數只加不減、未翻格重洗。原條文為「核准當下即生效、當日已鎖定者沿用舊版至該活動日結束」）；<strong style="color:var(--red-bright);">編輯不會暫停活動</strong>，暫停為獨立的止血動作；<strong>送審中鎖編輯</strong>（點編輯進唯讀模式，需 Admin 駁回才可再改）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：撤回送審</td></tr>
-      <tr><td><strong>模板 ID（系統流水號）</strong><span class="tag-upd">2026-09-02</span></td><td class="dim"><span class="mono">TPL_0001</span> 四位流水、<strong style="color:var(--red-bright);">首次儲存時產生（DEV V1.31 勘誤，原寫「建立時產生」）</strong>、<strong>營運不可編輯</strong>、軟刪除不回收號碼、複製產生新 ID；顯示於模板列表／編輯器頂部／活動 Tab 3・Tab 4，格式「<strong>ID · 名稱 版號</strong>」<span class="dim">（審查頁模板卡片已隨 DEV V1.31 模板免審查一併移除）</span>。<strong>模板名稱僅供辨識、可重名</strong>；一切引用與對帳以 ID 為準</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：以 ID／名稱搜尋</td></tr>
+      <tr><td><strong>模板 ID（系統流水號）</strong><span class="tag-upd">2026-09-02</span></td><td class="dim"><strong style="color:var(--red-bright);">24 碼字串（由後端產生、格式不規定，DEV V1.32 對齊實作，原寫 TPL_0001 四位流水）</strong>、首次儲存時產生、<strong>營運不可編輯</strong>、<strong>已刪除的 ID 不得被新模板取得</strong>、複製產生新 ID；<strong style="color:var(--gold-light);">只顯示於模板列表</strong>（編輯器與新增頁皆不顯示）。畫面顯示格式：Tab 2 下拉＝<strong>名稱 · RTP</strong>；快照明細＝<strong>名稱 · 快照版號 · ID 前 8 碼</strong>。<strong>模板名稱僅供辨識、可重名（同名時畫面才補 ID 前 8 碼）</strong>；一切引用與對帳以 ID 為準</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：以 ID／名稱搜尋</td></tr>
       <tr><td>帳號權限管理（角色權限對照）</td><td class="dim"><strong>後台帳號卡片列表 ＋ 角色權限對照矩陣</strong>：<strong>最高權限</strong>（CRM 全部＋帳號權限；<strong>帳號由 Server 設置</strong>，可新增「一般操作」帳號但不可新增最高權限）／<strong>一般操作</strong>（由最高權限新增並指派可見頁面）／<strong>查看(Platform)</strong>（<strong style="color:var(--orange-bright);">CRM 頁面皆不可見</strong>，權限由 Server 設置）。<strong>活動獎勵查詢權限由遊戲後台控管、不在此矩陣</strong>。<strong>「<a href="#account-add-modal" style="color:var(--gold-light);">新增帳號視窗</a>」僅能新增一般操作帳號</strong>，可見頁面 checkbox <strong>含遊戲後台頁面</strong>（線路管理／遊戲管理／資料查詢，預設關）；<strong>活動審查／核准與帳號權限兩頁列出但 disabled（🔒 最高權限專屬）</strong></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：頁內動作級權限</td></tr>
-      <tr><td>活動複製</td><td class="dim">複本帶入<strong style="color:var(--red-bright);">除起訖時間外</strong>的全部設定（含每日重置時間）、<strong>起訖時間帶預設值</strong>（隔日 00:00 起 14 天）、狀態重置為<strong>草稿</strong>、<strong style="color:var(--gold-light);">版本＝未建立（尚未核准，DEV V1.23）</strong>、ID 加 <span class="mono">_COPY</span>（DEV V1.31）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
+      <tr><td>活動複製</td><td class="dim">複本帶入<strong style="color:var(--red-bright);">除起訖時間外</strong>的全部設定（含每日重置時間）、<strong>起訖時間帶預設值</strong>（隔日 00:00 起 14 天）、<strong style="color:var(--gold-light);">按下第一次「儲存草稿」才建立活動、取得 Campaign ID 與 V1（DEV V1.33）</strong>、ID 加 <span class="mono">_COPY</span></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>月結對帳儀表板</td><td class="dim">視覺化活動成本 vs GGR 拆帳</td><td class="dim">—（數據組另拉）</td><td><span class="tag-pill" style="background:var(--purple-fill);color:var(--purple-bright);">v2 擴充</span></td></tr>
     </tbody>
   </table>
@@ -4765,7 +4824,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <tbody>
       <tr><td>導覽與標題</td><td class="dim"><strong>導覽選單、頁面標題</strong></td></tr>
       <tr><td>表格與表單</td><td class="dim"><strong>表格欄位標題、按鈕、表單 label 與 placeholder</strong></td></tr>
-      <tr><td>狀態名稱</td><td class="dim"><strong>草稿／送審中／已核准／運行中／已暫停／已結束</strong></td></tr>
+      <tr><td>狀態名稱<span class="tag-upd">2026-09-14</span></td><td class="dim"><strong style="color:var(--gold-light);">活動狀態（四態）</strong>：<strong>未運行／運行中／已暫停／已結束</strong><br><strong style="color:var(--gold-light);">版本狀態（五態）</strong>：<strong>無／草稿／修改待審核／駁回／已核准</strong><br><strong>欄位標題</strong>：<strong>活動狀態／版本狀態</strong><br><span class="dim">DEV V1.33 拆欄後的完整值域，見 <a href="#status-two-fields" style="color:var(--gold-light);">DEV §13 一之一</a>。</span></td></tr>
       <tr><td>訊息</td><td class="dim"><strong>驗證與錯誤訊息</strong>、<strong>toast</strong>、<strong>空狀態文案</strong></td></tr>
       <tr><td>確認視窗</td><td class="dim"><strong>確認視窗</strong>（含「<strong>是否確認刪除模板</strong>」）</td></tr>
       <tr><td>tooltip</td><td class="dim">含「<strong>此模板有活動使用中，無法刪除</strong>」「<strong>🔒 最高權限專屬</strong>」</td></tr>
@@ -4804,7 +4863,10 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.nav.template</span></td><td class="dim">抽寶箱模板管理</td><td class="dim mono" style="font-size:11.5px;">Treasure Box Template Management</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.nav.review</span></td><td class="dim">活動審查</td><td class="dim mono" style="font-size:11.5px;">Campaign Review</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.nav.account</span></td><td class="dim">帳號權限</td><td class="dim mono" style="font-size:11.5px;">Account &amp; Permissions</td></tr>
-      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.status.draft</span><br><span class="mono" style="font-size:11px;">admin.status.in_review</span><br><span class="mono" style="font-size:11px;">admin.status.approved</span><br><span class="mono" style="font-size:11px;">admin.status.running</span><br><span class="mono" style="font-size:11px;">admin.status.paused</span><br><span class="mono" style="font-size:11px;">admin.status.ended</span></td><td class="dim">草稿／送審中／已核准／運行中／已暫停／已結束</td><td class="dim mono" style="font-size:11.5px;">Draft / In Review / Approved / Running / Paused / Ended</td></tr>
+      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.status.not_started</span><br><span class="mono" style="font-size:11px;">admin.status.running</span><br><span class="mono" style="font-size:11px;">admin.status.paused</span><br><span class="mono" style="font-size:11px;">admin.status.ended</span></td><td class="dim"><strong>【活動狀態 · 四態】</strong>未運行／運行中／已暫停／已結束<br><span class="dim" style="font-size:10.5px;">DEV V1.33 新增 <span class="mono">not_started</span>；原 <span class="mono">admin.status.draft／in_review／approved</span> <strong style="color:var(--orange-bright);">不再作為活動狀態使用</strong>（文字沿用到下方版本狀態 key，舊 key 停用）。</span></td><td class="dim mono" style="font-size:11.5px;">Not Started / Running / Paused / Ended</td></tr>
+      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.vstatus.none</span><br><span class="mono" style="font-size:11px;">admin.vstatus.draft</span><br><span class="mono" style="font-size:11px;">admin.vstatus.in_review</span><br><span class="mono" style="font-size:11px;">admin.vstatus.rejected</span><br><span class="mono" style="font-size:11px;">admin.vstatus.approved</span></td><td class="dim"><strong>【版本狀態 · 五態】</strong>無／草稿／修改待審核／駁回／已核准<br><span class="dim" style="font-size:10.5px;">DEV V1.33 新增整組。</span></td><td class="dim mono" style="font-size:11.5px;">None / Draft / Change In Review / Rejected / Approved</td></tr>
+      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.col.campaign_status</span><br><span class="mono" style="font-size:11px;">admin.col.version_status</span></td><td class="dim"><strong>【列表欄位標題】</strong>活動狀態／版本狀態<br><span class="dim" style="font-size:10.5px;">DEV V1.33 新增；chips 兩列的標題沿用同一組 key。</span></td><td class="dim mono" style="font-size:11.5px;">Campaign Status / Version Status</td></tr>
+      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.countdown.not_started</span><br><span class="mono" style="font-size:11px;">admin.camp.countdown.paused</span><br><span class="mono" style="font-size:11px;">admin.camp.countdown.ended</span></td><td class="dim"><strong>【活動倒數欄的非倒數文字】</strong>未上線／已暫停／已結束<br><span class="dim" style="font-size:10.5px;">DEV V1.33 新增；活動狀態＝運行中時本欄顯示真正的倒數，不用這三個 key。</span></td><td class="dim mono" style="font-size:11.5px;">Not Started / Paused / Ended</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.campaign.create_btn</span></td><td class="dim">建立新活動</td><td class="dim mono" style="font-size:11.5px;">New Campaign</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.action.view</span><br><span class="mono" style="font-size:11px;">admin.action.edit</span><br><span class="mono" style="font-size:11px;">admin.action.copy</span><br><span class="mono" style="font-size:11px;">admin.action.delete</span></td><td class="dim">查看／編輯／複製／刪除<br><span style="font-size:10px;color:var(--orange-bright);">※ <span class="mono">admin.action.view</span> 自 DEV V1.8 起<strong>不再用於活動列表操作欄</strong>（該欄已移除「查看」），僅保留供<strong>活動審查頁「查看完整設定（唯讀）」</strong>使用</span></td><td class="dim mono" style="font-size:11.5px;">View / Edit / Copy / Delete</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.review.submit</span><br><span class="mono" style="font-size:11px;">admin.review.approve</span><span style="color:var(--gold-light);font-size:10px;"> ※</span><br><span class="mono" style="font-size:11px;">admin.review.reject</span><span style="color:var(--gold-light);font-size:10px;"> ※</span><br><span class="mono" style="font-size:11px;">admin.review.reject_reason</span><span style="color:var(--gold-light);font-size:10px;"> ※</span><br><span class="mono" style="font-size:11px;">admin.review.feedback</span><span style="color:var(--gold-light);font-size:10px;"> ※</span><br><span class="mono" style="font-size:11px;">admin.review.approved_notice</span><span style="color:var(--gold-light);font-size:10px;"> ※</span></td><td class="dim">送審／核准／駁回（原因必填）<br><strong style="color:var(--gold-light);">審查反饋</strong>（通過／駁回共用輸入框）／<strong style="color:var(--gold-light);">審查已通過</strong>（綠底 banner，見 <a href="#backend" style="color:var(--gold-light);">審查頁 ④</a>）</td><td class="dim mono" style="font-size:11.5px;">Submit for Review / Approve / Reject (reason required)<br>Review Feedback / Review Approved</td></tr>
@@ -4812,7 +4874,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.edit.locked</span><span style="color:var(--gold-light);font-size:10px;"> ※V1.20</span></td><td class="dim"><strong>此活動審查中，如需修改請聯繫最高權限駁回</strong>（唯讀模式頂部橘色橫幅；模板頁沿用同一 key，文案「此模板審查中…」由參數帶入類型）</td><td class="dim mono" style="font-size:11.5px;">Under review — contact an Admin to reject it before editing</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.reset_time.delay_hint</span><span style="color:var(--gold-light);font-size:10px;"> ※V1.20</span></td><td class="dim"><strong>重置時間的變更將自次一個每日重置時點起生效</strong>（編輯頁與審查頁）</td><td class="dim mono" style="font-size:11.5px;">Changes to the reset time take effect from the next daily reset</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.tpl.effect_hint</span><span style="color:var(--gold-light);font-size:10px;"> ※V1.20</span></td><td class="dim"><strong>此模板被 {n} 檔運行中活動使用，送審核准後立即生效；當日已觸發的玩家沿用舊版至該活動日結束</strong>（模板編輯器頂部＋模板列表黃色提示）</td><td class="dim mono" style="font-size:11.5px;">Used by {n} running campaigns. Takes effect once approved; players already triggered today keep the previous version until the next daily reset</td></tr>
-      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.tpl.id</span><br><span class="mono" style="font-size:11px;">admin.tpl.id_placeholder</span><br><span class="mono" style="font-size:11px;">admin.tpl.name_dup_hint</span><span style="color:var(--gold-light);font-size:10px;"> ※V1.20</span></td><td class="dim">模板 ID／<strong>儲存後自動產生</strong>（新增時 placeholder）／<strong>已有同名模板（{id}），確定要使用相同名稱？</strong>（非阻擋性提示）</td><td class="dim mono" style="font-size:11.5px;">Template ID / Generated after saving / A template named the same already exists ({id}). Use this name anyway?</td></tr>
+      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.tpl.id</span><br><span class="mono" style="font-size:11px;text-decoration:line-through;">admin.tpl.id_placeholder</span><br><span class="mono" style="font-size:11px;">admin.tpl.name_dup</span><span style="color:var(--gold-light);font-size:10px;"> ※V1.32 改</span></td><td class="dim">模板 ID<span class="dim">（僅用於模板列表的欄位標題）</span>／<strong style="color:var(--red-bright);">id_placeholder 停用</strong><span class="dim">（DEV V1.32：編輯器與新增頁不再顯示模板 ID，無 placeholder）</span>／<strong>已有同名模板，確定要使用相同名稱？</strong><span class="dim">（非阻擋性提示；DEV V1.32 改字，<strong>移除句中的 {id}</strong>——24 碼 ID 放進提示句無助辨識）</span></td><td class="dim mono" style="font-size:11.5px;">Template ID / — / A template with this name already exists. Use it anyway?</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.template.thresholds</span></td><td class="dim">9 格累積門檻</td><td class="dim mono" style="font-size:11.5px;">9-Slot Cumulative Thresholds</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.template.prizes</span><br><span class="mono" style="font-size:11px;">admin.template.prize_small</span><br><span class="mono" style="font-size:11px;">admin.template.prize_medium</span><br><span class="mono" style="font-size:11px;">admin.template.prize_large</span><br><span class="mono" style="font-size:11px;">admin.template.prize_final</span></td><td class="dim">四階獎項（小／中／大／最終獎）</td><td class="dim mono" style="font-size:11.5px;">4-Tier Prizes (Small / Medium / Large / Final)</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.template.weight_table</span></td><td class="dim">抽獎權重表（第 1~8 抽）</td><td class="dim mono" style="font-size:11.5px;">Draw Weight Table (Draws 1&ndash;8)</td></tr>
@@ -5065,7 +5127,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td>Campaign ID</td><td class="dim">活動唯一識別碼（<span class="mono">mono</span> 字體）</td></tr>
       <tr><td>活動名稱</td><td class="dim">營運自訂名稱</td></tr>
       <tr><td>活動時間</td><td class="dim">起訖時間（<strong>UTC+8</strong>，<strong>格式與活動列表一致</strong>）</td></tr>
-      <tr><td>活動狀態</td><td class="dim">狀態 badge，<strong>樣式與活動管理列表共用同一組</strong>（草稿／送審中／已核准／運行中／已暫停）</td></tr>
+      <tr><td>活動狀態<span class="tag-upd">2026-09-14</span></td><td class="dim">狀態 badge，<strong>樣式與活動管理列表的「活動狀態」欄共用同一組</strong>（<strong style="color:var(--gold-light);">DEV V1.33 四態</strong>：未運行／運行中／已暫停；<strong>已結束活動不出現在本清單</strong>）。<span class="dim">子列表<strong>不顯示版本狀態</strong>（屬 v2 展開功能，此處僅定義欄位）。</span></td></tr>
     </tbody>
   </table>
 
@@ -5132,7 +5194,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td><strong>草稿儲存的校驗範圍</strong></td><td class="dim">只擋<strong>格式錯誤</strong>：非數字、負數、<strong>門檻遞減</strong>、獎項數量超出 <span class="mono">1–6</span>。<strong style="color:var(--green-bright);">不擋「未填完」</strong>——空欄位可存。</td></tr>
       <tr><td><strong>送審的校驗範圍</strong></td><td class="dim"><strong>完全維持現況、一字不放寬</strong>：必填 17 種須完整、第 1~8 抽每列權重合計 &gt; 0、獎項數量加總＝9 且四檔各 ≥ 1、已啟用的選填幣別須完整（見 <a href="#currency-list" style="color:var(--gold-light);">§06 二之一 四</a>）。未通過<strong>擋送審</strong>並列出未通過的幣別。</td></tr>
       <tr><td><strong>未完成度顯示</strong></td><td class="dim">草稿狀態下，編輯器頂部與模板列表顯示「<strong>草稿 · 已完成 N／17 幣別</strong>」，讓營運知道還差幾種；<strong>點擊可跳到第一個未完成的幣別 tab</strong>。</td></tr>
-      <tr><td><strong>不變的部分</strong></td><td class="dim"><strong>草稿不可被活動引用生效</strong>、<strong>核准才產生版號與快照</strong>、<strong>快照僅含已啟用幣別</strong> ——三條規則<strong>完全不動</strong>（見 <a href="#template-version" style="color:var(--gold-light);">§06 六</a>）。不完整的草稿<strong>永遠到不了玩家端</strong>，這是放寬草稿校驗不會造成風險的前提。</td></tr>
+      <tr><td><strong>不變的部分</strong><span class="tag-upd">2026-09-14</span></td><td class="dim"><strong>快照僅含已啟用幣別</strong>——此條不動（見 <a href="#template-version" style="color:var(--gold-light);">§06 六</a>）。<br><strong style="color:var(--red-bright);">DEV V1.32 勘誤：原列的另兩條已不存在</strong>——「草稿不可被活動引用生效」與「核准才產生版號與快照」是 DEV V1.31 把模板改為<strong>免審查、儲存即產號</strong>時漏改的殘留；<strong>模板已沒有「草稿」與「核准」這兩個狀態</strong>，本 v2 優化方案（草稿分段校驗）日後實作時須以改版後的〈<a href="#template-version" style="color:var(--gold-light);">§06 六</a>〉為準重新檢視。不完整的草稿<strong>永遠到不了玩家端</strong>，這是放寬草稿校驗不會造成風險的前提。</td></tr>
       <tr><td><strong>職能</strong></td><td><span class="tag-pill tag-web">🌐 前端Web</span> 校驗拆為草稿／送審兩段　<span class="tag-pill tag-eng">🛠 後端</span> 草稿允許欄位為空落庫（欄位可為 null，不設 NOT NULL）</td></tr>
     </tbody>
   </table>
@@ -5715,23 +5777,40 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <table class="spec-table">
     <thead><tr><th>欄位</th><th>說明</th></tr></thead>
     <tbody>
-      <tr><td>活動名稱</td><td class="dim">營運自訂。v1 不提供搜尋，<strong>篩選以狀態 chips＋線路下拉＋日期區間為主</strong>。<span class="dim">（名稱搜尋列屬 v2 → <a href="#comparison" style="color:var(--gold-light);">§07</a>）</span></td></tr>
+      <tr><td>活動名稱</td><td class="dim">營運自訂。v1 不提供搜尋，<strong>篩選以狀態 chips（活動狀態／版本狀態兩列）＋線路下拉＋日期區間為主</strong>。<span class="dim">（名稱搜尋列屬 v2 → <a href="#comparison" style="color:var(--gold-light);">§07</a>）</span></td></tr>
       <tr><td>Campaign ID</td><td class="dim"><strong>系統自動產生、唯讀</strong>（不可人工編輯），作為對帳與 audit 的唯一鍵。</td></tr>
       <tr><td>活動類型</td><td class="dim">該活動的玩法類型（v1 僅「抽寶箱」）。<strong>位於「版型」欄左側</strong>；篩選列另有<strong>活動類型下拉</strong>。建立活動時先選類型、表單內唯讀。詳見 <a href="#activity-type" style="color:var(--gold-light);">DEV §06 活動類型擴充</a>。</td></tr>
       <tr><td>版型</td><td class="dim">版型主題（theme_id，預定義單選；沿用 DEV §04／DEV §05 換皮架構）。</td></tr>
       <tr><td>起訖時間</td><td class="dim">活動開始 / 結束時間，<strong>一律以 UTC+8 設定與計算</strong>（見下）。</td></tr>
       <tr><td>重置時間</td><td class="dim">每日 reset 時間點（HH:MM），<strong>一律以 UTC+8</strong>（見下）。</td></tr>
       <tr><td>適用線路</td><td class="dim">投放的平台線路（chips 多選，取自預定義「已開通 Bet=0」清單）。</td></tr>
-      <tr><td>活動倒數</td><td class="dim"><strong>即時倒數計時</strong>；<strong>剩餘 ≤ 倒數啟動天數時轉紅</strong>（<strong>邊界含正好 N 天當天</strong>，與玩家端切換倒數同日觸發）。</td></tr>
-      <tr><td>狀態</td><td class="dim">六態：草稿／送審中／已核准／運行中／已暫停／已結束（見審核狀態機）。<strong style="color:var(--red-bright);">DEV V1.24：「已暫停」<u>不再</u>附加任何小字備注</strong>（原「已觸發玩家保護至該活動下次每日重置」隨保護機制一併廢除——暫停即為對全體立即關閉，該備注會誤導營運以為活動還在跑），見〈<a href="#camp-pause" style="color:var(--gold-light);">一之一、活動暫停／運行</a>〉。</td></tr>
-      <tr><td>版本</td><td class="dim">當前版本流水號（V1、V2…）。</td></tr>
+      <tr><td>活動倒數<span class="tag-upd">2026-09-14</span></td><td class="dim"><strong style="color:var(--red-bright);">DEV V1.33：本欄只看「活動狀態」，完全不受「版本狀態」影響</strong>——一檔運行中的活動就算有改動正在等審核，倒數也照常跑。<br>· <strong>運行中</strong>＝<strong>即時倒數計時</strong>至活動迄時；<strong>剩餘 ≤ 倒數啟動天數時轉紅</strong>（<strong>邊界含正好 N 天當天</strong>，與玩家端切換倒數同日觸發）。<br>· <strong>未運行</strong>＝顯示「<strong>未上線</strong>」（<span class="mono">admin.camp.countdown.not_started</span>）。<br>· <strong>已暫停</strong>＝顯示「<strong>已暫停</strong>」（<span class="mono">admin.camp.countdown.paused</span>）。<br>· <strong>已結束</strong>＝顯示「<strong>已結束</strong>」（<span class="mono">admin.camp.countdown.ended</span>）。</td></tr>
+      <tr><td><strong style="color:var(--gold-light);">活動狀態</strong><br><span class="dim" style="font-size:10px;">原「狀態」欄改名</span><span class="tag-upd">2026-09-14</span></td><td class="dim"><strong style="color:var(--red-bright);">⚠ DEV V1.33 改版：原「狀態」一欄正式改名為「活動狀態」，並把所有送審相關的值搬到新增的「版本狀態」欄。</strong>本項<strong>取代 DEV V1.20「UI 不顯示版本狀態、只在活動表單 Tab 4 呈現」的拍板</strong>——該拍板正是 QA 回報「運行中活動顯示修改待審核、⏸ 消失、篩不到」的根因。<br>
+      <strong>四態：未運行／運行中／已暫停／已結束</strong>，<strong>只描述「這檔活動現在對玩家是什麼狀態」</strong>：<br>
+      · <strong>未運行</strong>＝<strong>從未上線過</strong>（不論它現在是草稿、送審中、還是已核准但沒到起始時間，一律顯示「未運行」）。<br>
+      · <strong>運行中</strong>＝玩家看得到、玩得到。<br>
+      · <strong>已暫停</strong>＝被人工止血中，可恢復。<br>
+      · <strong>已結束</strong>＝已過活動迄時或被手動下架。<br>
+      <strong style="color:var(--red-bright);">運行中的活動被編輯並送審，本欄仍顯示「運行中」</strong>——送審這件事一律只反映在右側「版本狀態」欄。<br>
+      <strong style="color:var(--red-bright);">DEV V1.24：「已暫停」<u>不再</u>附加任何小字備注</strong>（原「已觸發玩家保護至該活動下次每日重置」隨保護機制一併廢除——暫停即為對全體立即關閉，該備注會誤導營運以為活動還在跑），見〈<a href="#camp-pause" style="color:var(--gold-light);">一之一、活動暫停／運行</a>〉。</td></tr>
+      <tr><td><strong style="color:var(--gold-light);">版本狀態</strong><br><span class="dim" style="font-size:10px;">DEV V1.33 新增欄</span><span class="tag-upd">2026-09-14</span></td><td class="dim"><strong>欄位位置＝「活動狀態」欄的右側、「版本」欄的左側。</strong>本欄<strong>只描述「還沒生效的那一版設定走到哪一步」</strong>，<strong>五種值</strong>：<br>
+      · <strong>無</strong>＝目前沒有待生效版本。畫面<strong>直接顯示「無」二字</strong>（<strong style="color:var(--orange-bright);">不留白、不用「—」</strong>）。<br>
+      · <strong>草稿</strong>＝已存草稿、尚未送審。<br>
+      · <strong>修改待審核</strong>＝已提交審查，等最高權限(Admin) 處理。<br>
+      · <strong>駁回</strong>＝被 Admin 駁回；<strong style="color:var(--gold-light);">營運一動手編輯，本欄立刻自動變回「草稿」</strong>。<br>
+      · <strong>已核准</strong>＝已核准但當時選了「<strong>隔日生效</strong>」，正在等該活動的次一個每日重置時點（見〈<a href="#effect-timing" style="color:var(--gold-light);">本章三 · 生效時點的選擇</a>〉）；<strong>生效的那一刻本欄自動變回「無」</strong>。<br>
+      <strong style="color:var(--red-bright);">兩欄可自由組合，互不覆蓋。</strong>最典型的組合就是 QA 這次打回來的情境：<strong>活動狀態＝運行中 ＋ 版本狀態＝修改待審核</strong>（活動照跑、同時有一版改動在排隊等審核）。</td></tr>
+      <tr><td>版本<span class="tag-upd">2026-09-14</span></td><td class="dim"><strong>顯示這檔活動目前的最新版本流水號</strong>（V1、V2…）。<br><strong style="color:var(--red-bright);">⚠ 此欄是「最新版號」，不等於玩家正在跑的版本。</strong>DEV V1.32 起<strong>設定有變動就 +1</strong>（見〈<a href="#effect-timing" style="color:var(--gold-light);">本章三 · 版本流水號</a>〉），營運存了草稿但尚未送審或尚未核准時，此欄會比玩家實際在跑的版本更新。<br>例：列表顯示 <span class="mono">V6</span>，玩家實際跑的可能仍是 <span class="mono">V4</span>。<strong style="color:var(--gold-light);">要確認玩家跑哪一版，請開活動表單 Tab 4，看標有「運行中」的那一版。</strong><span class="dim">（本欄不加任何額外標記，DEV V1.32 拍板——維持單一數字，差異說明寫在本規格與營運教育訓練。）</span></td></tr>
       <tr><td>操作</td><td class="dim"><strong>編輯 · 複製 ＋ <span style="color:var(--gold-light);">⏸ 暫停／▶ 運行（圖示按鈕）</span></strong>（移除 RTP／受眾 TAG 欄）。<br>
       <strong style="color:var(--red-bright);">DEV V1.8 起移除「查看」操作</strong>——<strong>活動完整設定的查閱入口改為點「編輯」進入編輯頁瀏覽</strong>（<strong style="color:var(--green-bright);">不儲存即不會變更任何內容</strong>），<strong style="color:var(--orange-bright);">不另設唯讀詳情頁</strong>。<br>
       <strong>暫停／運行皆需彈窗二次確認</strong>，非一鍵啟停；圖示規格、顯示條件與權限見〈<a href="#camp-pause" style="color:var(--gold-light);">一之一、活動暫停／運行</a>〉。</td></tr>
     </tbody>
   </table>
   <div class="callout info" style="font-size:12px;">
-    <strong>篩選：</strong><strong>活動類型下拉</strong>＋狀態 chips（含各狀態數量）＋線路下拉＋日期區間＋清除篩選。<strong>活動複製：</strong>複本帶入<strong style="color:var(--red-bright);">除起訖時間外</strong>的全部設定（含每日重置時間）、<strong>起訖時間改帶預設值</strong>、狀態重置為<strong>草稿</strong>、<strong style="color:var(--gold-light);">版本＝未建立（尚未核准，DEV V1.23）</strong>、ID 加 <span class="mono">_COPY</span>，完整規則見〈<a href="#review-fsm" style="color:var(--gold-light);">本章四、活動複製功能</a>〉。
+    <strong>篩選<span class="tag-upd">2026-09-14</span>：</strong><strong>活動類型下拉</strong>＋<strong style="color:var(--gold-light);">狀態 chips（DEV V1.33 起拆成兩列，各自帶數量）</strong>＋線路下拉＋日期區間＋清除篩選。<br>
+    　· <strong>第一列</strong>標題「<strong>活動狀態</strong>」：全部／未運行／運行中／已暫停／已結束。<br>
+    　· <strong>第二列</strong>標題「<strong>版本狀態</strong>」：全部／無／草稿／修改待審核／駁回／已核准。<br>
+    　· <strong style="color:var(--red-bright);">兩列可同時使用，條件為 AND</strong>；「<strong>活動狀態＝運行中</strong>」必須篩得到那些「版本狀態＝修改待審核」的活動（<strong>這是 DEV V1.33 的驗收重點</strong>），「清除篩選」<strong>同時清掉兩列</strong>。<strong>活動複製：</strong>複本帶入<strong style="color:var(--red-bright);">除起訖時間外</strong>的全部設定（含每日重置時間）、<strong>起訖時間改帶預設值</strong>、<strong style="color:var(--gold-light);">按下第一次「儲存草稿」時才建立活動並取得 Campaign ID 與 V1</strong>（DEV V1.33；跳出表單當下尚無版號、無狀態）、ID 加 <span class="mono">_COPY</span>，完整規則見〈<a href="#review-fsm" style="color:var(--gold-light);">本章四、活動複製功能</a>〉。
   </div>
 
   <div class="sub-title" id="camp-ops">一之零、操作欄精簡（移除「查看」）<span class="tag-upd">2026-08-06</span></div>
@@ -5758,28 +5837,31 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <strong style="color:var(--orange-bright);">⚠ 本版廢除「已觸發玩家保護至該活動日結束」的整套機制</strong>（DEV V1.13～V1.23 的口徑）。原設計讓已觸發玩家用當日快照續跑到重置時點，等於<strong>按下暫停之後活動還會繼續發真金最多一整個活動日</strong>——止血動作卻止不到血，與「暫停」二字的用途矛盾。本版改為<strong>真正的即時停止</strong>。
   </div>
 
-  <div class="callout warn" id="status-two-fields" style="font-size:12px;">
-    <strong style="color:var(--red-bright);">⚠ DEV V1.23 修訂 · 「活動狀態」與「版本狀態」是兩個不同的欄位，不可混為一欄：</strong><br>
-    · <strong style="color:var(--gold-light);">活動狀態</strong>（<span class="mono">campaign_status</span>）＝<strong>這檔活動現在對玩家是什麼狀態</strong>：草稿／送審中／已核准／運行中／已暫停／已結束。<br>
-    · <strong style="color:var(--gold-light);">版本狀態</strong>（<span class="mono">pending_version_status</span>）＝<strong>待生效版本走到哪一步</strong>：無／草稿／送審中。<br>
-    <strong>DEV V1.20 起 Operator 可編輯運行中活動，編輯只會讓「版本狀態」變成送審中，「活動狀態」維持運行中</strong>——活動照常跑、玩家照常參與。<br>
-    <strong style="color:var(--red-bright);">修正的問題：</strong>原條文把兩者塞進同一欄，導致「運行中活動被編輯後狀態顯示送審中 → 依按鈕規則 ⏸ 消失 → 一檔正在發真金的活動失去止血入口」，且狀態 chips 篩「運行中」也篩不到它。<strong>本版起：按鈕顯示、狀態 chips 篩選、活動列表狀態欄，一律依「活動狀態」判定，不受版本狀態影響。</strong><br>
-    <span class="dim">UI 仍<strong>不顯示</strong>「審查中／待生效」badge（DEV V1.20 拍板維持）；版本狀態只在活動表單 Tab 4 呈現。</span>
+  <div class="callout danger" id="status-two-fields" style="font-size:12px;">
+    <strong style="color:var(--red-bright);">⚠ DEV V1.33 改版 · 「活動狀態」與「版本狀態」<u>必須在活動列表上拆成兩個獨立欄位顯示</u>：</strong><br>
+    <span class="dim">（DEV V1.23 已把兩者定義為兩個<strong>資料欄位</strong>，但同時寫了「UI 仍不顯示版本狀態、版本狀態只在活動表單 Tab 4 呈現」——結果開發把版本狀態塞進唯一的那一欄，QA 兩次回報同一批問題。<strong>DEV V1.33 起，該句作廢，改為列表上兩欄並列。</strong>）</span><br>
+    <strong style="color:var(--gold-light);">① 活動狀態</strong>（<span class="mono">campaign_status</span>）＝<strong>這檔活動現在對玩家是什麼狀態</strong>，<strong>四態</strong>：<strong>未運行／運行中／已暫停／已結束</strong>。<br>
+    　<span class="dim">＊原六態中的「草稿／送審中／已核准」<strong>不再屬於活動狀態</strong>——它們描述的是「設定」而非「活動對玩家的開關」，一律收斂為「<strong>未運行</strong>」，細節改看版本狀態欄。</span><br>
+    <strong style="color:var(--gold-light);">② 版本狀態</strong>（<span class="mono">pending_version_status</span>）＝<strong>還沒生效的那一版設定走到哪一步</strong>，<strong>五態</strong>：<strong>無／草稿／修改待審核／駁回／已核准</strong>。<br>
+    　<span class="dim">＊「無」要<strong>印出「無」二字</strong>；「駁回」在營運一動手編輯時<strong>自動回到「草稿」</strong>；「已核准」＝選了隔日生效、正在等次一個每日重置時點，生效瞬間自動回到「無」。</span><br>
+    <strong style="color:var(--red-bright);">③ 兩欄互不覆蓋、可自由組合。</strong>Operator 編輯運行中活動並送審時：<strong>活動狀態維持「運行中」</strong>、<strong>版本狀態轉「修改待審核」</strong>——活動照常跑、玩家照常參與。<br>
+    <strong style="color:var(--red-bright);">④ 一律依「活動狀態」判定的三件事：</strong><strong>⏸／▶ 按鈕是否顯示</strong>、<strong>活動狀態 chips 篩選</strong>、<strong>活動倒數欄顯示什麼</strong>。<strong style="color:var(--orange-bright);">這三件事完全不看版本狀態。</strong><br>
+    <strong>QA 兩度退回的四個症狀，本版一次解決：</strong>①運行中活動不再顯示成「修改待審核」；②⏸ 暫停鈕不再消失，正在發真金的活動永遠留著止血入口；③倒數不再顯示「未上線」；④chips 篩「運行中」一定篩得到。
   </div>
   <div class="sub-title" style="font-size:13px;margin-top:16px;">① 按鈕顯示規則（操作欄 · <span style="color:var(--gold-light);">圖示按鈕</span>）</div>
   <table class="spec-table">
     <thead><tr><th style="width:230px;">活動狀態<span class="dim" style="font-size:10px;">（非版本狀態）</span></th><th>顯示按鈕</th></tr></thead>
     <tbody>
-      <tr><td><strong>運行中</strong><br><span class="dim" style="font-size:10px;">含「有待生效版本正在送審」者</span></td><td class="dim">顯示 <strong style="color:var(--orange-bright);font-size:15px;">⏸</strong>（<strong style="color:var(--orange-bright);">暫停</strong>）<br><strong style="color:var(--gold-light);">待生效版本送審中不影響本鈕</strong>——暫停是止血動作，Operator 以上任何時候都必須能按（見〈<a href="#admin-version" style="color:var(--gold-light);">本章三 · 送審中鎖編輯</a>〉）。</td></tr>
+      <tr><td><strong>運行中</strong><br><span class="dim" style="font-size:10px;">含「版本狀態＝修改待審核／駁回／已核准」者</span></td><td class="dim">顯示 <strong style="color:var(--orange-bright);font-size:15px;">⏸</strong>（<strong style="color:var(--orange-bright);">暫停</strong>）<br><strong style="color:var(--gold-light);">待生效版本送審中不影響本鈕</strong>——暫停是止血動作，Operator 以上任何時候都必須能按（見〈<a href="#admin-version" style="color:var(--gold-light);">本章三 · 送審中鎖編輯</a>〉）。</td></tr>
       <tr><td><strong>已暫停</strong>（且<strong>活動迄時未過</strong>）</td><td class="dim">顯示 <strong style="color:var(--green-bright);font-size:15px;">▶</strong>（<strong style="color:var(--green-bright);">運行</strong>）</td></tr>
-      <tr><td>草稿／<strong>送審中</strong>（＝<span class="dim">首次上線前的活動本身送審，玩家尚看不到</span>）／已核准（尚未到起始時間）／已結束</td><td class="dim"><strong style="color:var(--red-bright);">不顯示</strong>暫停／運行鈕<br><span class="dim">這些狀態下活動對玩家不可見，沒有東西需要止血。</span></td></tr>
+      <tr><td><strong>未運行</strong>（＝<span class="dim">還在草稿、送審中、或已核准但未到起始時間，玩家一律看不到</span>）<strong>／已結束</strong><span class="tag-upd">2026-09-14</span></td><td class="dim"><strong style="color:var(--red-bright);">不顯示</strong>暫停／運行鈕<br><span class="dim">這些狀態下活動對玩家不可見，沒有東西需要止血。</span><br><strong style="color:var(--gold-light);">DEV V1.33：本列原寫「草稿／送審中／已核准／已結束」，已依四態收斂改寫，判定條件不變。</strong></td></tr>
     </tbody>
   </table>
   <div class="bdd-card">
-    <div class="bdd-title">BDD 驗收情境 · 運行中活動被編輯後仍可暫停（DEV V1.23）</div>
-    <b class="g">Given</b> 活動 <span class="mono">CHEST0901</span> <strong>活動狀態＝運行中</strong>，Operator 已編輯並提交審查（<strong>版本狀態＝送審中</strong>）<br>
+    <div class="bdd-title">BDD 驗收情境 · 運行中活動被編輯後仍可暫停（DEV V1.33 改寫 · QA 兩度退回的那一檔）</div>
+    <b class="g">Given</b> 活動 <span class="mono">CHEST0901</span> <strong>活動狀態＝運行中</strong>，Operator 已編輯並提交審查（<strong>版本狀態＝修改待審核</strong>）<br>
     <b class="w">When</b> 營運於活動列表查看該檔<br>
-    <b class="t">Then</b> ①狀態欄顯示「<strong>運行中</strong>」（<strong style="color:var(--red-bright);">不是「送審中」</strong>）；②<strong style="color:var(--orange-bright);">⏸ 暫停鈕照常顯示且可按</strong>；③狀態 chips 篩「運行中」<strong>篩得到</strong>這一檔；④點「編輯」進入<strong>唯讀模式</strong>（版本送審中的鎖定，見本章三）；⑤按 ⏸ 暫停成功後，活動狀態轉「已暫停」，<strong>待生效版本維持送審中不受影響</strong>。
+    <b class="t">Then</b> ①<strong>活動狀態</strong>欄顯示「<strong>運行中</strong>」、<strong>版本狀態</strong>欄顯示「<strong>修改待審核</strong>」（<strong style="color:var(--red-bright);">兩個欄位並列，不是擠在同一欄</strong>）；②<strong style="color:var(--orange-bright);">⏸ 暫停鈕照常顯示且可按</strong>；③活動狀態 chips 篩「運行中」<strong>篩得到</strong>這一檔，版本狀態 chips 篩「修改待審核」<strong>也篩得到</strong>同一檔；④<strong>活動倒數欄照常倒數</strong>（<strong style="color:var(--red-bright);">不得顯示「未上線」</strong>）；⑤點「編輯」進入<strong>唯讀模式</strong>（版本送審中的鎖定，見本章三）；⑥按 ⏸ 暫停成功後，<strong>活動狀態</strong>轉「已暫停」、<strong>版本狀態維持「修改待審核」不受影響</strong>。
   </div>
   <div class="callout warn" style="font-size:12px;">
     <strong>🎨 圖示按鈕規格（DEV V1.8 · <span style="color:var(--orange-bright);">只改外觀、不改行為</span>）：</strong><br>
@@ -5882,8 +5964,24 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <thead><tr><th>機制</th><th>設計</th></tr></thead>
     <tbody>
       <tr><td>運行期間可編輯<span class="tag-upd">2026-09-02</span></td><td class="dim">活動<strong>運行期間可編輯</strong>；系統以<strong>「快照（snapshot）」</strong>保留<strong>正在運行的規則</strong>，<strong>不影響已參與玩家</strong>（進行中玩家沿用命中當下的快照）。<strong style="color:var(--gold-light);">DEV V1.20：Operator 與 Admin 皆可編輯運行中活動</strong>（原「僅 Admin 可編輯運行中」廢除）。<strong style="color:var(--red-bright);">編輯本身不會讓活動進入「已暫停」、不會中斷玩家參與</strong>——送審期間活動照常以現行版本運行。</td></tr>
-      <tr><td>版本流水號<span class="tag-upd">2026-09-02</span></td><td class="dim"><strong style="color:var(--gold-light);">核准時才產生版本流水號（V1、V2…）並寫入快照</strong>（DEV V1.23 修訂）。<strong style="color:var(--orange-bright);">DEV V1.31 提醒：活動與模板的版號規則自本版起不同</strong>——<strong>活動</strong>＝核准才產號（本列，不變）；<strong>模板</strong>＝<strong style="color:var(--red-bright);">每次儲存就產號</strong>（模板已無核准流程，見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉）。原「兩者統一為同一口徑」的敘述不再成立，開發不可共用同一段產號邏輯。<br>· <strong style="color:var(--red-bright);">儲存草稿不產生、不佔用版號</strong>——草稿可反覆覆寫；<strong>駁回退回草稿亦不佔號</strong>。<br>· <strong>首次核准產生 V1</strong>，之後每核准一次遞增。<br><strong style="color:var(--orange-bright);">原「每次編輯自動產生版本流水號」條文廢除。</strong><span class="dim">舊寫法會讓 Operator 反覆存草稿就把版號跳到 V7、實際只核准過 1 版，且草稿沒有快照可放進 Tab 4「版本下拉＋快照明細」；DEV V1.17／V1.20 已把模板統一為「核准才產號」，活動端未跟改，本版補上。</span></td></tr>
-      <tr><td>運行中 vs 待生效<br><span class="dim" style="font-size:10px;">UI 呈現</span><span class="tag-upd">2026-09-02</span></td><td class="dim">資料層保留<strong>「運行中版本（current）」</strong>與<strong>「待生效版本（pending）」</strong>；編輯產生的是待生效版本；<strong style="color:var(--red-bright);">待生效版本須重新「提交審查」並經最高權限（Admin）核准（DEV V1.16 新增）</strong>。<br><strong style="color:var(--red-bright);">生效切點改由 Admin 在核准時選擇（DEV V1.31，取代 DEV V1.20 寫死的「核准當下」）：</strong>核准前需先選「<strong>立即生效</strong>」或「<strong>隔日生效</strong>」，完整規則見下一列〈<strong>生效時點的選擇</strong>〉。<br><strong>核准前</strong>：全體玩家（含核准前才首次觸發者）<strong>一律走現行版本</strong>。<strong>駁回 → 待生效版本退回草稿可再編輯，運行中版本不受影響</strong>。<span class="dim">（DEV V1.31 起模板已無審核流程、也不再有自己的生效切點，「與模板統一切點」一語不再適用，見 <a href="#template-version" style="color:var(--gold-light);">DEV §06 六</a>。）</span><strong style="color:var(--gold-light);">UI 不顯示「運行中/待生效」badge</strong>（DEV V1.20 確認維持，活動列表不加「審查中」標示），改以活動表單 Tab 4「版本下拉＋快照明細」呈現（下拉選項格式「V1（更新 2026-06-28 10:12）」）。</td></tr>
+      <tr><td><strong style="color:var(--red-bright);">版本流水號</strong><br><span class="dim" style="font-size:10px;">DEV V1.32 全列改寫</span><span class="tag-upd">2026-09-14</span></td><td class="dim">
+      <strong style="color:var(--red-bright);">規則：設定有變動就產生新版號；核准不產生版號。</strong><br>
+      · <strong style="color:var(--gold-light);">每按一次「儲存草稿」或「提交審查」，只要內容與上一版不同，版本流水號即 +1</strong>（V1、V2…）並寫入該版快照。<br>
+      · <strong style="color:var(--red-bright);">Admin 核准「不會」再產生新版號</strong>——核准做的事只有一件：<strong>把送審的那一版切換為「運行中版本」</strong>。<br>
+      · <strong>連續編輯多次才送審</strong>：每存一次都 +1（例：運行中 V3，改三次存成 V4、V5、V6），<strong style="color:var(--gold-light);">按下送審時送的是最新的那一版（V6）</strong>；V4、V5 為<strong>中間過程版本</strong>——有版號、有快照、從未上線，保留供追溯。<br>
+      · <strong>駁回</strong>退回草稿後再修改，同樣<strong>每存一次 +1</strong>，不會回頭覆蓋被駁回的那一版。<br>
+      · <strong>新活動（含複製出來的複本）在「按下第一次儲存草稿」時建立並取得 V1</strong>，不需等核准（<strong style="color:var(--gold-light);">DEV V1.33 改口，取代 V1.32 的「建立當下即為 V1」</strong>——複製只是把設定帶進表單，沒存就沒有活動、沒有版號），見〈<a href="#review-fsm" style="color:var(--gold-light);">本章四、活動複製功能</a>〉。<br><br>
+      <strong style="color:var(--orange-bright);">⚠ 本列取代 DEV V1.23～V1.31 的「核准才產生版號、儲存草稿不佔號、首次核准產生 V1」整套敘述。</strong>依據為 2026-09-11 於 Game Backstage UAT（v1.0.1）的實測與 Oliver 確認（「草稿有變動就會 +版號，不用核准才進版本」）：複本儲存送審後即為 V1（未核准）；運行中活動 <span class="mono">test</span> 送審後 V3→V4、<strong>核准後仍為 V4</strong>；草稿活動未經任何核准已累積至 V6。<br>
+      <strong style="color:var(--gold-light);">「待生效版本」的意思也跟著變了（開發務必看這句）：</strong>舊文中它指「核准後才會拿到版號的那一版」；<strong>本版起每一版都有版號，所謂「待生效版本」＝目前送審中、尚未被核准切換為運行中的那一版</strong>。不要沿用舊理解實作。</td></tr>
+      <tr><td>運行中 vs 待生效<br><span class="dim" style="font-size:10px;">UI 呈現</span><span class="tag-upd">2026-09-02</span></td><td class="dim">資料層保留<strong>「運行中版本（current）」</strong>與<strong>「待生效版本（pending）」</strong>；編輯產生的是待生效版本；<strong style="color:var(--red-bright);">待生效版本須重新「提交審查」並經最高權限（Admin）核准（DEV V1.16 新增）</strong>。<br><strong style="color:var(--red-bright);">生效切點改由 Admin 在核准時選擇（DEV V1.31，取代 DEV V1.20 寫死的「核准當下」）：</strong>核准前需先選「<strong>立即生效</strong>」或「<strong>隔日生效</strong>」，完整規則見下一列〈<strong>生效時點的選擇</strong>〉。<br><strong>核准前</strong>：全體玩家（含核准前才首次觸發者）<strong>一律走現行版本</strong>。<strong>駁回 → 待生效版本退回草稿可再編輯，運行中版本不受影響</strong>。<span class="dim">（DEV V1.31 起模板已無審核流程、也不再有自己的生效切點，「與模板統一切點」一語不再適用，見 <a href="#template-version" style="color:var(--gold-light);">DEV §06 六</a>。）</span><strong style="color:var(--red-bright);">DEV V1.33 改口：活動列表<u>要</u>顯示版本狀態，但用的是獨立的「版本狀態」欄，不是掛在版號上的 badge。</strong><br>
+      · <strong>版號欄（V1、V2…）維持單一數字、不掛任何 badge</strong>（DEV V1.32 拍板不變）。<br>
+      · <strong style="color:var(--gold-light);">「待生效版本走到哪一步」改由新的「版本狀態」欄呈現</strong>（無／草稿／修改待審核／駁回／已核准），值域與規則見〈<a href="#status-two-fields" style="color:var(--gold-light);">本章一之一</a>〉。<strong style="color:var(--orange-bright);">原「活動列表不加任何審查中標示」（DEV V1.20）自本版起作廢</strong>——正是該條讓開發把版本狀態塞進活動狀態欄，QA 兩度退回。<br>
+      · <strong>每一版的完整設定明細</strong>仍在活動表單 Tab 4「版本下拉＋快照明細」查看。<br>
+      <strong style="color:var(--red-bright);">Tab 4 版本下拉的收錄範圍與標示（DEV V1.32 新增）：</strong><br>
+      · <strong>全部版本都收</strong>——含從未上線過的中間過程版本（每次儲存都會產生一版，見上方〈版本流水號〉）。<br>
+      · 下拉選項格式：「<span class="mono">V1（更新 2026-06-28 10:12）</span>」；<strong style="color:var(--gold-light);">玩家目前實際在跑的那一版，額外加上「運行中」標記</strong>（例：「<span class="mono">V4（更新 2026-09-10 14:03）· 運行中</span>」）。<br>
+      · <strong style="color:var(--orange-bright);">只標「運行中」這一種</strong>，不區分「曾核准過」與「只存過草稿」——<strong>沒有標記的一律視為未上線版本</strong>（DEV V1.32 拍板：多一種標記對營運的幫助有限，反而讓下拉更難讀）。<br>
+      · <strong>每一版都有快照可看</strong>，選任一版即顯示該版完整設定明細。</td></tr>
       <tr><td><strong style="color:var(--red-bright);">生效時點的選擇</strong><br><span class="dim" style="font-size:10px;">DEV V1.31 新增</span></td><td class="dim">
       <strong>適用對象：只有「運行中活動的待生效版本」</strong>。<strong style="color:var(--orange-bright);">新活動的首次核准不提供此選項</strong>——新活動何時開跑由「活動開始時間」決定，再加一個生效選項只會讓營運搞混。<br>
       <strong>UI：</strong>活動審查頁的活動卡片上，<strong>核准鈕旁為必選的兩段單選</strong>，未選不可按核准；<strong>預設選在「隔日生效」</strong>（較保守的一邊）。模板卡片不適用（模板已免審查）。<br>
@@ -5923,7 +6021,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td><strong>適用線路被移除</strong><br><span class="dim" style="font-size:10px;">DEV V1.20 新增 · <span style="color:var(--red-bright);">V1.24 改為立即</span></span></td><td class="dim">待生效版本若移除某條適用線路：<strong style="color:var(--red-bright);">核准當下起該線路的全體玩家立即關閉，不分未觸發／已觸發</strong>——入口立即消失、押注不再累計、<strong>已解鎖未翻的次數一律沒收並寫入 E11</strong>，飛行中的派獎請求照常跑完。<br><strong style="color:var(--orange-bright);">DEV V1.24：取代 D-042 ⑥ 的「已觸發玩家保護至該活動日結束」</strong>，與〈<a href="#camp-pause" style="color:var(--gold-light);">活動暫停</a>〉維持<strong>同一套即時關閉定義</strong>（不另立規則，明確定義見〈<a href="#pause-freeze" style="color:var(--gold-light);">本章一之一 ②-2 · 暫停的即時關閉範圍</a>〉）。</td></tr>
       <tr><td>多版本並存</td><td class="dim">同一活動<strong>不同版本可並存</strong>，支援<strong>比對與追溯</strong>（誰在何時改了什麼、玩家當時跑哪一版）。</td></tr>
       <tr><td>快照計數規則</td><td class="dim"><strong>快照明細的「標籤規則數量」＝規則 N 組，<span style="color:var(--gold-light);">預設配置另列、不計入 N</span></strong>；<strong>顯示格式「N 組規則 ＋ 預設」</strong>。<strong style="color:var(--orange-bright);">⚠ N 不含預設配置，文案須寫「N 組規則 ＋ 預設」。</strong></td></tr>
-      <tr><td>引用模板版本<span class="tag-upd">2026-09-11</span></td><td class="dim"><strong style="color:var(--red-bright);">DEV V1.31 改版：活動快照自己存一份完整數值，不是只存「模板 ID ＋ 版號」再回查。</strong>活動於<strong>儲存草稿</strong>時把所引用模板的門檻／獎項／權重／各幣別設定<strong>整組複製進活動</strong>，<strong style="color:var(--orange-bright);">同時記下來源的模板 ID ＋ 模板版本序號供對帳</strong>。必須自存的理由：模板可被刪除（見〈<a href="#template-delete" style="color:var(--gold-light);">DEV §06 模板刪除規則</a>〉），只存指標會查不到；且模板改版不影響現有活動，回查模板表會拿到錯的數值。完整機制見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉。<br><strong>活動 Tab 4 快照明細須採「模板 ID · 名稱 版號」格式</strong>（例：<strong><span class="mono">TPL_0003</span> · 忠誠加碼 V2</strong>，DEV V1.20）；<strong style="color:var(--orange-bright);">名稱取模板目前的最新名稱、不凍結歷史名稱</strong>（顯示名會跟著變，<strong>快照數值不變</strong>），辨識以 ID 為準。</td></tr>
+      <tr><td>引用模板版本<span class="tag-upd">2026-09-11</span></td><td class="dim"><strong style="color:var(--red-bright);">DEV V1.31 改版：活動快照自己存一份完整數值，不是只存「模板 ID ＋ 版號」再回查。</strong>活動於<strong>儲存草稿</strong>時把所引用模板的門檻／獎項／權重／各幣別設定<strong>整組複製進活動</strong>，<strong style="color:var(--orange-bright);">同時記下來源的模板 ID ＋ 模板版本序號供對帳</strong>。必須自存的理由：模板可被刪除（見〈<a href="#template-delete" style="color:var(--gold-light);">DEV §06 模板刪除規則</a>〉），只存指標會查不到；且模板改版不影響現有活動，回查模板表會拿到錯的數值。完整機制見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉。<br><strong style="color:var(--red-bright);">活動 Tab 4 快照明細的顯示格式＝「名稱　快照 Vn　· ID 前 8 碼」</strong>（例：<strong><span class="mono">忠誠加碼　快照 V2　· 6aa3572a</span></strong>，DEV V1.32 改，原為「模板 ID · 名稱 版號」；完整逐畫面規定見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六 · 名稱不是 key</a>〉）；<strong style="color:var(--orange-bright);">名稱取模板目前的最新名稱、不凍結歷史名稱</strong>（顯示名會跟著變，<strong>快照數值不變</strong>），辨識以 ID 為準。</td></tr>
       <tr><td>與標籤變動一致<span class="tag-upd">2026-09-02</span></td><td class="dim">「<strong>已鎖定當日配置的玩家不被改寫</strong>」與 <a href="#tag-rules" style="color:var(--gold-light);">DEV §12</a>「<strong>標籤變動不即時、於次一個每日重置時點套用</strong>」<strong>同一設計哲學</strong>：飛行中資料不被改寫。<br><strong style="color:var(--orange-bright);">DEV V1.20 差異提醒：</strong>「<strong>新版本何時上架</strong>」（核准當下）與「<strong>已鎖定玩家何時換版</strong>」（次一重置時點）是<strong>兩件事</strong>——本版只把前者改為即時，後者不變。<br>
         <strong style="color:var(--red-bright);">⚠ DEV V1.24 必讀 · 「暫停」與「換版」的時間口徑相反，這不是矛盾：</strong><br>
         · <strong>暫停／線路被移除＝關掉活動</strong> → <strong style="color:var(--red-bright);">立即</strong>對全體生效，已鎖定玩家<strong>沒有豁免</strong>。<br>
@@ -5977,15 +6075,21 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td>帶入範圍</td><td class="dim"><strong>除「活動開始時間」與「活動結束時間」兩欄外，來源活動的設定全部帶入</strong>——活動名稱、活動類型、版型主題、適用線路、<strong>每日重置時間</strong>、標籤規則與模板配置、預設配置皆照抄。<strong style="color:var(--orange-bright);">每日重置時間屬於活動設定、不屬於檔期，一律照抄</strong>（DEV V1.31 明定，避免開發誤把它當成「時間」而不帶入）。</td></tr>
       <tr><td>開始時間<span class="dim" style="font-size:10px;">（預設值）</span></td><td class="dim"><strong>建立當天的隔日 00:00（UTC+8）</strong>。此處的 00:00 指<strong>自然日的凌晨零點</strong>，與該活動的每日重置時間無關（DEV V1.31 明定：本欄是本文件中少數不用「活動日」口徑的地方）。營運可自行改寫。</td></tr>
       <tr><td>結束時間<span class="dim" style="font-size:10px;">（預設值）</span></td><td class="dim"><strong>開始時間 ＋ 14 天</strong>（＝隔日 00:00 起算第 14 天的同一時刻）。營運可自行改寫。</td></tr>
-      <tr><td>複本的狀態與識別</td><td class="dim">狀態重置為<strong>草稿</strong>；<strong style="color:var(--gold-light);">版本＝未建立（尚未核准，DEV V1.23）</strong>；ID 加 <span class="mono">_COPY</span>（新活動取得全新 Campaign ID·唯讀）；<strong>審查反饋與駁回原因一併清空</strong>（沿用〈審查反饋〉既有規則）。</td></tr>
+      <tr><td>複本的狀態與識別<span class="tag-upd">2026-09-14</span></td><td class="dim"><strong style="color:var(--red-bright);">點「複製」只是把來源活動的設定帶進表單，此時活動尚未建立</strong>——版本欄<strong>空白</strong>、活動狀態<strong>空白</strong>（<strong style="color:var(--gold-light);">DEV V1.33 改口，取代 V1.32 的「跳出表單當下即 V1」</strong>）。<br>
+      <strong>按下第一次「儲存草稿」時才真正建立活動</strong>：此刻同時取得全新 Campaign ID（<span class="mono">_COPY</span> 後綴、唯讀）、<strong>版本＝V1</strong>、活動狀態＝<strong>未運行</strong>、版本狀態＝<strong>草稿</strong>。<br>
+      <strong style="color:var(--gold-light);">這樣訂的理由：</strong>①與 QA 實測的「複本儲存並送審後即為 V1」不衝突；②<strong>營運點了複製後直接關掉不會留下空草稿</strong>（前一版的做法會留）。<br>
+      <strong>審查反饋與駁回原因一併清空</strong>（沿用〈審查反饋〉既有規則）。</td></tr>
       <tr><td>模板數值快照</td><td class="dim">複本是<strong>一份新的草稿</strong>，其模板數值快照<strong>於複本首次按「儲存草稿」時才拍</strong>，<strong style="color:var(--red-bright);">不沿用來源活動的舊快照</strong>。規則見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉。</td></tr>
       <tr><td>與活動重疊硬擋的關係<span class="dim" style="font-size:10px;">（DEV V1.31 新增）</span></td><td class="dim"><strong style="color:var(--red-bright);">複製本身不觸發重疊檢查，但送審時會</strong>——複本照抄來源活動的<strong>適用線路</strong>，若來源活動的檔期與複本的預設檔期（隔日起 14 天）有交集，複本送審必被〈<a href="#camp-overlap" style="color:var(--gold-light);">DEV §06 活動重疊硬擋</a>〉擋下。<strong>本版不放寬硬擋</strong>；改為在複製完成進入表單時顯示一次提示「此複本與來源活動的線路與時段重疊，送審前請先調整線路或時間」（<span class="mono">admin.camp.copy_overlap_hint</span>）。</td></tr>
     </tbody>
   </table>
 
-  <div class="sub-title" id="review-fsm">五、審核流程（狀態機 · 六態）<span class="tag-upd">2026-09-11</span></div>
+  <div class="sub-title" id="review-fsm">五、審核流程（狀態機 · <span style="color:var(--gold-light);">活動狀態四態 × 版本狀態五態</span>）<span class="tag-upd">2026-09-14</span></div>
   <div class="callout info">
-    <strong>規則：</strong>設定完成後<strong>提交審查</strong>，由<strong>最高權限（Admin）</strong>核准後方可上線；<strong style="color:var(--red-bright);">DEV V1.31：本審核流程只適用於「活動」，模板已改為免審查、儲存即生效</strong>（原「模板異動亦須經同一審核流程核准」廢除，見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉）；一般操作者<strong>不可自審自上</strong>（職責分離）；<strong>Admin 自行送審者得自核（寫入 E9 操作紀錄，見 DEV §06 審核流程①之例外）</strong>。<strong>活動狀態六態：草稿 → 送審中 → 已核准 → 運行中 → 已暫停 → 已結束</strong>；<strong style="color:var(--red-bright);">DEV V1.23 補：本六態指的是「活動狀態」；「待生效版本」另有自己的三態（無／草稿／送審中），兩者互不覆蓋</strong>——編輯運行中活動時，活動狀態<strong>維持運行中</strong>、只有版本狀態轉送審中（狀態轉移「運行中 →（版本）送審中 → 運行中」不改變活動狀態，見〈<a href="#status-two-fields" style="color:var(--gold-light);">本章一之一 · 兩個欄位</a>〉）；<strong>駁回 → 回草稿並顯示駁回原因（必填）</strong>。上線中 ⇄ 已暫停 可互切。<br><strong style="color:var(--gold-light);">DEV V1.31 新增 · 核准時須選生效時點：</strong>核准「運行中活動的待生效版本」時，Admin 必須先選「<strong>立即生效</strong>」或「<strong>隔日生效</strong>」（預設隔日）才能按核准；<strong>新活動的首次核准不出現此選項</strong>。規則見〈<a href="#effect-timing" style="color:var(--gold-light);">本章三 · 生效時點的選擇</a>〉。<strong style="color:var(--red-bright);">DEV V1.20 澄清：「暫停」與「編輯」互不相干</strong>——編輯運行中活動<strong>不會</strong>使活動暫停，也<strong>不需要</strong>先暫停才能編輯；只有在「需要讓玩家立即停止參與」時才使用暫停。
+    <strong>規則：</strong>設定完成後<strong>提交審查</strong>，由<strong>最高權限（Admin）</strong>核准後方可上線；<strong style="color:var(--red-bright);">DEV V1.31：本審核流程只適用於「活動」，模板已改為免審查、儲存即生效</strong>（原「模板異動亦須經同一審核流程核准」廢除，見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉）；一般操作者<strong>不可自審自上</strong>（職責分離）；<strong>Admin 自行送審者得自核（寫入 E9 操作紀錄，見 DEV §06 審核流程①之例外）</strong>。<strong style="color:var(--red-bright);">DEV V1.33 改版：狀態機由「活動狀態六態」拆為「活動狀態四態 × 版本狀態五態」兩條線，且<u>兩者都要顯示在活動列表上</u></strong>（取代 DEV V1.23 的六態寫法與 DEV V1.20「版本狀態不上列表」的拍板，見〈<a href="#status-two-fields" style="color:var(--gold-light);">本章一之一 · 兩個欄位</a>〉）：<br>
+    · <strong style="color:var(--gold-light);">活動狀態四態</strong>：<strong>未運行 → 運行中 ⇄ 已暫停 → 已結束</strong>（原六態中的「草稿／送審中／已核准」一律收斂為<strong>未運行</strong>）。<br>
+    · <strong style="color:var(--gold-light);">版本狀態五態</strong>：<strong>無 → 草稿 → 修改待審核 →（核准）→ 已核准或直接回「無」</strong>；<strong>駁回 → 版本狀態＝駁回並顯示駁回原因（必填）</strong>，<strong>營運一動手編輯即自動回「草稿」</strong>。<br>
+    · <strong style="color:var(--red-bright);">兩條線互不覆蓋</strong>——編輯運行中活動時，活動狀態<strong>維持運行中</strong>、只有版本狀態轉「修改待審核」；上線中 ⇄ 已暫停 可互切。<br><strong style="color:var(--gold-light);">DEV V1.31 新增 · 核准時須選生效時點：</strong>核准「運行中活動的待生效版本」時，Admin 必須先選「<strong>立即生效</strong>」或「<strong>隔日生效</strong>」（預設隔日）才能按核准；<strong>新活動的首次核准不出現此選項</strong>。規則見〈<a href="#effect-timing" style="color:var(--gold-light);">本章三 · 生效時點的選擇</a>〉。<strong style="color:var(--red-bright);">DEV V1.20 澄清：「暫停」與「編輯」互不相干</strong>——編輯運行中活動<strong>不會</strong>使活動暫停，也<strong>不需要</strong>先暫停才能編輯；只有在「需要讓玩家立即停止參與」時才使用暫停。
   </div>
   <div class="callout warn">
     <strong>暫停／恢復的操作入口（明定 · <span style="color:var(--gold-light);">DEV V1.7 修訂</span>）：</strong><strong>運行中 ⇄ 已暫停</strong> 的操作入口＝<strong style="color:var(--gold-light);">活動管理列表的操作欄「暫停／運行」按鈕</strong>，<strong>操作(Operator) 以上可操作</strong>（查看(Platform) 不顯示）。<strong style="color:var(--orange-bright);">兩者皆需彈窗二次確認</strong>——<strong>非「一鍵啟停」</strong>。完整規格見〈<a href="#camp-pause" style="color:var(--gold-light);">一之一、活動暫停／運行</a>〉。<br>
@@ -6025,27 +6129,40 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <div class="mermaid-box">
     <div class="mermaid" id="mmd-fsm">stateDiagram-v2
   direction LR
-  [*] --> 草稿
-  草稿 --> 送審中: 提交審查
-  送審中 --> 已核准: 最高權限(Admin)核准
-  送審中 --> 草稿: 駁回(原因必填)
-  已核准 --> 運行中: 排程 / 手動上線
-  運行中 --> 已暫停: 手動暫停
-  已暫停 --> 運行中: 恢復
+  [*] --> 未運行
+  未運行 --> 運行中: 已核准且到達活動起始時間
+  運行中 --> 已暫停: 手動暫停 二次確認
+  已暫停 --> 運行中: 手動恢復 二次確認
   運行中 --> 已結束: 到期 / 手動下架
   已暫停 --> 已結束: 到期 / 手動下架
+  未運行 --> 已結束: 未上線即到期 / 手動下架
   已結束 --> [*]</div>
-    <div class="mermaid-cap">FIG.16 · <strong>活動狀態</strong>機（六態：草稿 → 送審中 → 已核准 → 運行中 ⇄ 已暫停 → 已結束；駁回→回草稿）</div>
+    <div class="mermaid-cap">FIG.16 · <strong>活動狀態</strong>機（<strong>DEV V1.33 四態</strong>：未運行 → 運行中 ⇄ 已暫停 → 已結束）</div>
+  </div>
+  <div class="mermaid-box">
+    <div class="mermaid" id="mmd-fsm-ver">stateDiagram-v2
+  direction LR
+  [*] --> 無
+  無 --> 草稿: 儲存草稿
+  草稿 --> 修改待審核: 提交審查
+  修改待審核 --> 駁回: Admin 駁回 原因必填
+  駁回 --> 草稿: 營運開始編輯
+  修改待審核 --> 已核准: Admin 核准 + 選隔日生效
+  修改待審核 --> 無: Admin 核准 + 選立即生效 當場併入
+  已核准 --> 無: 次一個每日重置時點到達 併入
+  無 --> [*]</div>
+    <div class="mermaid-cap">FIG.16-1 · <strong>版本狀態</strong>機（<strong>DEV V1.33 新增 · 五態</strong>：無／草稿／修改待審核／駁回／已核准）</div>
   </div>
   <div class="callout warn" style="font-size:12px;">
-    <strong style="color:var(--red-bright);">⚠ FIG.16 畫的是「活動狀態」，不含「待生效版本」的流程（DEV V1.23 補述）：</strong>編輯運行中活動時，活動狀態<strong>停留在「運行中」不動</strong>，走的是另一條<strong>版本狀態</strong>線——<span class="mono">無 → 草稿（存草稿）→ 送審中（提交審查）→ 核准後併入運行中版本並消滅</span>；駁回則<span class="mono">送審中 → 草稿</span>。<br>
-    因此圖上<strong>沒有</strong>「運行中 → 送審中」這條轉移，<strong style="color:var(--green-bright);">這是正確的，不是漏畫</strong>——一檔運行中的活動<strong>永遠不會因為被編輯而變成「送審中」</strong>。兩個欄位的定義見〈<a href="#status-two-fields" style="color:var(--gold-light);">本章一之一</a>〉。
+    <strong style="color:var(--red-bright);">⚠ 兩張圖是兩條互相獨立的線，請對照看（DEV V1.33）：</strong>編輯運行中活動時，<strong>FIG.16 的活動狀態停留在「運行中」不動</strong>，走的是 <strong>FIG.16-1 的版本狀態線</strong>。<br>
+    因此 FIG.16 上<strong>沒有</strong>「運行中 → 修改待審核」這條轉移，<strong style="color:var(--green-bright);">這是正確的，不是漏畫</strong>——一檔運行中的活動<strong>永遠不會因為被編輯而離開「運行中」</strong>。<br>
+    <strong style="color:var(--gold-light);">活動列表要把這兩條線各用一欄顯示</strong>，兩欄的定義與值域見〈<a href="#status-two-fields" style="color:var(--gold-light);">本章一之一</a>〉。
   </div>
   <div class="callout info">
     <strong>核准後的狀態語意（明定）：</strong>最高權限(Admin) 核准時，落到哪一態<strong>取決於是否已達活動開始時間</strong>：
     <ol style="margin:6px 0 0;padding-left:18px;line-height:1.9;">
       <li><strong>已達活動開始時間 → 直接進入「運行中」</strong>（對應原型 v2 的「<strong style="color:var(--green);">核准並上線</strong>」按鈕語意）。</li>
-      <li><strong>未達開始時間 → 進入「已核准」</strong>；到達活動開始時間後，<strong>由排程自動轉「運行中」</strong>，不需人工再操作一次上線。</li>
+      <li><strong>未達開始時間 → 活動狀態維持「未運行」</strong>（<strong style="color:var(--gold-light);">DEV V1.33 改寫</strong>：原寫「進入『已核准』」，已核准現在是<strong>版本狀態</strong>的值，不再是活動狀態的值）；到達活動開始時間後，<strong>由排程自動把活動狀態轉「運行中」</strong>，不需人工再操作一次上線。</li>
     </ol>
   </div>
 
@@ -6425,7 +6542,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 開發交付版規格書 · LUCKY CHEST DEV V1.31 · CONFIDENTIAL 2026<br>
+  抽寶箱 開發交付版規格書 · LUCKY CHEST DEV V1.33 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 受眾：後端／前端／美術／QA · 完整版（含 KPI／成本／時程）另見 <a href="treasure_box_crm_spec_v5.0.html" target="_blank" rel="noopener" style="color:var(--gold-light);">treasure_box_crm_spec_v5.0.html</a>（內容版號 V5.3）<br>
   <strong>兩份文件如有衝突，以本文件為準。</strong>
 </div>
