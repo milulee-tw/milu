@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Player Experience Scripts · Combo Gaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#E92B0D; --accent-text:#C42109; --accent-soft:#F0876F;
+  --bg:#FFFFFF; --bg-2:#FAFAFA; --bg-3:#FAFAFA; --bg-4:#F0F0F0; --bg-5:#E4E4E4;
+  --border:#D6D6D6; --border-bright:#ADADAD;
+  --text-primary:#1A1A1A; --text-secondary:#434343; --text-dim:#8F8F8F;
+  --red:#B42318; --teal:#0F766E; --blue:#2563EB; --green:#1F8A4C; --purple:#7C3AED; --orange:#D97706;
+  --accent-fill:rgba(233,43,13,0.1); --accent-fill-faint:rgba(233,43,13,0.06);
+  --green-bright:#17693C; --blue-bright:#1D4ED8; --red-bright:#9A1C10; --purple-bright:#6D28D9;
+  --green-fill:rgba(31,138,76,0.1); --blue-fill:rgba(37,99,235,0.09);
+  --red-fill:rgba(180,35,24,0.09); --red-fill-faint:rgba(180,35,24,0.06);
+  --purple-fill:rgba(124,58,237,0.09); --orange-fill:rgba(217,119,6,0.08);
+  --overlay-faint:rgba(0,0,0,0.02); --overlay-row:rgba(0,0,0,0.07);
+  --shadow:rgba(0,0,0,0.08); --grid-line:#EAEAEA;
+}
+html[data-theme="dark"]{
+  --accent:#F04E30; --accent-text:#FF7A5C; --accent-soft:#A63A24;
+  --bg:#111112; --bg-2:#151517; --bg-3:#1A1A1C; --bg-4:#202023; --bg-5:#2A2A2E;
+  --border:#2A2A2E; --border-bright:#3D3D42;
+  --text-primary:#F2F2F0; --text-secondary:#B4B4B2; --text-dim:#707070;
+  --red:#D9483B; --teal:#34B3A6; --blue:#5B8DEF; --green:#3FBF6F; --purple:#A78BFA; --orange:#E8A33D;
+  --accent-fill:rgba(240,78,48,0.14); --accent-fill-faint:rgba(240,78,48,0.07);
+  --green-bright:#7ADFA0; --blue-bright:#93B8F5; --red-bright:#F0907A; --purple-bright:#C4B5FD;
+  --green-fill:rgba(63,191,111,0.12); --blue-fill:rgba(91,141,239,0.12);
+  --red-fill:rgba(217,72,59,0.12); --red-fill-faint:rgba(217,72,59,0.07);
+  --purple-fill:rgba(167,139,250,0.12); --orange-fill:rgba(232,163,61,0.1);
+  --overlay-faint:rgba(255,255,255,0.02); --overlay-row:rgba(255,255,255,0.06);
+  --shadow:rgba(0,0,0,0.5); --grid-line:#232326;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text-primary);font-family:'DM Sans',sans-serif;
+  line-height:1.7;font-size:15px;transition:background .3s,color .3s;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-thumb{background:var(--bg-5);border-radius:2px;}
+
+.theme-toggle{position:fixed;bottom:24px;right:24px;z-index:210;width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--bg);
+  border:1px solid var(--border);color:var(--text-primary);box-shadow:0 4px 24px var(--shadow);
+  transition:all .25s;-webkit-appearance:none;appearance:none;}
+.theme-toggle:hover{border-color:var(--text-primary);transform:translateY(-2px) rotate(-12deg);}
+.theme-toggle svg{width:20px;height:20px;display:block;}
+.theme-toggle .icon-sun{display:none;} .theme-toggle .icon-moon{display:block;}
+html[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+html[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+
+.wrap{max-width:920px;margin:0 auto;padding:0 32px 120px;}
+.hero{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 60px;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--accent-text);
+  text-transform:uppercase;background:var(--accent-fill-faint);padding:7px 18px;border-radius:50px;
+  align-self:flex-start;margin-bottom:34px;}
+.hero h1{font-size:clamp(38px,5.8vw,62px);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:20px;}
+.hero h1 span{color:var(--accent);}
+.hero-lead{font-size:18px;color:var(--text-secondary);line-height:1.75;max-width:680px;margin-bottom:40px;}
+.hero-lead strong{color:var(--text-primary);}
+.pills{display:flex;gap:10px;flex-wrap:wrap;}
+.pill{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--text-secondary);
+  padding:7px 16px;border:1px solid var(--border);border-radius:50px;}
+.pill strong{color:var(--text-primary);}
+.pill.hot{border-color:var(--accent);color:var(--accent-text);}
+
+.blk{margin-bottom:100px;}
+.blk-num{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--accent-text);margin-bottom:10px;text-transform:uppercase;}
+.blk h2{font-size:29px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin-bottom:14px;}
+.blk h2 span{color:var(--accent);}
+.blk-lead{font-size:16px;color:var(--text-secondary);line-height:1.85;max-width:730px;margin-bottom:34px;}
+.blk-lead strong{color:var(--text-primary);}
+.blk-lead em{color:var(--accent-text);font-style:normal;font-weight:600;}
+
+.fig{background:var(--bg-3);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:24px;}
+.fig svg{display:block;width:100%;height:auto;}
+.fig-cap{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--text-dim);
+  text-transform:uppercase;margin-bottom:20px;}
+.fig-note{font-size:13px;color:var(--text-secondary);margin-top:18px;line-height:1.7;}
+.fig-note strong{color:var(--text-primary);}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.cards.c3{grid-template-columns:repeat(3,1fr);}
+.cards.c2{grid-template-columns:repeat(2,1fr);}
+.cards.c1{grid-template-columns:1fr;}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.card-ico{font-size:20px;margin-bottom:10px;}
+.card-k{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;color:var(--text-dim);
+  text-transform:uppercase;margin-bottom:8px;}
+.card-v{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:var(--accent-text);
+  line-height:1.15;margin-bottom:8px;}
+.card-t{font-size:14px;font-weight:700;margin-bottom:6px;}
+.card-d{font-size:13px;color:var(--text-secondary);line-height:1.6;}
+.card.hi{border-color:var(--accent);background:var(--accent-fill-faint);}
+.card.warn{border-color:var(--red);background:var(--red-fill-faint);}
+.card.ok{border-color:var(--green);background:var(--green-fill);}
+.card.ok .card-v{color:var(--green-bright);}
+
+.note{background:var(--bg-3);border:1px solid var(--border);border-left:3px solid var(--teal);
+  padding:18px 22px;border-radius:0 14px 14px 0;margin-bottom:20px;font-size:14.5px;color:var(--text-secondary);line-height:1.75;}
+.note strong{color:var(--text-primary);}
+.note.warn{border-left-color:var(--red);}
+.note.warn strong{color:var(--red-bright);}
+.note.ok{border-left-color:var(--green);}
+.note.info{border-left-color:var(--blue);}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:20px;}
+.tbl th{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--text-secondary);
+  text-transform:uppercase;padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);background:var(--bg-3);}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--overlay-row);}
+.tbl td.mono{font-family:'DM Mono',monospace;font-size:13px;}
+.tbl td.dim{color:var(--text-secondary);}
+.tbl tr:hover td{background:var(--overlay-faint);}
+.tag{font-family:'DM Mono',monospace;font-size:9px;padding:3px 10px;border-radius:50px;letter-spacing:.06em;display:inline-block;}
+.tag.g{background:var(--green-fill);color:var(--green-bright);}
+.tag.b{background:var(--blue-fill);color:var(--blue-bright);}
+
+.foot{text-align:center;padding:60px 32px;border-top:1px solid var(--border);
+  font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:.15em;line-height:2;}
+
+@media(max-width:820px){
+  .cards,.cards.c3,.cards.c2{grid-template-columns:1fr 1fr;}
+  .cards.c1{grid-template-columns:1fr;}
+  .wrap{padding:0 20px 80px;}
+}
+@media print{.theme-toggle{display:none!important;}}
+</style>
+<script>
+(function(){try{var s=localStorage.getItem('brief-en-theme');
+document.documentElement.setAttribute('data-theme', s||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'));}
+catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light/dark theme">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+
+<div class="wrap">
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="eyebrow">Combo Gaming · Feature Brief · 2026</div>
+  <h1>Turning a new player's<br>first 150 spins<span> from luck into design</span></h1>
+  <div class="hero-lead">
+    We cannot control whether a new player gets lucky — but we can <strong>remove the two extremes</strong>
+    from the run they receive.<br>
+    For each game we pre-build <strong>two pools of verified 150-spin result sets, 2,000 in total</strong>,
+    and serve them according to the player's current bet size. After <strong>150 recorded bets</strong>
+    the game returns to standard RNG.<br>
+    <strong>The order in which those results appear is random</strong> — two players drawing the same set
+    still have completely different journeys.<br>
+    <strong>No additional money is given away</strong> — the average RTP of the scripts is the same as standard RNG.
+    What changes is the spread of outcomes, not the average. The player sees nothing different at any point.
+  </div>
+  <div class="pills">
+    <div class="pill"><strong>Scope</strong> Server-side only</div>
+    <div class="pill"><strong>Player UI</strong> None</div>
+    <div class="pill"><strong>Art assets</strong> None</div>
+    <div class="pill"><strong>Integration change</strong> None</div>
+    <div class="pill hot"><strong>Currency</strong> THB only at launch</div>
+    <div class="pill hot"><strong>Markets</strong> Non-certified only</div>
+    <div class="pill"><strong>Cost</strong> Average RTP unchanged</div>
+  </div>
+</div>
+
+<!-- ══ 01 PROBLEM ══ -->
+<div class="blk">
+  <div class="blk-num">01 · The problem</div>
+  <h2>96.7% is a <span>long-run average</span>, not anyone's actual experience</h2>
+  <div class="blk-lead">
+    Two players can open the same game, with identical maths, and have completely opposite
+    first sessions. One hits a Free Game early and keeps playing. The other runs dry and
+    <em>never comes back for day two</em>. Neither outcome is a design fault — it is simply
+    what probability does over the first hundred spins or so. Today we have no way to influence it.
+  </div>
+
+  <div class="fig">
+    <div class="fig-cap">Figure 1 · Two new players, same game, the first 150 spins</div>
+    <svg viewBox="0 0 860 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Balance curves of two new players in the same game">
+      <g stroke="var(--grid-line)" stroke-width="1">
+        <line x1="60" y1="40" x2="820" y2="40"/><line x1="60" y1="100" x2="820" y2="100"/>
+        <line x1="60" y1="160" x2="820" y2="160"/><line x1="60" y1="220" x2="820" y2="220"/>
+        <line x1="60" y1="280" x2="820" y2="280"/>
+      </g>
+      <line x1="60" y1="160" x2="820" y2="160" stroke="var(--border-bright)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="60" y="152" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)" letter-spacing="1">Starting balance</text>
+      <polyline fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round"
+        points="60,160 120,172 180,150 240,164 300,120 360,132 420,96 480,110 540,84 600,98 660,70 720,86 780,62 820,74"/>
+      <circle cx="420" cy="96" r="5" fill="var(--green)"/>
+      <text x="430" y="88" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green)">Free Game hit</text>
+      <text x="828" y="78" font-family="DM Mono, monospace" font-size="10" fill="var(--green)">A</text>
+      <polyline fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linejoin="round"
+        points="60,160 120,178 180,196 240,188 300,214 360,228 420,220 480,246 540,258 600,252 660,272 700,284"/>
+      <circle cx="700" cy="284" r="5" fill="var(--red)"/>
+      <text x="576" y="304" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--red)">Balance gone · player leaves</text>
+      <text x="712" y="288" font-family="DM Mono, monospace" font-size="10" fill="var(--red)">B</text>
+      <text x="60" y="308" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Spin 1</text>
+      <text x="770" y="308" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Spin 150</text>
+    </svg>
+    <div class="fig-note">
+      Both curves have <strong>exactly the same expected value</strong>. The only difference is the
+      order in which results arrive. Player B never sees the game's core feature, and never returns.
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 SOLUTION ══ -->
+<div class="blk">
+  <div class="blk-num">02 · The solution</div>
+  <h2>Two script pools, <span>split by bet size</span></h2>
+  <div class="blk-lead">
+A large simulation is run <strong>on our game server</strong> for each game — <strong>a million spins or more</strong> —
+    and the output is cut into <strong>continuous 150-spin segments</strong>. Every segment must pass
+    <strong>a single gate</strong> before it enters a pool: the RTP of the whole 150-spin segment must fall
+    between <strong>85% and 115%</strong>.<br>
+    Bets are routed into three bands — a <em>low-stake pool</em> (bet tiers 1–4, THB &lt; 10) and a
+    <em>high-stake pool</em> (tiers 5–11, THB 10–100), with <strong>1,000 scripts each</strong>; bets at
+    <em>tier 12 and above</em> (THB ≥ 200) are <strong>not scripted at all</strong>.
+    Once the player reaches <strong>150 recorded bets</strong>, the mechanism ends.
+  </div>
+
+  <div class="fig">
+    <div class="fig-cap">Figure 2 · Three bet bands and how the 150-spin window is consumed</div>
+    <svg viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three bet bands: low-stake and high-stake pools of 1000 scripts each, and bets at tier 12 or above which use standard RNG and consume no progress">
+      <defs>
+        <marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--accent)"/></marker>
+        <marker id="a3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--blue)"/></marker>
+        <marker id="a4" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--text-dim)"/></marker>
+      </defs>
+      <text x="0" y="14" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--accent)">Low-stake pool · tiers 1–4</text>
+      <text x="0" y="29" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB &lt; 10 · 1,000 scripts × 150 spins</text>
+      <text x="0" y="42" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Script RTP 85–115%</text>
+      <rect x="0.0" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="72.2" width="16" height="9" rx="2" fill="var(--accent)"/><rect x="127.4" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/>
+      <text x="0" y="132" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--blue)">High-stake pool · tiers 5–11</text>
+      <text x="0" y="147" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB 10–100 · 1,000 scripts × 150 spins</text>
+      <text x="0" y="160" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Script RTP 85–115% (identical gate)</text>
+      <rect x="0.0" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="179.6" width="16" height="9" rx="2" fill="var(--blue)"/><rect x="54.6" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/>
+      <text x="0" y="250" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-secondary)">Not scripted · tier 12 and above</text>
+      <text x="0" y="265" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB ≥ 200 · no script</text>
+      <rect x="0" y="274" width="195" height="36" rx="6" fill="none" stroke="var(--border-bright)" stroke-width="1.2" stroke-dasharray="5 4"/>
+      <text x="12" y="290" font-family="DM Sans, sans-serif" font-size="11" fill="var(--text-secondary)">Standard RNG</text>
+      <text x="12" y="304" font-family="DM Sans, sans-serif" font-size="11" font-weight="700" fill="var(--text-primary)">Consumes no progress</text>
+      <path d="M210 78 L285 150" stroke="var(--accent)" stroke-width="2" marker-end="url(#a2)"/>
+      <path d="M210 196 L285 178" stroke="var(--blue)" stroke-width="2" marker-end="url(#a3)"/>
+      <path d="M210 290 L285 142" stroke="var(--text-dim)" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#a4)"/>
+      <text x="212" y="222" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--text-primary)">Every spin,</text>
+      <text x="212" y="238" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--text-primary)">routed by bet</text>
+      <text x="305" y="112" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)">The player's actual 150 spins</text>
+      <text x="305" y="128" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">150 recorded bets · hard cap · no replay, no extension</text>
+      <rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="640.3" y="134" width="3.0" height="9" rx="1.5" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.4"/><rect x="305.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="308.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="312.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="315.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="319.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="322.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="326.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="329.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="333.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="336.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="340.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="343.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="347.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="350.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="354.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="357.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="361.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="365.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="368.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="372.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="375.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="379.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="382.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="386.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="389.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="393.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="396.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="400.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="403.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="407.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="410.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="414.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="418.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="421.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="425.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="428.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="432.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="435.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="439.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="442.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--accent-soft)"/><rect x="446.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="449.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="453.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="456.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="460.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="463.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="467.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="470.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="474.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="478.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="481.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="485.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="488.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="492.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="495.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="499.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="502.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="506.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="509.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="513.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="516.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="520.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="523.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="527.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="530.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="534.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="538.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="541.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="545.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="548.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="552.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="555.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="559.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="562.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="566.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="569.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="573.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="576.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="580.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="583.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="587.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="590.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="594.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="598.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="601.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="605.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="608.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="612.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="615.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="619.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="622.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="626.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="629.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="633.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="636.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="640.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="643.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="647.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="650.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="654.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="658.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="661.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="665.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="668.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="672.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="675.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="679.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="682.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="686.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="689.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="693.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="696.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="700.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="703.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="707.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="711.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="714.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="718.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="721.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="725.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="728.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="732.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="735.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="739.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="742.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="746.2" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="749.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="753.3" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="756.8" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="760.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="763.9" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="767.4" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="771.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="774.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="778.0" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="781.5" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="785.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="788.6" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="792.1" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/><rect x="795.7" y="150" width="3.0" height="40" rx="1.5" fill="var(--blue)"/>
+      <text x="305" y="206" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Spin 1</text>
+      <text x="790" y="206" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Spin 150</text>
+      <g font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">
+        <rect x="305" y="226" width="9" height="12" rx="2" fill="var(--accent-soft)"/><text x="320" y="236">small bet → low-stake pool</text>
+        <rect x="500" y="226" width="9" height="12" rx="2" fill="var(--blue)"/><text x="515" y="236">mid bet → high-stake pool</text>
+        <rect x="695" y="226" width="9" height="12" rx="2" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.6"/><text x="710" y="236">large bet → not counted</text>
+      </g>
+      <text x="305" y="268" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">Grey cells on the upper row: bets at tier 12 or above — standard RNG, no progress consumed.</text>
+      <text x="305" y="290" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">After 150 recorded bets the game returns to standard RNG.</text>
+    </svg>
+  </div>
+
+  <div class="note ok">
+    <strong>The key change in this version: the RTP is no longer raised.</strong><br>
+    Both pools now average the <strong>natural RTP of the game (≈96.7%, the same as standard RNG)</strong>.
+    The single gate only removes the two extremes of a 150-spin run — nothing scrapes the bottom, nothing runs away at the top.<br>
+    In plain terms: <strong>a new player does not get better odds, they get a less extreme 150 spins.</strong>
+    No additional money is paid out; only the spread of outcomes changes.
+  </div>
+
+  <div class="note ok">
+    <strong>The second key change: a script is a set of results, not a sequence.</strong><br>
+    The 150 entries in a script file are numbered, but <strong>that is a data index, not the order the player
+    will see them in</strong>. On every spin the server draws one of the results <strong>not yet used</strong>
+    from that script, at random; once used it never reappears.<br>
+    <strong>Two players drawing the same script therefore have completely different journeys</strong> — different
+    points at which the Free Game arrives, different placement of dry stretches.<br>
+    <strong>Nothing about the totals changes</strong>: RTP, Free Game count, Big Win count and the maximum single
+    multiplier are all sums over the 150 results, so the 85–115% gate and the 172.5× ceiling hold exactly as before.
+  </div>
+
+  <div class="note warn">
+    <strong>What this mechanism does not guarantee.</strong> The gate looks at the RTP of the
+    <em>whole</em> 150-spin set, not at what happens inside it — and the order is drawn per player.
+    It therefore <strong>does not guarantee that a player will avoid a long dry stretch</strong>; how long a dry
+    stretch runs differs for every player and <em>cannot be controlled at the script level at all</em>.
+    It can only be observed after the fact, from the spin logs.
+  </div>
+
+  <div class="note info">
+    <strong>Scripts are assigned at random, on first use.</strong> The first time a player bets in a band, the
+    server draws one of that pool's 1,000 scripts at random. <strong>Which script is drawn only determines which
+    150 results the player will meet</strong> — the order is decided spin by spin, at random.<br>
+    <strong>A Free Game counts as one spin.</strong> The triggering spin and all of its free spins consume one
+    step of the script and count as one recorded bet; the big-win limit is checked once for the whole round.
+  </div>
+
+  <div class="note ok">
+    <strong>Why 150 and not longer</strong><br>
+    The median number of spins played by a departing new player is <strong>66</strong> — half of them never
+    reach 150, let alone 300. A longer window means most of the script is never seen, while the full
+    exposure is still carried.<br>
+    A 150-spin window covers the range players actually reach, and halves the length of script a single
+    account can consume.<br>
+    The <strong>150-bet cap is hard</strong>: not per pool, no replay, no extension. However a player
+    moves between bet bands, the window does not get longer.
+  </div>
+
+  <div class="note info">
+    <strong>Both pools use the same gate — deliberately.</strong> A player who crosses from tier 4 to tier 5
+    moves to an <em>entirely different script</em>, so a small-bet run cannot be used to map a sequence and then
+    replayed at a higher stake. The 2,000 scripts of a game also share <strong>no spin with one another</strong>.
+  </div>
+
+  <div class="note info">
+    <strong>Players who cross the bet threshold mid-window</strong> receive two partial sets
+    rather than one complete script, so the 85–115% band is not guaranteed for them. This is an
+    accepted trade-off: what is lost is the <em>guarantee</em>, not the experience — the scripts are
+    ordinary results drawn from simulation, so a partial run behaves much like standard RNG rather
+    than worse. Both pools use the same gate, so there is nothing to gain by switching. We monitor how
+    often this happens and will revisit the rule if it turns out to be common.
+  </div>
+
+  <div class="note warn">
+    <strong>Two scope limits at launch.</strong> The mechanism only engages when
+    <strong>both</strong> conditions hold: the game is <strong>Lucky Paws</strong>, and the player's
+    wallet currency is <strong>THB</strong>. Players on any other currency are passed straight to
+    standard RNG — no script is assigned.<br>
+    Both thresholds for <strong>62 currencies are already defined</strong>, taken directly from the platform's
+    bet-tier table (tier 5 and tier 12) and held as fixed values rather than live FX, so a player cannot drift
+    between bands as rates move. Extending to further currencies is a configuration change —
+    <strong>no change to the mechanism or the scripts themselves</strong>.
+  </div>
+
+  <div class="note warn">
+    <strong>Two kinds of spin are excluded.</strong> A purchased Free Game (buy bonus), and any bet at
+    <strong>tier 12 or above (THB ≥ 200)</strong>. Both use <strong>standard RNG</strong> and
+    <strong>consume no script progress</strong>. The script's remaining results stay intact rather than having some carved out of it; a player who returns to tier 11 or below simply continues where they left off.
+  </div>
+</div>
+
+
+<!-- ══ 03 QUALITY GATES ══ -->
+<div class="blk">
+  <div class="blk-num">03 · Quality standard</div>
+  <h2>Five gates, <span>reduced to one</span></h2>
+  <div class="blk-lead">
+    A 150-spin segment now has to satisfy a <strong>single</strong> condition: the RTP of the whole segment
+    must fall between <strong>85% and 115%</strong>. Segments that fail are discarded and the next one is
+    evaluated. <strong>Both pools use the same gate</strong> — there is no difference between them.
+  </div>
+
+  <div class="cards c2" style="margin-bottom:12px">
+    <div class="card hi">
+      <div class="card-k">The only gate · RTP of the full 150-spin segment</div>
+      <div class="card-v">85 – 115%</div>
+      <div class="card-d">Removes the two extremes of a run — <strong>nothing scrapes the bottom, nothing runs away at the top</strong>. Identical for the low-stake and high-stake pools.</div>
+    </div>
+    <div class="card" style="border-color:var(--blue);background:var(--blue-fill)">
+      <div class="card-k">Average RTP across both pools</div>
+      <div class="card-v" style="color:var(--blue-bright)">≈ 96.7%</div>
+      <div class="card-d"><strong>The natural rate, identical to standard RNG.</strong> This version does not raise it: no additional money is paid out.</div>
+    </div>
+  </div>
+
+  <div class="note info">
+    <strong>Why the other four gates were removed.</strong> Requiring five conditions at once left very few
+    qualifying segments, which concentrated the pools on unusual runs — and the more conditions there are,
+    the harder it is for 2,000 scripts to stay independent of one another, which is what the analysis in
+    section 07-B depends on.<br>
+    Removed: <em>hit rate &gt; 35%</em>, <em>Free Game ≥ 1</em>, <em>Big Win ≥ 3</em>, <em>max single win &lt; 500×</em>.
+  </div>
+
+  <div class="note warn">
+    <strong>Two guarantees end with those gates.</strong><br>
+    ① A 150-spin script is <strong>no longer guaranteed to contain a Free Game</strong>.<br>
+    ② Hit rate is no longer constrained, so a long dry stretch is <strong>not ruled out</strong> (see section 02).<br>
+    Both points are stated here rather than left implicit, because the previous version's wording claimed otherwise.
+  </div>
+
+  <div class="note ok">
+    <strong>Outsized wins are still impossible — and the limit is now tighter.</strong><br>
+    The previous version enforced this with a gate (max single win &lt; 500×). It is now guaranteed by
+    arithmetic instead: a script is 150 spins and its RTP cannot exceed 115%, so the total multiplier of the
+    whole script cannot exceed <strong>172.5×</strong> — and therefore <strong>no individual spin within it can
+    exceed 172.5× either</strong>. Tighter than the old 500× gate, with one fewer check to run.
+  </div>
+
+  <div class="note info">
+    <strong>Fewer conditions, but many more scripts — and no overlap.</strong> The requirement rises from 200
+    to <strong>2,000 scripts per game</strong> (1,000 per pool), and <strong>no two scripts may share a single
+    spin</strong>, across pools as well as within them.
+  </div>
+</div>
+
+
+<!-- ══ 04 PRIORITY & COMPLIANCE ══ -->
+<div class="blk">
+  <div class="blk-num">04 · Order of precedence</div>
+  <h2>The prize cap <span>always comes first</span></h2>
+  <div class="blk-lead">
+    This mechanism <strong>never overrides existing risk controls</strong>.
+    Whenever a scripted result would exceed the line's available prize pool, the prize cap wins
+    and the script gives way for that spin.
+  </div>
+
+  <div class="fig">
+    <div class="fig-cap">Figure 3 · How each spin is resolved</div>
+    <svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Order of precedence: prize cap, then script, then standard RNG">
+      <rect x="1" y="10" width="858" height="66" rx="14" fill="var(--red-fill)" stroke="var(--red)" stroke-width="1.5"/>
+      <text x="24" y="40" font-family="DM Mono, monospace" font-size="10" fill="var(--red-bright)" letter-spacing="2">Priority 1 · Highest</text>
+      <text x="24" y="62" font-family="DM Sans, sans-serif" font-size="17" font-weight="700" fill="var(--text-primary)">Prize cap</text>
+      <text x="200" y="62" font-family="DM Sans, sans-serif" font-size="14" fill="var(--text-secondary)">Net win exceeds the line's prize pool → the spin is capped to a low win</text>
+      <path d="M430 80 L430 96" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#ah2)"/>
+      <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--text-dim)"/></marker></defs>
+      <rect x="1" y="100" width="858" height="66" rx="14" fill="var(--accent-fill-faint)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="24" y="130" font-family="DM Mono, monospace" font-size="10" fill="var(--accent-text)" letter-spacing="2">Priority 2 · This feature</text>
+      <text x="24" y="152" font-family="DM Sans, sans-serif" font-size="17" font-weight="700" fill="var(--text-primary)">Scripted result</text>
+      <text x="200" y="152" font-family="DM Sans, sans-serif" font-size="14" fill="var(--text-secondary)">Within pool limits, pays the multiplier defined for spin N of the script</text>
+      <path d="M430 170 L430 186" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#ah2)"/>
+      <rect x="1" y="190" width="858" height="60" rx="14" fill="var(--bg-4)" stroke="var(--border)" stroke-width="1.5"/>
+      <text x="24" y="216" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)" letter-spacing="2">Priority 3 · Existing</text>
+      <text x="24" y="238" font-family="DM Sans, sans-serif" font-size="17" font-weight="700" fill="var(--text-primary)">Standard RNG</text>
+      <text x="200" y="238" font-family="DM Sans, sans-serif" font-size="14" fill="var(--text-secondary)">Non-new players, completed scripts, bought Free Games, or any error condition</text>
+    </svg>
+  </div>
+
+  <div class="note info">
+    <strong>How the prize pool works</strong>: each line holds its own pool, seeded at launch.
+    Player losses flow into it and player wins are paid out of it. When a spin's net win would
+    exceed the remaining balance, that win is capped to a <strong>low win</strong> — a value close
+    enough to zero to be treated as zero — so the pool can never go negative. In practice this is
+    rare: the arithmetic of the gate means no spin inside a script can pay more than 172.5× bet, and the
+    largest bet that can draw on a script is THB 100, so the cap is very unlikely to trigger.<br><br>
+    The feature itself is configured <strong>per line and disabled by default</strong>; enabling it
+    on a given line is a written request handled on our side, with no self-service switch in any
+    back office.
+  </div>
+
+</div>
+
+<!-- ══ 05 PROTECTION ══ -->
+<div class="blk">
+  <div class="blk-num">05 · Protection by design</div>
+  <h2>There is <span>nothing to farm</span></h2>
+  <div class="blk-lead">
+    A mechanism that gives new accounts a controlled experience invites an obvious question:
+    <em>what stops someone from opening accounts repeatedly to harvest it?</em><br>
+    In this version the answer is structural rather than defensive: <strong>the scripts average the game's
+    natural RTP</strong>, so every one of the three bet bands carries the same negative expectation as
+    ordinary play. There is no positive-expectation band to harvest.
+  </div>
+
+  <div class="fig">
+    <div class="fig-cap">Figure 4 · Expected result for a single new account across the whole window (THB)</div>
+    <svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The original single-pool design was positive for the player; all three bands in this version are negative">
+      <line x1="30" y1="170" x2="830" y2="170" stroke="var(--border-bright)" stroke-width="1.5"/>
+      <text x="0" y="174" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">0</text>
+
+      <rect x="60" y="60" width="150" height="110" rx="4" fill="var(--red)"/>
+      <text x="135" y="50" font-family="DM Mono, monospace" font-size="16" fill="var(--red-bright)" text-anchor="middle">+1,500</text>
+      <text x="135" y="192" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Original · single pool</text>
+      <text x="135" y="210" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 200 × 300 spins</text>
+      <text x="135" y="228" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--red-bright)" text-anchor="middle">worth farming</text>
+
+      <rect x="255" y="170" width="150" height="14" rx="3" fill="var(--green)"/>
+      <text x="330" y="200" font-family="DM Mono, monospace" font-size="16" fill="var(--green-bright)" text-anchor="middle">−25</text>
+      <text x="330" y="222" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">This version · low-stake</text>
+      <text x="330" y="240" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 5 × 150 spins</text>
+      <text x="330" y="258" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green-bright)" text-anchor="middle">expected loss</text>
+
+      <rect x="450" y="170" width="150" height="46" rx="3" fill="var(--green)"/>
+      <text x="525" y="232" font-family="DM Mono, monospace" font-size="16" fill="var(--green-bright)" text-anchor="middle">−495</text>
+      <text x="525" y="254" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">This version · high-stake</text>
+      <text x="525" y="272" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 100 × 150 spins</text>
+      <text x="525" y="290" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green-bright)" text-anchor="middle">bet more, lose more</text>
+
+      <rect x="645" y="170" width="150" height="46" rx="3" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="720" y="232" font-family="DM Mono, monospace" font-size="13" fill="var(--text-dim)" text-anchor="middle">same as any player</text>
+      <text x="720" y="254" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">This version · THB ≥ 200</text>
+      <text x="720" y="272" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">no script at all</text>
+      <text x="720" y="290" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green-bright)" text-anchor="middle">standard RNG</text>
+    </svg>
+    <div class="fig-note">
+      All three bands carry the <strong>same −3.3% expectation</strong> (the game's 96.7% RTP); only the turnover differs.<br>
+      Low-stake: 150 × THB 5 × −3.3% ≈ <strong>−25</strong>. High-stake: 150 × THB 100 × −3.3% ≈ <strong>−495</strong>.<br>
+      The <strong>largest bet that can draw on a script is THB 100</strong>, because tier 12 (THB 200) and above
+      bypass the scripts entirely — which puts a fixed ceiling on the exposure of any single account.
+    </div>
+  </div>
+
+  <div class="cards c3">
+    <div class="card ok">
+      <div class="card-k">Layer 1 · Structural</div>
+      <div class="card-t">Every band is EV-negative</div>
+      <div class="card-d">The scripts average the game's natural RTP, so <strong>no band offers a positive expectation</strong>. Farming the scripts is the same proposition as playing the game normally.</div>
+    </div>
+    <div class="card ok">
+      <div class="card-k">Layer 2 · Structural</div>
+      <div class="card-t">Tier 12 and above are not scripted</div>
+      <div class="card-d">Not a bet cap — a player may bet any amount, but a bet of THB 200 or more draws no script and consumes no progress. Scripted turnover for one account is therefore fixed at <strong>THB 15,000</strong> (THB 100 × 150 spins). The equivalent ceiling in another currency is that currency's tier-11 bet × 150, recalculated before it is enabled.</div>
+    </div>
+    <div class="card ok">
+      <div class="card-k">Layer 3 · At source</div>
+      <div class="card-t">No spin can exceed 172.5×</div>
+      <div class="card-d">Not a gate but arithmetic: 150 spins at an RTP ceiling of 115% gives a total multiplier of 172.5×, so no single spin can exceed it. Tighter than the previous 500× rule.</div>
+    </div>
+  </div>
+  <div class="cards c1" style="margin-top:12px">
+    <div class="card ok">
+      <div class="card-k">Also structural</div>
+      <div class="card-t">The order is drawn per player, so nothing can be mapped by observation</div>
+      <div class="card-d">Even if two accounts draw the same script, <strong>the order they see it in is different</strong>. Recording and comparing sessions cannot even establish that two accounts share a script, let alone predict the next spin — reconstructing a script's contents would require playing all 150 spins, by which point the window has already closed.</div>
+    </div>
+  </div>
+  <div class="cards c2">
+    <div class="card ok">
+      <div class="card-k">Layer 4 · System</div>
+      <div class="card-t">Prize cap</div>
+      <div class="card-d">Existing control, always ahead of the script in precedence (section 04).</div>
+    </div>
+    <div class="card warn">
+      <div class="card-k">Layer 5 · Post-launch</div>
+      <div class="card-t">Behavioural monitoring</div>
+      <div class="card-d">Primarily watching for accounts clustering at <strong>THB 100</strong> — the highest bet that still draws on a script.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ 06 SCOPE ══ -->
+<div class="blk">
+  <div class="blk-num">06 · Scope</div>
+  <h2>What ships now, and <span>what comes later</span></h2>
+  <div class="blk-lead">
+    At launch the mechanism runs on <strong>Lucky Paws</strong> only, and only for players on
+    <strong>THB</strong>. From there it extends to further currencies and titles, and
+    <strong>every new game will ship with its own script pools</strong> as a standard deliverable.
+  </div>
+
+  <table class="tbl">
+    <thead>
+      <tr><th>Item</th><th>This release</th><th>Future (not yet scheduled)</th></tr>
+    </thead>
+    <tbody>
+            <tr><td class="dim">Games covered</td><td><strong>Lucky Paws</strong> only</td><td>Rolled out across the catalogue; standard on all new titles</td></tr>
+      <tr><td class="dim">Currencies</td><td><strong>THB only</strong> (thresholds 10 and 200) · all others pass through to standard RNG</td><td>Extended to <strong>all currencies</strong>; both thresholds already defined for 62 currencies</td></tr>
+      <tr><td class="dim">Script pools</td><td><strong>2,000 scripts</strong> per game (1,000 low-stake + 1,000 high-stake) · 150 results each · no shared spins</td><td>Production conditions for the next generation tuned from the characteristics analysis; <strong>first review at week 8 after launch</strong></td></tr>
+      <tr><td class="dim">Pool selection</td><td><span class="tag g">Per spin · bet tiers 5 and 12</span></td><td>Thresholds tuned to live data; bands may be subdivided further</td></tr>
+      <tr><td class="dim">Window length</td><td><strong>150 recorded bets</strong> (no replay, no extension; bets of THB 200+ do not count)</td><td>Length tuned to observed spin volume</td></tr>
+      <tr><td class="dim">Bought Free Games<br>and bets of THB 200+</td><td><span class="tag b">Standard RNG · no progress consumed</span></td><td>Unchanged</td></tr>
+      <tr><td class="dim">Player interface</td><td><span class="tag b">None</span></td><td>Unchanged</td></tr>
+      <tr><td class="dim">Integration work on your side</td><td><span class="tag b">None</span></td><td>Unchanged</td></tr>
+      <tr><td class="dim">Markets</td><td>Non-certified only · off by default, enabled per line on request</td><td>Unchanged</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note ok">
+    <strong>Nothing changes on your side.</strong> This runs entirely within our game server.
+    There is no new API, no change to existing endpoints, no client update, and no artwork.
+    From an integration standpoint, enabling it is a configuration change on our end.
+  </div>
+</div>
+
+<!-- ══ 07 INSIGHTS ══ -->
+<div class="blk">
+  <div class="blk-num">07 · What we measure, and what you get back</div>
+  <h2>Success is measured in <span>spins</span>, not retention</h2>
+  <div class="blk-lead">
+    The target for this feature is <strong>a higher average number of spins per new player</strong> —
+    getting people to play more rounds of the game. It is deliberately <em>not</em> retention.
+  </div>
+
+  <div class="note info">
+    <strong>Why not retention</strong><br>
+    Retention is the output of the <em>entire</em> new-player funnel — acquisition source, deposit
+    flow, promotions, market conditions, competition from other titles. A single in-game mechanism
+    does not control most of those inputs, and the link between spin volume and retention has not
+    yet been established with data.<br>
+    Measuring this feature on retention would mean grading it on something neither of us controls.
+    Spin volume attributes cleanly to the mechanism, so that is what we hold ourselves to.
+    <strong>Day-1 and day-3 retention are still recorded</strong> and still baselined — as observed
+    metrics, and so the spin-volume-to-retention link can be tested later.
+  </div>
+
+  <div class="cards">
+    <div class="card hi">
+      <div class="card-k">Primary</div>
+      <div class="card-t">Avg. spins per new player</div>
+      <div class="card-d">Total spins ÷ new players in that game. Reported as <strong>mean and median together</strong>.</div>
+    </div>
+    <div class="card">
+      <div class="card-k">Secondary</div>
+      <div class="card-t">150-spin completion rate</div>
+      <div class="card-d">Share of new players who complete the full window. Most robust measure — both numerator and denominator sit in our own data.</div>
+    </div>
+    <div class="card">
+      <div class="card-k">Secondary</div>
+      <div class="card-t">First-day spins</div>
+      <div class="card-d">Reflects the immediate session, though it varies with how much time a player happens to have.</div>
+    </div>
+    <div class="card" style="border-style:dashed">
+      <div class="card-k">Observed</div>
+      <div class="card-t">D1 / D3 retention</div>
+      <div class="card-d">Recorded and baselined, but <strong>not used to judge the feature</strong>.</div>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <strong>Why the median matters as much as the mean.</strong> Averages are easily inflated by a
+    small number of heavy players. If the mean improves but the median does not, the mechanism is
+    only working on players who were already going to play a lot — not the ones it was built for.
+    We report both.
+  </div>
+
+  <div class="blk-num" style="margin-top:60px">07-B · Continuous optimisation</div>
+  <h2>Every player's journey is <span>a data point of its own</span></h2>
+  <div class="blk-lead">
+    Because the window is a fixed 150 spins and every spin is logged, <strong>each player's actual journey</strong>
+    is a known combination of characteristics — how far in the first Free Game arrived, how Big Wins were spaced,
+    how long the longest dry stretch ran. Since the order is drawn per player, <em>every player who passes through
+    the window is a separate data point</em> on which characteristics drive spin volume — not 2,000 points, but
+    as many as there are players.
+  </div>
+
+  <div class="fig">
+    <div class="fig-cap">Figure 5 · Characteristics analysis across player journeys (illustrative)</div>
+    <svg viewBox="0 0 860 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two scripts with the same RTP band but different Free Game placement produce different spin volumes">
+      <g stroke="var(--grid-line)" stroke-width="1">
+        <line x1="70" y1="40" x2="820" y2="40"/><line x1="70" y1="90" x2="820" y2="90"/>
+        <line x1="70" y1="140" x2="820" y2="140"/><line x1="70" y1="190" x2="820" y2="190"/>
+        <line x1="70" y1="240" x2="820" y2="240"/>
+      </g>
+      <text x="26" y="44" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">100%</text>
+      <text x="40" y="244" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">0%</text>
+      <text x="0" y="24" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Players still playing</text>
+
+      <polyline fill="none" stroke="var(--green)" stroke-width="3" stroke-linejoin="round"
+        points="70,40 130,48 190,58 250,66 310,74 380,82 450,90 520,97 590,103 660,109 730,114 820,120"/>
+      <line x1="190" y1="34" x2="190" y2="248" stroke="var(--green)" stroke-width="2" stroke-dasharray="5 4"/>
+      <circle cx="190" cy="58" r="5" fill="var(--green)"/>
+      <text x="198" y="62" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green)">Free Game arrives early</text>
+      <text x="610" y="112" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--green)">higher spin volume</text>
+
+      <polyline fill="none" stroke="var(--text-dim)" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5"
+        points="70,40 130,58 190,96 250,132 310,158 380,172 450,182 520,190 590,196 660,201 730,205 820,210"/>
+      <line x1="450" y1="34" x2="450" y2="248" stroke="var(--text-dim)" stroke-width="2" stroke-dasharray="5 4"/>
+      <circle cx="450" cy="182" r="5" fill="var(--text-dim)"/>
+      <text x="458" y="168" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--text-dim)">Free Game arrives late</text>
+      <text x="610" y="228" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-dim)">lower spin volume</text>
+
+      <text x="70" y="272" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Spin 1</text>
+      <text x="760" y="272" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Spin 150</text>
+      <text x="70" y="300" font-family="DM Sans, sans-serif" font-size="12.5" fill="var(--text-secondary)">Same gate, same RTP band — the difference is how far in the Free Game arrived.</text>
+    </svg>
+    <div class="fig-note">
+Both groups pass the same gate and sit in the same RTP band, so on paper they are equivalent.
+      In play they are not — and the logs show precisely why. Because the order is drawn per player,
+      <strong>the comparison is built in</strong>: players who met the Free Game early and players who met it late
+      can be read against each other directly, within the same population.
+      What separates them <strong>feeds the production conditions of the next generation of scripts</strong>
+      (Free Game frequency is something a script controls; where it lands is not).
+    </div>
+  </div>
+
+  <div class="cards c2">
+    <div class="card">
+      <div class="card-ico">01</div>
+      <div class="card-t">Does it work at all?</div>
+      <div class="card-d">Average spins per new player (mean and median) against a 30-day baseline frozen before launch.</div>
+    </div>
+    <div class="card hi">
+      <div class="card-ico">02</div>
+      <div class="card-t">Which characteristics drive it?</div>
+      <div class="card-d">How far in the first Free Game arrived, how Big Wins were spaced, what hit rate actually matters, how long the longest dry stretch ran — read <strong>per player journey</strong>, not per script. <strong>The sample is the number of players, not 2,000.</strong></div>
+    </div>
+  </div>
+
+  <div class="note info">
+    <strong>Why this replaces "which script is best".</strong> Two reasons. With 1,000 scripts per pool, no
+    individual script accumulates enough players for a per-script comparison to be meaningful — and more
+    fundamentally, <em>a script no longer corresponds to a single experience</em>, since the order is drawn per
+    player. Reading <em>journeys</em> rather than scripts needs no per-script sample size and grows sharper with
+    every player who passes through.
+  </div>
+
+  <div class="note ok">
+    <strong>This does not stop at launch.</strong> The characteristics analysis runs continuously, and what
+    it shows about Free Game frequency and win spacing feeds into <strong>the production conditions for the
+    next generation of scripts</strong> and into the maths design of every future title.<br>
+    <strong>The first review is scheduled for week 8 after launch</strong>, and
+    <strong>the findings are shared with you</strong> — the same insight applies to any title in your lobby,
+    not only ours.
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<div class="foot">
+  New Player Experience Scripts · Feature Brief V5.0 · Confidential 2026<br>
+  Force / Combo Gaming
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('theme-toggle');
+  function apply(t){root.setAttribute('data-theme',t);
+    if(btn)btn.setAttribute('aria-label',t==='light'?'Switch to dark theme':'Switch to light theme');}
+  apply(root.getAttribute('data-theme')||'light');
+  if(btn)btn.addEventListener('click',function(){
+    var n=root.getAttribute('data-theme')==='light'?'dark':'light';apply(n);
+    try{localStorage.setItem('brief-en-theme',n);}catch(e){}});
+  if(window.matchMedia){
+    var mq=window.matchMedia('(prefers-color-scheme: dark)');
+    var oc=function(e){var h;try{h=localStorage.getItem('brief-en-theme');}catch(err){h=null;}
+      if(h)return;apply(e.matches?'dark':'light');};
+    if(mq.addEventListener)mq.addEventListener('change',oc);else if(mq.addListener)mq.addListener(oc);}
+})();
+</script>
+</body>
+</html>
