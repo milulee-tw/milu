@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G2E 2026 拉斯維加斯出差行程手冊 v5</title>
+<style>
+:root{
+  --bg:#0f1115; --bg2:#161a21; --bg3:#1d222b;
+  --fg:#e8eaed; --fg2:#a8b0bd; --fg3:#6f7887;
+  --gold:#d4af37; --gold2:#f0d478; --line:#2a303b;
+  --ok:#4ade80; --warn:#fbbf24; --bad:#f87171; --info:#60a5fa;
+}
+:root[data-theme="light"]{
+  --bg:#f7f8fa; --bg2:#ffffff; --bg3:#eef1f5;
+  --fg:#1a1d23; --fg2:#4a5261; --fg3:#828b9a;
+  --gold:#a67c00; --gold2:#8a6600; --line:#dde2e9;
+  --ok:#15803d; --warn:#b45309; --bad:#b91c1c; --info:#1d4ed8;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f7f8fa; --bg2:#ffffff; --bg3:#eef1f5;
+    --fg:#1a1d23; --fg2:#4a5261; --fg3:#828b9a;
+    --gold:#a67c00; --gold2:#8a6600; --line:#dde2e9;
+    --ok:#15803d; --warn:#b45309; --bad:#b91c1c; --info:#1d4ed8;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.75; font-size:15px;
+}
+.wrap{display:flex; max-width:1400px; margin:0 auto; min-height:100vh}
+nav{
+  width:250px; flex-shrink:0; background:var(--bg2); border-right:1px solid var(--line);
+  position:sticky; top:0; height:100vh; overflow-y:auto; padding:22px 0;
+}
+nav .brand{padding:0 20px 18px; border-bottom:1px solid var(--line); margin-bottom:14px}
+nav .brand b{display:block; color:var(--gold); font-size:17px; letter-spacing:.5px}
+nav .brand span{display:block; color:var(--fg3); font-size:12px; margin-top:3px}
+nav a{
+  display:block; padding:9px 20px; color:var(--fg2); text-decoration:none;
+  font-size:13.5px; border-left:3px solid transparent; transition:.15s;
+}
+nav a:hover{background:var(--bg3); color:var(--fg)}
+nav a.active{border-left-color:var(--gold); color:var(--gold); background:var(--bg3)}
+nav .sec{padding:14px 20px 5px; font-size:11px; color:var(--fg3); letter-spacing:1.5px; text-transform:uppercase}
+main{flex:1; padding:34px 42px 90px; min-width:0}
+.topbar{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:28px; flex-wrap:wrap}
+h1{font-size:27px; color:var(--gold); letter-spacing:.5px; line-height:1.35}
+h1 small{display:block; font-size:13px; color:var(--fg3); font-weight:400; letter-spacing:0; margin-top:5px}
+#tt{
+  background:var(--bg3); color:var(--fg2); border:1px solid var(--line);
+  padding:7px 14px; border-radius:20px; cursor:pointer; font-size:12.5px; white-space:nowrap;
+}
+#tt:hover{border-color:var(--gold); color:var(--gold)}
+section{margin-bottom:46px; scroll-margin-top:20px}
+h2{
+  font-size:20px; color:var(--gold); border-bottom:2px solid var(--line);
+  padding-bottom:9px; margin-bottom:18px; display:flex; align-items:center; gap:9px;
+}
+h2 .n{
+  background:var(--gold); color:var(--bg); min-width:26px; height:26px; padding:0 6px; border-radius:6px;
+  display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;
+}
+h2.apx{color:var(--fg2); border-bottom-style:dashed}
+h2.apx .n{background:var(--fg3); color:var(--bg2)}
+h3{font-size:16px; margin:24px 0 10px; color:var(--fg); border-left:3px solid var(--gold); padding-left:10px}
+h4{font-size:14.5px; margin:16px 0 7px; color:var(--gold2)}
+p{margin-bottom:11px; color:var(--fg2)}
+ul,ol{margin:0 0 12px 21px; color:var(--fg2)}
+li{margin-bottom:5px}
+strong{color:var(--fg); font-weight:600}
+s{color:var(--fg3)}
+code{background:var(--bg3); padding:2px 6px; border-radius:4px; font-size:13px; color:var(--gold2)}
+a{color:var(--info)}
+.card{background:var(--bg2); border:1px solid var(--line); border-radius:10px; padding:17px 19px; margin-bottom:14px}
+.card.gold{border-left:4px solid var(--gold)}
+.card.mute{border-left:4px solid var(--fg3); background:var(--bg2)}
+.grid{display:grid; gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tag{
+  display:inline-block; font-size:11px; padding:2px 9px; border-radius:20px;
+  background:var(--bg3); color:var(--fg2); border:1px solid var(--line); margin-right:5px; margin-bottom:5px;
+}
+.tag.rec{background:rgba(212,175,55,.14); color:var(--gold); border-color:var(--gold)}
+.tag.ok{color:var(--ok); border-color:var(--ok); background:transparent}
+.tag.bad{color:var(--bad); border-color:var(--bad); background:transparent}
+.tag.info{color:var(--info); border-color:var(--info); background:transparent}
+.note{border-radius:8px; padding:13px 16px; margin:14px 0; font-size:14px; border-left:4px solid}
+.note.w{background:rgba(251,191,36,.09); border-color:var(--warn)}
+.note.d{background:rgba(248,113,113,.09); border-color:var(--bad)}
+.note.i{background:rgba(96,165,250,.09); border-color:var(--info)}
+.note.g{background:rgba(74,222,128,.09); border-color:var(--ok)}
+.note b{color:var(--fg)}
+.tw{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:9px}
+table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:520px}
+th{background:var(--bg3); color:var(--gold); text-align:left; padding:10px 13px; font-weight:600; white-space:nowrap; border-bottom:1px solid var(--line)}
+td{padding:10px 13px; border-bottom:1px solid var(--line); color:var(--fg2); vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg3)}
+td b{color:var(--fg)}
+.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.day{background:var(--bg2); border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:10px; padding:16px 19px; margin-bottom:14px}
+.day.key{border-left-width:6px; box-shadow:0 0 0 1px rgba(212,175,55,.25)}
+.day.travel{border-left-color:var(--fg3)}
+.day .h{display:flex; align-items:baseline; gap:11px; margin-bottom:11px; flex-wrap:wrap}
+.day .d{font-size:19px; color:var(--gold); font-weight:700}
+.day .t{font-size:14px; color:var(--fg)}
+.slot{display:flex; gap:13px; padding:7px 0; border-top:1px dashed var(--line)}
+.slot:first-of-type{border-top:none}
+.slot .tm{flex-shrink:0; width:82px; color:var(--gold2); font-size:12.5px; padding-top:2px; font-variant-numeric:tabular-nums}
+.slot .ct{flex:1; font-size:14px; color:var(--fg2); min-width:0}
+.slot .ct b{display:block; color:var(--fg); margin-bottom:2px}
+.optional{background:var(--bg3); border-radius:7px; padding:9px 13px; margin-top:10px; font-size:13px; color:var(--fg3); border:1px dashed var(--line)}
+.optional b{color:var(--fg2)}
+.chk{list-style:none; margin-left:0}
+.chk li{padding:6px 0 6px 27px; position:relative; border-bottom:1px dashed var(--line); font-size:14px}
+.chk li:last-child{border-bottom:none}
+.chk li::before{
+  content:""; position:absolute; left:0; top:12px; width:14px; height:14px;
+  border:2px solid var(--fg3); border-radius:3px;
+}
+.chk li.hot::before{border-color:var(--bad)}
+.chk li.hot{color:var(--fg)}
+.flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:16px 0; padding:16px; background:var(--bg2); border:1px solid var(--line); border-radius:10px}
+.fbox{background:var(--bg3); border:1px solid var(--line); border-radius:8px; padding:9px 13px; font-size:13px; color:var(--fg); text-align:center; min-width:104px}
+.fbox small{display:block; color:var(--fg3); font-size:11px; margin-top:2px}
+.fbox.on{border-color:var(--gold); background:rgba(212,175,55,.11); color:var(--gold)}
+.fbox.key{border-color:var(--gold); background:rgba(212,175,55,.22); color:var(--gold); font-weight:700}
+.arw{color:var(--gold); font-size:17px}
+.apxbar{background:var(--bg3); border:1px dashed var(--line); border-radius:10px; padding:14px 18px; margin:34px 0 22px; color:var(--fg2); font-size:14px}
+.apxbar b{color:var(--gold)}
+footer{margin-top:44px; padding-top:18px; border-top:1px solid var(--line); color:var(--fg3); font-size:12px}
+@media(max-width:900px){
+  .wrap{flex-direction:column}
+  nav{width:100%; height:auto; position:static; border-right:none; border-bottom:1px solid var(--line); padding:14px 0}
+  nav a{display:inline-block; border-left:none; border-bottom:3px solid transparent; padding:7px 13px}
+  nav a.active{border-left:none; border-bottom-color:var(--gold)}
+  nav .sec{display:inline-block; padding:7px 13px 3px}
+  main{padding:22px 17px 60px}
+  h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div class="brand"><b>G2E 2026</b><span>Las Vegas 出差手冊 v5 · 9/27–10/3</span></div>
+  <div class="sec">總覽</div>
+  <a href="#s0">0. 一分鐘懶人包</a>
+  <a href="#s1">1. 展會基本資訊</a>
+  <div class="sec">交通住宿</div>
+  <a href="#s2">2. 航班</a>
+  <a href="#s3">3. 住宿</a>
+  <a href="#s4">4. 當地交通</a>
+  <div class="sec">主行程</div>
+  <a href="#s5">5. 每日行程表</a>
+  <a href="#s6">6. 賭場觀察清單</a>
+  <div class="sec">錢與準備</div>
+  <a href="#s7">7. 預算與現金</a>
+  <a href="#s8">8. ESTA 出發前確認</a>
+  <a href="#s9">9. 出發前 Check List</a>
+  <a href="#s10">10. 出發前待確認</a>
+  <div class="sec">附錄 · 自由活動參考</div>
+  <a href="#sa">A. 餐飲</a>
+  <a href="#sb">B. 秀、景點與採購</a>
+  <a href="#sc">C. 飯店賭場巡禮</a>
+</nav>
+
+<main>
+<div class="topbar">
+  <h1>G2E 2026 拉斯維加斯出差行程手冊
+    <small>Global Gaming Expo · The Venetian Expo · 2026/09/27 – 10/03 · 6 人研發團（企劃＋美術）</small>
+  </h1>
+  <button id="tt">◐ 切換主題</button>
+</div>
+
+<div class="note i" style="margin-top:-8px">
+<b>📌 這份手冊怎麼用</b><br>
+<b>第 0–10 章是給全團看的正式行程</b>，主軸是<b>看展與視覺／美感觀察</b>。<br>
+<b>附錄 A、B、C 是自由活動的參考清單</b> — 餐飲、秀、景點、飯店賭場巡禮與採購，<b>不列入正式排程</b>，適合排進 10/3 自由時間或各展場日的晚間空檔。<br>
+<b>原則：晚上除聚餐外不安排團體行程</b>，團員可自行安排活動。
+</div>
+
+<!-- ============ 0 ============ -->
+<section id="s0">
+<h2><span class="n">0</span>一分鐘懶人包</h2>
+
+<div class="note d">
+<b>⚠️ 現在最急的事（今天 9/14，距出發 13 天）</b><br>
+1. <b>確認 6 人的 ESTA 都已核准</b> — 沒辦的人現在辦還來得及，但被轉人工審核會拖 1–2 週，<b>今天就要確認</b>。詳見 §8。<br>
+2. <b>104 申請差旅項目</b>（9/27–10/4）— 行政流程要跑，不要拖到最後一週。<br>
+3. <b>三場團體晚餐訂位</b>（9/29 Venetian、10/1 Battista's、10/2 Downtown）— G2E 週全城餐廳爆滿，<b>現在不訂就沒有了</b>。<br>
+4. <b>買旅平險＋旅遊不便險、辦美國 eSIM</b> — 去程 PHX、回程 SEA 都要轉機，不便險有其必要。
+</div>
+
+<div class="grid g3">
+  <div class="card gold"><h4>✈️ 航班 <span class="tag rec">已訂位</span></h4>
+    <p style="font-size:13.5px"><b>去程 9/27</b>　星宇 JX026<br>
+    TPE 20:10 → PHX 17:40（同日）<br>
+    轉 AA2106 → <b>LAS 21:59</b><br>
+    <b>回程 10/3</b>　AS1677<br>
+    LAS 19:09 → SEA，轉 JX031<br>
+    → <b>TPE 10/5（一）04:55</b><br>
+    行李：1 手提 7kg ＋ <b>2 託運各 23kg</b></p>
+  </div>
+  <div class="card gold"><h4>🏨 住宿 <span class="tag rec">已訂位</span></h4>
+    <p style="font-size:13.5px"><b>Treasure Island（TI）</b><br>步行 10–12 分到展場<br><b>3 間雙人房 · 共 6 晚</b><br>9/27 入住、10/3 退房<br>女 1：Milu ＋ 俞萱<br>女 2：Astrid ＋ Sherry<br>男：Joy ＋ 學珩</p>
+  </div>
+  <div class="card gold"><h4>🎯 行程主軸</h4>
+    <p style="font-size:13.5px"><b>9/28</b> 領證 ＋ Fontainebleau<br><b>9/29–10/1</b> 展場三天<br><b style="color:var(--bad)">⚠️ 10/1 展場 15:00 就閉館</b>（比前兩天早 2 小時）<br><b>10/2</b> 賭場田野調查全天<br><b>10/3</b> 自由時間 ＋ 返程</p>
+  </div>
+</div>
+
+<h3>行程骨架</h3>
+<div class="flow">
+  <div class="fbox travel">9/27 日<small>深夜抵達</small></div><span class="arw">→</span>
+  <div class="fbox on">9/28 一<small>領證 · Fontainebleau</small></div><span class="arw">→</span>
+  <div class="fbox on">9/29 二<small>展場 D1</small></div><span class="arw">→</span>
+  <div class="fbox on">9/30 三<small>展場 D2</small></div><span class="arw">→</span>
+  <div class="fbox key">10/1 四<small>★ 展場 D3 · 15:00 閉館</small></div><span class="arw">→</span>
+  <div class="fbox on">10/2 五<small>賭場田野調查</small></div><span class="arw">→</span>
+  <div class="fbox">10/3 六<small>返程</small></div>
+</div>
+
+<div class="note g">
+<b>🎯 這趟出差要帶回什麼</b><br>
+本團是<b>企劃＋美術的研發團隊</b>。這趟<b>不談合作、不拜訪客戶、不安排任何商務會議</b>，唯一的任務是：<br>
+<b>親身體驗國際大廠最新機台的視覺呈現、動畫節奏與整體氛圍營造，透過實際觀察與比較，培養對 slot 設計的直覺與美感。</b><br>
+展場之外的賭場田野調查（Fontainebleau、Wynn、Durango、Downtown）也是同樣用意 —— <b>看不同客群、不同定位的賭場怎麼呈現機台</b>，累積設計 Sense。
+</div>
+</section>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+<h2><span class="n">1</span>展會基本資訊</h2>
+
+<div class="tw"><table>
+<tr><th style="width:150px">項目</th><th>內容</th></tr>
+<tr><td><b>展會名稱</b></td><td>Global Gaming Expo (G2E) 2026</td></tr>
+<tr><td><b>展場日期</b></td><td><b>2026/09/29（二）– 10/01（四）</b>，共三天 ← 本團主戰場</td></tr>
+<tr><td><b>展場開放時間</b></td><td><b>9/29（二）10:00–17:00</b><br><b>9/30（三）10:00–17:00</b><br><b style="color:var(--bad)">10/01（四）10:00–15:00 ← 提早 2 小時閉館</b></td></tr>
+<tr><td><b>地點</b></td><td>The Venetian Expo, 201 Sands Ave, Las Vegas（與 Venetian / Palazzo 相連）</td></tr>
+<tr><td><b>領證時間</b></td><td><b>9/28（一）14:30</b>，Venetian Expo Level 1，6 人一次領完</td></tr>
+<tr><td><b>參展規模</b></td><td>25,000+ 業界人士、120+ 國家、近 400 家參展商</td></tr>
+<tr><td><b>入場證</b></td><td><b>Expo Hall Pass（已全數領取，費用 $0）</b>，本團不參加教育議程</td></tr>
+<tr><td><b>官網</b></td><td>globalgamingexpo.com</td></tr>
+</table></div>
+
+<div class="note d">
+<b>🔴 10/1 展場提早 2 小時閉館 —— 這是本次行程最需要注意的一件事</b><br>
+9/29、9/30 是 10:00–17:00，但 <b>10/1 只開到 15:00</b>。<br>
+而 10/1 又剛好是<b>多數大廠展區全面對外開放的一天</b>（前兩天有不少機台試玩區只對既有客戶與受邀者開放）。<br>
+<b>也就是說：最想看的東西在最後一天，而最後一天只有 5 小時。</b><br>
+因應做法：<b>9/30 收場前務必盤點出「10/1 必看清單」</b>，10/1 一開門就照清單直接衝，不要在現場才決定要看什麼。
+</div>
+
+<div class="note w">
+<b>⚠️ 關於「廠商展區開放時機」</b><br>
+G2E 有不少大廠的展區（尤其是機台試玩區、新品發表區）<b>前兩天只對既有客戶與受邀者開放</b>，一般參觀者進不去。<br>
+因此本團的行程原則是：<b>9/29–9/30 用來掃描全場、記錄視覺與動畫的第一印象、盤點進不去的展區；10/1 在僅有的 5 小時內把清單一次看完。</b>
+</div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+<h2><span class="n">2</span>航班（星宇＋美航去程 · 阿拉斯加＋星宇回程）</h2>
+
+<div class="card gold">
+<span class="tag rec">已訂位</span><span class="tag ok">1 件手提 7kg</span><span class="tag ok">2 件託運各 23kg</span>
+<h4>去程 9/27（日）· 經鳳凰城 PHX</h4>
+<div class="flow" style="margin:12px 0">
+  <div class="fbox">TPE<small>桃園 20:10</small></div><span class="arw">→</span>
+  <div class="fbox key">PHX<small>鳳凰城 · 美國入境點</small></div><span class="arw">→</span>
+  <div class="fbox on">LAS<small>拉斯維加斯 21:59</small></div>
+</div>
+<div class="tw"><table>
+<tr><th style="width:130px">航班</th><th>起飛</th><th>抵達</th><th>備註</th></tr>
+<tr><td><b>JX026</b><br>星宇航空</td><td><b>TPE 20:10</b></td><td><b>PHX 17:40</b>（同日）</td><td>約 12 小時 30 分，<b>有餐點</b></td></tr>
+<tr style="background:var(--bg3)"><td><b>PHX 轉機</b></td><td colspan="2"><b>約 3 小時</b>（17:40 抵達 → 20:43 起飛）</td><td><b style="color:var(--warn)">⚠️ 美國第一入境點，必須領行李重新託運</b></td></tr>
+<tr><td><b>AA2106</b><br>美國航空</td><td><b>PHX 20:43</b></td><td><b>LAS 21:59</b>（同日）</td><td>約 1 小時 16 分，<b>供應點心</b></td></tr>
+</table></div>
+<p style="margin-top:10px"><b>去程總時長約 16 小時 49 分</b>（台北 9/27 傍晚出發，同日深夜抵達拉斯維加斯）。</p>
+</div>
+
+<div class="card gold">
+<h4>回程 10/3（六）– 10/5（一）· 經西雅圖 SEA</h4>
+<div class="flow" style="margin:12px 0">
+  <div class="fbox on">LAS<small>10/3 19:09</small></div><span class="arw">→</span>
+  <div class="fbox">SEA<small>西雅圖 · 國內轉國際</small></div><span class="arw">→</span>
+  <div class="fbox">TPE<small>10/5 04:55</small></div>
+</div>
+<div class="tw"><table>
+<tr><th style="width:130px">航班</th><th>起飛</th><th>抵達</th><th>備註</th></tr>
+<tr><td><b>AS1677</b><br>阿拉斯加航空</td><td><b>LAS 19:09</b>（10/3）</td><td><b>SEA 21:58</b>（10/3）</td><td>約 2 小時 49 分，<b>無餐點</b>、<b style="color:var(--ok)">行李直掛台北</b></td></tr>
+<tr style="background:var(--bg3)"><td><b>SEA 轉機</b></td><td colspan="2"><b>3 小時 17 分</b>（21:58 抵達 → 01:15 起飛）</td><td><b style="color:var(--ok)">✅ 國內轉國際，不用領行李</b>。晚餐在機場解決</td></tr>
+<tr><td><b>JX031</b><br>星宇航空</td><td><b>SEA 01:15</b>（10/4）</td><td><b>TPE 04:55</b>（10/5）</td><td>約 13 小時，<b>有餐點</b></td></tr>
+</table></div>
+<p style="margin-top:10px"><b>回程總時長約 18 小時 46 分</b>，<b>10/5（一）凌晨 04:55 抵達桃園</b>。</p>
+</div>
+
+<div class="note d">
+<b>🔴 去程在 PHX 一定要把行李領出來重新託運 —— 這是美國海關規定，不是航空公司規定</b><br>
+美國<b>沒有「國際過境區」</b>。全世界多數機場（東京、香港、法蘭克福）轉機可以待在管制區內不入境；但<b>美國規定所有旅客，不論是否只是轉機，都必須在第一個抵達的美國機場完成入境查驗</b>。人既然入境了，行李就必須跟著接受美國海關（CBP）檢查一次。<br>
+<b>而且這一段是星宇轉美國航空、兩家不同的航空公司，更不可能直掛。</b>
+</div>
+
+<h3>去程 PHX 入境與轉機流程（約 3 小時）</h3>
+<div class="card">
+<div class="flow" style="margin:12px 0">
+  <div class="fbox">下機<small>17:40</small></div><span class="arw">→</span>
+  <div class="fbox">證照查驗<small>最耗時</small></div><span class="arw">→</span>
+  <div class="fbox">領行李</div><span class="arw">→</span>
+  <div class="fbox">海關</div><span class="arw">→</span>
+  <div class="fbox">重新託運<small>recheck</small></div><span class="arw">→</span>
+  <div class="fbox">安檢<small>再過一次</small></div><span class="arw">→</span>
+  <div class="fbox on">登機門<small>20:43</small></div>
+</div>
+<p><b>順利的話約 1 小時 15 分 – 1 小時 45 分。</b>本次有約 3 小時，即使 6 人一起移動、或遇上入境尖峰排隊，都還有餘裕。</p>
+
+<div class="note i">
+<b>💡 重新託運沒有想像中麻煩</b>
+<div class="tw" style="margin-top:9px"><table>
+<tr><th style="width:44%">常見誤解</th><th>實際狀況</th></tr>
+<tr><td>要重新去櫃檯排隊辦託運</td><td><b>不用</b>。海關出口旁邊就有 <b>recheck 專用輸送帶</b>，把行李放上去就走，約 2–3 分鐘</td></tr>
+<tr><td>要重新掛行李條</td><td><b>不用</b>。原本的行李條繼續有效</td></tr>
+<tr><td>重掛是最花時間的環節</td><td><b>不是</b>。真正吃時間的是<b>證照查驗排隊</b>與<b>等行李轉盤吐出行李</b></td></tr>
+</table></div>
+</div>
+
+<p><b>實務建議：</b></p>
+<ul>
+<li><b>6 人不要走散</b>，指定一個人負責點人數 —— 在管制區裡走散很難找</li>
+<li><b>ESTA 核准頁、回程機票、飯店訂房確認</b>在飛機上就準備好（見 §9 入境注意）</li>
+<li>託運行李<b>綁上明顯識別帶</b>，在轉盤上一眼就能抓到</li>
+<li>每人有 <b>2 件託運額度</b>，若 6 人都託運 2 件就是 12 件行李，<b>領行李時約好在轉盤同一側集合</b>，不要散在整圈</li>
+<li>過完安檢後時間還夠，<b>可以在 PHX 先吃點東西</b>（AA2106 只有點心）</li>
+</ul>
+</div>
+
+<div class="note g">
+<b>✅ 回程在 SEA 不用領行李</b><br>
+回程 LAS → SEA 是<b>美國國內線</b>，SEA → TPE 是國際線，<b>國內轉國際不需要過海關</b>，行李從拉斯維加斯就<b>直掛到台北</b>。<br>
+SEA 有 <b>3 小時 17 分</b>的轉機空檔，而且不用處理行李，<b>可以好好在機場吃頓晚餐再上飛機</b>（AS1677 無餐點）。
+</div>
+
+<div class="note w">
+<b>⚠️ 兩件跟時間有關的提醒</b><br>
+• <b>桃園報到</b>：JX026 20:10 起飛，國際線建議提前 3 小時 → <b>17:10 前要到桃園機場</b>，台北約 <b>15:30–16:00 出發</b>。<br>
+• <b>原始行程表把去程 PHX 轉機記為「3 小時 17 分」</b>，但依航班時刻計算（17:40 抵達、20:43 起飛）實際為 <b>3 小時 3 分</b>。差異不影響安排，但<b>以航空公司訂位系統顯示為準</b>。
+</div>
+
+<div class="note i">
+<b>🕐 時差</b>：拉斯維加斯（PDT）比台北<b>慢 15 小時</b>。台北中午 12:00 = Vegas 前一天晚上 21:00。<br>
+鳳凰城（PHX）九月不實施夏令時間，與拉斯維加斯<b>同時區</b>，轉機時不必再調錶。西雅圖（SEA）與拉斯維加斯也同為 PDT。
+</div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+<h2><span class="n">3</span>住宿</h2>
+
+<div class="card gold">
+<span class="tag rec">已訂位</span><span class="tag ok">步行 10–12 分到展場</span>
+<h4>Treasure Island (TI)</h4>
+<p><b>就在 Venetian 斜對面</b>，是距離展場壓倒性最近的平價選擇。展會期間一天走三趟回房間放資料、換衣服、補個眠都不痛苦，這在跑展的時候是實質戰力。</p>
+<p><b>入住 9/27（日）、退房 10/3（六），共 6 晚。3 間雙人房。</b></p>
+</div>
+
+<h3>房間分配</h3>
+<div class="card">
+<p><b>分房原則：把去過 Vegas 的人拆開分到不同房，比較能互相照應。</b>（亦可依大家需求調整）</p>
+<div class="tw"><table>
+<tr><th style="width:140px">房間</th><th>成員</th></tr>
+<tr><td><b>女生房 1</b></td><td><b>Milu ＋ 俞萱</b></td></tr>
+<tr><td><b>女生房 2</b></td><td><b>Astrid ＋ Sherry</b></td></tr>
+<tr><td><b>男生房</b></td><td><b>Joy ＋ 學珩</b></td></tr>
+</table></div>
+<p style="margin-top:10px;font-size:13.5px;color:var(--fg3)">TI 的標準房型是 2 張 Queen 床，兩人一間空間充足。</p>
+</div>
+
+<div class="note w">
+<b>⚠️ Resort Fee 是 Vegas 的隱藏成本</b><br>
+TI 的 Resort Fee 約 <b>$39–52／晚</b>（含免費自助停車與不限裝置 WiFi），這是「每晚強制加收」的費用，訂房網站顯示的房價<b>不含</b>它，也不含 13.38% 房稅。<br>
+訂位已由曉陽處理，<b>但入住時若櫃檯要求另外收取 Resort Fee，請先確認是否已包含在公司訂單內再付款</b>，並保留收據。
+</div>
+
+<div class="note i">
+<b>💡 抵達當天（9/27）是深夜 22:30 左右才會到飯店</b><br>
+建議<b>出發前就用 TI 的 App 完成線上 check-in</b>，可以跳過櫃檯排隊，有些房型還能直接用手機開門。<br>
+6 人分 3 間房，<b>請確認 3 間房的訂單資訊各自在誰手上</b>，不要全部只有一個人有。
+</div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+<h2><span class="n">4</span>當地交通</h2>
+
+<div class="tw"><table>
+<tr><th>方式</th><th>費用</th><th>什麼時候用</th></tr>
+<tr><td><b>走路</b></td><td>免費</td><td>從 TI 到展場、Strip 中段各賭場之間。<b>Vegas 的「看起來很近」其實很遠</b> — 每棟樓佔地巨大，目測 5 分鐘實際要走 15 分鐘。準備好走的鞋。</td></tr>
+<tr><td><b>Uber / Lyft</b></td><td>Strip 內 $10–18<br>機場↔Strip $22–30<br>Strip↔Downtown $25–30<br>Strip↔Durango $30–38</td><td>主力交通工具。<b>展會期間叫車點會排隊</b>，各飯店有指定 rideshare 上車區（通常在停車場），要預留 10–15 分鐘。<b>6 人請叫 Uber XL 或分兩台 UberX。</b></td></tr>
+<tr><td><b>Las Vegas Monorail</b></td><td>單程 $6<br>3 日票 $32</td><td>路線在 Strip <b>東側後方</b>。<b>⚠️ 到不了 Venetian Expo</b>，對本次行程幫助有限。</td></tr>
+<tr><td><b>The Deuce 公車</b></td><td>24 小時票 $8</td><td>沿 Strip 跑到 Downtown。便宜但慢又擠，6 人一起搭 Uber 更划算。</td></tr>
+<tr><td><b>機場接送</b></td><td>Uber XL $25–35</td><td>9/27 抵達（深夜）與 10/3 離開當天，6 人 + 大行李直接叫 XL，分攤每人約 $5。</td></tr>
+</table></div>
+
+<div class="note w">
+<b>⚠️ 9/27 深夜抵達的叫車注意事項</b><br>
+班機 <b>21:59</b> 落地，領完行李大約 <b>22:20</b> 才會走出航廈。<br>
+LAS 機場的 <b>Uber / Lyft 上車區在停車場 Level 2M</b>，要走一段路加搭電梯，<b>不在航廈門口</b>。<br>
+<b>6 人加大行李建議叫 2 台 UberXL</b>，一台塞不下。深夜車資可能略高，但仍比計程車便宜。
+</div>
+
+<div class="note i">
+<b>💡 10/2 那天車資會集中</b><br>
+賭場田野調查日要跑 Durango（西邊）與 Downtown（北邊），全天 Uber 約 <b>$95–115（全團）</b>，每人約 <b>$16–19</b>。這是整趟行程車資最重的一天，已計入預算。
+</div>
+
+<div class="note i">
+<b>💡 Uber 帳號請出發前先設定好</b>：綁定台灣信用卡即可在美國使用，不需重辦。但<b>建議在台灣就先開好 App、綁好卡</b>，落地才發現帳號有問題會很麻煩。<b>6 個人都要裝</b>，分頭行動時才不會卡住。<br>
+<b>當地交通費統一由 1～2 人代訂、回公司請款</b>（見 §7），請那 1～2 人記得<b>每趟都截圖存證</b>。
+</div>
+</section>
+<!-- ============ 5 ============ -->
+<section id="s5">
+<h2><span class="n">5</span>每日行程表</h2>
+
+<div class="note i">
+<b>本表只列「團體行程」。</b>用餐選項、購物、看秀等自由安排請見<b>附錄 A、B</b>。<br>
+<b>原則：晚上除聚餐外不安排團體行程</b>，團員可自行安排活動。<br>
+<b>標示「團進團出」的行程請全員一起行動</b>，其餘時段自由。<br>
+時差：拉斯維加斯（PDT）比台北<b>慢 15 小時</b>。
+</div>
+
+<div class="day travel">
+<div class="h"><span class="d">9/27</span><span class="t">週日 · 移動日</span><span class="tag">深夜抵達 · 不排任何行程</span></div>
+<div class="slot"><div class="tm">15:30</div><div class="ct"><b>台北出發前往桃園機場</b>20:10 的班機、國際線建議提前 3 小時報到 → <b>17:10 前要到桃園</b>。6 人可考慮共乘或包一台九人座。</div></div>
+<div class="slot"><div class="tm">20:10</div><div class="ct"><b>TPE 起飛（星宇 JX026）</b>約 12 小時 30 分，有餐點。機上把入境資料準備好（ESTA 核准頁、飯店地址、回程機票）。</div></div>
+<div class="slot"><div class="tm">17:40</div><div class="ct"><b>抵達 PHX 鳳凰城，辦理美國入境</b>（同日）<br>證照查驗 → 領行李 → 海關 → <b>重新託運</b> → 安檢。<b>約 3 小時的轉機時間很充裕</b>，完成後可在 PHX 先吃點東西。詳見 §2。</div></div>
+<div class="slot"><div class="tm">20:43</div><div class="ct"><b>PHX 起飛（美國航空 AA2106）</b>約 1 小時 16 分，供應點心。</div></div>
+<div class="slot"><div class="tm">21:59</div><div class="ct"><b>抵達 LAS 哈利瑞德國際機場</b>入境已在 PHX 完成，這裡是國內線到達，領行李後直接出關。<b>Uber / Lyft 上車區在停車場 Level 2M，不在航廈門口。</b></div></div>
+<div class="slot"><div class="tm">22:30</div><div class="ct"><b>抵達 Treasure Island，Check-in</b>建議事先用飯店 App 完成線上 check-in，跳過櫃檯排隊。</div></div>
+<div class="slot"><div class="tm">—</div><div class="ct"><b>Check-in 後不排其他行程，直接休息</b>⚠️ 這天從台灣下午出發、深夜才進房，實際清醒時間很長。<b>不要安排任何額外行程。</b></div></div>
+</div>
+
+<div class="day">
+<div class="h"><span class="d">9/28</span><span class="t">週一 · 準備日：領證 ＋ Fontainebleau</span><span class="tag">調時差為優先</span></div>
+<div class="slot"><div class="tm">—</div><div class="ct"><b>本日主旨</b>展場還沒開。今天把證件領完、把展場周邊環境走熟，下午看一間「從零設計」的新賭場當暖身。<b>今天的觀察不用深入，重點是讓眼睛先適應 Vegas 的視覺密度。</b></div></div>
+<div class="slot"><div class="tm">10:00</div><div class="ct"><b>出發前往 Venetian，熟悉場館周邊</b>從 TI 步行 10–12 分鐘。<br><b>要確認的事：</b>從飯店走過來的最快路線、展場入口位置、周邊的用餐與休息點、廁所與寄物在哪。<br>順路走一圈 Venetian / Palazzo 賭場 —— <b>看大廠新機首發擺在什麼位置、燈光怎麼把視線引過去。</b></div></div>
+<div class="slot"><div class="tm">午餐</div><div class="ct"><b>Venetian / Palazzo 內美食廣場，或周邊餐廳</b>（自理，選項見附錄 A）</div></div>
+<div class="slot"><div class="tm">14:30</div><div class="ct"><b>★ 完成 Venetian Expo 領證</b>（Level 1）<b>6 人一次領完</b>，後面三天直接進場。順便拿一份展場樓層配置圖，晚上先圈出想去的展區。</div></div>
+<div class="slot"><div class="tm">14:30–16:30</div><div class="ct"><b>Fontainebleau 考察</b><span class="tag rec">團進團出</span>2023 年底開幕的最新大型場館，Uber 約 6 分鐘。<br><b>看什麼：</b><b>「從零開始設計」的空間視覺語言</b> —— 燈光色溫、天花板高度、機台群的色彩節奏與排列密度。沒有歷史包袱的新場，配置邏輯最接近教科書。<br><b>對美術的價值：</b>觀察大面積機台牆的色彩如何不打架、動態光效如何在整個樓面上形成節奏而不是雜訊。</div></div>
+<div class="slot"><div class="tm">16:30</div><div class="ct"><b>回飯店整理，當天團體行程結束</b>晚餐自理。<b>回飯店後自由安排 —— 還在調時差，盡量多休息，不排團體行程。</b></div></div>
+</div>
+
+<div class="day">
+<div class="h"><span class="d">9/29</span><span class="t">週二 · 展場 Day 1</span><span class="tag">掃描全場 · 記錄第一印象</span></div>
+<div class="slot"><div class="tm">—</div><div class="ct"><b>本日主旨</b>開幕日人最多、大廠新機首發。<b>今天的任務是「把全場走過一遍」</b> —— 記錄哪些機台第一眼就抓住你、為什麼抓住你，同時盤點哪些展區今天進不去。<b>不求深入，求覆蓋率。</b></div></div>
+<div class="slot"><div class="tm">09:45</div><div class="ct"><b>抵達展場</b>提前 15 分鐘準備入場。開幕日入口會塞。</div></div>
+<div class="slot"><div class="tm">10:00–17:00</div><div class="ct"><b>展場（官方時間 10:00–17:00）</b><b>6 人建議分兩組，各自認領展區</b>，避免重複跑同一條動線。<br><b>今天要記下來的：</b><br>• 哪幾台<b>遠遠就看到、想走過去</b> —— 是什麼讓它跳出來？螢幕尺寸？燈條？機台造型？<br>• 大廠的<b>新機首發區怎麼佈置</b> —— 燈光、音量、人流動線<br>• <b>哪些展區今天進不去</b>（只對既有客戶開放）→ 記下來，這是 10/1 的清單</div></div>
+<div class="slot"><div class="tm">17:30</div><div class="ct"><b>返回飯店整理</b><b>當天就把筆記與照片整理過一輪</b> —— 三天展看完會全部糊在一起，分不清哪台是哪台。</div></div>
+<div class="slot"><div class="tm">晚餐</div><div class="ct"><b>Venetian 團體晚餐</b><span class="tag rec">團進團出</span>就在展場所在的 Venetian 內，走路可到。餐廳選項與訂位見附錄 A。</div></div>
+</div>
+
+<div class="day">
+<div class="h"><span class="d">9/30</span><span class="t">週三 · 展場 Day 2</span><span class="tag">細看 · 試玩 · 盤點清單</span></div>
+<div class="slot"><div class="tm">—</div><div class="ct"><b>本日主旨</b>今天人比開幕日少，適合回頭把昨天「看了一眼覺得有東西」的機台<b>坐下來好好玩過一輪</b>。<br><b>今天最重要的產出：把 10/1 的必看清單盤點出來。</b></div></div>
+<div class="slot"><div class="tm">09:45</div><div class="ct"><b>抵達展場</b>提前 15 分鐘準備入場。</div></div>
+<div class="slot"><div class="tm">10:00–17:00</div><div class="ct"><b>展場（官方時間 10:00–17:00）</b><b>今天實際坐下來試玩</b>，記錄的重點是「體感」而不是規格：<br>• <b>轉速節奏</b> —— 從按下到停止的時間感，快或慢、乾脆或拖沓<br>• <b>中獎回饋的聲光層次</b> —— 小獎、中獎、大獎的表現怎麼分層？升級感怎麼做出來的？<br>• <b>Free Game 觸發時的情緒轉場</b> —— 畫面怎麼切、音樂怎麼轉、玩家的注意力怎麼被抓住<br>• <b>動畫的幀感與流暢度</b> —— 哪些動畫會讓人想再看一次，哪些只是在動<br>• <b>待機畫面（Attract Mode）</b> —— 沒人玩的時候它在演什麼？這是機台最主要的招客手段</div></div>
+<div class="slot"><div class="tm">15:00</div><div class="ct"><b>★ 盤點 10/1 必看清單</b>把<b>今天仍未對外開放的展區</b>、以及<b>想再看一次的機台</b>列成一份清單，排好優先順序。<br><b style="color:var(--gold)">這份清單就是明天的作戰計畫 —— 明天只有 5 小時。</b></div></div>
+<div class="slot"><div class="tm">17:30</div><div class="ct"><b>返回飯店整理</b>午餐、晚餐皆自理。晚上自由安排。</div></div>
+</div>
+
+<div class="day key">
+<div class="h"><span class="d">10/1</span><span class="t">週四 · 展場 Day 3</span><span class="tag rec">★ 全程最關鍵</span><span class="tag bad">⚠️ 15:00 閉館</span></div>
+<div class="slot"><div class="tm">—</div><div class="ct"><b>本日主旨</b><b>多數廠商的展區前兩天只對既有客戶與受邀者開放，今天才全面開放。</b><br><b style="color:var(--bad)">但今天展場只開到 15:00，比前兩天少 2 小時。</b><br>前兩天盤點出來的清單，全部要在這 5 小時內兌現。<b>一開門就照清單直接衝，不要在現場才決定要看什麼。</b></div></div>
+<div class="slot"><div class="tm">09:45</div><div class="ct"><b>抵達展場</b>最後一天開放展區的人潮會集中，<b>務必準時</b>。</div></div>
+<div class="slot"><div class="tm">10:00–15:00</div><div class="ct"><b>展場（官方時間 10:00–15:00，僅 5 小時）</b>依 9/30 盤點出的清單逐一攻破，<b>優先順序照「對我們產品線的參考價值」排，不是照攤位大小排</b>。<br><b>時間分配建議：</b>10:00–12:30 先攻前兩天完全進不去的展區；12:30 快速午餐（30 分鐘內）；13:00–15:00 回頭補看想再確認的機台，並把要留存的畫面拍完。<br><b>⚠️ 今天不要花一小時吃飯。</b></div></div>
+<div class="slot"><div class="tm">15:00</div><div class="ct"><b>展場閉館</b>離場前<b>確認沒有人漏掉清單上的項目</b>。</div></div>
+<div class="slot"><div class="tm">15:30–17:30</div><div class="ct"><b>Wynn / Encore 觀察</b><span class="tag rec">團進團出</span>從展場步行約 12 分鐘。<br><b>看什麼：</b>全 Vegas <b>機台選品最精緻</b>的場。重點看 <b>High Limit 區的視覺規格</b> —— 螢幕尺寸、椅子材質、區域的圍蔽感與燈光，如何用視覺手段營造「這區跟外面不一樣」。<br><b>對美術的價值：</b>看高端場怎麼用材質、色溫與留白做出質感，這跟展場上「用亮度與動態搶注意力」是完全相反的設計語言。</div></div>
+<div class="slot"><div class="tm">18:00</div><div class="ct"><b>★ 團體聚餐 ＋ 展場資訊彙整</b><span class="tag rec">團進團出</span><b>晚餐：Battista's Hole in the Wall</b>（見附錄 A）<br>吃飯的同時把三天展的收穫收斂成可以帶回台灣的東西：<br>• 每個人講<b>三個「這次看到、我們現在沒有」的視覺或動畫手法</b><br>• 列出<b>回台後想試做的 3 件事</b><br><b>不要拖到回台灣再講</b> —— 落地後時差加上積壓的工作，這個討論就不會發生了。</div></div>
+<div class="slot"><div class="tm">晚餐後</div><div class="ct"><b>自由活動</b>團員可自行安排行程。</div></div>
+</div>
+
+<div class="day">
+<div class="h"><span class="d">10/2</span><span class="t">週五 · 賭場田野調查日</span><span class="tag rec">團進團出 · 全天離開 Strip</span></div>
+<div class="slot"><div class="tm">—</div><div class="ct"><b>本日主旨</b>展場已經結束。今天用一整天把「<b>Strip 以外</b>」的兩種賭場走完 —— <b>本地客場</b>與<b>Downtown 舊區</b>。<br>這兩類都需要搭車，<b>集中在同一天跑最有效率</b>。<br><b>核心對照：</b>Strip 是「一生來一次、要刺激要拍照」，本地客場是「天天來、每次玩很久」。<b>同樣是 slot，畫面要好看的方式完全不同。</b></div></div>
+<div class="slot"><div class="tm">10:00</div><div class="ct"><b>Durango Casino &amp; Resort（本地客場）</b>Uber 約 20–25 分鐘、$30–38。<br><b>核心問題：</b>當玩家是「天天來的鄰居」而不是「一生來一次的觀光客」，<b>畫面要怎麼做才不會膩？</b><br><b>看什麼：</b>動畫的刺激強度（會不會比 Strip 收斂）、音效音量、機台外觀的耐看度、老機台為什麼還留著、視訊撲克（Video Poker）的比例與介面。</div></div>
+<div class="slot"><div class="tm">12:30</div><div class="ct"><b>午餐：Eat Your Heart Out 美食廣場（Durango 內）</b>趁記憶新鮮，六個人把上午看到的差異點對一次。</div></div>
+<div class="slot"><div class="tm">14:00</div><div class="ct"><b>（可選）Red Rock Casino</b>同為 Station Casinos 集團的本地客場，離 Durango 車程約 15 分。<br><b>若想確認「本地客場」的視覺風格是集團策略還是單店特例，加看這一間很有價值。</b>時間或體力不夠就跳過。</div></div>
+<div class="slot"><div class="tm">15:30</div><div class="ct"><b>前往 Downtown</b>Uber 約 25 分鐘、$35–45。</div></div>
+<div class="slot"><div class="tm">16:00</div><div class="ct"><b>Downtown 老場巡禮：Golden Nugget / The D / Four Queens</b>Fremont Street 上的老牌賭場。<br><b>看什麼：</b>這些場的機台平均機齡比 Strip 高很多。<b>看「什麼樣的老畫面能活二十年」</b> —— 哪些視覺設計經得起時間，哪些一看就過時。這對耐看性的判斷是很直接的參考。<br>順便看老機台與新機台<b>並排在一起</b>時的對比，差異會非常明顯。</div></div>
+<div class="slot"><div class="tm">18:00</div><div class="ct"><b>Circa Resort &amp; Casino</b><span class="tag bad">21 歲以上限定</span>2020 年開幕，是 Downtown 三十年來第一間全新建造的賭場。<br><b>看什麼：</b>全球最大 Sportsbook（三層樓、巨型 LED 牆）、Stadium Swim 泳池劇場。<br><b>這是「用單一沉浸式視覺體驗當作核心賣點」的極端案例</b> —— 一面牆就是整間店的識別。跟 Strip 的多元業態策略是完全不同的思路。</div></div>
+<div class="slot"><div class="tm">19:30</div><div class="ct"><b>Fremont Street Experience 光雕秀</b>頭頂 Viva Vision LED 天幕，每小時整點播放，免費。<br><b>對美術的價值：</b>這是<b>全世界最大的曲面 LED 內容之一</b>。看超大尺幅上的動態如何維持可讀性、色彩如何在夜間環境光下仍然有衝擊力 —— 跟機台上方的大型 LED 招牌是同一套設計問題，只是放大了一百倍。</div></div>
+<div class="slot"><div class="tm">晚餐</div><div class="ct"><b>Downtown / Fremont 團體晚餐</b><span class="tag rec">團進團出</span>Fremont 街上選擇很多，見附錄 A。<br>餐後返回 Strip，Uber 約 15 分鐘、$25–30。</div></div>
+</div>
+
+<div class="day travel">
+<div class="h"><span class="d">10/3</span><span class="t">週六 · 收尾與返程</span></div>
+<div class="slot"><div class="tm">11:00</div><div class="ct"><b>Check out，行李寄放櫃檯</b>退房前<b>確認房間沒有遺漏物品</b>，尤其是充電器與轉接頭。</div></div>
+<div class="slot"><div class="tm">11:00–16:00</div><div class="ct"><b>自由活動（約 5 小時）</b><b>工作向的選項：</b>補看前幾天沒去成的賭場 —— <b>ARIA / Cosmopolitan</b>（年輕客群，電子桌遊與技術型機台比例高，UI 與觸控介面的設計值得看）<br><b>休閒向的選項：</b>Outlet、Bellagio 噴泉、High Roller 等，見附錄 B<br><b>午餐自理。</b></div></div>
+<div class="slot"><div class="tm">16:00</div><div class="ct"><b>回飯店取行李 → 前往 LAS 機場</b>Uber XL 約 20 分鐘。<b>國內線段建議提前 2.5 小時</b>，6 人加行李要留餘裕。</div></div>
+<div class="slot"><div class="tm">19:09</div><div class="ct"><b>LAS 起飛（阿拉斯加 AS1677）→ SEA 西雅圖</b>約 2 小時 49 分，<b>無餐點</b>。<b>行李直掛台北，不用在 SEA 領行李。</b></div></div>
+<div class="slot"><div class="tm">21:58</div><div class="ct"><b>抵達 SEA，轉機 3 小時 17 分</b>國內轉國際，不需過海關。<b>晚餐在 SEA 機場解決</b>（這段班機無餐點）。</div></div>
+</div>
+
+<div class="day travel">
+<div class="h"><span class="d">10/4–10/5</span><span class="t">週日–週一 · 返程</span></div>
+<div class="slot"><div class="tm">10/4 01:15</div><div class="ct"><b>SEA 起飛（星宇 JX031）→ TPE</b>約 13 小時，有餐點。</div></div>
+<div class="slot"><div class="tm">10/5 04:55</div><div class="ct"><b>抵達桃園機場（週一凌晨）</b><b>務必事先預約凌晨接送</b>，這個時間點不好叫車。<br>10/5 是上班日，<b>可視精神狀況判斷是否自行請假補眠</b>。</div></div>
+</div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+<h2><span class="n">6</span>賭場觀察清單</h2>
+
+<p>不是隨便逛，是<b>帶著問題去看</b>。本團是研發團隊，觀察重點全部聚焦在<b>視覺呈現、動畫節奏與氛圍營造</b>。</p>
+
+<div class="tw"><table>
+<tr><th style="width:150px">場館</th><th style="width:105px">時間</th><th>核心問題／觀察重點</th></tr>
+<tr>
+<td><b>Venetian / Palazzo</b></td><td>9/28 上午</td>
+<td>展場所在地。<b>大廠新機首發的擺放位置</b>、燈光如何把視線引導過去；從飯店大廳到賭場區的視覺過渡怎麼做。</td>
+</tr>
+<tr>
+<td><b>Fontainebleau</b><br><span class="tag rec">團進團出</span></td><td>9/28 下午<br>14:30–16:30</td>
+<td>2023 開幕新場，<b>「從零設計」的空間視覺語言</b> —— 燈光色溫、天花板高度、機台群的色彩節奏與排列密度。沒有歷史包袱，配置邏輯最接近教科書。<br><b>重點：</b>大面積機台牆的色彩如何不打架、動態光效如何形成節奏而非雜訊。</td>
+</tr>
+<tr>
+<td><b>Wynn / Encore</b><br><span class="tag rec">團進團出</span></td><td>10/1 傍晚<br>15:30–17:30</td>
+<td><b>全 Vegas 機台選品最精緻</b>。High Limit 區的視覺規格（螢幕尺寸、椅子材質、圍蔽感、燈光），如何用視覺手段做出「這區不一樣」。<br><b>重點：</b>高端場用材質、色溫與留白做質感 —— 跟展場上「用亮度搶注意力」是相反的設計語言。</td>
+</tr>
+<tr>
+<td><b>Durango Casino</b><br><span class="tag rec">團進團出</span></td><td>10/2 上午<br>10:00</td>
+<td>本地客場。<b>當玩家天天來，畫面要怎麼做才不會膩？</b><br><b>重點：</b>動畫的刺激強度是否比 Strip 收斂、音效音量、機台外觀的耐看度、老機台為什麼留著、視訊撲克的介面設計。</td>
+</tr>
+<tr>
+<td><b>Downtown ＋ Circa</b><br><span class="tag rec">團進團出</span></td><td>10/2 下午–晚上<br>16:00 起</td>
+<td>老場機齡高，<b>看「什麼樣的老畫面能活二十年」</b>；老機台與新機台並排的對比。<br><b>Circa：</b>用單一沉浸式視覺體驗（巨型 LED 牆、Stadium Swim）當核心賣點的極端案例。<br><b>Fremont 光雕秀：</b>全球最大曲面 LED 之一，看超大尺幅上的動態如何維持可讀性。</td>
+</tr>
+<tr>
+<td><b>ARIA / Cosmopolitan</b><br><span class="tag">自由參加</span></td><td>10/3 自由時間</td>
+<td>年輕客群導向。<b>電子桌遊（ETG）與技術型（skill-based）機台比例明顯較高</b>，看新世代機台的 <b>UI 設計與觸控介面的視覺回饋</b>。</td>
+</tr>
+</table></div>
+
+<div class="note d">
+<b>🔴 賭場現場注意事項（請全團都看過）</b><br>
+• <b>🔴 賭場內不可拍攝機台、賠付表或其他玩家</b> —— 保全會制止，嚴重會請你離場。<b>這對我們特別痛，因為我們就是要看畫面。</b><br>
+&nbsp;&nbsp;<b>替代做法：</b>①在現場用<b>文字筆記</b>描述（色系、動畫長度、聲音層次）②<b>要拍機台就到 G2E 展場攤位光明正大拍</b> —— 展場上廠商反而歡迎你拍 ③離場後立刻補記，不要等回飯店<br>
+• <b>賭場區域嚴禁未滿 21 歲進入</b>，隨身帶護照（美國駕照台灣人沒有，護照是唯一有效證件）<br>
+• 賭場內部禁菸規定寬鬆，<b>菸味很重</b>，會過敏的人準備口罩<br>
+• 若要實際試玩，<b>先設好上限、只帶現金進場、卡留房間</b><br>
+• 賭場內沒有時鐘也沒有窗戶，<b>自己設手機鬧鐘</b>，很容易不小心待過頭
+</div>
+
+<div class="note i">
+<b>💡 建議每個人固定記這幾欄，回台灣才比得起來</b><br>
+<code>場館｜機台名稱／廠商｜第一眼抓住我的是什麼｜動畫節奏（快/慢、乾脆/拖沓）｜中獎回饋的層次｜待機畫面在演什麼｜可借鑑的點</code><br>
+六個人用<b>同一套欄位</b>記，回台灣把表格併起來就是一份可用的資料；各記各的就只是六份感想。
+</div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+<h2><span class="n">7</span>預算與現金</h2>
+
+<div class="note g">
+<b>✅ 機票與住宿已由公司處理，不需個人墊付</b><br>
+機票與 TI 六晚住宿<b>皆由曉陽協助訂位</b>，以下只列<b>個人需要自行準備或代墊的費用</b>。
+</div>
+
+<div class="tw"><table>
+<tr><th style="width:170px">項目</th><th style="width:130px">金額</th><th>備註</th></tr>
+<tr><td><b>機票 TPE ⇄ LAS</b></td><td><b style="color:var(--ok)">公司支付</b></td><td>曉陽已協助訂位</td></tr>
+<tr><td><b>住宿 6 晚</b></td><td><b style="color:var(--ok)">公司支付</b></td><td>曉陽已協助訂位（TI 3 間雙人房）</td></tr>
+<tr><td><b>G2E 註冊費</b></td><td><b>$0</b></td><td>皆已領取，僅需 Expo Hall Pass</td></tr>
+<tr><td><b>餐費（6 天）</b></td><td><b>US$500–600</b></td><td><b>公司每日補助 TWD$2,500</b>，超出部分自理</td></tr>
+<tr><td><b>當地交通</b></td><td><b>US$150</b></td><td><b>統一由 1～2 人代訂，回公司請款</b>（請留存每趟截圖）</td></tr>
+<tr><td><b>小費預備現金</b></td><td><b>US$70–100</b></td><td>房務 $3–5／天、行李員 $2／件、司機 15%</td></tr>
+<tr><td><b>ESTA</b></td><td><b>US$40.27</b></td><td>官網固定費用（多數人應已申請）</td></tr>
+<tr><td><b>旅平險＋不便險</b></td><td>依個人安排</td><td><b>建議加保不便險</b> —— 去程 PHX、回程 SEA 都有轉機</td></tr>
+<tr><td><b>賭場體驗金</b></td><td><b>US$100–300</b></td><td>依個人安排，<b>只帶現金進場</b></td></tr>
+<tr><td><b>自由行程（秀／購物）</b></td><td>自訂</td><td>自由參加，不列入公司核銷</td></tr>
+</table></div>
+
+<h3>現金該帶多少？</h3>
+<div class="grid g2">
+<div class="card gold">
+<h4>💵 建議每人帶現金 US$300 – 500</h4>
+<ul>
+<li><b>小費 $70–100</b> — 房務、行李員、Uber、餐廳（小費給現金最好）</li>
+<li><b>賭場體驗金 $100–300</b> — <b>只帶這個金額進賭場，卡留房間</b></li>
+<li><b>零星消費 $100</b> — 路邊、小店、緊急用</li>
+</ul>
+<p style="font-size:13px;color:var(--fg3);margin-top:8px">機票住宿公司已付、餐費有補助，所以現金需求比一般自由行低。</p>
+</div>
+<div class="card">
+<h4>💳 大額一律刷卡</h4>
+<ul>
+<li>美國幾乎全面接受 Visa / Mastercard</li>
+<li><b>出發前打電話給發卡銀行報備海外使用</b>，否則大額交易可能被風控鎖卡</li>
+<li>選<b>免海外手續費</b>的卡（一般卡 1.5%）</li>
+<li>刷卡時若問要用「台幣」還是「美金」結帳，<b>一律選美金</b>（選台幣是 DCC，匯率很差）</li>
+</ul>
+</div>
+</div>
+
+<div class="note d">
+<b>🔴 法規提醒｜攜帶現金超過 US$10,000 必須申報</b><br>
+這是<b>「每個人」超過 $10,000 要申報</b>，但如果是<b>同團一起旅行、資金共同管理</b>，<b>合計金額也會被視為一體計算</b>。<br>
+6 人 × $500 = $3,000 在安全範圍內，但若有人身上帶著全團的代墊款，務必先算清楚。<br>
+超過就填 <b>FinCEN Form 105</b>，<b>申報本身完全合法、不用課稅，但不申報會被沒收</b>。
+</div>
+
+<div class="note i">
+<b>💡 換匯建議</b>：台灣銀行、兆豐銀行的美金現鈔匯率通常較好，<b>可線上結匯再到分行或機場櫃檯領取</b>。建議換成 <b>$20 和 $10 面額為主</b>（小費最常用），不要全換 $100 大鈔 — 很多小店和小費場合找不開。
+</div>
+
+<div class="note i">
+<b>💡 請款提醒</b><br>
+<b>當地交通統一由 1～2 人代訂、回公司請款</b>，那 1～2 人請<b>每趟 Uber 都截圖存證</b>（金額、時間、起訖點）。<br>
+餐費補助的核銷規則<b>出發前先跟行政確認</b>：要不要正本收據、匯率怎麼認列、每日補助是實報實銷還是定額。
+</div>
+</section>
+<!-- ============ 8 ============ -->
+<section id="s8">
+<h2><span class="n">8</span>ESTA 出發前確認</h2>
+
+<div class="note g">
+<b>✅ 觀念先講清楚：台灣護照去美國看展「不需要簽證」</b><br>
+台灣是美國「<b>免簽證計畫（Visa Waiver Program, VWP）</b>」成員國，只要線上申請 <b>ESTA</b>（US$40.27）即可，<b>不用面談、不用跑 AIT、不用寄護照</b>。<br>
+白話說：<b>ESTA 像是「線上填一張表、拿到一個進場許可」；簽證則是「要本人到 AIT 面談、貼一張貼紙在護照上」。</b>兩者完全不同。
+</div>
+
+<h3>出發前必做的四件事</h3>
+<div class="card gold">
+<ul class="chk">
+<li class="hot"><b>確認 6 個人的 ESTA 狀態都是 Approved</b> — 到官網 <code>esta.cbp.dhs.gov</code> 的「Check ESTA Status」，用<b>護照號碼＋出生日期＋護照發照國</b>即可查詢，不需要申請號碼</li>
+<li class="hot"><b>核對 ESTA 上的護照號碼與手上的實體護照完全一致</b> — ESTA 與護照號碼綁定，<b>期間換過護照就必須重新申請</b></li>
+<li class="hot"><b>確認護照效期涵蓋 2026/10/05 之後</b>（建議回國日後還有 6 個月以上）</li>
+<li><b>把 ESTA 核准頁列印一份，並存一份在手機裡</b> — 入境時用不到紙本的機率很高，但沒帶而被問到會很麻煩</li>
+</ul>
+</div>
+
+<div class="note d">
+<b>🔴 還沒辦的人：現在辦還來得及，但要今天就辦</b><br>
+<b>唯一官方網站：<code>esta.cbp.dhs.gov</code>，費用 US$40.27。</b><br>
+<b>⚠️ 網路上有大量長得很像官網的代辦網站</b>，名稱常含 esta / usa / travel-authorization，會收 US$80–150 的「手續費」，做的事跟你自己填完全一樣。<b>網址結尾一定要是 <code>.gov</code></b>，不是的一律不要付款。搜尋引擎最上方常常是付費廣告的代辦商，<b>請直接輸入網址</b>。<br><br>
+<b>填寫時要注意的三件事：</b><br>
+1. <b>姓名拼音必須與護照上的英文完全一致</b>（包含有沒有連字號）<br>
+2. <b>國民身分證字號欄位不可跳過</b> —— 這是台灣申請人特有的必填欄位<br>
+3. <b>2026 年新增社群媒體帳號欄位</b>（填帳號名稱，不需要密碼），近 5 年用過的都要填；確實沒有可選 None。<b>不要因為嫌麻煩就漏填</b>，資料不一致可能被轉人工審核<br><br>
+<b>時程：</b>多數人幾分鐘到 24 小時內核准，但<b>被轉人工審核可能拖 1–2 週</b>。距出發只剩 13 天，<b>今天送出、明天確認狀態</b>。
+</div>
+
+<h3>萬一出狀況</h3>
+<div class="tw"><table>
+<tr><th style="width:36%">狀況</th><th>怎麼辦</th></tr>
+<tr><td><b>狀態顯示 Authorization Pending</b></td><td>正常，多數 24 小時內會變 Approved。<b>不要重複申請（會重複收費）</b>，用「Check ESTA Status」追蹤即可</td></tr>
+<tr><td><b>超過 72 小時仍是 Pending</b></td><td><b>立即回報帶團者</b>。距出發已不到兩週，需要開始評估替代方案</td></tr>
+<tr><td><b>顯示 Travel Not Authorized</b></td><td>ESTA 被拒。<b>不代表不能去美國</b>，但必須改辦 B1/B2 簽證，而 DS-160 加上 AIT 面談排期<b>通常需要 1–2 個月</b>，<b>本次出差確定來不及</b>。立刻回報帶團者處理人員調整</td></tr>
+<tr><td><b>信用卡付款失敗</b></td><td>換一張卡或改用 PayPal。部分台灣信用卡的境外交易風控會擋，可先打電話向發卡行報備</td></tr>
+<tr><td><b>姓名或護照號碼填錯</b></td><td>關鍵欄位<b>核准後不能修改</b>，只能重新申請並重新付款。發現了就馬上重辦，不要拖</td></tr>
+<tr><td><b>住宿地址要改</b></td><td>非關鍵欄位，登入後可更新，不影響效力</td></tr>
+</table></div>
+
+<div class="note w">
+<b>⚠️ 少數人不能用 ESTA，請自己對一下</b><br>
+下列任一情況<b>不能使用 ESTA</b>，必須辦 B1/B2 簽證：<br>
+• 護照不是<b>晶片護照</b>，或效期無法涵蓋回國日之後<br>
+• <b>2011 年 3 月 1 日之後</b>曾前往<b>伊朗、伊拉克、北韓、敘利亞、蘇丹、利比亞、索馬利亞、葉門、古巴</b>任一國（或具這些國家的雙重國籍）<br>
+• 曾<b>被美國拒絕入境、被遣返、逾期停留</b>，或有犯罪紀錄<br>
+<b>若有人符合上述任一項，請立刻告知帶團者</b> —— 這已經不是簽證問題，而是人員調整的問題。
+</div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="s9">
+<h2><span class="n">9</span>出發前 Check List</h2>
+
+<h3>🔴 本週內必做（9/14 – 9/20）</h3>
+<ul class="chk">
+<li class="hot"><b>確認 6 人的 ESTA 都已核准</b> — 詳見 §8。沒辦的人今天就要辦</li>
+<li class="hot"><b>104 申請差旅項目</b> — 期間 <b>9/27 – 10/4</b>，行政流程要跑，不要拖</li>
+<li class="hot"><b>三場團體晚餐訂位</b> — 9/29（Venetian）、10/1（Battista's）、10/2（Downtown）。<b>G2E 週全城餐廳爆滿，現在不訂就沒有了</b>。詳見附錄 A</li>
+<li class="hot"><b>買旅平險 ＋ 旅遊不便險</b> — 去程 PHX、回程 SEA 都要轉機，<b>不便險有其必要</b></li>
+<li><b>辦美國網路 eSIM</b> — Airalo / Ubigi，5GB 約 US$16。<b>6 人都要辦</b></li>
+<li><b>研究 G2E 參展商名單，列出必看清單</b> — 官網會公布 Exhibitor List 與樓層圖。<b>10/1 只有 5 小時，清單越早開始列越好</b></li>
+<li><b>確認護照效期涵蓋 2026/10/05 之後</b>（建議 6 個月以上）</li>
+<li><b>個人自費行程訂位</b> — 想看秀的人（Mystère、Sphere 等）現在訂，熱門場次會賣完。見附錄 B</li>
+</ul>
+
+<h3>🟡 出發前 1 週（9/21 – 9/26）</h3>
+<ul class="chk">
+<li><b>下載 App</b>：Uber / Lyft、Google Maps（<b>下載 Vegas 離線地圖</b>）、G2E 官方 App、Treasure Island 飯店 App、星宇與美國航空 App</li>
+<li><b>準備海外可使用的信用卡</b> — <b>打電話向發卡銀行報備海外使用</b>，確認額度足夠，優先選免海外手續費的卡</li>
+<li><b>列印 ＋ 手機存檔</b>：ESTA 核准頁、電子機票（去程 4 段、回程 3 段都要）、飯店訂房確認、保險卡、<b>G2E 入場函</b></li>
+<li><b>線上結匯美金現鈔</b>（$20、$10 面額為主，小費最常用）</li>
+<li><b>用飯店 App 完成線上 check-in</b> — 9/27 是深夜 22:30 才到，能跳過櫃檯排隊最好</li>
+<li><b>開行前會</b> — 分配展區（6 人分兩組）、約定集合點與時間、建立群組並測試在美國能不能正常收發、<b>統一觀察記錄的欄位格式</b>（見 §6）</li>
+<li><b>確認公司差旅費核銷規則</b> — 餐費補助是實報實銷還是定額？要不要正本收據？匯率怎麼認列？</li>
+</ul>
+
+<h3>🧳 行李重點</h3>
+<div class="grid g2">
+<div class="card">
+<h4>一定要帶</h4>
+<ul>
+<li><b>好走的鞋（兩雙）</b> — 展場一天走 15,000 步以上，一雙會濕、會臭</li>
+<li><b>薄外套／長袖</b> — 九月底白天約 32°C，但<b>室內冷氣強到會冷</b>，早晚降到 18°C</li>
+<li><b>護唇膏 + 乳液</b> — Vegas 極乾燥，濕度常低於 20%</li>
+<li><b>行動電源</b> — 展場一天狂拍照狂查資料，電池撐不住</li>
+<li><b>保溫水壺</b> — 展場一瓶水 $5，自己裝省很多，也防脫水</li>
+<li><b>常備藥</b> — 感冒藥、腸胃藥、止痛藥</li>
+<li><b>行李識別帶</b> — PHX 轉機要快速從轉盤抓行李</li>
+</ul>
+</div>
+<div class="card">
+<h4>注意事項</h4>
+<ul>
+<li><b>行李額度：1 件手提 7kg ＋ 2 件託運各 23kg</b>（去回程相同）</li>
+<li><b>電壓</b>：美國 110V／60Hz，A、B 型插頭，<b>台灣插頭可直接用</b>。三孔插頭要確認轉接</li>
+<li><b>行李箱留空間</b> — 展場型錄很重、Outlet 買完會塞不下，可帶一個折疊袋</li>
+<li><b>肉類、水果、種子不得帶入美國</b>（含肉鬆、肉乾、月餅），罰款很重</li>
+<li><b>鋰電池行動電源只能放隨身行李</b>，不能託運</li>
+<li><b>藥品帶原包裝</b>，處方藥附英文處方箋</li>
+</ul>
+</div>
+</div>
+
+<h3>🛂 入境注意（在 PHX 鳳凰城入境）</h3>
+<div class="note w">
+<b>海關問答準備</b><br>
+• 目的說 <b>"attending a trade show"</b>（參加商展），<b>不要說 "working"</b> — ESTA 商務免簽不允許在美國從事受僱工作<br>
+• 準備好回答：住哪間飯店（Treasure Island）、待幾天、回程機票日期、公司名稱與職稱<br>
+• <b>隨身備妥（不要放託運）</b>：ESTA 核准頁、回程機票、飯店訂房確認、G2E 入場函<br>
+• 不要在入境時開玩笑，美國海關對玩笑話零容忍<br>
+• <b>6 個人請一起排隊、一起過</b>，走散了在管制區找不到人<br>
+• 入境後<b>還要領行李、重新託運、再過一次安檢</b>才能到登機門，時間規劃見 §2
+</div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+<h2><span class="n">10</span>出發前待確認</h2>
+
+<div class="tw"><table>
+<tr><th style="width:36px">#</th><th style="width:180px">待確認事項</th><th>說明</th><th style="width:110px">時限</th></tr>
+<tr><td>1</td><td><b>三場團體晚餐是否已訂位</b></td><td>9/29 Venetian、10/1 Battista's、10/2 Downtown。<b>Battista's 可提前 2 個月訂、最多 20 人</b>；Venetian 內的餐廳多可用 OpenTable。詳見附錄 A</td><td><span class="tag bad">本週內</span></td></tr>
+<tr><td>2</td><td><b>6 人的 ESTA 是否全數核准</b></td><td>見 §8。若有人被拒或卡在人工審核，需要立刻處理人員調整</td><td><span class="tag bad">本週內</span></td></tr>
+<tr><td>3</td><td><b>桃園機場來回接送</b></td><td>去程 9/27（日）約 15:30 出發；<b>回程 10/5（一）凌晨 04:55 抵達，這個時間不好叫車，務必事先預約</b></td><td><span class="tag bad">本週內</span></td></tr>
+<tr><td>4</td><td><b>10/2 要不要加 Red Rock</b></td><td>加（多 1 小時車程與參觀，可驗證「本地客場」的視覺風格是集團策略還是單店特例）／不加（Durango 看深一點）</td><td><span class="tag">出發前</span></td></tr>
+<tr><td>5</td><td><b>10/3 自由時間要不要排團體選項</b></td><td>11:00–16:00 約 5 小時。工作向：ARIA / Cosmopolitan（新世代機台 UI）；休閒向：Outlet（見附錄 B）。也可以直接公布選項讓大家自己組隊</td><td><span class="tag">出發前</span></td></tr>
+<tr><td>6</td><td><b>展區分配方式</b></td><td>6 人分兩組，怎麼分？建議企劃與美術混編（各組都有兩種視角），而不是企劃一組、美術一組</td><td><span class="tag">行前會</span></td></tr>
+<tr><td>7</td><td><b>餐費補助的核銷規則</b></td><td>每日 TWD$2,500 是實報實銷還是定額？要不要正本收據？匯率怎麼認列？<b>出發前跟行政確認清楚</b></td><td><span class="tag">出發前</span></td></tr>
+<tr><td>8</td><td><b>當地交通由誰代訂</b></td><td>統一由 1～2 人代訂、回公司請款。<b>要先指定是誰</b>，並提醒每趟截圖存證</td><td><span class="tag">行前會</span></td></tr>
+</table></div>
+
+<div class="note g">
+<b>✅ 需要的話我可以接著做</b><br>
+• <b>展場必看清單模板</b>（參展商、位置、想看什麼、誰負責、10/1 優先順序）<br>
+• <b>統一格式的觀察記錄表</b>（見 §6 建議欄位），六個人用同一份，回台可直接合併<br>
+• <b>可列印的隨身摘要卡</b>（飯店英文地址、緊急聯絡、每日集合時間與地點），發給 6 個人<br>
+• <b>費用代墊與請款對帳表</b>
+</div>
+</section>
+
+<!-- ============ 附錄分隔 ============ -->
+<div class="apxbar">
+<b>—— 以下為附錄，自由活動參考用 ——</b><br>
+餐飲、秀、景點、飯店賭場巡禮與採購的選項整理，<b>不佔正式排程</b>。<br>
+<b>適合排進 10/3 的自由時間（11:00–16:00），或各展場日的晚間空檔。</b>可以直接把清單丟給大家，自己揪、自己去。
+</div>
+
+<!-- ============ A ============ -->
+<section id="sa">
+<h2 class="apx"><span class="n">A</span>附錄：餐飲</h2>
+
+<h3>A-1｜三場團體晚餐<span class="tag rec" style="margin-left:8px">正式行程</span></h3>
+
+<div class="note d">
+<b>🔴 訂位可行性是關鍵</b><br>
+G2E 期間全城餐廳都會被業界人士塞爆。<b>不能訂位的店，6 個人現場排隊會排到崩潰。</b><br>
+<b>三場團體晚餐建議本週內全部訂完。</b>
+</div>
+
+<div class="tw"><table>
+<tr><th style="width:92px">日期</th><th style="width:150px">地點</th><th>建議與訂位方式</th></tr>
+<tr>
+<td><b>9/29（二）</b><br>展場 D1</td>
+<td><b>Venetian 內</b></td>
+<td><b>首選 Yardbird Southern Table &amp; Bar</b> —— 就在展場樓下，<b>可透過 OpenTable 訂位</b>，美式南方菜，六人桌好訂。營業時間週一–五 11:00–22:00。<br><b>備案：</b>Grand Lux Cafe（Venetian 內，平價、份量大、不太需要訂位）／Black Tap（漢堡與誇張的「怪獸奶昔」，展場樓下）<br><span class="tag ok">走路可到，展場結束直接過去</span></td>
+</tr>
+<tr>
+<td><b>10/1（四）</b><br>展場 D3</td>
+<td><b>Battista's Hole in the Wall</b><br><span class="tag rec">★ 已定</span></td>
+<td>義大利老店（1970 年開業），從 TI 走路 15–18 分或 Uber 5 分。<br><b>接受最多 20 人訂位、可提前 2 個月預約</b>，電話訂位時間每日 09:00–21:00（美西時間）。<br>主餐附<b>濃湯、沙拉、蒜香麵包、無限量 house wine、卡布奇諾</b>，手風琴師會到桌邊演奏。<br><span class="tag bad">缺點</span>店內空間小、桌距近、比較吵</td>
+</tr>
+<tr>
+<td><b>10/2（五）</b><br>賭場田調日</td>
+<td><b>Downtown / Fremont</b></td>
+<td><b>首選 Chart House（Golden Nugget 內）</b> —— 餐廳中央有一座 <b>75,000 加侖的圓柱形水族箱</b>，對做視覺的人本身就是個有趣的空間案例；海鮮為主，可訂位。<br><b>備案：</b>Andiamo Italian Steakhouse（The D 內，可訂位、老 Vegas 風格）／Fremont 街邊小吃（不用訂位，最隨性）<br><span class="tag">光雕秀 19:30，晚餐建議排在秀前或秀後</span></td>
+</tr>
+</table></div>
+
+<div class="note i">
+<b>💡 預算怎麼抓</b><br>
+公司每日餐費補助 <b>TWD$2,500</b>（約 US$78），六天合計約 US$470。扣掉早餐與午餐後，<b>晚餐大約可抓 US$40–50／人</b>。<br>
+記得 Vegas 要加 <b>8.375% 銷售稅</b>與 <b>18–20% 小費</b>（6 人以上很多店會直接把服務費加在帳單上）。<br>
+<code>US$50 ÷ 1.08375 ÷ 1.20 ≈ US$38 實際可點餐金額</code>
+</div>
+
+<div class="note i">
+<b>💡 結帳方式</b><br>
+<b>用一張信用卡付、事後統一分攤</b>，不要 6 個人分開刷 —— 美國餐廳分單很慢，也容易算錯小費。<br>
+<b>先看帳單有沒有已包含 "Service Charge" 或 "Gratuity"</b>，有的話就不用再加。<b>記得拿收據</b>，餐費要核銷。
+</div>
+
+<h3>A-2｜人氣與指標性餐飲<span class="tag" style="margin-left:8px">自由參加</span></h3>
+
+<p>不分價位，都是 Vegas 有代表性、值得知道的店。<b>展覽期間人潮多，有想吃的都建議先訂位。</b></p>
+
+<h4>🍽️ 自助餐（Buffet）— Vegas 的招牌形式</h4>
+<div class="tw"><table>
+<tr><th style="width:190px">店名</th><th style="width:130px">位置</th><th style="width:90px">價位</th><th>備註</th></tr>
+<tr><td><b>Bacchanal Buffet</b><br><span class="tag rec">天花板</span></td><td>Caesars Palace</td><td class="num"><b>$85 起</b></td><td><b>Vegas 自助餐的天花板</b>。9 個開放式廚房、250+ 道菜。<b>建議提前 30 天訂位</b>，現場排隊會很久。</td></tr>
+<tr><td><b>Wicked Spoon</b></td><td>Cosmopolitan</td><td class="num">$50 起</td><td><b>小份量精緻版</b>自助餐，每道菜都以小盤盛裝。適合<b>怕吃太撐但想多嚐幾種</b>的人。</td></tr>
+<tr><td><b>The Buffet at Wynn</b></td><td>Wynn</td><td class="num">$68–75</td><td><b>氣氛最優雅</b>的一家，適合當作犒賞自己的一餐。10/1 傍晚剛好會去 Wynn 觀察，可順道。</td></tr>
+</table></div>
+
+<h4>🔥 名廚與話題餐廳</h4>
+<div class="tw"><table>
+<tr><th style="width:230px">店名</th><th style="width:170px">位置</th><th style="width:80px">價位</th><th>備註</th></tr>
+<tr><td><b>Gordon Ramsay Hell's Kitchen</b></td><td>Caesars Palace</td><td class="num">$$$</td><td>電視節目同名餐廳，招牌是<b>牛肉 Wellington</b>，氣氛熱鬧。</td></tr>
+<tr><td><b>Gordon Ramsay Burger</b></td><td>Planet Hollywood</td><td class="num">$$</td><td>Ramsay 版漢堡，比 Hell's Kitchen <b>輕鬆隨性</b>，適合快速解決一餐。</td></tr>
+<tr><td><b>Gordon Ramsay Fish &amp; Chips</b><br><span class="tag ok">CP 值高</span></td><td>LINQ Promenade<br>（近 High Roller）</td><td class="num">$17 起</td><td>英式炸魚薯條，<b>外帶式快餐</b>，常被稱為 Vegas 最好吃的 fish &amp; chips。看完 High Roller 順道。</td></tr>
+<tr><td><b>Bazaar Meat by José Andrés</b></td><td>SAHARA</td><td class="num">$$$$</td><td>西班牙名廚操刀，<b>牛肉切法與來源選擇非常多</b>。</td></tr>
+<tr><td><b>L'Atelier de Joël Robuchon</b></td><td>MGM Grand</td><td class="num">$$$$$</td><td><b>米其林等級</b>，適合想留一晚做高規格慶祝的人。</td></tr>
+<tr><td><b>Lotus of Siam</b></td><td>中國城</td><td class="num">$35–45</td><td>得過 <b>James Beard 獎</b>的泰北菜，可透過 OpenTable 訂位。中國城裡少數訂位系統完整的名店。</td></tr>
+</table></div>
+
+<h3>A-3｜平價美式漢堡（便宜又有美國特色）</h3>
+
+<div class="grid g2">
+<div class="card gold">
+<h4>🍔 In-N-Out Burger <span class="tag rec">必吃</span></h4>
+<p><b>Strip 上最近的分店：</b>3545 S Las Vegas Blvd, Ste L24（Grand Bazaar Shops 內，靠近 Horseshoe／LINQ 一帶，就在 Strip 上，走路可到）</p>
+<p><b>價格：</b>Double-Double + 薯條 + 飲料<b>約 $11.40</b>，是 Vegas 少數還能吃到的真・平價美食。</p>
+<p><b>為什麼值得去：</b>加州起家的西岸傳奇，<b>台灣完全吃不到</b>。所有食材現點現做、從不冷凍。</p>
+<p><b>點餐小知識（Not-So-Secret Menu）：</b></p>
+<ul>
+<li><b>Animal Style</b> — 免費升級：加烤過的洋蔥、額外醬料、芥末煎肉排。<b>第一次來就點這個</b></li>
+<li><b>Double-Double</b> — 雙層肉雙層起司，招牌中的招牌</li>
+<li><b>Animal Style Fries</b> — 薯條加起司、烤洋蔥、醬料</li>
+<li><b>Neapolitan Shake</b> — 三種口味奶昔混在一起</li>
+</ul>
+<p><span class="tag bad">注意</span><b>晚餐與宵夜時段會大排長龍</b>，建議避開 18:00–21:00。</p>
+</div>
+<div class="card">
+<h4>🍔 其他值得試的漢堡</h4>
+<p><b>Shake Shack</b>（紐約起家，New York-New York 與 Strip 多處有店）<br>約 $12–16。奶昔和 crinkle-cut 薯條是強項，跟 In-N-Out 剛好是<b>東岸 vs 西岸</b>的對照組，兩家都吃一次很有意思。</p>
+<p><b>Black Tap Craft Burgers &amp; Beer</b>（Venetian）<br>約 $20–26。<b>以誇張的「怪獸奶昔」聞名</b>（整杯插滿甜甜圈和糖果），拍照效果極好，展場樓下就有。</p>
+<p><b>Holsteins Shakes &amp; Buns</b>（Cosmopolitan）<br>約 $20–25。精釀啤酒配創意漢堡，也有酒精奶昔。</p>
+<p><b>Sickies Garage Burgers &amp; Brews</b><br>汽車主題，漢堡種類多達五十種，是本地人不想被 Strip 削一刀時會去的店。</p>
+</div>
+</div>
+
+<h3>A-4｜其他候選（訂位有限制，注意）</h3>
+<div class="tw"><table>
+<tr><th style="width:170px">店名</th><th style="width:140px">位置</th><th style="width:140px">訂位</th><th>備註</th></tr>
+<tr><td><b>Mon Ami Gabi</b></td><td>Paris Las Vegas</td><td><b style="color:var(--warn)">⚠️ 室內可訂<br>露天不可</b></td><td>室內座位可透過 OpenTable 或電話（702-944-4224）訂位，<b>但看得到 Bellagio 噴泉的露天座不接受訂位、一律現場先到先得</b>。想坐外面就得現場排，常見等待約 30 分鐘內。</td></tr>
+<tr><td><b>888 Korean BBQ</b></td><td>中國城</td><td><b style="color:var(--bad)">❌ 不接受訂位</b></td><td>只能當天加入線上候位名單。平日約等 45 分鐘，<b>假日與尖峰可能等 2 小時以上</b>。<br><span class="tag bad">G2E 週不建議六人團硬闖</span><br>若真的想吃韓式燒烤，同區的 <b>Hwaro</b> 也是吃到飽，可先打電話問當天候位狀況。</td></tr>
+</table></div>
+
+<h3>A-5｜日常餐飲的省錢原則</h3>
+<div class="card">
+<ul>
+<li><b>展場內餐飲很貴</b>（一份三明治 $18–22、一瓶水 $5）。<b>自備水壺</b>，早餐在飯店附近解決</li>
+<li><b>飯店房間通常沒有免費早餐</b>，Strip 上的早餐 $20 起跳。可以到 CVS 或 Walgreens（Strip 上很多）買麵包牛奶當早餐，<b>一天省 $15</b> —— 省下來的補助可以用在晚餐</li>
+<li><b>中國城（Spring Mountain Rd）是全 Vegas CP 值最高的餐飲聚落</b>，離 TI 只要 Uber 5–8 分鐘。想吃中式、韓式、越南菜都在那裡</li>
+<li><b>賭場的餐廳不一定貴</b>，Downtown 老場（如 The D、Four Queens）常有 <b>$10–15 的牛排特餐</b>，是老 Vegas 的傳統。10/2 去 Downtown 時可以留意</li>
+<li><b>展覽期間人潮多，有想吃的餐廳都先訂位</b></li>
+</ul>
+</div>
+</section>
+
+<!-- ============ B ============ -->
+<section id="sb">
+<h2 class="apx"><span class="n">B</span>附錄：秀、景點與採購</h2>
+
+<div class="note i">
+<b>這一區全部是「自由參加」選項</b>，不佔正式排程。<br>
+<b>本次行程的原則是：晚上除聚餐外不安排團體行程</b>，所以這些都是各自安排。<b>把選項公布出去、讓大家自己組隊</b>是最好的做法。
+</div>
+
+<h3>B-1｜指標性的秀與娛樂</h3>
+
+<div class="note w">
+<b>⚠️ 想看秀的人，本週內就要訂</b><br>
+熱門場次會賣完，尤其 G2E 期間全城住客暴增。<b>票價與場次僅為參考值，部分秀的檔期可能已異動或停演，訂票前務必上官網確認當日場次與價格。</b>
+</div>
+
+<div class="tw"><table>
+<tr><th style="width:180px">項目</th><th style="width:150px">位置</th><th style="width:90px">價位</th><th style="width:160px">場次</th><th>備註</th></tr>
+<tr>
+<td><b>Atomic Saloon Show</b><br><span class="tag rec">★ 距離最近</span></td><td>Grand Canal Shoppes<br>（Venetian 內）</td><td class="num">$99 起</td><td>週五–二<br>19:30／21:30</td>
+<td><b>就在展場所在地，走出展場就到</b>。喜劇＋特技＋雜耍，75 分鐘。<span class="tag bad">18 歲以上</span></td>
+</tr>
+<tr>
+<td><b>Mystère</b><br>（Cirque du Soleil）<br><span class="tag rec">★ 最省事</span></td><td><b>Treasure Island 內</b></td><td class="num">$80–130</td><td>每晚</td>
+<td><b>就住在這裡，走出電梯就到</b>。Cirque 在 Vegas 最老的常駐秀，也是系列中票價最親民的。</td>
+</tr>
+<tr>
+<td><b>Absinthe</b></td><td>Caesars Palace</td><td class="num">$149 起</td><td>週三–日<br>19:00／21:30</td>
+<td>經典喜劇雜耍秀，15 年長青招牌，<b>風格辛辣直白</b>。</td>
+</tr>
+<tr>
+<td><b>O</b>（Cirque du Soleil）</td><td>Bellagio</td><td class="num">$150–250</td><td>每晚</td>
+<td>Cirque 招牌作，<b>在水池上演出</b>，最經典的一齣。</td>
+</tr>
+<tr>
+<td><b>KÀ</b>（Cirque du Soleil）</td><td>MGM Grand</td><td class="num">$110–250</td><td>週六日 16:30／19:00<br>週一–三 19:00／21:30</td>
+<td><b>巨型旋轉舞台＋武術動作戲劇</b>。舞台機構本身就是看點。演到 2026/11。</td>
+</tr>
+<tr>
+<td><b>Blue Man Group</b></td><td>Luxor</td><td class="num">$80–130</td><td>每晚</td>
+<td><b>無台詞</b>，擊樂＋喜劇，老少咸宜、沒有語言障礙。</td>
+</tr>
+<tr>
+<td><b>Sphere 入場看秀</b></td><td>Sphere</td><td class="num">$100–250</td><td>每日多場</td>
+<td><b>The Wizard of Oz</b> 沉浸版，16K 曲面螢幕。熱門場次會賣完，<b>提前訂</b>。詳見 B-3。</td>
+</tr>
+<tr>
+<td><b>David Copperfield</b></td><td>MGM Grand</td><td class="num">$80–150</td><td>每晚</td>
+<td>知名度最高的駐店魔術師。</td>
+</tr>
+<tr>
+<td><b>Penn &amp; Teller</b></td><td>Rio</td><td class="num">$60 起</td><td>每晚</td>
+<td>魔術界長青雙人組，演出超過 22 年，<b>CP 值高</b>。</td>
+</tr>
+<tr>
+<td><b>Le Rêve</b></td><td>Wynn</td><td class="num">$130–220</td><td>每週數場</td>
+<td>水上超現實秀，Wynn 自製招牌。<b style="color:var(--warn)">⚠️ 此秀曾長期停演，訂票前請務必確認目前是否仍在演出。</b></td>
+</tr>
+<tr>
+<td><b>High Roller 摩天輪</b></td><td>LINQ Promenade</td><td class="num">$25–35</td><td>全天</td>
+<td>30 分鐘一圈，<b>Strip 夜景最佳視角</b>。可選含吧台的車廂（貴約 $20）。</td>
+</tr>
+<tr>
+<td><b>Venetian 貢多拉船</b></td><td>Venetian 內</td><td class="num">$39／人</td><td>全天</td>
+<td>展場旁邊，室內運河。有點觀光客，但船夫會唱歌。</td>
+</tr>
+</table></div>
+
+<h3>B-2｜觀光地標</h3>
+<div class="tw"><table>
+<tr><th style="width:190px">景點</th><th style="width:180px">位置</th><th style="width:90px">價位</th><th>備註</th></tr>
+<tr><td><b>Fountains of Bellagio</b></td><td>Bellagio 前噴泉湖</td><td class="num"><b>免費</b></td><td>每 15–30 分鐘一場，晚上到 24:00。經典必看，順路就能看。</td></tr>
+<tr><td><b>Sphere（外觀）</b></td><td>Venetian 旁</td><td class="num"><b>免費</b></td><td>全天可看，<b>晚上效果最好</b>。展場走路可到，詳見 B-3。</td></tr>
+<tr><td><b>World of Coca-Cola Store</b></td><td>Showcase Mall<br>（近 MGM Grand）</td><td class="num"><b>免費入場</b></td><td><b>100 呎高的可樂瓶地標</b>，可試喝各國限定口味可樂。</td></tr>
+<tr><td><b>M&amp;M's World</b></td><td>Showcase Mall（同棟）</td><td class="num"><b>免費入場</b></td><td>四層樓。<b>跟 Coca-Cola Store 在同一棟，可順道一起逛。</b></td></tr>
+<tr><td><b>Welcome to Las Vegas 招牌</b></td><td>Strip 南端</td><td class="num"><b>免費</b></td><td><b>偏遠且人超多</b>，要排隊拍照。建議白天去。</td></tr>
+</table></div>
+
+<h3>B-3｜Sphere（對美術團隊特別值得）</h3>
+<div class="grid g2">
+<div class="card gold">
+<h4>球體外觀（Exosphere）<span class="tag ok">免費</span></h4>
+<p>就在 <b>Venetian 旁邊，從展場走路可到</b>。展場日結束後順路就能看，<b>不需要特別排時間</b>。</p>
+<p>球體外牆是<b>全球最大的 LED 顯示裝置</b>（約 580,000 平方英尺），入夜後整顆球會播放各種動畫。</p>
+<p><b>對美術團隊的價值：</b>看超大曲面上的動態如何維持可讀性與衝擊力 —— 這跟 <b>10/2 晚上的 Fremont 光雕秀</b>是同一類問題的不同解法，<b>兩個都看過會很有收穫</b>。</p>
+</div>
+<div class="card mute">
+<h4>入場看秀 <span class="tag">自由參加</span></h4>
+<p><b>票價 $100–250／人</b>，目前上演《The Wizard of Oz》沉浸版，用 16K 曲面螢幕重製經典電影。</p>
+<p><b>不列入正式行程</b> —— 價格差距大、每個人的興趣不同。<b>想去的人自行上官網購票、自由前往。</b></p>
+<p><b>建議：</b>熱門場次會賣完，<b>要提前上網訂</b>。做視覺呈現的人，這個票價換到的參考價值是值得的 —— 重點看超大曲面上的動態如何維持可讀性、以及聲音如何配合視覺營造包覆感。</p>
+</div>
+</div>
+
+<h3>B-4｜Outlet 採購</h3>
+
+<div class="note w">
+<b>建議時段</b><br>
+<b>第一選擇：10/3（六）11:00–16:00 的自由時間</b> —— 這天 check out 後到 16:00 都是空的，回程 19:09 起飛，時間最充裕。<br>
+<b>第二選擇：9/28（一）16:30 之後</b> —— 但這天還在調時差，體力允許再說。<br>
+<b>⚠️ 9/29–10/2 四天都有正式行程，不建議安排。</b>
+</div>
+
+<div class="grid g2">
+<div class="card gold">
+<h4>Las Vegas North Premium Outlets <span class="tag rec">精品線</span></h4>
+<p><span class="tag">露天</span><span class="tag">約 175 家店</span><span class="tag">離 Strip 車程 10 分</span></p>
+<p><b>強項：</b>Burberry、Dolce &amp; Gabbana、Versace、Jimmy Choo、Tory Burch、Coach、Saks OFF 5TH，也是 Vegas <b>唯一有 Lululemon Outlet</b> 的地方。</p>
+<p><b>缺點：</b>露天，九月底白天仍可能 32–35°C，中午去會很熱。<b>建議下午 3 點後再去。</b></p>
+<p><b>營業時間：</b>約 10:00–20:00（週日縮短），<b>出發前上官網再確認</b>。</p>
+</div>
+<div class="card">
+<h4>Las Vegas South Premium Outlets <span class="tag info">順路首選</span></h4>
+<p><span class="tag">室內冷氣</span><span class="tag">約 140 家店</span><span class="tag">離機場近</span></p>
+<p><b>強項：</b>大眾品牌為主（Nike、Adidas、Levi's、Gap、Under Armour），<b>全室內冷氣</b>，逛起來舒服。</p>
+<p><b>最佳用法：</b><b>10/3 前往機場的路上順道</b> —— 位置在 Strip 南邊、往機場方向，可以直接帶著行李逛完去搭機。<br><span class="tag bad">注意</span>本次行李是寄放在飯店、16:00 要回去拿，<b>若要順道請先算好來回時間</b>，或改成提早取行李直接帶去。</p>
+</div>
+</div>
+</section>
+
+<!-- ============ C ============ -->
+<section id="sc">
+<h2 class="apx"><span class="n">C</span>附錄：特色飯店＆賭場巡禮</h2>
+
+<div class="note i">
+<b>這一章跟 §6 的差別</b><br>
+<b>§6 賭場觀察清單</b>是<b>正式行程</b>，帶著工作問題去看（Fontainebleau、Wynn、Durango、Downtown）。<br>
+<b>這一章是自由逛的參考</b> —— Strip 上其餘幾間最具代表性、<b>純逛也值得一去</b>的飯店賭場。走累了進去吹冷氣、順便看看別人怎麼做空間，也是一種收穫。<br>
+<b>這些多半在步行圈內或 Uber 10 分鐘內，10/3 自由時間或晚上散步順路就能看。</b>
+</div>
+
+<div class="tw"><table>
+<tr><th style="width:170px">飯店</th><th style="width:240px">主題／特色</th><th>建議停留重點</th></tr>
+<tr>
+<td><b>Bellagio</b><br><span class="tag rec">最值得</span></td>
+<td>義式優雅，<b>Fountains of Bellagio 噴泉</b>為地標</td>
+<td><b>Conservatory 植物溫室（免費）</b> —— 每季更換主題的大型花藝裝置，<b>佈景與燈光設計對美術很有參考價值</b>；賭場內高級桌遊區。</td>
+</tr>
+<tr>
+<td><b>Caesars Palace</b></td>
+<td>古羅馬主題，Vegas 最老牌招牌之一</td>
+<td><b>Forum Shops 的挑高穹頂商場</b>（天花板做成會變化的假天空），賭場氣勢十足。Bacchanal Buffet 也在這裡。</td>
+</tr>
+<tr>
+<td><b>Cosmopolitan</b></td>
+<td>現代精品風格，年輕客群</td>
+<td><b>吊燈酒吧（Chandelier Bar）</b> —— 整間酒吧包在三層樓高的水晶吊燈裡；<b>賭場動線設計新穎</b>，跟傳統大場很不一樣。</td>
+</tr>
+<tr>
+<td><b>ARIA</b></td>
+<td>科技感強，MGM 集團旗艦之一</td>
+<td>大型藝術裝置、<b>電子桌遊（ETG）比例高</b>。與 Cosmopolitan 相鄰，可一起逛。</td>
+</tr>
+<tr>
+<td><b>Paris Las Vegas</b></td>
+<td>巴黎鐵塔複刻（半高，可登頂）</td>
+<td>鐵塔夜景登頂（需付費）、法式街景賭場。Mon Ami Gabi 就在這裡（見 A-4）。</td>
+</tr>
+<tr>
+<td><b>New York-New York</b></td>
+<td>紐約天際線＋雲霄飛車外觀</td>
+<td><b>免費拍照打卡</b>，賭場走復古紐約風。</td>
+</tr>
+<tr>
+<td><b>MGM Grand</b></td>
+<td>全 Strip 最大賭場樓層之一</td>
+<td><b>賭場規模</b>本身就是看點、<b>體育博彩區（Sportsbook）</b>氣氛。KÀ 與 David Copperfield 都在這裡。</td>
+</tr>
+<tr>
+<td><b>Luxor</b></td>
+<td>金字塔造型＋獅身人面像</td>
+<td><b>建築外觀好拍</b>，內部賭場偏舊、可快速路過。Blue Man Group 在這裡。</td>
+</tr>
+<tr>
+<td><b>Excalibur</b></td>
+<td>石中劍城堡</td>
+<td><b>建築外觀好拍</b>，內部賭場偏舊、可快速路過。與 Luxor 相鄰。</td>
+</tr>
+<tr>
+<td><b>Golden Nugget</b><br>（Downtown）</td>
+<td>老城區地標，<b>Fremont 街上的鯊魚缸泳池</b></td>
+<td><span class="tag ok">已排進 10/2 田野調查</span>順道逛即可。泳池中央有一座穿過鯊魚缸的滑水道，餐廳 Chart House 的 75,000 加侖水族箱也在這裡。</td>
+</tr>
+</table></div>
+
+<div class="note i">
+<b>💡 逛法建議</b><br>
+Strip 中段（<b>Bellagio → Caesars → Cosmopolitan → ARIA</b>）彼此走路可達，<b>一趟可以連著逛完</b>，是密度最高的一段。<br>
+南段（<b>MGM Grand → New York-New York → Excalibur → Luxor</b>）也連在一起，但離 TI 較遠，建議 Uber 過去再走回來。<br>
+<b>⚠️ 提醒：賭場內一律不可拍攝機台、賠付表與其他玩家</b>（見 §6），逛這些場也適用。建築、大廳、裝置藝術可以拍。
+</div>
+</section>
+
+<footer>
+<p><b>版本：v5（2026/09/14，含自由活動參考清單）</b></p>
+<p><b>本版變更：</b>依新版行程表全面改寫。①<b>航班全面更換</b> —— 去程星宇 JX026（TPE 20:10 → PHX 17:40）轉美航 AA2106（→ LAS 21:59）、回程阿拉斯加 AS1677（LAS 19:09 → SEA）轉星宇 JX031（→ TPE 10/5 04:55）；轉機點由 SFO 改為去程 PHX、回程 SEA ②<b>出差期間延長為 9/27–10/3，住宿 6 晚</b>，並確定房間分配 ③<b>團隊定位改為企劃＋美術研發團</b>，全書移除客戶拜訪、商務會議、demo 預約等內容，觀察重點全面改寫為<b>視覺呈現、動畫節奏與氛圍營造</b> ④<b>每日行程依新版重排</b>：9/28 領證＋Fontainebleau、9/29–10/1 展場三天、<b>10/1 展場 15:00 提早閉館</b>並加 Wynn／Encore、10/2 賭場田野調查全天、10/3 自由時間＋返程 ⑤<b>三場團體晚餐</b>（9/29 Venetian、10/1 Battista's、10/2 Downtown）⑥預算改為公司支付機票住宿、<b>餐費每日補助 TWD$2,500</b>、當地交通代訂請款 ⑦§8 ESTA 由完整申請指南精簡為出發前確認 ⑧§10 改為出發前待確認事項 ⑨<b>附錄全面擴充</b>：A 餐飲（新增人氣與指標性餐飲、自助餐、名廚餐廳）、B 秀景點與採購（新增 12 項指標性秀與娛樂、5 處觀光地標）、<b>新增附錄 C 特色飯店＆賭場巡禮</b>（10 間 Strip 代表性場館）。</p>
+<p style="margin-top:9px"><b>資料來源：</b>行程與航班資訊依 2026/09/14 版「G2E 2026 拉斯維加斯出差行程表」（Google Docs）；展會資訊：globalgamingexpo.com｜ESTA：U.S. CBP 官方 esta.cbp.dhs.gov｜美國轉機行李規定：CBP 入境規範｜自由活動參考清單（餐廳、秀、景點、飯店賭場）依 2026/09/14 版「G2E 2026 自由活動參考清單」（Google Docs）｜餐廳訂位政策：各餐廳官網、OpenTable｜In-N-Out：locations.in-n-out.com｜Outlet：Premium Outlets 官網。</p>
+<p style="margin-top:9px; color:var(--fg3)"><b>⚠️ 所有票價、費用、營業時間為概估與查詢當日資訊，訂購前請以官方訂位系統／官網為準。G2E 期間拉斯維加斯價格波動極大。</b><br><b>⚠️ 去程 PHX 轉機時間，原始行程表記為 3 小時 17 分，依航班時刻計算為 3 小時 3 分，請以航空公司訂位系統顯示為準。</b></p>
+</footer>
+</main>
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt');
+  var s=null; try{s=localStorage.getItem('g2e-theme')}catch(e){}
+  if(s){document.documentElement.setAttribute('data-theme',s)}
+  b.addEventListener('click',function(){
+    var c=document.documentElement.getAttribute('data-theme');
+    var n;
+    if(c){ n = c==='dark' ? 'light' : 'dark'; }
+    else { n = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'; }
+    document.documentElement.setAttribute('data-theme',n);
+    try{localStorage.setItem('g2e-theme',n)}catch(e){}
+  });
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  function up(){
+    var y=window.scrollY+120, cur=links[0];
+    secs.forEach(function(sc,i){ if(sc.offsetTop<=y) cur=links[i]; });
+    links.forEach(function(a){a.classList.toggle('active',a===cur)});
+  }
+  window.addEventListener('scroll',up,{passive:true}); up();
+})();
+</script>
+</body>
+</html>
