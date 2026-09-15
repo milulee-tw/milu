@@ -1,0 +1,18 @@
+抽寶箱 v1 音效定稿清單
+依 DEV V1.11 §05 ＋ 2026-08-17 三項決議 · 生成工具：ElevenLabs Sound Effects
+匯出時間：2026/8/17 下午3:05:03
+進度：已定稿 11 / 11　（音檔版本：原始輸出）
+
+交付檔名	採用版本	規格秒數	使用時機
+────────────────────────────────────────────────────────────────────────────────────────────────
+theme_treasure_box_sfx_unlock	v2（B）	0.5~1秒	解鎖氣泡跳出（押注達門檻、獲得翻牌機會；P1 icon 旁）
+theme_treasure_box_sfx_panel_open	v2（B）	約0.5秒	面板自 icon 原點展開（動畫 0.42s）；遊戲中心側欄展開亦共用（crmIn 0.32s）
+theme_treasure_box_sfx_panel_close	v1（A）	約0.3秒	面板縮回 icon（動畫 0.3s）；遊戲中心側欄收合亦共用（crmOut 0.24s）
+theme_treasure_box_sfx_shuffle	v2（B）	1.5秒（對齊動畫）	每日開始遊戲後的洗牌漩渦（動畫 1.5s）
+theme_treasure_box_sfx_flip	v3（C）	0.3~0.5秒	點擊可翻格、卡牌 3D 翻轉（動畫 0.34s）
+theme_treasure_box_sfx_prize_s	v3（C）	約0.8秒	小獎揭曉（data-prize="small"）、金額由格內飛出上浮（動畫 1s）
+theme_treasure_box_sfx_prize_m	v3（C）	約1秒	中獎揭曉（data-prize="medium"）、金額由格內飛出上浮（動畫 1s）
+theme_treasure_box_sfx_prize_l	v1（A）	約1.3秒	大獎揭曉（data-prize="large"）、金額由格內飛出上浮（動畫 1s）
+theme_treasure_box_sfx_locked	v1（A）	約0.3秒	點擊鎖定格（可翻次數＝0）
+theme_treasure_box_sfx_final_reveal	v2（B）	1.6~2秒	P4 最終大獎開獎時間軸：容器開啟→光爆→獎品彈出（動畫 1.6s）。亦即獎階第四階 final 的揭曉音
+theme_treasure_box_sfx_daily_done	v3（C）	1~1.5秒	P7 今日全部抽完、結算卡出現

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽寶箱 v1 音效試聽對照表 · A/B/C 定稿</title>
+<style>
+  :root{
+    --bg:#0d0f14; --panel:#151922; --panel2:#1c212c; --line:#2a3140;
+    --gold:#d4af37; --gold-light:#f0d264; --gold-dim:#8a7429;
+    --txt:#e8eaed; --txt-dim:#9aa3b2; --green:#22c55e; --green-dim:#15803d;
+    --red:#ef4444; --blue:#60a5fa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Helvetica Neue",sans-serif;font-size:15px;line-height:1.6;padding:0 0 80px}
+  .wrap{max-width:1400px;margin:0 auto;padding:0 28px}
+
+  header{background:linear-gradient(160deg,#14181f 0%,#0d0f14 100%);border-bottom:1px solid var(--line);padding:38px 0 30px;margin-bottom:28px}
+  .tag{display:inline-block;font-size:11px;letter-spacing:.16em;color:var(--gold);border:1px solid var(--gold-dim);border-radius:3px;padding:4px 10px;margin-bottom:14px}
+  h1{font-size:30px;font-weight:700;letter-spacing:.02em}
+  h1 span{color:var(--gold)}
+  .sub{color:var(--txt-dim);font-size:13px;margin-top:8px}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .pill{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:5px 11px;font-size:12px;color:var(--txt-dim)}
+  .pill b{color:var(--gold-light);font-weight:600}
+
+  .bar{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .bar-label{font-size:12px;color:var(--txt-dim);letter-spacing:.05em}
+  button{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:5px;padding:7px 14px;font-size:13px;cursor:pointer;font-family:inherit;transition:.15s}
+  button:hover{border-color:var(--gold-dim);color:var(--gold-light)}
+  button.primary{background:var(--gold);color:#1a1500;border-color:var(--gold);font-weight:600}
+  button.primary:hover{background:var(--gold-light);color:#1a1500}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .seg button{border:0;border-radius:0;padding:7px 13px}
+  .seg button.on{background:var(--gold);color:#1a1500;font-weight:600}
+  .status{font-size:12px;color:var(--txt-dim);margin-left:auto}
+  .status b{color:var(--gold-light)}
+
+  .note{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.28);border-left:3px solid var(--blue);border-radius:5px;padding:12px 16px;font-size:13px;color:#c5d5ea;margin-bottom:22px}
+  .note b{color:var(--blue)}
+  .note code{background:#0a0d12;padding:1px 6px;border-radius:3px;font-size:12px;color:var(--gold-light)}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:9px;margin-bottom:16px;overflow:hidden}
+  .card.decided{border-color:var(--green-dim);box-shadow:0 0 0 1px rgba(34,197,94,.18) inset}
+  .card-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:var(--panel2);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .idx{width:26px;height:26px;flex:none;border-radius:4px;background:var(--gold-dim);color:#1a1500;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .head-main{flex:1;min-width:260px}
+  .fname{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:var(--gold-light);font-weight:600}
+  .desc{font-size:13px;color:var(--txt);margin-top:3px}
+  .timing{font-size:12px;color:var(--txt-dim);margin-top:4px}
+  .secs{flex:none;text-align:right;font-size:12px;color:var(--txt-dim);line-height:1.7}
+  .secs b{color:var(--gold-light);font-size:15px;display:block}
+  .decided-flag{display:none;font-size:11px;color:var(--green);border:1px solid var(--green-dim);border-radius:3px;padding:3px 9px;align-self:center}
+  .card.decided .decided-flag{display:block}
+
+  .variants{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+  .v{background:var(--panel);padding:15px 18px}
+  .v.picked{background:rgba(34,197,94,.06)}
+  .v-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .v-name{font-size:12px;color:var(--txt-dim);letter-spacing:.08em;font-weight:600}
+  .v.picked .v-name{color:var(--green)}
+  .pick{font-size:12px;padding:4px 11px;border-radius:4px}
+  .v.picked .pick{background:var(--green);border-color:var(--green);color:#04180b;font-weight:600}
+  audio{width:100%;height:34px;filter:invert(.88) hue-rotate(180deg) saturate(.55)}
+  .missing{font-size:12px;color:#7a8496;background:#11141b;border:1px dashed var(--line);border-radius:5px;padding:9px 12px;text-align:center}
+
+  .prompt-row{padding:12px 20px;border-top:1px solid var(--line);background:#11141b}
+  .prompt-row summary{font-size:12px;color:var(--txt-dim);cursor:pointer;list-style:none}
+  .prompt-row summary::-webkit-details-marker{display:none}
+  .prompt-row summary::before{content:"▸ ";color:var(--gold)}
+  .prompt-row[open] summary::before{content:"▾ "}
+  .prompt-txt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#b9c2d0;background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:11px 13px;margin-top:9px;line-height:1.65;white-space:pre-wrap}
+  .prompt-meta{font-size:11px;color:var(--txt-dim);margin-top:7px}
+
+  .export{background:var(--panel);border:1px solid var(--gold-dim);border-radius:9px;padding:20px 22px;margin-top:26px}
+  .export h3{font-size:15px;color:var(--gold-light);margin-bottom:6px}
+  .export p{font-size:13px;color:var(--txt-dim);margin-bottom:14px}
+  #exportOut{width:100%;min-height:150px;background:#0a0d12;border:1px solid var(--line);border-radius:5px;color:#b9c2d0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;padding:13px;line-height:1.7;resize:vertical;display:none}
+
+  .measured{font-size:12px;color:#9fb4c9;background:#0f1319;border:1px solid var(--line);border-radius:5px;padding:8px 11px;margin-top:8px;line-height:1.6}
+  .m-tag{display:inline-block;font-size:10px;letter-spacing:.08em;color:#0d0f14;background:var(--blue);border-radius:3px;padding:1px 6px;margin-right:7px;font-weight:700;vertical-align:1px}
+  .pnote{font-size:12px;color:#e2c98a;background:rgba(212,175,55,.07);border-left:3px solid var(--gold);border-radius:0 5px 5px 0;padding:8px 12px;margin-top:7px;line-height:1.6}
+  .pnote.ok{color:#a7e8bd;background:rgba(34,197,94,.08);border-left-color:var(--green)}
+  .pnote.warn{color:#f5b5b5;background:rgba(239,68,68,.08);border-left-color:var(--red)}
+  @media(max-width:900px){.variants{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="tag">CHEST · SFX REVIEW · 2026</div>
+    <h1>抽寶箱 v1 <span>音效試聽對照表</span></h1>
+    <div class="sub">依 DEV V1.11 §05〈音樂音效需求表〉＋2026-08-17 三項決議（locked 補做／P7 結算卡確做／prize 分三階）· 每條 3 版 A/B/C · 選定後匯出定稿清單交音效外包</div>
+    <div class="pills">
+      <div class="pill"><b>範圍</b> 11 條核心 SFX（不含 BGM、不含語音）</div>
+      <div class="pill"><b>命名</b> theme_treasure_box_sfx_{event}</div>
+      <div class="pill"><b>生成</b> ElevenLabs Sound Effects</div>
+      <div class="pill"><b>秒數依據</b> 原型 v2 實測動畫時間軸</div>
+      <div class="pill"><b>觸發</b> 前端 Web · 動畫時間軸節點</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note">
+    <b>播不出聲音時：</b>瀏覽器直接開本地檔案有時會擋住音檔讀取。點下方「<b>選擇 sfx_out 資料夾</b>」把資料夾指給它，就會全部接上。
+    另外瀏覽器規定<b>頁面上要先點過一下才准出聲</b>，所以第一次請直接按播放鍵、不要用鍵盤。
+  </div>
+
+  <div class="bar">
+    <span class="bar-label">音檔版本</span>
+    <div class="seg">
+      <button id="btnRaw" class="on" onclick="setSrcMode('raw')">原始輸出</button>
+      <button id="btnTrim" onclick="setSrcMode('trimmed')">裁切對齊版</button>
+    </div>
+    <button onclick="document.getElementById('dirPick').click()">📁 選擇 sfx_out 資料夾</button>
+    <input type="file" id="dirPick" webkitdirectory directory multiple style="display:none" onchange="loadFolder(this.files)">
+    <button onclick="clearPicks()">清除所有選擇</button>
+    <button class="primary" onclick="doExport()">匯出定稿清單</button>
+    <span class="status">已定稿 <b id="cnt">0</b> / 11</span>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="export">
+    <h3>定稿清單</h3>
+    <p>按上方「匯出定稿清單」產生。內容可直接貼給音效外包或放進規格書修改紀錄。</p>
+    <textarea id="exportOut" readonly></textarea>
+  </div>
+
+</div>
+
+<script>
+const DATA = [
+ {
+  "event": "unlock",
+  "filename": "theme_treasure_box_sfx_unlock",
+  "spec_timing": "解鎖氣泡跳出（押注達門檻、獲得翻牌機會；P1 icon 旁）",
+  "spec_desc": "明亮「叮！」＋氣泡彈開",
+  "spec_seconds": "0.5~1秒",
+  "proto_measured": "dotPop 0.4s（紅點數字彈出，cubic-bezier 回彈）＋16ms 後 bubbleIn 0.3s（白色氣泡「快來抽寶箱囉！💰」自 icon 右上長出）；兩者疊在一起總長約 0.42s",
+  "proto_note": "實測是「紅點先跳、氣泡緊接著彈開」的兩拍結構，不是單一顆叮。音效若做成兩層（前 tick 後 pop）會更貼畫面",
+  "target_seconds": 0.9,
+  "duration_seconds": 1.0,
+  "hit_ms": 0,
+  "prompt_influence": 0.65,
+  "prompt": "A tiny crisp tick immediately followed by a bright magical chime ding and a soft bubble pop, two-layer mobile game reward notification, light sparkle tail, clean and short, no music bed, no voice"
+ },
+ {
+  "event": "panel_open",
+  "filename": "theme_treasure_box_sfx_panel_open",
+  "spec_timing": "面板自 icon 原點展開（動畫 0.42s）；遊戲中心側欄展開亦共用（crmIn 0.32s）",
+  "spec_desc": "上揚 whoosh ＋ 寶箱鉸鏈開啟",
+  "spec_seconds": "約0.5秒",
+  "proto_measured": "tbIn 0.42s cubic-bezier(.34,1.45,.5,1)（明顯 overshoot 回彈）＋同時 tb-scrim fade 0.3s 背景壓暗。前一層遊戲中心側欄為 crmIn 0.32s cubic-bezier(.34,1.4,.5,1)",
+  "proto_note": "曲線帶回彈，音效尾巴要有一個「落定」的收束感，不能是單純直線上揚。兩層面板 v1 共用此條",
+  "target_seconds": 0.6,
+  "duration_seconds": 0.7,
+  "hit_ms": 0,
+  "prompt_influence": 0.6,
+  "prompt": "A quick upward whoosh with a wooden treasure chest lid swinging open, ending on a soft settling thud as the panel snaps into place, magical UI expand, snappy with subtle sparkle, no music, no voice"
+ },
+ {
+  "event": "panel_close",
+  "filename": "theme_treasure_box_sfx_panel_close",
+  "spec_timing": "面板縮回 icon（動畫 0.3s）；遊戲中心側欄收合亦共用（crmOut 0.24s）",
+  "spec_desc": "下沉 whoosh",
+  "spec_seconds": "約0.3秒",
+  "proto_measured": "tbOut 0.3s ease forwards（無回彈，直接縮回 icon 原點）。前一層側欄為 crmOut 0.24s",
+  "proto_note": "與 open 不同，close 是單向收束沒有回彈，音色要更乾、更短",
+  "target_seconds": 0.35,
+  "duration_seconds": 0.5,
+  "hit_ms": 0,
+  "prompt_influence": 0.6,
+  "prompt": "A short soft descending whoosh shrinking away, UI panel collapsing shut, low downward air swish, very dry with almost no reverb tail, no music, no voice"
+ },
+ {
+  "event": "shuffle",
+  "filename": "theme_treasure_box_sfx_shuffle",
+  "spec_timing": "每日開始遊戲後的洗牌漩渦（動畫 1.5s）",
+  "spec_desc": "牌卡快速刷動 ＋ 魔法星塵上升音",
+  "spec_seconds": "1.5秒（對齊動畫）",
+  "proto_measured": "swirlSpin 1.5s cubic-bezier(.4,0,.4,1)：0% scale .2／透明 → 18%（270ms）scale 1、已轉 180° → 72%（1080ms）轉到 620°、scale 1.05 → 100%（1500ms）轉到 760°、縮回 .3 並淡出。旋轉物件是金幣／錢袋 emoji（🪙💰）繞圈，同時顯示「洗牌中…」跳動文字",
+  "proto_note": "⚠ 視覺不是撲克牌，是「金幣旋渦」。規格書寫的 card riffle 會對不上畫面。節奏是先爆衝、中段等速、尾端減速消失",
+  "target_seconds": 1.5,
+  "duration_seconds": 1.5,
+  "hit_ms": 0,
+  "prompt_influence": 0.65,
+  "prompt": "A swirling magical vortex of gold coins and treasure spinning fast, metallic coin clatter tumbling in a circular whirl, accelerating hard at the start then slowing and fading away into sparkle dust at the end, 1.5 seconds, no music, no voice"
+ },
+ {
+  "event": "flip",
+  "filename": "theme_treasure_box_sfx_flip",
+  "spec_timing": "點擊可翻格、卡牌 3D 翻轉（動畫 0.34s）",
+  "spec_desc": "卡牌「唰」翻面",
+  "spec_seconds": "0.3~0.5秒",
+  "proto_measured": "cardSwap 0.34s：0% rotateY 0° → 48%（163ms）轉到 86°（幾乎全側面、畫面最窄）→ 52%（177ms）跳到 −86° 換面 → 100%（340ms）回正。美術版翻面前是寶箱蓋圖、翻面後是獎項圖",
+  "proto_note": "⚠ 換面的瞬間在 170ms，不在 0ms。音效重音要壓在中段，前段是轉動、後段是落定。且視覺是木寶箱不是紙牌，需要木頭質感",
+  "target_seconds": 0.45,
+  "duration_seconds": 0.5,
+  "hit_ms": 170,
+  "prompt_influence": 0.7,
+  "prompt": "A wooden chest lid flipping over with a short airy whoosh, a crisp wooden clack landing right in the middle of the sound, then settling flat, dry and tight, no reverb, no music, no voice"
+ },
+ {
+  "event": "prize_s",
+  "filename": "theme_treasure_box_sfx_prize_s",
+  "spec_timing": "小獎揭曉（data-prize=\"small\"）、金額由格內飛出上浮（動畫 1s）",
+  "spec_desc": "少量金幣輕落 ＋ 短促提示（小獎）",
+  "spec_seconds": "約0.8秒",
+  "proto_measured": "cashUp 1s ease-out，與 cardSwap 同時觸發：0% 透明、scale .6 → 20%（200ms）scale 1.1 彈到最大 → 100%（1000ms）上浮 60px 並淡出",
+  "proto_note": "小獎是最高頻出現的一條（9 格裡多數是 ₱1~₱3），必須「輕、短、不膩」——這條聽 50 次也不能煩。刻意做得比中／大獎克制",
+  "target_seconds": 0.8,
+  "duration_seconds": 0.8,
+  "hit_ms": 200,
+  "prompt_influence": 0.65,
+  "prompt": "A few small gold coins tinkling lightly with a short soft chime, modest little reward pickup, gentle and understated, quick clean decay, no music bed, no voice"
+ },
+ {
+  "event": "prize_m",
+  "filename": "theme_treasure_box_sfx_prize_m",
+  "spec_timing": "中獎揭曉（data-prize=\"medium\"）、金額由格內飛出上浮（動畫 1s）",
+  "spec_desc": "金幣叮鈴入袋 ＋ 明亮上揚（中獎）",
+  "spec_seconds": "約1秒",
+  "proto_measured": "同 cashUp 1s，重音在 200ms 彈出點，之後 0.8 秒下降餘韻",
+  "proto_note": "中獎是「基準線」，小獎比它輕、大獎比它厚。三條要能明顯排出層次但保持同一組音色家族（同樣的金幣質感）",
+  "target_seconds": 1.0,
+  "duration_seconds": 1.2,
+  "hit_ms": 200,
+  "prompt_influence": 0.65,
+  "prompt": "Gold coins jingling and tumbling into a pouch with a bright cheerful reward chime peaking a fifth of a second in, then a shimmering tail drifting upward and fading out, casino win pickup, warm and satisfying, no music bed, no voice"
+ },
+ {
+  "event": "prize_l",
+  "filename": "theme_treasure_box_sfx_prize_l",
+  "spec_timing": "大獎揭曉（data-prize=\"large\"）、金額由格內飛出上浮（動畫 1s）",
+  "spec_desc": "大量金幣傾瀉 ＋ 上揚和弦（大獎，但仍輕於 final_reveal）",
+  "spec_seconds": "約1.3秒",
+  "proto_measured": "同 cashUp 1s，但視覺金額數字更大；大獎格的 cell 底圖為 large 版美術",
+  "proto_note": "⚠ 上限要壓住——這條不能搶過 final_reveal 的份量。定位是「哇」而不是「全場最高潮」，兩者若同重會讓最終大獎失去記憶點",
+  "target_seconds": 1.3,
+  "duration_seconds": 1.5,
+  "hit_ms": 200,
+  "prompt_influence": 0.6,
+  "prompt": "A generous cascade of gold coins pouring out with a bright rising chime and a short uplifting sparkle flourish, big win pickup for a casual game, rich and rewarding but not overwhelming, no music bed, no voice"
+ },
+ {
+  "event": "locked",
+  "filename": "theme_treasure_box_sfx_locked",
+  "spec_timing": "點擊鎖定格（可翻次數＝0）",
+  "spec_desc": "低沉「叩」否定音",
+  "spec_seconds": "約0.3秒",
+  "proto_measured": "⚠ 原型 v2 未實作互動回饋：.tb-cell.locked 只有 filter: brightness(.62) saturate(.7) 變暗，cursor 為 default，實測點擊無任何動畫觸發",
+  "proto_note": "✅ 已定案：音效要做，前端須補回饋（建議沿用原型既有的 chestShake 0.6s keyframe＋冒出「再押 ₱X 解鎖」提示）。畫面上鎖定態是金色掛鎖圖示，音色改金屬鎖扣而非木頭",
+  "target_seconds": 0.35,
+  "duration_seconds": 0.5,
+  "hit_ms": 0,
+  "prompt_influence": 0.7,
+  "prompt": "A short muted metallic padlock clunk that refuses to open, dull locked latch thud, negative UI feedback, dark dry and very short with no tail, no music, no voice"
+ },
+ {
+  "event": "final_reveal",
+  "filename": "theme_treasure_box_sfx_final_reveal",
+  "spec_timing": "P4 最終大獎開獎時間軸：容器開啟→光爆→獎品彈出（動畫 1.6s）。亦即獎階第四階 final 的揭曉音",
+  "spec_desc": "蓄力上升音 → 金光爆發（全套最重的一條）",
+  "spec_seconds": "1.6~2秒",
+  "proto_measured": "全螢幕 rv-scrim 演出，五層動畫同為 1.6s。rvContainer（寶箱本體）：0~224ms 由小彈出登場 → 416~800ms 左右搖晃四下（−7°／+7°／−5°／+4°）→ 992ms 開始放大 → 1184ms 撐爆消失。rvFlash（白光爆）：880ms 起亮 → 1088ms 全白最亮 → 擴散消失。rvRaysFade（放射光）：880ms 起 → 1120ms 最亮。rvPrize（獎品圖）：928ms 起現 → 1184ms 彈到 1.2 倍。rvText（獎名／金額）：1056ms 起 → 1280ms 完全顯示",
+  "proto_note": "⚠ 三段式且爆點明確在 1.05~1.1s，不是尾端。0.4~0.8s 的四下搖晃是可以出「寶箱裡有東西在撞」聲音的位置——規格書只寫「蓄力上升」，實際畫面比那更有戲。data-prize=final 的格子點擊後直接進此演出，不另做格內揭曉音",
+  "target_seconds": 1.8,
+  "duration_seconds": 2.0,
+  "hit_ms": 1050,
+  "prompt_influence": 0.55,
+  "prompt": "A treasure chest thumps into view, rattles and shakes four times as something powerful struggles inside, a rising magical charge swells underneath, then at one second in it bursts open in a huge golden light explosion with a triumphant impact and showering sparkles, epic grand prize reveal, cinematic, two seconds, no music bed, no voice"
+ },
+ {
+  "event": "daily_done",
+  "filename": "theme_treasure_box_sfx_daily_done",
+  "spec_timing": "P7 今日全部抽完、結算卡出現",
+  "spec_desc": "達成／收尾提示音",
+  "spec_seconds": "1~1.5秒",
+  "proto_measured": "⚠ 原型 v2 未實作：程式碼中查無 summary／recap／結算 相關類名或字串，實際玩到 9 格全開也未見結算畫面",
+  "proto_note": "✅ 已定案：P7 結算卡確定要做，原型 v2 待補。音效先照規格書 1~1.5 秒生成，待結算卡動畫做出來後回頭校秒數",
+  "target_seconds": 1.3,
+  "duration_seconds": 1.5,
+  "hit_ms": 0,
+  "prompt_influence": 0.6,
+  "prompt": "A warm completion chime, gentle ascending three-note bell resolving to a satisfying finish, daily session complete sting for a casual game, soft shimmer tail, no music bed, no voice"
+ }
+];
+
+const VARIANTS = [1,2,3];
+let srcMode = "raw";
+const picks = {};        // event -> variant
+const blobMap = {};      // "filename.mp3" -> objectURL（使用者選資料夾後才有）
+
+function pathFor(file, v){
+  const name = file + "_v" + v + ".mp3";
+  if (blobMap[srcMode + "/" + name]) return blobMap[srcMode + "/" + name];
+  return (srcMode === "trimmed" ? "sfx_out/trimmed/" : "sfx_out/") + name;
+}
+
+function render(){
+  const list = document.getElementById("list");
+  list.innerHTML = DATA.map((d,i)=>`
+    <div class="card ${picks[d.event]?'decided':''}" id="card-${d.event}">
+      <div class="card-head">
+        <div class="idx">${String(i+1).padStart(2,'0')}</div>
+        <div class="head-main">
+          <div class="fname">${d.filename}</div>
+          <div class="desc">${d.spec_desc}</div>
+          <div class="timing">${d.spec_timing}</div>
+          <div class="measured"><span class="m-tag">原型實測</span>${d.proto_measured}</div>
+          ${d.proto_note ? `<div class="pnote ${/^✅/.test(d.proto_note)?'ok':(/⚠⚠/.test(d.proto_note)?'warn':'')}">${d.proto_note}</div>` : ''}
+        </div>
+        <div class="decided-flag">✓ 已定稿 v${picks[d.event]||''}</div>
+        <div class="secs">規格秒數<b>${d.spec_seconds}</b>重音落點<b>${d.hit_ms}ms</b></div>
+      </div>
+      <div class="variants">
+        ${VARIANTS.map(v=>`
+          <div class="v ${picks[d.event]===v?'picked':''}">
+            <div class="v-top">
+              <span class="v-name">版本 ${String.fromCharCode(64+v)}　·　v${v}</span>
+              <button class="pick" onclick="pick('${d.event}',${v})">${picks[d.event]===v?'✓ 定稿':'選這版'}</button>
+            </div>
+            <audio controls preload="none" src="${pathFor(d.filename,v)}"></audio>
+          </div>`).join("")}
+      </div>
+      <details class="prompt-row">
+        <summary>生成 prompt 與參數（重生時可微調）</summary>
+        <div class="prompt-txt">${d.prompt}</div>
+        <div class="prompt-meta">duration_seconds = ${d.duration_seconds}　·　prompt_influence = ${d.prompt_influence}　·　裁切目標 ${d.target_seconds}s　·　重音落點 ${d.hit_ms}ms　·　重生指令：<code>python3 generate_sfx.py --only ${d.event}</code></div>
+      </details>
+    </div>`).join("");
+  document.getElementById("cnt").textContent = Object.keys(picks).length;
+}
+
+function pick(ev, v){
+  if (picks[ev] === v) delete picks[ev]; else picks[ev] = v;
+  render();
+}
+function clearPicks(){ Object.keys(picks).forEach(k=>delete picks[k]); render(); }
+
+function setSrcMode(m){
+  srcMode = m;
+  document.getElementById("btnRaw").classList.toggle("on", m==="raw");
+  document.getElementById("btnTrim").classList.toggle("on", m==="trimmed");
+  render();
+}
+
+function loadFolder(files){
+  Object.keys(blobMap).forEach(k=>delete blobMap[k]);
+  let n=0;
+  for (const f of files){
+    if (!f.name.toLowerCase().endsWith(".mp3")) continue;
+    const key = (f.webkitRelativePath||"").includes("/trimmed/") ? "trimmed/"+f.name : "raw/"+f.name;
+    blobMap[key] = URL.createObjectURL(f); n++;
+  }
+  render();
+  alert("已接上 " + n + " 個音檔。");
+}
+
+function doExport(){
+  const done = DATA.filter(d=>picks[d.event]);
+  const lines = [];
+  lines.push("抽寶箱 v1 音效定稿清單");
+  lines.push("依 DEV V1.11 §05 ＋ 2026-08-17 三項決議 · 生成工具：ElevenLabs Sound Effects");
+  lines.push("匯出時間：" + new Date().toLocaleString("zh-TW"));
+  lines.push("進度：已定稿 " + done.length + " / " + DATA.length + "　（音檔版本：" + (srcMode==="trimmed"?"裁切對齊版":"原始輸出") + "）");
+  lines.push("");
+  lines.push("交付檔名\t採用版本\t規格秒數\t使用時機");
+  lines.push("─".repeat(96));
+  DATA.forEach(d=>{
+    const v = picks[d.event];
+    lines.push(d.filename + "\t" + (v?("v"+v+"（"+String.fromCharCode(64+v)+"）"):"── 未定稿 ──") + "\t" + d.spec_seconds + "\t" + d.spec_timing);
+  });
+  const undone = DATA.filter(d=>!picks[d.event]);
+  if (undone.length){
+    lines.push("");
+    lines.push("⚠ 尚未定稿（" + undone.length + " 條）：" + undone.map(d=>d.event).join("、"));
+    lines.push("　可用 python3 generate_sfx.py --only " + undone.map(d=>d.event).join(",") + " 重新生成");
+  }
+  const out = document.getElementById("exportOut");
+  out.value = lines.join("\n");
+  out.style.display = "block";
+  out.scrollIntoView({behavior:"smooth", block:"center"});
+  out.select();
+}
+
+render();
+</script>
+</body>
+</html>
