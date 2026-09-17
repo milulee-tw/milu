@@ -1526,6 +1526,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
           <strong style="color:var(--red-bright);">【B · 模板改硬刪除】⑩ 刪除確認警語不再分 N＝0／N≥1 兩種</strong>（<a href="#template-delete" style="color:var(--gold-light);">§06 模板刪除</a>）——一律統一為單句「<strong>刪除後此模板無法再被新活動引用。</strong>」，<span class="mono">admin.tpl.delete_confirm_inuse</span> 停用。<strong>⑪ 軟刪除改為硬刪除</strong>——依研發回覆（Eric Lu 2026-09-11）實作為直接刪除、不保留關聯與版本快照，故<strong>「軟刪除保留版本快照」與「依模板 ID ＋ <span class="mono">template_version</span> 追溯已刪模板門檻／獎項」整套條文與 BDD 一併刪除</strong>。<strong style="color:var(--orange-bright);">已知代價（刻意接受）</strong>：已刪模板的門檻／獎項日後查不回來，對帳只能靠活動自己存下的快照。<strong>「一律可刪」（N≥1 也能刪）、「最後一個模板不可刪」、「N 欄位保留當提醒」三條維持不變。</strong><br>
           <strong style="color:var(--red-bright);">【C · 衝突檢查只在送審當下】⑫ 設定期間完全不檢查、送審鈕不預先 disabled</strong>（<a href="#camp-overlap" style="color:var(--gold-light);">§06 重疊硬擋</a>）——「提交審查」永遠可按，<strong>按下去的那一刻才跑重疊檢查</strong>；不通過則擋住送出、顯示衝突清單與原因、活動停在草稿。<strong>⑬ 核准時重跑檢查保留</strong>（不可省，否則送審到核准之間別人先被核准就擋不住）。<strong>⑭ Tab 1 的即時紅框與衝突清單、審查頁待審卡片與唯讀彈窗的衝突清單，全數移除</strong>——本版起衝突資訊<strong>只在「送審當下」與「核准當下」兩個動作的回應中出現</strong>，畫面上不做任何事前提示。連帶改寫「全選讓製造重疊變成預設路徑、防呆必須做在設定端」那段論述。<br>
           <strong style="color:var(--red-bright);">【D · 適用路線三項回退】⑮</strong>（<a href="#camp-lines" style="color:var(--gold-light);">§06 適用路線</a>）——推翻 DEV V1.31 條目⑦的三項：<strong>已選項目自下拉清單移出</strong>（取消選取的唯一入口＝chip 上的 ×）、<strong>✕ 清除全部與 chip × 移除單條皆不二次確認</strong>（<span class="mono">admin.camp.lines.clear_all</span> 停用）、<strong>有關鍵字過濾時清單不顯示「全選」</strong>（「全選」只存在於無過濾狀態＝一次加入全部線路）。連帶刪除 BDD〈過濾後點全選〉。<strong style="color:var(--orange-bright);">已知代價</strong>：誤觸 ✕ 會把已選線路全部清空且無法復原，須重新逐條選回。<br>
+          <strong style="color:var(--red-bright);">【E · 2026-09-16 原型複檢後補】⑰ 活動表單內不提供「核准並上線」</strong>（<a href="#camp-overlap" style="color:var(--gold-light);">§06</a>）——核准動作<strong>只保留「活動審查」頁一個入口</strong>。原因：表單內那條路徑沒有生效時點選擇器，也沒有跑核准當下的重疊重跑檢查，等於在唯一防線上開後門（原型複檢時實際發現）。<strong>⑱ 已核准的活動被編輯時，活動狀態維持「已核准」、不退回草稿</strong>（<a href="#review-fsm" style="color:var(--gold-light);">§13 五</a>／<a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a> 對照表補兩列）——改動另存為待生效版本，只存草稿時送審狀態＝否、送審後轉「是」；<strong>此情境不需選生效時點</strong>（活動尚未上線、沒有換版問題）。原規格未定義這條轉移，本版補上。<br>
           <strong>⑯ 後台原型 v2 需同步改版</strong>（列表兩欄、chips 兩列、刪除確認文案、線路下拉三項行為、Tab 1 紅框與審查頁衝突清單移除），截圖俟原型更新後重拍。</td>
         </tr>
         <tr>
@@ -3704,7 +3705,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         <button class="admin-btn secondary">儲存草稿</button>
         <button class="admin-btn primary">提交審查</button>
       </div>
-      <div class="body-text" style="font-size:11px;color:var(--text-dim);margin-top:6px;text-align:right;">未過驗算、未選線路、或<strong>引用的模板尚無任何已核准版本</strong>時，「提交審查」<strong>disabled ＋ 原因提示</strong>。<strong style="color:var(--red-bright);">DEV V1.35：活動重疊<u>不再</u>是 disabled 條件</strong>——重疊一律等按下「提交審查」的那一刻才檢查，見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉。最高權限(Admin) 檢視<strong>送審狀態＝是</strong>的活動時額外顯示「<strong style="color:var(--green);">核准並上線</strong>」。</div>
+      <div class="body-text" style="font-size:11px;color:var(--text-dim);margin-top:6px;text-align:right;">未過驗算、未選線路、或<strong>引用的模板尚無任何已核准版本</strong>時，「提交審查」<strong>disabled ＋ 原因提示</strong>。<strong style="color:var(--red-bright);">DEV V1.35：活動重疊<u>不再</u>是 disabled 條件</strong>——重疊一律等按下「提交審查」的那一刻才檢查，見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉。<strong style="color:var(--red-bright);">DEV V1.35：活動表單內<u>不提供</u>「核准並上線」</strong>——核准動作<strong>只有「活動審查」頁一個入口</strong>。<span class="dim">（原寫「Admin 檢視送審狀態＝是的活動時額外顯示核准並上線」，本版移除：表單內沒有生效時點選擇器，也容易漏跑核准當下的重疊重跑檢查，等於在唯一防線上開後門。Milu 2026-09-16 拍板。）</span></div>
     </div>
   </div>
 
@@ -5891,6 +5892,8 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         <tr><td>新活動送審</td><td class="dim mono">pending</td><td class="dim">送審中</td><td class="dim"><strong style="color:var(--orange-bright);">是</strong></td></tr>
         <tr><td>新活動被駁回</td><td class="dim mono">draft</td><td class="dim">草稿</td><td class="dim">否</td></tr>
         <tr><td>已核准、未到起始時間</td><td class="dim mono">on（未到起始）</td><td class="dim">已核准</td><td class="dim">否</td></tr>
+        <tr><td><strong>已核准活動被編輯（存草稿）</strong></td><td class="dim mono">on（未到起始）</td><td class="dim"><strong>已核准</strong></td><td class="dim">否</td></tr>
+        <tr><td><strong>已核准活動改版送審</strong></td><td class="dim mono">modify_pending</td><td class="dim"><strong>已核准</strong></td><td class="dim"><strong style="color:var(--orange-bright);">是</strong></td></tr>
         <tr><td>運行中</td><td class="dim mono">on</td><td class="dim">運行中</td><td class="dim">否</td></tr>
         <tr><td><strong style="color:var(--red-bright);">運行中活動改版送審</strong></td><td class="dim mono">modify_pending</td><td class="dim"><strong>運行中</strong></td><td class="dim"><strong style="color:var(--orange-bright);">是</strong></td></tr>
         <tr><td>運行中活動改版被駁回／已核准</td><td class="dim mono">on</td><td class="dim">運行中</td><td class="dim">否</td></tr>
@@ -6207,6 +6210,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <strong>核准後的狀態語意（明定）：</strong>最高權限(Admin) 核准時，落到哪一態<strong>取決於是否已達活動開始時間</strong>：
     <ol style="margin:6px 0 0;padding-left:18px;line-height:1.9;">
       <li><strong>已達活動開始時間 → 直接進入「運行中」</strong>（對應原型 v2 的「<strong style="color:var(--green);">核准並上線</strong>」按鈕語意）。</li>
+      <li><strong style="color:var(--gold-light);">已核准的活動被編輯時，活動狀態<u>維持「已核准」</u>不退回草稿</strong>（DEV V1.35 補，Milu 2026-09-16 拍板）——改動的那一版<strong>另存為待生效版本</strong>：只存草稿時送審狀態＝否、送審後轉「是」，核准後併入、活動狀態仍為「已核准」，到起始時間由排程轉「運行中」。<strong style="color:var(--orange-bright);">此情境不需選生效時點</strong>（活動尚未上線，沒有換版問題），審查頁該活動的待審卡片<strong>不出現「立即／隔日生效」選擇器</strong>。<span class="dim">原因：若一編輯就退回草稿，Admin 先前那次核准形同作廢，營運改一個字就要重跑整套審核。</span></li>
       <li><strong>未達開始時間 → 活動狀態＝「已核准」</strong>、<strong>送審狀態回「否」</strong><span class="dim">（<strong style="color:var(--gold-light);">DEV V1.35 改寫</strong>：V1.33～V1.34 曾把「已核准」訂為版本狀態的值、活動狀態顯示「未運行」，本版起「已核准」回到活動狀態的值域）</span>；到達活動開始時間後，<strong>由排程自動把活動狀態轉「運行中」</strong>，不需人工再操作一次上線。</li>
     </ol>
   </div>
