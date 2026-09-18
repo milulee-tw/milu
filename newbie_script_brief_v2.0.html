@@ -239,8 +239,8 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   <div class="blk-lead">
     從 <strong>server 跑出的遊戲快測結果</strong>（<strong>百萬局以上</strong>）中，切出一段一段<strong>連續的 150 局</strong>，
     <strong>只檢查一件事：整段 150 局的還原率有沒有落在 85%~115% 之間</strong>，合格的才收進腳本池。<br>
-    下注額分三段——<em>低額池</em>（押注檔位第 1~4 檔，THB &lt; 10）、<em>高額池</em>（第 5~11 檔，THB 10~100），各 1,000 套；
-    <em>第 12 檔以上</em>（THB ≥ 200）<strong>完全不套用腳本</strong>。
+    下注額分三段——<em>低額池</em>（THB &lt; 10）、<em>高額池</em>（THB 10~199），各 1,000 套；
+    <em>大額</em>（THB ≥ 200）<strong>完全不套用腳本</strong>。
     玩家每一局依當下下注額取對應池的結果，<strong>累積押注滿 150 局</strong>後結束。
   </div>
 
@@ -253,17 +253,17 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
         <marker id="a4" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--text-dim)"/></marker>
       </defs>
 
-      <text x="0" y="14" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--accent)">低額池 · 第 1~4 檔</text>
+      <text x="0" y="14" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--accent)">低額池 · 小額</text>
       <text x="0" y="29" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB &lt; 10 · 1,000 套 × 150 局</text>
       <text x="0" y="42" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">整套 RTP 85~115%</text>
       <rect x="0.0" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="72.2" width="16" height="9" rx="2" fill="var(--accent)"/><rect x="127.4" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/>
 
-      <text x="0" y="132" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--blue)">高額池 · 第 5~11 檔</text>
-      <text x="0" y="147" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB 10 ~ 100 · 1,000 套 × 150 局</text>
+      <text x="0" y="132" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--blue)">高額池 · 中額</text>
+      <text x="0" y="147" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB 10 ~ 199 · 1,000 套 × 150 局</text>
       <text x="0" y="160" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">整套 RTP 85~115%（條件與低額池相同）</text>
       <rect x="0.0" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="179.6" width="16" height="9" rx="2" fill="var(--blue)"/><rect x="54.6" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/>
 
-      <text x="0" y="250" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-secondary)">不套用 · 第 12 檔以上</text>
+      <text x="0" y="250" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-secondary)">不套用 · 大額</text>
       <text x="0" y="265" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB ≥ 200 · 沒有腳本</text>
       <rect x="0" y="274" width="179" height="36" rx="6" fill="none" stroke="var(--border-bright)" stroke-width="1.2" stroke-dasharray="5 4"/>
       <text x="12" y="290" font-family="DM Sans, sans-serif" font-size="11" fill="var(--text-secondary)">直接走原生隨機</text>
@@ -286,7 +286,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
         <rect x="470" y="226" width="9" height="12" rx="2" fill="var(--blue)"/><text x="485" y="236">壓中注 → 高額池</text>
         <rect x="635" y="226" width="9" height="12" rx="2" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.6"/><text x="650" y="236">壓大注 → 不算進度</text>
       </g>
-      <text x="305" y="268" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">上排灰格＝這幾局壓到第 12 檔以上，走原生隨機、不佔用 150 局</text>
+      <text x="305" y="268" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">上排灰格＝這幾局壓到 THB 200 以上，走原生隨機、不佔用 150 局</text>
       <text x="305" y="290" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">累積 150 局後，自動切回遊戲原本的隨機結果</text>
     </svg>
   </div>
@@ -336,7 +336,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 
   <div class="note warn">
     <strong>兩個池的條件為什麼要完全一樣</strong><br>
-    因為玩家一跨過第 5 檔，就<strong>換到一套全新的腳本</strong>——
+    因為玩家一跨過 THB 10 這條界線，就<strong>換到一套全新的腳本</strong>——
     這樣他<em>不能先用小注把節奏摸清楚、再換大注去吃同一套的後半段</em>。<br>
     對想刷帳號的工作室來說也一樣：要建對照圖就得建滿 <strong>2,000 套</strong>，而且這 2,000 套之間<strong>一局都不重複</strong>。
   </div>
@@ -353,9 +353,9 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 
   <div class="note warn">
     <strong>兩種局不算在內</strong>：① 玩家付費購買 Free Game（buy bonus）的那一局；
-    ② <strong>bet 壓到第 12 檔以上（THB ≥ 200）的那一局</strong>。<br>
+    ② <strong>bet 壓到 THB 200 以上的那一局</strong>。<br>
     這兩種都<strong>直接走原生隨機、而且不消耗腳本進度</strong>——那一套剩下的結果保持完整，不會被挖掉幾個。
-    玩家把 bet 壓回第 11 檔以下，就從原本的進度接著跑。
+    玩家把 bet 壓回 THB 200 以下，就從原本的進度接著跑。
   </div>
 </div>
 
@@ -462,10 +462,9 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   <div class="note warn">
     <strong>v1 有兩道範圍限制</strong>：① 遊戲僅 <strong>Lucky Paws 財神貓</strong>；
     ② 幣別<strong>僅 THB</strong>——其他幣別的玩家不套用腳本、直接走原生隨機。
-    後續擴充為全幣值時，62 種幣別的兩條門檻已經定好——<strong>直接用平台押注檔位表的「第 5 檔」與「第 12 檔」</strong>，
-    固定值、不隨匯率浮動，<strong>只要開啟對應幣別即可，機制和腳本內容都不用改</strong>。<br>
-    <span style="opacity:.75">其中 11 種幣別（USD、EUR、CNY、SGD、GBP、AUD、CAD、CHF、NOK、OMR、BND）的最高押注檔位本來就低於第 12 檔，
-    玩家按不出那麼大的注，所以這些幣別只有兩段、沒有「不套用」那一段。</span><br>
+    後續擴充為全幣值時，62 種幣別的兩條門檻已經定好——<strong>直接查營運維護的門檻表（高Bet門檻／不跑新手腳本門檻）</strong>，
+    固定金額、不隨匯率浮動，<strong>只要開啟對應幣別即可，機制和腳本內容都不用改</strong>。<br>
+    <span style="opacity:.75">62 種幣別都有完整的兩條界線，沒有任何一種幣別缺上界。</span><br>
     <span style="color:var(--red-bright)"><strong>但要注意</strong>：範圍同時限縮「單一遊戲 × 單一幣別」，
     可取得的新手樣本會比原先估計少很多，<strong>驗證期可能因此拉長</strong>——需要數據組重新推算。</span>
   </div>
@@ -531,48 +530,43 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     </svg>
     <div class="fig-note">
       三段的期望值<strong>都是 −3.3%</strong>（＝正常的還原率 96.7%），差別只在總下注量不同。<br>
-      低額池：150 局 × THB 5 × −3.3% ≈ <strong>−25</strong>；高額池：150 局 × THB 100 × −3.3% ≈ <strong>−495</strong>。<br>
-      能吃到腳本的<strong>最大單注只有 THB 100</strong>——因為第 12 檔（THB 200）以上直接走原生隨機，這一條把曝險金額封了頂。
+      舉例：低額池 150 局 × THB 5 × −3.3% ≈ <strong>−25</strong>；高額池 150 局 × THB 100 × −3.3% ≈ <strong>−495</strong>。<br>
+      壓到 THB 200 以上的那一局直接走原生隨機、完全不吃腳本，<strong>想用大注放大腳本效果在機制上做不到</strong>。
     </div>
   </div>
 
-  <div class="cards c3">
+  <div class="cards c2">
     <div class="card ok">
       <div class="card-k">防線 1 · 結構層</div>
       <div class="card-t">三段全是負期望</div>
       <div class="card-d">腳本的平均還原率就是正常值，<strong>沒有任何一段是正期望</strong>。想靠刷腳本賺錢，等於想靠玩 slot 賺錢。</div>
     </div>
     <div class="card ok">
-      <div class="card-k">防線 2 · 結構層</div>
-      <div class="card-t">第 12 檔以上不套用</div>
-      <div class="card-d">不是 bet 上限——玩家可以壓任何金額，但壓到 THB 200 以上那一局完全不吃腳本、也不算進度。單一帳號能吃到腳本的總下注因此固定為 <strong>THB 15,000</strong>（THB 100 × 150 局）。<br><span style="opacity:.75">其他幣別的上限是「該幣別第 11 檔 × 150 局」，金額不會與 THB 等值，開放前要重算。</span></div>
-    </div>
-    <div class="card ok">
-      <div class="card-k">防線 3 · 源頭層</div>
+      <div class="card-k">防線 2 · 源頭層</div>
       <div class="card-t">單局最大 172.5 倍</div>
       <div class="card-d">不是靠篩選條件，是<strong>算術上就不可能</strong>：150 局 × 115% ＝ 172.5 倍，一局的倍數不可能超過整段總倍數。比上一版的 500 倍更嚴。</div>
     </div>
   </div>
   <div class="cards c2">
     <div class="card ok">
-      <div class="card-k">防線 4 · 系統層</div>
+      <div class="card-k">防線 3 · 系統層</div>
       <div class="card-t">總水池大獎限制</div>
       <div class="card-d">既有機制，順位永遠在腳本之前。</div>
     </div>
     <div class="card warn">
-      <div class="card-k">防線 5 · 事後</div>
+      <div class="card-k">防線 4 · 事後</div>
       <div class="card-t">數據監控</div>
-      <div class="card-d">主要盯一件事：<strong>是否有大量帳號固定把下注壓在 THB 100</strong>——那是「能吃到腳本的最高一檔」。</div>
+      <div class="card-d">主要盯一件事：<strong>是否有大量帳號固定把下注壓在接近 THB 200 的位置</strong>——越靠近界線，腳本的下限保護能護住的金額越大。</div>
     </div>
   </div>
 
   <div class="note warn">
     <strong>誠實揭露：本版剩下唯一的「好處」是輸得有下限，不是贏得有上限</strong><br>
     篩選條件的下限 85%，等於給了新手「整段 150 局最多輸 15%」的保護。
-    以全程壓滿 THB 100 計，最壞情況是輸 <strong>THB 2,250</strong>，而正常隨機沒有這個底。<br>
+    以全程壓 THB 100 舉例，最壞情況是輸 <strong>THB 2,250</strong>，而正常隨機沒有這個底。<br>
     <strong>這不構成套利</strong>：期望值仍是 −3.3%，開分身帳號的人力與帳號成本遠高於這點差異，
     而且「輸得比較少」不能換成現金。<br>
-    <strong>但監控仍要保留</strong>——如果真的出現大量帳號固定壓在 THB 100，代表有人在利用這個下限做風險管理。
+    <strong>但監控仍要保留</strong>——如果真的出現大量帳號固定壓在接近門檻的位置，代表有人在利用這個下限做風險管理。
   </div>
 
   <div class="note ok">
@@ -603,7 +597,7 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
             <tr><td class="dim">適用遊戲</td><td><strong>Lucky Paws 財神貓</strong>單款驗證</td><td>推廣至各遊戲；新遊戲一律標配</td></tr>
       <tr><td class="dim">適用幣別</td><td><strong>僅 THB</strong>（門檻 10 與 200）· 其他幣別玩家不套用腳本</td><td>擴充至<strong>全幣值</strong>；62 種幣別的兩條門檻已備妥</td></tr>
       <tr><td class="dim">腳本池</td><td><strong>雙池 2,000 套</strong>（低額 1,000＋高額 1,000）· 每套 150 局 · 彼此不重複</td><td>依<strong>特徵分析結果</strong>調整下一代腳本的產製條件</td></tr>
-      <tr><td class="dim">下注額判定</td><td><span class="tag g">逐局判定 · 第 5 檔與第 12 檔切三段</span></td><td>門檻依實際數據調整，可能再細分區間</td></tr>
+      <tr><td class="dim">下注額判定</td><td><span class="tag g">逐局判定 · 查門檻表切三段</span></td><td>門檻依實際數據調整，可能再細分區間</td></tr>
       <tr><td class="dim">體驗長度</td><td><strong>累積押注 150 局</strong>（不重跑、不延長；THB ≥ 200 的局不計）</td><td>依手數數據調整長度；視切換率決定是否調整跨區間規則</td></tr>
       <tr><td class="dim">套利空間</td><td><span class="tag g">結構性消除</span></td><td>依監控結果微調門檻</td></tr>
       <tr><td class="dim">buy bonus<br>與 THB ≥ 200 的局</td><td><span class="tag b">走原生隨機 · 不消耗進度</span></td><td>同左，不變</td></tr>
@@ -778,8 +772,8 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
     <div class="cards c3">
       <div class="card warn">
         <div class="card-k">營運</div>
-        <div class="card-t">核對押注檔位表</div>
-        <div class="card-d">62 種幣別的兩條門檻改為直接查平台押注檔位表〈Combo bet list〉的第 5 檔與第 12 檔，已寫入規格書。<strong>請確認該表是現行最新版，並指定日後平台調整檔位時由誰回頭同步。</strong></div>
+        <div class="card-t">核對幣別門檻表</div>
+        <div class="card-d">62 種幣別的兩條門檻改為直接查〈Combo 平台串接相關規格貨幣設定 · 新手腳本門檻設定〉（2026-09-16 版），已寫入規格書。<strong>請確認這份是現行最新版，並指定日後門檻表調整時由誰回頭同步。</strong></div>
       </div>
       <div class="card warn">
         <div class="card-k">Server</div>
@@ -797,9 +791,9 @@ catch(e){document.documentElement.setAttribute('data-theme','light');}})();
 </div><!-- /wrap -->
 
 <div class="foot">
-  新手機率體驗腳本 · 決策簡報 V5.0 · CONFIDENTIAL 2026<br>
+  新手機率體驗腳本 · 決策簡報 V5.1 · CONFIDENTIAL 2026<br>
   Force / Combo Gaming<br>
-  <span style="letter-spacing:.1em">完整規格請見《新手機率體驗腳本規格書 NES-SPEC V5.0》</span>
+  <span style="letter-spacing:.1em">完整規格請見《新手機率體驗腳本規格書 NES-SPEC V5.1》</span>
 </div>
 
 <script>

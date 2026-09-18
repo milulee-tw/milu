@@ -219,29 +219,29 @@ A large simulation is run <strong>on our game server</strong> for each game — 
     and the output is cut into <strong>continuous 150-spin segments</strong>. Every segment must pass
     <strong>a single gate</strong> before it enters a pool: the RTP of the whole 150-spin segment must fall
     between <strong>85% and 115%</strong>.<br>
-    Bets are routed into three bands — a <em>low-stake pool</em> (bet tiers 1–4, THB &lt; 10) and a
-    <em>high-stake pool</em> (tiers 5–11, THB 10–100), with <strong>1,000 scripts each</strong>; bets at
-    <em>tier 12 and above</em> (THB ≥ 200) are <strong>not scripted at all</strong>.
+    Bets are routed into three bands — a <em>low-stake pool</em> (THB &lt; 10) and a
+    <em>high-stake pool</em> (THB 10–199), with <strong>1,000 scripts each</strong>; bets of
+    <em>THB 200 or more</em> are <strong>not scripted at all</strong>.
     Once the player reaches <strong>150 recorded bets</strong>, the mechanism ends.
   </div>
 
   <div class="fig">
     <div class="fig-cap">Figure 2 · Three bet bands and how the 150-spin window is consumed</div>
-    <svg viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three bet bands: low-stake and high-stake pools of 1000 scripts each, and bets at tier 12 or above which use standard RNG and consume no progress">
+    <svg viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three bet bands: low-stake and high-stake pools of 1000 scripts each, and bets at or above the no-script threshold which use standard RNG and consume no progress">
       <defs>
         <marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--accent)"/></marker>
         <marker id="a3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--blue)"/></marker>
         <marker id="a4" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="var(--text-dim)"/></marker>
       </defs>
-      <text x="0" y="14" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--accent)">Low-stake pool · tiers 1–4</text>
+      <text x="0" y="14" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--accent)">Low-stake pool · small stakes</text>
       <text x="0" y="29" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB &lt; 10 · 1,000 scripts × 150 spins</text>
       <text x="0" y="42" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Script RTP 85–115%</text>
       <rect x="0.0" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="52.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="62.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="72.2" width="16" height="9" rx="2" fill="var(--accent)"/><rect x="127.4" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="73.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="83.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="94.4" width="16" height="7" rx="2" fill="var(--bg-5)"/>
-      <text x="0" y="132" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--blue)">High-stake pool · tiers 5–11</text>
-      <text x="0" y="147" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB 10–100 · 1,000 scripts × 150 spins</text>
+      <text x="0" y="132" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--blue)">High-stake pool · mid stakes</text>
+      <text x="0" y="147" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB 10–199 · 1,000 scripts × 150 spins</text>
       <text x="0" y="160" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">Script RTP 85–115% (identical gate)</text>
       <rect x="0.0" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="170.0" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="179.6" width="16" height="9" rx="2" fill="var(--blue)"/><rect x="54.6" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="180.6" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="191.2" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="201.8" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="0.0" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="18.2" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="36.4" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="54.6" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="72.8" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="91.0" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="109.2" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="127.4" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="145.6" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/><rect x="163.8" y="212.4" width="16" height="7" rx="2" fill="var(--bg-5)"/>
-      <text x="0" y="250" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-secondary)">Not scripted · tier 12 and above</text>
+      <text x="0" y="250" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-secondary)">Not scripted · large stakes</text>
       <text x="0" y="265" font-family="DM Mono, monospace" font-size="10" fill="var(--text-dim)">THB ≥ 200 · no script</text>
       <rect x="0" y="274" width="195" height="36" rx="6" fill="none" stroke="var(--border-bright)" stroke-width="1.2" stroke-dasharray="5 4"/>
       <text x="12" y="290" font-family="DM Sans, sans-serif" font-size="11" fill="var(--text-secondary)">Standard RNG</text>
@@ -261,7 +261,7 @@ A large simulation is run <strong>on our game server</strong> for each game — 
         <rect x="500" y="226" width="9" height="12" rx="2" fill="var(--blue)"/><text x="515" y="236">mid bet → high-stake pool</text>
         <rect x="695" y="226" width="9" height="12" rx="2" fill="var(--bg-5)" stroke="var(--border-bright)" stroke-width="0.6"/><text x="710" y="236">large bet → not counted</text>
       </g>
-      <text x="305" y="268" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">Grey cells on the upper row: bets at tier 12 or above — standard RNG, no progress consumed.</text>
+      <text x="305" y="268" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">Grey cells on the upper row: bets of THB 200 or more — standard RNG, no progress consumed.</text>
       <text x="305" y="290" font-family="DM Sans, sans-serif" font-size="13" fill="var(--text-secondary)">After 150 recorded bets the game returns to standard RNG.</text>
     </svg>
   </div>
@@ -313,7 +313,7 @@ A large simulation is run <strong>on our game server</strong> for each game — 
   </div>
 
   <div class="note info">
-    <strong>Both pools use the same gate — deliberately.</strong> A player who crosses from tier 4 to tier 5
+    <strong>Both pools use the same gate — deliberately.</strong> A player who crosses the high-stake threshold
     moves to an <em>entirely different script</em>, so a small-bet run cannot be used to map a sequence and then
     replayed at a higher stake. The 2,000 scripts of a game also share <strong>no spin with one another</strong>.
   </div>
@@ -332,16 +332,16 @@ A large simulation is run <strong>on our game server</strong> for each game — 
     <strong>both</strong> conditions hold: the game is <strong>Lucky Paws</strong>, and the player's
     wallet currency is <strong>THB</strong>. Players on any other currency are passed straight to
     standard RNG — no script is assigned.<br>
-    Both thresholds for <strong>62 currencies are already defined</strong>, taken directly from the platform's
-    bet-tier table (tier 5 and tier 12) and held as fixed values rather than live FX, so a player cannot drift
-    between bands as rates move. Extending to further currencies is a configuration change —
+    Both thresholds for <strong>62 currencies are already defined</strong> as fixed amounts in the platform's
+    currency settings — a high-stake threshold and a no-script threshold — held as fixed values rather than live FX,
+    so a player cannot drift between bands as rates move. Extending to further currencies is a configuration change —
     <strong>no change to the mechanism or the scripts themselves</strong>.
   </div>
 
   <div class="note warn">
     <strong>Two kinds of spin are excluded.</strong> A purchased Free Game (buy bonus), and any bet at
-    <strong>tier 12 or above (THB ≥ 200)</strong>. Both use <strong>standard RNG</strong> and
-    <strong>consume no script progress</strong>. The script's remaining results stay intact rather than having some carved out of it; a player who returns to tier 11 or below simply continues where they left off.
+    <strong>THB 200 or more (the no-script threshold)</strong>. Both use <strong>standard RNG</strong> and
+    <strong>consume no script progress</strong>. The script's remaining results stay intact rather than having some carved out of it; a player who returns below the threshold simply continues where they left off.
   </div>
 </div>
 
@@ -436,8 +436,8 @@ A large simulation is run <strong>on our game server</strong> for each game — 
     Player losses flow into it and player wins are paid out of it. When a spin's net win would
     exceed the remaining balance, that win is capped to a <strong>low win</strong> — a value close
     enough to zero to be treated as zero — so the pool can never go negative. In practice this is
-    rare: the arithmetic of the gate means no spin inside a script can pay more than 172.5× bet, and the
-    largest bet that can draw on a script is THB 100, so the cap is very unlikely to trigger.<br><br>
+    rare: the arithmetic of the gate means no spin inside a script can pay more than 172.5× bet — a ceiling
+    that does not widen with the size of the bet — so the cap is very unlikely to trigger.<br><br>
     The feature itself is configured <strong>per line and disabled by default</strong>; enabling it
     on a given line is a written request handled on our side, with no self-service switch in any
     back office.
@@ -472,13 +472,13 @@ A large simulation is run <strong>on our game server</strong> for each game — 
       <rect x="255" y="170" width="150" height="14" rx="3" fill="var(--green)"/>
       <text x="330" y="200" font-family="DM Mono, monospace" font-size="16" fill="var(--green-bright)" text-anchor="middle">−25</text>
       <text x="330" y="222" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">This version · low-stake</text>
-      <text x="330" y="240" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 5 × 150 spins</text>
+      <text x="330" y="240" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 5 × 150 spins (illustrative)</text>
       <text x="330" y="258" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green-bright)" text-anchor="middle">expected loss</text>
 
       <rect x="450" y="170" width="150" height="46" rx="3" fill="var(--green)"/>
       <text x="525" y="232" font-family="DM Mono, monospace" font-size="16" fill="var(--green-bright)" text-anchor="middle">−495</text>
       <text x="525" y="254" font-family="DM Sans, sans-serif" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">This version · high-stake</text>
-      <text x="525" y="272" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 100 × 150 spins</text>
+      <text x="525" y="272" font-family="DM Sans, sans-serif" font-size="12" fill="var(--text-secondary)" text-anchor="middle">THB 100 × 150 spins (illustrative)</text>
       <text x="525" y="290" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" fill="var(--green-bright)" text-anchor="middle">bet more, lose more</text>
 
       <rect x="645" y="170" width="150" height="46" rx="3" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="5 4"/>
@@ -489,25 +489,20 @@ A large simulation is run <strong>on our game server</strong> for each game — 
     </svg>
     <div class="fig-note">
       All three bands carry the <strong>same −3.3% expectation</strong> (the game's 96.7% RTP); only the turnover differs.<br>
-      Low-stake: 150 × THB 5 × −3.3% ≈ <strong>−25</strong>. High-stake: 150 × THB 100 × −3.3% ≈ <strong>−495</strong>.<br>
-      The <strong>largest bet that can draw on a script is THB 100</strong>, because tier 12 (THB 200) and above
-      bypass the scripts entirely — which puts a fixed ceiling on the exposure of any single account.
+      Illustrative: low-stake 150 × THB 5 × −3.3% ≈ <strong>−25</strong>; high-stake 150 × THB 100 × −3.3% ≈ <strong>−495</strong>.<br>
+      A bet of <strong>THB 200 or more bypasses the scripts entirely</strong>, so a larger bet cannot be used to
+      amplify what a script pays.
     </div>
   </div>
 
-  <div class="cards c3">
+  <div class="cards c2">
     <div class="card ok">
       <div class="card-k">Layer 1 · Structural</div>
       <div class="card-t">Every band is EV-negative</div>
       <div class="card-d">The scripts average the game's natural RTP, so <strong>no band offers a positive expectation</strong>. Farming the scripts is the same proposition as playing the game normally.</div>
     </div>
     <div class="card ok">
-      <div class="card-k">Layer 2 · Structural</div>
-      <div class="card-t">Tier 12 and above are not scripted</div>
-      <div class="card-d">Not a bet cap — a player may bet any amount, but a bet of THB 200 or more draws no script and consumes no progress. Scripted turnover for one account is therefore fixed at <strong>THB 15,000</strong> (THB 100 × 150 spins). The equivalent ceiling in another currency is that currency's tier-11 bet × 150, recalculated before it is enabled.</div>
-    </div>
-    <div class="card ok">
-      <div class="card-k">Layer 3 · At source</div>
+      <div class="card-k">Layer 2 · At source</div>
       <div class="card-t">No spin can exceed 172.5×</div>
       <div class="card-d">Not a gate but arithmetic: 150 spins at an RTP ceiling of 115% gives a total multiplier of 172.5×, so no single spin can exceed it. Tighter than the previous 500× rule.</div>
     </div>
@@ -521,14 +516,14 @@ A large simulation is run <strong>on our game server</strong> for each game — 
   </div>
   <div class="cards c2">
     <div class="card ok">
-      <div class="card-k">Layer 4 · System</div>
+      <div class="card-k">Layer 3 · System</div>
       <div class="card-t">Prize cap</div>
       <div class="card-d">Existing control, always ahead of the script in precedence (section 04).</div>
     </div>
     <div class="card warn">
-      <div class="card-k">Layer 5 · Post-launch</div>
+      <div class="card-k">Layer 4 · Post-launch</div>
       <div class="card-t">Behavioural monitoring</div>
-      <div class="card-d">Primarily watching for accounts clustering at <strong>THB 100</strong> — the highest bet that still draws on a script.</div>
+      <div class="card-d">Primarily watching for accounts clustering just below the <strong>no-script threshold</strong>, where the 85% floor protects the largest amount.</div>
     </div>
   </div>
 </div>
@@ -552,7 +547,7 @@ A large simulation is run <strong>on our game server</strong> for each game — 
             <tr><td class="dim">Games covered</td><td><strong>Lucky Paws</strong> only</td><td>Rolled out across the catalogue; standard on all new titles</td></tr>
       <tr><td class="dim">Currencies</td><td><strong>THB only</strong> (thresholds 10 and 200) · all others pass through to standard RNG</td><td>Extended to <strong>all currencies</strong>; both thresholds already defined for 62 currencies</td></tr>
       <tr><td class="dim">Script pools</td><td><strong>2,000 scripts</strong> per game (1,000 low-stake + 1,000 high-stake) · 150 results each · no shared spins</td><td>Production conditions for the next generation tuned from the characteristics analysis; <strong>first review at week 8 after launch</strong></td></tr>
-      <tr><td class="dim">Pool selection</td><td><span class="tag g">Per spin · bet tiers 5 and 12</span></td><td>Thresholds tuned to live data; bands may be subdivided further</td></tr>
+      <tr><td class="dim">Pool selection</td><td><span class="tag g">Per spin · two threshold amounts</span></td><td>Thresholds tuned to live data; bands may be subdivided further</td></tr>
       <tr><td class="dim">Window length</td><td><strong>150 recorded bets</strong> (no replay, no extension; bets of THB 200+ do not count)</td><td>Length tuned to observed spin volume</td></tr>
       <tr><td class="dim">Bought Free Games<br>and bets of THB 200+</td><td><span class="tag b">Standard RNG · no progress consumed</span></td><td>Unchanged</td></tr>
       <tr><td class="dim">Player interface</td><td><span class="tag b">None</span></td><td>Unchanged</td></tr>
@@ -703,7 +698,7 @@ Both groups pass the same gate and sit in the same RTP band, so on paper they ar
 </div><!-- /wrap -->
 
 <div class="foot">
-  New Player Experience Scripts · Feature Brief V5.0 · Confidential 2026<br>
+  New Player Experience Scripts · Feature Brief V5.1 · Confidential 2026<br>
   Force / Combo Gaming
 </div>
 
