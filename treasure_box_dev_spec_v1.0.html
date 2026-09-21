@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 開發交付版規格書 DEV V1.35</title>
+<title>抽寶箱 開發交付版規格書 DEV V1.36</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="sidebar-brand">CMB · DEV SPEC</div>
     <div class="sidebar-title">抽寶箱<br>開發交付版規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.35</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.36</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">SOURCE</span><span class="sidebar-meta-val">完整版 V5.3</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
@@ -1464,7 +1464,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <div class="cover-grid"></div>
   <div class="cover-tag">CHEST · DEV DELIVERY SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>開發交付版規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.35 · 源自完整版 V5.3</div>
+  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.36 · 源自完整版 V5.3</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>文件定位</strong> 開發交付版（後端／前端／美術／QA）</div>
     <div class="cover-pill"><strong>內容範圍</strong> 需求目的・系統行為・驗收標準</div>
@@ -1473,7 +1473,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="cover-pill"><strong>市場</strong> 菲律賓（披索）</div>
   </div>
   <div class="cover-badges">
-    <span class="badge badge-v1">DEV V1.35 · 開發交付版</span>
+    <span class="badge badge-v1">DEV V1.36 · 開發交付版</span>
     <span class="badge badge-scope">源自完整版 V5.3</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
   </div>
@@ -1510,10 +1510,19 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       </thead>
       <tbody>
         <tr>
+          <td>2026-09-16</td>
+          <td>DEV V1.36</td>
+          <td><a href="#camp-overlap" style="color:var(--gold-light);">§06 重疊硬擋</a>／<a href="#review-fsm" style="color:var(--gold-light);">§13 四</a>／<a href="#i18n" style="color:var(--gold-light);">§11</a></td>
+          <td><strong style="color:var(--gold-light);">QA 複測修正：重疊檢查收斂為「核准並上線」的唯一攔截點。</strong><span class="dim">（來源：QA 2026-09-16 複測，原單 z90hj2y1d3；PM 2026-09-16 指示不回研發、由規格對齊 Game Backstage UAT v1.0.1 實作。）</span><br>
+          <strong style="color:var(--red-bright);">① 送審不檢查活動重疊</strong>——「提交審查」不因重疊而 disabled，按下後也不跑重疊檢查；即使與現有活動的時間與線路重疊，仍可成功送審，活動進入送審中、送審狀態轉「是」，不顯示衝突彈窗。<br>
+          <strong style="color:var(--red-bright);">② 只在核准當下硬擋</strong>——Admin 按「核准並上線」時才執行時間 × 線路重疊檢查；不通過則核准失敗、顯示衝突清單，活動維持待審且送審狀態維持「是」，系統不自動駁回。<br>
+          <strong>③ 連動修正</strong>——重寫送審／核准 BDD 與 UI 落點；「送審當下是唯一攔截點」改為「核准並上線是唯一攔截點」；活動複製不再要求送審前處理重疊，並停用 <span class="mono">admin.camp.copy_overlap_hint</span>。<span class="dim">本條正式更正 DEV V1.35 第 C 項只退讓「不預先 disabled／不事前提示」、卻仍要求送審擋下的自相矛盾。</span></td>
+        </tr>
+        <tr>
           <td>2026-09-15</td>
           <td>DEV V1.35</td>
           <td><a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a>／<a href="#review-fsm" style="color:var(--gold-light);">§13 五</a>／<a href="#admin-version" style="color:var(--gold-light);">§13 三</a>／<a href="#camp-overlap" style="color:var(--gold-light);">§06 重疊硬擋</a>／<a href="#camp-lines" style="color:var(--gold-light);">§06 適用路線</a>／<a href="#template-delete" style="color:var(--gold-light);">§06 模板刪除</a>／<a href="#template-list" style="color:var(--gold-light);">§06 一</a>／<a href="#comparison" style="color:var(--gold-light);">§07</a>／<a href="#i18n" style="color:var(--gold-light);">§11</a>／§12</td>
-          <td><strong style="color:var(--gold-light);">UAT 四張規格修改單一次收攏：狀態欄改「六態＋送審狀態」、模板改硬刪除、衝突檢查只在送審當下、適用路線三項行為回退。</strong><span class="dim">（來源：ClickUp z90hj2zee1／z90hj2zedz／z90hj2zee7／z90hj2zee9，2026-09-11 UAT 複測；Milu 2026-09-15 拍板。本版四項<strong>全部是規格向實作現況退讓</strong>，不是要求研發改實作。）</span><br>
+          <td><strong style="color:var(--gold-light);">UAT 四張規格修改單一次收攏：狀態欄改「六態＋送審狀態」、模板改硬刪除、衝突檢查原規劃改為動作當下執行、適用路線三項行為回退。</strong><span class="dim">（來源：ClickUp z90hj2zee1／z90hj2zedz／z90hj2zee7／z90hj2zee9，2026-09-11 UAT 複測；Milu 2026-09-15 拍板。<strong style="color:var(--orange-bright);">其中重疊檢查第 C 項於 DEV V1.36 更正：V1.35 仍要求送審當下擋件，未完全對齊實作。</strong>）</span><br>
           <strong style="color:var(--red-bright);">【A · 狀態欄重新設計 · 本版主軸】① 推翻 DEV V1.33 的「活動狀態四態 × 版本狀態五態」</strong>（<a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a>）——V1.33 要求的五態「無／草稿／修改待審核／駁回／已核准」，後端<strong>從頭到尾就給不出來</strong>：後端狀態欄只有 <span class="mono">on／off／stop／draft／pending／modify_pending</span> 六個值，<strong>沒有「駁回」、也沒有「已核准待生效」</strong>。這是開發連兩次做不出來的結構性原因。<strong style="color:var(--orange-bright);">V1.33 的四態／五態自本版起全數作廢。</strong><br>
           <strong>② 活動狀態回到六態</strong>：<strong>草稿／送審中／已核准／運行中／已暫停／已結束</strong>——即 V1.33 之前的值域，「未運行」一詞停用。<br>
           <strong>③ 新增「送審狀態」欄（布林）</strong>：<strong>是／否</strong>，位置＝活動狀態欄右側、版本欄左側。原「版本狀態」欄<strong>改名為「送審狀態」</strong>並把值域由五態收為布林。<br>
@@ -1524,7 +1533,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
           <strong style="color:var(--orange-bright);">⑧ 兩個刻意接受的資訊損失</strong>：<strong>「駁回」不上列表</strong>——被駁回後送審狀態回「否」、活動狀態回「草稿」（運行中活動則維持「運行中」），列表上與「從未送審過」長得一樣，駁回原因要點進活動表單的審查反饋欄看；<strong>「已核准但等隔日生效」在運行中活動上也看不出來</strong>，只能從「版本」欄與 Tab 4 判斷。<span class="dim">（Milu 2026-09-15 拍板接受，換取後端不必新增狀態值。）</span><br>
           <strong>⑨ i18n</strong>——復用 <span class="mono">admin.status.draft／in_review／approved</span>（<span class="mono">in_review</span> 文案＝「送審中」）；<strong style="color:var(--orange-bright);">停用</strong> <span class="mono">admin.status.not_started</span> 與 <span class="mono">admin.vstatus.*</span>（5 個）；<span class="mono">admin.col.version_status</span> 改名為 <span class="mono">admin.col.review_status</span>、文案改「送審狀態」；<strong>新增</strong> <span class="mono">admin.review_flag.yes／no</span>。<strong>玩家端多語系 key 完全不受影響</strong>（本版全部改動都在後台）。<br>
           <strong style="color:var(--red-bright);">【B · 模板改硬刪除】⑩ 刪除確認警語不再分 N＝0／N≥1 兩種</strong>（<a href="#template-delete" style="color:var(--gold-light);">§06 模板刪除</a>）——一律統一為單句「<strong>刪除後此模板無法再被新活動引用。</strong>」，<span class="mono">admin.tpl.delete_confirm_inuse</span> 停用。<strong>⑪ 軟刪除改為硬刪除</strong>——依研發回覆（Eric Lu 2026-09-11）實作為直接刪除、不保留關聯與版本快照，故<strong>「軟刪除保留版本快照」與「依模板 ID ＋ <span class="mono">template_version</span> 追溯已刪模板門檻／獎項」整套條文與 BDD 一併刪除</strong>。<strong style="color:var(--orange-bright);">已知代價（刻意接受）</strong>：已刪模板的門檻／獎項日後查不回來，對帳只能靠活動自己存下的快照。<strong>「一律可刪」（N≥1 也能刪）、「最後一個模板不可刪」、「N 欄位保留當提醒」三條維持不變。</strong><br>
-          <strong style="color:var(--red-bright);">【C · 衝突檢查只在送審當下】⑫ 設定期間完全不檢查、送審鈕不預先 disabled</strong>（<a href="#camp-overlap" style="color:var(--gold-light);">§06 重疊硬擋</a>）——「提交審查」永遠可按，<strong>按下去的那一刻才跑重疊檢查</strong>；不通過則擋住送出、顯示衝突清單與原因、活動停在草稿。<strong>⑬ 核准時重跑檢查保留</strong>（不可省，否則送審到核准之間別人先被核准就擋不住）。<strong>⑭ Tab 1 的即時紅框與衝突清單、審查頁待審卡片與唯讀彈窗的衝突清單，全數移除</strong>——本版起衝突資訊<strong>只在「送審當下」與「核准當下」兩個動作的回應中出現</strong>，畫面上不做任何事前提示。連帶改寫「全選讓製造重疊變成預設路徑、防呆必須做在設定端」那段論述。<br>
+          <strong style="color:var(--red-bright);">【C · 衝突檢查時機】⑫ 設定期間完全不檢查、送審鈕不預先 disabled</strong>（<a href="#camp-overlap" style="color:var(--gold-light);">§06 重疊硬擋</a>）——V1.35 當時仍要求按下「提交審查」後跑重疊檢查並擋住送出。<strong style="color:var(--orange-bright);">本項已於 DEV V1.36 依 QA 複測更正：送審完全不檢查，只在核准並上線時硬擋。</strong><br>
           <strong style="color:var(--red-bright);">【D · 適用路線三項回退】⑮</strong>（<a href="#camp-lines" style="color:var(--gold-light);">§06 適用路線</a>）——推翻 DEV V1.31 條目⑦的三項：<strong>已選項目自下拉清單移出</strong>（取消選取的唯一入口＝chip 上的 ×）、<strong>✕ 清除全部與 chip × 移除單條皆不二次確認</strong>（<span class="mono">admin.camp.lines.clear_all</span> 停用）、<strong>有關鍵字過濾時清單不顯示「全選」</strong>（「全選」只存在於無過濾狀態＝一次加入全部線路）。連帶刪除 BDD〈過濾後點全選〉。<strong style="color:var(--orange-bright);">已知代價</strong>：誤觸 ✕ 會把已選線路全部清空且無法復原，須重新逐條選回。<br>
           <strong style="color:var(--red-bright);">【E · 2026-09-16 原型複檢後補】⑰ 活動表單內不提供「核准並上線」</strong>（<a href="#camp-overlap" style="color:var(--gold-light);">§06</a>）——核准動作<strong>只保留「活動審查」頁一個入口</strong>。原因：表單內那條路徑沒有生效時點選擇器，也沒有跑核准當下的重疊重跑檢查，等於在唯一防線上開後門（原型複檢時實際發現）。<strong>⑱ 已核准的活動被編輯時，活動狀態維持「已核准」、不退回草稿</strong>（<a href="#review-fsm" style="color:var(--gold-light);">§13 五</a>／<a href="#status-two-fields" style="color:var(--gold-light);">§13 一之一</a> 對照表補兩列）——改動另存為待生效版本，只存草稿時送審狀態＝否、送審後轉「是」；<strong>此情境不需選生效時點</strong>（活動尚未上線、沒有換版問題）。原規格未定義這條轉移，本版補上。<br>
           <strong>⑯ 後台原型 v2 需同步改版</strong>（列表兩欄、chips 兩列、刪除確認文案、線路下拉三項行為、Tab 1 紅框與審查頁衝突清單移除），截圖俟原型更新後重拍。</td>
@@ -1868,7 +1877,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   </div>
 
   <details class="fold">
-    <summary>章節對照表 · 完整版 V5.3 → 開發版 DEV V1.35<span class="fold-hint">（與完整版對照時才需展開）</span></summary>
+    <summary>章節對照表 · 完整版 V5.3 → 開發版 DEV V1.36<span class="fold-hint">（與完整版對照時才需展開）</span></summary>
     <div class="fold-body">
       <table class="spec-table compact">
         <thead><tr><th style="width:190px;">完整版章節</th><th style="width:150px;">本文件章節</th><th>處理方式</th></tr></thead>
@@ -3705,7 +3714,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         <button class="admin-btn secondary">儲存草稿</button>
         <button class="admin-btn primary">提交審查</button>
       </div>
-      <div class="body-text" style="font-size:11px;color:var(--text-dim);margin-top:6px;text-align:right;">未過驗算、未選線路、或<strong>引用的模板尚無任何已核准版本</strong>時，「提交審查」<strong>disabled ＋ 原因提示</strong>。<strong style="color:var(--red-bright);">DEV V1.35：活動重疊<u>不再</u>是 disabled 條件</strong>——重疊一律等按下「提交審查」的那一刻才檢查，見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉。<strong style="color:var(--red-bright);">DEV V1.35：活動表單內<u>不提供</u>「核准並上線」</strong>——核准動作<strong>只有「活動審查」頁一個入口</strong>。<span class="dim">（原寫「Admin 檢視送審狀態＝是的活動時額外顯示核准並上線」，本版移除：表單內沒有生效時點選擇器，也容易漏跑核准當下的重疊重跑檢查，等於在唯一防線上開後門。Milu 2026-09-16 拍板。）</span></div>
+      <div class="body-text" style="font-size:11px;color:var(--text-dim);margin-top:6px;text-align:right;">未過驗算、未選線路、或<strong>引用的模板尚無任何已核准版本</strong>時，「提交審查」<strong>disabled ＋ 原因提示</strong>。<strong style="color:var(--red-bright);">DEV V1.36：活動重疊不是 disabled 條件，送審時也不檢查</strong>——即使時間與線路重疊仍可成功送審，重疊硬擋只在 Admin 按「核准並上線」時執行，見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉。<strong style="color:var(--red-bright);">DEV V1.35：活動表單內<u>不提供</u>「核准並上線」</strong>——核准動作<strong>只有「活動審查」頁一個入口</strong>。<span class="dim">（原寫「Admin 檢視送審狀態＝是的活動時額外顯示核准並上線」，本版移除：表單內沒有生效時點選擇器，也容易漏跑核准當下的重疊檢查，等於在唯一防線上開後門。Milu 2026-09-16 拍板。）</span></div>
     </div>
   </div>
 
@@ -3760,34 +3769,35 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <b class="t">Then</b> ①三條規則玩家乙<strong>全部符合</strong>；②先比標籤數 → <strong style="color:var(--gold-light);">R3（2 個標籤）勝出，套用 M3</strong>；③若把 R3 刪掉，R1 與 R2 標籤數相同 → <strong>取列表由上而下第一條＝R1，套用 M1</strong>；④<strong style="color:var(--red-bright);">系統不得報錯、不得擋送審、不得隨機挑</strong>；⑤獎勵歷程可查回當日命中的是哪一條規則與哪一個模板版本。
   </div>
 
-  <div class="sub-title" id="camp-overlap">活動重疊硬擋（時間 × 線路）<span class="tag-upd">2026-09-15</span></div>
+  <div class="sub-title" id="camp-overlap">活動重疊硬擋（時間 × 線路）<span class="tag-upd">2026-09-16</span></div>
   <div class="callout warn">
-    <strong style="color:var(--red-bright);">DEV V1.23 新增規則：同一條線路、同一段時間內只允許存在 1 檔抽寶箱活動。</strong><strong>硬擋</strong>，<strong style="color:var(--red-bright);">不提供「我知道了照送」的放行路徑</strong>。<br><strong style="color:var(--gold-light);">DEV V1.35 改版：檢查一律等到「送審」與「核准」兩個動作按下的那一刻才跑</strong>——設定期間完全不檢查、畫面上不做任何事前提示、「提交審查」按鈕<strong>不預先 disabled</strong>。<span class="dim">（依據：ClickUp z90hj2zee7，實作本來就是這樣；規格向實作退讓。）</span><br>
-    <strong>為什麼要擋（不是體驗問題，是真金問題）：</strong>v1 <strong>沒有</strong>營運自訂優先序欄位（屬 v2 → <a href="#comparison" style="color:var(--gold-light);">§07</a>），重疊時系統依〈<a href="#behavior" style="color:var(--gold-light);">DEV §04 一 · 多檔判定</a>〉自動只留「開始時間最早」的那一檔，<strong style="color:var(--red-bright);">後開的那檔會 100% 靜默失效</strong>——押注 0、發放 0、玩家完全無感、後台零提示，營運要等上線後看報表全 0 才會發現。更嚴重的是：該線路的遊戲內 RTP 已為了這檔活動調降，<strong>錢挪走了卻沒有發回玩家</strong>，直接違反 <a href="#reward-data" style="color:var(--gold-light);">DEV §14 二</a> 的逐族群守恆。<br>
-    <strong style="color:var(--orange-bright);">Tab 1 適用路線的「全選」（不輸入關鍵字時＝一鍵加入全部線路）使「製造重疊」成為預設路徑而非意外。</strong><strong style="color:var(--red-bright);">DEV V1.35 起設定端不再做任何事前防呆</strong>，因此<strong>「送審當下」的那一則錯誤提示就是唯一的攔截點</strong>——它必須把<strong>撞到哪一檔、哪幾條線路、哪一段時間</strong>全部講清楚（見下方〈錯誤提示〉），營運才有辦法自己改對。<span class="dim">（原條文寫「防呆必須做在設定端」，已隨本版的檢查時機調整一併改寫。）</span>
+    <strong style="color:var(--red-bright);">DEV V1.23 新增規則：同一條線路、同一段時間內只允許 1 檔抽寶箱活動被核准或上線。</strong><strong>硬擋</strong>，<strong style="color:var(--red-bright);">不提供「我知道了照核准」的放行路徑</strong>。<br>
+    <strong style="color:var(--gold-light);">DEV V1.36 改版：重疊檢查只在 Admin 按「核准並上線」的那一刻執行</strong>——設定期間不檢查、畫面上不做事前提示、「提交審查」不因重疊而 disabled，按下後也不檢查重疊，重疊活動仍可成功送審。<span class="dim">（依據：QA 2026-09-16 複測，原單 z90hj2y1d3；PM 指示不回研發、規格對齊 Game Backstage UAT v1.0.1 實作。）</span><br>
+    <strong>為什麼要擋（不是體驗問題，是真金問題）：</strong>v1 <strong>沒有</strong>營運自訂優先序欄位（屬 v2 → <a href="#comparison" style="color:var(--gold-light);">§07</a>），重疊時系統依〈<a href="#behavior" style="color:var(--gold-light);">DEV §04 一 · 多檔判定</a>〉自動只留「開始時間最早」的那一檔，<strong style="color:var(--red-bright);">後開的那檔會 100% 靜默失效</strong>。<br>
+    <strong style="color:var(--red-bright);">「核准並上線」的錯誤回應是唯一攔截點</strong>——衝突時必須把<strong>撞到哪一檔、哪幾條線路、哪一段時間</strong>全部講清楚，Admin 才能駁回給營運修正。<span class="dim">設定期間、儲存草稿與提交審查均不顯示重疊提示。</span>
   </div>
   <table class="spec-table">
     <thead><tr><th style="width:150px;">項目</th><th>規則</th></tr></thead>
     <tbody>
       <tr><td><strong>重疊定義</strong></td><td class="dim">兩檔活動<strong style="color:var(--gold-light);">同時滿足</strong>下列兩項即為「重疊」：<br>① <strong>時間區間有交集</strong>——起訖為<strong>閉區間</strong>、精確至秒（UTC+8）；判定式：<span class="mono">NOT (A.迄 &lt; B.起 OR B.迄 &lt; A.起)</span>。<br>② <strong>適用線路集合有交集</strong>——兩檔的適用路線清單存在<strong>至少 1 條相同線路</strong>。<br><strong style="color:var(--green-bright);">正常接檔不會被誤擋：</strong>A 迄 <span class="mono">09/30 23:59:59</span>、B 起 <span class="mono">10/01 00:00:00</span> 無交集，可正常排檔。</td></tr>
-      <tr><td><strong>比對對象</strong><span class="tag-upd">2026-09-14</span></td><td class="dim">與本檔<strong>以外</strong>的所有<strong>未結束、且已有上線意圖</strong>的活動比對。<br><strong style="color:var(--gold-light);">DEV V1.35 依六態改寫（判定結果與原條文完全相同，只是換成新值域講）：</strong>納入比對者＝<strong>活動狀態 ≠ 已結束</strong>，<strong>且</strong>該活動<strong>至少送審過一次或已被核准過</strong>。<br>· <strong style="color:var(--orange-bright);">從未送審過的新草稿不納入比對</strong>（活動狀態＝草稿且送審狀態＝否、且歷史上未曾送審）——尚無上線意圖，允許多人先各自打草稿；<strong>活動狀態＝已結束者不納入</strong>。<br>· <strong>活動狀態＝送審中／已核准者一定要納入</strong>——它已排定要上線。<br>· 編輯既有活動時，<strong>比對排除自己</strong>（含自己的其他版本）。<br>· <strong style="color:var(--gold-light);">已暫停仍要比對</strong>——暫停是可隨時恢復的止血動作，不是退場。</td></tr>
-      <tr><td><strong style="color:var(--red-bright);">檢查時機（兩道，缺一不可）</strong><span class="tag-upd">2026-09-15</span></td><td class="dim"><strong style="color:var(--red-bright);">DEV V1.35 改版：兩道檢查都改為「動作按下的那一刻才跑」，設定期間完全不檢查。</strong><br><strong>① 送審當下</strong>——「提交審查」<strong style="color:var(--gold-light);">永遠可按、不預先 disabled</strong>；<strong>按下去的那一刻才跑重疊檢查</strong>。不通過則：<br>　· <strong style="color:var(--red-bright);">擋住送出</strong>——活動<strong>停在草稿</strong>（不進入送審中、送審狀態維持「否」）；<br>　· 以彈窗顯示<strong>衝突清單與原因</strong>（文案見下方〈錯誤提示〉）；<br>　· <strong>不清空已填內容</strong>，營運可直接改期間或移除線路後再按一次。<br><strong>② 核准當下（必要，不可省）</strong>——因 DEV V1.20 起<strong>核准即生效</strong>，送審後到核准前局勢可能已變（另一檔在這期間被核准）。Admin 點「核准並上線」時<strong>重跑同一份檢查</strong>；不通過則<strong style="color:var(--red-bright);">核准失敗</strong>並顯示同一份衝突清單，該活動<strong>送審狀態維持「是」</strong>，Admin 須<strong>駁回</strong>（原因必填）交回營運改期間或改線路。<strong style="color:var(--orange-bright);">系統不得自動駁回</strong>——駁回須留人為紀錄。<br>· <strong>儲存草稿不檢查</strong>（草稿允許任意填寫）。<br>· <strong style="color:var(--orange-bright);">設定期間（含選線路、改時間）一律不檢查</strong>，畫面不出現任何衝突標示。</td></tr>
-      <tr><td><strong>錯誤提示</strong></td><td class="dim">阻擋時<strong style="color:var(--gold-light);">必須指名到底跟誰撞</strong>，不可只寫「有衝突」。文案 <span class="mono">admin.camp.overlap.blocked</span>：<br>「<strong>與 {campaign_id}（{campaign_name}）在線路 {lines} 於 {start} ~ {end} 重疊；同一線路同一時間只能有 1 檔抽寶箱活動。</strong>」<br>· 多檔同時衝突時<strong>逐檔列出</strong>；<br>· <span class="mono">{lines}</span> <strong>只列實際交集的線路</strong>（非整份清單）；<span class="mono">{start}~{end}</span> <strong>只列實際重疊的區段</strong>（非整段活動期間）。</td></tr>
-      <tr><td><strong>UI 落點</strong><span class="tag-upd">2026-09-15</span></td><td class="dim"><strong style="color:var(--red-bright);">DEV V1.35：衝突資訊只出現在兩個動作的回應裡，畫面上不做任何事前提示。</strong><br>① <strong>送審當下</strong>——「提交審查」的回應彈窗列出衝突清單。<br>② <strong>核准當下</strong>——「核准並上線」的回應彈窗列出同一份衝突清單。<br>③ 阻擋時<strong>不清空</strong>已填內容，營運可直接改期間或移除線路後重試。<br><strong style="color:var(--red-bright);">以下兩項自本版起整套移除：</strong><br>　· <strong style="text-decoration:line-through;">Tab 1 適用路線區衝突線路 chip 轉紅框、區塊下方即時衝突清單</strong>（原 V1.23 訂）——設定期間不檢查，自然也無從標紅。<br>　· <strong style="text-decoration:line-through;">審查頁待審卡片與「查看完整設定（唯讀）」彈窗帶衝突清單</strong>（原 V1.23 訂）——<strong>Admin 改為按下核准才會知道</strong>。<span class="dim">（Milu 2026-09-15 拍板；已知代價：Admin 會多按一次空。接受理由是與「設定期間不檢查」保持同一套邏輯——檢查只在動作當下發生。）</span></td></tr>
-      <tr><td><strong style="color:var(--red-bright);">不做的事</strong></td><td class="dim"><strong>不提供「強制略過」「我知道了照送」</strong>——一旦允許放行，靜默失效的風險就原封不動回來了。<br>營運要<strong>排接檔</strong>請改期間（精確至秒，前後銜接不會被擋）；要<strong>同時投放</strong>請改線路（不同線路互不衝突）。<br><span class="dim">有了 v2 的營運自訂優先序欄位之後，才談得上「有意識的重疊」，屆時再評估是否放寬為警示。</span></td></tr>
+      <tr><td><strong>比對對象</strong><span class="tag-upd">2026-09-16</span></td><td class="dim">核准當下，與本檔<strong>以外</strong>的已核准或已進入執行階段活動比對。<br><strong style="color:var(--gold-light);">納入比對者＝活動狀態為已核准／運行中／已暫停。</strong><br>· <strong style="color:var(--orange-bright);">草稿與送審中不納入比對</strong>——重疊草稿可同時建立，重疊活動也可同時待審；核准時以先通過者為準，後續嘗試核准的重疊活動被擋下。<br>· <strong>已結束不納入比對</strong>；編輯既有活動時，<strong>比對排除自己</strong>（含自己的其他版本）。<br>· <strong style="color:var(--gold-light);">已暫停仍要比對</strong>——暫停是可隨時恢復的止血動作，不是退場。</td></tr>
+      <tr><td><strong style="color:var(--red-bright);">檢查時機（一道）</strong><span class="tag-upd">2026-09-16</span></td><td class="dim"><strong style="color:var(--red-bright);">DEV V1.36：只在「核准並上線」按下的那一刻執行重疊檢查。</strong><br><strong>① 設定期間／儲存草稿</strong>——不檢查重疊，畫面不出現衝突標示。<br><strong>② 送審當下</strong>——「提交審查」<strong style="color:var(--gold-light);">不因活動重疊而 disabled</strong>，按下後<strong>不執行重疊檢查</strong>。即使重疊仍送審成功：新活動進入<strong>送審中</strong>，運行中／已暫停／已核准活動的待生效版本保留原活動狀態；兩者的<strong>送審狀態都轉「是」</strong>，不顯示衝突彈窗。<br><strong>③ 核准當下（唯一攔截點）</strong>——Admin 點「核准並上線」時才執行時間 × 線路重疊檢查；不通過則<strong style="color:var(--red-bright);">核准失敗</strong>並顯示衝突清單，該活動<strong>送審狀態維持「是」</strong>，Admin 須<strong>駁回</strong>（原因必填）交回營運改期間或改線路。<strong style="color:var(--orange-bright);">系統不得自動駁回</strong>。</td></tr>
+      <tr><td><strong>錯誤提示</strong></td><td class="dim">核准被阻擋時<strong style="color:var(--gold-light);">必須指名到底跟誰撞</strong>，不可只寫「有衝突」。文案 <span class="mono">admin.camp.overlap.blocked</span>：<br>「<strong>與 {campaign_id}（{campaign_name}）在線路 {lines} 於 {start} ~ {end} 重疊；同一線路同一時間只能有 1 檔抽寶箱活動。</strong>」<br>· 多檔同時衝突時<strong>逐檔列出</strong>；<span class="mono">{lines}</span> 只列實際交集的線路，<span class="mono">{start}~{end}</span> 只列實際重疊的區段。</td></tr>
+      <tr><td><strong>UI 落點</strong><span class="tag-upd">2026-09-16</span></td><td class="dim"><strong style="color:var(--red-bright);">衝突資訊只出現在「核准並上線」失敗的回應彈窗。</strong><br>· 設定期間、儲存草稿、提交審查均不顯示衝突清單、紅框或任何事前提示。<br>· 審查頁待審卡片與「查看完整設定（唯讀）」彈窗不顯示衝突清單；Admin 按下核准後才會知道。</td></tr>
+      <tr><td><strong style="color:var(--red-bright);">不做的事</strong></td><td class="dim"><strong>不提供「強制略過」「我知道了照核准」</strong>——一旦允許上線放行，靜默失效的風險就原封不動回來了。<br>營運要<strong>排接檔</strong>請改期間；要<strong>同時投放</strong>請改線路。</td></tr>
     </tbody>
   </table>
   <div class="bdd-card">
-    <div class="bdd-title">BDD 驗收情境 · 重疊硬擋（送審當下 · DEV V1.35 改寫）</div>
+    <div class="bdd-title">BDD 驗收情境 · 重疊活動仍可成功送審（DEV V1.36）</div>
     <b class="g">Given</b> 活動 <span class="mono">CHEST0901</span>（中秋抽寶箱）<strong>運行中</strong>，期間 <span class="mono">09/01 00:00:00 ~ 09/30 23:59:59</span>，適用線路 <span class="mono">AWS062, AWS051</span><br>
-    <b class="w">When</b> 營運建立 <span class="mono">CHEST0915</span>，期間 <span class="mono">09/15 00:00:00 ~ 10/15 23:59:59</span>，線路以清單首列「<strong>全選</strong>」一次加入全部（含 AWS062、AWS051）後點「提交審查」<br>
-    <b class="t">Then</b> ①<strong style="color:var(--gold-light);">「提交審查」按鈕在按下之前一直是可按的（不得 disabled）</strong>；②按下之後<strong style="color:var(--red-bright);">擋住送出</strong>，活動<strong>停在草稿、送審狀態維持「否」</strong>；③彈窗提示「與 <span class="mono">CHEST0901</span>（中秋抽寶箱）在線路 <strong>AWS062, AWS051</strong> 於 <strong>09/15 00:00:00 ~ 09/30 23:59:59</strong> 重疊…」；④<strong style="color:var(--red-bright);">Tab 1 的 chip 全部維持原樣、不得有任何紅框或衝突清單</strong>（V1.35 移除）；⑤已填內容不被清空；⑥營運把起始改為 <span class="mono">10/01 00:00:00</span> 後再按一次<strong style="color:var(--green-bright);">即可送審成功</strong>；⑦或移除 AWS062、AWS051 兩條線路後<strong style="color:var(--green-bright);">亦可送審</strong>。
+    <b class="w">When</b> 營運建立 <span class="mono">CHEST0915</span>，期間 <span class="mono">09/15 00:00:00 ~ 10/15 23:59:59</span>，適用線路含 <span class="mono">AWS062, AWS051</span> 後點「提交審查」<br>
+    <b class="t">Then</b> ①「提交審查」不因重疊而 disabled；②<strong style="color:var(--green-bright);">送審成功</strong>，<span class="mono">CHEST0915</span> 進入<strong>送審中</strong>、送審狀態轉「是」；③<strong>不顯示</strong>重疊錯誤彈窗、Tab 1 線路 chip 不轉紅框、畫面不出現衝突清單；④已填內容完整保留在待審版本。
   </div>
   <div class="bdd-card">
-    <div class="bdd-title">BDD 驗收情境 · 核准時重跑檢查（DEV V1.20 核准即生效的連帶）</div>
-    <b class="g">Given</b> 活動 X 與 Y 期間、線路皆重疊；兩檔<strong>各自送審當下對方仍是從未送審過的草稿</strong>（依〈比對對象〉不納入比對），故送審時都沒被擋<br>
-    <b class="w">When</b> Admin 先核准 X，接著點核准 Y<br>
-    <b class="t">Then</b> ①X <strong>核准成功並立即成為運行中版本</strong>；②<strong style="color:var(--red-bright);">Y 核准失敗</strong>，畫面顯示與 X 的衝突清單；③Y <strong>送審狀態維持「是」</strong>、不被系統自動駁回；④Admin <strong>駁回</strong>Y（原因必填）後，營運改期間或改線路再送審；⑤<strong>任何時點都不存在「兩檔同線路同時間皆為運行中」的狀態</strong>。
+    <div class="bdd-title">BDD 驗收情境 · 核准並上線時硬擋（DEV V1.36）</div>
+    <b class="g">Given</b> 活動 X 已核准或運行中；待審活動 Y 與 X 的期間、線路重疊<br>
+    <b class="w">When</b> Admin 對 Y 點「核准並上線」<br>
+    <b class="t">Then</b> ①<strong style="color:var(--red-bright);">Y 核准失敗</strong>，畫面顯示與 X 的衝突清單與原因；②Y 維持待審、<strong>送審狀態維持「是」</strong>，不被系統自動駁回；③Admin 以必填原因駁回 Y 後，營運改期間或改線路再送審；④任何時點都不存在兩檔同線路、同時間皆被核准或運行的狀態。
   </div>
 
   <div class="sub-title">活動上線審核流程（核准權＝最高權限(Admin)）<span class="tag-upd">2026-08-03</span></div>
@@ -4960,7 +4970,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.pause.success</span></td><td class="dim">活動已暫停</td><td class="dim mono" style="font-size:11.5px;">Campaign paused</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.resume.success</span></td><td class="dim">活動已恢復運行</td><td class="dim mono" style="font-size:11.5px;">Campaign resumed</td></tr>
       <tr><td colspan="3" style="background:var(--gold-fill-faint);font-size:11px;color:var(--gold-light);font-weight:600;">▼ DEV V1.31 新增（2026-09-11 · 活動複製／模板刪除／分頁／快照比對／生效時點）</td></tr>
-      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.copy_overlap_hint</span><br><span class="dim" style="font-size:10px;">複製後進入表單時顯示一次</span></td><td class="dim">此複本與來源活動的線路與時段重疊，送審前請先調整線路或時間</td><td class="dim mono" style="font-size:11.5px;">This copy overlaps the source campaign on lines and dates. Adjust before submitting for review.</td></tr>
+      <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;text-decoration:line-through;">admin.camp.copy_overlap_hint</span><br><span class="dim" style="font-size:10px;"><strong style="color:var(--red-bright);">DEV V1.36 停用</strong></span></td><td class="dim">複製後不進行重疊檢查、不顯示事前提示；重疊只在核准並上線時攔截。</td><td class="dim mono" style="font-size:11.5px;">—</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;text-decoration:line-through;">admin.tpl.delete_confirm_inuse</span><br><span class="dim" style="font-size:10px;"><strong style="color:var(--red-bright);">DEV V1.35 停用</strong><br>（警語已統一為單句，不再分 N 值）</span></td><td class="dim">此模板目前有 {n} 檔未結束活動引用中。刪除後這些活動會沿用各自已存下的數值照常運行，不受影響；但日後想再引用這個模板將無法選取。</td><td class="dim mono" style="font-size:11.5px;">This template is used by {n} active campaign(s). They will keep running on their own saved values and are unaffected, but you will not be able to select this template again.</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.tpl.effect_hint</span><br><span class="dim" style="font-size:10px;">V1.31 整句改字（原「送審核准後立即生效…」意思已相反）</span></td><td class="dim">此模板目前被 {n} 檔未結束活動引用。修改這個模板不會影響這些活動——它們跑的是各自存下的數值。若要讓某一檔活動改用新數值，請到該活動編輯頁重新儲存草稿並送審。</td><td class="dim mono" style="font-size:11.5px;">This template is used by {n} active campaign(s). Editing it does not affect them — each runs on its own saved values. To apply new values to a campaign, re-save and re-submit that campaign.</td></tr>
       <tr><td style="vertical-align:top;"><span class="mono" style="font-size:11px;">admin.camp.snapshot_diff_title</span><br><span class="dim" style="font-size:10px;">送審前比對彈窗標題</span></td><td class="dim">模板已更新</td><td class="dim mono" style="font-size:11.5px;">Template has been updated</td></tr>
@@ -6136,7 +6146,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <strong style="color:var(--gold-light);">這樣訂的理由：</strong>①與 QA 實測的「複本儲存並送審後即為 V1」不衝突；②<strong>營運點了複製後直接關掉不會留下空草稿</strong>（前一版的做法會留）。<br>
       <strong>審查反饋與駁回原因一併清空</strong>（沿用〈審查反饋〉既有規則）。</td></tr>
       <tr><td>模板數值快照</td><td class="dim">複本是<strong>一份新的草稿</strong>，其模板數值快照<strong>於複本首次按「儲存草稿」時才拍</strong>，<strong style="color:var(--red-bright);">不沿用來源活動的舊快照</strong>。規則見〈<a href="#template-version" style="color:var(--gold-light);">DEV §06 六、模板數值與活動快照</a>〉。</td></tr>
-      <tr><td>與活動重疊硬擋的關係<span class="dim" style="font-size:10px;">（DEV V1.31 新增）</span></td><td class="dim"><strong style="color:var(--red-bright);">複製本身不觸發重疊檢查，但送審時會</strong>——複本照抄來源活動的<strong>適用線路</strong>，若來源活動的檔期與複本的預設檔期（隔日起 14 天）有交集，複本送審必被〈<a href="#camp-overlap" style="color:var(--gold-light);">DEV §06 活動重疊硬擋</a>〉擋下。<strong>本版不放寬硬擋</strong>；改為在複製完成進入表單時顯示一次提示「此複本與來源活動的線路與時段重疊，送審前請先調整線路或時間」（<span class="mono">admin.camp.copy_overlap_hint</span>）。</td></tr>
+      <tr><td>與活動重疊硬擋的關係<span class="dim" style="font-size:10px;">（DEV V1.36 修訂）</span></td><td class="dim"><strong style="color:var(--red-bright);">複製、儲存草稿與提交審查均不觸發重疊檢查</strong>——複本照抄來源活動的<strong>適用線路</strong>，即使預設檔期與來源活動交集，仍可正常儲存並送審，表單不顯示重疊提示。Admin 按「核准並上線」時才依〈<a href="#camp-overlap" style="color:var(--gold-light);">DEV §06 活動重疊硬擋</a>〉檢查；如仍重疊則核准失敗。<span class="mono">admin.camp.copy_overlap_hint</span> 自 DEV V1.36 起停用。</td></tr>
     </tbody>
   </table>
 
@@ -6591,7 +6601,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 開發交付版規格書 · LUCKY CHEST DEV V1.35 · CONFIDENTIAL 2026<br>
+  抽寶箱 開發交付版規格書 · LUCKY CHEST DEV V1.36 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 受眾：後端／前端／美術／QA · 完整版（含 KPI／成本／時程）另見 <a href="treasure_box_crm_spec_v5.0.html" target="_blank" rel="noopener" style="color:var(--gold-light);">treasure_box_crm_spec_v5.0.html</a>（內容版號 V5.3）<br>
   <strong>兩份文件如有衝突，以本文件為準。</strong>
 </div>
