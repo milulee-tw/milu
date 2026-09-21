@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>排行榜與大獎回放 開發版規格書 · CMB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   CSS VARIABLES · 主題定義（v3 · Calaix 極簡風）
+   ── 亮色（預設）：白底、近黑文字、淺灰邊框、橘紅點綴
+   ── 暗色：純反轉極簡，見 html[data-theme="dark"] 覆寫
+═══════════════════════════════════════ */
+:root {
+  /* ── 強調色（橘紅） ── */
+  --accent: #E92B0D;
+  --accent-text: #C42109;
+  --accent-soft: #F0876F;
+
+  /* ── 背景層 ── */
+  --bg: #FFFFFF;
+  --bg-2: #FAFAFA;
+  --bg-3: #FAFAFA;
+  --bg-4: #F0F0F0;
+  --bg-5: #E4E4E4;
+
+  /* ── 邊框 ── */
+  --border: #D6D6D6;
+  --border-bright: #ADADAD;
+
+  /* ── 文字 ── */
+  --text-primary: #1A1A1A;
+  --text-secondary: #434343;
+  --text-dim: #8F8F8F;
+
+  /* ── 狀態主色（邊框/點綴用；warn 紅為深紅、與強調橘紅區隔） ── */
+  --red: #B42318;
+  --teal: #0F766E;
+  --blue: #2563EB;
+  --green: #1F8A4C;
+  --purple: #7C3AED;
+  --orange: #D97706;
+
+  /* ── 強調色透明填充 / 光暈 ── */
+  --accent-fill: rgba(233,43,13,0.1);
+  --accent-fill-weak: rgba(233,43,13,0.08);
+  --accent-fill-faint: rgba(233,43,13,0.06);
+  --accent-line: rgba(0,0,0,0.03);
+  --accent-glow: rgba(233,43,13,0.15);
+  --accent-glow-faint: rgba(233,43,13,0.05);
+  --accent-fill-dot: rgba(233,43,13,0.18);
+  --border-kpi: rgba(233,43,13,0.45);
+
+  /* ── 中性疊加（hover / 細分隔線） ── */
+  --overlay-hover: rgba(0,0,0,0.03);
+  --overlay-row: rgba(0,0,0,0.07);
+  --overlay-faint: rgba(0,0,0,0.02);
+  --overlay-pill: rgba(0,0,0,0.02);
+
+  /* ── 陰影 / 半透明面板背景 ── */
+  --shadow: rgba(0,0,0,0.08);
+  --topnav-bg: rgba(255,255,255,0.92);
+
+  /* ── 狀態亮色文字（白底加深至 AA） ── */
+  --green-bright: #17693C;
+  --blue-bright: #1D4ED8;
+  --purple-bright: #6D28D9;
+  --red-bright: #9A1C10;
+  --teal-bright: #0D5F58;
+
+  /* ── 狀態透明填充 ── */
+  --green-fill: rgba(31,138,76,0.1);
+  --green-fill-weak: rgba(31,138,76,0.08);
+  --green-fill-faint: rgba(31,138,76,0.06);
+  --green-line: rgba(31,138,76,0.35);
+  --blue-fill: rgba(37,99,235,0.09);
+  --blue-fill-weak: rgba(37,99,235,0.07);
+  --blue-glow: rgba(37,99,235,0.05);
+  --purple-fill: rgba(124,58,237,0.09);
+  --purple-line: rgba(124,58,237,0.35);
+  --purple-glow: rgba(124,58,237,0.04);
+  --red-fill: rgba(180,35,24,0.09);
+  --red-fill-weak: rgba(180,35,24,0.07);
+  --red-fill-strong: rgba(180,35,24,0.12);
+  --red-fill-faint: rgba(180,35,24,0.06);
+  --red-line: rgba(180,35,24,0.3);
+  --red-line-strong: rgba(180,35,24,0.4);
+  --teal-fill: rgba(15,118,110,0.09);
+
+  --sidebar-w: 280px;
+  --topnav-h: 48px;
+}
+
+/* ═══════════════════════════════════════
+   暗色主題：純反轉極簡（近黑底、白字、深灰邊框、同一橘紅微調亮）
+   覆寫上方同一批變數，亮色完全不受影響
+═══════════════════════════════════════ */
+html[data-theme="dark"] {
+  /* ── 強調色：暗底微調亮以保留對比 ── */
+  --accent: #F04E30;
+  --accent-text: #FF7A5C;
+  --accent-soft: #A63A24;
+
+  /* ── 背景層：近黑／深灰系 ── */
+  --bg: #111112;
+  --bg-2: #151517;
+  --bg-3: #1A1A1C;
+  --bg-4: #202023;
+  --bg-5: #2A2A2E;
+
+  /* ── 邊框 ── */
+  --border: #2A2A2E;
+  --border-bright: #3D3D42;
+
+  /* ── 文字 ── */
+  --text-primary: #F2F2F0;
+  --text-secondary: #B4B4B2;
+  --text-dim: #707070;
+
+  /* ── 狀態主色 ── */
+  --red: #D9483B;
+  --teal: #34B3A6;
+  --blue: #5B8DEF;
+  --green: #3FBF6F;
+  --purple: #A78BFA;
+  --orange: #E8A33D;
+
+  /* ── 強調色透明填充 / 光暈 ── */
+  --accent-fill: rgba(240,78,48,0.14);
+  --accent-fill-weak: rgba(240,78,48,0.1);
+  --accent-fill-faint: rgba(240,78,48,0.07);
+  --accent-line: rgba(255,255,255,0.03);
+  --accent-glow: rgba(240,78,48,0.2);
+  --accent-glow-faint: rgba(240,78,48,0.06);
+  --accent-fill-dot: rgba(240,78,48,0.22);
+  --border-kpi: rgba(240,78,48,0.5);
+
+  /* ── 中性疊加 ── */
+  --overlay-hover: rgba(255,255,255,0.04);
+  --overlay-row: rgba(255,255,255,0.06);
+  --overlay-faint: rgba(255,255,255,0.02);
+  --overlay-pill: rgba(255,255,255,0.03);
+
+  /* ── 陰影 / 半透明面板背景 ── */
+  --shadow: rgba(0,0,0,0.5);
+  --topnav-bg: rgba(17,17,18,0.92);
+
+  /* ── 狀態亮色文字 ── */
+  --green-bright: #7ADFA0;
+  --blue-bright: #93B8F5;
+  --purple-bright: #C4B5FD;
+  --red-bright: #F0907A;
+  --teal-bright: #6ED4C8;
+
+  /* ── 狀態透明填充 ── */
+  --green-fill: rgba(63,191,111,0.12);
+  --green-fill-weak: rgba(63,191,111,0.1);
+  --green-fill-faint: rgba(63,191,111,0.06);
+  --green-line: rgba(63,191,111,0.3);
+  --blue-fill: rgba(91,141,239,0.12);
+  --blue-fill-weak: rgba(91,141,239,0.1);
+  --blue-glow: rgba(91,141,239,0.05);
+  --purple-fill: rgba(167,139,250,0.12);
+  --purple-line: rgba(167,139,250,0.3);
+  --purple-glow: rgba(167,139,250,0.05);
+  --red-fill: rgba(217,72,59,0.12);
+  --red-fill-weak: rgba(217,72,59,0.1);
+  --red-fill-strong: rgba(217,72,59,0.16);
+  --red-fill-faint: rgba(217,72,59,0.07);
+  --red-line: rgba(217,72,59,0.3);
+  --red-line-strong: rgba(217,72,59,0.4);
+  --teal-fill: rgba(52,179,166,0.12);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text-primary);
+  font-family:'DM Sans','Noto Sans TC',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  font-size:15px;
+  transition: background .3s, color .3s;
+}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg-2);}
+::-webkit-scrollbar-thumb{background:var(--bg-5);border-radius:2px;}
+
+/* ═══════════════════════════════════════
+   LAYOUT MODE TOGGLE（頂部列／側邊欄，獨立於主題切換）
+═══════════════════════════════════════ */
+/* ── 預設：左側邊欄模式 ── */
+body.layout-top .sidebar { display: none; }
+body.layout-top .topnav  { display: flex; }
+body.layout-top .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
+body.layout-top .page { max-width: 1440px; }
+
+body.layout-side .sidebar { display: flex; }
+body.layout-side .topnav  { display: none; }
+body.layout-side .main-wrap { margin-left: var(--sidebar-w); padding-top: 0; }
+
+/* 切換按鈕（往上移讓出右下角給主題鈕）· pill 造型 */
+.layout-toggle {
+  position: fixed;
+  bottom: 88px; right: 24px;
+  z-index: 200;
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px var(--shadow);
+}
+.layout-toggle-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: var(--text-dim);
+  background: none; border: none;
+  transition: all .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.layout-toggle-btn:hover { color: var(--text-primary); }
+.layout-toggle-btn.active {
+  background: var(--text-primary);
+  color: var(--bg);
+}
+.layout-toggle-divider {
+  width: 1px; background: var(--border);
+  align-self: stretch;
+}
+
+/* ═══════════════════════════════════════
+   THEME TOGGLE（亮/暗主題切換 · 右下角浮動圓鈕）
+═══════════════════════════════════════ */
+.theme-toggle {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 210;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  box-shadow: 0 4px 24px var(--shadow);
+  transition: background .25s, color .25s, border-color .25s, transform .25s, box-shadow .25s;
+  -webkit-appearance: none; appearance: none;
+}
+.theme-toggle:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+  background: var(--bg-3);
+  transform: translateY(-2px) rotate(-12deg);
+  box-shadow: 0 6px 28px var(--shadow);
+}
+.theme-toggle svg { width: 20px; height: 20px; display: block; }
+/* 圖示表示「可切換到的狀態」：暗色顯示太陽（→亮），亮色顯示月亮（→暗） */
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* ═══════════════════════════════════════
+   TOP NAV（水平導覽）
+═══════════════════════════════════════ */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--topnav-bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 0 40px;
+  height: var(--topnav-h);
+  overflow-x: auto;
+  align-items: center; gap: 0;
+}
+.topnav::-webkit-scrollbar{height:2px;}
+.nav-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--accent-text);
+  letter-spacing: 0.15em; white-space: nowrap;
+  margin-right: 32px; flex-shrink: 0;
+}
+.nav-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim);
+  padding: 0 14px; height: var(--topnav-h);
+  display: flex; align-items: center;
+  cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all .2s; text-decoration: none;
+}
+.nav-item:hover { color: var(--text-primary); border-bottom-color: var(--accent); }
+.nav-item.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+
+/* ═══════════════════════════════════════
+   SIDEBAR（左側導覽）
+═══════════════════════════════════════ */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w); z-index: 100;
+  background: var(--bg-2);
+  border-right: 1px solid var(--border);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 側邊欄頂部：文件資訊 */
+.sidebar-header {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--accent-text); text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.sidebar-title {
+  font-size: 15px; font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4; margin-bottom: 14px;
+}
+.sidebar-meta {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.sidebar-meta-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.06em;
+}
+.sidebar-meta-label { color: var(--text-dim); }
+.sidebar-meta-val { color: var(--text-secondary); }
+.sidebar-meta-val.status-active {
+  color: var(--green-bright);
+  background: var(--green-fill-weak);
+  padding: 2px 8px; border-radius: 50px;
+}
+.sidebar-meta-val.status-draft {
+  color: var(--accent-text);
+  background: var(--accent-fill-weak);
+  padding: 2px 8px; border-radius: 50px;
+}
+.sidebar-meta-val.status-review {
+  color: var(--blue-bright);
+  background: var(--blue-fill-weak);
+  padding: 2px 8px; border-radius: 50px;
+}
+
+/* 側邊欄導覽區 */
+.sidebar-nav {
+  flex: 1; overflow-y: auto;
+  padding: 12px 12px 80px;
+}
+.sidebar-nav::-webkit-scrollbar{width:3px;}
+
+.sidebar-section {
+  margin-bottom: 2px;
+}
+.sidebar-section-btn {
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: none; border: none;
+  cursor: pointer; text-align: left;
+  text-decoration: none;
+  transition: all .2s;
+  border-radius: 8px;
+}
+.sidebar-section-btn:hover {
+  color: var(--text-primary);
+  background: var(--overlay-hover);
+}
+.sidebar-section-btn.active {
+  color: var(--text-primary);
+  background: var(--bg-4);
+}
+.sidebar-section-num {
+  font-size: 10px; color: var(--text-dim);
+  flex-shrink: 0; width: 20px;
+}
+.sidebar-section-btn.active .sidebar-section-num {
+  color: var(--accent-text);
+}
+.sidebar-chevron {
+  margin-left: auto; font-size: 10px;
+  color: var(--text-dim);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.sidebar-section.open .sidebar-chevron {
+  transform: rotate(90deg);
+}
+
+/* 子章節 */
+.sidebar-subsections {
+  display: none;
+  padding: 2px 0 4px;
+  border-left: 1px solid var(--border);
+  margin-left: 20px;
+}
+.sidebar-section.open .sidebar-subsections {
+  display: block;
+}
+.sidebar-sub-link {
+  display: block;
+  padding: 6px 16px 6px 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color .15s;
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+}
+.sidebar-sub-link:hover { color: var(--text-primary); }
+.sidebar-sub-link.active {
+  color: var(--accent-text);
+  border-left-color: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════ */
+.main-wrap {
+  transition: margin-left .3s, padding-top .3s;
+  min-height: 100vh;
+}
+.page { max-width: 1040px; margin: 0 auto; padding: 0 40px 120px; }
+.section { margin-bottom: 100px; padding-top: 20px; }
+.section-header {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  color: var(--accent-text); letter-spacing: 0.18em;
+}
+.section-title { font-size: 23px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
+.section-title-en {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--text-dim); letter-spacing: 0.15em; margin-left: auto;
+}
+.sub-title {
+  font-size: 16px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 14px; margin-top: 28px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sub-title::before { content:''; width:3px; height:14px; background:var(--accent); border-radius:2px; flex-shrink:0; }
+.body-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.85; }
+.body-text strong { color: var(--text-primary); }
+.body-text em { color: var(--accent-text); font-style: normal; font-weight: 600; }
+
+/* ─── COVER ─── */
+.cover {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 60px 40px; text-align: center;
+}
+.cover-bg { position: absolute; inset: 0; background: none; }
+.cover-grid { display: none; }
+.cover-tag {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.22em; color: var(--accent-text); text-transform: uppercase;
+  background: var(--accent-fill-faint);
+  border: none; padding: 7px 18px; border-radius: 50px;
+  margin-bottom: 36px; position: relative;
+}
+.cover h1 {
+  font-family: 'DM Sans','Noto Sans TC',sans-serif;
+  font-size: clamp(44px,7.5vw,76px);
+  font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.08;
+  color: var(--text-primary);
+  margin-bottom: 16px; position: relative;
+}
+.cover h1 span { color: var(--accent); }
+.cover-sub {
+  font-size: 16px; color: var(--text-secondary);
+  letter-spacing: 0.04em; margin-bottom: 56px; position: relative;
+}
+.cover-pills {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: center; position: relative; margin-bottom: 60px;
+}
+.cover-pill {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; color: var(--text-secondary);
+  padding: 7px 16px; border: 1px solid var(--border);
+  border-radius: 50px; background: var(--bg);
+}
+.cover-pill strong { color: var(--text-primary); }
+.cover-badges {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  justify-content: center; position: relative;
+}
+.badge {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; padding: 5px 14px; border-radius: 50px;
+  text-transform: uppercase;
+}
+.badge-v1 { background: var(--green-fill); color: var(--green-bright); border: 1px solid var(--green-line); }
+.badge-v2 { background: var(--purple-fill); color: var(--purple-bright); border: 1px solid var(--purple-line); }
+.badge-scope { background: var(--accent-fill-weak); color: var(--accent-text); border: 1px solid var(--border); }
+.badge-conf { background: var(--red-fill-weak); color: var(--red-bright); border: 1px solid var(--red-line); }
+
+/* ─── HYPOTHESIS ─── */
+.hypo-block {
+  background: var(--bg-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 24px 28px; border-radius: 0 12px 12px 0; margin-bottom: 28px;
+}
+.hypo-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  color: var(--accent-text); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px;
+}
+.hypo-text { font-size: 16px; color: var(--text-primary); font-weight: 500; line-height: 1.75; }
+
+/* ─── INFO GRID ─── */
+.info-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+.info-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 28px; }
+.info-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 28px; }
+.info-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px;
+}
+.info-card-icon { font-size: 22px; margin-bottom: 8px; }
+.info-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.info-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.info-card-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--accent-text); margin-bottom: 4px; }
+.info-card-label { font-size: 11px; color: var(--text-dim); }
+
+/* ─── TABLE ─── */
+.spec-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+.spec-table th {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em;
+  color: var(--text-secondary); text-transform: uppercase;
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-3);
+}
+.spec-table td {
+  padding: 11px 14px; color: var(--text-primary);
+  border-bottom: 1px solid var(--overlay-row);
+}
+.spec-table td.mono { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-primary); }
+.spec-table td.dim { color: var(--text-secondary); }
+.spec-table tr:hover td { background: var(--overlay-faint); }
+
+/* ─── TAG PILLS ─── */
+.tag-pill {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  padding: 3px 10px; border-radius: 50px; letter-spacing: 0.08em;
+  display: inline-block;
+}
+.tag-v1 { background: var(--green-fill); color: var(--green-bright); }
+.tag-v2 { background: var(--purple-fill); color: var(--purple-bright); }
+.tag-req { background: var(--red-fill); color: var(--red-bright); }
+.tag-opt { background: var(--blue-fill); color: var(--blue-bright); }
+.tag-data { background: var(--teal-fill); color: var(--teal-bright); }
+.tag-eng { background: var(--accent-fill); color: var(--accent-text); }
+.tag-inf { background: var(--red-fill-strong); color: var(--red-bright); border: 1px solid var(--red-line-strong); }
+.tag-pm { background: var(--blue-fill); color: var(--blue-bright); }
+.tag-design { background: var(--purple-fill); color: var(--purple-bright); }
+.check { color: var(--green); }
+.cross { color: var(--text-dim); }
+.plus { color: var(--orange); }
+
+/* ─── FLOW DIAGRAM ─── */
+.flow-wrap { margin-bottom: 32px; overflow-x: auto; }
+.flow { display: flex; align-items: center; gap: 0; min-width: max-content; padding: 4px; }
+.flow-step {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px; text-align: center; min-width: 140px;
+}
+.flow-step-num { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--accent-text); letter-spacing: 0.2em; margin-bottom: 6px; }
+.flow-step-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.flow-step-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.flow-step.highlight { border-color: var(--accent); background: var(--accent-fill-faint); }
+.flow-step.warn { border-color: var(--red); background: var(--red-fill-faint); }
+.flow-step.success { border-color: var(--green); background: var(--green-fill-faint); }
+.flow-arrow { color: var(--text-dim); font-size: 18px; padding: 0 8px; flex-shrink: 0; }
+.flow-arrow-down { text-align: center; color: var(--text-dim); font-size: 18px; padding: 8px 0; margin: 0 auto; }
+.flow-v { display: flex; flex-direction: column; gap: 0; align-items: center; }
+.flow-v .flow-step { min-width: 520px; text-align: left; }
+
+/* ─── TABS ─── */
+.tab-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+.tab-btn {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; color: var(--text-dim);
+  padding: 10px 20px; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s; background: none;
+  border-top: none; border-left: none; border-right: none;
+}
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ─── KPI ─── */
+.kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+.kpi-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.kpi-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+.kpi-val { font-family: 'DM Mono', monospace; font-size: 28px; color: var(--accent-text); font-weight: 500; margin-bottom: 4px; }
+.kpi-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+.kpi-card.primary { border-color: var(--border-kpi); }
+
+/* ─── COST ─── */
+.cost-block { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.cost-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--overlay-row); font-size: 14px; }
+.cost-row:last-child { border-bottom: none; }
+.cost-row.total { font-weight: 700; color: var(--text-primary); border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; }
+.cost-label { color: var(--text-secondary); }
+.cost-val { font-family: 'DM Mono', monospace; color: var(--text-primary); }
+.cost-val.highlight { color: var(--accent-text); }
+
+/* ─── COMPARE TABLE ─── */
+.compare-wrap { overflow-x: auto; margin-bottom: 28px; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+.compare-table th {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em;
+  color: var(--text-dim); text-transform: uppercase;
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--border); background: var(--bg-3);
+}
+.compare-table th.v1-col { color: var(--green); }
+.compare-table th.v2-col { color: var(--purple); }
+.compare-table td { padding: 11px 16px; border-bottom: 1px solid var(--overlay-row); vertical-align: top; }
+.compare-table td:first-child { color: var(--text-secondary); font-weight: 500; }
+.compare-table .v1-val { color: var(--green-bright); }
+.compare-table .v2-val { color: var(--purple-bright); }
+.compare-table tr:hover td { background: var(--overlay-faint); }
+
+/* ─── TIMELINE ─── */
+.timeline { position: relative; padding-left: 28px; margin-bottom: 32px; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 32px; }
+.tl-dot { position: absolute; left: -24px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent-soft); }
+.tl-dot.active { border-color: var(--accent); background: var(--accent-fill-dot); }
+.tl-phase { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--accent-text); letter-spacing: 0.2em; margin-bottom: 6px; }
+.tl-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.tl-tasks { display: flex; flex-wrap: wrap; gap: 6px; }
+.tl-task { font-size: 12px; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 4px 12px; border-radius: 50px; }
+.tl-task.eng { border-left: 2px solid var(--accent); }
+.tl-task.pm { border-left: 2px solid var(--blue); }
+.tl-task.data { border-left: 2px solid var(--teal); }
+.tl-task.inf { border-left: 2px solid var(--red); }
+.tl-task.design { border-left: 2px solid var(--purple); }
+
+/* ─── CALLOUT ─── */
+.callout {
+  background: var(--bg-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  padding: 16px 20px; border-radius: 0 12px 12px 0;
+  margin-bottom: 20px; font-size: 14px; color: var(--text-secondary);
+}
+.callout strong { color: var(--text-primary); }
+.callout.warn { border-left-color: var(--orange); }
+.callout.warn strong { color: var(--orange); }
+.callout.info { border-left-color: var(--blue); }
+.callout.success { border-left-color: var(--green); }
+
+/* ─── OPEN QUESTIONS ─── */
+.oq-item {
+  background: var(--bg-3); border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  padding: 16px 20px; border-radius: 0 12px 12px 0; margin-bottom: 10px;
+}
+.oq-owner { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); letter-spacing: 0.15em; margin-bottom: 6px; }
+.oq-q { font-size: 14px; color: var(--text-primary); font-weight: 500; }
+.oq-item.awc { border-left-color: var(--blue); }
+.oq-item.awc .oq-owner { color: var(--blue); }
+.oq-item.pm { border-left-color: var(--purple); }
+.oq-item.pm .oq-owner { color: var(--purple); }
+
+/* ─── LOG TABLE ─── */
+.log-item {
+  display: grid; grid-template-columns: 180px 100px 1fr;
+  gap: 12px; padding: 10px 12px;
+  border-bottom: 1px solid var(--overlay-row); font-size: 13px;
+}
+.log-item:hover { background: var(--overlay-faint); }
+.log-item.header {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); background: var(--bg-3);
+}
+.log-event { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-primary); }
+.log-owner { font-size: 10px; }
+.log-desc { color: var(--text-secondary); line-height: 1.5; }
+
+/* ─── FOOTER ─── */
+.doc-footer {
+  text-align: center; padding: 60px 40px;
+  border-top: 1px solid var(--border);
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text-dim); letter-spacing: 0.15em; line-height: 2;
+}
+
+/* ─── TOPNAV META ─── */
+.topnav-meta {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+}
+.topnav-meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.topnav-meta-divider {
+  color: var(--text-dim);
+  font-size: 10px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  body.layout-side .sidebar { display: none; }
+  body.layout-side .main-wrap { margin-left: 0; padding-top: var(--topnav-h); }
+  .info-grid-3,.info-grid-4,.kpi-grid { grid-template-columns: 1fr 1fr; }
+  .page { padding: 0 20px 80px; }
+  .flow-v .flow-step { min-width: 0; width: 100%; }
+}
+
+/* ─── PRINT：隱藏浮動控制鈕 ─── */
+@media print {
+  .theme-toggle, .layout-toggle { display: none !important; }
+}
+
+/* ═══════════════════════════════════════
+   本文件增補樣式（不覆寫模板既有樣式）
+═══════════════════════════════════════ */
+
+/* ─── 修改紀錄表 ─── */
+.chglog { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:20px; }
+.chglog th { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--text-secondary);
+  text-transform:uppercase; padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); background:var(--bg-3); }
+.chglog td { padding:11px 14px; border-bottom:1px solid var(--overlay-row); vertical-align:top; color:var(--text-primary); }
+.chglog td.v { font-family:'DM Mono',monospace; font-size:12px; color:var(--accent-text); white-space:nowrap; }
+.chglog td.d { font-family:'DM Mono',monospace; font-size:12px; color:var(--text-dim); white-space:nowrap; }
+
+/* ─── Story 清單 ─── */
+.story-group { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:12px; }
+.story-role { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent-text); margin-bottom:12px; }
+.story-list { list-style:none; }
+.story-list li { display:flex; gap:12px; padding:7px 0; font-size:14px; color:var(--text-primary); line-height:1.7;
+  border-bottom:1px solid var(--overlay-row); }
+.story-list li:last-child { border-bottom:none; }
+.story-list .sn { font-family:'DM Mono',monospace; font-size:12px; color:var(--text-dim); flex-shrink:0; width:24px; }
+.story-list li em { color:var(--accent-text); font-style:normal; font-weight:600; }
+.newmark { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; color:var(--orange);
+  border:1px solid var(--orange); border-radius:50px; padding:1px 8px; margin-left:6px; white-space:nowrap; }
+
+/* ─── 區域詳細說明 block ─── */
+.area-detail { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:12px; }
+.area-detail-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px;
+  padding-bottom:10px; border-bottom:1px solid var(--overlay-row); }
+.area-detail-head strong { font-size:14px; color:var(--text-primary); }
+.area-oneline { font-size:13px; color:var(--text-secondary); }
+.area-badge { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
+  border-radius:50%; background:#e5484d; color:#fff; font-size:11px; font-weight:700; flex-shrink:0; }
+.area-detail-cols { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.area-col h5 { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-dim); margin-bottom:8px; }
+.area-col ul { list-style:none; }
+.area-col li { font-size:13px; color:var(--text-secondary); line-height:1.65; padding-left:14px; position:relative; margin-bottom:6px; }
+.area-col li::before { content:'·'; position:absolute; left:2px; color:var(--accent); font-weight:700; }
+.area-col li strong { color:var(--text-primary); }
+@media(max-width:768px){ .area-detail-cols { grid-template-columns:1fr; } }
+
+/* ─── 區域索引 ─── */
+.shot-layout { display:grid; grid-template-columns:64% 1fr; gap:20px; margin-bottom:24px; align-items:start; }
+.shot-index { border:1px solid var(--border); border-radius:12px; padding:14px 16px; background:var(--bg-3); }
+.shot-index h5 { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-dim); margin-bottom:10px; }
+.shot-index a { display:flex; gap:8px; align-items:center; padding:6px 0; font-size:13px; color:var(--text-secondary);
+  text-decoration:none; border-bottom:1px solid var(--overlay-row); }
+.shot-index a:last-child { border-bottom:none; }
+.shot-index a:hover { color:var(--accent-text); }
+@media(max-width:768px){ .shot-layout { grid-template-columns:1fr; } }
+
+/* ─── 截圖框 ─── */
+.shot-frame { border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--bg-3); position:relative; }
+.shot-frame img { width:100%; display:block; cursor:zoom-in; }
+.shot-cap { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--text-dim);
+  padding:8px 12px; border-top:1px solid var(--border); }
+
+/* ─── 線框圖 ─── */
+.wf { background:var(--bg-3); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.wf-screen { background:var(--bg); border:1px solid var(--border-bright); border-radius:10px; padding:12px; max-width:430px; margin:0 auto; }
+.wf-row { display:flex; align-items:center; gap:8px; }
+.wf-box { border:1px solid var(--border-bright); border-radius:8px; padding:8px 10px; background:var(--bg-2);
+  font-size:12px; color:var(--text-secondary); position:relative; }
+.wf-box.acc { border-color:var(--accent); background:var(--accent-fill-faint); color:var(--text-primary); }
+.wf-tag { position:absolute; top:-9px; left:-9px; width:20px; height:20px; border-radius:50%;
+  background:#e5484d; color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; z-index:2; }
+.wf-gap { height:10px; }
+.wf-pill { font-family:'DM Mono',monospace; font-size:10px; border:1px solid var(--border-bright); border-radius:50px;
+  padding:3px 10px; color:var(--text-secondary); white-space:nowrap; }
+.wf-pill.on { background:var(--text-primary); color:var(--bg); border-color:var(--text-primary); }
+.wf-cap { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--text-dim); text-align:center; margin-top:10px; }
+.wf-thumb { width:42px; height:42px; border-radius:8px; border:1px solid var(--border-bright); background:var(--bg-4);
+  display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--text-dim); flex-shrink:0; }
+.wf-line { height:7px; border-radius:4px; background:var(--bg-5); }
+.wf-btn { font-family:'DM Mono',monospace; font-size:10px; border-radius:50px; padding:4px 12px;
+  background:var(--accent); color:#fff; white-space:nowrap; }
+.wf-note { font-size:11px; color:var(--text-dim); margin-top:6px; }
+
+/* ─── i18n 表橫向捲動 ─── */
+.i18n-wrap { overflow-x:auto; margin-bottom:20px; border:1px solid var(--border); border-radius:12px; }
+.i18n-wrap .spec-table { margin-bottom:0; min-width:1500px; }
+.i18n-wrap .spec-table th { white-space:nowrap; font-size:10px; }
+.i18n-wrap .spec-table td { white-space:nowrap; font-size:12px; }
+.i18n-wrap .spec-table td:first-child { font-family:'DM Mono',monospace; color:var(--accent-text); }
+
+/* ─── Lightbox ─── */
+.lb-overlay { position:fixed; inset:0; z-index:500; background:rgba(0,0,0,.82); display:none;
+  align-items:center; justify-content:center; padding:24px; }
+.lb-overlay.on { display:flex; }
+.lb-overlay img { max-width:min(1680px,94vw); max-height:92vh; border-radius:8px; box-shadow:0 10px 60px rgba(0,0,0,.6); }
+.lb-close { position:absolute; top:18px; right:22px; width:38px; height:38px; border-radius:50%;
+  background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.3); font-size:18px; cursor:pointer; }
+</style>
+<script>
+/* ═══════════ FOUC 防閃白：在 CSS 之後盡早把 data-theme 設到 <html> ═══════════
+   優先序：localStorage("spec-theme") → 系統 prefers-color-scheme → 亮色
+   （與「頂部列模式切換」的 spec-layout 是兩套獨立 key，互不干擾） */
+(function(){
+  try {
+    var stored = localStorage.getItem('spec-theme');
+    var theme = stored
+      || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+</head>
+<body class="layout-side">
+
+<!-- ═══════════ THEME TOGGLE ═══════════ -->
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換亮/暗主題" title="切換亮/暗主題">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<!-- ═══════════ LAYOUT TOGGLE ═══════════ -->
+<div class="layout-toggle">
+  <button class="layout-toggle-btn" id="btn-side" onclick="setLayout('side')">▣ 側邊欄</button>
+  <div class="layout-toggle-divider"></div>
+  <button class="layout-toggle-btn" id="btn-top" onclick="setLayout('top')">☰ 頂部列</button>
+</div>
+
+<!-- ═══════════ TOP NAV ═══════════ -->
+<nav class="topnav" id="topnav">
+  <span class="nav-brand">LB-SPEC · DEV V1.2</span>
+  <a class="nav-item" href="#changelog">修改紀錄</a>
+  <a class="nav-item active" href="#overview">目的與 Story</a>
+  <a class="nav-item" href="#glossary">名詞定義</a>
+  <a class="nav-item" href="#flow">運作流程</a>
+  <a class="nav-item" href="#mechanic">榜單機制</a>
+  <a class="nav-item" href="#ui">玩家端 UI</a>
+  <a class="nav-item" href="#replay">回放功能</a>
+  <a class="nav-item" href="#config">設定檔</a>
+  <a class="nav-item" href="#logs">事件記錄</a>
+  <a class="nav-item" href="#i18n">多國語系</a>
+  <a class="nav-item" href="#openq">待確認</a>
+  <div class="topnav-meta">
+    <span class="topnav-meta-item" id="topnav-date"></span>
+    <span class="topnav-meta-divider">·</span>
+    <span class="topnav-meta-item">Milu</span>
+    <span class="topnav-meta-divider">·</span>
+    <span class="topnav-meta-item">Force / Combo Gaming</span>
+  </div>
+</nav>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">CMB · SPEC DOC</div>
+    <div class="sidebar-title">排行榜與大獎回放<br>開發版規格書</div>
+    <div class="sidebar-meta">
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.2</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">PLATFORM</span><span class="sidebar-meta-val">Force / Combo Gaming</span></div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav" id="sidebar-nav">
+
+    <div class="sidebar-section" data-section="changelog">
+      <button class="sidebar-section-btn" onclick="navTo('changelog')">
+        <span class="sidebar-section-num">00</span>修改紀錄<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections"><a class="sidebar-sub-link" href="#changelog">版本異動表</a></div>
+    </div>
+
+    <div class="sidebar-section open" data-section="overview">
+      <button class="sidebar-section-btn active" onclick="navTo('overview')">
+        <span class="sidebar-section-num">01</span>開發目的與 Story<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#overview">目標</a>
+        <a class="sidebar-sub-link" href="#story-player">Story · 玩家</a>
+        <a class="sidebar-sub-link" href="#story-system">Story · 系統</a>
+        <a class="sidebar-sub-link" href="#story-ops">Story · 營運人員</a>
+        <a class="sidebar-sub-link" href="#scope">v1 做／不做</a>
+        <a class="sidebar-sub-link" href="#diff-proposal">與提案 V1.6 的差異</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="glossary">
+      <button class="sidebar-section-btn" onclick="navTo('glossary')">
+        <span class="sidebar-section-num">02</span>名詞定義<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections"><a class="sidebar-sub-link" href="#glossary">名詞對照表</a></div>
+    </div>
+
+    <div class="sidebar-section" data-section="flow">
+      <button class="sidebar-section-btn" onclick="navTo('flow')">
+        <span class="sidebar-section-num">03</span>運作流程圖<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#flow-data">資料流程</a>
+        <a class="sidebar-sub-link" href="#flow-player">玩家動線</a>
+        <a class="sidebar-sub-link" href="#flow-settle">結算流程</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="mechanic">
+      <button class="sidebar-section-btn" onclick="navTo('mechanic')">
+        <span class="sidebar-section-num">04</span>榜單機制<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#mech-4boards">四張榜的定義</a>
+        <a class="sidebar-sub-link" href="#mech-scope">榜的分界：專線 × 幣別</a>
+        <a class="sidebar-sub-link" href="#mech-score">計分方式</a>
+        <a class="sidebar-sub-link" href="#mech-include">列入與排除的局型</a>
+        <a class="sidebar-sub-link" href="#mech-threshold">進榜門檻與排序</a>
+        <a class="sidebar-sub-link" href="#mech-period">榜期與結算時點</a>
+        <a class="sidebar-sub-link" href="#mech-edge">本章相關的異常狀態</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="ui">
+      <button class="sidebar-section-btn" onclick="navTo('ui')">
+        <span class="sidebar-section-num">05</span>玩家端 UI／UX<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#ui-map">畫面清單與動線</a>
+        <a class="sidebar-sub-link" href="#ui-l1">L1 入口 · 浮動 icon 選單</a>
+        <a class="sidebar-sub-link" href="#ui-l2">L2 榜單主畫面</a>
+        <a class="sidebar-sub-link" href="#ui-states">L2 狀態畫面</a>
+        <a class="sidebar-sub-link" href="#ui-art">美術資產需求</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="replay">
+      <button class="sidebar-section-btn" onclick="navTo('replay')">
+        <span class="sidebar-section-num">06</span>回放功能<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#rp-entry">開啟方式</a>
+        <a class="sidebar-sub-link" href="#rp-split">誰做什麼（分工線）</a>
+        <a class="sidebar-sub-link" href="#rp-mark">回放標示</a>
+        <a class="sidebar-sub-link" href="#rp-play">播放流程</a>
+        <a class="sidebar-sub-link" href="#rp-ui">L3 回放浮層畫面</a>
+        <a class="sidebar-sub-link" href="#rp-edge">本章相關的異常狀態</a>
+        <a class="sidebar-sub-link" href="#rp-jump">從榜單進入該款遊戲</a>
+        <a class="sidebar-sub-link" href="#rp-art">美術資產需求</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="config">
+      <button class="sidebar-section-btn" onclick="navTo('config')">
+        <span class="sidebar-section-num">07</span>設定檔參數<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#cfg-table">參數清單</a>
+        <a class="sidebar-sub-link" href="#cfg-risk">風險與限制</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="logs">
+      <button class="sidebar-section-btn" onclick="navTo('logs')">
+        <span class="sidebar-section-num">08</span>事件記錄<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#logs">前端事件</a>
+        <a class="sidebar-sub-link" href="#logs">後端事件</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="i18n">
+      <button class="sidebar-section-btn" onclick="navTo('i18n')">
+        <span class="sidebar-section-num">09</span>多國語系<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections">
+        <a class="sidebar-sub-link" href="#i18n">CRM 文案表（14 語系）</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section" data-section="openq">
+      <button class="sidebar-section-btn" onclick="navTo('openq')">
+        <span class="sidebar-section-num">10</span>待確認事項<span class="sidebar-chevron">›</span>
+      </button>
+      <div class="sidebar-subsections"><a class="sidebar-sub-link" href="#openq">Q1～Q7 與後續待辦</a></div>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="main-wrap" id="main-wrap">
+
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-tag">CMB · FEATURE SPEC · 2026</div>
+  <h1>排行榜與<span>大獎回放</span></h1>
+  <div class="cover-sub">LEADERBOARD &amp; BIG WIN REPLAY · DEV V1.2</div>
+  <div class="cover-pills">
+    <div class="cover-pill"><strong>類型</strong> CRM 玩家端功能</div>
+    <div class="cover-pill"><strong>版本</strong> DEV V1.2</div>
+    <div class="cover-pill"><strong>平台</strong> Force / Combo Gaming</div>
+  </div>
+  <div class="cover-badges">
+    <span class="badge badge-v1">V1 開發範疇</span>
+    <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════ 00 修改紀錄 ═══════════ -->
+<section class="section" id="changelog">
+  <div class="section-header">
+    <span class="section-num">00</span>
+    <span class="section-title">修改紀錄</span>
+    <span class="section-title-en">CHANGE LOG</span>
+  </div>
+  <div class="body-text">每次內容調整在本表最上方新增一列，並於被修改的章節標題旁加註「更新 YYYY-MM-DD」。<strong>歷史條目一律不動</strong>，即使內容已被後續版本推翻。</div>
+  <table class="chglog">
+    <thead><tr><th style="width:110px">修改日期</th><th style="width:90px">版號</th><th style="width:180px">修改章節</th><th>摘要</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="d">2026-09-14</td>
+        <td class="v">DEV V1.2</td>
+        <td>§01～§10</td>
+        <td>依〈內部衝突盤點〉22 項裁決全面修訂（阻擋開發 3／阻擋驗收 11／文件品質 8，D-064）：①<strong>回放 url 隨榜單每筆回傳</strong>，沒有 url 的筆不畫 replay 按鈕，「可重播旗標」併入 url；跨專線／跨幣別由後端於簽發 url 時拒絕；②<strong>E5 改為「已按 SPIN」</strong>（遊戲端於按下時向父頁面送訊息）、<strong>E6 刪除留空號</strong>，不再記播完與中離階段；③結算失敗重試<strong>以結算時間切分</strong>快照與清空、進行中榜帶榜期欄位；④<strong>Free Game 於觸發局結算當下即以整段完整結果計分</strong>（後端硬性前提）、結算時間與識別碼皆取觸發局；⑤buy bonus 整段合併、E9 局型 buy bonus 優先；⑥<strong>門檻改為單一 threshold、四張榜共用</strong>；⑦top_n 固定 20、hero_count 固定 3，v1 不可調；⑧<strong>看哪張榜只顯示那個值</strong>（英雄卡與表格列皆只顯示一個數字）；⑨L3 資訊列拿掉押注與發生時間、倍數與贏分兩者都顯示；⑩進行中頁籤 lb_period 的 end 填預定結算時間；進行中榜不自動更新；⑪已下架遊戲一律只看有沒有 url；播放中斷線由遊戲端在 iframe 內顯示、浮層不自動關；⑫board_enabled 關閉再開啟：清空不補結算；參數名改 <span class="tag-pill tag-opt">board_enabled[線路代碼][幣別]</span>；⑬不可重播表格列一律短橫線，lb_05 改 1 態；⑭文件品質：§06 七 Q3→Q4、§04 七預設理由改寫、「遮罩帳號」→「遮罩 playID」、V1.1 修改章節補 §01、Story 4／21 改寫；⑮§10 Q2 改問「哪些局給得出回放 url」、Q3 併入三件事（url 防偽造、已按 SPIN 訊息、觸發局識別碼重演整段）。</td>
+      </tr>
+      <tr>
+        <td class="d">2026-09-14</td>
+        <td class="v">DEV V1.1</td>
+        <td>§01～§10<br><span class="dim" style="font-size:11px;">（V1.2 勘誤：原漏列 §01）</span></td>
+        <td>依待確認事項的回覆全面修訂：①榜的分界由「站台」正名為<strong>專線</strong>（底下只有一個站台的線路），新增專線／共線定義與 PB10／AWS101 對照，<strong>共線一律不開</strong>；②玩家身分改用 <strong>playID 遮罩</strong>；③進榜門檻定為 <strong>50 倍</strong>、由 Server 端調整、不需發版；④快照<strong>只保留上一期</strong>；⑤開關改為逐「專線 × 幣別」、<strong>預設為否</strong>；⑥回放改為<strong>浮層內 iframe 載入遊戲端回放網址</strong>並帶同一組 token，新增分工線章節；⑦<strong>回放標示改由遊戲端做在回放畫面內、英文呈現</strong>，<strong>免責說明不做</strong>（風險已記載）；⑧已下架遊戲的 replay <strong>仍可播放</strong>；⑨錯誤拆為「iframe 載入失敗（CRM）」與「讀不到該局（遊戲端，沿用既有訊息＋錯誤代碼）」；⑩新增 §06 七「從榜單進入該款遊戲」；⑪§09 移除 5 條移交遊戲端的文案、新增 lb_rp_title，共 22 條；⑫§10 結案 6 項、重編為 Q1～Q7 並新增後續待辦。</td>
+      </tr>
+      <tr>
+        <td class="d">2026-09-11</td>
+        <td class="v">DEV V1.0</td>
+        <td>全文</td>
+        <td>首次發行。依 2026-09-08～09-11 與 Milu 的設計討論結果撰寫，含四張榜定義、站台 × 幣別分界、單局最大值計分、倍數進榜門檻、雙頁籤結算、英雄卡版型、回放浮層與播放流程。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 01 開發目的與 STORY ═══════════ -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">開發目的與 Story</span>
+    <span class="section-title-en">PURPOSE &amp; USER STORIES</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">目標 · OBJECTIVE</div>
+    <div class="hypo-text">讓玩家在遊戲內看到<strong>同專線、同幣別</strong>的大獎排名，並可重播任一筆大獎的完整過程。</div>
+  </div>
+
+  <div class="info-grid-3">
+    <div class="info-card">
+      <div class="info-card-icon">🏆</div>
+      <div class="info-card-title">看得到大獎</div>
+      <div class="info-card-desc">玩家知道 Combo 的遊戲真的會開出大獎，而不是只有自己在輸。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📣</div>
+      <div class="info-card-title">帶去別款遊戲</div>
+      <div class="info-card-desc">榜上會出現同專線其他 Combo 遊戲的大獎，點遊戲名稱即可直接進入該款遊戲。</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🎬</div>
+      <div class="info-card-title">代入得獎者</div>
+      <div class="info-card-desc">玩家自己按 spin 重播那一局，從轉盤看到大獎結算，感受中獎的過程而非只看到一個數字。</div>
+    </div>
+  </div>
+
+  <div class="sub-title" id="story-player">Story · 作為玩家</div>
+  <div class="story-group">
+    <div class="story-role">AS A PLAYER</div>
+    <ul class="story-list">
+      <li><span class="sn">1</span><span>我可以從遊戲內的浮動 icon 選單進入排行榜。</span></li>
+      <li><span class="sn">2</span><span>我可以切換日榜／週榜、倍數榜／贏分榜，共四張榜。</span></li>
+      <li><span class="sn">3</span><span>我可以切換看「進行中」與「上一期已結算」兩種榜單。</span></li>
+      <li><span class="sn">4</span><span>我可以看到榜上每一筆的遊戲名稱、遮罩後的 playID，以及<em>看哪張榜就顯示哪個數字</em>（倍數榜顯示倍數、贏分榜顯示贏分）。</span></li>
+      <li><span class="sn">5</span><span>我可以分辨榜上哪一筆是 <em>buy bonus</em> 開出來的。</span></li>
+      <li><span class="sn">6</span><span>我可以點榜上的 replay，用浮層重看那一局，並自己按 spin 從轉盤看到大獎結算。</span></li>
+      <li><span class="sn">7</span><span>我可以在回放中隨時關閉回到榜單，也可以重看。</span></li>
+      <li><span class="sn">8</span><span>我可以從榜上點遊戲名稱，直接進入該款遊戲。<span class="newmark">企劃主動新增</span></span></li>
+    </ul>
+  </div>
+
+  <div class="sub-title" id="story-system">Story · 作為系統</div>
+  <div class="story-group">
+    <div class="story-role">AS THE SYSTEM</div>
+    <ul class="story-list">
+      <li><span class="sn">9</span><span>我只把<em>同專線、同幣別</em>的成績放進同一張榜，<em>共線一律不開榜</em>。</span></li>
+      <li><span class="sn">10</span><span>我以<em>單局最大值</em>計分：倍數＝win ÷ bet、贏分＝win。</span></li>
+      <li><span class="sn">11</span><span>我把一次 Free Game <em>整段視為一局</em>（win＝整段總贏分、bet＝觸發局的押注）。</span></li>
+      <li><span class="sn">12</span><span>我排除 FS 卡免費旋轉的局，不列入任何榜。</span></li>
+      <li><span class="sn">13</span><span>我以一般押注作為 buy bonus 局的 bet，並在該筆加上 BUY 標記。</span></li>
+      <li><span class="sn">14</span><span>我只讓達到<em>倍數門檻（50 倍，四張榜共用一個值）</em>的成績進榜，未達門檻者不進榜。</span></li>
+      <li><span class="sn">15</span><span>我在日榜每日 08:00、週榜每週一 08:00（UTC+8）把進行中榜凍結為快照成為「上一期」，並清空進行中榜重新累積。</span></li>
+      <li><span class="sn">16</span><span>我不限制同一玩家在同一張榜上佔多個名次。</span></li>
+      <li><span class="sn">17</span><span>我在成績相同時，以發生時間較早者排前。</span></li>
+      <li><span class="sn">18</span><span>我在達到門檻的筆數不足 20 名時，只顯示實際筆數。</span></li>
+      <li><span class="sn">19</span><span>我在後端<em>沒有隨榜單回傳該筆的回放網址</em>時，不顯示該筆的 replay 按鈕。</span></li>
+      <li><span class="sn">20</span><span>我記錄玩家在排行榜與回放上的操作事件，供成效量測。</span></li>
+    </ul>
+  </div>
+
+  <div class="sub-title" id="story-ops">Story · 作為營運人員</div>
+  <div class="story-group">
+    <div class="story-role">AS AN OPERATOR</div>
+    <ul class="story-list">
+      <li><span class="sn">21</span><span>我可以請 Server 調整進榜門檻（<em>四張榜共用一個值</em>），<em>不需要排前端發版</em>。</span></li>
+      <li><span class="sn">22</span><span>我可以請 Server 關閉整個排行榜，或關閉指定的<em>「專線 × 幣別」</em>。</span></li>
+    </ul>
+  </div>
+
+  <div class="sub-title" id="scope">v1 做什麼 · 不做什麼</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:34%">項目</th><th style="width:14%">v1</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td>四張榜（日／週 × 倍數／贏分）</td><td><span class="tag-pill tag-v1">做</span></td><td class="dim">每張榜含「進行中」與「上一期已結算」兩個頁籤。</td></tr>
+      <tr><td>專線 × 幣別分界</td><td><span class="tag-pill tag-v1">做</span></td><td class="dim">不跨專線、不跨幣別，回放也不跨。</td></tr>
+      <tr><td>只開專線、共線不開</td><td><span class="tag-pill tag-v1">做</span></td><td class="dim">專線＝底下只有一個站台的線路（如 PB10）；共線（如 AWS101，含 10 個站）一律不開榜。開關預設為否，需逐一明確開啟。</td></tr>
+      <tr><td>大獎回放（站內）</td><td><span class="tag-pill tag-v1">做</span></td><td class="dim">浮層內 iframe 載入遊戲端回放網址，玩家手動按 spin。</td></tr>
+      <tr><td>從榜上進入該款遊戲</td><td><span class="tag-pill tag-v1">做</span></td><td class="dim">導流用；帶同一組 token 呼叫專線遊戲網址，介面規格待確認（Q4）。</td></tr>
+      <tr><td>發放獎勵</td><td><span class="tag-pill tag-v2">不做</span></td><td class="dim">只預留結算快照的資料欄位與 UI 版位。提案 V1.6 已定的「週榜前三發 FS 卡、T+1 人工審核」屬 v2。</td></tr>
+      <tr><td>玩家個人區塊（自己的名次／個人最佳）</td><td><span class="tag-pill tag-v2">不做</span></td><td class="dim">2026-09-09 拍板本版不做。</td></tr>
+      <tr><td>回放的免責說明文字</td><td><span class="tag-pill tag-v2">不做</span></td><td class="dim">只靠遊戲端的英文回放標示。已知風險見 §06 三。</td></tr>
+      <tr><td>站外分享（縮網址、社群媒體）</td><td><span class="tag-pill tag-v2">不做</span></td><td class="dim">v2 採<strong>與站內同一套 log 重播</strong>，非預錄影片；v1 先不開對外入口。</td></tr>
+      <tr><td>營運後台</td><td><span class="tag-pill tag-v2">不做</span></td><td class="dim">門檻與開關由 Server 端調整，<strong>不需發版</strong>（見 §07）。</td></tr>
+      <tr><td>跨專線曝光</td><td><span class="tag-pill tag-v2">不做</span></td><td class="dim">榜單與回放一律不顯示其他專線的資料。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" id="diff-proposal">與《CRM Q3–Q4 開發順序提案 V1.6》的兩處差異</div>
+  <div class="callout warn">
+    <strong>提案文件需勘誤</strong>：下列兩點以本規格書為準，提案 V1.6 的對應敘述已不成立，需另行修訂該文件。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:16%">項次</th><th style="width:34%">提案 V1.6 原文</th><th>本規格書</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>計分方式</td>
+        <td class="dim">§04 波2：「個人榜＋全線路榜（<strong>日賽 net win 計分</strong>）」</td>
+        <td><strong>單局贏分</strong>與<strong>單局倍數</strong>兩張榜，不做 net win 累積賽。原因：net win 沒有單一局可回放，也沒有對應的單一倍數可標示，與本功能的回放主線接不上。</td>
+      </tr>
+      <tr>
+        <td>榜的範圍</td>
+        <td class="dim">§01 曝光引擎：「<strong>全線路排行榜</strong>…玩家在任何一款遊戲裡，都看得到別款遊戲有人贏大的」</td>
+        <td><strong>專線 × 幣別</strong>各一張榜，且<strong>只開專線</strong>（底下只有一個站台的線路）。跨站台曝光取消（等同替其他站台宣傳，站長不會接受）；「看到別款遊戲開大獎」仍成立，來源改為<strong>同專線內的其他 Combo 遊戲</strong>。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 02 名詞定義 ═══════════ -->
+<section class="section" id="glossary">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">名詞定義</span>
+    <span class="section-title-en">GLOSSARY</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+  <div class="body-text">全文一律使用下列名詞。<strong>同一個概念不得出現第二種寫法</strong>，避免開發與測試對不上。</div>
+
+  <table class="spec-table">
+    <thead><tr><th style="width:18%">名詞</th><th style="width:40%">定義</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>線路</strong></td>
+        <td>投放的通道，有自己的代碼（例：<span class="tag-pill tag-opt">PB10</span>、<span class="tag-pill tag-opt">AWS101</span>）。一條線路底下可能只有一個站台，也可能涵蓋多個站台。</td>
+        <td class="dim">代碼實際從哪個欄位讀取待後端確認（Q1）。</td>
+      </tr>
+      <tr>
+        <td><strong>專線</strong></td>
+        <td><strong>底下只有一個站台的線路</strong>。例：PB 站的線路代碼為 <span class="tag-pill tag-opt">PB10</span>，該線路就只有 PB 這一個站。<strong>本功能只開放專線。</strong></td>
+        <td class="dim">因為只有一個站台，線路代碼等同站台身分，榜才不會混到別人家的玩家。</td>
+      </tr>
+      <tr>
+        <td><strong>共線</strong></td>
+        <td><strong>涵蓋多個站台的線路</strong>。例：<span class="tag-pill tag-opt">AWS101</span> 底下有 10 個站、幣別範圍太廣。</td>
+        <td class="dim"><strong>一律不開排行榜</strong>。開了等於把不同站台的玩家混在同一張榜上。</td>
+      </tr>
+      <tr>
+        <td><strong>幣別</strong></td>
+        <td>玩家下注所使用的貨幣代碼。<strong>同一條專線底下可以有多種幣別</strong>（例：PB 底下有菲律賓、越南、柬埔寨等）。</td>
+        <td class="dim">與專線共同構成榜的分界。</td>
+      </tr>
+      <tr>
+        <td><strong>playID</strong></td>
+        <td>我方系統中識別玩家的代碼。</td>
+        <td class="dim">榜上<strong>遮罩後顯示</strong>，不露出完整值。我方是遊戲供應商，不取得玩家在站台的帳號。</td>
+      </tr>
+      <tr>
+        <td><strong>遮罩 playID</strong></td>
+        <td>playID 遮去中段後的顯示字串（例：<span class="tag-pill tag-opt">pl***21</span>）。</td>
+        <td class="dim">遮罩規則（露幾碼、遮幾碼）由前端統一，全文件與所有畫面一致。</td>
+      </tr>
+      <tr><td><strong>單局</strong></td><td>一筆計分單位。一般情況等於一次押注旋轉；一次 Free Game 整段合併為一個單局。</td><td class="dim">定義見 §04 四。</td></tr>
+      <tr><td><strong>倍數</strong></td><td>該單局的 win ÷ bet，無單位。</td><td class="dim">可跨幣別比較，但本功能仍不跨專線。</td></tr>
+      <tr><td><strong>贏分</strong></td><td>該單局的 win 金額，帶幣別。</td><td class="dim">不同幣別不可互比，故贏分榜必須同幣別。</td></tr>
+      <tr><td><strong>進榜門檻</strong></td><td>一筆成績要被列入榜單所需達到的<strong>最低倍數</strong>，目前為 <strong>50 倍</strong>。未達門檻者不進榜。</td><td class="dim">兩張榜共用同一種尺（倍數），<strong>四張榜共用同一個值</strong>（日榜與週榜不分開設），由 Server 端調整。</td></tr>
+      <tr><td><strong>榜期</strong></td><td>一張榜的計算期間。日榜＝當日 08:00 至次日 08:00；週榜＝週一 08:00 至次週一 08:00（UTC+8）。</td><td class="dim">全系統唯一時區 UTC+8（2026-07-20 定案）。</td></tr>
+      <tr><td><strong>進行中榜</strong></td><td>目前榜期正在累積的榜單，後端即時寫入。</td><td class="dim">畫面於開啟或切換時讀取一次，停留期間不自動更新（§05 四 C）。</td></tr>
+      <tr><td><strong>已結算榜</strong></td><td>榜期結束時凍結下來的快照，內容不再變動。</td><td class="dim">預設顯示的就是這一張。<strong>只保留最近一期。</strong></td></tr>
+      <tr><td><strong>快照</strong></td><td>結算瞬間寫下的完整榜單資料（含名次、玩家、遊戲、倍數、贏分、該局識別碼）。</td><td class="dim">v2 發獎時的唯一依據。</td></tr>
+      <tr><td><strong>回放</strong></td><td>依該局的完整過程紀錄重演該局，從轉盤到大獎結算。</td><td class="dim">不是預錄影片，是依紀錄重演。實作方式為浮層內 iframe 載入遊戲端的回放網址。</td></tr>
+      <tr><td><strong>回放網址</strong></td><td>遊戲端提供、用來重演某一局的網址。<strong>由後端隨榜單資料每筆回傳</strong>（已驗證專線與幣別）；CRM 以 iframe 載入並帶上玩家當前工作階段的同一組 token。</td><td class="dim">沒有回放網址的筆不畫 replay 按鈕。網址規格待遊戲端確認（Q3）。</td></tr>
+      <tr><td><strong>英雄卡</strong></td><td>榜單前 3 名使用的大卡片版型，含遊戲圖、玩家、該榜的主要數字（倍數榜＝倍數、贏分榜＝贏分）與 replay 按鈕。</td><td class="dim">第 4～20 名用一般表格列。前 3／20 為 v1 固定值（§07 一）。</td></tr>
+      <tr><td><strong>BUY 標記</strong></td><td>標示該筆成績來自 buy bonus（花錢購買觸發）的小標籤。</td><td class="dim">只作標示，不改計分也不改排序。</td></tr>
+      <tr><td><strong>FS 卡</strong></td><td>Free Spin 卡，CRM 發給玩家的免費旋轉道具，使用時 bet＝0。</td><td class="dim">與遊戲本身的 Free Game 是<strong>兩件不同的事</strong>，不可混用。</td></tr>
+      <tr><td><strong>Free Game</strong></td><td>遊戲本身的免費旋轉特色玩法，由一次押注局觸發後連續進行數局。</td><td class="dim">本功能整段合併算一局；<strong>整段結果於觸發局結算時即已確定</strong>，計分不等演出跑完（§03 一 STEP 04）。</td></tr>
+      <tr><td><strong>buy bonus</strong></td><td>玩家付費直接購買一次特色玩法觸發的機制。</td><td class="dim">列入榜單，計分方式見 §04 四。</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 03 運作流程圖 ═══════════ -->
+<section class="section" id="flow">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">運作流程圖</span>
+    <span class="section-title-en">SYSTEM FLOW</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="sub-title" id="flow-data">一、資料流程：從一筆注單到榜單上的一列</div>
+  <div class="body-text">本流程<strong>每筆注單結算後跑一次</strong>，不是排程批次。玩家開出大獎後應在數秒內看到自己出現在「進行中」榜上（下次開啟或切換榜單時讀到）。</div>
+
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">取得一筆已結算的注單</div>
+        <div class="flow-step-desc">含 playID、線路代碼、幣別、遊戲、bet、win、局型、該局識別碼、結算時間。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step warn">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">開關檢查</div>
+        <div class="flow-step-desc">以注單上的線路代碼與幣別查 <span class="tag-pill tag-opt">board_enabled[線路代碼][幣別]</span>，為否 → 直接丟棄。<strong>專線與共線都查同一張表；共線因為從未被開啟，在此就被擋掉。</strong></div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step warn">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">局型過濾</div>
+        <div class="flow-step-desc">FS 卡免費旋轉 → 直接丟棄。<br>Free Game 的免費局 → 不獨立計分，併入其觸發局。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">組成單局</div>
+        <div class="flow-step-desc">一般局＝該局本身；Free Game＝觸發局＋其後所有免費局合併（win＝整段總贏分、bet＝觸發局押注）；buy bonus＝購買局＋其後所有免費局合併、bet 取一般押注。<br><strong>後端硬性前提</strong>：Free Game 的整段結果（含總贏分）於<strong>觸發局結算當下即已確定</strong>，後端直接取用、<strong>不等演出跑完</strong>；本筆的結算時間＝觸發局的結算時間、該局識別碼＝觸發局的識別碼。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">計算倍數與贏分</div>
+        <div class="flow-step-desc">倍數＝win ÷ bet（無單位）；贏分＝win（帶幣別）。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 06</div>
+        <div class="flow-step-title">門檻篩選</div>
+        <div class="flow-step-desc">倍數 ≥ 進榜門檻 <span class="tag-pill tag-opt">threshold</span>（目前 50 倍，四張榜共用一個值）才繼續；未達門檻直接丟棄，<strong>不寫入任何榜</strong>。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 07</div>
+        <div class="flow-step-title">寫入該專線 × 該幣別的進行中榜</div>
+        <div class="flow-step-desc">同時寫入日榜與週榜（門檻同值，過了就四張都進）；倍數榜依倍數排序、贏分榜依贏分排序，各自只保留前 20 名（v1 固定）。每筆帶所屬榜期，供結算失敗重試時切分。記錄 E9。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 08</div>
+        <div class="flow-step-title">玩家可見</div>
+        <div class="flow-step-desc">玩家開啟榜單即讀到最新的進行中榜。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" id="flow-settle">二、結算流程：榜期切換的那一刻</div>
+  <div class="callout warn">
+    <strong>順序不可調換</strong>：一定是「先凍結、再覆蓋上一期、最後才清空進行中榜」。若先清空再凍結，遇到失敗就會兩張榜都沒有資料。
+  </div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">時間到達結算點</div>
+        <div class="flow-step-desc">日榜每日 08:00、週榜每週一 08:00（UTC+8）。週一 08:00 兩者<strong>同時</strong>結算。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">凍結為快照</div>
+        <div class="flow-step-desc">把進行中榜裡<strong>結算時間落在該榜期內</strong>的成績寫成一份快照，含名次、玩家、遊戲、倍數、贏分、該局識別碼、榜期起訖。快照寫成後即不可再變動。（正常情況下進行中榜只有該榜期的成績；結算失敗重試時才會混有新榜期的成績，見 §04 八。）</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">新快照覆蓋舊快照，成為「上一期」</div>
+        <div class="flow-step-desc"><span class="tag-pill tag-opt">snapshot_keep = 1</span>，<strong>只保留最近一期</strong>，上上期的快照於此時被覆蓋。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">清空進行中榜</div>
+        <div class="flow-step-desc">只清除<strong>結算時間落在已結算榜期內</strong>的成績；結算失敗重試期間已寫入的新榜期成績<strong>留在進行中榜</strong>，不清。新榜期從此累積。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">寫入結算事件</div>
+        <div class="flow-step-desc">記錄 E10（見 §08），含該榜期實際進榜筆數與當時的門檻值，供回頭校準門檻。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" id="flow-player">三、玩家動線</div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">玩家正在玩任一款 Combo 遊戲</div>
+        <div class="flow-step-desc">畫面上有 CRM 浮動 icon（抽寶箱既有元件）。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">點浮動 icon → 活動選單</div>
+        <div class="flow-step-desc">該「專線 × 幣別」已開啟時，選單內才出現「排行榜」項目。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">榜單主畫面（L2）</div>
+        <div class="flow-step-desc">預設＝日榜 × 贏分 × 上一期已結算。玩家可切換榜型與狀態頁籤。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">分岔：玩家可做兩件事</div>
+        <div class="flow-step-desc">Ⓐ 點 replay → 開啟回放浮層（L3），浮層內 iframe 載入遊戲端回放網址<br>Ⓑ 點遊戲名稱 → 帶同一組 token 呼叫專線遊戲網址，進入該款遊戲</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 05A</div>
+        <div class="flow-step-title">回放浮層（L3）</div>
+        <div class="flow-step-desc">玩家自己按 SPIN → 轉盤 → 觸發特色玩法 → 逐局演完 → 大獎結算。關閉後回到 L2 且<strong>榜型與頁籤維持原狀</strong>。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 05B</div>
+        <div class="flow-step-title">進入該款遊戲</div>
+        <div class="flow-step-desc">導流達成，記錄 E7。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 04 榜單機制 ═══════════ -->
+<section class="section" id="mechanic">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">榜單機制</span>
+    <span class="section-title-en">LEADERBOARD RULES</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="sub-title" id="mech-4boards">一、四張榜的定義</div>
+  <div class="body-text">共 <strong>4 張榜</strong>＝ 2 種榜期 × 2 種計分。每張榜各有「進行中」與「上一期已結算」兩個頁籤，所以玩家可看到的榜單組合共 8 種。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:16%">榜</th><th style="width:14%">榜期</th><th style="width:18%">排序依據</th><th style="width:14%">名額</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td><strong>日榜 · 倍數</strong></td><td class="mono">每日 08:00</td><td>單局倍數（大→小）</td><td class="mono">Top 20</td><td class="dim">小額玩家也上得了，數字無單位。</td></tr>
+      <tr><td><strong>日榜 · 贏分</strong></td><td class="mono">每日 08:00</td><td>單局贏分（大→小）</td><td class="mono">Top 20</td><td class="dim">同幣別才可比較，故限同專線同幣別。</td></tr>
+      <tr><td><strong>週榜 · 倍數</strong></td><td class="mono">每週一 08:00</td><td>單局倍數（大→小）</td><td class="mono">Top 20</td><td class="dim">同上，期間拉長為一週。</td></tr>
+      <tr><td><strong>週榜 · 贏分</strong></td><td class="mono">每週一 08:00</td><td>單局贏分（大→小）</td><td class="mono">Top 20</td><td class="dim">同上。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>兩張榜的意義不同，不要合併</strong>：倍數榜回答「誰開得最誇張」，小額玩家有機會上榜；贏分榜回答「誰贏最多錢」，偏向大額玩家。兩張並存才能讓不同押注習慣的玩家都有奔頭。
+  </div>
+
+  <div class="sub-title" id="mech-scope">二、榜的分界：專線 × 幣別</div>
+  <div class="body-text">
+    一張榜的範圍是 <strong>「同一條專線」且「同一種幣別」</strong>。同專線不同幣別是<strong>不同張榜</strong>；不同專線一律不混；<strong>共線一律不開榜</strong>。
+  </div>
+
+  <div class="sub-title" style="font-size:14px;margin-top:18px;">為什麼只開專線</div>
+  <div class="info-grid-2">
+    <div class="info-card">
+      <div class="info-card-icon">✅</div>
+      <div class="info-card-title">專線 · 可以開</div>
+      <div class="info-card-desc">
+        線路底下<strong>只有一個站台</strong>，線路代碼等同站台身分。<br><br>
+        例：PB 站的線路代碼為 <strong>PB10</strong>。PB 底下再分菲律賓、越南、柬埔寨等幣別，所以實際的榜是
+        <strong>「PB10 × PHP」</strong>、<strong>「PB10 × BDT」</strong>各一張，可以個別開關。
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">⛔</div>
+      <div class="info-card-title">共線 · 不開</div>
+      <div class="info-card-desc">
+        線路底下<strong>涵蓋多個站台</strong>，幣別範圍太廣。<br><br>
+        例：<strong>AWS101</strong> 包含 10 個站。開了等於把不同站台的玩家混在同一張榜上，
+        對每一個站長來說都是在替別人家宣傳。
+      </div>
+    </div>
+  </div>
+
+  <table class="spec-table">
+    <thead><tr><th style="width:32%">情境</th><th style="width:16%">是否同榜</th><th>原因</th></tr></thead>
+    <tbody>
+      <tr><td>同專線 · 同幣別</td><td><span class="check">✓ 同榜</span></td><td class="dim">唯一會互相比較的情況。</td></tr>
+      <tr><td>同專線 · 不同幣別</td><td><span class="cross">✕ 不同榜</span></td><td class="dim">金額不同量級，混排會讓小面額幣別霸榜。例：PB10 × PHP 與 PB10 × BDT 是兩張獨立的榜。</td></tr>
+      <tr><td>不同專線</td><td><span class="cross">✕ 不同榜</span></td><td class="dim">等同替其他站台宣傳，站長不會接受。</td></tr>
+      <tr><td>共線</td><td><span class="cross">✕ 不開榜</span></td><td class="dim">一條線路含多個站台，無法切出乾淨的分界。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <strong>開關預設為否。</strong> 設定檔的 <span class="tag-pill tag-opt">board_enabled[線路代碼][幣別]</span> 預設不開，必須由 Server 逐一明確開啟（§07 一）。這是防止共線被誤開的第一道也是唯一一道防線——<strong>系統本身不會自動判斷一條線路是不是專線</strong>，靠的是開啟時的人為確認。
+  </div>
+  <div class="callout warn">
+    <strong>回放同樣受此分界限制</strong>：玩家只能回放自己專線、自己幣別的那些局。不得提供任何可看到其他專線資料的路徑，包含直接帶參數開啟。
+  </div>
+  <div class="callout">
+    <strong>已知代價（設計時已接受）</strong>：榜切得越細、母體越小。專線的活躍人數少時，即使成績達到 50 倍門檻，也可能只有個位數筆進榜。這是<strong>刻意用「榜寧可短、不可爛」換來的</strong>——處理方式見本章五。
+  </div>
+
+  <div class="sub-title" id="mech-score">三、計分方式：單局最大值</div>
+  <div class="body-text">兩張榜都取<strong>單局</strong>的最大值，不是期間累加。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:18%">榜</th><th style="width:30%">計算式</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr><td>倍數榜</td><td class="mono">倍數 = win ÷ bet</td><td class="dim">無單位。bet 為 0 的局一律不進入計算（見本章四）。</td></tr>
+      <tr><td>贏分榜</td><td class="mono">贏分 = win</td><td class="dim">帶幣別，顯示時附幣別符號。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>為什麼不用期間累加</strong>：累加值沒有對應的單一局可以回放，也沒有單一倍數可以標示。本功能的主線是「點進去看那一局怎麼開出來的」，計分單位必須是一局。
+  </div>
+
+  <div class="sub-title" id="mech-include">四、列入與排除的局型</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:16%">局型</th><th style="width:12%">是否列入</th><th style="width:24%">win 怎麼取</th><th style="width:24%">bet 怎麼取</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>一般局</strong></td><td><span class="check">✓ 列入</span></td>
+        <td class="mono">該局 win</td><td class="mono">該局 bet</td><td class="dim">最單純的情況。</td>
+      </tr>
+      <tr>
+        <td><strong>Free Game</strong></td><td><span class="check">✓ 列入</span></td>
+        <td class="mono">整段總贏分</td><td class="mono">觸發局的押注</td>
+        <td class="dim"><strong>整段算一局</strong>：觸發局＋其後所有免費局合併為一筆。免費局<strong>不各自計分</strong>。結算時間與該局識別碼皆取<strong>觸發局</strong>；整段結果於觸發局結算時即已確定，不等演出跑完（§03 一 STEP 04）。</td>
+      </tr>
+      <tr>
+        <td><strong>buy bonus</strong></td><td><span class="check">✓ 列入</span></td>
+        <td class="mono">整段總贏分</td><td class="mono">一般押注</td>
+        <td class="dim">榜上該筆加 <strong>BUY 標記</strong>。<strong>購買局＋其後所有免費局合併為一筆</strong>（與 Free Game 同一套算法，只差 bet 取一般押注）。E9 局型記為 buy bonus。</td>
+      </tr>
+      <tr>
+        <td><strong>FS 卡免費旋轉</strong></td><td><span class="cross">✕ 排除</span></td>
+        <td class="dim">—</td><td class="dim">—</td>
+        <td class="dim">bet＝0 算不出倍數，且該局的錢是我們發的卡、不是玩家自己押的。任何榜都不列入。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <strong>buy bonus 的已知落差（設計時已知悉並接受）</strong>：buy bonus 的 bet 取<strong>一般押注</strong>而非購買金額，所以榜上顯示的倍數會明顯高於玩家實際的投入報酬。例：基礎押注 100、購買觸發花 6,000、贏 60,000 —— 玩家實際只賺 10 倍，但榜上顯示 <strong>600 倍</strong>。這會讓倍數榜前段偏向 buy bonus 的成績。<strong>BUY 標記即為此而設</strong>，讓玩家至少看得出那一筆是買來的。
+  </div>
+
+  <div class="sub-title" id="mech-threshold">五、進榜門檻與排序</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:22%">規則</th><th>內容</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>門檻的尺</strong></td>
+        <td><strong>兩張榜都用「倍數」當門檻</strong>。倍數無單位，<strong>一組數字即可套用到所有幣別</strong>，不需要每種幣別各填一個金額，匯率變動也不必回頭改。</td>
+      </tr>
+      <tr>
+        <td><strong>門檻怎麼套</strong></td>
+        <td>先用倍數門檻決定「有沒有資格進榜」，進榜後<strong>各榜依各自的尺排序</strong>：倍數榜排倍數、贏分榜排贏分。</td>
+      </tr>
+      <tr>
+        <td><strong>門檻值</strong></td>
+        <td><strong>50 倍</strong>，<strong>四張榜共用同一個值</strong>（日榜與週榜不分開設）。由 <strong>Server 端調整</strong>、不需排前端發版（§07 一）。</td>
+      </tr>
+      <tr>
+        <td><strong>不滿 20 名</strong></td>
+        <td><strong>就不滿</strong>。不補小獎湊數、不拉長取數期間、不降門檻。榜上有幾筆就顯示幾筆。</td>
+      </tr>
+      <tr>
+        <td><strong>重複上榜</strong></td>
+        <td><strong>不限制</strong>。同一玩家一個榜期內開出多筆達標成績，就佔多個名次。</td>
+      </tr>
+      <tr>
+        <td><strong>同分排序</strong></td>
+        <td>成績相同時，<strong>發生時間較早者排前</strong>。</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>「不限制重複上榜」的已知風險</strong>：專線 × 幣別切細後母體小，運氣好的玩家單日連開數筆即可佔掉榜單相當比例，其他玩家看了會失去參與感。本版<strong>刻意不設上限</strong>；上線後若實際出現此情形，屬機制調整、需排一次改版（本版未做成可調參數）。
+  </div>
+
+  <div class="sub-title" id="mech-period">六、榜期與結算時點</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:16%">項目</th><th style="width:30%">日榜</th><th>週榜</th></tr></thead>
+    <tbody>
+      <tr><td>榜期起訖</td><td class="mono">當日 08:00 → 次日 08:00</td><td class="mono">週一 08:00 → 次週一 08:00</td></tr>
+      <tr><td>結算時點</td><td class="mono">每日 08:00（UTC+8）</td><td class="mono">每週一 08:00（UTC+8）</td></tr>
+      <tr><td>週一 08:00</td><td colspan="2" class="dim">日榜與週榜<strong>同時結算</strong>。兩者各自獨立凍結，互不影響。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>時區</strong>：全系統唯一時區為 <strong>UTC+8</strong>（設定、顯示、計算、資料庫、排程皆同，2026-07-20 定案）。各站台當地時間由營運自行換算，本功能<strong>不提供任何時區切換</strong>。
+  </div>
+
+  <div class="sub-title">七、雙頁籤行為</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:18%">頁籤</th><th style="width:16%">資料來源</th><th>行為</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>上一期已結算</strong><br><span class="tag-pill tag-v1">預設</span></td>
+        <td>最近一份快照</td>
+        <td>內容固定不變。<strong>預設停在這一頁</strong>——因為它是整期累積完畢的完整榜，內容不再變動。</td>
+      </tr>
+      <tr>
+        <td><strong>進行中</strong></td>
+        <td>目前榜期的即時榜</td>
+        <td>後端隨注單即時累積；<strong>畫面於開啟榜單、切換榜型或頁籤時讀取一次</strong>，停留期間不自動更新（§05 四 C）。玩家剛開的大獎在下次讀取時看得到。</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>為什麼預設看「上一期」</strong>：若預設看進行中榜，每天 08:01 進來的玩家會看到一張幾乎空白的榜，第一印象就是「這功能沒東西」。預設看已結算的完整榜，才撐得住第一眼。
+  </div>
+
+  <div class="sub-title" id="mech-edge">八、本章相關的異常狀態</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:22%">狀況</th><th style="width:34%">系統怎麼做</th><th>玩家看到什麼</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>榜期內沒有任何成績達到門檻</strong></td>
+        <td>不產生任何列；結算時仍寫出一份「0 筆」的快照。</td>
+        <td>空榜畫面（見 §05 四），文案說明本期尚無成績達標。</td>
+      </tr>
+      <tr>
+        <td><strong>達標筆數不足 20 名</strong></td>
+        <td>有幾筆就寫幾筆，不補。</td>
+        <td>榜單只顯示實際筆數，不出現空白列或佔位列。</td>
+      </tr>
+      <tr>
+        <td><strong>結算失敗</strong></td>
+        <td><strong>保留舊快照不覆蓋</strong>、<strong>不清空進行中榜</strong>，寫入失敗事件並告警；重試期間新榜期的成績照常寫入進行中榜。重試成功後依 §03 二的順序完成切換，並<strong>以結算時間切分</strong>：快照只收舊榜期的成績、清空也只清舊榜期的成績，新榜期成績留在進行中榜。</td>
+        <td>「上一期」仍顯示上上期的內容（榜期標題誠實顯示該快照的實際起訖），不會變成空的。</td>
+      </tr>
+      <tr>
+        <td><strong>注單寫入延遲</strong></td>
+        <td>以<strong>注單的結算時間</strong>歸屬榜期，不是寫入時間。延遲送達的注單仍歸入它原本所屬的榜期。</td>
+        <td>成績可能晚幾秒出現；若該榜期已結算完畢才送達，該筆<strong>不再追加進已凍結的快照</strong>。</td>
+      </tr>
+      <tr>
+        <td><strong>結算瞬間中獎</strong></td>
+        <td>同上：依結算時間判定。08:00:00 之前（不含 08:00:00）屬舊榜期，08:00:00 起屬新榜期。</td>
+        <td>玩家在交界點開的大獎，會出現在其中一張榜，不會兩張都有也不會兩張都沒有。</td>
+      </tr>
+      <tr>
+        <td><strong>玩家更換幣別</strong></td>
+        <td>舊成績<strong>留在舊幣別的榜上，不搬移、不重算</strong>。新成績寫入新幣別的榜（同一條專線底下的另一張榜）。</td>
+        <td>玩家換幣別後看到的是新幣別的榜；舊成績仍在舊榜上（但玩家已看不到該張榜）。</td>
+      </tr>
+      <tr>
+        <td><strong>玩家已離開該專線</strong></td>
+        <td>已進榜的成績<strong>保留</strong>，不因玩家離開而移除。</td>
+        <td>榜上仍顯示該筆（遮罩 playID 照常顯示），replay 照常可點。</td>
+      </tr>
+      <tr>
+        <td><strong>該「專線 × 幣別」被關閉</strong></td>
+        <td>停止寫入新成績、停止結算；已存在的快照保留不刪。<strong>重新開啟時</strong>：若進行中榜的榜期已過期，<strong>先清空（不補做結算、不寫快照）</strong>，從開啟當下所屬的榜期重新累積；上一期頁籤維持關閉前最後一份快照。其他組合不受影響。</td>
+        <td>浮動 icon 選單<strong>不出現「排行榜」項目</strong>（不是進去之後才顯示已關閉）。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 05 玩家端 UI／UX ═══════════ -->
+<section class="section" id="ui">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-title">玩家端 UI／UX</span>
+    <span class="section-title-en">PLAYER UI / UX</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="callout info">
+    <strong>本章尚無實機截圖</strong>（功能未開發、原型未製作），故以線框圖表達版面結構與相對位置。原型完成後，依既有慣例將截圖放入 <span class="tag-pill tag-opt">design_assets/lb_NN_主題.png</span> 並補上紅框標號，本章線框圖改為輔助說明。<strong>線框圖只定結構與層級，不定顏色、字級與間距</strong>——那些交由美術與前端依既有設計規範決定。
+  </div>
+
+  <div class="sub-title" id="ui-map">一、畫面清單與動線</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:12%">層級</th><th style="width:24%">畫面</th><th style="width:22%">怎麼進來</th><th>怎麼離開</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">L1</td><td>浮動 icon 活動選單</td><td>遊戲中點浮動 icon</td><td class="dim">點 ✕ 或選單外區域</td></tr>
+      <tr><td class="mono">L2</td><td>榜單主畫面</td><td>選單中點「排行榜」</td><td class="dim">點 ✕ 回遊戲；點遊戲名稱離開進該遊戲</td></tr>
+      <tr><td class="mono">L3</td><td>回放浮層（見 §06）</td><td>L2 點 replay 按鈕</td><td class="dim">點 ✕ 回 L2，且 L2 維持原本的榜型與頁籤</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>層級規則</strong>：L3 疊在 L2 之上、<strong>不關閉 L2</strong>。L3 開啟期間，L2 的所有互動（切榜、捲動、點其他 replay）全部鎖住。
+  </div>
+
+  <div class="sub-title" id="ui-l1">二、L1 入口 · 浮動 icon 選單</div>
+  <div class="body-text">
+    <strong>複用抽寶箱既有的遊戲內浮動 icon 與活動選單</strong>（規格見抽寶箱開發版規格書 §05），本功能只是在選單中新增一個項目，<strong>不新增第二個浮動 icon</strong>。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:24%">項目</th><th>規則</th></tr></thead>
+    <tbody>
+      <tr><td>選單項目名稱</td><td>「排行榜」（文案 key：<span class="tag-pill tag-opt">lb_menu_entry</span>）</td></tr>
+      <tr><td>排列位置</td><td>接在抽寶箱之後。日後再有新功能一律往後接。</td></tr>
+      <tr><td>顯示條件</td><td>該「專線 × 幣別」在設定檔為啟用時才出現；關閉時<strong>整個項目不渲染</strong>（不是顯示為不可點）。</td></tr>
+      <tr><td>不新增 icon</td><td>盤面上維持單一 CRM 浮動 icon。理由：手機畫面已擁擠，且日後每多一個功能就多一個浮動物件並不可行。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" id="ui-l2">三、L2 榜單主畫面</div>
+
+  <div class="shot-layout">
+    <div>
+      <div class="wf">
+        <div class="wf-screen">
+          <!-- Ⓐ 標題列 -->
+          <div class="wf-box acc" style="margin-bottom:10px;">
+            <span class="wf-tag">A</span>
+            <div class="wf-row" style="justify-content:space-between;">
+              <strong style="font-size:13px;">排行榜</strong>
+              <span style="font-size:13px;">✕</span>
+            </div>
+          </div>
+          <!-- Ⓑ 榜型切換 -->
+          <div class="wf-box" style="margin-bottom:10px;">
+            <span class="wf-tag">B</span>
+            <div class="wf-row" style="margin-bottom:6px;">
+              <span class="wf-pill on">日榜</span><span class="wf-pill">週榜</span>
+            </div>
+            <div class="wf-row">
+              <span class="wf-pill on">贏分</span><span class="wf-pill">倍數</span>
+            </div>
+          </div>
+          <!-- Ⓒ 狀態頁籤 -->
+          <div class="wf-box" style="margin-bottom:10px;">
+            <span class="wf-tag">C</span>
+            <div class="wf-row" style="justify-content:space-between;">
+              <span style="font-size:12px;"><strong>上一期</strong> ｜ 進行中</span>
+            </div>
+            <div class="wf-note">09/13 08:00 – 09/14 08:00</div>
+          </div>
+          <!-- Ⓓ 英雄卡 -->
+          <div class="wf-box acc" style="margin-bottom:6px;">
+            <span class="wf-tag">D</span>
+            <div class="wf-row">
+              <span style="font-family:'DM Mono',monospace;font-size:15px;">1</span>
+              <div class="wf-thumb">遊戲圖</div>
+              <div style="flex:1;">
+                <div class="wf-line" style="width:70%;margin-bottom:5px;"></div>
+                <div class="wf-line" style="width:46%;"></div>
+              </div>
+              <span class="wf-btn">▶ replay</span>
+            </div>
+          </div>
+          <div class="wf-box acc" style="margin-bottom:6px;">
+            <div class="wf-row">
+              <span style="font-family:'DM Mono',monospace;font-size:15px;">2</span>
+              <div class="wf-thumb">遊戲圖</div>
+              <div style="flex:1;">
+                <div class="wf-line" style="width:64%;margin-bottom:5px;"></div>
+                <div class="wf-line" style="width:40%;"></div>
+              </div>
+              <span class="wf-btn">▶ replay</span>
+            </div>
+          </div>
+          <div class="wf-box acc" style="margin-bottom:10px;">
+            <div class="wf-row">
+              <span style="font-family:'DM Mono',monospace;font-size:15px;">3</span>
+              <div class="wf-thumb">遊戲圖</div>
+              <div style="flex:1;">
+                <div class="wf-line" style="width:58%;margin-bottom:5px;"></div>
+                <div class="wf-line" style="width:36%;"></div>
+              </div>
+              <span class="wf-btn">▶ replay</span>
+            </div>
+          </div>
+          <!-- Ⓔ 表格列 -->
+          <div class="wf-box" style="margin-bottom:10px;padding:0;">
+            <span class="wf-tag">E</span>
+            <div class="wf-row" style="padding:8px 10px;border-bottom:1px solid var(--border);">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;width:18px;">4</span>
+              <span style="font-size:11px;flex:1;">遊戲名 · pl***21</span>
+              <span style="font-family:'DM Mono',monospace;font-size:11px;">₱ 12,400</span>
+              <span style="font-size:10px;">▶</span>
+            </div>
+            <div class="wf-row" style="padding:8px 10px;border-bottom:1px solid var(--border);">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;width:18px;">5</span>
+              <span style="font-size:11px;flex:1;">遊戲名 · mk***07 <span style="border:1px solid var(--orange);color:var(--orange);border-radius:50px;padding:0 5px;font-size:9px;">BUY</span></span>
+              <span style="font-family:'DM Mono',monospace;font-size:11px;">₱ 9,880</span>
+              <span style="font-size:10px;">▶</span>
+            </div>
+            <div class="wf-row" style="padding:8px 10px;">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;width:18px;">6</span>
+              <span style="font-size:11px;flex:1;">遊戲名 · sn***91</span>
+              <span style="font-family:'DM Mono',monospace;font-size:11px;">₱ 8,050</span>
+              <span style="color:var(--text-dim);font-size:10px;">—</span>
+            </div>
+          </div>
+          <!-- Ⓕ 榜底說明 -->
+          <div class="wf-box">
+            <span class="wf-tag">F</span>
+            <div style="font-size:11px;">達 50 倍以上才會進榜 · 時間為 UTC+8</div>
+          </div>
+        </div>
+        <div class="wf-cap">L2 榜單主畫面 · 線框示意（直式手機為基準）</div>
+      </div>
+    </div>
+
+    <div class="shot-index">
+      <h5>區域索引</h5>
+      <a href="#lb-l2-a"><span class="area-badge">A</span> 標題列與關閉</a>
+      <a href="#lb-l2-b"><span class="area-badge">B</span> 榜型切換</a>
+      <a href="#lb-l2-c"><span class="area-badge">C</span> 狀態頁籤與榜期</a>
+      <a href="#lb-l2-d"><span class="area-badge">D</span> 前 3 名英雄卡</a>
+      <a href="#lb-l2-e"><span class="area-badge">E</span> 第 4–20 名表格列</a>
+      <a href="#lb-l2-f"><span class="area-badge">F</span> 榜底規則說明</a>
+    </div>
+  </div>
+
+  <div class="sub-title">四、區域詳細說明</div>
+
+  <div class="area-detail" id="lb-l2-a">
+    <div class="area-detail-head">
+      <span class="area-badge">A</span><strong>標題列與關閉</strong>
+      <span class="area-oneline">告訴玩家自己在哪、以及怎麼回去。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>元件與行為</h5>
+        <ul>
+          <li>標題文字固定為「排行榜」（<span class="tag-pill tag-opt">lb_title</span>），<strong>不隨榜型改變</strong>。</li>
+          <li>右側 ✕ 按鈕關閉整個榜單、回到遊戲。</li>
+          <li>標題列固定在頂部，內容捲動時不跟著捲走。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>✕ 的可點範圍不小於 <strong>44 × 44 pt</strong>（與抽寶箱同一標準）。</li>
+          <li>回放浮層（L3）開啟時，<strong>此 ✕ 不可點</strong>——避免玩家連關兩層造成狀態錯亂。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l2-b">
+    <div class="area-detail-head">
+      <span class="area-badge">B</span><strong>榜型切換</strong>
+      <span class="area-oneline">兩排各自獨立的選擇，組合出四張榜。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>元件與行為</h5>
+        <ul>
+          <li>第一排＝榜期：<strong>日榜 / 週榜</strong>（<span class="tag-pill tag-opt">lb_tab_daily</span> / <span class="tag-pill tag-opt">lb_tab_weekly</span>）。</li>
+          <li>第二排＝計分：<strong>贏分 / 倍數</strong>（<span class="tag-pill tag-opt">lb_tab_win</span> / <span class="tag-pill tag-opt">lb_tab_multi</span>）。</li>
+          <li>兩排<strong>互相獨立</strong>，切換其中一排不影響另一排的選擇。</li>
+          <li>預設：<strong>日榜 × 贏分</strong>。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>切換時<strong>狀態頁籤（Ⓒ）的選擇保持不變</strong>——玩家在看「上一期」時切到週榜，看到的仍是週榜的上一期。</li>
+          <li>切換時<strong>捲動位置回到最上方</strong>。</li>
+          <li>資料載入中時，該排按鈕維持可見但不可重複點擊，避免連點造成多次請求。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l2-c">
+    <div class="area-detail-head">
+      <span class="area-badge">C</span><strong>狀態頁籤與榜期</strong>
+      <span class="area-oneline">切「已結算」與「進行中」，並明確告知這張榜算的是哪一段時間。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>元件與行為</h5>
+        <ul>
+          <li>兩個頁籤：<strong>上一期</strong>（<span class="tag-pill tag-opt">lb_tab_settled</span>）／<strong>進行中</strong>（<span class="tag-pill tag-opt">lb_tab_live</span>）。</li>
+          <li><strong>預設停在「上一期」</strong>。</li>
+          <li>下方一行小字顯示該榜期的<strong>實際起訖時間</strong>（<span class="tag-pill tag-opt">lb_period</span>）。</li>
+          <li>「進行中」時，同樣用 <span class="tag-pill tag-opt">lb_period</span>：<strong>{start}＝本期起點、{end}＝預定結算時間</strong>（例：09/14 08:00 – 09/15 08:00），不另加文案。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>「上一期」的起訖<strong>一律讀快照裡記錄的實際起訖</strong>，不可用當下時間推算——結算失敗延後時，推算值會是錯的。「進行中」的 {end} 為預定結算時間，結算失敗延後時與實際不符，<strong>屬已知代價、接受</strong>。</li>
+          <li><strong>不自動更新</strong>：榜單資料只在開啟榜單、切換榜型或頁籤時讀取一次；停留期間（含跨過結算時點、含別人開出新大獎）<strong>不自動重整畫面</strong>，下一次切換或重開榜單時才取新資料。理由：畫面在玩家眼前突然整份換掉比資料稍舊更糟，且後端不需承受輪詢流量。</li>
+          <li>時間一律標示為 <strong>UTC+8</strong>，不提供時區切換。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l2-d">
+    <div class="area-detail-head">
+      <span class="area-badge">D</span><strong>前 3 名英雄卡</strong>
+      <span class="area-oneline">榜單上最重要的三個版位，也是其他 Combo 遊戲每天輪替的廣告位。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>卡片內容（由左至右）</h5>
+        <ul>
+          <li><strong>名次</strong>：1 / 2 / 3，用名次徽章。</li>
+          <li><strong>遊戲圖</strong>：該款遊戲的方形縮圖。</li>
+          <li><strong>遊戲名稱</strong>：<strong>可點</strong>，點了進入該款遊戲。</li>
+          <li><strong>遮罩 playID</strong>：例 <span class="tag-pill tag-opt">pl***21</span>，不露出完整值。</li>
+          <li><strong>主要數字</strong>：看哪張榜就放哪個——倍數榜放倍數、贏分榜放贏分。<strong>只放這一個數字</strong>，不另標另一個值。</li>
+          <li><strong>BUY 標記</strong>：該筆為 buy bonus 時顯示。</li>
+          <li><strong>replay 按鈕</strong>：後端<strong>有隨榜單回傳該筆的回放網址</strong>時才出現。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>實際筆數不足 3 筆時，<strong>有幾張畫幾張</strong>，不放空卡。</li>
+          <li>遊戲圖讀不到時以預設圖替代，<strong>不可讓卡片破版</strong>。</li>
+          <li>遊戲名稱過長時單行省略，不換行、不擠壓其他欄位。</li>
+          <li>點遊戲名稱與點 replay 是兩個分開的可點區域，<strong>不可互相誤觸</strong>；兩者可點範圍各自不小於 44 × 44 pt。</li>
+          <li>金額一律<strong>帶該筆自己的幣別符號</strong>（同一張榜必為同幣別，但仍照實顯示、不省略）。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l2-e">
+    <div class="area-detail-head">
+      <span class="area-badge">E</span><strong>第 4–20 名表格列</strong>
+      <span class="area-oneline">資訊密度優先，一列一名。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>每列內容</h5>
+        <ul>
+          <li>名次數字、遊戲名稱（<strong>可點</strong>）、遮罩 playID、BUY 標記（有才顯示）、主要數字、replay 圖示。</li>
+          <li>主要數字依榜型決定：倍數榜顯示倍數、贏分榜顯示金額。<strong>只顯示這一個數字</strong>。</li>
+          <li>沒有回放網址的那一列，replay 位置顯示為<strong>不可點的短橫線</strong>（文字符號，不用美術資產），不留空白。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>整區為垂直捲動，<strong>不得產生橫向捲軸</strong>；欄位不夠寬時優先省略遊戲名稱，不省略數字。</li>
+          <li>第 20 名之後不顯示、不提供「載入更多」（20 為 v1 固定值，§07 一）。</li>
+          <li>列高固定，內容多寡不改變列高。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l2-f">
+    <div class="area-detail-head">
+      <span class="area-badge">F</span><strong>榜底規則說明</strong>
+      <span class="area-oneline">讓玩家知道自己為什麼沒上榜，以及時間怎麼算。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>內容</h5>
+        <ul>
+          <li>一行說明進榜門檻（<span class="tag-pill tag-opt">lb_rule_threshold</span>），倍數值（目前 50）<strong>由 API 帶入、不寫死在文案</strong>。</li>
+          <li>一行說明時間為 UTC+8（<span class="tag-pill tag-opt">lb_rule_tz</span>）。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>文案使用參數化寫法（例：<span class="tag-pill tag-opt">{threshold}</span>），由 API 帶入 Server 端的單一門檻值。</li>
+          <li><strong>不顯示玩家自己的名次或距離</strong>——本版不做個人區塊。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" id="ui-states">五、L2 的狀態畫面</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:16%">狀態</th><th style="width:26%">觸發時機</th><th style="width:30%">畫面</th><th>玩家可以做什麼</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>載入中</strong></td>
+        <td class="dim">開啟榜單、切換榜型或頁籤後、資料尚未回來。</td>
+        <td class="dim">Ⓐ Ⓑ Ⓒ 照常顯示（讓玩家知道自己選了什麼），Ⓓ Ⓔ 區顯示載入指示。</td>
+        <td class="dim">可關閉、可再切換；<strong>不可重複點同一個切換</strong>。</td>
+      </tr>
+      <tr>
+        <td><strong>空榜</strong></td>
+        <td class="dim">該榜期沒有任何成績達到門檻。</td>
+        <td class="dim">Ⓓ Ⓔ 區改為空榜插圖＋文案（<span class="tag-pill tag-opt">lb_empty</span>），Ⓕ 的門檻說明<strong>仍要顯示</strong>。</td>
+        <td class="dim">可切到另一張榜或另一個頁籤。</td>
+      </tr>
+      <tr>
+        <td><strong>載入失敗</strong></td>
+        <td class="dim">後端無回應或回傳錯誤。</td>
+        <td class="dim">Ⓓ Ⓔ 區顯示失敗文案（<span class="tag-pill tag-opt">lb_error</span>）＋「重試」按鈕。</td>
+        <td class="dim">可重試、可切換、可關閉。<strong>不自動無限重試</strong>。</td>
+      </tr>
+      <tr>
+        <td><strong>該專線已關閉</strong></td>
+        <td class="dim">設定檔關閉該「專線 × 幣別」的排行榜。</td>
+        <td class="dim"><strong>不會進到此畫面</strong>——L1 選單中就不出現「排行榜」項目。</td>
+        <td class="dim">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" id="ui-art">六、本章的美術資產需求</div>
+  <div class="body-text">命名一律為 <span class="tag-pill tag-opt">design_assets/lb_NN_主題.png</span>，NN 續碼；改版時<strong>同名覆蓋</strong>，規格書與程式皆免改路徑。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:10%">編號</th><th style="width:24%">資產</th><th style="width:16%">用在哪</th><th style="width:14%">數量</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">lb_01</td><td>排行榜選單 icon</td><td class="dim">L1 選單項目</td><td class="mono">1</td><td class="dim">與抽寶箱選單 icon 同尺寸、同風格。</td></tr>
+      <tr><td class="mono">lb_02</td><td>名次徽章（1／2／3）</td><td class="dim">Ⓓ 英雄卡</td><td class="mono">3</td><td class="dim">金銀銅或等效的三級視覺區分。</td></tr>
+      <tr><td class="mono">lb_03</td><td>英雄卡底板</td><td class="dim">Ⓓ 英雄卡</td><td class="mono">1</td><td class="dim">單一底板<strong>三個名次共用</strong>，靠徽章區分，不做三張。</td></tr>
+      <tr><td class="mono">lb_04</td><td>遊戲縮圖預設圖</td><td class="dim">Ⓓ Ⓔ</td><td class="mono">1</td><td class="dim">遊戲圖讀不到時的替代圖。<strong>各款遊戲本身的縮圖沿用既有資產、不重做。</strong></td></tr>
+      <tr><td class="mono">lb_05</td><td>replay 按鈕圖示</td><td class="dim">Ⓓ Ⓔ</td><td class="mono">1</td><td class="dim">只做可點態。沒有回放網址的筆：英雄卡不畫按鈕、表格列用文字短橫線，<strong>不做灰態圖</strong>。</td></tr>
+      <tr><td class="mono">lb_06</td><td>BUY 標記</td><td class="dim">Ⓓ Ⓔ</td><td class="mono">1</td><td class="dim">小標籤，不喧賓奪主。</td></tr>
+      <tr><td class="mono">lb_07</td><td>空榜插圖</td><td class="dim">空榜狀態</td><td class="mono">1</td><td class="dim">語氣中性，不要有「你很遜」的暗示。</td></tr>
+      <tr><td class="mono">lb_08</td><td>載入指示</td><td class="dim">載入中狀態</td><td class="mono">1</td><td class="dim">可沿用既有 CRM 載入動畫，不另做。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>刻意不做的美術</strong>：本功能<strong>不做每款遊戲各一張的卡片底圖</strong>。理由：每上一款新遊戲就要補一張，美術會被綁死；改用「共用底板＋既有遊戲縮圖」，新遊戲上架即可自動進榜、不需美術介入。
+  </div>
+</section>
+
+<!-- ═══════════ 06 回放功能 ═══════════ -->
+<section class="section" id="replay">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-title">回放功能</span>
+    <span class="section-title-en">BIG WIN REPLAY</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="hypo-block">
+    <div class="hypo-label">這個功能在做什麼 · WHAT IT IS</div>
+    <div class="hypo-text">依該局<strong>完整過程的紀錄</strong>重演那一局。玩家自己按 spin，看著轉盤轉出、觸發特色玩法、逐局演完、開出大獎——不是播一段預錄影片，也不是秀一張中獎結果圖。</div>
+  </div>
+
+  <div class="sub-title" id="rp-entry">一、開啟方式</div>
+  <div class="callout info">
+    <strong>做法（V1.1 定案、V1.2 補網址來源）</strong>：在榜單這一頁蓋一層浮層，浮層中央用 <strong>iframe 載入回放網址</strong>。回放網址由遊戲端提供、<strong>由後端隨榜單資料每筆回傳</strong>（後端於此時已驗證該筆與請求者同專線同幣別），呼叫時帶上<strong>與玩家當前工作階段相同的 token</strong>。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:22%">項目</th><th>規則</th></tr></thead>
+    <tbody>
+      <tr><td>入口</td><td>L2 榜單上英雄卡與表格列的 <strong>replay 按鈕</strong>。<strong>按鈕只看一件事：後端有沒有隨榜單回傳該筆的回放網址</strong>。沒有網址的筆按鈕<strong>不出現</strong>（表格列改顯示不可點的短橫線）。</td></tr>
+      <tr><td>網址來源</td><td>後端回傳榜單時<strong>每筆直接附上已驗證的回放網址</strong>；前端不另外呼叫、不自己組網址。</td></tr>
+      <tr><td>載入方式</td><td>浮層內 <strong>iframe 載入回放網址</strong>，盤面演出全部在該網址內完成。</td></tr>
+      <tr><td>不開瀏覽器新分頁</td><td><strong>嚴禁用 <span class="tag-pill tag-opt">window.open()</span> 之類的方式開新分頁。</strong> 遊戲跑在 iframe 內，由程式主動開啟的新分頁會被行動裝置瀏覽器（特別是 iOS Safari）當成彈出廣告擋掉，會有一批玩家點了完全沒反應且無從得知原因。</td></tr>
+      <tr><td>token</td><td>沿用玩家當前工作階段的同一組 token，<strong>不另外要求登入</strong>。</td></tr>
+      <tr><td>疊層</td><td>L3 高於 L2。L3 開啟期間 L2 的所有互動全鎖（切榜、捲動、點其他 replay、點 L2 的 ✕）。</td></tr>
+      <tr><td>關閉</td><td>點 L3 的 ✕ 或浮層外的遮罩即關閉，回到 L2。<strong>L2 的榜型、頁籤與捲動位置全部維持原狀</strong>，不重新載入。</td></tr>
+      <tr><td>重看</td><td>由回放網址內自行提供，<strong>次數不限</strong>。</td></tr>
+      <tr><td>範圍限制</td><td>只能回放<strong>自己專線、自己幣別</strong>的局。防線在<strong>後端簽發回放網址</strong>這一步：只對同專線同幣別的筆簽發；收到跨專線／跨幣別的簽發請求一律拒絕並記 E12。</td></tr>
+      <tr><td>遊戲已下架</td><td><strong>下架本身不改變任何事</strong>——按鈕仍然只看後端有沒有回傳回放網址：回得出網址就照常顯示、照常可播；回不出就不畫按鈕。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" id="rp-split">二、誰做什麼（分工線）</div>
+  <div class="body-text">這條線要先講清楚，否則兩邊都以為對方會做。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:22%">誰做</th><th>負責範圍</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>CRM（本功能）</strong><br><span class="tag-pill tag-opt">🎮 前端</span></td>
+        <td>
+          ① 浮層外框與 ✕ 關閉鈕<br>
+          ② 浮層頂部的<strong>該局資訊列</strong>（遊戲名稱、遮罩 playID、倍數、贏分、BUY 標記）<br>
+          ③ 用 iframe 載入後端回傳的回放網址、帶 token<br>
+          ④ <strong>iframe 本身載入失敗</strong>時的錯誤畫面<br>
+          ⑤ 事件記錄（E4 點 replay；E5 已按 SPIN——收到遊戲端訊息時記）
+        </td>
+      </tr>
+      <tr>
+        <td><strong>遊戲端</strong><br><span class="tag-pill tag-eng">🛠 遊戲端</span></td>
+        <td>
+          ① 回放網址本身<br>
+          ② 盤面重演（含 Free Game 逐局、連鎖、乘數變化與音效）<br>
+          ③ SPIN 按鈕、播放控制、結算畫面、重看<br>
+          ④ <strong>回放標示</strong>（見本章三）<br>
+          ⑤ <strong>讀不到該局資料</strong>、<strong>播放中斷線</strong>時的錯誤訊息與錯誤代碼（都在回放網址內顯示）<br>
+          ⑥ 玩家按下 SPIN 時，<strong>向父頁面送一則「已按 SPIN」訊息</strong>（供 CRM 記 E5；只有這一個時點，不送其他播放階段）
+        </td>
+      </tr>
+      <tr>
+        <td><strong>後端</strong><br><span class="tag-pill tag-eng">🛠 後端</span></td>
+        <td>提供榜單資料時，<strong>每筆一併帶出該局識別碼與已驗證的回放網址</strong>（給不出網址的筆留空）；簽發網址前比對請求者與該局的專線、幣別，不符一律拒絕並記 E12。</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>「有沒有回放網址」就是可重播的唯一判斷，不是猜的。</strong> 後端在回傳榜單時必須每筆明確給出回放網址（或留空），前端據此決定要不要畫 replay 按鈕。<strong>不可由前端試著呼叫、失敗再隱藏</strong>——那會讓玩家點了之後才發現不能看。日後某款遊戲補齊了紀錄，後端開始給得出網址，前端不需改版。
+  </div>
+  <div class="callout warn">
+    <strong>「這一局的資訊列由 CRM 做在浮層頂部」是企劃的判斷，不是既有需求。</strong> 理由：那些欄位本來就在榜單資料裡，CRM 做不必等遊戲端；且玩家需要持續看得到「這是誰的局」。<strong>若要改由遊戲端做在回放網址內，請告知，本節可改寫。</strong>
+  </div>
+
+  <div class="sub-title" id="rp-mark">三、回放標示（遊戲端負責）</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:22%">項目</th><th>規則</th></tr></thead>
+    <tbody>
+      <tr><td>誰做</td><td><strong>遊戲端</strong>，做在回放網址的畫面內。</td></tr>
+      <tr><td>內容</td><td>顯示這是回放畫面的標示，<strong>以英文呈現</strong>（不做多語系）。</td></tr>
+      <tr><td>位置</td><td><strong>放在顯眼的地方</strong>，讓玩家一眼看得到。</td></tr>
+      <tr><td>持續時間</td><td><strong>從進入到離開全程顯示</strong>，包含盤面轉動與特色玩法演出期間。不可只在開頭出現後淡出——玩家中途才看過來時就看不到了。</td></tr>
+      <tr><td>不動餘額</td><td>回放<strong>不扣款、不派獎、不產生任何注單</strong>，也不顯示玩家自己的餘額欄位。</td></tr>
+      <tr><td>不顯示餘額變化</td><td>回放畫面<strong>不呈現押注前後的資產變化</strong>。（提案 V1.6 波2.5 曾列此項，本規格書取消——顯示金額增減正是最容易被誤會成自己中獎的元素。）</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>已知風險（Milu 已知悉並決定不處理）</strong>：原設計另有一行白話免責說明（「這是其他玩家的紀錄重播，不會影響你的餘額」），<strong>本版決定不做</strong>。風險是：標示為英文，泰、越、緬、孟等語系的玩家不一定讀得懂，可能誤以為自己中了大獎而產生客訴——而這類客訴很難處理，因為玩家<strong>確實看到自己按了 SPIN 然後開出大獎</strong>。若上線後確實出現此類客訴，補一行走 CRM 語系表的說明即可解決，屬小幅改版。
+  </div>
+
+  <div class="sub-title" id="rp-play">四、播放流程</div>
+  <div class="flow-wrap">
+    <div class="flow-v">
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">CRM 開啟浮層</div>
+        <div class="flow-step-desc">畫出外框、✕ 與頂部的該局資訊列（遊戲名、遮罩 playID、倍數、贏分、BUY 標記）。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">iframe 載入回放網址</div>
+        <div class="flow-step-desc">載入後端隨榜單回傳的回放網址，帶玩家當前工作階段的同一組 token。載入期間浮層內顯示載入指示。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">回放畫面就緒</div>
+        <div class="flow-step-desc">盤面為<strong>靜止的起始狀態</strong>，尚未開始；<strong>英文回放標示已顯示在顯眼處</strong>。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step highlight">
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">玩家自己按 SPIN</div>
+        <div class="flow-step-desc"><strong>不自動開始。</strong> 要玩家自己按下去，代入感才成立——這是整個功能的重點。按下時遊戲端向父頁面送「已按 SPIN」訊息，CRM 記 E5。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-num">STEP 05</div>
+        <div class="flow-step-title">盤面轉出、觸發特色玩法、逐局演完</div>
+        <div class="flow-step-desc">依紀錄重演，含該遊戲原本的演出節奏與音效，<strong>不跳過、不加速</strong>。此段可能較長，<strong>期間 CRM 的 ✕ 一律保持可點</strong>。</div>
+      </div>
+      <div class="flow-arrow-down">↓</div>
+      <div class="flow-step success">
+        <div class="flow-step-num">STEP 06</div>
+        <div class="flow-step-title">大獎結算</div>
+        <div class="flow-step-desc">顯示該局總贏分與倍數。<strong>不得出現任何入帳、獲得、恭喜你贏得之類的字眼。</strong> 可重看。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" id="rp-ui">五、L3 回放浮層畫面</div>
+
+  <div class="shot-layout">
+    <div>
+      <div class="wf">
+        <div class="wf-screen">
+          <div class="wf-box acc" style="margin-bottom:10px;">
+            <span class="wf-tag">A</span>
+            <div class="wf-row" style="justify-content:space-between;">
+              <strong style="font-size:12px;">回放</strong>
+              <span style="font-size:13px;">✕</span>
+            </div>
+          </div>
+          <div class="wf-box" style="margin-bottom:10px;">
+            <span class="wf-tag">B</span>
+            <div class="wf-row">
+              <div class="wf-thumb">遊戲圖</div>
+              <div style="flex:1;">
+                <div class="wf-line" style="width:66%;margin-bottom:5px;"></div>
+                <div class="wf-line" style="width:44%;"></div>
+              </div>
+            </div>
+            <div class="wf-note">遊戲名 · pl***21 · 124 倍 · ₱12,400</div>
+          </div>
+          <div class="wf-box" style="height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+            <span class="wf-tag">C</span>
+            <span style="font-size:11px;border:1px solid var(--accent);color:var(--accent-text);border-radius:4px;padding:2px 10px;font-family:'DM Mono',monospace;">REPLAY</span>
+            <span style="font-size:12px;color:var(--text-dim);">iframe：遊戲端回放網址</span>
+            <span style="font-size:11px;color:var(--text-dim);">（盤面／SPIN／結算皆在此網址內）</span>
+          </div>
+        </div>
+        <div class="wf-cap">L3 回放浮層 · 線框示意（紅框為 CRM 負責區域）</div>
+      </div>
+    </div>
+
+    <div class="shot-index">
+      <h5>區域索引</h5>
+      <a href="#lb-l3-a"><span class="area-badge">A</span> 浮層標題列與關閉</a>
+      <a href="#lb-l3-b"><span class="area-badge">B</span> 這一局的資訊</a>
+      <a href="#lb-l3-c"><span class="area-badge">C</span> 回放網址（iframe）</a>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l3-a">
+    <div class="area-detail-head">
+      <span class="area-badge">A</span><strong>浮層標題列與關閉</strong>
+      <span class="area-oneline">CRM 負責。讓玩家隨時走得掉。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>元件與行為</h5>
+        <ul>
+          <li>左側標題文字（<span class="tag-pill tag-opt">lb_rp_title</span>）。</li>
+          <li>右側 ✕ 關閉浮層、回 L2。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>✕ 在<strong>任何階段都可點</strong>，包含 iframe 載入中、盤面轉動中與特色玩法演出中。</li>
+          <li>✕ 可點範圍不小於 44 × 44 pt。</li>
+          <li>✕ 必須在 iframe <strong>外面</strong>，不可放進 iframe 內——否則 iframe 掛掉時玩家就關不掉了。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l3-b">
+    <div class="area-detail-head">
+      <span class="area-badge">B</span><strong>這一局的資訊</strong>
+      <span class="area-oneline">CRM 負責。誰、在哪款遊戲、開出多少。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>內容</h5>
+        <ul>
+          <li>遊戲縮圖與遊戲名稱。</li>
+          <li><strong>遮罩 playID</strong>。</li>
+          <li>倍數與贏分<strong>兩個都顯示</strong>（與榜單列只顯示一個不同——回放時玩家要同時看得到這一局是幾倍、贏多少）。</li>
+          <li>不顯示押注金額、不顯示發生時間。</li>
+          <li>該筆為 buy bonus 時顯示 BUY 標記。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>資料直接沿用榜單那一列的內容，<strong>不另外向後端要一次</strong>。</li>
+          <li>此區<strong>從頭到尾都在</strong>，不隨播放隱藏——它是「這是別人的局」最主要的視覺證據。</li>
+          <li>遊戲名稱在此處<strong>不可點</strong>（避免玩家在回放中途誤觸而離開）。要進該遊戲請回 L2 點。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-detail" id="lb-l3-c">
+    <div class="area-detail-head">
+      <span class="area-badge">C</span><strong>回放網址（iframe）</strong>
+      <span class="area-oneline">遊戲端負責。CRM 只負責把它載進來。</span>
+    </div>
+    <div class="area-detail-cols">
+      <div class="area-col">
+        <h5>此區內由遊戲端提供</h5>
+        <ul>
+          <li>盤面重演（含 Free Game 逐局、連鎖、乘數變化與音效）。</li>
+          <li><strong>英文回放標示</strong>，放顯眼處、全程顯示。</li>
+          <li>SPIN 按鈕、播放控制、結算畫面、重看。</li>
+          <li>讀不到該局資料、播放中斷線時的錯誤訊息與錯誤代碼。</li>
+          <li>玩家按下 SPIN 時向父頁面送「已按 SPIN」訊息（格式待 Q3）。</li>
+        </ul>
+      </div>
+      <div class="area-col">
+        <h5>限制與防呆</h5>
+        <ul>
+          <li>CRM <strong>不介入盤面演出邏輯</strong>、不畫盤面、不控制播放。</li>
+          <li>不提供快轉、跳過或倍速——會破壞「完整看獲獎流程」的目的。</li>
+          <li>此區不顯示玩家自己的餘額列。</li>
+          <li>iframe 區在直式手機上需<strong>完整可見</strong>，不可被 Ⓐ Ⓑ 擠到需要捲動才看得到盤面。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title" id="rp-edge">六、本章相關的異常狀態</div>
+  <div class="callout info">
+    <strong>錯誤分成兩種，由不同的人顯示。</strong> iframe <strong>載不進來</strong>是 CRM 的錯誤畫面；iframe 載進來了但<strong>讀不到那一局</strong>是遊戲端在回放網址內顯示。兩者不可混做，否則會出現兩層錯誤畫面疊在一起。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:20%">狀況</th><th style="width:12%">誰顯示</th><th style="width:30%">系統怎麼做</th><th>玩家看到什麼</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>該筆沒有回放網址</strong></td>
+        <td class="dim">—</td>
+        <td>後端回傳榜單時該筆的回放網址為空。<strong>該筆仍正常進榜、名次不受影響。</strong></td>
+        <td class="dim">英雄卡不畫 replay 按鈕；表格列該位置顯示不可點的短橫線。<strong>不顯示任何錯誤訊息</strong>。</td>
+      </tr>
+      <tr>
+        <td><strong>iframe 載入失敗</strong></td>
+        <td><span class="tag-pill tag-opt">CRM</span></td>
+        <td>浮層照常開啟，iframe 區改為錯誤畫面；<strong>不自動重試、不自動關閉</strong>。</td>
+        <td class="dim">失敗文案（<span class="tag-pill tag-opt">lb_rp_error</span>）＋<strong>錯誤代碼</strong>＋關閉按鈕。</td>
+      </tr>
+      <tr>
+        <td><strong>讀不到該局資料</strong></td>
+        <td><span class="tag-pill tag-eng">遊戲端</span></td>
+        <td>回放網址內顯示錯誤，<strong>沿用遊戲端現有的錯誤訊息</strong>（如「資料錯誤，請稍後重試」）並顯示錯誤代碼。</td>
+        <td class="dim">在 iframe 內看到錯誤訊息與代碼；CRM 的 ✕ 仍在外面、隨時可關。</td>
+      </tr>
+      <tr>
+        <td><strong>播放中斷線</strong></td>
+        <td><span class="tag-pill tag-eng">遊戲端</span></td>
+        <td>回放<strong>沒有任何金額後果</strong>，斷線不需要任何補償或狀態還原。遊戲端在回放網址內顯示其既有的斷線畫面；<strong>CRM 浮層不自動關閉</strong>、不介入。</td>
+        <td class="dim">在 iframe 內看到遊戲端的斷線畫面；CRM 的 ✕ 照常可點，玩家自己關閉回 L2，可再點一次重看。</td>
+      </tr>
+      <tr>
+        <td><strong>播放中玩家關閉</strong></td>
+        <td><span class="tag-pill tag-opt">CRM</span></td>
+        <td>直接結束。不記錄中離事件（v1 只記點 replay 與是否按 SPIN）。</td>
+        <td class="dim">回到 L2，榜型與捲動位置維持原狀。</td>
+      </tr>
+      <tr>
+        <td><strong>Free Game 太長</strong></td>
+        <td class="dim">—</td>
+        <td>不截斷、不加速，完整演完。</td>
+        <td class="dim">✕ 全程可點，想走隨時能走。</td>
+      </tr>
+      <tr>
+        <td><strong>要求簽發其他專線或其他幣別的局的回放網址</strong></td>
+        <td><span class="tag-pill tag-eng">後端</span></td>
+        <td><strong>後端拒絕簽發</strong>，不回傳任何該局資料，並記錄 E12。正常操作下不會發生（榜單本來就只有自己專線幣別的筆），發生即代表有人繞過前端。</td>
+        <td class="dim">與「讀不到該局資料」相同的錯誤畫面。<strong>不得提示「這是其他專線的資料」</strong>——那等於洩漏了它存在。</td>
+      </tr>
+      <tr>
+        <td><strong>該局所屬的遊戲已下架</strong></td>
+        <td class="dim">—</td>
+        <td>成績留在榜上。replay <strong>一律只看後端有沒有回傳回放網址</strong>，下架本身不改變任何事。</td>
+        <td class="dim">有網址就正常顯示按鈕、正常播放；沒網址就不畫按鈕。但<strong>遊戲名稱不可點</strong>（跳過去也沒有那款遊戲了）。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" id="rp-jump">七、從榜單進入該款遊戲（Story 8）</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:22%">項目</th><th>規則</th></tr></thead>
+    <tbody>
+      <tr><td>觸發</td><td>在 L2 點英雄卡或表格列上的<strong>遊戲名稱</strong>。</td></tr>
+      <tr><td>做法</td><td>透過 API，<strong>帶玩家當前工作階段的同一組 token 呼叫該專線的遊戲網址</strong>，達成跳轉。<strong>不要求玩家重新登入。</strong></td></tr>
+      <tr><td>目標</td><td>同一專線、同一幣別下的該款遊戲。</td></tr>
+      <tr><td>遊戲已下架</td><td><strong>名稱不可點</strong>，不提供跳轉。（該筆的 replay 只看有沒有回放網址，兩者是分開的。）</td></tr>
+      <tr><td>事件</td><td>成功跳轉時記錄 E7，含來源遊戲與目標遊戲——這是導流效果的唯一證據。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>呼叫介面規格尚未定義</strong>（Q4）。本節只定義「帶同一組 token 呼叫專線的遊戲網址」這條做法；實際的 API、參數與失敗處理需與遊戲端／後端確認後補入。
+  </div>
+
+  <div class="sub-title" id="rp-art">八、本章的美術資產需求</div>
+  <div class="callout">
+    <strong>回放畫面內的美術全部由遊戲端負責</strong>（盤面、SPIN 按鈕、結算、英文回放標示），不列入本表。CRM 只需要浮層外框那一層。
+  </div>
+  <table class="spec-table">
+    <thead><tr><th style="width:10%">編號</th><th style="width:24%">資產</th><th style="width:16%">用在哪</th><th style="width:14%">數量</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">lb_09</td><td>回放浮層外框</td><td class="dim">L3 Ⓐ Ⓑ</td><td class="mono">1</td><td class="dim">中央需留出完整區域給 iframe，外框不遮擋。直式手機上 iframe 區須完整可見。</td></tr>
+      <tr><td class="mono">lb_10</td><td>浮層載入指示</td><td class="dim">iframe 載入中</td><td class="mono">1</td><td class="dim">可沿用 lb_08 的既有載入動畫，不另做。</td></tr>
+      <tr><td class="mono">lb_11</td><td>回放失敗插圖</td><td class="dim">iframe 載入失敗</td><td class="mono">1</td><td class="dim">語氣中性，不要像是玩家做錯了什麼。</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 07 設定檔參數 ═══════════ -->
+<section class="section" id="config">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-title">設定檔參數</span>
+    <span class="section-title-en">CONFIGURATION</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="callout info">
+    <strong>本版不做營運後台</strong>，所有參數由 <strong>Server 端調整</strong>，營運需要改值時向 Server 提出。<strong>不需要排前端發版</strong>。
+  </div>
+
+  <div class="sub-title" id="cfg-table">一、參數清單</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:24%">參數</th><th style="width:14%">型別</th><th style="width:14%">值</th><th>說明</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="mono">leaderboard_enabled</td><td class="mono">是／否</td><td class="mono">是</td>
+        <td class="dim">排行榜總開關。關閉時所有專線的 L1 選單都不出現「排行榜」項目。</td>
+      </tr>
+      <tr>
+        <td class="mono">board_enabled[線路代碼][幣別]</td><td class="mono">是／否</td><td class="mono">預設否</td>
+        <td class="dim"><strong>逐「線路代碼 × 幣別」個別開關</strong>，以注單上的線路代碼查表，專線與共線都查同一張表；共線代碼因從未開啟，查到一律為否。與榜的分界完全一致。例：可以只開 <span class="tag-pill tag-opt">PB10 × PHP</span>，不開 <span class="tag-pill tag-opt">PB10 × BDT</span>。<strong>預設為否</strong>——沒有被明確開啟的組合一律不開榜，避免共線被誤開。</td>
+      </tr>
+      <tr>
+        <td class="mono">threshold</td><td class="mono">數字（倍數）</td><td class="mono">50</td>
+        <td class="dim">進榜門檻。<strong>四張榜（日／週 × 倍數／贏分）共用同一個值</strong>，不分日週設定。</td>
+      </tr>
+      <tr>
+        <td class="mono">top_n</td><td class="mono">整數</td><td class="mono">20（v1 寫死）</td>
+        <td class="dim">每張榜取前幾名。<strong>v1 固定 20、不可調</strong>；調整屬改版（§05 版面與 E 區「第 20 名之後」需連動）。</td>
+      </tr>
+      <tr>
+        <td class="mono">snapshot_keep</td><td class="mono">整數（期）</td><td class="mono">1</td>
+        <td class="dim">已結算快照保留期數。<strong>只留上一期</strong>，新快照寫成時覆蓋前一份。</td>
+      </tr>
+      <tr>
+        <td class="mono">hero_count</td><td class="mono">整數</td><td class="mono">3（v1 寫死）</td>
+        <td class="dim">用英雄卡呈現的名次數。<strong>v1 固定 3、不可調</strong>；調整屬改版（lb_02 徽章資產與 §05 版面需連動）。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">二、參數與行為的對應</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:30%">改了這個參數</th><th style="width:20%">何時生效</th><th>對既有資料的影響</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="mono">threshold</td>
+        <td class="dim"><strong>下一筆注單</strong>起套用</td>
+        <td class="dim"><strong>不回溯</strong>。已進榜的舊成績不會因門檻調高而被移除；已結算的快照一律不重算。</td>
+      </tr>
+      <tr>
+        <td class="mono">board_enabled → 關閉</td>
+        <td class="dim">立即</td>
+        <td class="dim">該「專線 × 幣別」停止寫入新成績、停止結算；<strong>既有快照保留不刪</strong>。重新開啟時：進行中榜的榜期若已過期，<strong>先清空、不補做結算、不寫快照</strong>，從開啟當下所屬榜期重新累積；上一期頁籤維持關閉前最後一份快照。其他組合不受影響。</td>
+      </tr>
+      <tr>
+        <td class="mono">leaderboard_enabled → 關閉</td>
+        <td class="dim">立即</td>
+        <td class="dim">同上，範圍為全部專線。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title" id="cfg-risk">三、風險與限制</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:26%">風險</th><th style="width:32%">會發生什麼</th><th>目前的處理</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>只留一期快照，v2 發獎會沒有依據</strong></td>
+        <td class="dim">v2 要依榜單發獎時，只查得到最近一期；玩家對名次有爭議也回溯不了。</td>
+        <td class="dim"><strong>v1 不發獎，故現在不痛。</strong> 但 <span class="tag-pill tag-opt">snapshot_keep</span> 必須在<strong>v2 發獎開發之前</strong>先調大，否則會在要發獎那天才發現沒有資料。此項已記為 v2 的前置條件。</td>
+      </tr>
+      <tr>
+        <td><strong>沒有後台，營運不能自助改值</strong></td>
+        <td class="dim">營運要調門檻或開關時，得走 Server 端，不能自己在後台按。</td>
+        <td class="dim">本版接受。門檻預期改動頻率低（上線後第二週校準一次，之後穩定），不值得為此先做一個後台。</td>
+      </tr>
+      <tr>
+        <td><strong>門檻設錯的影響</strong></td>
+        <td class="dim">門檻設太高會讓榜長期空著、設太低會讓榜上都是小獎。</td>
+        <td class="dim">上線後<strong>第一次檢視安排在第二週</strong>，依 E10 記錄的實際進榜筆數校準。因為 Server 可改，調整不需等發版。</td>
+      </tr>
+      <tr>
+        <td><strong>參數散落在程式裡</strong></td>
+        <td class="dim">門檻值若被寫進多處（後端篩選、前端文案），改一處漏一處會造成顯示與實際不一致。</td>
+        <td class="dim"><strong>門檻值只有一個來源</strong>：Server 端設定。前端文案的門檻數字由 API 帶下來，<strong>嚴禁在前端另外寫死一份</strong>。</td>
+      </tr>
+      <tr>
+        <td><strong>共線被誤開</strong></td>
+        <td class="dim">若把 AWS101 這類共線開起來，榜上會混進多個站台的玩家，違反本功能的分界原則。</td>
+        <td class="dim"><span class="tag-pill tag-opt">board_enabled</span> <strong>預設為否</strong>，必須逐一明確開啟。開啟前需確認該線路確為專線（見 §04 二）。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════ 08 事件記錄 ═══════════ -->
+<section class="section" id="logs">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-title">事件記錄</span>
+    <span class="section-title-en">EVENT LOG</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="body-text">
+    事件記錄是本功能<strong>唯一</strong>的成效量測來源，也是校準進榜門檻的依據。每一條都有明確用途，<strong>沒有「先記起來以後再說」的項目</strong>。
+  </div>
+
+  <div class="sub-title">一、前端事件</div>
+  <div class="log-item header">
+    <div>事件</div><div>職能</div><div>記錄內容與用途</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E1 · 開啟榜單</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">玩家從 L1 選單進入 L2。記錄：來源遊戲、專線、幣別、時間。<strong>用途</strong>：算榜單開啟率，判斷入口位置有沒有效。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E2 · 切換榜型</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">切換日／週或贏分／倍數。記錄：切換前後的榜型。<strong>用途</strong>：看玩家實際偏好哪張榜，決定日後預設值要不要改。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E3 · 切換狀態頁籤</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">切換「上一期」與「進行中」。記錄：切換後的頁籤。<strong>用途</strong>：驗證「預設看上一期」是不是對的選擇。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E4 · 點 replay</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">記錄：該筆的名次、來自英雄卡或表格列、遊戲、倍數、贏分。<strong>用途</strong>：算回放點擊率，並比較英雄卡與表格列的效果差異。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E5 · 已按 SPIN</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">CRM 收到遊戲端從 iframe 送出的「已按 SPIN」訊息時記錄。記錄：該局識別碼、來自英雄卡或表格列。<strong>用途</strong>：算「點了 replay 之後真的按下 SPIN」的比例——只開浮層沒按 SPIN 代表玩家看不懂要做什麼。播完與中離階段<strong>不記</strong>（在 iframe 內、CRM 無從得知，v1 不要求遊戲端送其他階段）。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E6 · （已刪除，留空號）</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">—</span></div>
+    <div class="log-desc">V1.2 刪除原「回放中離」事件，編號保留不重排，以免 E7～E12 在其他章節的引用失效。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E7 · 從榜單進入遊戲</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">玩家點遊戲名稱跳轉。記錄：來源遊戲、目標遊戲、該筆名次、是從英雄卡或表格列點的。<strong>用途</strong>：這是<strong>導流效果的唯一證據</strong>，也是「用排行榜推廣其他遊戲」成不成立的判準。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E8 · 榜單開啟失敗</div>
+    <div class="log-owner"><span class="tag-pill tag-opt">🎮 前端</span></div>
+    <div class="log-desc">L2 資料載入失敗。記錄：失敗原因、<strong>錯誤代碼</strong>、當時選的榜型。<strong>用途</strong>：監控穩定度；客服接到反應時可依代碼追查。</div>
+  </div>
+
+  <div class="sub-title">二、後端事件</div>
+  <div class="log-item header">
+    <div>事件</div><div>職能</div><div>記錄內容與用途</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E9 · 一筆成績進榜</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">一筆注單通過門檻並寫入榜單。記錄：專線、幣別、遊戲、playID、局型（一般／Free Game／buy bonus 三選一，<strong>只要是買來的就記 buy bonus</strong>，「Free Game」只用於自然觸發）、倍數、贏分、該局識別碼、是否有回放網址。<strong>用途</strong>：門檻校準、局型分佈分析。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E10 · 榜期結算完成</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">快照寫成。記錄：專線、幣別、榜型、榜期起訖、<strong>實際進榜筆數</strong>、當時套用的門檻值。<strong>用途</strong>：這是校準門檻的主要依據——筆數長期不到 20 就該調降，長期爆滿就該調升。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E11 · 結算失敗</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">快照寫入失敗。記錄：專線、幣別、榜型、失敗原因、重試次數。<strong>用途</strong>：告警。此事件觸發時<strong>舊快照必須仍在、進行中榜必須未被清空</strong>（見 §04 八）。</div>
+  </div>
+  <div class="log-item">
+    <div class="log-event">E12 · 回放請求被拒</div>
+    <div class="log-owner"><span class="tag-pill tag-eng">🛠 後端</span></div>
+    <div class="log-desc">收到跨專線或跨幣別的回放網址簽發請求而拒絕。記錄：請求者、被請求的局、<strong>錯誤代碼</strong>。<strong>用途</strong>：這是資料邊界有沒有被繞過的<strong>唯一偵測點</strong>，不可省略。</div>
+  </div>
+
+  <div class="sub-title">三、成效怎麼看</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:26%">想知道的事</th><th style="width:26%">用哪些事件</th><th>怎麼算</th></tr></thead>
+    <tbody>
+      <tr><td>榜單有沒有人看</td><td class="mono">E1</td><td class="dim">開啟榜單人數 ÷ 該專線該幣別的活躍玩家數。</td></tr>
+      <tr><td>回放有沒有人點</td><td class="mono">E4 ÷ E1</td><td class="dim">點過 replay 的人數佔開啟榜單人數的比例。</td></tr>
+      <tr><td>回放有沒有真的看</td><td class="mono">E5 ÷ E4</td><td class="dim">按 SPIN 率：點了 replay 的人有多少真的按下 SPIN。偏低代表回放畫面讓玩家不知道要做什麼。完播率 v1 不量。</td></tr>
+      <tr><td><strong>導流有沒有效</strong></td><td class="mono">E7 ÷ E1</td><td class="dim">從榜單點進其他遊戲的比例。再看 E7 的「目標遊戲 ≠ 來源遊戲」佔比，才是真正的跨遊戲導流。</td></tr>
+      <tr><td>門檻設得對不對</td><td class="mono">E10</td><td class="dim">看各榜期的實際進榜筆數分佈。<strong>上線後第二週做第一次校準。</strong></td></tr>
+      <tr><td>buy bonus 有沒有霸榜</td><td class="mono">E9</td><td class="dim">看倍數榜前段的局型分佈中 buy bonus 佔多少。</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>本版不設 KPI 數字目標。</strong> 上述指標是<strong>調參數用的</strong>，不是驗收門檻——功能首次上線沒有基準值，訂目標只會是憑空喊價。上線後兩週取得實際數字作為基準，再決定要不要訂目標。
+  </div>
+</section>
+
+<!-- ═══════════ 09 多國語系 ═══════════ -->
+<section class="section" id="i18n">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <span class="section-title">多國語系</span>
+    <span class="section-title-en">LOCALISATION</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+  <div class="callout info">
+    <strong>本表只收 CRM 負責的文案。</strong> 回放畫面內的所有文字（回放標示、SPIN 按鈕、結算、重看、讀不到該局的錯誤訊息）都在遊戲端的回放網址裡，<strong>由遊戲端維護自己的語系</strong>，不列入本表——見本節末的對照。
+  </div>
+  <div class="body-text">本功能的文案 key 一律以 <span class="tag-pill tag-opt">lb_</span> 為前綴，與抽寶箱的 <span class="tag-pill tag-opt">tb_</span>／<span class="tag-pill tag-opt">crm_</span>／<span class="tag-pill tag-opt">fab_</span> 分屬不同命名，<strong>不可混用</strong>。共 22 條 × 14 語系。</div>
+  <div class="callout warn">
+    <strong>本表為初譯，全部須送在地化審校。</strong> 14 個語系中只有繁體中文為原文，其餘皆為本文件初譯。上線前一律與既有語系表（Google Sheet〈CRM-抽寶箱〉同一份主檔）併同審校；審校結果若與本表不同，<strong>以審校後為準並回寫本表</strong>。
+  </div>
+  <div class="callout info">
+    <strong>參數化文案不可寫死。</strong> <span class="tag-pill tag-opt">{threshold}</span>、<span class="tag-pill tag-opt">{start}</span>、<span class="tag-pill tag-opt">{end}</span>、<span class="tag-pill tag-opt">{code}</span> 一律由程式帶入。門檻值（目前 50）只有 Server 端一個來源，<strong>不得在任何語系的文案裡直接寫數字</strong>。
+  </div>
+  <div class="i18n-wrap">
+  <table class="spec-table">
+    <thead><tr><th>KEY</th><th>使用位置</th><th>zh-Hant</th><th>en</th><th>zh-Hans</th><th>ja-JP</th><th>ko-KR</th><th>th</th><th>vi</th><th>id</th><th>my-MM</th><th>bn</th><th>pt</th><th>es-ES</th><th>tr-TR</th><th>ru</th></tr></thead>
+    <tbody>
+      <tr><td>lb_menu_entry</td><td class="dim">L1 浮動 icon 選單項目</td><td>排行榜</td><td>Leaderboard</td><td>排行榜</td><td>ランキング</td><td>랭킹</td><td>อันดับ</td><td>Bảng xếp hạng</td><td>Papan Peringkat</td><td>အဆင့်သတ်မှတ်ချက်</td><td>লিডারবোর্ড</td><td>Ranking</td><td>Clasificación</td><td>Sıralama</td><td>Рейтинг</td></tr>
+      <tr><td>lb_title</td><td class="dim">L2 標題列</td><td>排行榜</td><td>Leaderboard</td><td>排行榜</td><td>ランキング</td><td>랭킹</td><td>อันดับ</td><td>Bảng xếp hạng</td><td>Papan Peringkat</td><td>အဆင့်သတ်မှတ်ချက်</td><td>লিডারবোর্ড</td><td>Ranking</td><td>Clasificación</td><td>Sıralama</td><td>Рейтинг</td></tr>
+      <tr><td>lb_tab_daily</td><td class="dim">L2 Ⓑ 榜期切換</td><td>日榜</td><td>Daily</td><td>日榜</td><td>デイリー</td><td>일간</td><td>รายวัน</td><td>Hằng ngày</td><td>Harian</td><td>နေ့စဉ်</td><td>দৈনিক</td><td>Diário</td><td>Diario</td><td>Günlük</td><td>День</td></tr>
+      <tr><td>lb_tab_weekly</td><td class="dim">L2 Ⓑ 榜期切換</td><td>週榜</td><td>Weekly</td><td>周榜</td><td>ウィークリー</td><td>주간</td><td>รายสัปดาห์</td><td>Hằng tuần</td><td>Mingguan</td><td>အပတ်စဉ်</td><td>সাপ্তাহিক</td><td>Semanal</td><td>Semanal</td><td>Haftalık</td><td>Неделя</td></tr>
+      <tr><td>lb_tab_win</td><td class="dim">L2 Ⓑ 計分切換</td><td>贏分</td><td>Win</td><td>赢分</td><td>獲得額</td><td>당첨금</td><td>เงินรางวัล</td><td>Tiền thắng</td><td>Kemenangan</td><td>အနိုင်ရငွေ</td><td>জয়ের অঙ্ক</td><td>Prémio</td><td>Premio</td><td>Kazanç</td><td>Выигрыш</td></tr>
+      <tr><td>lb_tab_multi</td><td class="dim">L2 Ⓑ 計分切換</td><td>倍數</td><td>Multiplier</td><td>倍数</td><td>倍率</td><td>배수</td><td>ตัวคูณ</td><td>Hệ số nhân</td><td>Pengganda</td><td>အဆ</td><td>গুণক</td><td>Multiplicador</td><td>Multiplicador</td><td>Çarpan</td><td>Множитель</td></tr>
+      <tr><td>lb_tab_settled</td><td class="dim">L2 Ⓒ 狀態頁籤</td><td>上一期</td><td>Last period</td><td>上一期</td><td>前回</td><td>지난 회차</td><td>รอบก่อน</td><td>Kỳ trước</td><td>Periode lalu</td><td>ယခင်အကြိမ်</td><td>গত রাউন্ড</td><td>Período anterior</td><td>Período anterior</td><td>Önceki dönem</td><td>Прошлый период</td></tr>
+      <tr><td>lb_tab_live</td><td class="dim">L2 Ⓒ 狀態頁籤</td><td>進行中</td><td>Live</td><td>进行中</td><td>進行中</td><td>진행 중</td><td>กำลังดำเนินการ</td><td>Đang diễn ra</td><td>Berlangsung</td><td>လက်ရှိ</td><td>চলমান</td><td>Em curso</td><td>En curso</td><td>Devam ediyor</td><td>Идёт сейчас</td></tr>
+      <tr><td>lb_period</td><td class="dim">L2 Ⓒ 榜期起訖（上一期＝快照實際起訖；進行中＝本期起點與預定結算時間）</td><td>{start} – {end}（UTC+8）</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end}（UTC+8）</td><td>{start} – {end}（UTC+8）</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td><td>{start} – {end} (UTC+8)</td></tr>
+      <tr><td>lb_col_rank</td><td class="dim">L2 Ⓔ 欄位標題</td><td>名次</td><td>Rank</td><td>名次</td><td>順位</td><td>순위</td><td>อันดับ</td><td>Hạng</td><td>Peringkat</td><td>အဆင့်</td><td>স্থান</td><td>Posição</td><td>Puesto</td><td>Sıra</td><td>Место</td></tr>
+      <tr><td>lb_col_game</td><td class="dim">L2 Ⓔ 欄位標題</td><td>遊戲</td><td>Game</td><td>游戏</td><td>ゲーム</td><td>게임</td><td>เกม</td><td>Trò chơi</td><td>Gim</td><td>ဂိမ်း</td><td>গেম</td><td>Jogo</td><td>Juego</td><td>Oyun</td><td>Игра</td></tr>
+      <tr><td>lb_col_player</td><td class="dim">L2 Ⓔ 欄位標題</td><td>玩家</td><td>Player</td><td>玩家</td><td>プレイヤー</td><td>플레이어</td><td>ผู้เล่น</td><td>Người chơi</td><td>Pemain</td><td>ကစားသမား</td><td>প্লেয়ার</td><td>Jogador</td><td>Jugador</td><td>Oyuncu</td><td>Игрок</td></tr>
+      <tr><td>lb_badge_buy</td><td class="dim">L2 Ⓓ Ⓔ · L3 Ⓑ</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td><td>BUY</td></tr>
+      <tr><td>lb_btn_replay</td><td class="dim">L2 Ⓓ Ⓔ replay 按鈕</td><td>回放</td><td>Replay</td><td>回放</td><td>リプレイ</td><td>다시 보기</td><td>ดูย้อนหลัง</td><td>Xem lại</td><td>Putar ulang</td><td>ပြန်ကြည့်</td><td>রিপ্লে</td><td>Repetir</td><td>Repetir</td><td>Tekrar izle</td><td>Повтор</td></tr>
+      <tr><td>lb_rule_threshold</td><td class="dim">L2 Ⓕ 榜底說明</td><td>達 {threshold} 倍以上才會進榜</td><td>Only wins of {threshold}x or above enter the board</td><td>达 {threshold} 倍以上才会进榜</td><td>{threshold} 倍以上でランクインします</td><td>{threshold}배 이상만 랭킹에 오릅니다</td><td>ต้องได้ {threshold} เท่าขึ้นไปจึงจะติดอันดับ</td><td>Phải đạt từ {threshold} lần trở lên mới vào bảng</td><td>Hanya kemenangan {threshold}x ke atas yang masuk papan</td><td>{threshold} ဆအထက်မှသာ အဆင့်ဝင်ပါမည်</td><td>কেবল {threshold}x বা তার বেশি জয় বোর্ডে ওঠে</td><td>Só entram no ranking prémios de {threshold}x ou mais</td><td>Solo entran al ranking premios de {threshold}x o más</td><td>Sadece {threshold}x ve üzeri kazançlar listeye girer</td><td>В рейтинг попадают выигрыши от {threshold}x</td></tr>
+      <tr><td>lb_rule_tz</td><td class="dim">L2 Ⓕ 榜底說明</td><td>時間為 UTC+8</td><td>Times shown in UTC+8</td><td>时间为 UTC+8</td><td>時刻は UTC+8 表示</td><td>시간은 UTC+8 기준</td><td>เวลาแสดงเป็น UTC+8</td><td>Thời gian theo UTC+8</td><td>Waktu dalam UTC+8</td><td>အချိန်သည် UTC+8 ဖြစ်သည်</td><td>সময় UTC+8 অনুযায়ী</td><td>Horas em UTC+8</td><td>Horas en UTC+8</td><td>Saatler UTC+8</td><td>Время указано в UTC+8</td></tr>
+      <tr><td>lb_empty</td><td class="dim">L2 空榜狀態</td><td>本期還沒有成績達標</td><td>No qualifying wins this period yet</td><td>本期还没有成绩达标</td><td>今回はまだ対象の記録がありません</td><td>이번 회차에는 아직 기록이 없습니다</td><td>รอบนี้ยังไม่มีผลงานที่ผ่านเกณฑ์</td><td>Kỳ này chưa có kết quả đạt chuẩn</td><td>Belum ada kemenangan yang memenuhi syarat</td><td>ယခုအကြိမ်တွင် သတ်မှတ်ချက်ပြည့်မီသည့် ရလဒ်မရှိသေးပါ</td><td>এই রাউন্ডে এখনো যোগ্য জয় নেই</td><td>Ainda não há prémios elegíveis neste período</td><td>Aún no hay premios que califiquen en este período</td><td>Bu dönemde henüz uygun kazanç yok</td><td>В этом периоде пока нет подходящих выигрышей</td></tr>
+      <tr><td>lb_error</td><td class="dim">L2 載入失敗</td><td>載入失敗，請稍後再試</td><td>Failed to load. Please try again.</td><td>加载失败，请稍后再试</td><td>読み込みに失敗しました。しばらくしてからお試しください。</td><td>불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</td><td>โหลดไม่สำเร็จ กรุณาลองใหม่</td><td>Tải không thành công, vui lòng thử lại</td><td>Gagal memuat. Silakan coba lagi.</td><td>ဖွင့်၍မရပါ။ ခဏနေ ထပ်ကြိုးစားပါ။</td><td>লোড করা যায়নি। আবার চেষ্টা করুন।</td><td>Falha ao carregar. Tente novamente.</td><td>Error al cargar. Inténtalo de nuevo.</td><td>Yüklenemedi. Lütfen tekrar deneyin.</td><td>Не удалось загрузить. Попробуйте ещё раз.</td></tr>
+      <tr><td>lb_retry</td><td class="dim">L2 載入失敗</td><td>重試</td><td>Retry</td><td>重试</td><td>再試行</td><td>다시 시도</td><td>ลองใหม่</td><td>Thử lại</td><td>Coba lagi</td><td>ထပ်ကြိုးစားရန်</td><td>আবার চেষ্টা</td><td>Tentar de novo</td><td>Reintentar</td><td>Tekrar dene</td><td>Повторить</td></tr>
+      <tr><td>lb_close</td><td class="dim">L2／L3 關閉</td><td>關閉</td><td>Close</td><td>关闭</td><td>閉じる</td><td>닫기</td><td>ปิด</td><td>Đóng</td><td>Tutup</td><td>ပိတ်ရန်</td><td>বন্ধ</td><td>Fechar</td><td>Cerrar</td><td>Kapat</td><td>Закрыть</td></tr>
+      <tr><td>lb_rp_title</td><td class="dim">L3 Ⓐ 浮層標題</td><td>回放</td><td>Replay</td><td>回放</td><td>リプレイ</td><td>다시 보기</td><td>ดูย้อนหลัง</td><td>Xem lại</td><td>Putar ulang</td><td>ပြန်ကြည့်</td><td>রিপ্লে</td><td>Repetição</td><td>Repetición</td><td>Tekrar</td><td>Повтор</td></tr>
+      <tr><td>lb_rp_error</td><td class="dim">L3 iframe 載入失敗（CRM 顯示）</td><td>回放載入失敗，請稍後再試（{code}）</td><td>Replay failed to load. Please try again. ({code})</td><td>回放加载失败，请稍后再试（{code}）</td><td>リプレイを読み込めません。しばらくしてからお試しください。（{code}）</td><td>다시 보기를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요. ({code})</td><td>โหลดการเล่นซ้ำไม่สำเร็จ กรุณาลองใหม่ ({code})</td><td>Không tải được phần xem lại, vui lòng thử lại ({code})</td><td>Gagal memuat putar ulang. Silakan coba lagi. ({code})</td><td>ပြန်ကြည့်ရန် မဖွင့်နိုင်ပါ။ ခဏနေ ထပ်ကြိုးစားပါ။ ({code})</td><td>রিপ্লে লোড করা যায়নি। আবার চেষ্টা করুন। ({code})</td><td>Falha ao carregar a repetição. Tente novamente. ({code})</td><td>Error al cargar la repetición. Inténtalo de nuevo. ({code})</td><td>Tekrar yüklenemedi. Lütfen tekrar deneyin. ({code})</td><td>Не удалось загрузить повтор. Попробуйте ещё раз. ({code})</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="sub-title">不在本表的文案（遊戲端負責）</div>
+  <div class="body-text">下列文字都在回放網址內，<strong>由遊戲端提供並自行處理語系</strong>。CRM 不提供、也不覆蓋。</div>
+  <table class="spec-table">
+    <thead><tr><th style="width:26%">文字</th><th style="width:18%">語系</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>回放標示</td><td><strong>英文</strong></td><td class="dim">§06 三定案：英文呈現、放顯眼處、全程顯示。實際用字待遊戲端確認（Q5）。</td></tr>
+      <tr><td>SPIN 按鈕</td><td class="dim">遊戲端既有</td><td class="dim">沿用該遊戲原本的按鈕。</td></tr>
+      <tr><td>結算畫面文字</td><td class="dim">遊戲端既有</td><td class="dim"><strong>不得出現入帳、獲得、恭喜你贏得之類的字眼。</strong></td></tr>
+      <tr><td>再看一次</td><td class="dim">遊戲端既有</td><td class="dim">重看功能由回放網址自行提供。</td></tr>
+      <tr><td>讀不到該局的錯誤訊息</td><td class="dim">遊戲端既有</td><td class="dim">沿用既有錯誤訊息（如「資料錯誤，請稍後重試」）並顯示錯誤代碼，清單待確認（Q6）。</td></tr>
+      <tr><td>播放中斷線的訊息</td><td class="dim">遊戲端既有</td><td class="dim">沿用遊戲端既有斷線畫面，在回放網址內顯示；CRM 浮層不自動關（§06 六）。</td></tr>
+      <tr><td>免責說明</td><td class="dim">—</td><td class="dim"><strong>本版不做</strong>（§06 三）。日後若要補，走 CRM 語系表、新增 <span class="tag-pill tag-opt">lb_rp_notice</span>。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">語系清單</div>
+  <div class="body-text">與抽寶箱開發版規格書一致的 14 語系：zh-Hant、en、zh-Hans、ja-JP、ko-KR、th、vi、id、my-MM、bn、pt、es-ES、tr-TR、ru。<strong>新增語系時本表須同步補欄</strong>。</div>
+</section>
+
+<!-- ═══════════ 10 待確認事項 ═══════════ -->
+<section class="section" id="openq">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <span class="section-title">待確認事項</span>
+    <span class="section-title-en">OPEN QUESTIONS</span>
+    <span class="tag-pill tag-eng" style="margin-left:10px;">更新 2026-09-14</span>
+  </div>
+
+  <div class="body-text">
+    每一條都標明<strong>該問誰</strong>與<strong>沒答案會怎樣</strong>。已有答案的項目直接寫進對應章節並從本表移除，<strong>不留「已確認」的殘列</strong>。
+  </div>
+
+  <div class="callout success">
+    <strong>V1.1 已結案（共 6 項，均已寫入對應章節）</strong><br>
+    ① 各款遊戲的紀錄<strong>存得到</strong> spin → 觸發 → 逐局演完的完整過程——回放的最大技術風險解除。<br>
+    ② 榜上的玩家身分<strong>用 playID 遮罩後顯示</strong>，不需向站台索取帳號字串。<br>
+    ③ 已結算快照<strong>只保留上一期</strong>（<span class="tag-pill tag-opt">snapshot_keep = 1</span>）。<br>
+    ④ 進榜門檻<strong>定為 50 倍</strong>，日榜與週榜同值，由 Server 端調整。<br>
+    ⑤ 站長<strong>通知即可、不需取得同意</strong>（v1 不發獎，只是遊戲曝光區）。<br>
+    ⑥ 開關做在 <strong>Server 端、逐「專線 × 幣別」</strong>，初期不做進後台。
+  </div>
+
+  <div class="sub-title">一、需後端確認</div>
+
+  <div class="oq-item">
+    <div class="oq-owner">Q1 · 後端</div>
+    <div class="oq-q">
+      「<strong>專線</strong>」與「<strong>幣別</strong>」在資料上各用哪個欄位識別？<br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        本功能的榜、開關與回放權限<strong>全部以「專線 × 幣別」為單位</strong>，這兩個欄位取不到就什麼都做不了。<br>
+        <strong>一併確認</strong>：注單上能不能直接讀到線路代碼（如 <span class="tag-pill tag-opt">PB10</span>）與幣別代碼，還是需要另外查對照表。<br>
+        <strong>沒答案的後果</strong>：榜切不出來，§04 二整節無法實作。
+      </span>
+    </div>
+  </div>
+
+  <div class="oq-item">
+    <div class="oq-owner">Q2 · 後端</div>
+    <div class="oq-q">
+      <strong>哪些局後端給得出回放網址、給不出的原因有哪些？</strong><br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        §06 二明定由後端在回傳榜單時每筆附上已驗證的回放網址，前端只看「有沒有網址」決定畫不畫 replay 按鈕。<br>
+        <strong>要確認的是</strong>：後端依什麼判斷一筆給不給得出網址（該局有沒有完整過程紀錄？該遊戲有沒有提供回放網址？），會不會隨時間改變（例如紀錄被清掉、遊戲下架），以及網址的有效期與防偽造方式（被複製到別的工作階段能不能用）。<br>
+        <strong>沒答案的後果</strong>：前端不知道按鈕該不該畫，只能改成「一律可點、點了才知道」——那會讓玩家撲空。
+      </span>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:24px;">二、需遊戲端確認</div>
+
+  <div class="oq-item awc">
+    <div class="oq-owner">Q3 · 遊戲端</div>
+    <div class="oq-q">
+      <strong>回放網址的規格</strong>：網址格式、要帶哪些參數、token 怎麼傳？<br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        §06 已定做法為「浮層內用 iframe 載入回放網址、帶玩家當前工作階段的同一組 token」，但實際規格未定。<br>
+        <strong>一併確認</strong>：<br>
+        · 所有款遊戲是否都提供回放網址，還是只有部分（這會直接影響 Q2 的旗標）<br>
+        · 回放網址能不能被放在 iframe 內（有沒有禁止內嵌的限制）<br>
+        · 已下架的遊戲，回放網址是否仍然有效（§06 已定為<strong>一律只看後端有沒有給出網址</strong>）<br>
+        · <strong>「已按 SPIN」訊息</strong>：玩家按下 SPIN 時從 iframe 向父頁面送訊息的格式與時點（§06 二 ⑥、§08 E5）<br>
+        · <strong>以觸發局識別碼重演整段 Free Game</strong>：規格定為合併後的該局識別碼＝觸發局的識別碼（§03 一 STEP 04），回放網址拿觸發局識別碼能否播出整段<br>
+        · 網址被複製到其他工作階段時的防偽造方式（與 Q2 一併回）<br>
+        <strong>沒答案的後果</strong>：前端做不了 L3，回放整章無法開工。
+      </span>
+    </div>
+  </div>
+
+  <div class="oq-item awc">
+    <div class="oq-owner">Q4 · 遊戲端</div>
+    <div class="oq-q">
+      <strong>從榜單進入該款遊戲</strong>的 API 規格：帶同一組 token 呼叫專線遊戲網址，實際怎麼呼叫？<br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        對應 Story 第 8 條（v1 範圍內），做法見 §06 七。<br>
+        <strong>一併確認</strong>：前端怎麼知道某款遊戲已下架（§06 已定為下架時名稱不可點，但前端要拿得到下架狀態）。<br>
+        <strong>沒答案的後果</strong>：Story 8 做不出來，「用排行榜推廣其他遊戲」少掉最後一哩——玩家看到別款遊戲開大獎卻只能自己去找。
+      </span>
+    </div>
+  </div>
+
+  <div class="oq-item awc">
+    <div class="oq-owner">Q5 · 遊戲端</div>
+    <div class="oq-q">
+      <strong>英文回放標示</strong>的實際文字與位置，以及何時能完成？<br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        §06 三已定由遊戲端做在回放畫面內、英文呈現、放顯眼處、全程顯示。<br>
+        <strong>要確認的是</strong>：實際用字（例如 <span class="tag-pill tag-opt">REPLAY</span>）、擺放位置、以及是<strong>所有款遊戲一次做完</strong>還是逐款補上。<br>
+        <strong>沒答案的後果</strong>：這是本功能唯一的誤會防線（本版已決定不做免責說明文字）。若某款遊戲的回放沒有標示就上線，該款的客訴風險會集中爆發。
+      </span>
+    </div>
+  </div>
+
+  <div class="oq-item awc">
+    <div class="oq-owner">Q6 · 遊戲端／後端</div>
+    <div class="oq-q">
+      <strong>現成的錯誤訊息與錯誤代碼清單</strong>在哪裡？<br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        §06 六定為：讀不到該局資料時，<strong>沿用既有的錯誤訊息</strong>（如「資料錯誤，請稍後重試」）並顯示錯誤代碼。<br>
+        <strong>要確認的是</strong>：這份清單的來源、代碼格式、以及有沒有現成的多語系版本可沿用。<br>
+        <strong>沒答案的後果</strong>：錯誤畫面做不出來，且客服接到反應時問不到代碼、只能自己翻紀錄。
+      </span>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:24px;">三、需營運確認</div>
+
+  <div class="oq-item pm">
+    <div class="oq-owner">Q7 · 營運</div>
+    <div class="oq-q">
+      <strong>專線清單由誰維護？</strong> v1 要先開哪幾個「專線 × 幣別」？<br>
+      <span style="font-size:13px;color:var(--text-secondary);">
+        <span class="tag-pill tag-opt">board_enabled</span> 預設為否，必須逐一明確開啟（§07 一）。<br>
+        <strong>要確認的是</strong>：<br>
+        · v1 上線首批要開哪些組合（例：<span class="tag-pill tag-opt">PB10 × PHP</span>）<br>
+        · 日後新專線接入時，由誰判斷它是專線、由誰通知 Server 開啟<br>
+        · 一條線路從專線變成共線（底下多接了站台）時，誰負責關掉<br>
+        <strong>沒答案的後果</strong>：上線當天不知道要開哪些，或日後共線被誤開、榜上混進多個站台的玩家。
+      </span>
+    </div>
+  </div>
+
+  <div class="sub-title" style="margin-top:24px;">四、後續待辦（非待確認）</div>
+
+  <div class="callout warn">
+    <strong>《CRM Q3–Q4 開發順序提案》需修訂</strong>（已裁示執行）。該提案 V1.6 的兩處敘述與本規格書不一致，見 §01 末：<br>
+    ① §04 波2 的「日賽 net win 計分」→ 應改為單局贏分榜與單局倍數榜<br>
+    ② §01 曝光引擎的「全線路排行榜」→ 應改為專線 × 幣別，跨站台曝光取消<br>
+    該提案已對 CEO／COO／站長說明過，修訂後<strong>建議一併向相關人員說明改動</strong>——「全線路」改成「專線內」是曝光範圍的實質縮小。
+  </div>
+
+  <div class="callout">
+    <strong>v2 開發前的前置條件</strong>：<span class="tag-pill tag-opt">snapshot_keep</span> 目前為 1（只留上一期）。v2 要依榜單發獎時，<strong>必須先把這個值調大</strong>，否則發獎當天會發現沒有歷史資料可查、玩家爭議也回溯不了。此項須在 v2 開案時第一個處理。
+  </div>
+
+  <div class="callout">
+    <strong>多國語系待審校</strong>：§09 的 22 條文案為本文件初譯，除繁體中文外全部需送在地化審校，與既有語系表併同處理。
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<div class="doc-footer">
+  排行榜與大獎回放 開發版規格書 · DEV V1.2 · CONFIDENTIAL 2026<br>
+  Force / Combo Gaming
+</div>
+
+</div><!-- /main-wrap -->
+
+<!-- ═══════════ LIGHTBOX ═══════════ -->
+<div class="lb-overlay" id="lb-overlay">
+  <button class="lb-close" id="lb-close" type="button" aria-label="關閉">✕</button>
+  <img id="lb-img" alt="">
+</div>
+
+<script>
+// ═══════════ LIGHTBOX：點截圖在文件內放大，不另開視窗 ═══════════
+(function(){
+  var ov = document.getElementById('lb-overlay');
+  var im = document.getElementById('lb-img');
+  var cl = document.getElementById('lb-close');
+  if (!ov || !im) return;
+
+  function open(src, alt){
+    im.src = src;
+    im.alt = alt || '';
+    ov.classList.add('on');
+  }
+  function close(){
+    ov.classList.remove('on');
+    im.src = '';
+  }
+
+  document.querySelectorAll('.shot-frame img').forEach(function(img){
+    img.addEventListener('click', function(){ open(this.src, this.alt); });
+  });
+
+  if (cl) cl.addEventListener('click', close);
+  ov.addEventListener('click', function(e){ if (e.target === ov) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+})();
+</script>
+<script>
+// ═══════════ THEME TOGGLE（亮/暗主題；獨立 key：spec-theme） ═══════════
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+
+  function apply(theme){
+    root.setAttribute('data-theme', theme);
+    if (btn) btn.setAttribute('aria-label', theme === 'light' ? '切換為暗色主題' : '切換為亮色主題');
+  }
+
+  // 以 <head> inline script 已設定的 data-theme 為準
+  apply(root.getAttribute('data-theme') || 'light');
+
+  // 手動切換 → 反轉主題並寫入 localStorage（之後以使用者選擇為準）
+  if (btn) {
+    btn.addEventListener('click', function(){
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      apply(next);
+      try { localStorage.setItem('spec-theme', next); } catch (e) {}
+    });
+  }
+
+  // 未手動覆蓋過時，跟隨系統主題變化；手動切換過（已有 spec-theme）就不再跟隨
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onChange = function(e){
+      var hasPref;
+      try { hasPref = localStorage.getItem('spec-theme'); } catch (err) { hasPref = null; }
+      if (hasPref) return;
+      apply(e.matches ? 'dark' : 'light');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
+})();
+
+// ═══════════ LAYOUT TOGGLE（頂部列／側邊欄模式；獨立 key：spec-layout） ═══════════
+function setLayout(mode) {
+  document.body.className = 'layout-' + mode;
+  document.getElementById('btn-side').classList.toggle('active', mode === 'side');
+  document.getElementById('btn-top').classList.toggle('active', mode === 'top');
+  localStorage.setItem('spec-layout', mode);
+}
+
+// 初始化：讀取上次選擇的 layout
+(function(){
+  const saved = localStorage.getItem('spec-layout') || 'side';
+  setLayout(saved);
+})();
+
+// ═══════════ 日期動態產生 ═══════════
+(function(){
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const dateStr = y + '/' + m + '/' + d;
+  const sidebarDate = document.getElementById('sidebar-date');
+  const topnavDate  = document.getElementById('topnav-date');
+  if (sidebarDate) sidebarDate.textContent = dateStr;
+  if (topnavDate)  topnavDate.textContent  = dateStr;
+})();
+
+// ═══════════ SIDEBAR：點擊章節 toggle 展開/收合（不強制收合其他） ═══════════
+document.querySelectorAll('.sidebar-section-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const section = this.closest('.sidebar-section');
+    section.classList.toggle('open');
+  });
+});
+
+function navTo(id) {
+  const target = document.getElementById(id);
+  if (target) {
+    const offset = document.body.classList.contains('layout-top') ? 60 : 20;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+// ═══════════ SCROLL SPY ═══════════
+const sections = document.querySelectorAll('.section');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+
+  // Top nav highlight
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.getAttribute('href') === '#' + current);
+  });
+
+  // Sidebar highlight：只更新 active 樣式，不動展開/收合狀態
+  document.querySelectorAll('.sidebar-section-btn').forEach(btn => {
+    const sectionEl = btn.closest('.sidebar-section');
+    btn.classList.toggle('active', sectionEl.dataset.section === current);
+  });
+
+  // Sidebar sub-link highlight
+  document.querySelectorAll('.sidebar-sub-link').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+// ═══════════ TABS ═══════════
+function switchTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ═══════════ SMOOTH SCROLL (top nav) ═══════════
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
