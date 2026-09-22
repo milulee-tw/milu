@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抽寶箱／新手腳本 活動排程計劃表 V1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF;--bg2:#F7F7F7;--tx:#1A1A1A;--tx2:#434343;--tx3:#767676;--bd:#D6D6D6;--accent:#E92B0D;--warn:#B42318;--ok:#1B7F4B;--warnbg:#FEF3F2;--okbg:#ECFDF3;--infobg:#F2F6FF;--info:#1D4ED8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"DM Sans","Noto Sans TC",sans-serif;font-size:16px;line-height:1.7}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px}
+header{border-bottom:1px solid var(--bd);padding-bottom:20px;margin-bottom:28px}
+h1{font-size:30px;margin:0 0 6px}
+.meta{color:var(--tx3);font-size:14px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+nav a{border:1px solid var(--bd);border-radius:999px;padding:4px 14px;font-size:14px;color:var(--tx2);text-decoration:none}
+nav a:hover{border-color:var(--accent);color:var(--accent)}
+h2{font-size:22px;margin:48px 0 12px;padding-top:12px;border-top:1px solid var(--bd)}
+h2 span{color:var(--accent);margin-right:10px;font-weight:700}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:8px 0;color:var(--tx2)}
+.tw{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:640px}
+th,td{border:1px solid var(--bd);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--bg2);font-weight:700;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.card{border:1px solid var(--bd);border-radius:12px;padding:16px 20px;margin:14px 0}
+.warn{background:var(--warnbg);border-color:#FDA29B}
+.warn b:first-child{color:var(--warn)}
+.ok{background:var(--okbg);border-color:#A6F4C5}
+.info{background:var(--infobg);border-color:#B2CCFF}
+.tag{display:inline-block;border-radius:999px;padding:1px 10px;font-size:13px;border:1px solid var(--bd);color:var(--tx2);white-space:nowrap}
+.tag.r{border-color:#FDA29B;color:var(--warn);background:var(--warnbg)}
+.tag.g{border-color:#A6F4C5;color:var(--ok);background:var(--okbg)}
+.tag.b{border-color:#B2CCFF;color:var(--info);background:var(--infobg)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid3 .card{margin:0}
+.big{font-size:22px;font-weight:700}
+.small{font-size:14px;color:var(--tx3)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;margin:14px 0}
+.flow div{flex:1 1 130px;border:1px solid var(--bd);border-radius:12px;padding:10px 12px;font-size:14px;background:var(--bg2)}
+.flow div b{display:block;color:var(--accent);font-size:13px}
+ul{margin:6px 0;padding-left:22px;color:var(--tx2)}
+li{margin:3px 0}
+.chk td:first-child{width:36px;text-align:center}
+@media(max-width:760px){.grid3{grid-template-columns:1fr}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>抽寶箱／新手腳本 活動排程計劃表</h1>
+  <div class="meta">V1.0 ｜ 2026-09-21 ｜ 製表：Milu ｜ 場域：UFA Game Hall（THB）｜ 時間一律 UTC+8</div>
+  <nav>
+    <a href="#s1">01 總覽</a><a href="#s2">02 第 1 波 9/24</a><a href="#s3">03 三客群數值對照</a>
+    <a href="#s4">04 第 2 波 金蛋</a><a href="#s5">05 第 3 波 聖誕</a><a href="#s6">06 新手腳本</a>
+    <a href="#s7">07 撞期與風險</a><a href="#s8">08 待確認</a>
+  </nav>
+</header>
+
+<!-- ───────── 01 ───────── -->
+<h2 id="s1"><span>01</span>總覽</h2>
+<p>本表涵蓋兩件互相獨立的事：<b>抽寶箱三波活動</b>（§02～§05）與<b>新手腳本上線與後續遊戲排隊</b>（§06）。兩者只在「時間重疊」這一點上有關聯，見 §07。</p>
+
+<div class="tw"><table>
+<tr><th>日期</th><th>事項</th><th>類別</th><th>目的</th><th>狀態</th></tr>
+<tr><td>9/23（三）版更</td><td>新手腳本上線；PMS PM 同步打 JP 引新手進遊戲</td><td><span class="tag b">新手腳本</span></td><td>看效果與數據是否正常</td><td>目標日</td></tr>
+<tr><td>9/24（四）14:00 ～ 9/30（三）23:59:59</td><td>抽寶箱第 1 波：常駐寶箱主題，小／中／大客三套模板</td><td><span class="tag g">抽寶箱</span></td><td><b>純驗功能正常</b>，不做成效判定、不留對照組</td><td>DEV V1.35 已複測通過</td></tr>
+<tr><td>10/1（四）</td><td>第 1 波結束檢核；決定第 2 波能不能照原數值開</td><td><span class="tag g">抽寶箱</span></td><td>放行關卡</td><td>—</td></tr>
+<tr><td>10/26（一）～ 11/1（日）</td><td>抽寶箱第 2 波：金蛋主題（gold_egg）</td><td><span class="tag g">抽寶箱</span></td><td>驗換皮流程＋第一次看成效</td><td>美術、前端待啟動</td></tr>
+<tr><td>12/21（一）～ 12/27（日）</td><td>抽寶箱第 3 波：聖誕主題（xmas_gift）</td><td><span class="tag g">抽寶箱</span></td><td>節慶檔期</td><td>美術、前端待啟動</td></tr>
+<tr><td>10 月起陸續</td><td>新手腳本納入遊戲開發 SOP，依序排入 7 款遊戲</td><td><span class="tag b">新手腳本</span></td><td>擴大涵蓋</td><td>日期待機率組回覆</td></tr>
+</table></div>
+<p class="small">第 2、3 波起訖日為本表建議值（週一開、週日收，整週 7 天），你可以直接改。</p>
+
+<!-- ───────── 02 ───────── -->
+<h2 id="s2"><span>02</span>第 1 波：9/24 功能驗證</h2>
+
+<div class="grid3">
+  <div class="card"><div class="small">活動期間</div><div class="big">9/24 14:00 → 9/30 23:59:59</div><p class="small">7 個活動日；首日只有 10 小時，首日數字不納入任何比較。</p></div>
+  <div class="card"><div class="small">後台設定方式</div><div class="big">1 檔活動 × 3 條標籤規則</div><p class="small">同一線路同時段只能有一檔活動（重疊硬擋），所以三客群是同一檔活動裡的三條規則，不是三檔活動。</p></div>
+  <div class="card"><div class="small">每日重置</div><div class="big">00:00</div><p class="small">主題：treasure_box（現成，不需美術／前端）。</p></div>
+</div>
+
+<div class="card info"><b>為什麼結束時間建議設 9/30 23:59:59，而不是 10/1 14:00：</b>活動在一天的中間結束，玩家當天已解鎖、還沒翻的次數會直接消失，容易變成客訴。收在一天的最後一秒最乾淨。若你堅持整整 168 小時，可改 10/1 23:59:59（變 8 個活動日）。</div>
+
+<h3>倒數三天的工作</h3>
+<div class="tw"><table>
+<tr><th>日期</th><th>工作</th><th>職能</th><th>完成的定義</th></tr>
+<tr><td>9/21（一）</td><td>三套模板數值定版（§03 中客門檻要先決定）</td><td>企劃（Milu）＋機率（麒融）</td><td>試算表不再改動，通知營運可以開始填</td></tr>
+<tr><td>9/21（一）</td><td>確認 THB 錢包最小派獎單位（小客最小獎 0.2 THB）</td><td>後端（Wayne／Eric）</td><td>回覆「0.2 THB 可正常入帳、不會被四捨五入成 0」</td></tr>
+<tr><td>9/22（二）</td><td>後台建立小／中／大三個模板；建立活動、設三條標籤規則、適用路線選 UFA；儲存草稿</td><td>營運</td><td>三個模板 RTP 驗算各為 1.00%；草稿快照內容與試算表逐格相同</td></tr>
+<tr><td>9/22（二）</td><td>確認後端標籤 API 回傳的標籤名稱，與活動規則選到的是同一組</td><td>後端＋營運</td><td>用三個測試帳號（各一客群）確認各自拿到對應模板</td></tr>
+<tr><td>9/23（三）</td><td>送審 → Admin 於審查頁核准（生效時點：因開始時間已設 9/24 14:00，選「立即」即可）</td><td>營運＋Admin</td><td>活動狀態＝已核准；送審狀態＝否</td></tr>
+<tr><td>9/23（三）</td><td>版更後在正式環境冒煙測試（測試帳號走完：累積押注 → 解鎖 → 翻格 → 派獎入帳 → 歷程可查）</td><td>QA</td><td>三客群各走一輪，無錯誤</td></tr>
+<tr><td>9/24（四）14:00</td><td>活動自動轉「運行中」；14:00～16:00 盯場</td><td>企劃＋後端＋QA</td><td>玩家端 icon 出現、第一筆真實派獎入帳正確</td></tr>
+</table></div>
+
+<h3>活動期間每日檢查（每天 10:00，看前一個活動日）</h3>
+<div class="tw"><table class="chk">
+<tr><th>#</th><th>檢查項目</th><th>正常的樣子</th><th>異常時</th></tr>
+<tr><td>1</td><td><b>逐客群對帳</b>：各客群「實際派獎 ÷ 參與玩家總押注」</td><td>落在 0.7%～1.1%（模板理論值最高點 1.02%）</td><td>超過 1.5% 立即暫停活動查因</td></tr>
+<tr><td>2</td><td><b>模板發放正確性</b>：抽 20 位玩家，核對其標籤與實際拿到的模板</td><td>20 位全對</td><td>有任何一位錯 → 立即暫停（這是發錯真金的那一種錯）</td></tr>
+<tr><td>3</td><td>派獎失敗／逾時筆數、人工對帳佇列筆數</td><td>0 或個位數，且重試後清空</td><td>佇列有殘留 → 後端當日處理</td></tr>
+<tr><td>4</td><td>同一格重複派獎</td><td>0 筆</td><td>有 → 立即暫停</td></tr>
+<tr><td>5</td><td>00:00 重置：前一日盤面清空、標籤異動於重置後才生效</td><td>符合規格</td><td>記錄、不暫停</td></tr>
+<tr><td>6</td><td>客服單：看不到 icon、點了沒反應、金額不對</td><td>—</td><td>逐筆歸類，10/1 檢核用</td></tr>
+</table></div>
+
+<div class="card warn"><b>暫停的代價要先講好：</b>依 DEV V1.24，活動暫停對全體立即生效，玩家<b>已解鎖未翻的次數會被沒收</b>（正在派獎中的那一筆不中斷）。所以暫停只用在上表標「立即暫停」的三種情況，其餘一律記錄、不暫停。</div>
+
+<h3>10/1 結束檢核（放行第 2 波的條件）</h3>
+<ul>
+<li>硬性：派獎總帳對得起來（差額 0）；模板發錯 0 件；重複派獎 0 件。</li>
+<li>硬性：三客群實際派獎比例皆 ≤ 1.1%。</li>
+<li>觀察（不當成效結論）：各客群「開到第幾格」的人數分布——這份分布是第 2 波調門檻的唯一依據。</li>
+<li>軟性：客服與營運回饋「後台三套模板建立流程」卡在哪。</li>
+</ul>
+
+<!-- ───────── 03 ───────── -->
+<h2 id="s3"><span>03</span>三客群數值對照</h2>
+<p>數值來源：〈抽寶箱_貨幣設定〉試算表與你 9/21 提供的截圖（THB）。我做了兩件事：①驗算模板本身；②拿客群當日注額 P50 去對門檻。匯率用同一份試算表〈匯率表〉的 1 THB＝0.0269 USD（1 USD≈37.2 THB）。</p>
+
+<h3>① 模板驗算：通過</h3>
+<div class="tw"><table>
+<tr><th>客群</th><th class="n">累積最大押注</th><th>獎項（5 格／2 格／1 格／1 格）</th><th class="n">獎池合計</th><th class="n">翻完 9 格 RTP</th><th class="n">途中最高 RTP</th></tr>
+<tr><td>小客</td><td class="n">500</td><td>0.2／0.5／1／2</td><td class="n">5</td><td class="n">1.00%</td><td class="n">1.02%（第 8 格）</td></tr>
+<tr><td>中客</td><td class="n">1,500</td><td>0.6／1.5／3／6</td><td class="n">15</td><td class="n">1.00%</td><td class="n">1.02%（第 8 格）</td></tr>
+<tr><td>大客</td><td class="n">5,000</td><td>2／5／10／20</td><td class="n">50</td><td class="n">1.00%</td><td class="n">1.02%（第 8 格）</td></tr>
+</table></div>
+<p class="small">門檻比例 0.15／0.12／0.1×6／0.13 合計 1.00；逐格 RTP 0.74%→1.02%→1.00% 與試算表一致。此驗算假設 9 格抽中機率均等；若「第幾抽權重」不是均等，早退玩家的 RTP 會偏離，需由機率組另驗。</p>
+
+<h3>② 對照客群 P50：中客偏緊</h3>
+<div class="tw"><table>
+<tr><th>客群</th><th class="n">當日注額 P50</th><th class="n">換算 THB</th><th class="n">P50 玩家能開幾格</th><th class="n">開第 1 格約需局數</th><th class="n">全開需 P50 的幾倍</th></tr>
+<tr><td>小客</td><td class="n">6.7 USD</td><td class="n">≈ 249</td><td class="n">4 格（235）</td><td class="n">≈ 30 局</td><td class="n">2.0 倍</td></tr>
+<tr><td><b>中客</b></td><td class="n">14.2 USD</td><td class="n">≈ 528</td><td class="n"><b>2 格（405）</b></td><td class="n"><b>≈ 63 局</b></td><td class="n"><b>2.8 倍</b></td></tr>
+<tr><td>大客</td><td class="n">95.8 USD</td><td class="n">≈ 3,561</td><td class="n">6 格（3,350）</td><td class="n">≈ 56 局</td><td class="n">1.4 倍</td></tr>
+</table></div>
+
+<div class="card warn"><b>問題：</b>中客的一般玩家一天只開得到 2 格，比小客（4 格）還少，第一格也要打 63 局才看得到（小客 30 局）。原因是中客這群的注額分布很寬（7 日 15～200 USD），但當日 P50 只有 14.2 USD，1,500 THB 對多數中客是搆不到的。第 1 波只驗功能，這不會造成事故，但會讓「中客這條規則」的翻格樣本很少，後半盤（第 5～9 格）幾乎驗不到。</div>
+
+<div class="tw"><table>
+<tr><th></th><th>方案甲：照現有數值開</th><th>方案乙：中客累積最大押注 1,500 → 1,000</th></tr>
+<tr><td>P50 中客能開</td><td>2 格</td><td>4 格（累積 150／270／370／470）</td></tr>
+<tr><td>獎項</td><td>0.6／1.5／3／6</td><td>0.4／1／2／4（RTP 仍 1.00%）</td></tr>
+<tr><td>優點</td><td>不用重算、不用再跟機率組對一次</td><td>三客群的體驗一致（P50 都開 4～6 格）；後半盤驗得到</td></tr>
+<tr><td>缺點</td><td>中客後半盤樣本少；10/1 的分布資料對中客參考價值低</td><td>今天要改試算表；中客最終大獎由 6 降為 4 THB</td></tr>
+</table></div>
+<p>我的建議是乙，但這是你和麒融的數值決定；本表其他章節不受影響。</p>
+
+<!-- ───────── 04 ───────── -->
+<h2 id="s4"><span>04</span>第 2 波：10/26 金蛋主題</h2>
+<p>gold_egg 已在後台主題下拉的四個選項內，美術描述也已寫在規格 §04（P6-A／P6-B）；缺的是<b>美術資產</b>與<b>前端接上素材</b>（規格定節慶主題採前端寫死，所以一定要跟一次版更）。</p>
+
+<div class="flow">
+  <div><b>10/9（五）</b>美術交付整組 theme_gold_egg_* 資產</div>
+  <div><b>10/16（五）</b>前端接完、交 QA</div>
+  <div><b>10/19～20</b>QA 驗換皮（icon／背景／9 格／開獎演出／文案）</div>
+  <div><b>10/21（三）</b>版更</div>
+  <div><b>10/22～23</b>後台建活動、送審、核准</div>
+  <div><b>10/26（一）00:00</b>活動開始</div>
+</div>
+<p class="small">以上倒推假設版更固定在週三。若 10/21 趕不上，下一個週三是 10/28，活動就得整檔往後移一週。</p>
+
+<div class="tw"><table>
+<tr><th>工作</th><th>職能</th><th>備註</th></tr>
+<tr><td>金蛋主題整組資產（整張重畫類＋重上色類）</td><td>美術（Grace／千又）</td><td>數量依規格〈多主題資產增量換算表〉</td></tr>
+<tr><td>前端接 gold_egg 素材組</td><td>Web 前端（坤佑／Yuki）</td><td>與 FREE SPIN 卡＋背包上線同一批人，見 §07</td></tr>
+<tr><td>金蛋版文案 14 語系是否已在語系主檔</td><td>企劃</td><td>「每日金蛋／敲開金蛋／恭喜敲中黃金大獎！」需核對</td></tr>
+<tr><td>依第 1 波分布調整三套門檻</td><td>企劃＋機率</td><td>10/2～10/9</td></tr>
+<tr><td>是否留對照組（第一次看成效）</td><td>企劃＋數據</td><td><b>待你決定</b>：原定案成效判定需「2 週＋對照組」，7 天檔期不足以下結論</td></tr>
+</table></div>
+
+<!-- ───────── 05 ───────── -->
+<h2 id="s5"><span>05</span>第 3 波：12/21 聖誕主題</h2>
+<div class="flow">
+  <div><b>12/4（五）</b>美術交付 theme_xmas_gift_*</div>
+  <div><b>12/11（五）</b>前端接完</div>
+  <div><b>12/14～15</b>QA</div>
+  <div><b>12/16（三）</b>版更</div>
+  <div><b>12/17～18</b>建活動、送審、核准</div>
+  <div><b>12/21（一）00:00</b>活動開始</div>
+</div>
+<p>時間充裕。唯一要注意：原 Q3–Q4 節奏「寶箱掛卡＋加倍券」排在 12 月上旬。聖誕波若要用 FREE SPIN 卡當獎項，必須等掛卡上線；若只發現金獎，兩者互不相干。<b>聖誕波獎項要不要含 FS 卡，建議 11 月中前決定。</b></p>
+
+<!-- ───────── 06 ───────── -->
+<h2 id="s6"><span>06</span>新手腳本（另一件事）</h2>
+<p>新手腳本＝新玩家進某款遊戲的前 150 局，不走原生隨機，而是從預先篩過的結果組（整組 RTP 85%～115%）裡取用，目的是去掉極端的開局體驗。現行文件 V5.1。</p>
+
+<h3>9/23 上線</h3>
+<div class="tw"><table class="chk">
+<tr><th>#</th><th>上線前要確認</th><th>職能</th><th>為什麼</th></tr>
+<tr><td>1</td><td><b>打 JP 的線路已開「新手腳本線路開關」，且該線路幣別在門檻表內</b></td><td>後端＋PMS PM</td><td>不然 JP 引來的新手根本拿不到腳本，這次看不到任何數據</td></tr>
+<tr><td>2</td><td>S8 的兩條驗收情境有跑過：同一個結果不會被取兩次</td><td>QA＋後端</td><td>V5.0 裁決不加「已用標記」欄位，全靠逐局紀錄同步寫入撐著；壞掉時不報錯、玩家看不出來，只有事後對帳才發現</td></tr>
+<tr><td>3</td><td>門檻表用的是 9/17 CSV 定版（兩天內改過兩次）</td><td>營運＋後端</td><td>高Bet門檻／不跑新手腳本門檻填錯會整批分錯池</td></tr>
+<tr><td>4</td><td>2,000 套結果組已通過全量不重疊比對</td><td>機率（麒融）</td><td>驗收條件</td></tr>
+</table></div>
+
+<h3>上線後「數據是否正常」看什麼</h3>
+<div class="tw"><table>
+<tr><th>看什麼</th><th>正常</th><th>時點</th></tr>
+<tr><td>新玩家首局即建立綁定列；押注 ≥ 不跑門檻者走原生隨機、不建腳本</td><td>抽查 20 位全對</td><td>9/23 當天</td></tr>
+<tr><td>同一套內 result_index 重複筆數</td><td><b>0</b></td><td>每日</td></tr>
+<tr><td>已跑完 150 局的玩家，其整組 RTP</td><td>全部落在 85%～115%</td><td>每日</td></tr>
+<tr><td>低額池／高額池／不跑腳本 三段人數比例</td><td>記錄即可</td><td>首週</td></tr>
+<tr><td>大獎限制觸發次數</td><td>記錄即可</td><td>首週</td></tr>
+<tr><td>手數（有押注的局數）對照上線前新手</td><td>成效指標；第一次正式檢視＝上線後第 8 週</td><td>11/18 前後</td></tr>
+</table></div>
+
+<div class="card warn"><b>打 JP 會改變新手的組成：</b>被 JP 吸進來的玩家，下注金額與動機跟平常自然進來的新手不同（可能為了 JP 資格押得比較高，落到高額池或直接超過不跑門檻）。所以 9/23 這批的手數，<b>不能直接跟上線前的自然新手比</b>；建議這批在分析時另外標記為「JP 導入批」。這一週適合驗「功能與數據正確」，不適合下「腳本有沒有效」的結論。</div>
+
+<h3>後續遊戲排隊（納入正常遊戲開發 SOP）</h3>
+<div class="tw"><table>
+<tr><th class="n">順位</th><th>遊戲</th><th>前置條件</th><th>目標版更</th></tr>
+<tr><td class="n">0</td><td>Lucky Paws 財神貓</td><td>—</td><td>9/23</td></tr>
+<tr><td class="n">1</td><td>富豪 <span class="tag r">優先</span></td><td>無</td><td rowspan="2">待機率組回覆（建議：Lucky Paws 首週數據確認正常後啟動）</td></tr>
+<tr><td class="n">2</td><td>小綠人 <span class="tag r">優先</span></td><td>無</td></tr>
+<tr><td class="n">3</td><td>宙斯</td><td>無</td><td>待排</td></tr>
+<tr><td class="n">4</td><td>星際動物</td><td>無</td><td>待排</td></tr>
+<tr><td class="n">5</td><td>衝浪鯊魚</td><td>無</td><td>待排</td></tr>
+<tr><td class="n">6</td><td>摩艾假期</td><td>無</td><td>待排</td></tr>
+<tr><td class="n">—</td><td>祖馬</td><td><b>需先改機率、調降 SD</b>（波動太大時，150 局落在 85%～115% 的通過率會很低）</td><td>改完機率後插入，不占順位</td></tr>
+</table></div>
+<p class="small">祖馬我放在順位外：它卡的是另一項工作（改機率），排在中間會擋住後面的遊戲。你列的順序其餘照舊。</p>
+
+<h3>每款遊戲要走的步驟</h3>
+<div class="flow">
+  <div><b>1 機率</b>跑快測（百萬局以上）</div>
+  <div><b>2 機率</b>截取 2,000 套（每池 1,000）、整組 RTP 85%～115%、0 重疊；不夠就跑更多局</div>
+  <div><b>3 機率＋QA</b>不重疊全量程式比對；邊界抽驗</div>
+  <div><b>4 後端</b>匯入結果組、開線路開關</div>
+  <div><b>5 QA</b>S1～S9 驗收</div>
+  <div><b>6</b>週三版更</div>
+</div>
+<p>新遊戲的 SOP 要加的只有步驟 1～3（機率組的工作量），步驟 4～6 是既有機制重複使用。<b>每款需要機率組幾個工作天，要請麒融估</b>——這個數字決定上表的日期。</p>
+
+<!-- ───────── 07 ───────── -->
+<h2 id="s7"><span>07</span>撞期與風險</h2>
+<div class="tw"><table>
+<tr><th>#</th><th>風險</th><th>影響</th><th>處理</th></tr>
+<tr><td>1</td><td><b>9/23 新手腳本與 9/24 抽寶箱差一天上線</b>，小客定義含「近 30 天無資料」＝新玩家，兩者落在同一批人</td><td>抽寶箱的門檻會鼓勵多打幾局，新手腳本的成效指標正好是「手數」→ 9/24～9/30 進來的新手，手數會被抽寶箱墊高</td><td>第 1 波只驗功能，可接受；但數據組要把 9/24～9/30 進來的新手<b>另外標記</b>，第 8 週檢視時不要混算</td></tr>
+<tr><td>2</td><td>10 月上旬 FREE SPIN 卡＋背包上線，與金蛋主題搶同一批前端／QA</td><td>10/21 版更趕不上 → 第 2 波延到 11/2</td><td>10/2 前由你決定優先順序；金蛋的前端工作量小（只接素材），建議排在 FS 卡上線後那一週</td></tr>
+<tr><td>3</td><td>gold_egg 規格定調是復活節（金＋嫩綠、粉彩草原）</td><td>10 月底出現春天視覺</td><td>已建議活動名稱用中性的「金蛋週」，不掛萬聖節</td></tr>
+<tr><td>4</td><td>後台原型 v2 仍積欠 V1.31～V1.35 未更新</td><td>營運照原型學操作會對不上實際後台</td><td>9/22 營運建模板時以實際後台為準，不看原型</td></tr>
+<tr><td>5</td><td>模板為硬刪除、「清除全部」無二次確認</td><td>活動進行中誤刪不影響現有活動（活動吃自有快照），但查不回原模板</td><td>9/22 提醒營運；活動期間不動這三個模板</td></tr>
+</table></div>
+
+<!-- ───────── 08 ───────── -->
+<h2 id="s8"><span>08</span>待確認</h2>
+<div class="tw"><table>
+<tr><th>#</th><th>問題</th><th>問誰</th><th>最晚</th></tr>
+<tr><td>1</td><td>中客累積最大押注用 1,500 還是 1,000（§03）</td><td>Milu＋麒融</td><td>9/21</td></tr>
+<tr><td>2</td><td>THB 能否派 0.2 這種小數金額</td><td>後端</td><td>9/21</td></tr>
+<tr><td>3</td><td>模板必填 17 種幣別：三套模板是否 17 種都已有數值（截圖只看到 THB）</td><td>Milu／營運</td><td>9/22</td></tr>
+<tr><td>4</td><td>玩家沒有命中任何一個客群標籤時，拿到哪一套模板，還是看不到活動</td><td>後端</td><td>9/22</td></tr>
+<tr><td>5</td><td>打 JP 的線路與幣別，是否在新手腳本的開放範圍內</td><td>PMS PM＋後端</td><td>9/22</td></tr>
+<tr><td>6</td><td>每款遊戲產出 2,000 套結果組需要幾個工作天</td><td>麒融</td><td>10/1</td></tr>
+<tr><td>7</td><td>第 2 波是否留對照組、看哪個指標</td><td>Milu＋數據組</td><td>10/9</td></tr>
+<tr><td>8</td><td>聖誕波獎項是否含 FREE SPIN 卡</td><td>Milu</td><td>11 月中</td></tr>
+</table></div>
+
+</div>
+</body>
+</html>
