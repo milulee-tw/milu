@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-09",
-  "count": 83,
+  "updated": "2026-10-05",
+  "count": 88,
   "items": [
     {
       "date": "2026-03-09",
@@ -190,7 +190,7 @@
     {
       "date": "2026-06-03",
       "category": "伺服器更新",
-      "event": "版本更新（發生延誤）：Free Spin 上線；後台下注段設定（後台＋前台）；Buy Bonus 保底；優化部署流程（多環境分支合併）；資料庫機器升級規格"
+      "event": "版本更新（發生延誤）：Free Spin 上線；後台下注段設定（後台＋前台）；Buy Bonus 保底（規則：玩家進行 Buy Bonus 若 win=0 且 bet>n，則重新 random；n 可依各幣值分別設定、預設 n=0；最多重新 random 3 次，3 次皆為 0 則給 low win）；優化部署流程（多環境分支合併）；資料庫機器升級規格"
     },
     {
       "date": "2026-06-05",
@@ -400,6 +400,11 @@
     {
       "date": "2026-08-27",
       "category": "遊戲上線",
+      "event": "前端 Prod 預計版本更新（14:00）：[Fix] 修正斷線重連問題（金鑰空窗明文送出、pending 殘留卡死、逾時監看未停止、生命週期異常斷線）；[Fix] 修正餘額不足重試時畫面靜默卡住及空參考隱患；[Fix] 進場關鍵資源改優先載入，避免被大量下載搶頻寬；[Fix] 啟動流程改 fail-closed（語系預載需驗證成功才續行，避免無聲卡蓋）；[Fix] 修正單例物件離開遊戲時被復活；[Fix] 修正測試購買指令類型檢查過嚴誤擋合法購買；[Feat] 新增 CRM 活動模組框架；[Feat] 新增自動化測試設施 TestBeacon（dev 限定：外部驅動購買、快速收集、網路異常模擬）；[Feat] 新增玩家 FPS 回報、封包收發統一由共用層輸出（對應 2026-08-12 版更加入的 fps 數據資料）；[Feat] Max Win 補齊語音與循環結束音效並加物件完整性檢查；[Feat] Loading 頁支援 Space 鍵關閉；[Feat] 新增俄文語系（字體、字串表、圖片素材）；[Feat] WebView 改用外層 shell iframe 接口並移除 Vuplex；[Feat] 狀態機原生支援 UniTask；[Feat] 重構 WebGL 載入語系與掀蓋時序，啟動失敗自動重載一次；[Feat] 建置工具強化（貼圖 ASTC 稽核、打包版號快捷、上傳版號交叉驗證）；[Feat] WebGL 模板更新（JBL SDK 20260803 改 UMD 載入、Combo 模板對齊 webgl-shell 1.0.8）；[Under the Hood] 網路層架構收斂（去假泛型、指令常數集中、子服務拆分）、事件類別統一納入 `Slot.Common`、死碼清除"
+    },
+    {
+      "date": "2026-08-27",
+      "category": "遊戲上線",
       "event": "[S062 Lucky Paws 財神貓] 預計於 UFA SLOT 開放遊玩（獨佔，該遊戲預計 2026-08-12 先行上線）；其他 AWC 支援泰銖線路須同步關閉 S062"
     },
     {
@@ -408,14 +413,34 @@
       "event": "[S062 Lucky Paws 財神貓] 機率 AB Testing 開始（2026-08-27 ～ 2026-09-10）；與上線同日開跑。[S062 財神貓] 為 [S021 財神] 的換皮遊戲，S021 該期 AB Testing 數據遭污染後改於本款重跑；須先經 Server Staging 模擬驗證設定檔再上線"
     },
     {
-      "date": "2026-08-27",
+      "date": "2026-09-08",
       "category": "商務合作",
-      "event": "預計美國直連平台「House of Spins」開放營運"
+      "event": "預計美國直連平台「House of Spins」開放營運（原訂 2026-08-27，延後至 2026-09-08）"
     },
     {
       "date": "2026-09-09",
       "category": "遊戲上線",
-      "event": "[S029 Temple Burst 神廟爆金]（內部代號：祖馬）預計於 UFA SLOT Release（game code `TempleBurstUfa`）"
+      "event": "預計上線 3 款遊戲：[A001 Fast Game - Mines]、[S029 Temple Burst 神廟爆金]（內部代號：祖馬，UFA SLOT game code `TempleBurstUfa`）、[S059 FUIYOH WINLA]"
+    },
+    {
+      "date": "2026-09-16",
+      "category": "伺服器更新",
+      "event": "預計不停機更新（10:00）：[Feat] CRM 活動功能；[Feat] readonly 資料庫（讀寫分離）；[Feat] 玩家連線後踢前機制；[Feat] 新手遊戲體驗（本次先上但功能關閉，預計 2026-09-23 版更開啟）"
+    },
+    {
+      "date": "2026-09-16",
+      "category": "遊戲開發",
+      "event": "[S062 Lucky Paws 財神貓] 機率 AB Testing 結束（原訂 2026-09-10 結束），最終採用 A 版機率"
+    },
+    {
+      "date": "2026-09-23",
+      "category": "伺服器更新",
+      "event": "預計不停機更新（10:00，前置作業：2026-09-22 14:30 先更新 FADA 環境）：[Feat] 新手遊戲體驗（開啟 2026-09-16 版更已佈署但關閉的功能）；[Fix] 修正 [S018 老巫師] 遊戲歷程贏分錯誤"
+    },
+    {
+      "date": "2026-10-05",
+      "category": "遊戲上線",
+      "event": "[S033 Royal Riches 富豪] 由一般線路轉為 UFA SLOT 獨佔：AWC 內部作業預計本日先將該遊戲自一般線路關閉，待內部測試完畢後，再依 UFA 安排開放至 UFA SLOT 線路（開放日期未定）"
     }
   ]
 }
