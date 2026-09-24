@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>FREE SPIN 卡規格書 · 開發交付版 · CMB · DEV V1.17</title>
+<title>FREE SPIN 卡規格書 · 開發交付版 · CMB · DEV V1.20</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -597,7 +597,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <button class="audience-toggle-btn" data-view="art" type="button">美術</button>
 </div>
 <nav class="topnav" id="topnav">
-<span class="nav-brand">FS-DEV · V1.17</span><a class="nav-item active" data-target-audience="shared" href="#sec-00-A">00 總覽</a><a class="nav-item" data-target-audience="shared" href="#sec-01-A">01 後台發放卡管理</a><a class="nav-item" data-target-audience="shared" href="#sec-02-A">02 玩家端背包</a><a class="nav-item" data-target-audience="shared" href="#sec-03-A">03 遊戲內與結算</a><a class="nav-item" data-target-audience="shared" href="#sec-04-A">04 玩家端遊戲歷程</a><a class="nav-item" data-target-audience="art" href="#sec-05-A">05 美術</a><a class="nav-item" data-target-audience="shared" href="#sec-09-A">09 共用規則</a>
+<span class="nav-brand">FS-DEV · V1.20</span><a class="nav-item active" data-target-audience="shared" href="#sec-00-A">00 總覽</a><a class="nav-item" data-target-audience="shared" href="#sec-01-A">01 後台發放卡管理</a><a class="nav-item" data-target-audience="shared" href="#sec-02-A">02 玩家端背包</a><a class="nav-item" data-target-audience="shared" href="#sec-03-A">03 遊戲內與結算</a><a class="nav-item" data-target-audience="shared" href="#sec-04-A">04 玩家端遊戲歷程</a><a class="nav-item" data-target-audience="art" href="#sec-05-A">05 美術</a><a class="nav-item" data-target-audience="shared" href="#sec-09-A">09 共用規則</a>
 
 
 
@@ -612,7 +612,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="sidebar-brand">CMB · DEV SPEC</div>
 <div class="sidebar-title">FREE SPIN 卡<br/>規格書 · 開發交付版</div>
 <div class="sidebar-meta">
-<div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.17</span></div>
+<div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.20</span></div>
 <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date">2026/09/18</span></div>
 <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
 <div class="sidebar-meta-row"><span class="sidebar-meta-label">STATUS</span><span class="sidebar-meta-val status-draft">DRAFT</span></div>
@@ -629,7 +629,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="cover-grid"></div>
 <div class="cover-tag">CMB · DEV SPEC · 2026</div>
 <h1>FREE <span>SPIN</span> 卡</h1>
-<div class="cover-sub">FREE SPIN CARD · 開發交付版 · DEV V1.17（Annotated Wireframe 主文版；產品規則沿用 DEV V1.15）</div>
+<div class="cover-sub">FREE SPIN CARD · 開發交付版 · DEV V1.20（Annotated Wireframe 主文版；依文件矛盾審查報告修正結算觸發、逐局注單、到期結算時點與歷程顯示）</div>
 <div class="cover-pills">
 <div class="cover-pill"><strong>類型</strong> CRM 周邊 · 非現金獎勵</div>
 <div class="cover-pill"><strong>來源</strong> 抽寶箱 第二階段</div>
@@ -645,6 +645,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <span class="cover-proto-label">原型連結</span>
 <a class="cover-proto-link" href="遊戲背包頁原型(new).html" rel="noopener" target="_blank">🎮 前台原型 · 遊戲背包頁 ↗</a>
 <a class="cover-proto-link" href="後台獎勵系統 (standalone).html" rel="noopener" target="_blank">🛠 後台原型 · 獎勵清單工具 ↗</a>
+<a class="cover-proto-link" href="遊戲歷程活動頁原型.html" rel="noopener" target="_blank">📜 前台原型 · 遊戲歷程活動頁 ↗</a>
 </div>
 </div>
 <div class="page">
@@ -677,13 +678,13 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="info-card" style="border-color:var(--blue-line-strong);">
 <div class="info-card-icon">🛠</div>
 <div class="info-card-title" style="color:var(--blue-bright);">串接細節由開發決定</div>
-<div class="info-card-desc">本文件<strong>不指定</strong>介接端點、參數表、傳輸格式、簽章方式、錯誤代碼；只界定必須達成的結果與約束。集成商細節唯一來源為《integration_consolidated_checklist_v2.html》</div>
+<div class="info-card-desc">本文件<strong>不指定</strong>介接端點、參數表、傳輸格式與簽章方式；只界定必須達成的結果與約束。<strong>唯一例外</strong>：遊戲端回傳、且玩家端必須各自對應處理的錯誤訊息與回應狀態，列於 09-G。集成商細節唯一來源為《integration_consolidated_checklist_v2.html》</div>
 </div>
 </div>
 <div class="callout">
 <strong>與完整版的關係：</strong>完整版（含目標數字與串接脈絡）另見 <a href="free_spin_chest_spec_v2.0.html" rel="noopener" style="color:var(--gold-light);" target="_blank">《Free Spin 抽寶箱發放卡規格書》（內容版號 V2.4） ↗</a>。<strong>兩份文件如有衝突，以開發版（本文件）較新的修改紀錄為準。</strong>
 </div>
-<div class="callout warn" style="font-size:12px;"><strong>章號已重新編號：</strong>V1.17 使用 00／01／02／03／04／05／09 模組。內文交叉引用已換算為本版章號；來源列與修改紀錄中的舊章號則保留，方便追溯。</div>
+<div class="callout warn" style="font-size:12px;"><strong>章號已重新編號：</strong>V1.17 起使用 00／01／02／03／04／05／09 模組。內文交叉引用已換算為本版章號；來源列與修改紀錄中的舊章號則保留，方便追溯。</div>
 <div class="sub-title">核心定位</div>
 <div class="body-text">抽寶箱第一階段只派<strong>現金獎</strong>；第二階段起新增 <em>FREE SPIN 卡</em>這類「非現金獎勵」。一張 FREE SPIN 卡＝一張可在指定遊戲列表內免費旋轉 N 次的票券。本文件定義它從「<strong>後台建卡 → 抽中發卡 → 背包持有 → 進遊戲使用 → 整卡結算入帳</strong>」的完整行為，以及支撐它的<strong>後台獎勵清單工具</strong>與<strong>與集成商／平台的行為邊界</strong>。</div>
 <div class="info-grid-3">
@@ -700,7 +701,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="info-card">
 <div class="info-card-icon">🏦</div>
 <div class="info-card-title">結算有上限、入真金</div>
-<div class="info-card-desc">每張卡可指定最終獎金上限（max_conversion）；結算一律入<strong>主錢包真金</strong>，可立即提領，沒有流水限制。</div>
+<div class="info-card-desc">每張卡可指定最終獎金上限（max_bonus）；結算一律入<strong>主錢包真金</strong>，可立即提領，沒有流水限制。</div>
 </div>
 </div>
 <div class="sub-title">需求對照（本文件涵蓋的 6 點）</div>
@@ -743,7 +744,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="flow-arrow-down">↓</div>
 <div class="flow-step warn" style="min-width:520px;"><div class="flow-step-num">07</div><div class="flow-step-title">結算觸發</div><div class="flow-step-desc"><strong>局數用完（最後一次 FREE SPIN 結束）／卡片到期（到達 valid_to）／玩家提前結算（僅封頂後可用）——先到者觸發，整張卡只結算一次</strong></div></div>
 <div class="flow-arrow-down">↓</div>
-<div class="flow-step success" style="min-width:520px;"><div class="flow-step-num">08</div><div class="flow-step-title">整卡結算</div><div class="flow-step-desc">給付 <span class="mono">min(score, max_conversion)</span>；以一筆注單入主錢包真金；剩餘未轉次數放棄</div></div>
+<div class="flow-step success" style="min-width:520px;"><div class="flow-step-num">08</div><div class="flow-step-title">整卡結算</div><div class="flow-step-desc">給付 <span class="mono">min(score, max_bonus)</span>；以一筆注單入主錢包真金；剩餘未轉次數放棄</div></div>
 </div>
 </div>
 <div class="sub-title">結算三步驟（暫存分數 score → 一律主錢包真金）</div>
@@ -753,12 +754,12 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="flow-arrow-down">↓</div>
 <div class="flow-step highlight" style="min-width:520px;"><div class="flow-step-num">SETTLE 1</div><div class="flow-step-title">彙總暫存分數 score</div><div class="flow-step-desc">整張卡每一局的贏分都只累加在 <span class="mono">score</span>，過程中 Balance 完全不動</div></div>
 <div class="flow-arrow-down">↓</div>
-<div class="flow-step" style="min-width:520px;"><div class="flow-step-num">SETTLE 2</div><div class="flow-step-title">套用上限 max_conversion</div><div class="flow-step-desc">final ＝ <span class="mono">min(score, max_conversion)</span>：score 超過上限給上限、未超過給 score；超出部分捨棄</div></div>
+<div class="flow-step" style="min-width:520px;"><div class="flow-step-num">SETTLE 2</div><div class="flow-step-title">套用上限 max_bonus</div><div class="flow-step-desc">final ＝ <span class="mono">min(score, max_bonus)</span>：score 超過上限給上限、未超過給 score；超出部分捨棄</div></div>
 <div class="flow-arrow-down">↓</div>
 <div class="flow-step success" style="min-width:520px;"><div class="flow-step-num">SETTLE 3 · 入主錢包真金</div><div class="flow-step-title">以「下注 0 / 派彩 final」注單發放</div><div class="flow-step-desc">產生一筆零下注中獎注單（帶 campaign_id 與卡序號）——<strong>這筆注單放「一般注單」</strong>，Balance 於此刻增加，並以 bet=0 發放方式與平台／集成商同步資產增加。無流水、無 roll-over。</div></div>
 </div>
 </div>
-<div class="callout info"><strong>FREE SPIN 押注歷程單獨分類</strong>：卡片內每一局 FREE SPIN 的押注／贏分歷程<strong>不放一般注單</strong>，歸在「<strong>活動 › FREE SPIN 卡</strong>」分類留存（對帳與客訴查詢用）；<strong>只有最後那筆結算注單進一般注單</strong>。<br/><span class="tag-pill tag-v2">V1.12 補</span> <strong>玩家怎麼查得到這些局</strong>：入口與四層畫面規則見 <a data-target-audience="shared" href="#sec-04-A" style="color:var(--gold-light);">04 玩家端遊戲歷程</a>。</div>
+<div class="callout info"><strong>FREE SPIN 押注歷程單獨分類</strong>：卡片內每一局 FREE SPIN 會寫成注單，但停在「免費轉注單狀態」，<strong>一般注單檢視一律濾掉</strong>，改在「<strong>活動 › FREE SPIN 卡</strong>」分類呈現（對帳與客訴查詢用）；<strong>玩家在一般注單只看得到最後那筆結算注單</strong>。<span class="tag-pill tag-v2">V1.20 改</span><br/><span class="tag-pill tag-v2">V1.12 補</span> <strong>玩家怎麼查得到這些局</strong>：入口與四層畫面規則見 <a data-target-audience="shared" href="#sec-04-A" style="color:var(--gold-light);">04 玩家端遊戲歷程</a>。</div>
 <div class="callout success"><strong>為什麼是注單而不是另開一條金流</strong>：獎勵即真金，搭遊戲本來就在跑的注單流送出，<em>不需要第二條金流管線</em>，也不需要紅利錢包、流水倍數或 roll-over。封頂由我方結算層自己算好再送出。</div>
 
 </section>
@@ -787,7 +788,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <thead><tr><th style="width:210px;">頁面</th><th style="width:90px;">誰在用</th><th>這一頁做什麼</th><th style="width:100px;">對應章節</th></tr></thead>
 <tbody>
 <tr><td>後台 · 發放管理列表</td><td class="dim">營運</td><td class="dim">發放卡型錄總覽、道具基礎值維護、引用活動追蹤、停用把關</td><td class="mono">01-A 發放卡列表</td></tr>
-<tr><td>後台 · 新增／編輯發放卡</td><td class="dim">營運</td><td class="dim">建卡：選星級、勾遊戲、填次數與封頂、設有效期，按「啟用」（含二次確認）即生效</td><td class="mono">01-B 建卡與編輯表單</td></tr>
+<tr><td>後台 · 新增／編輯發放卡</td><td class="dim">營運</td><td class="dim">建卡：選星級、勾遊戲、填次數與封頂、設有效期，按「建立發放卡」（含二次確認）即生效</td><td class="mono">01-B 建卡與編輯表單</td></tr>
 <tr><td>玩家端 · <strong>遊戲內 CRM 選單</strong><br/><span class="tag-pill tag-v2">V1.8 新增</span></td><td class="dim">玩家</td><td class="dim"><strong>背包與歷程的唯一入口</strong>：遊戲畫面上的吸附浮動 icon → 點擊展開 CRM 選單 → 點「背包」或<strong>最下方的「History」</strong><span class="tag-pill tag-v2">V1.12 新增</span>。選單為所有 CRM 活動共用（抽寶箱等同列）；<strong>icon 與選單本體規則見抽寶箱 CRM 浮動 icon 規格</strong></td><td class="mono">03 遊戲內與結算</td></tr>
 <tr><td>玩家端 · 背包</td><td class="dim">玩家</td><td class="dim">查看持卡明細與累積獎金、選攜帶遊戲、進入遊戲</td><td class="mono">02 玩家端背包</td></tr>
 <tr><td>玩家端 · 遊戲內與結算</td><td class="dim">玩家</td><td class="dim">進場提示、FS 模式進行中的畫面規則（押注鎖定／餘額不動）、結算彈窗</td><td class="mono">03 遊戲內與結算</td></tr>
@@ -850,7 +851,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="ccy-pills"><span class="ccy-pill">PHP</span><span class="ccy-pill">USD</span><span class="ccy-pill">TWD</span><span class="ccy-pill">TWDp</span><span class="ccy-pill">TWDv</span><span class="ccy-pill">BDT</span><span class="ccy-pill">BND</span><span class="ccy-pill">BRL</span><span class="ccy-pill">CNY</span><span class="ccy-pill">EUR</span><span class="ccy-pill">HKD</span><span class="ccy-pill">INR</span><span class="ccy-pill">JPY</span><span class="ccy-pill">KRW</span><span class="ccy-pill">LKR</span><span class="ccy-pill">MMK</span><span class="ccy-pill">kMMK</span><span class="ccy-pill">MXN</span><span class="ccy-pill">MYR</span><span class="ccy-pill">MYRh</span><span class="ccy-pill">MYRd</span><span class="ccy-pill">PKR</span><span class="ccy-pill">IDR</span><span class="ccy-pill">kIDR</span><span class="ccy-pill">RUB</span><span class="ccy-pill">SGD</span><span class="ccy-pill">THB</span><span class="ccy-pill">VND</span><span class="ccy-pill">kVND</span><span class="ccy-pill">KHR</span><span class="ccy-pill">kKHR</span><span class="ccy-pill">LAK</span><span class="ccy-pill">kLAK</span><span class="ccy-pill">AED</span><span class="ccy-pill">NPR</span><span class="ccy-pill">GBP</span><span class="ccy-pill">GBP (&lt; 25y)</span><span class="ccy-pill">GBP (≧ 25y)</span><span class="ccy-pill">AMD</span><span class="ccy-pill">AUD</span><span class="ccy-pill">ARS</span><span class="ccy-pill">CAD</span><span class="ccy-pill">CHF</span><span class="ccy-pill">CLP</span><span class="ccy-pill">COP</span><span class="ccy-pill">GEL</span><span class="ccy-pill">GHS</span><span class="ccy-pill">KES</span><span class="ccy-pill">KZT</span><span class="ccy-pill">NGN</span><span class="ccy-pill">NOK</span><span class="ccy-pill">NZD</span><span class="ccy-pill">OMR</span><span class="ccy-pill">PGK</span><span class="ccy-pill">PEN</span><span class="ccy-pill">PLN</span><span class="ccy-pill">SAR</span><span class="ccy-pill">SEK</span><span class="ccy-pill">TND</span><span class="ccy-pill">TRY</span><span class="ccy-pill">TZS</span><span class="ccy-pill">VES</span><span class="ccy-pill">ZAR</span><span class="ccy-pill">UGX</span></div>
 <div class="shot-map narrow" data-audience="shared" style="margin-top:6px;">
 <div class="shot-frame" data-audience="shared"><img alt="道具基礎值編輯狀態" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_admin_03_base_values_edit.png"/><div class="shot-ph">📷 截圖待補：道具基礎值編輯狀態<br/><span style="font-size:10px;">將 fs_admin_03_base_values_edit.png 放入 design_assets 後自動顯示</span></div><div class="shot-cap">「編輯基礎值」展開示意：各星級單一 bet 欄位直接填每轉押注（改版後原型畫面）· 點圖放大</div></div>
-<div class="body-text" style="margin-top:0;">展開後每星級一個 <span class="mono">bet</span> 輸入欄；<span class="mono">face_value</span> 與 <span class="mono">max_conversion</span> 由建卡頁自動推算（見 01-B 建卡與編輯表單）。</div>
+<div class="body-text" style="margin-top:0;">展開後每星級一個 <span class="mono">bet</span> 輸入欄；<span class="mono">face_value</span> 與 <span class="mono">max_bonus</span> 由建卡頁自動推算（見 01-B 建卡與編輯表單）。</div>
 </div>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>幣值以<strong>下拉選單</strong>選擇（含搜尋），支援幣值見下方清單（64 項，依 Combo 平台貨幣設定）</li>
@@ -939,9 +940,13 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <h4><span class="region-td">Ⓑ</span>可用遊戲列表<span class="rd-func">搜尋＋點選加入這張卡可玩的遊戲。</span></h4>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>已選遊戲顯示為可移除 chip</li>
-<li><span class="mono">game_ids</span> <strong>最多選 8 款</strong>，即時顯示「<strong>已選 n / 8 款</strong>」（DEV V1.6 起廢除逗號串 200 字元限制）</li>
-<li><strong>發卡後鎖定不可改</strong>（快照）</li></ul></div>
-<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li><strong>已選滿 8 款時，其餘遊戲選項押灰不可再加</strong>；不會出現超選後才擋下的狀況</li></ul></div>
+<li><span class="mono">game_ids</span> <strong>最多選 8 款</strong>，即時顯示「<strong>已選 n / 8</strong>」（DEV V1.6 起廢除逗號串 200 字元限制）</li>
+<li><strong>發卡後鎖定不可改</strong>（快照）</li>
+<li><strong>S003／S015／S019 不開放發放 FREE SPIN 卡</strong>（這三款遊戲<strong>尚未製作完成</strong>）——這三款<strong>不得出現在可選遊戲清單中</strong><span class="tag-pill tag-v2">V1.18 新增</span></li>
+<li><strong>後台一律擋下含這三款的卡</strong>：按「建立發放卡」或「儲存」時，後端<strong>再檢查一次遊戲列表</strong>，只要含 S003／S015／S019 就<strong>不建立、不儲存</strong>——不能只靠前端清單不顯示，避免被繞過<span class="tag-pill tag-v2">V1.19 新增</span></li></ul></div>
+<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li><strong>已選滿 8 款時，其餘遊戲選項押灰不可再加</strong>；不會出現超選後才擋下的狀況</li>
+<li><strong>S003／S015／S019 一律不出現在清單中</strong>——是整筆不顯示，不是押灰不可選；搜尋也搜不到<span class="tag-pill tag-v2">V1.18 新增</span></li>
+<li>後端擋下時<strong>提示營運移除這三款後再送出</strong>，表單內容保留、不清空<span class="tag-pill tag-v2">V1.19 新增</span></li></ul></div>
 </div>
 </div>
 <div class="region-detail" data-audience="shared" id="pg-form-c">
@@ -949,7 +954,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>次數＝<strong>整卡共用池</strong>（跨遊戲一起扣）</li>
 <li><span class="mono">face_value</span>＝bet × 次數，自動計算唯讀</li>
-<li>各幣值 <span class="mono">max_conversion</span>＝bet × 次數 × 倍數，<strong>自動計算唯讀</strong></li></ul></div>
+<li>各幣值 <span class="mono">max_bonus</span>＝bet × 次數 × 倍數，<strong>自動計算唯讀</strong></li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>次數／倍數為 0 或負數擋下</li>
 <li>結算上限低於票面價值跳警示</li></ul></div>
 </div>
@@ -979,7 +984,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="page-basis" data-audience="shared">來源：DEV V1.15 §05–§06；後台原型 2026-08-25 實拍</div>
 <div class="section-header" data-audience="shared"><span class="section-num">01-C</span><span class="section-title">🖥 道具基礎值與公版數值</span></div>
 <div class="page-tags" data-audience="shared"><span class="tag-pill tag-pm">📋 企劃&amp;PM</span><span class="tag-pill tag-eng">⚙ 後端</span></div>
-<div class="one-liner" data-audience="shared">每個幣值一組 1★–5★，營運只填「每轉押注」一個數字，其餘全部自動算。</div>
+<div class="one-liner" data-audience="shared">每個幣值一組 1★–5★，營運填「每轉押注」，次數與封頂倍數也可逐段調整（預設 10 次、×10）；face_value 與 max_bonus 自動算。</div>
 
 
 
@@ -987,7 +992,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="sub-title" data-audience="software">幣值 × 5 階段設定矩陣（每個幣值一組）</div>
 <div class="body-text" data-audience="software">營運自下拉選定一個幣值後，展開 5 列（Tier 1–5）逐列填寫。下表為 <strong>THB</strong> 範例（數值僅示意，實際由營運填）：</div>
 <table class="spec-table" data-audience="software">
-<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注 bet（直接填）</th><th>次數</th><th>face_value（自動）</th><th>max_conversion（自動）</th></tr></thead>
+<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注 bet（直接填）</th><th>次數</th><th>face_value（自動）</th><th>max_bonus（自動）</th></tr></thead>
 <tbody>
 <tr><td>1</td><td class="mono">R_FS_1STAR</td><td>2</td><td>10</td><td>20 THB</td><td>200 THB</td></tr>
 <tr><td>2</td><td class="mono">R_FS_2STAR</td><td>5</td><td>10</td><td>50 THB</td><td>500 THB</td></tr>
@@ -1002,7 +1007,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="callout" data-audience="software"><strong>計算規則（讓數值可推導、可對帳）</strong><br/>
     ① <strong>每轉押注（bet）</strong>＝營運於「道具基礎值」各星級<strong>直接填寫的單一數值</strong>（DEV V1.3 起廢除 coin × mult 推算）<br/>
     ② <strong>face_value（票面價值）</strong> = 每轉押注 × 次數 → 代表這張卡「送出去的成本基準」，用於成本估算與對帳<br/>
-    ③ <strong>max_conversion（結算上限）</strong> = face_value × 封頂倍數（示意用 ×10，營運可逐段調整）<br/>
+    ③ <strong>max_bonus（結算上限）</strong> = face_value × 封頂倍數（示意用 ×10，營運可逐段調整）<br/>
     ④ 次數預設全段 = 10（可逐段調）；所有階段一律入主錢包真金</div>
 <div class="tab-bar" data-audience="software">
 <button class="tab-btn active" onclick="switchTab(this,'thb')">THB · 泰銖</button>
@@ -1013,7 +1018,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="tab-content active" data-audience="software" id="tab-thb">
 <table class="spec-table">
-<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_conversion (×10)</th></tr></thead>
+<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_bonus (×10)</th></tr></thead>
 <tbody>
 <tr><td>1</td><td class="mono">R_FS_1STAR</td><td>2</td><td>10</td><td>20 THB</td><td>200 THB</td></tr>
 <tr><td>2</td><td class="mono">R_FS_2STAR</td><td>5</td><td>10</td><td>50 THB</td><td>500 THB</td></tr>
@@ -1025,7 +1030,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="tab-content" data-audience="software" id="tab-php">
 <table class="spec-table">
-<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_conversion (×10)</th></tr></thead>
+<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_bonus (×10)</th></tr></thead>
 <tbody>
 <tr><td>1</td><td class="mono">R_FS_1STAR</td><td>1</td><td>10</td><td>10 PHP</td><td>100 PHP</td></tr>
 <tr><td>2</td><td class="mono">R_FS_2STAR</td><td>3</td><td>10</td><td>30 PHP</td><td>300 PHP</td></tr>
@@ -1037,7 +1042,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="tab-content" data-audience="software" id="tab-idr">
 <table class="spec-table">
-<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_conversion (×10)</th></tr></thead>
+<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_bonus (×10)</th></tr></thead>
 <tbody>
 <tr><td>1</td><td class="mono">R_FS_1STAR</td><td>1,000</td><td>10</td><td>10,000 IDR</td><td>100,000 IDR</td></tr>
 <tr><td>2</td><td class="mono">R_FS_2STAR</td><td>3,000</td><td>10</td><td>30,000 IDR</td><td>300,000 IDR</td></tr>
@@ -1049,7 +1054,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="tab-content" data-audience="software" id="tab-vnd">
 <table class="spec-table">
-<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_conversion (×10)</th></tr></thead>
+<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_bonus (×10)</th></tr></thead>
 <tbody>
 <tr><td>1</td><td class="mono">R_FS_1STAR</td><td>5,000</td><td>10</td><td>50,000 VND</td><td>500,000 VND</td></tr>
 <tr><td>2</td><td class="mono">R_FS_2STAR</td><td>15,000</td><td>10</td><td>150,000 VND</td><td>1,500,000 VND</td></tr>
@@ -1061,7 +1066,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="tab-content" data-audience="software" id="tab-usd">
 <table class="spec-table">
-<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_conversion (×10)</th></tr></thead>
+<thead><tr><th>Tier</th><th>reward_id</th><th>每轉押注</th><th>次數</th><th>face_value</th><th>max_bonus (×10)</th></tr></thead>
 <tbody>
 <tr><td>1</td><td class="mono">R_FS_1STAR</td><td>0.1</td><td>10</td><td>1 USD</td><td>10 USD</td></tr>
 <tr><td>2</td><td class="mono">R_FS_2STAR</td><td>0.2</td><td>10</td><td>2 USD</td><td>20 USD</td></tr>
@@ -1090,7 +1095,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td><strong>刪除引用中的卡</strong><br/><span class="tag-pill tag-v2">V1.9 改</span></td><td class="dim">被<strong>未結束活動</strong>（進行中＋<strong>尚未開始</strong>）引用的卡，刪除鈕 <strong>disabled 不可點</strong>；hover 顯示「此卡仍被未結束活動引用，無法刪除」。</td><td class="dim">活動抽到一張已刪除的卡，發卡流程當場失敗，玩家中獎卻沒拿到東西；<strong>只擋進行中會漏擋「尚未開始」的活動</strong>，卡被刪掉後活動一開跑就爆</td></tr>
 <tr><td>刪除前二次確認</td><td class="dim">N＝0（無未結束活動引用）的卡按刪除時<strong>跳確認視窗</strong>（摘要卡名＋reward_id），確認後才刪。</td><td class="dim">手滑誤刪剛設定好的卡，整組設定白做</td></tr>
 <tr><td>基礎值／型錄修改不回溯</td><td class="dim">列表上的任何修改（基礎值、型錄內容）僅對「之後發出的卡」生效。</td><td class="dim">改價回溯到玩家手上的卡——完整規則見 01-B 建卡與編輯表單「已發卡快照凍結」</td></tr>
-<tr><td><strong>已發卡快照凍結</strong><br/><span class="tag-pill tag-inf">最重要</span></td><td class="dim">已發出的卡採<strong>快照凍結</strong>；後台之後修改型錄（次數、上限、遊戲列表、押注），<strong>只對「改完之後才發出的卡」生效</strong>，已發卡完全不受影響。</td><td class="dim">改價會回溯到玩家手上的卡——玩家昨天抽到上限 1,000 的卡，今天變成 200，直接構成客訴與信任危機，且對帳金額對不起來</td></tr><tr><td>必填未填不可啟用</td><td class="dim">星級、次數、有效期、可玩遊戲、各幣值押注與上限任一未填，<strong>擋下啟用並明確指出哪一欄沒填</strong>。</td><td class="dim">發出一張缺參數的卡，玩家點進去無法開局，或結算時算不出金額</td></tr><tr><td>可用遊戲列表超過上限</td><td class="dim">一張卡<strong>最多指定 8 款遊戲</strong>；已選滿 8 款時，<strong>其餘遊戲選項一律押灰不可再點</strong>，並即時顯示「已選 8 / 8」。<strong>不會出現超選後才擋下的狀況。</strong></td><td class="dim">卡內塞進超出規格的遊戲清單，遊戲牆顯示與發卡資料不一致，玩家背包出現一張進不去的卡</td></tr><tr><td>數值不合理警示</td><td class="dim">例如<strong>結算上限低於票面價值</strong>、次數為 0、押注為 0 或負數，<strong>跳警示要求確認或直接擋下</strong>。</td><td class="dim">卡送出去玩家怎麼玩都拿不到合理獎金，或成本估算完全失真</td></tr><tr><td>建立前二次確認</td><td class="dim">按下「建立發放卡」時<strong>跳出確認視窗</strong>，摘要列出星級／次數／有效期／上限／可玩遊戲數，確認後才真正啟用。</td><td class="dim">誤建一張還沒設定完的卡，被活動引用後發出去就收不回來（已發卡不可變更）</td></tr></tbody>
+<tr><td><strong>已發卡快照凍結</strong><br/><span class="tag-pill tag-inf">最重要</span></td><td class="dim">已發出的卡採<strong>快照凍結</strong>；後台之後修改型錄（次數、上限、遊戲列表、押注），<strong>只對「改完之後才發出的卡」生效</strong>，已發卡完全不受影響。</td><td class="dim">改價會回溯到玩家手上的卡——玩家昨天抽到上限 1,000 的卡，今天變成 200，直接構成客訴與信任危機，且對帳金額對不起來</td></tr><tr><td>必填未填不可啟用</td><td class="dim">星級、次數、封頂倍數、有效期、可玩遊戲、各幣值押注任一未填（face_value 與上限由系統算出，不需填）<span class="tag-pill tag-v2">V1.20 改</span>，<strong>擋下啟用並明確指出哪一欄沒填</strong>。</td><td class="dim">發出一張缺參數的卡，玩家點進去無法開局，或結算時算不出金額</td></tr><tr><td>可用遊戲列表超過上限</td><td class="dim">一張卡<strong>最多指定 8 款遊戲</strong>；已選滿 8 款時，<strong>其餘遊戲選項一律押灰不可再點</strong>，並即時顯示「已選 8 / 8」。<strong>不會出現超選後才擋下的狀況。</strong></td><td class="dim">卡內塞進超出規格的遊戲清單，遊戲牆顯示與發卡資料不一致，玩家背包出現一張進不去的卡</td></tr><tr><td>數值不合理警示</td><td class="dim">例如<strong>結算上限低於票面價值</strong>、次數為 0、押注為 0 或負數，<strong>跳警示要求確認或直接擋下</strong>。</td><td class="dim">卡送出去玩家怎麼玩都拿不到合理獎金，或成本估算完全失真</td></tr><tr><td>建立前二次確認</td><td class="dim">按下「建立發放卡」時<strong>跳出確認視窗</strong>，摘要列出星級／次數／有效期／上限／可玩遊戲數，確認後才真正啟用。</td><td class="dim">誤建一張還沒設定完的卡，被活動引用後發出去就收不回來（已發卡不可變更）</td></tr></tbody>
 </table>
 <div class="sub-title" data-audience="software">友善度設計</div>
 <table class="spec-table" data-audience="software">
@@ -1100,7 +1105,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td>幣值下拉選單</td><td class="dim">幣值從<strong>下拉直接選</strong>（含搜尋），64 項支援幣值一目了然；各幣值已填數值切換後<strong>原封不動保留</strong>。</td></tr>
 <tr><td>大面額幣值自動格式化</td><td class="dim">IDR／VND 等大面額幣值，輸入與顯示都<strong>自動加千分位</strong>，過長時另以縮寫輔助顯示（如 1.5M），避免營運數錯位數。</td></tr>
 <tr><td>狀態一眼可辨</td><td class="dim">列表直接顯示「被幾個<strong>未結束</strong>活動引用」與刪除鈕可否點擊，營運不必逐張點開才知道哪張卡還在用；<strong>已結束的活動不佔版面</strong>，數字看到幾就是還要顧幾檔。</td></tr>
-<tr><td>自動計算欄位唯讀顯示</td><td class="dim"><strong>face_value</strong>（bet × 次數）與 <strong>max_conversion</strong>（bet × 次數 × 倍數）由系統即時算出、<strong>以唯讀樣式呈現</strong>，不讓人手填，避免算錯或前後不一致。</td></tr><tr><td>沒有半成品卡</td><td class="dim">草稿移除後，型錄裡的卡<strong>一律是完成建卡的可用狀態</strong>；活動獎項下拉永遠不會出現設定到一半的卡。</td></tr></tbody>
+<tr><td>自動計算欄位唯讀顯示</td><td class="dim"><strong>face_value</strong>（bet × 次數）與 <strong>max_bonus</strong>（bet × 次數 × 倍數）由系統即時算出、<strong>以唯讀樣式呈現</strong>，不讓人手填，避免算錯或前後不一致。</td></tr><tr><td>沒有半成品卡</td><td class="dim">草稿移除後，型錄裡的卡<strong>一律是完成建卡的可用狀態</strong>；活動獎項下拉永遠不會出現設定到一半的卡。</td></tr></tbody>
 </table>
 
 
@@ -1148,7 +1153,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr>
 <td><strong>必填擋啟用</strong></td>
 <td class="dim">新增發放卡，名稱（或星級、次數、有效期任一必填欄）未填</td>
-<td class="dim">按「啟用」</td>
+<td class="dim">按「建立發放卡」</td>
 <td class="dim">① 擋下並<strong>明確指出哪一欄沒填</strong>（「此欄為必填」）；② 補齊後可正常進入二次確認</td>
 </tr><tr>
 <td><strong>遊戲數量上限（8 款）</strong></td>
@@ -1164,11 +1169,11 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <td><strong>自動計算欄位</strong></td>
 <td class="dim">選 3★（bet＝10 THB）、次數 10、封頂倍數 10</td>
 <td class="dim">檢視發放參數區的各幣值結算封頂</td>
-<td class="dim">① face_value＝100 THB、max_conversion＝1,000 THB <strong>自動帶出且不可手改</strong>；② 其他幣值各自按該幣值 bet 同步算好</td>
+<td class="dim">① face_value＝100 THB、max_bonus＝1,000 THB <strong>自動帶出且不可手改</strong>；② 其他幣值各自按該幣值 bet 同步算好</td>
 </tr><tr>
 <td><strong>快照凍結</strong></td>
 <td class="dim">某張卡已被活動發出若干張</td>
-<td class="dim">回本頁把該卡次數 10 改成 20 並重新啟用</td>
+<td class="dim">回本頁把該卡次數 10 改成 20 並按「儲存」</td>
 <td class="dim">① 已發出的卡<strong>仍是 10 次</strong>、各項數值完全不變；② 之後新發出的卡才是 20 次</td>
 </tr></tbody>
 </table>
@@ -1292,7 +1297,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="shot-frame" data-audience="shared" style="max-width:700px;margin:0 auto 14px;"><img alt="FREE SPIN card field reference" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_05_fields.png"/><div class="shot-ph">📷 圖片未載入：欄位總覽截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">編號對應下表「#」欄；1–9 為收合卡片本身即有的欄位，10–11 僅在展開、進入 Select Game 之後出現。</div></div>
 <table class="spec-table" data-audience="software">
 <thead><tr><th style="width:36px;">#</th><th style="width:180px;">欄位</th><th style="width:90px;">顯示位置</th><th style="width:180px;">狀態</th><th>功能說明</th></tr></thead>
-<tbody><tr><td class="region-td">1</td><td class="dim">獎勵圖示</td><td class="dim">收合＋展開</td><td class="dim">1★–5★（依材質分級，共 5 級）</td><td class="dim">代表此FREE SPIN卡的稀有度／價值等級；材質與邊框隨星級變化，星數圖示同時顯示，見下方「星級分級」</td></tr><tr><td class="region-td">2</td><td class="dim">標題（固定卡名「{n}★ FREE SPIN」）</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">標示獎勵類型與星級；卡名全語系統一英文，格式見 <span data-goto="sec-09-A" role="link" style="color:var(--gold-light);" tabindex="0">09-A 全域約定</span>。<strong class="warn-text">原型待修</strong>：現行線框顯示為「FREE SPIN X10」，應改為「{n}★ FREE SPIN」；次數改由 Spins Left 欄位呈現</td></tr><tr><td class="region-td">3</td><td class="dim">標籤</td><td class="dim">收合＋展開</td><td class="dim">待啟動、使用中、全新、即將到期、已過期</td><td class="dim">標示此FREE SPIN卡目前所處的生命週期狀態；每態各自的顏色與樣式規則見下方「標籤五態」</td></tr><tr><td class="region-td">4</td><td class="dim">Time Left</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">倒數至到期的剩餘時間，傳達緊迫感；歸零後應轉入 Expired</td></tr><tr><td class="region-td">5</td><td class="dim">Current Winnings</td><td class="dim">收合＋展開</td><td class="dim">空、部分、全滿</td><td class="dim">顯示此FREE SPIN卡目前累積的獎金，以及可派發上限（Max）；下方進度條呈現獎金佔上限的比例，填滿程度必須即時對應數字，非裝飾用</td></tr><tr><td class="region-td">6</td><td class="dim">Bet Amount</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">此FREE SPIN卡每次轉動的固定下注金額；玩家不可調整</td></tr><tr><td class="region-td">7</td><td class="dim">Spins Left</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">已發放總次數中，尚可使用的剩餘次數</td></tr><tr><td class="region-td">8</td><td class="dim">View Details</td><td class="dim">僅收合</td><td class="dim">收合、展開</td><td class="dim">點擊展開卡片，卡片內出現 Select Game 選擇區</td></tr><tr><td class="region-td">9</td><td class="dim">卡片編號（Card No.）</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">此FREE SPIN卡的唯一識別編號＝<span class="mono">reference_id</span>，<strong>格式以 <span data-goto="sec-09-A" role="link" style="color:var(--gold-light);" tabindex="0">09-A 全域約定</span> 為準</strong>（線框上的「FS_PHP_0007」僅為版位示意，非正式格式）；位於 VIEW DETAILS 按鈕下方小字，供客服／後台除錯或玩家回報問題時對照使用</td></tr><tr><td class="region-td">10</td><td class="dim">Select Game 遊戲格</td><td class="dim">僅展開</td><td class="dim">Default、Selected、Locked</td><td class="dim">讓玩家選擇要在哪一款符合資格的遊戲上使用此FREE SPIN卡；三種樣式見下方「遊戲格狀態」</td></tr><tr><td class="region-td">11</td><td class="dim">Close ／ Proceed</td><td class="dim">僅展開</td><td class="dim">Close：—／Proceed：停用、啟用</td><td class="dim">不選擇遊戲則點擊 Close 直接退出，FREE SPIN卡狀態不受影響；選定遊戲後點擊 Proceed 確認並開始兌換流程，進入該遊戲</td></tr></tbody>
+<tbody><tr><td class="region-td">1</td><td class="dim">獎勵圖示</td><td class="dim">收合＋展開</td><td class="dim">1★–5★（依材質分級，共 5 級）</td><td class="dim">代表此FREE SPIN卡的稀有度／價值等級；材質與邊框隨星級變化，星數圖示同時顯示，見下方「星級分級」</td></tr><tr><td class="region-td">2</td><td class="dim">標題（固定卡名「{n}★ FREE SPIN」）</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">標示獎勵類型與星級；卡名全語系統一英文，格式見 <span data-goto="sec-09-A" role="link" style="color:var(--gold-light);" tabindex="0">09-A 全域約定</span>。<strong class="warn-text">原型待修</strong>：現行線框顯示為「FREE SPIN X10」，應改為「{n}★ FREE SPIN」；次數改由 Spins Left 欄位呈現</td></tr><tr><td class="region-td">3</td><td class="dim">標籤</td><td class="dim">收合＋展開</td><td class="dim">待啟動、使用中、全新、即將到期、已過期</td><td class="dim">標示此FREE SPIN卡目前所處的生命週期狀態；每態各自的顏色與樣式規則見下方「標籤五態」</td></tr><tr><td class="region-td">4</td><td class="dim">Time Left</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">倒數至到期的剩餘時間，傳達緊迫感；歸零後應轉入 Expired。<strong>待啟動卡例外</strong>：倒數至 <span class="mono">valid_from</span>，歸零後轉入可使用<span class="tag-pill tag-v2">V1.20 補</span></td></tr><tr><td class="region-td">5</td><td class="dim">Current Winnings</td><td class="dim">收合＋展開</td><td class="dim">空、部分、全滿</td><td class="dim">顯示此FREE SPIN卡目前累積的獎金，以及可派發上限（Max）；下方進度條呈現獎金佔上限的比例，填滿程度必須即時對應數字，非裝飾用</td></tr><tr><td class="region-td">6</td><td class="dim">Bet Amount</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">此FREE SPIN卡每次轉動的固定下注金額；玩家不可調整</td></tr><tr><td class="region-td">7</td><td class="dim">Spins Left</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">已發放總次數中，尚可使用的剩餘次數</td></tr><tr><td class="region-td">8</td><td class="dim">View Details</td><td class="dim">僅收合</td><td class="dim">收合、展開</td><td class="dim">點擊展開卡片，卡片內出現 Select Game 選擇區</td></tr><tr><td class="region-td">9</td><td class="dim">卡片編號（Card No.）</td><td class="dim">收合＋展開</td><td class="dim">—</td><td class="dim">此FREE SPIN卡的唯一識別編號＝<span class="mono">reference_id</span>，<strong>格式以 <span data-goto="sec-09-A" role="link" style="color:var(--gold-light);" tabindex="0">09-A 全域約定</span> 為準</strong>（線框上的「FS_PHP_0007」僅為版位示意，非正式格式）；位於 VIEW DETAILS 按鈕下方小字，供客服／後台除錯或玩家回報問題時對照使用</td></tr><tr><td class="region-td">10</td><td class="dim">Select Game 遊戲格</td><td class="dim">僅展開</td><td class="dim">Default、Selected、Locked</td><td class="dim">讓玩家選擇要在哪一款符合資格的遊戲上使用此FREE SPIN卡；三種樣式見下方「遊戲格狀態」</td></tr><tr><td class="region-td">11</td><td class="dim">Close ／ Proceed</td><td class="dim">僅展開</td><td class="dim">Close：—／Proceed：停用、啟用</td><td class="dim">不選擇遊戲則點擊 Close 直接退出，FREE SPIN卡狀態不受影響；選定遊戲後點擊 Proceed 確認並開始兌換流程，進入該遊戲</td></tr></tbody>
 </table>
 <div class="sub-title" data-audience="software">區域詳細說明</div>
 <div class="region-detail" data-audience="shared" id="pg-bag-a">
@@ -1329,18 +1334,18 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <h4><span class="region-td">Ⓓ</span>累積獎金充能進度條<span class="rd-func">即時顯示本卡累積獎金。</span></h4>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>顯示值＝<strong>暫存分數 score</strong>（每局贏分累加，<strong>未入 Balance</strong>，結算才入帳）</li>
-<li>分母＝<span class="mono">max_conversion</span>；達上限顯示「已達上限封頂」＋滿格光效（<a data-goto="art-max-cap" role="link" style="color:var(--gold-light);" tabindex="0">05 美術 獎金上限</a>）</li></ul></div>
+<li>分母＝<span class="mono">max_bonus</span>；達上限顯示「已達上限封頂」＋滿格光效（<a data-goto="art-max-cap" role="link" style="color:var(--gold-light);" tabindex="0">05 美術 獎金上限</a>）</li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>下方一行說明<strong>分兩種情況</strong>：<strong>已封頂</strong>顯示「超過上限不計入，結算以上限為準」（防「少給錢」誤解）；<strong>未封頂</strong>顯示「上限 {amount}，達到上限後獎金不再增加」——原規格只定義了封頂後那一條，未封頂時前端沒有字可用<span class="tag-pill tag-v2">V1.14 補</span></li></ul></div>
 </div>
 </div>
 <div class="region-detail" data-audience="shared" id="pg-bag-settle">
 <h4><span class="region-td">Ⓓ</span>提前結算按鈕 SETTLE NOW<span class="rd-func">已封頂之後，讓玩家立刻把獎金拿走的出口。<span class="tag-pill tag-v2">DEV V1.6 新增</span></span></h4>
-<div class="body-text" style="margin-top:2px;">背景：<span class="mono">score</span> 達 <span class="mono">max_conversion</span> 封頂後，<strong>再玩下去也不會再增加獎金</strong>；提前結算就是給玩家「不用把剩下的局數玩完」的選擇。</div>
+<div class="body-text" style="margin-top:2px;">背景：<span class="mono">score</span> 達 <span class="mono">max_bonus</span> 封頂後，<strong>再玩下去也不會再增加獎金</strong>；提前結算就是給玩家「不用把剩下的局數玩完」的選擇。</div>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list">
-<li><strong>顯示條件（三個同時成立才顯示）</strong>：① <span class="mono">score ≥ max_conversion</span>（已達上限封頂）② 卡片仍有<strong>剩餘次數</strong> ③ 卡片<strong>未過期</strong>。<strong>未封頂一律不顯示</strong>（不是灰化，是整個按鈕不存在）</li>
+<li><strong>顯示條件（三個同時成立才顯示）</strong>：① <span class="mono">score ≥ max_bonus</span>（已達上限封頂）② 卡片仍有<strong>剩餘次數</strong> ③ 卡片<strong>未過期</strong>。<strong>未封頂一律不顯示</strong>（不是灰化，是整個按鈕不存在）</li>
 <li><strong>行為</strong>：點擊 → 跳<strong>二次確認彈窗</strong>「已達最大獎金上限。提前結算將放棄剩餘 {n} 次免費旋轉，獎金 {amount} 立即入帳。」</li>
-<li><strong>確認</strong> → 觸發結算：金額＝<span class="mono">max_conversion</span>，走 <a data-goto="sec-00-B" role="link" style="color:var(--gold-light);" tabindex="0">00-B 端到端流程 結算三步驟</a>（bet=0 的結算注單入<strong>一般注單與 Balance</strong>）</li>
+<li><strong>確認</strong> → 觸發結算：金額＝<span class="mono">max_bonus</span>，走 <a data-goto="sec-00-B" role="link" style="color:var(--gold-light);" tabindex="0">00-B 端到端流程 結算三步驟</a>（bet=0 的結算注單入<strong>一般注單與 Balance</strong>）</li>
 <li>結算後<strong>先顯示 COMPLETED 完成畫面</strong>（見下方截圖），玩家按 <strong>CONFIRM</strong> 才關窗，此時<strong>卡片轉入「已過期」分頁</strong>，顯示結算獎金與最終已用次數——<strong>與到期結算走同一條路徑，不新增任何狀態</strong></li>
 <li><strong>取消</strong> → 關閉彈窗，一切不變（不扣次、不結算、卡片留在原分頁）</li>
 <li>按鈕下方須有一行<strong>後果提示</strong>：「放棄剩餘旋轉，立即領取封頂獎金」（Forfeit remaining spins, claim the capped bonus now）——代價要在點下去之前就講清楚，不能只靠二次確認彈窗<span class="tag-pill tag-v2">V1.14 補</span></li>
@@ -1363,6 +1368,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li><span class="mono">game_ids[]</span> 圖示牆；<strong>必選一款</strong>攜帶遊戲</li>
 <li><strong>遊戲牆最多 8 款</strong>（上限見 <a data-goto="sec-01-B" role="link" style="color:var(--gold-light);" tabindex="0">01-B 建卡與編輯表單</a>）</li>
+<li><strong>S003／S015／S019 的遊戲格一律不顯示</strong>：後台已擋下含這三款的卡，但萬一卡片的 <span class="mono">game_ids[]</span> 仍含這三款（例如排除規則生效前已發出的卡），遊戲牆<strong>直接不顯示這幾款</strong>，玩家只能從其餘遊戲中選；卡片本身與其餘遊戲照常可用<span class="tag-pill tag-v2">V1.19 新增</span></li>
 <li><strong>AWC FREE SPIN 衝突檢查</strong><span class="tag-pill tag-v2">DEV V1.6 新增</span>：選擇指定遊戲時，<strong>先查詢玩家在該遊戲是否存在未使用完的 AWC FREE SPIN</strong></li>
 <li>有衝突 → <strong>該遊戲按鈕押灰不可選</strong>＋提示「<strong>請先完成此遊戲的免費旋轉</strong>」；玩家必須先把該遊戲的 AWC FREE SPIN 用完，才能在背包指定該遊戲。其他無衝突的遊戲照常可選</li>
 <li><strong>玩家端文案一律不出現「AWC」字樣</strong>（DEV V1.7 定案）——<span class="mono">AWC</span> 僅作<strong>內部／後台用語</strong>，用於規則敘述、log 與客服查單；玩家只看得到「免費旋轉」的泛稱</li></ul></div>
@@ -1384,7 +1390,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <h4><span class="region-td">Ⓖ</span>即將到期卡<span class="rd-func">剩餘時間少於 24 小時的卡。</span></h4>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>紅底徽章＋紅字倒數（樣式沿用原型）</li></ul></div>
-<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>到期瞬間轉入已過期並觸發結算（03 遊戲內與結算）</li></ul></div>
+<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>到期後轉入已過期並結算：玩家正在遊戲中時，當下那一局照常結束、下一次下注即判定失效並結算；不在遊戲中時由每 15 分鐘一次的掃描排程結算（見 09-G ②）<span class="tag-pill tag-v2">V1.20 改</span></li></ul></div>
 </div>
 </div>
 <div class="region-detail" data-audience="shared" id="pg-bag-h">
@@ -1401,11 +1407,11 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tbody>
 <tr><td>多少押注額</td><td class="mono">bet（每轉押注 · 來自道具基礎值）</td></tr>
 <tr><td>剩餘 / 總次數</td><td class="mono">rounds_left / num_of_rounds</td></tr>
-<tr><td>最大獎金金額</td><td class="mono">max_conversion</td></tr>
+<tr><td>最大獎金金額</td><td class="mono">max_bonus</td></tr>
 <tr><td>可玩哪些遊戲</td><td class="mono">game_ids[]（圖示牆）</td></tr>
 <tr><td>剩餘可使用時間</td><td class="mono">valid_to − now（倒數；少於 24 小時轉紅提示）<br/><strong>待啟動卡改顯示 valid_from − now 開始倒數</strong></td></tr>
 <tr><td>狀態</td><td class="mono">待啟動 / 全新未使用 / 使用中 / 即將到期 / 已過期</td></tr>
-<tr><td>目前累積獎金</td><td class="mono">暫存分數 score（每局贏分累加，未入 Balance）；達 max_conversion 顯示「已達上限封頂」</td></tr>
+<tr><td>目前累積獎金</td><td class="mono">暫存分數 score（每局贏分累加，未入 Balance）；達 max_bonus 顯示「已達上限封頂」</td></tr>
 <tr><td>最終入帳</td><td class="mono">主錢包真金（無流水）</td></tr>
 </tbody>
 </table>
@@ -1469,7 +1475,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 
 
 <div class="sub-title" data-audience="software" id="art-max-cap">FREE SPIN卡 — 達到獎金上限（MAX）與結算確認彈窗</div>
-<div class="callout info" data-audience="software"><strong>與 02 玩家端背包 Ⓓ 的關係</strong>：02 玩家端背包「提前結算按鈕」定義了顯示條件與結算邏輯（<span class="mono">score ≥ max_conversion</span> 等三個條件、二次確認、走 00-B 端到端流程 結算三步驟）；本節在<strong>畫面層級</strong>補上 MAX 徽章、SETTLE NOW 按鈕、確認彈窗與完成畫面的呈現細節，兩者請對照使用。</div>
+<div class="callout info" data-audience="software"><strong>與 02 玩家端背包 Ⓓ 的關係</strong>：02 玩家端背包「提前結算按鈕」定義了顯示條件與結算邏輯（<span class="mono">score ≥ max_bonus</span> 等三個條件、二次確認、走 00-B 端到端流程 結算三步驟）；本節在<strong>畫面層級</strong>補上 MAX 徽章、SETTLE NOW 按鈕、確認彈窗與完成畫面的呈現細節，兩者請對照使用。</div>
 <div class="body-text" data-audience="software">當FREE SPIN卡的 Current Winnings 達到 Max 上限，即使 Spins Left 尚未用完，卡片會加上 MAX 徽章，並新增 SETTLE NOW 按鈕；玩家可以選擇立即結算已達上限的獎金、放棄剩餘旋轉，不需等到旋轉全部用完才能兌現。點擊 SETTLE NOW 後會先出現確認彈窗，玩家需再次點擊 CONFIRM 才會真正結算。直式與橫式既有的互動邏輯不變（見上一節「橫式選取前後對照」），只是新增的徽章與按鈕需要一併考慮進版面。</div>
 <div class="shot-map narrow" data-audience="shared">
 <div class="sub-title" data-audience="shared">畫面規格 · Annotated Wireframe</div><div class="shot-frame" data-audience="shared" style=""><img alt="Portrait: MAX badge, SETTLE NOW, confirm dialog, completed screen" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_07_maxcap_portrait.png"/><div class="shot-ph">📷 圖片未載入：獎金上限直式截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">直式四畫面 — ① 收合列表（MAX 徽章＋SETTLE NOW）② VIEW DETAILS 展開後的 Select Game ③ 點 SETTLE NOW 後的結算確認彈窗 ④ CONFIRM 後的 COMPLETED 完成畫面（以 CONFIRM 關閉）。編號對應下表「#」欄。</div></div>
@@ -1503,7 +1509,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="body-text" data-audience="software">結算確認彈窗：直式與橫式共用同一套版面規則（見上方直式與橫式對照圖），彈窗會蓋住整個 BACKPACK 視窗（包含 Select Game 面板），避免玩家在確認前誤觸其他操作。</div>
 <table class="spec-table" data-audience="software">
 <thead><tr><th style="width:36px;">#</th><th style="width:200px;">欄位</th><th>說明</th></tr></thead>
-<tbody><tr><td class="region-td">3</td><td class="dim">標題「Settle now?」</td><td class="dim">直接對應觸發的 SETTLE NOW 按鈕</td></tr><tr><td class="region-td">4</td><td class="dim">說明文字</td><td class="dim">告知玩家已達上限、結算後會放棄的剩餘 Spins Left 次數，以及即將入帳的金額（以「₱」符號顯示）；次數與金額須即時對應該FREE SPIN卡當下的實際數值</td></tr><tr><td class="region-td">5</td><td class="dim">小字說明</td><td class="dim">「Won ○○ ₱ · amount over the cap is not counted; settled at the cap」；顯示玩家實際贏得的金額與上限的差異，讓「結算金額為何比實際贏得少」保持透明。</td></tr><tr><td class="region-td">6</td><td class="dim">CONFIRM ／ CANCEL</td><td class="dim">CONFIRM（綠色實心，左側）：確認結算；FREE SPIN卡的 Current Winnings 立即入帳、剩餘 Spins Left 作廢，並顯示 COMPLETED 完成畫面。CANCEL（外框，右側）：取消，關閉彈窗返回原畫面，FREE SPIN卡狀態不受影響。<br/><strong>備註：</strong>此處 CONFIRM 刻意放在左側，與畫面中其他 CONFIRM／PROCEED 一律置右的慣例相反 — 目的是打破玩家的慣性點擊習慣，避免手滑或誤觸而不小心確認這個不可逆的結算動作</td></tr><tr><td class="region-td">7</td><td class="dim">「COMPLETED」標題</td><td class="dim">結算完成後顯示的畫面標題，取代原本的「Settle now?」確認彈窗</td></tr><tr><td class="region-td">8</td><td class="dim">Card No.</td><td class="dim">同「欄位總覽」編號 9，顯示此FREE SPIN卡的卡片編號，方便對照</td></tr><tr><td class="region-td">9</td><td class="dim"><strong>Bonus Amount</strong></td><td class="dim">本次結算實際入帳的金額（等同 Max 上限），下方附「Max Cap Reached」徽章重申結算原因。不寫「Maximum Payout Amount」，理由同 <a data-goto="pg-bag-d" role="link" style="color:var(--gold-light);" tabindex="0">02 玩家端背包 Ⓓ</a>：此金額通常低於上限，寫成「最高」會造成誤解</td></tr><tr><td class="region-td">10</td><td class="dim"><strong>CONFIRM</strong></td><td class="dim">綠色實心按鈕，<strong>本畫面唯一出口</strong>：按下後關閉完成畫面、返回背包列表。不做「點擊任意處關閉」——這一步已入帳真金，需要玩家明確按下</td></tr></tbody>
+<tbody><tr><td class="region-td">3</td><td class="dim">標題「Settle now?」</td><td class="dim">直接對應觸發的 SETTLE NOW 按鈕</td></tr><tr><td class="region-td">4</td><td class="dim">說明文字</td><td class="dim">告知玩家已達上限、結算後會放棄的剩餘 Spins Left 次數，以及即將入帳的金額（以「₱」符號顯示）；次數與金額須即時對應該FREE SPIN卡當下的實際數值</td></tr><tr><td class="region-td">5</td><td class="dim">小字說明</td><td class="dim">「Won ○○ ₱ · amount over the cap is not counted; settled at the cap」；顯示玩家實際贏得的金額與上限的差異，讓「結算金額為何比實際贏得少」保持透明。</td></tr><tr><td class="region-td">6</td><td class="dim">CONFIRM ／ CANCEL</td><td class="dim">CONFIRM（綠色實心，左側）：確認結算；FREE SPIN卡以 Max 上限金額（<span class="mono">max_bonus</span>）立即入帳<span class="tag-pill tag-v2">V1.20 改</span>、剩餘 Spins Left 作廢，並顯示 COMPLETED 完成畫面。CANCEL（外框，右側）：取消，關閉彈窗返回原畫面，FREE SPIN卡狀態不受影響。<br/><strong>備註：</strong>此處 CONFIRM 刻意放在左側，與畫面中其他 CONFIRM／PROCEED 一律置右的慣例相反 — 目的是打破玩家的慣性點擊習慣，避免手滑或誤觸而不小心確認這個不可逆的結算動作</td></tr><tr><td class="region-td">7</td><td class="dim">「COMPLETED」標題</td><td class="dim">結算完成後顯示的畫面標題，取代原本的「Settle now?」確認彈窗</td></tr><tr><td class="region-td">8</td><td class="dim">Card No.</td><td class="dim">同「欄位總覽」編號 9，顯示此FREE SPIN卡的卡片編號，方便對照</td></tr><tr><td class="region-td">9</td><td class="dim"><strong>Bonus Amount</strong></td><td class="dim">本次結算實際入帳的金額（等同 Max 上限），下方附「Max Cap Reached」徽章重申結算原因。不寫「Maximum Payout Amount」，此標籤與一般結算彈窗共用，一般結算的金額通常低於上限，寫成「最高」會造成誤解（提前結算時恆等於上限）</td></tr><tr><td class="region-td">10</td><td class="dim"><strong>CONFIRM</strong></td><td class="dim">綠色實心按鈕，<strong>本畫面唯一出口</strong>：按下後關閉完成畫面、返回背包列表。不做「點擊任意處關閉」——這一步已入帳真金，需要玩家明確按下</td></tr></tbody>
 </table>
 <div class="body-text" data-audience="software" style="margin-top:6px;">本節兩張截圖（直式／橫式）已換新版：#9 欄位標籤已改為 <strong>Bonus Amount</strong>，<span class="mono">Amout</span> 筆誤也已修正為 <span class="mono">Amount</span>。畫面中的幣別符號（$／₱）僅為示意，實際顯示依玩家錢包幣別與系統格式化（見 02 玩家端背包 i18n 備註①），美術稿不需要求與特定幣別一致，故不再視為待修正項。</div>
 
@@ -1543,7 +1549,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <li><span class="mono">valid_from</span> <strong>未到的卡歸入本分頁</strong>，不出現在「可使用」分頁</li>
 <li><strong>唯讀</strong>：VIEW DETAILS 可以展開、Select Game <strong>可以瀏覽</strong>，但<strong>不可選取遊戲、PROCEED 永遠押灰不可按</strong>，也不可取得遊戲入口<span class="tag-pill tag-v2">V1.15 改</span></li>
 <li>顯示「<strong>{t} 後開始</strong>」倒數（時間基準 <strong>UTC+8</strong>，與到期倒數同一基準）</li>
-<li>卡片明細（<span class="mono">bet</span>／次數／<span class="mono">max_conversion</span>／遊戲牆）<strong>照常顯示供玩家預覽</strong>——讓玩家先知道自己拿到什麼</li></ul></div>
+<li>卡片明細（<span class="mono">bet</span>／次數／<span class="mono">max_bonus</span>／遊戲牆）<strong>照常顯示供玩家預覽</strong>——讓玩家先知道自己拿到什麼</li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list">
 <li><strong>開始時間一到自動轉入「可使用」分頁</strong>（毋須重新整理）</li>
 <li>狀態徽章顯示「<strong>待啟動</strong>」（藍紫，樣式見 <a data-goto="art-tag-states" role="link" style="color:var(--gold-light);" tabindex="0">05 美術 標籤五態</a>）</li>
@@ -1557,7 +1563,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="region-detail" data-audience="shared" id="pg-bag-exp">
 <h4><span class="region-td">Ⓐ′</span>已過期卡<span class="rd-func">過期卡的最終狀態展示。</span></h4>
 <div class="rd-cols">
-<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>沿用可使用卡的同一組欄位，<strong>不另做「Settled Bonus」列</strong>：<span class="mono">Current Winnings</span> 顯示的就是<strong>最終結算金額</strong>＝<span class="mono">min(score, max_conversion)</span>，進度條停在結算當下的比例</li><li><span class="mono">Spins Left</span> <strong>保留結算當下的數字</strong>（例：到期時剩 9/10 未轉，就顯示 9/10）——不歸零，讓玩家看得出「還剩幾次沒用到」</li><li><span class="mono">Time Left</span> 顯示 <span class="mono">0D:00:00</span></li><li>狀態徽章「已過期」（灰）；<strong>無 VIEW DETAILS 按鈕、不可展開</strong></li></ul></div>
+<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>沿用可使用卡的同一組欄位，<strong>不另做「Settled Bonus」列</strong>：<span class="mono">Current Winnings</span> 顯示的就是<strong>最終結算金額</strong>＝<span class="mono">min(score, max_bonus)</span>，進度條停在結算當下的比例</li><li><span class="mono">Spins Left</span> <strong>保留結算當下的數字</strong>（例：到期時剩 9/10 未轉，就顯示 9/10）——不歸零，讓玩家看得出「還剩幾次沒用到」</li><li><span class="mono">Time Left</span> 顯示 <span class="mono">0D:00:00</span></li><li>狀態徽章「已過期」（灰）；<strong>無 VIEW DETAILS 按鈕、不可展開</strong></li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>整張卡<strong>置灰唯讀</strong>、按鈕不可按</li>
 <li>不可再取得遊戲入口</li></ul></div>
 </div>
@@ -1613,11 +1619,11 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <td><strong>提前結算</strong><br/><span class="tag-pill tag-v2">V1.6</span></td>
 <td class="dim">卡已封頂（<span class="mono">score ≥ max</span>）、<strong>剩 3 次</strong>未用</td>
 <td class="dim">點 SETTLE NOW → 按 CONFIRM</td>
-<td class="dim">① 彈窗明確顯示<strong>放棄 3 次</strong>與入帳金額，且 <strong>CONFIRM 在左、CANCEL 在右</strong>；② 按 CONFIRM 後<strong>先出現 COMPLETED 完成畫面</strong>（COMPLETED 標題＋Card No.＋Bonus Amount＋Max Cap Reached 徽章），按畫面上的 CONFIRM 才關窗；③ 實際入帳＝<span class="mono">max_conversion</span>；④ 卡片<strong>轉入「已過期」分頁</strong>並顯示結算獎金；⑤ <strong>不可再進場</strong></td>
+<td class="dim">① 彈窗明確顯示<strong>放棄 3 次</strong>與入帳金額，且 <strong>CONFIRM 在左、CANCEL 在右</strong>；② 按 CONFIRM 後<strong>先出現 COMPLETED 完成畫面</strong>（COMPLETED 標題＋Card No.＋Bonus Amount＋Max Cap Reached 徽章），按畫面上的 CONFIRM 才關窗；③ 實際入帳＝<span class="mono">max_bonus</span>；④ 卡片<strong>轉入「已過期」分頁</strong>並顯示結算獎金；⑤ <strong>不可再進場</strong></td>
 </tr>
 <tr>
 <td><strong>未封頂不顯示</strong><br/><span class="tag-pill tag-v2">V1.6</span></td>
-<td class="dim">卡片 <span class="mono">score &lt; max_conversion</span>（未封頂），仍有剩餘次數</td>
+<td class="dim">卡片 <span class="mono">score &lt; max_bonus</span>（未封頂），仍有剩餘次數</td>
 <td class="dim">展開卡片查看</td>
 <td class="dim">背包<strong>完全看不到 SETTLE NOW 按鈕</strong>（不是灰化，是整個按鈕不存在）</td>
 </tr>
@@ -1755,7 +1761,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="region-detail" data-audience="shared" id="pg-game-c">
 <h4><span class="region-td">Ⓒ</span>最高可獲得獎金（封頂）<span class="rd-func">先講清楚上限，避免「贏很多卻只給上限」的爭議。</span></h4>
 <div class="rd-cols">
-<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>數值＝該卡的 <span class="mono">max_conversion</span>，與背包 Ⓓ 進度條的分母同一個數字</li>
+<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>數值＝該卡的 <span class="mono">max_bonus</span>，與背包 Ⓓ 進度條的分母同一個數字</li>
 <li>幣別與格式依<strong>玩家錢包幣別</strong>顯示</li>
 <li>欄位標籤為「<strong>最高可獲得獎金</strong>」（Maximum Payout Amount），置於金額上方——文案見 <a data-goto="sec-09-I" role="link" style="color:var(--gold-light);" tabindex="0">02 玩家端背包 文案表</a> <span class="mono">fs_max_payout_label</span><span class="tag-pill tag-v2">V1.14 補</span></li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>此數字<strong>是上限不是保證</strong>；文案不得寫成「可獲得 ○○」等承諾語</li></ul></div>
@@ -1777,7 +1783,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="shot-frame" data-audience="shared" style="max-width:300px;margin:0 auto 14px;"><img alt="Entry popup showing free spins count" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_14_entry_popup.png"/><div class="shot-ph">📷 圖片未載入：進場提示彈窗截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">進場提示彈窗 — 顯示中獎彈窗與免費旋轉次數。</div></div>
 <table class="spec-table" data-audience="software">
 <thead><tr><th style="width:36px;">#</th><th style="width:220px;">欄位</th><th>說明</th></tr></thead>
-<tbody><tr><td class="region-td">1</td><td class="dim">CONGRATULATIONS / FREE SPINS</td><td class="dim">標題文字，告知玩家已成功兌換</td></tr><tr><td class="region-td">2</td><td class="dim">SPINS 次數</td><td class="dim">此次兌換獲得的免費旋轉次數，與該FREE SPIN卡的 Spins Left 對應</td></tr><tr><td class="region-td">3</td><td class="dim">Maximum Payout Amount</td><td class="dim">此次免費旋轉可派發的最高獎金，與FREE SPIN卡的 Max 上限對應</td></tr><tr><td class="region-td">4</td><td class="dim">Click Anywhere To Continue</td><td class="dim">點擊畫面任意處即關閉彈窗，進入所選遊戲</td></tr></tbody>
+<tbody><tr><td class="region-td">1</td><td class="dim">CONGRATULATIONS / FREE SPINS</td><td class="dim">標題文字，告知玩家已成功兌換</td></tr><tr><td class="region-td">2</td><td class="dim">SPINS 次數</td><td class="dim">此次兌換獲得的免費旋轉次數，與該FREE SPIN卡的 Spins Left 對應</td></tr><tr><td class="region-td">3</td><td class="dim">Maximum Payout Amount</td><td class="dim">此次免費旋轉可派發的最高獎金，與FREE SPIN卡的 Max 上限對應</td></tr><tr><td class="region-td">4</td><td class="dim">Press Anywhere to Continue</td><td class="dim">點擊畫面任意處即關閉彈窗，進入所選遊戲</td></tr></tbody>
 </table>
 
 </section>
@@ -1891,7 +1897,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <!-- ── CRM 活動頁浮層（iframe）行為 ── -->
 <div class="sub-title" data-audience="software" id="art-in-game">遊戲內畫面 — FS 模式的標示、注額與浮層行為</div>
 <div class="body-text" data-audience="software">玩家於進場提示彈窗點擊任意處後，進入所選遊戲。FS 模式下畫面有三處變化：左下角常駐 <strong>FREE SPINS</strong> 標示、<strong>BET 鎖定</strong>為卡片面額、原本的旋轉鈕改為 <strong>FREE {n} 剩餘局數計數器</strong>。FS 模式<strong>不是封閉狀態</strong>——浮動 icon 全程常駐，玩家在免費局進行中依然可以打開背包換卡、換遊戲。</div>
-<div class="shot-frame" data-audience="shared" id="art-fs-overlay" style="max-width:1000px;margin:0 auto 14px;"><img alt="FS 模式三態：一般 FS 模式、開啟選單、轉動中不可互動" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_15_in_game.png"/><div class="shot-ph">📷 圖片未載入：遊戲內畫面截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">左：FS 模式（編號 1–4 對應下表）· 中：FS 模式中點 icon 展開 GAME CENTER（#5）· 右：轉動中 icon 降低透明度、不可互動（#6）。</div></div>
+<div class="shot-frame" data-audience="shared" id="art-fs-overlay" style="max-width:1000px;margin:0 auto 14px;"><img alt="FS 模式三態：一般 FS 模式、開啟選單、轉動中不可互動" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_15_in_game.png"/><div class="shot-ph">📷 圖片未載入：遊戲內畫面截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">左：FS 模式（編號 1–4 對應下表）· 中：FS 模式中點 icon 展開 GAME CENTER（#4）· 右：轉動中 icon 降低透明度、不可互動（#6）。</div></div>
 <table class="spec-table" data-audience="software">
 <thead><tr><th style="width:36px;">#</th><th style="width:200px;">欄位／行為</th><th>說明</th></tr></thead>
 <tbody><tr><td class="region-td">1</td><td class="dim"><strong>FREE SPINS 標示</strong></td><td class="dim">常駐於畫面左下角，提醒玩家目前正在使用FREE SPIN卡進行免費旋轉；<strong>從第一局開始顯示，到結算彈窗關閉後移除</strong>。</td></tr><tr><td class="region-td">2</td><td class="dim">BET 注額</td><td class="dim">固定顯示為該FREE SPIN卡的 Bet Amount，免費旋轉期間玩家無法調整</td></tr><tr><td class="region-td">3</td><td class="dim"><strong>剩餘局數計數器</strong></td><td class="dim"><strong>原本的旋轉鈕位置改為顯示「FREE {n}」</strong>，n＝剩餘局數，每完成一局 −1；n 歸 0 後不可再按，直接進結算。「FREE」字樣為美術圖、數字為動態值。遊戲本身觸發的免費遊戲期間 n 停住不動（那些局不扣卡片局數）。規則見 <span data-goto="sec-03-A" role="link" style="color:var(--gold-light);" tabindex="0">03 遊戲內與結算 Ⓑ</span>。</td></tr><tr><td class="region-td">4</td><td class="dim">浮動 icon 於 FS 模式常駐</td><td class="dim">吸附浮動 icon 在<strong>一般模式與 FS 模式皆顯示、皆可點擊</strong>展開 GAME CENTER 選單，並非 FS 期間限定；玩家未持任何卡時同樣可開（開啟後看到空狀態）。從 FS 模式開啟的背包<strong>與一般模式是同一頁</strong>，沒有簡化版或第二種排版（<span data-goto="sec-02-B" role="link" style="color:var(--gold-light);" tabindex="0">02 玩家端背包 單一版面聲明</span>）。</td></tr><tr><td class="region-td">5</td><td class="dim">按下 SPIN 當下自動關閉</td><td class="dim">玩家按下 SPIN 的當下，<strong>展開的選單與背包浮層自動關閉</strong>，讓畫面回到遊戲；<strong>icon 本體保留在畫面上</strong>，不隨之消失。關閉浮層<strong>不影響任何結算數字</strong>——局數與 score 照常計算。</td></tr><tr><td class="region-td">6</td><td class="dim">轉動中降低透明度、不可點</td><td class="dim">轉軸轉動中／開獎動畫未結束時，<strong>icon、展開選單、背包浮層一律降低透明度並完全不可點擊</strong>（點擊事件全部阻擋，此時點 icon 不會展開選單），用降低透明度來表示「這個功能現在不能用」。動畫結束後全部恢復正常。<br/><span class="dim">責任邊界：浮層的開關與半透明由遊戲端／平台前端實作，遊戲需把「運行中」狀態通知浮層容器；背包本身的程式不因此變更。</span></td></tr></tbody>
@@ -1970,7 +1976,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <thead><tr><th style="width:56px;">區域</th><th>功能（點標題看詳細說明）</th></tr></thead>
 <tbody>
 <tr><td class="region-td">Ⓐ</td><td><a href="#pg-game-l" style="color:var(--gold-light);text-decoration:none;border-bottom:1px dashed var(--border-bright);">標題 Free Spins Completed</a></td></tr>
-<tr><td class="region-td">Ⓑ</td><td><a href="#pg-game-m" style="color:var(--gold-light);text-decoration:none;border-bottom:1px dashed var(--border-bright);">CampaignID（客訴查詢用）</a></td></tr>
+<tr><td class="region-td">Ⓑ</td><td><a href="#pg-game-m" style="color:var(--gold-light);text-decoration:none;border-bottom:1px dashed var(--border-bright);">卡序號 ID（客訴查詢用）</a></td></tr>
 <tr><td class="region-td">Ⓒ</td><td><a href="#pg-game-n" style="color:var(--gold-light);text-decoration:none;border-bottom:1px dashed var(--border-bright);">遊戲縮圖</a></td></tr>
 <tr><td class="region-td">Ⓓ</td><td><a href="#pg-game-o" style="color:var(--gold-light);text-decoration:none;border-bottom:1px dashed var(--border-bright);">Bonus Amount · 本次結算金額</a></td></tr>
 <tr><td class="region-td">Ⓔ</td><td><a href="#pg-game-p" style="color:var(--red-line-strong);text-decoration:none;border-bottom:1px dashed var(--border-bright);">⛔ 最低可提領金額（<strong>已確認移除 · 原型無此欄位</strong>）</a></td></tr>
@@ -1987,14 +1993,15 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>出現時機＝<strong>最後一局結束</strong>，或<strong>到期時玩家仍在遊戲中</strong></li>
 <li>整張卡<strong>只結算一次</strong>，本彈窗也只出現一次</li>
 <li><strong>標題視覺上排為兩段</strong>：上段「<strong>FREE SPINS</strong>」（美術圖，全語系統一英文）＋下段「<strong>COMPLETED</strong>」——<a data-goto="sec-09-I" role="link" style="color:var(--gold-light);" tabindex="0">02 玩家端背包 文案表</a> <span class="mono">fs_exit_title</span> 仍是完整語意的一條 key，<strong>前端依版面決定是否拆行，不得改變語意</strong><span class="tag-pill tag-v2">V1.14 補</span></li></ul></div>
-<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>結算尚未成功時<strong>不得先跳彈窗</strong>（避免顯示金額與實際入帳不符）</li></ul></div>
+<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>結算尚未成功時<strong>不得先跳彈窗</strong>（避免顯示金額與實際入帳不符）</li>
+<li><strong>入帳時點與餘額顯示時點分開</strong><span class="tag-pill tag-v2">V1.20 新增</span>：後端先入帳、再跳彈窗；畫面上的錢包餘額<strong>等玩家按 CONFIRM 關閉彈窗後才更新</strong></li></ul></div>
 </div>
 </div>
 <div class="region-detail" data-audience="shared" id="pg-game-m">
-<h4><span class="region-td">Ⓑ</span>CampaignID（客訴查詢用）<span class="rd-func">這張卡是哪一檔活動發的。</span></h4>
+<h4><span class="region-td">Ⓑ</span>卡序號 ID（客訴查詢用）<span class="tag-pill tag-v2">V1.20 改</span><span class="rd-func">這是哪一張卡。</span></h4>
 <div class="rd-cols">
-<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>顯示 <span class="mono">campaign_id</span>，可長按複製（若遊戲端支援）</li>
-<li><strong>【待確認】</strong>建議同時顯示卡序號 <span class="mono">reference_id</span>——客服查單以卡序號最快（見 <a data-target-audience="shared" href="#sec-09-A" style="color:var(--gold-light);">09-A 全域約定</a> 待確認⑦）</li></ul></div>
+<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>顯示卡序號 <span class="mono">reference_id</span>（客服查單以卡序號最快），可長按複製（若遊戲端支援）<span class="tag-pill tag-v2">V1.20 改 · 待確認⑦定案</span></li>
+<li>不顯示 <span class="mono">campaign_id</span>；原型圖上的「CampaignID」字樣待美術改為卡序號</li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>ID 為專名<strong>不翻譯</strong>、不換行截斷</li></ul></div>
 </div>
 </div>
@@ -2008,7 +2015,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="region-detail" data-audience="shared" id="pg-game-o">
 <h4><span class="region-td">Ⓓ</span>Bonus Amount · 本次結算金額<span class="rd-func">這張卡最後給了多少錢。</span></h4>
 <div class="rd-cols">
-<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>金額＝<span class="mono">min(score, max_conversion)</span>，幣別依玩家錢包</li>
+<div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>金額＝<span class="mono">min(score, max_bonus)</span>，幣別依玩家錢包</li>
 <li>此金額為<strong>主錢包真金、無流水</strong>，關窗後即可正常提領或續玩</li>
 <li>金額為 <strong>0 也要顯示彈窗</strong>（顯示 0），不可略過</li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>金額必須與背包<strong>已過期卡的 Current Winnings</strong>（該卡最終結算金額）完全一致<span class="tag-pill tag-v2">V1.15 改</span></li></ul></div>
@@ -2038,7 +2045,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="shot-frame" data-audience="shared" style="max-width:380px;margin:0 auto 14px;"><img alt="Exit popup showing settlement result" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_16_exit_popup.png"/><div class="shot-ph">📷 圖片未載入：結算彈窗截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">結算彈窗 — 顯示本次免費旋轉的結算結果，以 CONFIRM 關閉。編號對應下表「#」欄。</div><div class="body-text" style="margin-top:10px;">本圖標籤已改為 <strong>Bonus Amount</strong>，與下表 #4 一致；<span class="mono">Amout</span> 筆誤已修正。畫面中的幣別符號僅為示意，實際依玩家錢包幣別與系統格式化顯示（見 02 玩家端背包 i18n 備註①），不需要求與特定幣別一致。</div></div>
 <table class="spec-table" data-audience="software">
 <thead><tr><th style="width:36px;">#</th><th style="width:220px;">欄位</th><th>說明</th></tr></thead>
-<tbody><tr><td class="region-td">1</td><td class="dim">FREE SPINS COMPLETED</td><td class="dim">標題文字，告知玩家此FREE SPIN卡的免費旋轉已全部使用完畢</td></tr><tr><td class="region-td">2</td><td class="dim">ID</td><td class="dim">此次使用的FREE SPIN卡兌換識別碼，供玩家或客服對照查詢</td></tr><tr><td class="region-td">3</td><td class="dim">遊戲圖示與名稱</td><td class="dim">玩家選擇並完成免費旋轉的遊戲</td></tr><tr><td class="region-td">4</td><td class="dim"><strong>Bonus Amount</strong></td><td class="dim">本次免費旋轉<strong>實際派發</strong>的獎金＝<span class="mono">min(score, 上限)</span>；達到 Max 上限時額外顯示「Max Cap Reached」標籤，未達上限則不顯示。<strong>不使用「Maximum Payout Amount」</strong>——此金額通常低於上限，寫成「最高」會造成誤解（該字樣只用於<span data-goto="art-entry-popup" role="link" style="color:var(--gold-light);" tabindex="0">進場提示彈窗</span>）</td></tr><tr><td class="region-td">5</td><td class="dim"><strong>CONFIRM</strong></td><td class="dim">綠色實心按鈕，本畫面唯一出口：按下後 FS 標示消失、押注解鎖回玩家自選、錢包顯示已含本次獎金，停在<strong>同一款遊戲的一般模式</strong>，不自動跳回背包</td></tr></tbody>
+<tbody><tr><td class="region-td">1</td><td class="dim">FREE SPINS COMPLETED</td><td class="dim">標題文字，告知玩家此FREE SPIN卡的免費旋轉已全部使用完畢</td></tr><tr><td class="region-td">2</td><td class="dim">ID</td><td class="dim">此次使用的FREE SPIN卡卡序號 <span class="mono">reference_id</span>，供玩家或客服對照查詢<span class="tag-pill tag-v2">V1.20 改</span></td></tr><tr><td class="region-td">3</td><td class="dim">遊戲圖示與名稱</td><td class="dim">玩家選擇並完成免費旋轉的遊戲</td></tr><tr><td class="region-td">4</td><td class="dim"><strong>Bonus Amount</strong></td><td class="dim">本次免費旋轉<strong>實際派發</strong>的獎金＝<span class="mono">min(score, 上限)</span>；達到 Max 上限時額外顯示「Max Cap Reached」標籤，未達上限則不顯示。<strong>不使用「Maximum Payout Amount」</strong>——此金額通常低於上限，寫成「最高」會造成誤解（該字樣只用於<span data-goto="art-entry-popup" role="link" style="color:var(--gold-light);" tabindex="0">進場提示彈窗</span>）</td></tr><tr><td class="region-td">5</td><td class="dim"><strong>CONFIRM</strong></td><td class="dim">綠色實心按鈕，本畫面唯一出口：按下後 FS 標示消失、押注解鎖回玩家自選、錢包顯示已含本次獎金，停在<strong>同一款遊戲的一般模式</strong>，不自動跳回背包</td></tr></tbody>
 </table>
 
 </section>
@@ -2086,7 +2093,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <td><strong>② 錢包全程不動</strong></td>
 <td class="dim">記下進場前的錢包餘額</td>
 <td class="dim">玩完全部免費局（其中至少 1 局有贏分）</td>
-<td class="dim">① FS 期間<strong>每一局結束餘額都不變</strong>；② 直到結算彈窗出現後，餘額才增加 Bonus Amount</td>
+<td class="dim">① FS 期間<strong>每一局結束餘額都不變</strong>；② 結算彈窗出現時餘額<strong>顯示仍不變</strong>（後端已先入帳），<strong>按 CONFIRM 關閉彈窗後</strong>餘額顯示才增加 Bonus Amount<span class="tag-pill tag-v2">V1.20 改</span></td>
 </tr>
 <tr>
 <td><strong>③ 局數用完自動結算</strong></td>
@@ -2131,10 +2138,10 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <td class="dim">① <strong>選單與背包浮層立即關閉</strong>；② <strong>吸附浮動 icon 保留</strong>在畫面上（不一起消失）；③ 該局<strong>照常進行並扣次</strong>（局數與 <span class="mono">score</span> 計算不受影響）</td>
 </tr>
 <tr>
-<td><strong>⑩ 轉動中浮層鎖定</strong><br/><span class="tag-pill tag-v2">V1.6</span></td>
-<td class="dim">FS 模式中、<strong>正在轉動</strong>（開獎動畫未結束）</td>
-<td class="dim">開啟 CRM 活動頁</td>
-<td class="dim">① 浮層<strong>半透明</strong>；② <strong>任何按鈕點不動</strong>（點擊全部被阻擋）；③ <strong>動畫結束後恢復</strong>正常可操作</td>
+<td><strong>⑩ 轉動中浮層鎖定</strong><br/><span class="tag-pill tag-v2">V1.20 改</span></td>
+<td class="dim">FS 模式中、<strong>CRM 活動頁浮層開著</strong></td>
+<td class="dim">按下 SPIN，轉動中點浮層原本的位置</td>
+<td class="dim">① 浮層<strong>隨 SPIN 立即關閉</strong>；② 轉動中點擊該位置<strong>沒有任何反應</strong>（不會誤觸浮層按鈕）；③ <strong>動畫結束後</strong>點 icon 可再開啟活動頁</td>
 </tr>
 <tr>
 <td><strong>⑪ 轉動中點 icon</strong><br/><span class="tag-pill tag-v2">V1.8 新增</span></td>
@@ -2217,7 +2224,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 
 
 <div class="callout danger" data-audience="software"><strong>先讀這段 · 本章橫跨兩個系統，開單前務必分清楚</strong><br/>
-  本章描述的動線裡，<strong>CRM 端只做一件事</strong>：在背包浮層加一個「History」入口，把玩家送進遊戲端既有的「遊戲歷程」頁。<br/>
+  本章描述的動線裡，<strong>CRM 端只做一件事</strong>：在 CRM 選單（Game Center）最下方加一個「History」項目<span class="tag-pill tag-v2">V1.20 改</span>，把玩家送進遊戲端既有的「遊戲歷程」頁。<br/>
 <strong>其餘四項都是遊戲端要改的</strong>：活動分類頁新增 FREE SPIN 卡入口、卡片清單層、局歷程列表、盤面頁欄位置換。<br/>
   兩邊的工作項與職能已在下方〈職責切分〉表中拆開，<strong>不要開成同一張單</strong>。</div>
 <div class="sub-title" data-audience="software">職責切分（開單依據）</div>
@@ -2229,7 +2236,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td class="mono">H3</td><td>遊戲端</td><td>新增卡片清單層（L3）：以 <span class="mono">reference_id</span> 為分組主鍵，可展開；含日期篩選器</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H4</td><td>遊戲端</td><td>局歷程列表（L4）沿用既有注單列表元件，欄位口徑依本章調整</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H5</td><td>遊戲端</td><td>盤面頁（L5）沿用既有元件，僅置換頂部 Balance 區塊為 <span class="mono">reference_id</span>、調整 Bet／Win 顯示口徑</td><td class="dim">遊戲前端</td></tr>
-<tr><td class="mono">H6</td><td><strong>基礎建設</strong></td><td>FS 卡歷程獨立 DB 架構 ＋ 歷程 API 統一輸出（同一份資料同時餵一般注單與 FS 歷程，避免兩處各自維護）</td><td class="dim">後端<span class="tag-pill tag-inf">基建</span></td></tr>
+<tr><td class="mono">H6</td><td><strong>基礎建設</strong></td><td>FS 逐局注單（免費轉注單狀態）在一般注單檢視濾掉 ＋ 歷程 API 統一輸出（同一份注單資料同時餵一般注單與 FS 歷程，避免兩處各自維護）<span class="tag-pill tag-v2">V1.20 改</span></td><td class="dim">後端<span class="tag-pill tag-inf">基建</span></td></tr>
 <tr><td class="mono">H7</td><td>數據</td><td>確認 FS 局的 bet／win <strong>不計入單一遊戲收入</strong>的統計口徑（避免遊戲營收被卡片面額灌水）</td><td class="dim">數據組</td></tr>
 </tbody>
 </table>
@@ -2252,6 +2259,11 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 
 
 
+
+<div class="callout"><strong>活動分類頁原型已把兩個玩法彙整在同一頁</strong><span class="tag-pill tag-v2">V1.18 新增</span>：<a href="遊戲歷程活動頁原型.html" rel="noopener" style="color:var(--gold-light);" target="_blank">《遊戲歷程活動頁原型》↗</a> 在「遊戲歷程 › 活動」底下同時放了<strong>抽寶箱</strong>與 <strong>FREE SPIN 卡</strong>兩張入口卡，是本頁規格的實拍依據。<strong>抽寶箱那張卡的內部規格屬《抽寶箱規格書》範疇</strong>，本頁只定義 FREE SPIN 卡這一張，以及兩者並列時的版面與差異。</div>
+<div class="shot-map narrow" data-audience="shared" style="margin-top:10px;">
+<div class="shot-frame" data-audience="shared"><img alt="遊戲歷程 · 活動分類頁（抽寶箱與 FREE SPIN 卡並列）" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_hist_01_activity_tab.png"/><div class="shot-ph">📷 截圖待補：遊戲歷程活動分類頁</div><div class="shot-cap">L2 · 活動分類頁實拍（《遊戲歷程活動頁原型》2026-09-02）· 紅框 <strong>Ⓐ</strong> 為本頁定義的 FREE SPIN 卡入口卡 · 點圖放大<br/><span class="dim">同畫面其他元素：左側「抽寶箱」入口卡屬《抽寶箱規格書》；上排 Slot／Arcade 為既有的投注統計分類（卡下有 TOTAL BETS 與 NET WIN/LOSE），<strong>「活動」分類卡與其下兩張入口卡皆不放統計數字</strong>；最下方「更多活動玩法將陸續開放」即本頁所稱的版面預留。</span></div></div>
+</div>
 <div class="sub-title" data-audience="software">L2 · 活動分類頁</div>
 <div class="region-detail" data-audience="shared" id="pg-hist-l2">
 <h4><span class="region-td">Ⓐ</span>FREE SPIN 卡入口卡<span class="rd-func">與抽寶箱並列的第二張入口卡。</span></h4>
@@ -2275,17 +2287,20 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 
 
 
+<div class="shot-map narrow" data-audience="shared" style="margin-top:10px;">
+<div class="shot-frame" data-audience="shared"><img alt="L3 FREE SPIN 卡片清單（卡片列展開後含局歷程）" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_hist_02_fs_card_list.png"/><div class="shot-ph">📷 截圖待補：L3 FREE SPIN 卡片清單</div><div class="shot-cap">L3 · FREE SPIN 卡片清單實拍（《遊戲歷程活動頁原型》2026-09-02）<span class="tag-pill tag-v2">V1.18 新增</span> · <strong>Ⓒ</strong> 日期篩選器 · <strong>Ⓑ</strong> 卡片列（分組標頭：卡序號／有效期間／已用總次數／累積分數／結算金額）· <strong>Ⓓ</strong> 展開後的局歷程列表<span class="dim">（Ⓓ 的規格在 <a data-target-audience="shared" href="#sec-04-D" style="color:var(--gold-light);">04-D</a>，此處一併框出是因為原型上它就接在卡片列底下）</span> · 點圖放大<br/><span class="dim">畫面中第二張卡「5★ FREE SPIN」的累積分數標示「1,180 已封頂，結算以上限為準」，即 <a data-target-audience="shared" href="#sec-09-A" style="color:var(--gold-light);">09-A</a> 的 min(score, max_bonus) 封頂規則在玩家端的呈現。</span></div></div>
+</div>
 <div class="sub-title" data-audience="software">L3 · FREE SPIN 卡片清單</div>
 <div class="region-detail" data-audience="shared" id="pg-hist-l3">
 <h4><span class="region-td">Ⓑ</span>卡片列（分組標頭）<span class="rd-func">一張卡一列，reference_id 為主鍵；點列展開該卡全部局。</span></h4>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li>排序＝<strong>發卡時間倒序</strong>（最新的卡在最上面）</li>
-<li>每列欄位（自左至右）：<br/>① <strong>卡名</strong>「{n}★ FREE SPIN」（同背包固定卡名）<br/>② <span class="mono">reference_id</span> <strong>短碼＋複製 icon</strong>（樣式仿既有 ID 欄；點複製取<strong>完整值</strong>）<br/>③ <strong>有效期間</strong> <span class="mono">valid_from ~ valid_to</span><br/>④ <strong>已用／總次數</strong>（如 <span class="mono">8/10</span>）<br/>⑤ <strong>累積分數</strong> <span class="mono">score</span>——<strong>純數字、不帶幣值符號</strong><br/>⑥ <strong>結算金額</strong>——<strong>帶幣值符號、橘黃色</strong>；未結算顯示「進行中」灰字<br/>⑦ <strong>狀態徽章</strong>（使用中／已結算／已過期未使用）<br/>⑧ 展開 chevron</li>
+<li>每列欄位（自左至右）：<br/>① <strong>卡名</strong>「{n}★ FREE SPIN」（同背包固定卡名）<br/>② <span class="mono">reference_id</span> <strong>短碼＋複製 icon</strong>（樣式仿既有 ID 欄；點複製取<strong>完整值</strong>）<br/>③ <strong>有效期間</strong> <span class="mono">valid_from ~ valid_to</span><br/>④ <strong>已用／總次數</strong>（如 <span class="mono">8/10</span>）<br/>⑤ <strong>累積分數</strong> <span class="mono">score</span>——<strong>純數字、不帶幣值符號</strong><br/>⑥ <strong>結算金額</strong>——<strong>帶幣值符號、橘黃色</strong>；未結算時：已開打顯示「進行中」灰字、從未開打顯示「未使用」灰字<span class="tag-pill tag-v2">V1.20 改</span><br/>⑦ <strong>狀態徽章</strong>（使用中／已結算／已過期未使用）<br/>⑧ 展開 chevron</li>
 <li><strong>⑤與⑥的視覺必須有差別</strong>：⑤是分數（無幣值）、⑥是真金（有幣值）。這是本頁最容易被玩家誤解的一組數字</li>
 <li>score 已達封頂：⑤ 仍顯示<strong>實際 score</strong>，其後加小字「已封頂，結算以上限為準」</li>
 <li>展開為<strong>手風琴</strong>：一次只展開一張卡（避免長列表迷路）</li></ul></div>
-<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>卡片已發但玩家從未開打：可展開，L4 顯示「此卡未使用過」，結算欄顯示「未使用」</li>
-<li>卡片仍在使用中：結算欄一律「進行中」，<strong>不得顯示預估金額</strong>（避免玩家把預估當承諾）</li>
+<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>卡片已發但玩家從未開打：可展開，L4 顯示「此卡未使用過」，結算欄顯示「未使用」；徽章仍有效時為「使用中」、過期後為「已過期未使用」（到期未使用的卡不結算、不寫結算注單）<span class="tag-pill tag-v2">V1.20 補</span></li>
+<li>卡片已開打、尚未結算：結算欄一律「進行中」，<strong>不得顯示預估金額</strong>（避免玩家把預估當承諾）</li>
 <li>已過期未使用的卡仍列出並置灰，供客訴查詢</li>
 <li>清單為空（玩家從未取得 FS 卡）：置中顯示空狀態文案，不顯示表頭</li></ul></div>
 </div>
@@ -2326,18 +2341,18 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <li><strong>頁首固定說明列</strong>（不可關閉）：「此頁數字為卡片面額與累積分數，非帳戶餘額；實際入帳金額請見結算列。」</li></ul></div>
 <div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>遊戲已下架：遊戲名照常顯示（取快照留存值），點進 L5 若盤面資產已移除則顯示降級提示，<strong>數字部分仍須正確</strong></li>
 <li>單張卡局數上限有限（依卡片次數），<strong>不需分頁</strong>；若日後開放大次數卡再議</li>
-<li>卡片未使用過：顯示「此卡未使用過」，仍顯示結算列（結算金額 0 或未結算）</li></ul></div>
+<li>卡片未使用過：顯示「此卡未使用過」，<strong>不顯示結算列</strong>（到期未使用的卡不結算、不寫結算注單）<span class="tag-pill tag-v2">V1.20 改</span></li></ul></div>
 </div>
 </div>
 <div class="region-detail" data-audience="shared" id="pg-hist-settle">
 <h4><span class="region-td">Ⓔ</span>結算收尾列<span class="rd-func">把「分數」接回「真金」的那一列。</span></h4>
 <div class="rd-cols">
 <div><div class="rd-label">限制與規則</div><ul class="rd-list"><li><strong>固定置於該卡展開區的最下方</strong>（時間倒序之外的獨立列，樣式與局列有明顯區隔：底色略亮＋上緣分隔線）</li>
-<li>內容：<strong>時間</strong>＝結算時間｜<strong>標籤</strong>「結算 · 已入主錢包」｜<strong>金額</strong>＝<span class="mono">min(score, max_conversion)</span>，<strong>帶幣值符號、橘黃色</strong></li>
+<li>內容：<strong>時間</strong>＝結算時間｜<strong>標籤</strong>「結算 · 已入主錢包」｜<strong>金額</strong>＝<span class="mono">min(score, max_bonus)</span>，<strong>帶幣值符號、橘黃色</strong></li>
 <li><strong>可點</strong> → 跳至一般注單中對應的那一筆「下注 0／派彩 final」注單（跨分類跳轉，見 <a data-target-audience="software" href="#sec-09-G" style="color:var(--gold-light);">09-G／09-E 開發前置與待確認</a> 待確認⑩）</li>
 <li>卡片尚未結算：<strong>不顯示本列</strong>（不要顯示 0 或預估值）</li>
 <li>提前結算（<a data-target-audience="shared" href="#sec-02-D" style="color:var(--gold-light);">02 玩家端背包 Ⓓ′</a>）與到期／局數用完結算<strong>走同一列</strong>，不另做樣式</li></ul></div>
-<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>score 超過封頂：本列金額顯示<strong>實付的上限值</strong>，並在其下以小字註明「累積 {score}，上限 {max_conversion}，超出不計」——這是「少給錢」客訴的第一現場</li>
+<div><div class="rd-label">防呆與錯誤</div><ul class="rd-list"><li>score 超過封頂：本列金額顯示<strong>實付的上限值</strong>，並在其下以小字註明「累積 {score}，上限 {max_bonus}，超出不計」——這是「少給錢」客訴的第一現場</li>
 <li>跨分類跳轉若遊戲端不支援：<strong>降級為不可點</strong>，並在列上顯示注單 ID 短碼＋複製 icon，讓客服可自行查</li></ul></div>
 </div>
 </div>
@@ -2391,14 +2406,14 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td class="mono">H-05</td><td>檢查 L4 是否有單日統計</td><td><strong>不存在</strong> Single Day Bet Amount／Single Day Net Win Loss 兩個數字</td></tr>
 <tr><td class="mono">H-06</td><td>已結算的卡</td><td>L3 該列結算欄顯示<strong>帶幣值</strong>的實付金額；展開後最下方有結算收尾列，金額一致</td></tr>
 <tr><td class="mono">H-07</td><td>使用中（未結算）的卡</td><td>L3 結算欄顯示「進行中」；展開後<strong>沒有</strong>結算收尾列；<strong>畫面上不出現任何預估金額</strong></td></tr>
-<tr><td class="mono">H-08</td><td>score 超過 max_conversion 的卡</td><td>L3 累積分數顯示<strong>實際 score</strong>＋「已封頂」提示；結算列金額＝<span class="mono">max_conversion</span>，並註明「累積 {score}，上限 {max_conversion}，超出不計」</td></tr>
+<tr><td class="mono">H-08</td><td>score 超過 max_bonus 的卡</td><td>L3 累積分數顯示<strong>實際 score</strong>＋「已封頂」提示；結算列金額＝<span class="mono">max_bonus</span>，並註明「累積 {score}，上限 {max_bonus}，超出不計」</td></tr>
 <tr><td class="mono">H-09</td><td>點結算收尾列</td><td>跳至一般注單該筆「下注 0／派彩 final」；若遊戲端不支援跨分類跳轉，則<strong>降級為不可點但顯示注單 ID＋複製 icon</strong></td></tr>
 <tr><td class="mono">H-10</td><td>點單局進 L5</td><td>頂部<strong>只有</strong> <span class="mono">reference_id</span> 單行，<strong>沒有 Balance 前後值</strong>；Bet 帶幣值＋「卡片面額 · 未實際扣款」小字；Win <strong>不帶幣值</strong></td></tr>
 <tr><td class="mono">H-11</td><td>L5 按 ←</td><td>回到<strong>該卡仍為展開狀態</strong>的 L4</td></tr>
 <tr><td class="mono">H-12</td><td>日期篩選器選一個有使用紀錄的日期</td><td>L3 只列出該日有使用紀錄的卡；<strong>展開後仍顯示該卡全部局</strong>（不被日期裁切）</td></tr>
 <tr><td class="mono">H-13</td><td>日期篩選器選一個沒有紀錄的日期</td><td>顯示「該日期無使用紀錄」＋「清除篩選」，非空白畫面</td></tr>
 <tr><td class="mono">H-14</td><td>複製 <span class="mono">reference_id</span></td><td>取得的是<strong>完整值</strong>（非畫面上的短碼），與背包卡片明細的卡號一致</td></tr>
-<tr><td class="mono">H-15</td><td>與一般注單交叉比對</td><td>FS 的每一局<strong>不出現在一般注單</strong>；一般注單只有結算那一筆，金額與結算收尾列一致</td></tr>
+<tr><td class="mono">H-15</td><td>與一般注單交叉比對</td><td>FS 的每一局<strong>不出現在一般注單檢視</strong>（逐局注單停在免費轉注單狀態、被濾掉）；一般注單只有結算那一筆，金額與結算收尾列一致</td></tr>
 </tbody>
 </table>
 
@@ -2456,13 +2471,13 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="sub-title" id="art-tag-states">標籤 — 狀態徽章（五態）</div>
 <div class="body-text">五個狀態各自對應一組顏色與樣式規則，不只靠色相區分 — 明度與底紋也同步變化，色弱玩家仍能辨識。</div>
 <div class="shot-frame" style="max-width:420px;margin:0 auto 14px;"><img alt="待啟動、使用中、全新、即將到期、已過期" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_10_tag_states_badges.png"/><div class="shot-ph">📷 圖片未載入：五態徽章截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">待啟動、使用中、全新、即將到期、已過期 — 五態徽章。</div></div>
-<div class="shot-frame" style="max-width:780px;margin:0 auto 14px;"><img alt="Expiring soon / pending / expired card states" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_11_tag_states_popups.png"/><div class="shot-ph">📷 圖片未載入：五態情境截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">編號 1「即將到期」與編號 2「待啟動」— 收合與展開後皆與一般卡片相同（VIEW DETAILS 可展開 Select Game，CLOSE／PROCEED 行為不變），僅分頁歸屬不同。編號 3「已過期」— 無 VIEW DETAILS 按鈕、不可展開，也沒有其他互動；整張卡片透明度降低約 50％，呈現置灰效果。</div></div>
+<div class="shot-frame" style="max-width:780px;margin:0 auto 14px;"><img alt="Expiring soon / pending / expired card states" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_11_tag_states_popups.png"/><div class="shot-ph">📷 圖片未載入：五態情境截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">編號 1「即將到期」與編號 2「待啟動」— 收合與展開後的外觀與一般卡片相同（VIEW DETAILS 可展開瀏覽 Select Game），但<strong>不可選取遊戲、PROCEED 永遠押灰</strong>（見 02-E），分頁歸屬也不同<span class="tag-pill tag-v2">V1.20 改</span>。編號 3「已過期」— 無 VIEW DETAILS 按鈕、不可展開，也沒有其他互動；整張卡片透明度降低約 50％，呈現置灰效果。</div></div>
 <div class="body-text">「待啟動」與「即將到期」等其他狀態一樣可以展開瀏覽 Select Game（僅顯示於背包「PENDING」篩選，尚未到開始時間不影響瀏覽）；「已過期」則整卡不可互動、無法展開（僅顯示於背包「EXPIRED」篩選）。</div>
 <table class="spec-table">
 <thead><tr><th style="width:90px;">狀態</th><th style="width:70px;">顏色</th><th>樣式規則</th></tr></thead>
 <tbody><tr><td class="region-td">待啟動</td><td class="dim">藍紫</td><td class="dim">僅顯示於背包「PENDING」篩選；玩家可展開查看此卡可用的遊戲，但尚無法實際使用兌換</td></tr><tr><td class="region-td">使用中</td><td class="dim">金</td><td class="dim">玩家使用過此卡後，即轉為此狀態</td></tr><tr><td class="region-td">全新</td><td class="dim">綠</td><td class="dim">尚未使用（已用 0 次）且已可使用</td></tr><tr><td class="region-td">即將到期</td><td class="dim">紅</td><td class="dim">剩餘時間少於 24 小時；顯示倒數計時</td></tr><tr><td class="region-td">已過期</td><td class="dim">灰</td><td class="dim">無 VIEW DETAILS 按鈕、不可展開，整張卡片透明度降低約 50％呈現置灰效果；僅顯示於背包「EXPIRED」篩選</td></tr></tbody>
 </table>
-<div class="shot-frame" style="max-width:860px;margin:0 auto 14px;"><img alt="FREE SPIN卡生命週期：Pending 經 Available 到已結束，共四條結束路徑" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_12_tag_states_lifecycle.png"/><div class="shot-ph">📷 圖片未載入：卡片生命週期圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap"><strong>卡片生命週期</strong> — 一張FREE SPIN卡有<strong>四條</strong>結束路徑：<strong>①</strong> 把旋轉全部用完，結算 <span class="mono">min(score, 上限)</span>；<strong>②a</strong> 到期且從未使用，結算 0；<strong>②b</strong> 到期但已使用一部分，<strong>結算已累積的 score</strong>（剩餘未轉次數視同放棄）；<strong>③</strong> 獎金達上限後選擇 SETTLE NOW 提早結算。達到上限本身不會自動結束卡片，玩家仍可繼續用完剩餘旋轉。四條路徑最終都進入同一個分頁——其中 ①②b③ 都是<strong>已結算</strong>、只有 ②a 是真正的未使用過期。</div></div>
+<div class="shot-frame" style="max-width:860px;margin:0 auto 14px;"><img alt="FREE SPIN卡生命週期：Pending 經 Available 到已結束，共四條結束路徑" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_12_tag_states_lifecycle.png"/><div class="shot-ph">📷 圖片未載入：卡片生命週期圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap"><strong>卡片生命週期</strong> — 一張FREE SPIN卡有<strong>四條</strong>結束路徑：<strong>①</strong> 把旋轉全部用完，結算 <span class="mono">min(score, 上限)</span>；<strong>②a</strong> 到期且從未使用，<strong>不結算</strong>（不寫結算注單）；<strong>②b</strong> 到期但已使用一部分，<strong>結算 <span class="mono">min(score, 上限)</span></strong>（剩餘未轉次數視同放棄）<span class="tag-pill tag-v2">V1.20 改</span>；<strong>③</strong> 獎金達上限後選擇 SETTLE NOW 提早結算。達到上限本身不會自動結束卡片，玩家仍可繼續用完剩餘旋轉。四條路徑最終都進入同一個分頁——其中 ①②b③ 都是<strong>已結算</strong>、只有 ②a 是真正的未使用過期。</div></div>
 <div class="sub-title" id="art-tile-states">Select Game 遊戲格 — 方塊狀態</div>
 <div class="body-text">三種樣式互斥 — 一個方塊在同一時間只會是其中一種；選取狀態同時以邊框、打勾徽章與文字粗細三個線索標示，不單靠顏色。</div>
 <div class="shot-frame" style="max-width:420px;margin:0 auto 14px;"><img alt="Selected, Default, Locked game tiles" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" src="design_assets/fs_art_13_tile_states.png"/><div class="shot-ph">📷 圖片未載入：遊戲格狀態截圖<br/><span style="font-size:10px;">將圖片放入 design_assets 後自動顯示</span></div><div class="shot-cap">由左至右：Selected、Default、Locked。</div></div>
@@ -2571,7 +2586,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 
 
 
-<div class="callout info"><strong>為什麼保留欄位名？</strong>下表的 <span class="mono">reference_id</span>、<span class="mono">campaign_id</span>、<span class="mono">max_conversion</span> 等是<strong>查 log、對帳、偵錯時大家共用的語言</strong>。企劃回報問題時直接講欄位名，工程師就知道要查哪裡，所以刻意保留。</div>
+<div class="callout info"><strong>為什麼保留欄位名？</strong>下表的 <span class="mono">reference_id</span>、<span class="mono">campaign_id</span>、<span class="mono">max_bonus</span> 等是<strong>查 log、對帳、偵錯時大家共用的語言</strong>。企劃回報問題時直接講欄位名，工程師就知道要查哪裡，所以刻意保留。</div>
 <div class="sub-title">發卡即鎖定 + 多遊戲切換（共用局數池）</div>
 <div class="callout success"><strong>一張卡 = 一個共用局數池</strong>：玩家用這張卡玩 A 遊戲後，只要還有剩餘次數，就可<strong>自由切換到列表內的 B 遊戲繼續玩</strong>，次數從同一池扣。整張卡結束前<strong>不做任何中途結算</strong>，贏分先累積在卡上，直到整卡結束才一次給最終獎金。</div>
 <table class="spec-table">
@@ -2585,7 +2600,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td>剩餘次數</td><td class="dim">結算時未轉的剩餘次數<strong>視同放棄</strong>，不補轉、不折現；<strong>已累積的贏分照常結算給付</strong></td></tr>
 </tbody>
 </table>
-<div class="callout warn"><strong>結算時機</strong>：本卡的局數與結果都由我方自產，<strong>不是每轉即時派彩</strong>；每局贏分只進暫存分數 score。「<strong>局數用完</strong>」、「<strong>卡片到期</strong>」或「<strong>玩家提前結算（僅封頂後可用）</strong>」——<strong>先到者</strong>觸發統一結算一次，整張卡只結算一次，金額＝<span class="mono">min(score, max_conversion)</span>，剩餘未轉次數放棄。</div>
+<div class="callout warn"><strong>結算時機</strong>：本卡的局數與結果都由我方自產，<strong>不是每轉即時派彩</strong>；每局贏分只進暫存分數 score。「<strong>局數用完</strong>」、「<strong>卡片到期</strong>」或「<strong>玩家提前結算（僅封頂後可用）</strong>」——<strong>先到者</strong>觸發統一結算一次，整張卡只結算一次，金額＝<span class="mono">min(score, max_bonus)</span>，剩餘未轉次數放棄。</div>
 <div class="sub-title">⚠ 防濫用：真金直發的必要控管</div>
 <div class="callout danger"><strong>風險必須有人接</strong>：舊設計靠「高價值卡鎖紅利錢包、用平台流水門檻擋提款」來防濫用。改成<strong>結算即真金、可立即提領</strong>後，<strong>這道防線消失</strong>。防濫用責任回到 CRM 中台自持，發卡 / 結算前須通過以下控管。</div>
 <table class="spec-table">
@@ -2594,7 +2609,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td>領取資格</td><td class="dim">限定目標分群 / 玩家類型；不合格玩家不得發卡（防小號刷獎）</td></tr>
 <tr><td>頻率 / 額度</td><td class="dim">單人 / 單活動 / 單日的發卡與派彩上限；搭配中台先鎖額度，避免非同步空窗期超發</td></tr>
 <tr><td>黑名單 / 風控旗標</td><td class="dim">命中風控（多帳號、異常提款）即攔截發卡或結算</td></tr>
-<tr><td>結算封頂</td><td class="dim">最終金額取「累積贏分」與 <span class="mono">max_conversion</span> 中較小者，由我方結算層強制套用，杜絕超發</td></tr>
+<tr><td>結算封頂</td><td class="dim">最終金額取「累積贏分」與 <span class="mono">max_bonus</span> 中較小者，由我方結算層強制套用，杜絕超發</td></tr>
 </tbody>
 </table>
 <div class="callout info"><strong>對帳單純化</strong>：入帳只有一種目標（主錢包），對帳時用 <span class="mono">campaign_id</span> 與卡序號把每筆中獎歸到正確的活動 / 卡片即可，不需要再區分錢包別。</div>
@@ -2629,12 +2644,52 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td class="mono">1</td><td>結果的源頭在我方</td><td class="dim"><strong>活動、局數、獎項結果的源頭都是我方</strong>；集成商只負責接收與轉達，不產生也不改寫結果。</td></tr>
 <tr><td class="mono">2</td><td>發卡須通知並取得確認</td><td class="dim">發卡時須<strong>通知集成商建卡，並取得成功確認</strong>後才視為發卡完成；<strong>失敗要可重試</strong>，重試不得造成重複發卡。</td></tr>
 <tr><td class="mono">3</td><td>卡序號全域唯一</td><td class="dim">每張卡的序號<strong>全域唯一</strong>；同一序號重複通知<strong>不得造成重複發卡</strong>（視為已成功）。</td></tr>
-<tr><td class="mono">4</td><td>結算以一筆注單入主錢包</td><td class="dim">整卡結算以一筆<strong>「下注 0 / 派彩 final」</strong>的注單發放入<strong>主錢包真金</strong>，並<strong>須帶活動 ID 與卡序號</strong>供對帳歸戶。</td></tr>
+<tr><td class="mono">4</td><td>結算以一筆注單入主錢包</td><td class="dim">整卡結算以一筆<strong>「下注 0 / 派彩 final」</strong>的注單發放入<strong>主錢包真金</strong>，並<strong>須帶活動 ID 與卡序號</strong>供對帳歸戶。卡序號在注單上的欄位名為 <span class="mono">ref_free_voucher_id</span>（值＝該卡的 <span class="mono">reference_id</span>）——<strong>後台注單的「活動獎勵」檢視以此欄回查是哪一張 FREE SPIN 卡</strong>。<span class="tag-pill tag-v2">V1.18 新增</span></td></tr>
 <tr><td class="mono">5</td><td>對帳以我方自記為主</td><td class="dim">對帳的真相來源是<strong>我方自己的發卡與結算紀錄</strong>；向集成商查詢的結果<strong>僅作輔助校驗</strong>，不作為帳務依據。</td></tr>
 <tr><td class="mono">6</td><td>過期卡不可再進入遊戲</td><td class="dim">已過期的卡<strong>不可再取得遊戲入口、不可進入遊戲</strong>；背包端置灰唯讀。</td></tr>
 <tr><td class="mono">7</td><td>每次下注當下判斷有效性</td><td class="dim"><strong>每次下注當下判斷這張卡是否已失效</strong>；若已失效，<strong>直接結算給錢、不再起新局</strong>。</td></tr>
+<tr><td class="mono">8</td><td>注單獎勵類型須含「FREE SPIN 卡」<span class="tag-pill tag-v2">V1.18 新增</span></td><td class="dim">玩家在抽寶箱抽中 FREE SPIN 卡時，該筆注單的<strong>獎勵類型</strong>欄位須能標示為 <strong>「FREE SPIN 卡」</strong>（抽寶箱第一階段只有現金獎一種）。此欄位的列舉定義、後台呈現與玩家端歷程顯示屬<strong>《抽寶箱規格書》範疇</strong>（該書 §07 二已預告「獎勵類型欄位須為可擴充的列舉，以便 v2 加入非現金獎」），本文件只約束<strong>必須有這一類</strong>。</td></tr>
 </tbody>
 </table>
+
+<div class="sub-title">結算狀態與失敗重試<span class="tag-pill tag-v2">V1.18 新增</span></div>
+<div class="body-text">玩家手動提前結算（<a data-goto="sec-02-D" role="link" style="color:var(--gold-light);" tabindex="0">02-D 提前結算 SETTLE NOW</a>）與到期／局數用完的自動結算，<strong>走完全相同的一條結算路徑</strong>，差別只在誰觸發；失敗時不丟棄、不重算金額，改由 Retry 機制接手，直到與商戶下注成功為止。</div>
+<table>
+<thead><tr><th style="width:190px;">狀態欄位</th><th style="width:60px;">值</th><th>意義</th></tr></thead>
+<tbody>
+<tr><td>注單狀態 <span class="mono">order_state</span></td><td class="mono">5</td><td class="dim"><span class="mono">ORDER_STATE_SETTLING</span>：結算中但尚未成功，等待 Retry 機制重試</td></tr>
+<tr><td>注單狀態 <span class="mono">order_state</span></td><td class="mono">6</td><td class="dim"><span class="mono">ORDER_STATE_FINISH</span>：交易完成</td></tr>
+<tr><td>免費卡結算狀態 <span class="mono">settle_status</span></td><td class="mono">2</td><td class="dim">結算完成（手動與自動共用）<span class="tag-pill tag-v2">V1.20 改</span></td></tr>
+<tr><td>免費卡結算狀態 <span class="mono">settle_status</span></td><td class="mono">4</td><td class="dim">領取中——玩家端 SETTLE NOW 按鈕反灰，禁止重複領取</td></tr>
+</tbody>
+</table>
+<div class="body-text"><strong>結算成功</strong>：<span class="mono">order_state</span> → 6、<span class="mono">settle_status</span> → 2，流程結束。<br/>
+<strong>結算失敗</strong>：<span class="mono">order_state</span> → 5、<span class="mono">settle_status</span> → 4；<strong>Retry 機制每分鐘掃描 <span class="mono">order_state = 5</span> 的注單並重新與商戶下注</strong>，失敗則下一分鐘再試，成功後同樣寫回 6 / 2。</div>
+<div class="callout warn"><strong>玩家看到什麼，手動與自動不同</strong>：手動結算有按鈕，失敗時<strong>顯示錯誤訊息並把 SETTLE NOW 反灰</strong>（<span class="mono">settle_status = 4</span>），避免重複點擊；自動結算沒有按鈕可反灰，維持 <a data-goto="sec-03-T" role="link" style="color:var(--gold-light);" tabindex="0">03-T 錯誤處理</a> 的規則——<strong>先不跳結算彈窗</strong>，等重試成功後才顯示。兩者的後端路徑與狀態轉換完全相同。</div>
+
+<div class="sub-title">combo 與 awc 兩種開單模式<span class="tag-pill tag-v2">V1.18 新增</span></div>
+<div class="body-text">FREE SPIN 同時支援 <strong>combo</strong> 與 <strong>awc</strong> 兩種<strong>開單模式</strong>，差別只在<strong>開幾張單</strong>（這裡的 awc 是本卡的開單模式，<strong>與 02-B、09-G 所說會擋下本卡的外部「AWC FREE SPIN」是不同的東西</strong>）<span class="tag-pill tag-v2">V1.20 補</span>；「過期／用完才結算」的判斷邏輯與結算時的上限檢查，兩種模式<strong>共用同一套</strong>。</div>
+<table>
+<thead><tr><th style="width:110px;">模式</th><th>開單方式</th></tr></thead>
+<tbody>
+<tr><td class="mono">combo</td><td class="dim"><strong>一張單</strong>：<span class="mono">main_game</span> ＋ <span class="mono">free_game</span> 合在同一張單做結算</td></tr>
+<tr><td class="mono">awc</td><td class="dim"><strong>兩張單</strong>：<span class="mono">main_game</span> 一單、<span class="mono">free_game</span> 一單（沒有 <span class="mono">free_game</span> 就只會有 <span class="mono">main_game</span> 單）</td></tr>
+</tbody>
+</table>
+
+<div class="sub-title">寶箱免費旋轉卡的注單機制<span class="tag-pill tag-v2">V1.18 新增</span></div>
+<div class="body-text">以免費轉 10 次為例：一共會有 <strong>10 張 <span class="mono">main_game</span> 注單</strong>（暫存每次免費轉的結果），結算時再多 <strong>1 張</strong>（寫真正的結果），<strong>共 11 張</strong>（以 combo 模式、或 awc 模式但沒轉到 <span class="mono">free_game</span> 為例；awc 每轉到一次 <span class="mono">free_game</span> 就多拆 1 張）。<span class="tag-pill tag-v2">V1.20 補</span></div>
+<ul class="rd-list">
+<li>每轉 1 次 → 寫 1 張 <span class="mono">main_game</span> 注單，暫存這一轉的結果；這些逐局注單停在「免費轉注單狀態」，<strong>一般注單檢視與營收報表一律濾掉</strong>，玩家與營運在一般注單只看得到結算那一筆，逐局內容由「活動 › FREE SPIN 卡」歷程呈現<span class="tag-pill tag-v2">V1.20 補</span></li>
+<li>若這一轉有轉到 <span class="mono">free_game</span>：<strong>awc</strong> 要拆成 <span class="mono">main_game</span>、<span class="mono">free_game</span> 兩張單；<strong>combo</strong> 仍合在同一張單</li>
+<li><strong>下注次數未達最大次數</strong> → <span class="mono">order_state</span> 改成新狀態「免費轉注單狀態」，<strong>掛在這個狀態就不會被結算</strong>，繼續轉下一次</li>
+<li><strong>已達最大次數</strong>、<strong>卡片到期</strong>或<strong>玩家封頂後按 SETTLE NOW</strong> → 才真正寫結算注單（多 1 張）<span class="tag-pill tag-v2">V1.20 改</span></li>
+</ul>
+<div class="callout"><strong>結算觸發的判斷（combo 與 awc 共用）</strong>：卡片<strong>已過使用期限</strong> → 直接結算所有已轉的 free spin；<strong>尚未過期</strong>則看旋轉是否已用完——用完才結算，沒用完就<strong>不結算</strong>，等用完或過期；<strong>唯一例外是玩家於封頂後主動按 SETTLE NOW</strong>（見 02-D 提前結算），此時立即結算。<span class="tag-pill tag-v2">V1.20 補</span></div>
+
+<div class="sub-title">結算時的 max_bonus 上限<span class="tag-pill tag-v2">V1.18 新增</span></div>
+<div class="body-text">結算時若有設置 <span class="mono">max_bonus</span>，派彩<strong>以 <span class="mono">max_bonus</span> 為上限</strong>：<span class="mono">total_win</span> 大於 <span class="mono">max_bonus</span> 時<strong>只發放 <span class="mono">max_bonus</span></strong>（例：玩家贏 100 萬、<span class="mono">max_bonus</span> ＝ 1000，最後只結算 1000 元）；未大於就直接送 <span class="mono">total_win</span>。本卡的 <span class="mono">max_bonus</span> 由系統依 bet × 次數 × 封頂倍數算出，<strong>一律有值，不存在「未設置」的情況</strong>；萬一讀到空值視為資料異常——<strong>擋下結算並告警，不得改以實際贏分直接派彩</strong>。封頂一律由我方結算層套用。<span class="tag-pill tag-v2">V1.20 改</span></div>
+<div class="callout"><strong>上限欄位一律稱 <span class="mono">max_bonus</span></strong><span class="tag-pill tag-v2">V1.19 改</span>：本文件原本使用的 <span class="mono">max_conversion</span> 與流程圖的 <span class="mono">max_bonus</span> 是同一個上限，DEV V1.19 起<strong>全文統一為 <span class="mono">max_bonus</span></strong>；修改紀錄與歷史版本說明保留舊名以便追溯。</div>
 
 </section>
 <section class="section" data-audience="software" id="sec-09-B">
@@ -2686,15 +2741,15 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td class="mono">1</td><td>結算封頂</td><td class="dim">分別測「累積贏分剛好等於上限 / 差 1 / 超過 1」三種情況，最後給的金額都等於<strong>累積贏分與上限中較小的那一個</strong></td></tr>
 <tr><td class="mono">2</td><td>局數池共用</td><td class="dim">交替玩 A、B 兩款遊戲，扣的是<strong>同一個池</strong>；池歸零後再開一局<strong>會被擋下</strong></td></tr>
 <tr><td class="mono">3</td><td>不中途結算</td><td class="dim">切換遊戲、登出再登入之後，<strong>查不到任何結算入帳紀錄</strong>、Balance 無任何變動（贏分只在 score）</td></tr>
-<tr><td class="mono">4</td><td>過期判定與到期結算</td><td class="dim">到期前 1 秒還能轉；到期當下觸發結算，付累積贏分並套用上限，<strong>剩餘次數不補</strong>（時間基準 GMT+8）</td></tr>
+<tr><td class="mono">4</td><td>過期判定與到期結算</td><td class="dim">到期前 1 秒還能轉；到期後：玩家在遊戲中時，當下那一局照常結束、下一次下注即結算；不在遊戲中時由排程結算，<strong>到期後 15 分鐘內入帳</strong><span class="tag-pill tag-v2">V1.20 改</span>；付累積贏分並套用上限，<strong>剩餘次數不補</strong>（時間基準 GMT+8）</td></tr>
 <tr><td class="mono">5</td><td>卡序號不重複發卡</td><td class="dim">用同一個序號重送發卡通知，玩家背包<strong>仍然只有一張卡</strong></td></tr>
 <tr><td class="mono">6</td><td>快照凍結</td><td class="dim">發卡後到後台修改型錄（次數 / 上限 / 遊戲列表 / 押注），<strong>已發出的卡各項數值完全不變</strong></td></tr>
 <tr><td class="mono">7</td><td>結算入帳與歸戶</td><td class="dim">結算會產生一筆<strong>「下注 0 / 派彩 final」</strong>的紀錄，且<strong>查得到活動 ID 與卡序號</strong>；金額確實進到<strong>主錢包</strong></td></tr>
 <tr><td class="mono">8</td><td>遊戲數量上限（8 款）</td><td class="dim">後台選滿 8 款後，<strong>第 9 款起選項押灰不可點</strong>（計數顯示 8 / 8），不會把超量的清單送出去</td></tr>
 <tr><td class="mono">9</td><td>指定啟用</td><td class="dim">同一款遊戲持兩張卡，從甲卡進場<strong>只扣甲卡</strong>；續玩仍是甲卡、<strong>不開新卡</strong></td></tr>
 <tr><td class="mono">10</td><td>有效期換算</td><td class="dim">卡模板 N=7、發卡日為第 1 天 → 到期時間為<strong>第 7 天 23:59:59（GMT+8）</strong>；發卡當下換算成絕對時間再對外通知</td></tr>
-<tr><td class="mono">11</td><td>FS 歷程分類</td><td class="dim">用卡玩數局後查注單：每局 FREE SPIN 歷程<strong>不出現在一般注單</strong>，出現在「<strong>活動 › FREE SPIN 卡</strong>」分類，且每局贏分只累加在 score</td></tr>
-<tr><td class="mono">12</td><td>結算注單入帳</td><td class="dim">結算後查一般注單與 Balance：一般注單<strong>多一筆「下注 0／派彩 final」</strong>、Balance 增加金額＝<strong>min(score, max_conversion)</strong>，且與平台／集成商的資產同步一致</td></tr>
+<tr><td class="mono">11</td><td>FS 歷程分類</td><td class="dim">用卡玩數局後查注單：每局 FREE SPIN 歷程<strong>不出現在一般注單檢視</strong>（逐局注單停在免費轉注單狀態、被濾掉），出現在「<strong>活動 › FREE SPIN 卡</strong>」分類，且每局贏分只累加在 score</td></tr>
+<tr><td class="mono">12</td><td>結算注單入帳</td><td class="dim">結算後查一般注單與 Balance：一般注單<strong>多一筆「下注 0／派彩 final」</strong>、Balance 增加金額＝<strong>min(score, max_bonus)</strong>，且與平台／集成商的資產同步一致</td></tr>
 </tbody>
 </table>
 <div class="sub-title">跨頁共通錯誤（發卡與結算層）</div>
@@ -2740,12 +2795,13 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td>幣別</td><td class="mono">currency</td><td class="dim">發卡當下鎖定，全程不可變</td></tr>
 <tr><td>押注階段</td><td class="mono">bet_tier (1–5)</td><td class="dim">每個幣值有 5 個押注階段（＝星級），對應不同的每轉押注金額</td></tr>
 <tr><td>每轉押注</td><td class="mono">bet</td><td class="dim">該星級 × 幣值的每轉押注金額，營運於「道具基礎值」<strong>直接填寫的單一數值</strong>（DEV V1.3 起廢除 coin_size × multiplier 推算）</td></tr>
-<tr><td>暫存分數</td><td class="mono">score</td><td class="dim">卡片進行中的累積贏分暫存值，<strong>不直接進 Balance</strong>；結算時給付 min(score, max_conversion) 一次入帳</td></tr>
+<tr><td>暫存分數</td><td class="mono">score</td><td class="dim">卡片進行中的累積贏分暫存值，<strong>不直接進 Balance</strong>；結算時給付 min(score, max_bonus) 一次入帳</td></tr>
 <tr><td>發放卡名稱／玩家卡名</td><td class="mono">card_name（僅後台）</td><td class="dim">發放卡名稱<strong>僅供營運辨識</strong>、玩家不會看到；玩家端一律顯示固定卡名「<strong>{n}★ FREE SPIN</strong>」（n＝星級），全語系統一</td></tr>
 <tr><td>總次數 / 剩餘次數</td><td class="mono">num_of_rounds / rounds_left</td><td class="dim">整張卡的免費旋轉局數；跨列表內的遊戲<strong>共用同一池</strong></td></tr>
 <tr><td>可用遊戲列表</td><td class="mono">game_ids[]</td><td class="dim"><strong>最多可指定 8 款遊戲</strong>（發卡當下鎖定，卡內可自由切換）</td></tr>
 <tr><td>有效期限</td><td class="mono">valid_from / valid_to</td><td class="dim">發卡當下依<strong>卡模板的 N 天</strong>換算並凍結；<strong>發卡日為第 1 天，第 N 天 23:59:59（GMT+8）到期</strong>（自然日制）。到期統一結算（給付 min(score, 上限)），剩餘未轉次數視同放棄</td></tr>
-<tr><td>結算上限</td><td class="mono">max_conversion</td><td class="dim">整卡結束後最終可獲得的獎金上限值，由我方結算層強制套用</td></tr>
+<tr><td>結算上限<span class="tag-pill tag-v2">V1.19 改</span></td><td class="mono">max_bonus</td><td class="dim">整卡結束後最終可獲得的獎金上限值，由我方結算層強制套用；<span class="mono">total_win</span> 超過就只發 <span class="mono">max_bonus</span>。<strong>DEV V1.19 起統一此名，原稱 <span class="mono">max_conversion</span></strong>（查舊 log 時兩個名字都可能出現）</td></tr>
+<tr><td>注單上的卡序號欄<span class="tag-pill tag-v2">V1.18 新增</span></td><td class="mono">ref_free_voucher_id</td><td class="dim">結算注單上用來回指「這筆錢是哪一張 FREE SPIN 卡給的」的欄位，值＝該卡的 <span class="mono">reference_id</span>；後台注單的「活動獎勵」檢視靠它歸戶</td></tr>
 <tr><td>入帳目標</td><td class="mono">—（固定主錢包）</td><td class="dim">一律入<strong>主錢包真金</strong>，以「下注 0／派彩 final」的注單發放，無流水、無 roll-over</td></tr>
 <tr><td>CRM 浮動 icon／CRM 選單<br/><span class="tag-pill tag-v2">V1.8 新增</span></td><td class="mono">—（前端元件）</td><td class="dim">遊戲畫面上的<strong>吸附浮動 icon</strong>（可拖曳、自動貼邊），點擊展開 <strong>CRM 選單</strong>，為<strong>所有 CRM 活動的共用入口</strong>（抽寶箱、背包等同列其中）；<strong>icon 與選單本體的規則屬《抽寶箱 CRM 浮動 icon 規格》範疇</strong>，本文件<strong>只定義「背包」項目的行為</strong>（見 03 遊戲內與結算）</td></tr>
 <tr><td>卡片價值 / 面額</td><td class="mono">face_value</td><td class="dim">該幣別此押注階段的「對應價值」，供展示、成本估算與對帳</td></tr>
@@ -2765,7 +2821,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <span class="mono">reference_id = FS_{campaign_id}_{player_id}_{seq}　例：FS_CHEST0615_user88231_0007</span><br/>
     前綴可追溯來源（活動），後段（玩家 + 流水號）確保每張卡獨一無二。補發新卡時 campaign_id 可沿用，但 reference_id 必須產新的。</div>
 <div class="sub-title">卡型錄 ID 結構（reward_id）</div>
-<div class="body-text">沿用抽寶箱命名，FREE SPIN 卡的 reward_id 以 <em>R_FS_{星級}</em> 表示 5 個押注階段；實際「幣別」由發卡時帶入的 currency 決定，所以同一個 reward_id 可跨幣別複用，幣別專屬數值（coin_size / face_value / max_conversion）存在各幣別的子表。</div>
+<div class="body-text">沿用抽寶箱命名，FREE SPIN 卡的 reward_id 以 <em>R_FS_{星級}</em> 表示 5 個押注階段；實際「幣別」由發卡時帶入的 currency 決定，所以同一個 reward_id 可跨幣別複用，幣別專屬數值（bet / face_value / max_bonus）存在各幣別的子表。</div>
 <table class="spec-table">
 <thead><tr><th style="width:160px;">reward_id</th><th style="width:190px;">押注階段</th><th style="width:130px;">類型</th><th>說明</th></tr></thead>
 <tbody>
@@ -2793,7 +2849,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td class="mono">game_ids[]</td><td class="dim">獎勵清單的遊戲列表</td><td><span class="cross">否</span></td></tr>
 <tr><td class="mono">validity_days</td><td class="dim">卡模板（發卡 +N 天 · 自然日）</td><td><span class="cross">否</span></td></tr>
 <tr><td class="mono">valid_from / valid_to</td><td class="dim">發卡時間 + 卡模板 N 天（自然日換算，GMT+8；valid_to = 第 N 天 23:59:59）</td><td><span class="cross">否</span></td></tr>
-<tr><td class="mono">max_conversion</td><td class="dim">獎勵清單對應幣別的設定值</td><td><span class="cross">否</span></td></tr>
+<tr><td class="mono">max_bonus</td><td class="dim">獎勵清單對應幣別的設定值</td><td><span class="cross">否</span></td></tr>
 <tr><td class="mono">status</td><td class="dim">ISSUED → ACTIVE → SETTLED / EXPIRED</td><td><span class="check">是</span></td></tr>
 </tbody>
 </table>
@@ -2845,8 +2901,8 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 
 
 
-<div class="sub-title">待確認事項 ⑤–⑦（承接 <a data-target-audience="software" href="#sec-09-G" style="color:var(--gold-light);">09-G／09-E 開發前置與待確認</a> 的編號）<span class="tag-upd">2026-09-01</span></div>
-<div class="callout info"><strong>編號為什麼從 ⑤ 開始</strong>：本文件的待確認事項<strong>共用一套流水號</strong>。①–④ 與 ⑧–⑪ 屬「與集成商／後端／前端確認」放在 <a data-target-audience="software" href="#sec-09-G" style="color:var(--gold-light);">09-G／09-E 開發前置與待確認</a>；<strong>⑤–⑦ 屬「與遊戲端確認」且緊扣本章的全域規則，故留在此處</strong>。引用時請連章號一起寫（如「09-A 全域約定 待確認⑤」），避免查錯地方。</div>
+<div class="sub-title">待確認事項 ⑤⑥（與遊戲端確認）<span class="tag-upd">2026-09-01</span></div>
+<div class="callout info"><strong>編號說明</strong><span class="tag-pill tag-v2">V1.20 改</span>：本文件的待確認事項<strong>共用一套流水號，全部收在本章</strong>；目前未決 11 題（①–⑥、⑧–⑪、⑬）。<strong>⑦⑫⑭ 已定案、移出</strong>：⑦ 於 DEV V1.20 定案為結算彈窗顯示卡序號 <span class="mono">reference_id</span>（見 <a data-target-audience="shared" href="#sec-03-D" style="color:var(--gold-light);">03-D Ⓑ</a>），⑫⑭ 於 DEV V1.19 定案。引用時請連編號一起寫（如「09-E ⑤」）。</div>
 <div class="oq-item awc">
 <div class="oq-owner">與遊戲端確認</div>
 <div class="oq-q">⑤ FS 模式下 <strong>AUTO 自動旋轉是否開放</strong>？若開放，自動局數須以剩餘局數為上限、用完即停。</div>
@@ -2854,10 +2910,6 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="oq-item awc">
 <div class="oq-owner">與遊戲端確認</div>
 <div class="oq-q">⑥ <strong>卡片局數與遊戲自身免費遊戲局數並存時的畫面表現</strong>（兩個計數器並列？暫時隱藏其一？）。規則面已定：遊戲自身免費局不扣卡片局數、贏分照樣累加。</div>
-</div>
-<div class="oq-item awc">
-<div class="oq-owner">與遊戲端 / 客服確認</div>
-<div class="oq-q">⑦ 結算彈窗是否<strong>同時顯示卡序號 reference_id</strong>（客服查單以卡序號最快），或維持只顯示 CampaignID。</div>
 </div>
 <div class="sub-title">待確認事項（未決 · 影響實作行為）</div>
 <div class="oq-item awc">
@@ -2876,7 +2928,6 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="oq-owner">與集成商確認</div>
 <div class="oq-q">④ 結算資料回灌的方式與時間差（約 5–10 分鐘）對「整卡結束才給獎」時序的影響。</div>
 </div>
-<div class="callout warn"><strong>⑤–⑦ 不在本章</strong>：待確認事項共用一套流水號，<strong>⑤⑥⑦ 屬「與遊戲端確認」且緊扣全域規則，放在 <a data-target-audience="shared" href="#sec-09-A" style="color:var(--gold-light);">09-A 全域約定</a> 章末</strong>（⑤ AUTO 是否開放／⑥ 卡片局數與遊戲自身免費局並存的畫面表現／⑦ 結算彈窗是否顯示卡序號）。本章為 ①–④ 與 ⑧–⑪。</div>
 <div class="oq-item">
 <div class="oq-owner">與遊戲端確認</div>
 <div class="oq-q">⑧ <strong>盤面資料的保存期限</strong>：一般注單的盤面回放保存多久？FS 局歷程是否採<strong>同一保存政策</strong>？逾期後仍須保留「時間／Bet／Win／<span class="mono">reference_id</span>」四項數字（<a data-target-audience="shared" href="#sec-04-E" style="color:var(--gold-light);">04 玩家端遊戲歷程 Ⓕ</a>），此點需寫入 DB 設計。</div>
@@ -2892,6 +2943,10 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="oq-item">
 <div class="oq-owner">與前端確認</div>
 <div class="oq-q">⑪ <strong>盤面元件重用成本</strong>：內部 wiki《玩家遊戲歷程與獎勵記錄架構》原記載「歷程以數字呈現、<strong>不重現遊戲盤面</strong>」，該原則的成本理由建立在「盤面要另外做」之上。現況一般注單的盤面回放<strong>已上線</strong>，本章採<strong>重用既有元件、只置換頂部三個數字</strong>的做法，故 wiki 該段已標記 <span class="mono">OUTDATED</span>。需前端確認重用成本確實如評估般低；若不然，退回備援方案（L4 列不可點、不做 L5）。</div>
+</div>
+<div class="oq-item">
+<div class="oq-owner">與企劃／翻譯確認</div>
+<div class="oq-q">⑬ <strong>遊戲端錯誤文案的其餘語系翻譯</strong><span class="tag-pill tag-v2">V1.19 改</span>：玩家端的<strong>繁體中文與英文</strong>文案已於 DEV V1.19 定於 <a data-target-audience="shared" href="#sec-09-G" style="color:var(--gold-light);">09-G 玩家端錯誤文案</a>；其餘 <strong>12 個語系尚未翻譯</strong>，翻譯完成後併入 09-I 多國語系總表。</div>
 </div>
 <div class="callout info"><strong>串接細節唯一來源</strong>：以上與集成商往來的實際串法，一律以《integration_consolidated_checklist_v2.html》為唯一來源；本文件只定行為結果，不重複維護串接細節。</div>
 
@@ -2909,7 +2964,10 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="revlog-title">📌 修改紀錄 · REVISION LOG</div>
 <table>
 <thead><tr><th style="width:110px;">修改日期</th><th style="width:96px;">版號</th><th style="width:160px;">修改章節</th><th>修改摘要</th></tr></thead>
-<tbody><tr><td>2026-09-18</td><td><strong>DEV V1.17</strong></td><td>00／01／02／03／04／05／09</td><td><strong>文件結構與可讀性優化，產品行為不變：</strong>Annotated Wireframe 置於主要功能頁；目的句改為條件式；必要操作流程改於所屬模組內嵌；移除獨立 0N-W 頁及「摘要＋V1.15 原文」雙重規格；修正舊章號連結、固定發版日期並加入軟體／美術閱讀視圖。</td></tr>
+<tbody><tr><td>2026-09-24</td><td><strong>DEV V1.20</strong></td><td>00-B／01-B／01-C／01-D／01-T／02-B／02-D／03-A／03-B／03-D／03-T／04-A／04-C／04-D／04-T／05-B／09-A／09-B／09-C／09-E／09-G／09-I／09-J</td><td><strong>依《FREE SPIN 卡＋背包 · 文件矛盾審查報告》（2026-09-23）與企劃拍板修正 27 條矛盾：</strong>①<strong>結算觸發三個出口</strong>——09-A 結算判斷補上「玩家封頂後 SETTLE NOW」，與局數用完、到期並列。②<strong>逐局注單寫進注單表、畫面濾掉</strong>——停在「免費轉注單狀態」，一般注單檢視與營收報表濾掉；00-B、04-A H6、09-G ⑤、04-T H-15、09-B #11 同步改寫（取消「獨立 DB」說法）。③<strong>到期結算時點</strong>——排程改為每 15 分鐘掃描、到期後 15 分鐘內入帳；玩家在遊戲中時當下那局照常打完、下一次下注即結算（09-G ②、09-B #4、02-B）。④<strong>到期且從未使用的卡不結算、不寫結算注單</strong>——05-B ②a、04-C 結算欄與徽章、04-D 不顯示結算列；②b 改為 <span class="mono">min(score, 上限)</span>。⑤<strong>01-C 次數與封頂倍數可逐段調</strong>；01-D 必填清單改列封頂倍數、不列系統算出的上限。⑥<strong>待確認⑦定案</strong>：結算彈窗 ID 欄改顯示卡序號 <span class="mono">reference_id</span>（03-D Ⓑ）；09-E 編號說明重寫、刪除過時的「⑤–⑦ 不在本章」。⑦<strong><span class="mono">max_bonus</span> 一律有值、由我方結算層封頂</strong>，刪除「未設置則依實際贏分」的不封頂分支。⑧<strong>結算真失敗也進 Retry</strong>（09-G 錯誤表與玩家文案同步）；<span class="mono">settle_status</span> 2 改稱「結算完成（手動與自動共用）」。⑨<strong>餘額顯示時點</strong>：後端先入帳再跳彈窗，畫面餘額等按 CONFIRM 後才更新（03-D、03-T ②）。⑩其餘文字修正：04-A History 入口、01-T／00-C 按鈕名「建立發放卡」與「儲存」、02-B 待啟動卡倒數、02-D 提前結算入帳金額、03-A「Press Anywhere to Continue」、05-B 待啟動卡 PROCEED 押灰、09-A awc 與外部 AWC FS 區分與注單張數前提、09-C <span class="mono">coin_size</span>→<span class="mono">bet</span>、09-G「局數已用完」說明、09-J 結算彈窗出口、01-B 計數字樣、03-B 圖說編號、03-T ⑩ 情境。</td></tr>
+<tr><td>2026-09-23</td><td><strong>DEV V1.19</strong></td><td>全文（改名）／01-B／02-B／09-A／09-C／09-E／09-G</td><td><strong>依企劃拍板關閉待確認 ⑫⑬⑭：</strong><strong>①上限欄位一律稱 <span class="mono">max_bonus</span></strong>——原 <span class="mono">max_conversion</span> 全文改名（本表與頁尾的歷史紀錄保留舊名以便追溯）；09-C 兩列合併為一列並註明舊名，09-A 的「名稱尚未確認」警語改為定案說明，刪除待確認 ⑫。<strong>②09-G 新增「玩家端錯誤文案」</strong>——遊戲端 9 條錯誤訊息＋「領獎失敗但已 PENDING」共 10 句，繁體中文與英文，<strong>繁中每句 30 字以內</strong>，原則是每一句都告訴玩家下一步能做什麼、不出現技術詞；AWC 那句沿用 DEV V1.7 定案；待確認 ⑬ 縮為「其餘 12 語系待翻譯」。<strong>③S003／S015／S019（尚未製作完成）</strong>——01-B 新增「按建立發放卡或儲存時後端再檢查一次，含這三款就不建立、不儲存」；02-B Ⓔ 新增「萬一卡片仍含這三款，遊戲牆直接不顯示這幾款」；刪除待確認 ⑭。</td></tr>
+<tr><td>2026-09-22</td><td><strong>DEV V1.18</strong></td><td>00-A／01-B／09-A／09-C／09-E／09-G</td><td><strong>併入《CRM 免費卡結算流程》與《free spin 流程圖》兩份流程圖，並補齊遊戲端錯誤訊息：</strong><strong>①09-A 新增「結算狀態與失敗重試」</strong>——手動提前結算與自動結算走同一條路徑，<span class="mono">order_state</span> 5 <span class="mono">ORDER_STATE_SETTLING</span>／6 <span class="mono">ORDER_STATE_FINISH</span>、<span class="mono">settle_status</span> 2 手動結算／4 領取中，Retry 每分鐘掃描 <span class="mono">order_state = 5</span> 重新下注；手動失敗才反灰按鈕，自動失敗維持 03-T「先不跳彈窗」。<strong>②09-A 新增 combo／awc 兩種開單模式</strong>（一張單 vs. 兩張單）、<strong>寶箱卡注單機制</strong>（免費轉 N 次＝N 張 <span class="mono">main_game</span> 暫存單＋結算 1 張，共 N+1 張；未達最大次數掛「免費轉注單狀態」不結算）與<strong>結算 <span class="mono">max_bonus</span> 上限</strong>。<strong>③09-A 結算注單新增 <span class="mono">ref_free_voucher_id</span> 欄位</strong>（值＝<span class="mono">reference_id</span>，供後台注單「活動獎勵」檢視歸戶），並新增第 8 條「注單獎勵類型須含 FREE SPIN 卡」。<strong>④09-G 新增遊戲端錯誤訊息表 9 條與非錯誤回應狀態表 3 條</strong>，00-A 定位句同步改為「不指定介接端點、參數表、傳輸格式與簽章方式」並標明錯誤訊息為唯一例外。<strong>⑤01-B 可用遊戲列表排除 S003／S015／S019</strong>（整筆不顯示，非押灰）。<strong>⑥09-C 補 <span class="mono">ref_free_voucher_id</span>、<span class="mono">max_bonus</span> 兩則術語；09-E 新增待確認 ⑫⑬⑭。</strong><strong>⑦ 併入《遊戲歷程活動頁原型》</strong>——封面新增該原型連結；<strong>04-B</strong> 補入 L2 活動分類頁實拍（紅框 Ⓐ ＝ FREE SPIN 卡入口卡）並說明抽寶箱與 FREE SPIN 卡已彙整於同一頁、抽寶箱那張卡屬《抽寶箱規格書》範疇；<strong>04-C</strong> 補入 L3 卡片清單實拍（Ⓑ 卡片列／Ⓒ 日期篩選器／Ⓓ 局歷程列表）。區域字母沿用 04 模組既有的 Ⓐ–Ⓕ 連號，未重新編號。　已與企劃確認：流程圖所稱「領獎」即現行 <strong>SETTLE NOW 提前結算</strong>，<strong>未新增任何領獎 UI</strong>。</td></tr>
+<tr><td>2026-09-18</td><td><strong>DEV V1.17</strong></td><td>00／01／02／03／04／05／09</td><td><strong>文件結構與可讀性優化，產品行為不變：</strong>Annotated Wireframe 置於主要功能頁；目的句改為條件式；必要操作流程改於所屬模組內嵌；移除獨立 0N-W 頁及「摘要＋V1.15 原文」雙重規格；修正舊章號連結、固定發版日期並加入軟體／美術閱讀視圖。</td></tr>
 <tr><td>2026-09-14</td><td><strong>DEV V1.15</strong></td><td>§04（全章改寫）· §07 · §08 · §12</td><td><strong>併入新版背包原型（同事交付的 DEV V1.13 分支）之 UI／UX，基底規則一律以 DEV V1.14 為準。</strong> <strong>①§04 全章改寫</strong>：保留「燙金票券／珍藏卡」主題調性，其餘改為<strong>新版背包原型的線框級走查</strong>（畫面導覽流程／直式＋橫式參考線框／背包入口 GAME CENTER／面板總覽含兩種空狀態／卡片欄位總覽 1–11／橫式選取前後對照／MAX 徽章與 SETTLE NOW／結算確認與 COMPLETED 完成畫面／星級分級／標籤五態／遊戲格三態／進場提示彈窗／遊戲內畫面／使用失敗態／結算彈窗，共 16 張新圖 <span class="mono">fs_art_01–16</span>）；原 A／B 兩段圖文對照由新線框取代，<strong>C 美術資產需求總表與 D 動態文字位數表原樣保留</strong>並加註 V1.15 待補元件清單。 <strong>②背包新增橫式（landscape）版面規格</strong>：卡片下方按鈕在未選取為 VIEW DETAILS、選取後同位置變 CLOSE，Select Game 改為列表旁的獨立面板且面板內僅有 PROCEED。 <strong>③Ⓕ 由 V1.14 的「兩段三態動作鈕」改為 VIEW DETAILS／CLOSE／PROCEED</strong>（對齊新原型），但<strong>保留 V1.14 兩條防呆</strong>：押灰態不可做成隱藏、押灰時顯示「請先選擇一款遊戲」。 <strong>④分頁由三個改為兩個</strong>：FREE SPIN／COMING SOON（COMING SOON 可切換、切過去為空狀態），V1.14 的「SOON 徽章整顆不可點」與對應驗收情境隨之移除；標頭改為單行 BACKPACK ＋ ✕，<strong>移除可用張數徽章與副標</strong>。 <strong>⑤已過期卡改為沿用同一組欄位</strong>：不另做「結算獎金 Settled Bonus」列，Current Winnings 直接顯示最終結算金額、Spins Left 保留結算當下的未用次數、Time Left 顯示 0D:00:00、整卡置灰且無 VIEW DETAILS。 <strong>⑥待啟動卡改為可展開瀏覽</strong>：Select Game 可展開查看有哪些遊戲，但不可選取、PROCEED 永遠押灰；V1.14 的「Eligible Games／開始後才能選擇」標題與「開始時間 Starts at」欄位不採用。 <strong>⑦列表空狀態文案改為「No items available／Get it from daily chest!」</strong>，另新增橫式專屬的 Select Game 面板空狀態「No item selected／Select to use an item」；V1.14 的判斷規則（依分頁×篩選各自判斷、載入中不得先顯示空狀態）保留。 <strong>⑧提前結算新增 COMPLETED 完成畫面</strong>：CONFIRM 後先顯示完成畫面（COMPLETED 標題＋Card No.＋Bonus Amount＋Max Cap Reached 徽章），玩家按下按鈕才關窗；二次確認彈窗<strong>CONFIRM 在左、CANCEL 在右</strong>，刻意與其他畫面相反以防手滑誤觸。 <strong>⑨結算出口按鈕統一為「CONFIRM」</strong>：§08 結算彈窗原「Return to Normal Mode」與新原型的「BACK」一律改為 CONFIRM，並<strong>取消右上角 ✕ 關閉</strong>（原 Ⓖ 整區移除），該彈窗只有一個出口；<strong>§08 Ⓘ「Leave FS 中途離開」維持保留</strong>，局數未用完離開不結算。 <strong>⑩多國語系整併為一張 14 語系總表</strong>（含 ru）置於 §07：§08 原本的 6 條純文字併入（<span class="mono">fs_max_payout_label</span>／<span class="mono">fs_entry_continue_hint</span>／<span class="mono">fs_exit_title</span>／<span class="mono">fs_bonus_amount_label</span>／<span class="mono">fs_back_cta</span>／<span class="mono">fs_bet_locked</span>），§08 改為指路；另補回新原型漏列的 18 條 key（空狀態 ×4、VIEW DETAILS／CLOSE、Card No.、{n} left、MAX 徽章、COMPLETED、結算小字、後果提示、入帳性質、選遊戲提示、待啟動徽章、選單項目、使用失敗內文等）。 <strong>⑪卡名維持 V1.14 的「{n}★ FREE SPIN」</strong>——新原型顯示的「FREE SPIN X10」<strong>列為原型待修</strong>，規格不因原型現況放寬；次數改由 Spins Left 欄位呈現。 <strong>⑫§07 原「本頁操作流程 · 進入遊戲（5 步）」與啟用流程彈窗整段移除</strong>（新原型無此彈窗），綁卡與一次性入口規則改於 Ⓕ 條文內敘明。 <strong>⑬§04 卡號範例「FS_PHP_0007」標為版位示意</strong>，格式一律以 §03 的 <span class="mono">FS_{campaign_id}_{player_id}_{seq}</span> 為準。 <strong>⑭後台章（§05／§06）零變更</strong>，維持 V1.14：獎勵道具 ID 於建卡確認後才產生、指定遊戲上限 8 款。 <strong>⑮背包截圖 6 張（<span class="mono">fs_bag_01–06</span>）全部更新為新原型實拍</strong>，<span class="mono">fs_bag_05</span> 由「啟用流程彈窗」改為「提前結算完成畫面」。</td></tr>
 <tr><td>2026-09-09</td><td><strong>DEV V1.14</strong></td><td>§03 · §04 · §05 · §06 · §07 · §08 · §09 · §11</td><td><strong>①指定遊戲上限 6 款 → 8 款</strong>（§03／§04／§05／§06／§07／§09／§11 共 28 處同步；歷史修改紀錄保留原文並加註）——連帶美術版面由「每列 3 格 × 2 列」改為<strong>每列 4 格 × 2 列</strong>，§04 C 表縮圖尺寸由 96×96pt 調整為 72×72pt。<strong>②後台獎勵道具 ID 改為「建卡確認後才產生」</strong>（§06）：新增表單<strong>不預先配號、不渲染任何 ID 版位</strong>（不得用空值或 placeholder 代替）；<strong>編輯既有卡才顯示</strong>，置於表單頂部一行輔助色小字（唯讀＋一鍵複製），與抽寶箱後台「模板 ID」同一套做法。理由：原作法一開表單就配號，中途放棄即產生廢號。<strong>③§07 依原型逐項對齊補入 12 項</strong>（原型已實作、規格未定義者）：SOON 分頁佔位且不可點／篩選帶即時計數／標題副標 FREE SPIN／✕ 關閉鈕／<span class="mono">Card No.</span> 欄位標籤／使用中卡「{n} left」後綴／已過期卡標籤改「結算獎金」／<strong>未封頂時的上限提示</strong>（原僅定義封頂後那一條）／待啟動卡「開始時間 Starts at」／待啟動卡遊戲牆標題改「可用遊戲（開始後才能選擇）」／提前結算按鈕下方後果提示與入帳性質說明／<strong>新增〈列表空狀態〉整節</strong>。<strong>④Ⓕ 由「進入遊戲 CTA」改寫為〈卡片動作鈕（兩段三態）〉</strong>：收合＝選擇遊戲 ▾／展開未選＝開始 ▶（停用）＋「請先選擇一款遊戲」／展開已選＝開始 ▶（可按）／另有收合明細 ▴；並明定<strong>展開由按鈕觸發、卡片本體不作為點擊區</strong>，停用態不可做成隱藏。<strong>⑤卡名規則放寬呈現、不放寬語意</strong>：允許把「{n}★」拆為卡名左側獨立徽章、卡名本體只顯示「FREE SPIN」，<strong>語系表該列不變</strong>；仍不允許拿掉星級或以次數取代星級（原型「Free Spins ×N」仍列待修）。<strong>⑥§08 對齊原型補 4 項</strong>：進場彈窗標題為兩行（CONGRATULATIONS＋FREE SPINS，前者入美術圖表）／封頂標籤與開始提示於條文指名對應語系表 key／押注欄新增鎖定標示「LOCKED · FS」／結算標題視覺拆兩段但語系 key 不拆。<strong>⑦i18n 新增 24 條</strong>（§07 背包 23＋§08 遊戲內 1）×13 語系，另美術圖表新增 CONGRATULATIONS 一列。<strong>⑧原型必修</strong>：AWC 流程畫面三處出現「AWC」字樣，違反 DEV V1.7 定案，<strong>規格不放寬</strong>，於 §07 Ⓔ 明列。<strong>⑨驗收情境新增 4 條</strong>（動作鈕兩段三態／列表空狀態／SOON 分頁不可點／獎勵道具 ID 產生時點）。</td></tr>
 <tr><td>2026-09-02</td><td>DEV V1.13</td><td>§09（Ⓐ 入口卡）</td><td><strong>同步抽寶箱 DEV V1.22 的歷程改版（僅敘述修訂，FS 卡本身規則零變更）</strong>。§09 L2 Ⓐ「兩張入口卡結構不同」條目<strong>保留「抽寶箱＝單層獎勵列表且列不可點」</strong>（抽寶箱拍板<strong>不分組、不做卡片式分類</strong>），並補記三件事：①抽寶箱玩家端<strong>不顯示 CAMPAIGN ID</strong>、列上第二欄改為<strong>注單 ID</strong>；②抽寶箱<strong>無次層頁面</strong>（無盤面可回放），FS 卡則為三層可鑽 L3→L4→L5，<strong>前端不得共用元件</strong>之原則不變；③<strong>兩者上方都有日期選擇器（同一元件）但作用對象不同</strong>——抽寶箱篩「獎勵列」（單層、每列即一筆獨立獎勵、無加總關係）；FS 卡篩「有使用紀錄的卡片」且<strong>刻意不裁切展開後的局數</strong>（score 需與列出的局對得起來），<strong>此差異為刻意設計、不得統一</strong>。</td></tr>
@@ -2953,8 +3011,8 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="info-card" style="border-color:var(--red-line-strong);">
 <div class="info-card-icon">⏰</div>
-<div class="info-card-title">② 每日結算與過期掃描排程 <span class="tag-pill tag-inf">基建</span></div>
-<div class="info-card-desc">伺服器定時掃描「已到期」的卡並觸發整卡結算與狀態轉換（<strong>次數用完的結算由最後一局結束時即時觸發</strong>，不靠排程）。<br/><strong>沒先做會卡什麼：</strong>到期卡不會被結算、玩家拿不到錢；過期卡也不會轉唯讀，客訴必然發生。</div>
+<div class="info-card-title">② 過期結算掃描排程（每 15 分鐘） <span class="tag-pill tag-inf">基建</span></div>
+<div class="info-card-desc">伺服器<strong>每 15 分鐘</strong>掃描一次「已到期、未結算」的卡並觸發整卡結算與狀態轉換，<strong>到期後 15 分鐘內完成入帳</strong>；玩家正在遊戲中時，當下那一局照常結束、下一次下注即判定失效並結算，不等排程<span class="tag-pill tag-v2">V1.20 改</span>（<strong>次數用完的結算由最後一局結束時即時觸發</strong>，不靠排程）。<br/><strong>沒先做會卡什麼：</strong>到期卡不會被結算、玩家拿不到錢；過期卡也不會轉唯讀，客訴必然發生。</div>
 </div>
 <div class="info-card" style="border-color:var(--red-line-strong);">
 <div class="info-card-icon">🎫</div>
@@ -2968,10 +3026,58 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 </div>
 <div class="info-card" style="border-color:var(--red-line-strong);">
 <div class="info-card-icon">🗂️</div>
-<div class="info-card-title">⑤ FS 歷程獨立 DB ＋ 歷程 API 統一輸出 <span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-v2">V1.12 新增</span></div>
-<div class="info-card-desc">FS 卡的每一局<strong>不進一般注單</strong>，需<strong>獨立設計 DB 架構與邏輯</strong>；同時<strong>遊戲歷程 API 須調整為「同一份資料輸出」</strong>——一般注單與 FS 歷程<strong>吃同一份來源</strong>，不得兩處各自維護。<br/><strong>沒先做會卡什麼：</strong><a data-target-audience="shared" href="#sec-04-A" style="color:var(--gold-light);">04 玩家端遊戲歷程</a> 的四層畫面<strong>全部沒有資料可撈</strong>，玩家與客服都查不到 FS 的任何一局；兩處各自維護則必然出現「背包顯示的 score 與歷程列出的局加總對不起來」的對帳爭議。<br/><strong>連動範圍：</strong>此項同時連動 RTP 判斷、對帳與活動數據統計，<strong>不宜與 CRM 功能開發搶同一批後端人力</strong>。</div>
+<div class="info-card-title">⑤ FS 逐局注單過濾 ＋ 歷程 API 統一輸出 <span class="tag-pill tag-inf">基建</span> <span class="tag-pill tag-v2">V1.12 新增</span></div>
+<div class="info-card-desc">FS 卡的每一局以「免費轉注單狀態」<strong>寫在注單表</strong>（見 09-A 注單機制），<strong>一般注單檢視與報表須濾掉這個狀態</strong><span class="tag-pill tag-v2">V1.20 改</span>；同時<strong>遊戲歷程 API 須調整為「同一份資料輸出」</strong>——一般注單與 FS 歷程<strong>吃同一份來源</strong>，不得兩處各自維護。<br/><strong>沒先做會卡什麼：</strong><a data-target-audience="shared" href="#sec-04-A" style="color:var(--gold-light);">04 玩家端遊戲歷程</a> 的四層畫面<strong>全部沒有資料可撈</strong>，玩家與客服都查不到 FS 的任何一局；兩處各自維護則必然出現「背包顯示的 score 與歷程列出的局加總對不起來」的對帳爭議。<br/><strong>連動範圍：</strong>此項同時連動 RTP 判斷、對帳與活動數據統計，<strong>不宜與 CRM 功能開發搶同一批後端人力</strong>。</div>
 </div>
 </div>
+
+<div class="sub-title">遊戲端回傳的錯誤訊息<span class="tag-pill tag-v2">V1.18 新增</span></div>
+<div class="callout"><strong>這是本文件唯一列出錯誤訊息的地方。</strong>原則上本書不指定錯誤代碼（見 00-A 文件定位），但下列訊息<strong>玩家端必須各自對應處理</strong>——顯示什麼文案、能不能重試、要不要擋下開局——所以在此列出。<strong>訊息字串本身以遊戲端實作為準</strong>，本表只界定「什麼情況會收到它」。</div>
+<table>
+<thead><tr><th style="width:330px;">Message</th><th>觸發時機</th></tr></thead>
+<tbody>
+<tr><td class="mono">free voucher not found</td><td class="dim">玩家送的 ref 不在 server cache（卡剛過期被 cron 清、非法 ref、client 快取失效）</td></tr>
+<tr><td class="mono">game not supported by this voucher</td><td class="dim">卡的 <span class="mono">game_code</span> 不含當前遊戲</td></tr>
+<tr><td class="mono">invalid spin parameter for voucher</td><td class="dim">幣別／BuyType／BetAmount 不符卡的規範</td></tr>
+<tr><td class="mono">voucher rounds used up</td><td class="dim"><span class="mono">spin_count &gt;= round</span>，局數已用完仍送出 spin（最後一局結束即自動結算、不需玩家領獎；此錯誤只在前端尚未收到結算結果時出現）<span class="tag-pill tag-v2">V1.20 改</span></td></tr>
+<tr><td class="mono">free voucher expired</td><td class="dim">卡已過 <span class="mono">end_time</span></td></tr>
+<tr><td class="mono">（空 message · Before StartTime）</td><td class="dim">卡還沒生效（<span class="mono">start_time &gt; now</span>）</td></tr>
+<tr><td class="mono">AWC free spin available for this game, please use it first</td><td class="dim">同遊戲有 AWC 卡未用完，禁止使用 CRM 卡</td></tr>
+<tr><td class="mono">free voucher not owned by member</td><td class="dim">玩家 A 拿 B 的 ref（多見於 hack／bug）</td></tr>
+<tr><td class="mono">free voucher settle failed</td><td class="dim">結算失敗（非 PENDING 的失敗）；<strong>同樣寫入 <span class="mono">order_state</span> = 5、<span class="mono">settle_status</span> = 4，交由 Retry 機制重試</strong>（見 09-A）<span class="tag-pill tag-v2">V1.20 補</span></td></tr>
+</tbody>
+</table>
+<div class="callout warn"><strong>玩家端不得直接顯示這些英文原文。</strong><span class="mono">AWC free spin available for this game, please use it first</span> 對應的玩家端文案，依 DEV V1.7 定案為「<strong>請先完成此遊戲的免費旋轉</strong>」——<strong>玩家端一律不出現「AWC」字樣</strong>（見 <a data-target-audience="shared" href="#sec-09-I" style="color:var(--gold-light);">09-I 多國語系總表</a>）。每一條實際要顯示的文字見下方〈<strong>玩家端錯誤文案</strong>〉；其餘語系翻譯見 <a data-target-audience="shared" href="#sec-09-E" style="color:var(--gold-light);">09-E 待確認 ⑬</a>。</div>
+
+<div class="sub-title">非錯誤、但需要辨識的回應狀態<span class="tag-pill tag-v2">V1.18 新增</span></div>
+<div class="body-text">下列三種情境的 <span class="mono">code</span> 都是 <strong>0</strong>（不是錯誤），玩家端要再看 <span class="mono">settle_status</span> 與 <span class="mono">payout</span> 才知道實際發生什麼，不可一律當成功處理。</div>
+<table>
+<thead><tr><th style="width:230px;">情境</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>領獎失敗但已 PENDING</td><td class="dim"><span class="mono">code = 0</span> ＋ <span class="mono">voucher.settle_status = 4</span>　→ SETTLE NOW 反灰、禁止重複點擊，交由 Retry 機制處理（見 <a data-target-audience="shared" href="#sec-09-A" style="color:var(--gold-light);">09-A 結算狀態與失敗重試</a>）</td></tr>
+<tr><td>領獎成功</td><td class="dim"><span class="mono">code = 0</span> ＋ <span class="mono">voucher.settle_status = 2</span> ＋ <span class="mono">payout &gt; 0</span></td></tr>
+<tr><td>領獎但無派彩金額</td><td class="dim"><span class="mono">code = 0</span> ＋ <span class="mono">payout = 0</span>　→ <strong>仍須跳結算彈窗顯示 0</strong>，不可靜默結束（見 <a data-target-audience="shared" href="#sec-03-T" style="color:var(--gold-light);">03-T 驗收 ⑤</a>）</td></tr>
+</tbody>
+</table>
+
+<div class="sub-title">玩家端錯誤文案<span class="tag-pill tag-v2">V1.19 新增</span></div>
+<div class="body-text">原則：<strong>每一句都要告訴玩家「接下來可以做什麼」</strong>（重新整理、回背包換遊戲、等倒數、稍後再試、聯繫客服），不能只說「失敗了」；<strong>不出現技術詞</strong>（ref、cache、AWC、settle 等）；<strong>繁中每句 30 字以內</strong>（含標點），寧短勿長。左欄是遊戲端回傳的訊息，前端依此對應顯示右側文案。</div>
+<table>
+<thead><tr><th style="width:250px;">遊戲端訊息／狀態</th><th>玩家端文案（繁體中文）</th><th>English</th></tr></thead>
+<tbody>
+<tr><td class="mono">free voucher not found</td><td>找不到此卡，可能已過期，請重新整理背包</td><td class="dim">Card not found — it may have expired. Please refresh your Backpack.</td></tr>
+<tr><td class="mono">game not supported by this voucher</td><td>此卡不適用本遊戲，請回背包改選其他遊戲</td><td class="dim">Not valid for this game. Pick another game in your Backpack.</td></tr>
+<tr><td class="mono">invalid spin parameter for voucher</td><td>無法開始，請重新進入遊戲或聯繫客服</td><td class="dim">Couldn't start. Re-enter the game or contact support.</td></tr>
+<tr><td class="mono">voucher rounds used up</td><td>次數已用完，獎金將自動入帳，請至背包查看</td><td class="dim">No spins left. Winnings will be credited — check your Backpack.</td></tr>
+<tr><td class="mono">free voucher expired</td><td>此卡已過期，獎金將自動入帳，請至背包查看</td><td class="dim">Card expired. Winnings will be credited — check your Backpack.</td></tr>
+<tr><td class="mono">（空 message · Before StartTime）</td><td>此卡尚未開始，請等倒數結束後再使用</td><td class="dim">Not active yet. Please try again after the countdown.</td></tr>
+<tr><td class="mono">AWC free spin available for this game, please use it first</td><td>請先完成此遊戲的免費旋轉（DEV V1.7 定案，沿用 09-I <span class="mono">bag_fs_conflict_hint</span>）</td><td class="dim">Please finish the Free Spins in this game first</td></tr>
+<tr><td class="mono">free voucher not owned by member</td><td>此卡無法使用，請重新登入或聯繫客服</td><td class="dim">Can't use this card. Log in again or contact support.</td></tr>
+<tr><td class="mono">free voucher settle failed</td><td>領取失敗，系統會自動重試入帳，無需重複領取</td><td class="dim">Claim failed. We'll retry automatically — no need to claim again.</td></tr>
+<tr><td class="mono">領獎失敗但已 PENDING（settle_status = 4）</td><td>獎金入帳中，請稍後查看錢包，無需重複領取</td><td class="dim">Processing. Check your wallet shortly — no need to claim again.</td></tr>
+</tbody>
+</table>
+<div class="callout">「領獎但無派彩金額」（<span class="mono">code = 0</span> ＋ <span class="mono">payout = 0</span>）<strong>不另外顯示訊息</strong>——照常跳結算彈窗顯示 0 即可（見 <a data-target-audience="shared" href="#sec-03-T" style="color:var(--gold-light);">03-T 驗收 ⑤</a>）。</div>
 
 </section>
 <section class="section" data-audience="software" id="sec-09-H">
@@ -3125,7 +3231,7 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <tr><td class="mono">FREE SPINS</td><td><strong>美術圖</strong></td><td class="dim">進場彈窗標題橫幅（下行主標）與畫面二常駐標記，全語系統一英文</td></tr>
 <tr><td class="mono">FREE {n}</td><td><strong>美術圖＋動態數字</strong></td><td class="dim">計數器；「FREE」為圖、數字為動態值</td></tr>
 <tr><td class="mono">{n} SPINS</td><td><strong>美術底＋動態數字</strong></td><td class="dim">SPINS 字樣為圖、數字為動態值</td></tr>
-<tr><td class="mono">CampaignID</td><td><strong>不翻譯</strong></td><td class="dim">系統識別碼專名，各語系一致</td></tr>
+<tr><td>卡序號 <span class="mono">reference_id</span>（結算彈窗 ID 欄）<span class="tag-pill tag-v2">V1.20 改</span></td><td><strong>不翻譯</strong></td><td class="dim">系統識別碼專名，各語系一致</td></tr>
 <tr><td class="mono">WIN</td><td><strong>遊戲既有</strong></td><td class="dim">沿用各遊戲原本的贏分顯示，FS 不改</td></tr>
 </tbody>
 </table>
@@ -3178,16 +3284,16 @@ body[data-view="software"] [data-audience="art"],body[data-view="art"] [data-aud
 <div class="log-item"><span class="log-event">fs_activate</span><span class="log-desc">進場前綁定啟用：綁了哪張卡（reference_id）＋哪款遊戲（game_id）——「<strong>扣錯卡／啟用錯卡</strong>」的多卡歧義爭議查這裡。</span></div>
 <div class="log-item"><span class="log-event">fs_launch</span><span class="log-desc">取一次性遊戲入口的結果（成功／失效重取）——「<strong>點了進不去遊戲</strong>」排查。</span></div>
 <div class="log-item"><span class="log-event">fs_round_used</span><span class="log-desc">每局扣次與贏分：rounds_left 變化、該局贏分與累加後的 score、發生在哪款遊戲（歸「活動 › FREE SPIN 卡」分類）——「<strong>次數被多扣／少扣、分數不對</strong>」爭議查這裡。</span></div>
-<div class="log-item"><span class="log-event">fs_settle_shown</span><span class="log-desc">結算彈窗曝光與關閉：何時顯示給玩家、由哪個出口關閉（Return／✕）、是否為斷線後補顯示——客訴「<strong>沒看到結算畫面／不知道結束了</strong>」查這裡。</span></div>
-<div class="log-item"><span class="log-event">fs_early_settle</span><span class="log-desc"><strong>玩家主動提前結算</strong>：哪張卡（reference_id）、<strong>放棄的局數</strong>、<strong>入帳金額</strong>（＝max_conversion）、確認時間——客訴「<strong>我的次數怎麼不見了</strong>」查這裡（DEV V1.6 新增）。</span></div>
-<div class="log-item"><span class="log-event">fs_settled</span><span class="log-desc">整卡結算：score、實付金額 min(score, max_conversion)、campaign_id 與卡序號、對應的一般注單——客訴「<strong>少給錢</strong>」查這裡。</span></div>
+<div class="log-item"><span class="log-event">fs_settle_shown</span><span class="log-desc">結算彈窗曝光與關閉：何時顯示給玩家、以 CONFIRM 關閉（本彈窗唯一出口）、是否為斷線後補顯示——客訴「<strong>沒看到結算畫面／不知道結束了</strong>」查這裡。</span></div>
+<div class="log-item"><span class="log-event">fs_early_settle</span><span class="log-desc"><strong>玩家主動提前結算</strong>：哪張卡（reference_id）、<strong>放棄的局數</strong>、<strong>入帳金額</strong>（＝max_bonus）、確認時間——客訴「<strong>我的次數怎麼不見了</strong>」查這裡（DEV V1.6 新增）。</span></div>
+<div class="log-item"><span class="log-event">fs_settled</span><span class="log-desc">整卡結算：score、實付金額 min(score, max_bonus)、campaign_id 與卡序號、對應的一般注單——客訴「<strong>少給錢</strong>」查這裡。</span></div>
 <div class="log-item"><span class="log-event">fs_history_open</span><span class="log-desc"><strong>玩家開啟 FS 歷程</strong>：來源（CRM 選單 History／遊戲歷程分類）、開啟當下的持卡數與已結算卡數、展開了哪張卡（reference_id）——用來回答「<strong>玩家到底查不查得到、查不查得懂</strong>」，以及客訴前是否曾自助查詢過（DEV V1.12 新增）。</span></div>
 <div class="log-item"><span class="log-event">fs_expired</span><span class="log-desc">逾期紀錄：剩餘未轉局數、是否已觸發結算——「<strong>卡怎麼不見了</strong>」爭議查這裡。</span></div>
 </div>
 <!-- ═══════════ DEV 12 PREREQUISITES & OPEN ITEMS ═══════════ -->
 
 </section>
-<div class="doc-footer">FREE SPIN 卡 · 規格書 開發交付版 · DEV V1.17 · CONFIDENTIAL 2026<br/>DEV V1.17（2026-09-18）：Annotated Wireframe 主文版；目的句改為條件式；必要流程內嵌；產品行為不變。<br/><br/>
+<div class="doc-footer">FREE SPIN 卡 · 規格書 開發交付版 · DEV V1.20 · CONFIDENTIAL 2026<br/>DEV V1.20（2026-09-24）：依文件矛盾審查報告修正 27 條矛盾——結算觸發補「封頂後 SETTLE NOW」、逐局注單寫進注單表但畫面濾掉、到期結算改每 15 分鐘掃描、到期未使用不結算、01-C 次數與倍數可逐段調、待確認 ⑦ 定案（結算彈窗顯示卡序號）、max_bonus 一律有值、結算失敗一律進 Retry、餘額於按 CONFIRM 後更新。<br/>DEV V1.19（2026-09-23）：上限欄位 max_conversion 全文改名 max_bonus；09-G 新增玩家端錯誤文案（繁中＋英文）；S003／S015／S019 後台建立／儲存時擋下、背包遊戲牆不顯示；待確認 ⑫⑭ 定案。<br/>DEV V1.18（2026-09-22）：併入 CRM 免費卡結算流程與 free spin 流程圖；新增結算狀態與失敗重試、combo／awc 開單模式、注單機制與 max_bonus 上限；結算注單新增 ref_free_voucher_id；09-G 新增遊戲端錯誤訊息與回應狀態表；可用遊戲列表排除 S003／S015／S019。<br/>DEV V1.17（2026-09-18）：Annotated Wireframe 主文版；目的句改為條件式；必要流程內嵌；產品行為不變。<br/><br/>
   DEV V1.14（2026-09-09）：①指定遊戲上限 6→8 款（含美術版面改每列 4 格）；②後台獎勵道具 ID 改為建卡確認後才產生、編輯模式置於表單頂部小字；③§07 依原型補入 12 項（含列表空狀態整節）；④Ⓕ 改寫為兩段三態動作鈕；⑤卡名允許星級拆為獨立徽章、語意不變；⑥§08 補 4 項（含 LOCKED · FS）；⑦i18n +24 條 ×13 語系；⑧AWC 字樣列為原型必修。<br/>
       DEV V1.13（2026-09-02）：§09 Ⓐ 入口卡條目同步抽寶箱 DEV V1.22——補記抽寶箱玩家端不顯示 CAMPAIGN ID、列上第二欄改注單 ID、上方新增日期選擇器；抽寶箱維持單層列表不分組（「單層獎勵列表且列不可點」敘述保留），並註明兩者日期選擇器作用對象刻意不同（抽寶箱篩獎勵列／FS 卡篩卡片且不裁切局數）不得統一。FS 卡本身規則零變更。<br/>
   DEV V1.12（2026-09-01）：新增 §09「玩家端遊戲歷程呈現」（原 §09–§11 順延為 §10–§12）——CRM 選單（Game Center）最下方新增 History 項目（主標 History／副標 RECORDS、與 FS 卡同批上線前掛 SOON、開到活動分類不 deep link、背包內不另設入口）；四層動線 L2 活動分類卡／L3 以 reference_id 分組的卡片清單（含日期篩選器）／L4 該卡全部局（跨遊戲混排、移除單日統計、Profit 純數字）＋結算收尾列／L5 盤面（Balance 換 reference_id、Bet 帶幣值 Win 不帶）；取消遊戲分層；職責切分 H1–H7；§12 新增基建⑤（FS 歷程獨立 DB＋歷程 API 統一輸出）與待確認⑧–⑪；§11 新增 fs_history_open；wiki「不重現盤面」原則標記 OUTDATED。<br/>
