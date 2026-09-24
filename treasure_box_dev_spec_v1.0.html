@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 開發交付版規格書 DEV V1.36</title>
+<title>抽寶箱 開發交付版規格書 DEV V1.38</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="sidebar-brand">CMB · DEV SPEC</div>
     <div class="sidebar-title">抽寶箱<br>開發交付版規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.36</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.38</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">SOURCE</span><span class="sidebar-meta-val">完整版 V5.3</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
@@ -1464,7 +1464,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <div class="cover-grid"></div>
   <div class="cover-tag">CHEST · DEV DELIVERY SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>開發交付版規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.36 · 源自完整版 V5.3</div>
+  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.38 · 源自完整版 V5.3</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>文件定位</strong> 開發交付版（後端／前端／美術／QA）</div>
     <div class="cover-pill"><strong>內容範圍</strong> 需求目的・系統行為・驗收標準</div>
@@ -1473,7 +1473,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="cover-pill"><strong>市場</strong> 菲律賓（披索）</div>
   </div>
   <div class="cover-badges">
-    <span class="badge badge-v1">DEV V1.36 · 開發交付版</span>
+    <span class="badge badge-v1">DEV V1.38 · 開發交付版</span>
     <span class="badge badge-scope">源自完整版 V5.3</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
   </div>
@@ -1509,6 +1509,21 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>2026-09-24</td>
+          <td>DEV V1.38</td>
+          <td><a href="#review-page" style="color:var(--gold-light);">§06 活動審查頁規格</a>／<a href="#backend" style="color:var(--gold-light);">§06 模板儲存前驗證</a></td>
+          <td><strong style="color:var(--gold-light);">QA 複測修正文件內部矛盾，對齊 DEV V1.36 已定案的活動重疊檢查時機。</strong>審查頁 V1.31 改版表的「重疊硬擋」列改為：只在 Admin 按「核准並上線」時檢查；不因重疊事先停用核准鈕，失敗時於回應彈窗顯示衝突清單，送審狀態維持「是」。模板儲存前驗證段落移除「活動重疊屬送審檢查」的誤導引用。本版僅修企劃文件，不涉及研發改動。</td>
+        </tr>
+        <tr>
+          <td>2026-09-23</td>
+          <td>DEV V1.37</td>
+          <td><a href="#backend" style="color:var(--gold-light);">§06 獎勵歷程查詢（投注資料查詢頁）</a>／<a href="#backend" style="color:var(--gold-light);">§06 後台功能規格補充</a></td>
+          <td><strong style="color:var(--gold-light);">配合 FREE SPIN 卡規格書 DEV V1.18～V1.19：投注資料查詢的活動獎勵檢視納入 FREE SPIN 卡。</strong><br>
+          <strong>① 新增欄位 <span class="mono">ref_free_voucher_id</span></strong>——篩「活動獎勵」時由兩欄改為三欄（CAMPAIGN ID／獎勵類型／<span class="mono">ref_free_voucher_id</span>）；值＝對應 FREE SPIN 卡的卡序號，現金獎此欄為空。<br>
+          <strong>② 獎勵類型值域加入「FREE SPIN 卡」</strong>——原「FREE SPIN 卡於 v2 啟用後併入」改為正式納入；後台功能規格補充表的 v2 預留欄同步清空。<br>
+          <span class="dim">本版只改投注資料查詢相關兩處；§02、§07 二等處「v1 僅發現金獎」的原始範圍說明未改動。</span></td>
+        </tr>
         <tr>
           <td>2026-09-16</td>
           <td>DEV V1.36</td>
@@ -1877,7 +1892,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   </div>
 
   <details class="fold">
-    <summary>章節對照表 · 完整版 V5.3 → 開發版 DEV V1.36<span class="fold-hint">（與完整版對照時才需展開）</span></summary>
+    <summary>章節對照表 · 完整版 V5.3 → 開發版 DEV V1.38<span class="fold-hint">（與完整版對照時才需展開）</span></summary>
     <div class="fold-body">
       <table class="spec-table compact">
         <thead><tr><th style="width:190px;">完整版章節</th><th style="width:150px;">本文件章節</th><th>處理方式</th></tr></thead>
@@ -3831,7 +3846,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     </ol>
   </div>
 
-  <div class="sub-title" id="review-page">活動審查頁規格（對齊後台原型 v2）<span class="tag-upd">2026-09-11</span></div>
+  <div class="sub-title" id="review-page">活動審查頁規格（對齊後台原型 v2）<span class="tag-upd">2026-09-24</span></div>
   <div class="callout warn">
     <strong style="color:var(--red-bright);">DEV V1.31 三項改版</strong>——① <strong>佇列只剩活動卡片</strong>；② <strong>「查看完整設定」改為顯示活動快照的數值</strong>；③ <strong>核准前須選生效時點</strong>。逐項見下表。
   </div>
@@ -3851,7 +3866,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       選「立即生效」時，核准二次確認彈窗需寫明後果：「<strong>此版本將立即對全體玩家生效，包含今天已經在玩的玩家——他們未開啟的格子會依新設定重新配置。確定要立即生效嗎？</strong>」（<span class="mono">admin.review.effect_now_confirm</span>）。<br>
       完整行為規則見〈<a href="#effect-timing" style="color:var(--gold-light);">DEV §13 三 · 生效時點的選擇</a>〉。<br>
       文案 key：<span class="mono">admin.review.effect_timing</span>／<span class="mono">admin.review.effect_now</span>／<span class="mono">admin.review.effect_nextday</span>。</td></tr>
-      <tr><td>重疊硬擋（不變）</td><td class="dim">核准時仍需<strong>重跑活動重疊檢查</strong>並顯示衝突清單，規則不動（見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉）。<strong style="color:var(--orange-bright);">檢查順序：先擋重疊，再問生效時點</strong>——重疊未解除時「核准」本就不可按，不需要先選生效時點。</td></tr>
+      <tr><td>重疊硬擋<span class="tag-upd">DEV V1.38 修正</span></td><td class="dim">Admin 按下「核准並上線」時才執行<strong>活動重疊檢查（唯一一道）</strong>，見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉。<strong>核准鈕不因重疊事先 disabled</strong>；不通過則<strong style="color:var(--red-bright);">核准失敗</strong>，於回應彈窗顯示衝突清單，活動維持待審、<strong>送審狀態維持「是」</strong>。運行中活動的待生效版本仍須按上一列選擇生效時點（預設「隔日生效」），首次核准不顯示該單選。</td></tr>
     </tbody>
   </table>
 
@@ -4619,7 +4634,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <strong>儲存前驗證（沿用既有規則，於此明確列出適用於新模板）：</strong><br>
     ① <strong>第 1~8 抽每列權重合計 &gt; 0</strong>（任一列為 0 即不可儲存）；<br>
     ② <strong>獎項數量加總＝9，且小獎／中獎／大獎／最終獎四檔各 ≥ 1</strong>（見 <a href="#prize-count" style="color:var(--gold-light);">二之二、獎項格數</a>）；<strong style="color:var(--orange-bright);">RTP 僅顯示、不校驗</strong>（見 <a href="#rtp-info" style="color:var(--gold-light);">二之三</a>）；<br>
-    ③ <strong>未通過不可儲存</strong>——<strong style="color:var(--gold-light);">DEV V1.31 起模板沒有送審動作，這三項就是模板端唯一的把關</strong>（原文「同時擋送審」指的是模板送審，該流程已廢除；活動送審另有自己的檢查，見〈<a href="#template-version" style="color:var(--gold-light);">六</a>〉與 <a href="#camp-overlap" style="color:var(--gold-light);">〈活動重疊硬擋〉</a>）。
+    ③ <strong>未通過不可儲存</strong>——<strong style="color:var(--gold-light);">DEV V1.31 起模板沒有送審動作，這三項就是模板端唯一的把關</strong>（原文「同時擋送審」指的是模板送審，該流程已廢除；活動重疊不屬於送審檢查，只在 Admin 按「核准並上線」時檢查，見〈<a href="#camp-overlap" style="color:var(--gold-light);">活動重疊硬擋</a>〉）。
   </div>
 
   <div class="bdd-card">
@@ -4771,8 +4786,8 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <tbody>
       <tr><td>查詢位置</td><td class="dim"><strong>遊戲後台</strong> →「<strong>資料查詢</strong>」→「<strong>投注資料查詢</strong>」。</td></tr>
       <tr><td>新增篩選：注單類型</td><td class="dim">該頁<strong>新增「注單類型」篩選</strong>，選項：<strong>一般注單</strong> ／ <strong>活動獎勵</strong>。預設維持既有行為（不影響現有使用者的查詢習慣）。</td></tr>
-      <tr><td>活動獎勵的額外欄位</td><td class="dim">篩選為「<strong>活動獎勵</strong>」時，列表須<strong>額外呈現「CAMPAIGN ID」與「獎勵類型」兩欄</strong>；其餘欄位沿用該頁既有欄位（時間、玩家、線路、金額等）。</td></tr>
-      <tr><td>獎勵類型值</td><td class="dim">v1 為<strong>現金獎</strong>；FREE SPIN 卡於 v2 啟用後併入同一欄位值域。</td></tr>
+      <tr><td>活動獎勵的額外欄位</td><td class="dim">篩選為「<strong>活動獎勵</strong>」時，列表須<strong>額外呈現「CAMPAIGN ID」「獎勵類型」「<span class="mono">ref_free_voucher_id</span>」三欄</strong>；其餘欄位沿用該頁既有欄位（時間、玩家、線路、金額等）。<br><span class="mono">ref_free_voucher_id</span>＝該筆獎勵對應的 <strong>FREE SPIN 卡卡序號</strong>（即 FREE SPIN 規格書的 <span class="mono">reference_id</span>），營運用它回查「這筆錢是哪一張卡給的」；<strong>現金獎沒有對應的卡，此欄為空</strong>。<span class="tag-upd">DEV V1.37</span></td></tr>
+      <tr><td>獎勵類型值</td><td class="dim"><strong>現金獎／FREE SPIN 卡</strong> 兩種。玩家在抽寶箱抽中 FREE SPIN 卡時，該筆活動獎勵的獎勵類型標示為「<strong>FREE SPIN 卡</strong>」<span class="tag-upd">DEV V1.37</span><br><span class="dim">（原文：v1 為現金獎；FREE SPIN 卡於 v2 啟用後併入同一欄位值域。DEV V1.37 起 FREE SPIN 卡正式納入值域。）</span></td></tr>
       <tr><td>GGR 原則不變</td><td class="dim"><strong>活動獎勵不計入單一遊戲 GGR</strong>——因玩家可跨遊戲參與活動，獎勵不得被歸入任一款遊戲的收入，避免遊戲別收益失真。此原則<strong>不因查詢頁整併而改變</strong>（見 <a href="#reward-data" style="color:var(--gold-light);">DEV §14</a>）。</td></tr>
       <tr><td>與玩家端一致</td><td class="dim">此處查到的資料須與玩家端「活動」歷程入口<strong>同源一致</strong>（見 <a href="#player-history" style="color:var(--gold-light);">DEV §05</a>）。</td></tr>
       <tr><td>權限</td><td class="dim">沿用遊戲後台對投注資料查詢的權限控管，<strong>不在 CRM 後台角色矩陣內另設</strong>。</td></tr>
@@ -4812,7 +4827,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       <tr><td>版型主題設定（theme_id）</td><td class="dim">從<strong>預定義主題清單單選</strong>（treasure_box / gold_egg / red_envelope / xmas_gift），控制前台換皮（<span style="color:var(--red-bright);">DEV V1.27 移除縮圖預覽</span>）；<strong>不可自由輸入、不影響玩法數值</strong></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：營運可自上傳素材</td></tr>
       <tr><td>活動期間倒數設定（countdown_lead_days）</td><td class="dim">設定前台由日期區間轉倒數的提前天數（預設 3）；活動列表倒數欄剩餘天數 <strong>≤</strong> 此值時轉紅（<strong>邊界含第 N 天</strong>）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>抽獎權重表（第 1~8 抽）</td><td class="dim">模板編輯器內<strong>第 1~8 抽可輸入相對權重</strong>（每列合計 &gt;0 即可、<strong>非強制 100</strong>）；<strong>第 9 抽由系統自動決定</strong>（不放回抽、必中剩餘的最後 1 個獎項）為唯讀說明列、不參與合計驗證</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
-      <tr><td>注單類型篩選（遊戲後台）</td><td class="dim">遊戲後台既有「投注資料查詢」新增<strong>注單類型：一般注單／活動獎勵</strong>；篩活動獎勵時額外呈現 <strong>CAMPAIGN ID ＋ 獎勵類型</strong>欄。</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：FREE SPIN 卡併入獎勵類型值域</td></tr>
+      <tr><td>注單類型篩選（遊戲後台）</td><td class="dim">遊戲後台既有「投注資料查詢」新增<strong>注單類型：一般注單／活動獎勵</strong>；篩活動獎勵時額外呈現 <strong>CAMPAIGN ID ＋ 獎勵類型 ＋ <span class="mono">ref_free_voucher_id</span></strong> 欄；獎勵類型值域＝<strong>現金獎／FREE SPIN 卡</strong>。<span class="tag-upd">DEV V1.37</span></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—（原「v2：FREE SPIN 卡併入獎勵類型值域」已於 DEV V1.37 納入）</td></tr>
       <tr><td>RTP 自動試算（純資訊顯示）</td><td class="dim">於<strong>各幣別 tab 內</strong>即時顯示該幣別<strong>獎池總額與 RTP%</strong>；<strong style="color:var(--orange-bright);">不做目標值校驗、不擋儲存與送審</strong>。擋送審條件為<strong>獎項數量加總 ≠ 9／四檔任一數量 &lt; 1／必填幣別未填完整／第 1~8 抽權重列合計 0</strong></td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">—</td></tr>
       <tr><td>CRM 獨立獎勵歷程頁</td><td class="dim"><strong style="color:var(--orange-bright);">不設此頁</strong>——改於遊戲後台「投注資料查詢」（見上一列與本章「獎勵歷程查詢」）</td><td class="dim">✘ 不做</td><td class="dim">—</td></tr>
       <tr><td>玩家端「活動」歷程入口</td><td class="dim">遊戲歷程頂部分類新增「活動」（純入口、無 TOTAL BETS／Net Win/Lose）→ 抽寶箱方形卡 → 獎勵歷程列表（<strong>單層列表</strong>＋<strong>日期選擇器</strong>；欄位＝時間／<strong>注單 ID</strong>／獎勵類型／面額，<strong style="color:var(--orange-bright);">玩家端不顯示 CAMPAIGN ID</strong>，時間倒序、不可展開，DEV V1.22）</td><td><span class="tag-pill tag-v1">✓ 納入</span></td><td class="dim">v2：其他玩法卡片並列</td></tr>
@@ -6601,7 +6616,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
 </div><!-- /page -->
 
 <div class="doc-footer">
-  抽寶箱 開發交付版規格書 · LUCKY CHEST DEV V1.36 · CONFIDENTIAL 2026<br>
+  抽寶箱 開發交付版規格書 · LUCKY CHEST DEV V1.38 · CONFIDENTIAL 2026<br>
   FORCE / COMBO GAMING · 菲律賓市場 · 受眾：後端／前端／美術／QA · 完整版（含 KPI／成本／時程）另見 <a href="treasure_box_crm_spec_v5.0.html" target="_blank" rel="noopener" style="color:var(--gold-light);">treasure_box_crm_spec_v5.0.html</a>（內容版號 V5.3）<br>
   <strong>兩份文件如有衝突，以本文件為準。</strong>
 </div>
