@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽寶箱 開發交付版規格書 DEV V1.38</title>
+<title>抽寶箱 開發交付版規格書 DEV V1.39</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -1275,7 +1275,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="sidebar-brand">CMB · DEV SPEC</div>
     <div class="sidebar-title">抽寶箱<br>開發交付版規格書</div>
     <div class="sidebar-meta">
-      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.38</span></div>
+      <div class="sidebar-meta-row"><span class="sidebar-meta-label">VERSION</span><span class="sidebar-meta-val">DEV V1.39</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">SOURCE</span><span class="sidebar-meta-val">完整版 V5.3</span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">DATE</span><span class="sidebar-meta-val" id="sidebar-date"></span></div>
       <div class="sidebar-meta-row"><span class="sidebar-meta-label">AUTHOR</span><span class="sidebar-meta-val">Milu</span></div>
@@ -1464,7 +1464,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   <div class="cover-grid"></div>
   <div class="cover-tag">CHEST · DEV DELIVERY SPEC · 2026</div>
   <h1>抽<span>寶箱</span><br>開發交付版規格書</h1>
-  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.38 · 源自完整版 V5.3</div>
+  <div class="cover-sub">LUCKY CHEST · DEVELOPMENT SPEC · DEV V1.39 · 源自完整版 V5.3</div>
   <div class="cover-pills">
     <div class="cover-pill"><strong>文件定位</strong> 開發交付版（後端／前端／美術／QA）</div>
     <div class="cover-pill"><strong>內容範圍</strong> 需求目的・系統行為・驗收標準</div>
@@ -1473,7 +1473,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
     <div class="cover-pill"><strong>市場</strong> 菲律賓（披索）</div>
   </div>
   <div class="cover-badges">
-    <span class="badge badge-v1">DEV V1.38 · 開發交付版</span>
+    <span class="badge badge-v1">DEV V1.39 · 開發交付版</span>
     <span class="badge badge-scope">源自完整版 V5.3</span>
     <span class="badge badge-conf">CONFIDENTIAL · 2026</span>
   </div>
@@ -1509,6 +1509,12 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>2026-10-19</td>
+          <td>DEV V1.39</td>
+          <td><a href="#theme-settle" style="color:var(--gold-light);">§05 P6 主題風格／P6-A 結算畫面／獎項 icon 分級</a></td>
+          <td><strong style="color:var(--gold-light);">金蛋主題（gold_egg）定位更正：與寶箱同屬「常駐／通用」主題，非復活節節慶主題（Milu 拍板）。</strong>移除全部復活節元素（嫩綠草原、粉彩天空、描花彩蛋、緞帶、花環、花瓣）；改為<strong>黑金</strong>風格——主色票改為金 <span class="mono">#F5C542</span>／暖棕黑 <span class="mono">#2B1A0E</span>／琥珀 <span class="mono">#E08A1E</span>，結算背景、慶祝特效、卡片樣式與獎項 icon（小／中／大）同步改寫，標籤改為「常駐／通用」。主題 ID、資產數量與換皮規則不變；「節慶 3 套」相關敘述改為「其餘 3 套（通用 gold_egg＋節慶 2 套）」。本版僅修企劃文件，不涉及研發改動。</td>
+        </tr>
         <tr>
           <td>2026-09-24</td>
           <td>DEV V1.38</td>
@@ -2777,10 +2783,10 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
           <td class="dim">「每日寶箱」「開始遊戲」「恭喜獲得最終大獎！」</td>
         </tr>
         <tr>
-          <td>抽金蛋<br><span class="mono" style="font-size:10px;color:var(--gold-light);">gold_egg</span><br><span class="tag-pill" style="font-size:9px;background:var(--green-fill);color:var(--green-bright);">復活節</span></td>
-          <td class="dim">金＋嫩綠（easter）</td>
+          <td>抽金蛋<br><span class="mono" style="font-size:10px;color:var(--gold-light);">gold_egg</span><br><span class="tag-pill tag-v1" style="font-size:9px;">常駐／通用</span></td>
+          <td class="dim">金＋暖棕黑（黑金）</td>
           <td class="dim">🥚 金蛋</td>
-          <td class="dim">敲蛋：蛋殼裂開、彩光迸出</td>
+          <td class="dim">敲蛋：金殼裂開、金光迸出</td>
           <td class="dim">「每日金蛋」「敲開金蛋」「恭喜敲中黃金大獎！」</td>
         </tr>
         <tr>
@@ -2937,9 +2943,9 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   </div>
 
   <div class="sub-title" style="font-size:13px;">P6 · 主題風格（定稿 2026-06-30）</div>
-  <div class="body-text">4 套主題＝<strong>treasure_box（藍紫·常駐）／gold_egg（復活節）／red_envelope（春節）／xmas_gift（聖誕）</strong>；皆套用上方〈整體美術風格基準〉的質感層，僅替換色系與物件造型。<span style="color:var(--text-dim);">（原型另內建糖果／藍紫／金黑三套換色僅為示意，正式以本節 4 套為準。）</span></div>
+  <div class="body-text">4 套主題＝<strong>treasure_box（藍紫·常駐）／gold_egg（黑金·常駐）／red_envelope（春節）／xmas_gift（聖誕）</strong>；皆套用上方〈整體美術風格基準〉的質感層，僅替換色系與物件造型。<span style="color:var(--text-dim);">（原型另內建糖果／藍紫／金黑三套換色僅為示意，正式以本節 4 套為準。）</span></div>
   <div class="callout warn">
-    <strong>階段策略：</strong>首發<strong>先做 1 套（treasure_box）</strong>定稿；<strong>節慶 3 套（gold_egg／red_envelope／xmas_gift）後續再加、採前端寫死</strong>。<strong>總資產量＝換皮元件 × 套數</strong>——見下方〈美術資產清單〉之<strong>多主題資產增量換算表</strong>。下方 P6-A／P6-B 提供 4 套<strong>全主題</strong>的描述，美術可先聚焦 treasure_box、其餘 3 套作為後續排程依據。
+    <strong>階段策略：</strong>首發<strong>先做 1 套（treasure_box）</strong>定稿；<strong>其餘 3 套（通用 gold_egg＋節慶 red_envelope／xmas_gift）後續再加、採前端寫死</strong>。<strong>總資產量＝換皮元件 × 套數</strong>——見下方〈美術資產清單〉之<strong>多主題資產增量換算表</strong>。下方 P6-A／P6-B 提供 4 套<strong>全主題</strong>的描述，美術可先聚焦 treasure_box、其餘 3 套作為後續排程依據。
   </div>
 
   <!-- ═══ P6-A 各主題結算畫面美術描述 ═══ -->
@@ -2962,15 +2968,15 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
   </table>
 
   <!-- gold_egg -->
-  <div class="body-text" style="font-size:12px;margin:14px 0 6px;"><strong style="color:var(--green-bright);">② gold_egg · 抽金蛋（復活節）</strong></div>
+  <div class="body-text" style="font-size:12px;margin:14px 0 6px;"><strong style="color:var(--gold-light);">② gold_egg · 抽金蛋（黑金·常駐）</strong></div>
   <table class="spec-table">
     <thead><tr><th style="width:120px;">元素</th><th>美術描述</th></tr></thead>
     <tbody>
-      <tr><td>結算背景</td><td class="dim">嫩綠草原＋粉彩漸層天空（仍保留深色基準的景深壓角），漂浮彩蛋光球與小花散景</td></tr>
-      <tr><td>主視覺容器</td><td class="dim">P4＝大金蛋<strong>裂開</strong>、彩光由裂縫迸射＋👑；P7＝🎊＋草地上一籃滿滿彩蛋</td></tr>
-      <tr><td>慶祝特效</td><td class="dim">彩色碎蛋殼 ＋ 粉彩彩帶 ＋ 花瓣飄落</td></tr>
-      <tr><td>卡片樣式</td><td class="dim">奶油白＋嫩綠圓角卡，金蛋紋飾邊角</td></tr>
-      <tr><td>主色票</td><td class="dim">金 <span class="mono">#F5C542</span>／嫩綠 <span class="mono">#A8E063</span>／粉 <span class="mono">#FFC9DE</span></td></tr>
+      <tr><td>結算背景</td><td class="dim"><strong>深暖棕黑金庫</strong>，暖棕到近黑的放射漸層底＋金色粒子光塵，中央自金蛋座向上打出暖金聚光；四周漂浮金幣與金色碎光散景</td></tr>
+      <tr><td>主視覺容器</td><td class="dim">P4＝大金蛋<strong>裂開</strong>、金光由裂縫迸射＋👑；P7＝🎊＋金蛋座旁堆滿今日戰利金幣山</td></tr>
+      <tr><td>慶祝特效</td><td class="dim">金色碎蛋殼飛散 ＋ 金色彩帶 ＋ 金幣雨 ＋ 中央光爆（bloom）</td></tr>
+      <tr><td>卡片樣式</td><td class="dim">深棕黑底＋金描邊框，邊角金蛋殼紋飾，金色立體描邊字</td></tr>
+      <tr><td>主色票</td><td class="dim">金 <span class="mono">#F5C542</span>／暖棕黑 <span class="mono">#2B1A0E</span>／琥珀 <span class="mono">#E08A1E</span></td></tr>
     </tbody>
   </table>
 
@@ -3029,10 +3035,10 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
           <td class="dim"><strong>鑲鑽皇冠</strong>安座於溢滿金幣寶石的小寶箱上，強金光暈</td>
         </tr>
         <tr>
-          <td><strong style="color:var(--green-bright);">gold_egg</strong><br><span class="dim" style="font-size:10px;">復活節金蛋</span></td>
-          <td class="dim">1 顆素色淡彩<strong>小蛋</strong></td>
-          <td class="dim">2–3 顆<strong>描花彩蛋</strong>＋緞帶結</td>
-          <td class="dim"><strong>金色大彩蛋</strong>＋花環，微裂透金光</td>
+          <td><strong style="color:var(--gold-light);">gold_egg</strong><br><span class="dim" style="font-size:10px;">黑金金蛋（通用）</span></td>
+          <td class="dim">1 顆霧面<strong>銅色小蛋</strong>，無紋飾</td>
+          <td class="dim">2–3 顆<strong>亮面銀蛋</strong>，置於小金屬蛋托</td>
+          <td class="dim"><strong>金色大蛋</strong>＋周圍散落金幣與 2–3 顆彩色寶石，微裂透金光</td>
           <td class="dim"><strong>鑲寶石皇家金蛋</strong>（金蛋座＋頂端皇冠），裂縫噴金光</td>
         </tr>
         <tr>
@@ -3083,7 +3089,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
 
   <div class="sub-title" id="ui-assets" style="margin-top:32px;">美術資產清單（Asset List）<span class="tag-upd">2026-08-27</span></div>
   <div class="callout info">
-    <strong>本清單數量＝首發單一主題（<span class="mono" style="color:var(--gold-light);">treasure_box</span>）的量（×1）。</strong>節慶主題（gold_egg／red_envelope／xmas_gift）後續再加時的資產增量，見下方〈多主題資產增量換算表〉。
+    <strong>本清單數量＝首發單一主題（<span class="mono" style="color:var(--gold-light);">treasure_box</span>）的量（×1）。</strong>其餘主題（通用 gold_egg＋節慶 red_envelope／xmas_gift）後續再加時的資產增量，見下方〈多主題資產增量換算表〉。
   </div>
   <table class="spec-table">
     <thead><tr><th style="width:36px;">#</th><th>資產項目</th><th>數量/規格</th><th>備註</th></tr></thead>
@@ -3139,7 +3145,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
       </tr>
     </tbody>
   </table>
-  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 總資產量＝<strong>共用（×1）</strong>＋<strong>（整張重畫 ＋ 重上色）× 套數</strong>。首發僅 treasure_box 一套；節慶 3 套後續再加、採前端寫死（見 P6 主題風格、DEV §06 主題資產對應規範）。</div>
+  <div class="body-text" style="font-size:11px;color:var(--text-dim);">※ 總資產量＝<strong>共用（×1）</strong>＋<strong>（整張重畫 ＋ 重上色）× 套數</strong>。首發僅 treasure_box 一套；其餘 3 套（通用 gold_egg＋節慶 2 套）後續再加、採前端寫死（見 P6 主題風格、DEV §06 主題資產對應規範）。</div>
 
   <div class="sub-title" id="ui-audio" style="margin-top:40px;">音樂音效需求表（給音效製作）<span class="tag-upd">2026-08-17</span></div>
   <div class="callout info">
