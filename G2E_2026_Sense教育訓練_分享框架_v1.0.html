@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sense 教育訓練框架</title>
+<style>
+:root{
+  --bg:#0f1115; --bg2:#161a21; --bg3:#1d222b;
+  --fg:#e8eaed; --fg2:#a8b0bd; --fg3:#6f7887;
+  --gold:#d4af37; --gold2:#f0d478; --line:#2a303b;
+  --ok:#4ade80; --warn:#fbbf24; --bad:#f87171; --info:#60a5fa;
+}
+:root[data-theme="light"]{
+  --bg:#f7f8fa; --bg2:#ffffff; --bg3:#eef1f5;
+  --fg:#1a1d23; --fg2:#4a5261; --fg3:#828b9a;
+  --gold:#a67c00; --gold2:#8a6600; --line:#dde2e9;
+  --ok:#15803d; --warn:#b45309; --bad:#b91c1c; --info:#1d4ed8;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f7f8fa; --bg2:#ffffff; --bg3:#eef1f5;
+    --fg:#1a1d23; --fg2:#4a5261; --fg3:#828b9a;
+    --gold:#a67c00; --gold2:#8a6600; --line:#dde2e9;
+    --ok:#15803d; --warn:#b45309; --bad:#b91c1c; --info:#1d4ed8;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.75; font-size:15px;
+}
+.wrap{display:flex; max-width:1400px; margin:0 auto; min-height:100vh}
+nav{
+  width:250px; flex-shrink:0; background:var(--bg2); border-right:1px solid var(--line);
+  position:sticky; top:0; height:100vh; overflow-y:auto; padding:22px 0;
+}
+nav .brand{padding:0 20px 18px; border-bottom:1px solid var(--line); margin-bottom:14px}
+nav .brand b{display:block; color:var(--gold); font-size:17px; letter-spacing:.5px}
+nav .brand span{display:block; color:var(--fg3); font-size:12px; margin-top:3px}
+nav a{
+  display:block; padding:9px 20px; color:var(--fg2); text-decoration:none;
+  font-size:13.5px; border-left:3px solid transparent; transition:.15s;
+}
+nav a:hover{background:var(--bg3); color:var(--fg)}
+nav a.active{border-left-color:var(--gold); color:var(--gold); background:var(--bg3)}
+nav .sec{padding:14px 20px 5px; font-size:11px; color:var(--fg3); letter-spacing:1.5px; text-transform:uppercase}
+main{flex:1; padding:34px 42px 90px; min-width:0}
+.topbar{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:28px; flex-wrap:wrap}
+h1{font-size:27px; color:var(--gold); letter-spacing:.5px; line-height:1.35}
+h1 small{display:block; font-size:13px; color:var(--fg3); font-weight:400; letter-spacing:0; margin-top:5px}
+#tt{
+  background:var(--bg3); color:var(--fg2); border:1px solid var(--line);
+  padding:7px 14px; border-radius:20px; cursor:pointer; font-size:12.5px; white-space:nowrap;
+}
+#tt:hover{border-color:var(--gold); color:var(--gold)}
+section{margin-bottom:46px; scroll-margin-top:20px}
+h2{
+  font-size:20px; color:var(--gold); border-bottom:2px solid var(--line);
+  padding-bottom:9px; margin-bottom:18px; display:flex; align-items:center; gap:9px;
+}
+h2 .n{
+  background:var(--gold); color:var(--bg); min-width:26px; height:26px; padding:0 6px; border-radius:6px;
+  display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;
+}
+h2.apx{color:var(--fg2); border-bottom-style:dashed}
+h2.apx .n{background:var(--fg3); color:var(--bg2)}
+h3{font-size:16px; margin:24px 0 10px; color:var(--fg); border-left:3px solid var(--gold); padding-left:10px}
+h4{font-size:14.5px; margin:16px 0 7px; color:var(--gold2)}
+p{margin-bottom:11px; color:var(--fg2)}
+ul,ol{margin:0 0 12px 21px; color:var(--fg2)}
+li{margin-bottom:5px}
+strong{color:var(--fg); font-weight:600}
+s{color:var(--fg3)}
+code{background:var(--bg3); padding:2px 6px; border-radius:4px; font-size:13px; color:var(--gold2)}
+a{color:var(--info)}
+.card{background:var(--bg2); border:1px solid var(--line); border-radius:10px; padding:17px 19px; margin-bottom:14px}
+.card.gold{border-left:4px solid var(--gold)}
+.card.mute{border-left:4px solid var(--fg3); background:var(--bg2)}
+.grid{display:grid; gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tag{
+  display:inline-block; font-size:11px; padding:2px 9px; border-radius:20px;
+  background:var(--bg3); color:var(--fg2); border:1px solid var(--line); margin-right:5px; margin-bottom:5px;
+}
+.tag.rec{background:rgba(212,175,55,.14); color:var(--gold); border-color:var(--gold)}
+.tag.ok{color:var(--ok); border-color:var(--ok); background:transparent}
+.tag.bad{color:var(--bad); border-color:var(--bad); background:transparent}
+.tag.info{color:var(--info); border-color:var(--info); background:transparent}
+.note{border-radius:8px; padding:13px 16px; margin:14px 0; font-size:14px; border-left:4px solid}
+.note.w{background:rgba(251,191,36,.09); border-color:var(--warn)}
+.note.d{background:rgba(248,113,113,.09); border-color:var(--bad)}
+.note.i{background:rgba(96,165,250,.09); border-color:var(--info)}
+.note.g{background:rgba(74,222,128,.09); border-color:var(--ok)}
+.note b{color:var(--fg)}
+.tw{overflow-x:auto; margin:14px 0; border:1px solid var(--line); border-radius:9px}
+table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:520px}
+th{background:var(--bg3); color:var(--gold); text-align:left; padding:10px 13px; font-weight:600; white-space:nowrap; border-bottom:1px solid var(--line)}
+td{padding:10px 13px; border-bottom:1px solid var(--line); color:var(--fg2); vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg3)}
+td b{color:var(--fg)}
+.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.day{background:var(--bg2); border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:10px; padding:16px 19px; margin-bottom:14px}
+.day.key{border-left-width:6px; box-shadow:0 0 0 1px rgba(212,175,55,.25)}
+.day.travel{border-left-color:var(--fg3)}
+.day .h{display:flex; align-items:baseline; gap:11px; margin-bottom:11px; flex-wrap:wrap}
+.day .d{font-size:19px; color:var(--gold); font-weight:700}
+.day .t{font-size:14px; color:var(--fg)}
+.slot{display:flex; gap:13px; padding:7px 0; border-top:1px dashed var(--line)}
+.slot:first-of-type{border-top:none}
+.slot .tm{flex-shrink:0; width:82px; color:var(--gold2); font-size:12.5px; padding-top:2px; font-variant-numeric:tabular-nums}
+.slot .ct{flex:1; font-size:14px; color:var(--fg2); min-width:0}
+.slot .ct b{display:block; color:var(--fg); margin-bottom:2px}
+.optional{background:var(--bg3); border-radius:7px; padding:9px 13px; margin-top:10px; font-size:13px; color:var(--fg3); border:1px dashed var(--line)}
+.optional b{color:var(--fg2)}
+.chk{list-style:none; margin-left:0}
+.chk li{padding:6px 0 6px 27px; position:relative; border-bottom:1px dashed var(--line); font-size:14px}
+.chk li:last-child{border-bottom:none}
+.chk li::before{
+  content:""; position:absolute; left:0; top:12px; width:14px; height:14px;
+  border:2px solid var(--fg3); border-radius:3px;
+}
+.chk li.hot::before{border-color:var(--bad)}
+.chk li.hot{color:var(--fg)}
+.flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:16px 0; padding:16px; background:var(--bg2); border:1px solid var(--line); border-radius:10px}
+.fbox{background:var(--bg3); border:1px solid var(--line); border-radius:8px; padding:9px 13px; font-size:13px; color:var(--fg); text-align:center; min-width:104px}
+.fbox small{display:block; color:var(--fg3); font-size:11px; margin-top:2px}
+.fbox.on{border-color:var(--gold); background:rgba(212,175,55,.11); color:var(--gold)}
+.fbox.key{border-color:var(--gold); background:rgba(212,175,55,.22); color:var(--gold); font-weight:700}
+.arw{color:var(--gold); font-size:17px}
+.apxbar{background:var(--bg3); border:1px dashed var(--line); border-radius:10px; padding:14px 18px; margin:34px 0 22px; color:var(--fg2); font-size:14px}
+.apxbar b{color:var(--gold)}
+footer{margin-top:44px; padding-top:18px; border-top:1px solid var(--line); color:var(--fg3); font-size:12px}
+@media(max-width:900px){
+  .wrap{flex-direction:column}
+  nav{width:100%; height:auto; position:static; border-right:none; border-bottom:1px solid var(--line); padding:14px 0}
+  nav a{display:inline-block; border-left:none; border-bottom:3px solid transparent; padding:7px 13px}
+  nav a.active{border-left:none; border-bottom-color:var(--gold)}
+  nav .sec{display:inline-block; padding:7px 13px 3px}
+  main{padding:22px 17px 60px}
+  h1{font-size:22px}
+}
+
+.cases{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); margin:14px 0 6px}
+.case{background:var(--bg2); border:1px solid var(--line); border-radius:10px; overflow:hidden; display:flex; flex-direction:column}
+.case a.thumb{position:relative; display:block; aspect-ratio:16/9; background:var(--bg3); overflow:hidden}
+.case a.thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.case a.thumb .ph{position:absolute; inset:0; display:flex; align-items:flex-end; padding-bottom:14px!important; justify-content:center; color:var(--fg3); font-size:12px; padding:10px; text-align:center}
+.case a.thumb .play{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:52px; height:36px; border-radius:9px; background:rgba(200,0,0,.88); color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px}
+.case .bd{padding:11px 13px 13px; font-size:13.5px; color:var(--fg2)}
+.case .bd b.nm{display:block; color:var(--fg); font-size:14.5px; margin-bottom:3px}
+.case .bd .meta{margin-bottom:7px}
+.case .bd .look{margin-top:6px}
+.case .bd .look b{color:var(--gold2)}
+.yr25{color:var(--info)!important; border-color:var(--info)!important}
+.yr26{color:var(--ok)!important; border-color:var(--ok)!important}
+.cp{display:inline-block; font-size:11px; padding:2px 8px; border-radius:5px; background:rgba(212,175,55,.14); color:var(--gold); margin:0 4px 4px 0}
+.disc{background:var(--bg3); border-left:4px solid var(--gold); border-radius:8px; padding:11px 15px; margin:8px 0 22px; font-size:14px; color:var(--fg2)}
+.disc b{color:var(--gold)}
+.rate{font-variant-numeric:tabular-nums; white-space:nowrap}
+.rate.weak{color:var(--bad); font-weight:700}
+.rate.strong{color:var(--ok)}
+.seg{margin-top:34px}
+.seg h3{margin-top:0}
+.track-a h2{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div class="brand"><b>Sense 教育訓練</b><span>G2E 2025／2026 案例分享框架 v1.0</span></div>
+  <div class="sec">前導</div>
+  <a href="#s0">0. 這次分享怎麼進行</a>
+  <a href="#s1">1. 評分表與我們的現況</a>
+  <a href="#s2">2. 這兩年的三個大趨勢</a>
+  <div class="sec">場次一</div>
+  <a href="#s3">3. 企劃規劃面</a>
+  <div class="sec">場次二</div>
+  <a href="#s4">4. 美術設計與動態效果面</a>
+  <div class="sec">收尾</div>
+  <a href="#s5">5. 現場練習：用評分表評一次</a>
+  <a href="#s6">6. 準備事項</a>
+</nav>
+<main>
+<div class="topbar">
+  <h1>Sense 教育訓練｜G2E Las Vegas 遊戲演出分享
+    <small>以「Sense 度評分」13 個檢查點為主軸 · 案例取自 G2E 2026 新機與 G2E 2025 重點機台（已陸續上到各賭場）</small>
+  </h1>
+  <button id="tt">◐ 切換主題</button>
+</div>
+
+<div class="note i" style="margin-top:-8px">
+<b>📌 案例怎麼看</b><br>
+每張案例卡點縮圖會開 YouTube 影片。標籤 <span class="tag yr26">G2E 2026</span> 是今年展場新機，<span class="tag yr25">G2E 2025</span> 是去年展出、現在已上到賭場的機台，<span class="tag">經典延伸</span> 是同系列的前作或延伸作，用來補足說明。<br>
+<b>影片多為玩家在賭場拍攝的實機影片</b>（不是廠商官方），內容與音量請在分享前先看過一次；有我們自己現場拍到的同款機台，請優先替換。
+</div>
+
+<section id="s0">
+<h2><span class="n">0</span>這次分享怎麼進行</h2>
+<div class="flow">
+  <div class="fbox on">前導<small>全員 · 15 分鐘</small></div><span class="arw">→</span>
+  <div class="fbox key">場次一<small>企劃規劃面</small></div><span class="arw">→</span>
+  <div class="fbox key">場次二<small>美術設計與動態效果面</small></div><span class="arw">→</span>
+  <div class="fbox on">收尾<small>全員 · 現場練習 30 分鐘</small></div>
+</div>
+<div class="grid g3">
+  <div class="card gold"><h4>🎯 這次分享的目的</h4><p style="font-size:13.5px">用同一張評分表，讓企劃和美術對「什麼是好演出」有<b>一樣的判斷標準</b>，再把看到的做法帶進手上正在做的精品案。</p></div>
+  <div class="card gold"><h4>🧭 每一段的結構</h4><p style="font-size:13.5px">檢查點是什麼 → 我們的達成率 → 案例影片 → 討論題。<br>弱項（紅字）多花時間，強項快速帶過。</p></div>
+  <div class="card gold"><h4>📦 留下來的東西</h4><p style="font-size:13.5px">這份頁面本身就是之後新人可以看的教材；收尾的練習表留作每個人的第一份評分紀錄。</p></div>
+</div>
+</section>
+
+<section id="s1">
+<h2><span class="n">1</span>評分表與我們的現況</h2>
+<p>13 個檢查點、每項 1 分、滿分 13 分。精品 11 分以上、標準款 6–10 分、優化預備役 1–5 分。下表多一欄「分享場次」，標出這一項在哪一場講。</p>
+<div class="tw"><table><thead><tr><th>準則</th><th>檢查點</th><th>分享場次</th><th class="num">我們 33 款達成率</th></tr></thead><tbody><tr><td><b>主題玩法深度結合</b></td><td>核心機制的運作邏輯呼應主題敘事</td><td>企劃</td><td class="num"><span class="rate weak">36%</span></td></tr><tr><td><b></b></td><td>UI、symbol 設計具階層感，且和世界觀呼應</td><td>美術</td><td class="num"><span class="rate strong">79%</span></td></tr><tr><td><b></b></td><td>玩法設計有明確的「主期待點」</td><td>企劃</td><td class="num"><span class="rate strong">85%</span></td></tr><tr><td><b></b></td><td>Bonus/Feature 的敘事包裝讓玩家感覺是故事的展開</td><td>企劃（美術協作）</td><td class="num"><span class="rate ">—</span></td></tr><tr><td><b>表演與資訊引導充足</b></td><td>特色的視覺演出邏輯明確，看畫面動態就能理解機制</td><td>企劃定義＋美術實作</td><td class="num"><span class="rate ">76%</span></td></tr><tr><td><b></b></td><td>Near win/miss 有相關表演鋪陳</td><td>企劃定義＋美術實作</td><td class="num"><span class="rate ">—</span></td></tr><tr><td><b></b></td><td>觸發/結算有客製化主題連結</td><td>美術</td><td class="num"><span class="rate ">—</span></td></tr><tr><td><b></b></td><td>流程連貫且 spin 順暢</td><td>美術／動態</td><td class="num"><span class="rate ">70%</span></td></tr><tr><td><b></b></td><td>大獎表演張力和回饋成正比，無誤導性演出</td><td>企劃定義＋美術實作</td><td class="num"><span class="rate weak">39%</span></td></tr><tr><td><b></b></td><td>音樂音效呈現具沉浸感且適配</td><td>美術／音效</td><td class="num"><span class="rate ">70%</span></td></tr><tr><td><b>記憶點</b></td><td>至少 1 處提升體驗的細節設計／彩蛋／巧思</td><td>美術（企劃協作）</td><td class="num"><span class="rate weak">24%</span></td></tr><tr><td><b></b></td><td>特殊或強勢玩法</td><td>企劃</td><td class="num"><span class="rate weak">6%</span></td></tr><tr><td><b></b></td><td>特殊主題、美術風格</td><td>美術</td><td class="num"><span class="rate weak">21%</span></td></tr></tbody></table></div>
+<div class="note d"><b>🔴 關鍵落差：皮有主題，骨架沒主題</b><br>「UI、symbol 設計」達成率 79%，「機制呼應主題」只有 36%。大部分遊戲在畫面上做了主題化，但觸發邏輯、成長方式沒有跟主題掛勾。<b>這次分享的重點就放在紅字的 5 項。</b></div>
+</section>
+
+<section id="s2">
+<h2><span class="n">2</span>這兩年的三個大趨勢</h2>
+<div class="grid g3">
+  <div class="card gold"><h4>① 收集罐幾乎成了標配</h4><p style="font-size:13.5px">G2E 2025、2026 的新機大多有 3–5 個常駐在畫面上的收集罐，裝滿觸發或強化特色。<b>主期待點直接擺在畫面上</b>，每一局都看得到。</p><p style="font-size:12.5px;color:var(--fg3)">例：AGS Rakin' Bacon 四罐、Ainsworth Dragon Legacy 五罐、Konami Bomberman 三罐、Aristocrat Spooky Link 三罐</p></div>
+  <div class="card gold"><h4>② 主題直接變成機制</h4><p style="font-size:13.5px">不是「一個主題＋通用機制」，而是故事本身在動：大野狼吹房子、精靈落下兌現金幣、瀑布沖下來讓獎金變大、火車撞出金幣。</p><p style="font-size:12.5px;color:var(--fg3)">例：Huff N' Puff 系列、Novomatic Wish of Riches、Zitro Lion Falls、Sega Sammy Railroad Riches</p></div>
+  <div class="card gold"><h4>③ 機台本身變成場景</h4><p style="font-size:13.5px">超大曲面螢幕、跟遊戲同步的燈條、整排機台串成一面 LED 牆一起演出。</p><p style="font-size:12.5px;color:var(--fg3)">例：L&amp;W Firebird（G2E 2026）、L&amp;W LightWave、Aruze Summit Reach（多台共用 9 呎 LED）、Ainsworth 65 吋 J 型曲面</p></div>
+</div>
+</section>
+
+<section id="s3" class="track-a">
+<h2><span class="n">3</span>場次一｜企劃規劃面</h2>
+<p>涵蓋：<b>規格與主題的適配度</b>、主期待點、特色遊戲包裝、強勢玩法、把演出需求寫進規格、<b>場景設計與氛圍營造</b>。</p>
+<div class="seg"><h3>1｜主題和機制怎麼結合</h3>
+<p><b>對應檢查點：</b>核心機制的運作邏輯呼應主題敘事　<b>我們的達成率：</b><span class="rate weak">36%</span></p>
+<p>這是我們「皮有主題、骨架沒主題」的落差所在：符號和 UI 有主題，但觸發邏輯和成長方式跟主題沒關係。看這幾款怎麼讓「故事本身就是機制」。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=_AxAnMrw_5M" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/_AxAnMrw_5M/hqdefault.jpg" alt="Huff N&#x27; Even More Puff Grand" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Huff N&#x27; Even More Puff Grand</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag ">經典延伸</span></div>
+<span class="cp">機制呼應主題</span><span class="cp">Bonus 敘事包裝</span>
+<div class="look"><b>看點：</b>三隻小豬的房子會升級（草屋→木屋→磚屋→豪宅），大野狼來吹房子＝觸發結算。房子等級就是獎金等級，玩家一看就懂。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=acgH6HSkivA" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/acgH6HSkivA/hqdefault.jpg" alt="Huff N&#x27; Triple Puff" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Huff N&#x27; Triple Puff</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">機制呼應主題</span><span class="cp">主期待點</span>
+<div class="look"><b>看點：</b>三個收集罐各對應一種「蓋房子的工具」：時鐘多送幾轉（Overtime）、電鑽讓盤面長到 6 列並鑽破封住的列（Jackhammer）、電鋸橫切盤面讓經過的房子直接升級（Buzzsaw）。工具和房子升級的故事完全對得上，是「主題直接變成機制」最好的例子。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=2PvXG85c7MU" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/2PvXG85c7MU/hqdefault.jpg" alt="Rakin&#x27; Bacon 新作展場導覽" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Rakin&#x27; Bacon 新作展場導覽</b>
+<div class="meta"><span class="tag">AGS</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">機制呼應主題</span><span class="cp">主期待點</span>
+<div class="look"><b>看點：</b>小豬撲滿＝收集罐，餵飽就爆開給獎。「存錢筒」這個主題和「累積再兌現」的機制完全對得上。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=tHRTrdcvrD8" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/tHRTrdcvrD8/hqdefault.jpg" alt="Railroad Riches" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Railroad Riches</b>
+<div class="meta"><span class="tag">Sega Sammy</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">機制呼應主題</span><span class="cp">觸發/結算客製</span>
+<div class="look"><b>看點：</b>火車進站撞出金幣、閘門開啟增加列數。注意「列數增加」是用軌道閘門包裝的，不是單純畫面變大。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>如果是我們的遊戲，三個收集罐可以對應主題裡的哪三樣東西？（參考 Huff N' Triple Puff 的時鐘、電鑽、電鋸）</div></div><div class="seg"><h3>2｜主期待點的設計：收集罐成為標配</h3>
+<p><b>對應檢查點：</b>玩法設計有明確的「主期待點」　<b>我們的達成率：</b><span class="rate strong">85%</span></p>
+<p>我們這項分數高，但要檢查的是：主期待點「玩家看不看得到」。這兩年各大廠的做法是把期待點常駐在畫面上（收集罐、撲滿、炸彈），每一局都在提醒玩家「快滿了」。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=yhtalwvIp0w" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/yhtalwvIp0w/hqdefault.jpg" alt="Bomberman Blast" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Bomberman Blast</b>
+<div class="meta"><span class="tag">Konami</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">主期待點</span><span class="cp">視覺演出幫助理解</span>
+<div class="look"><b>看點：</b>三顆炸彈罐分別對應不同強化，炸彈引線越燒越短＝越接近觸發。看罐子快滿時的提示演出。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=5q3Rlx01OZs" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/5q3Rlx01OZs/hqdefault.jpg" alt="Dragon Legacy" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Dragon Legacy</b>
+<div class="meta"><span class="tag">Ainsworth</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">主期待點</span><span class="cp">特殊或強勢玩法</span>
+<div class="look"><b>看點：</b>五個獨立收集罐各自通往不同獎勵（含紅包刮刮樂），玩家會同時盯著好幾個目標。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=8nI6jMOjKSc" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/8nI6jMOjKSc/hqdefault.jpg" alt="Mo&#x27; Mummy" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Mo&#x27; Mummy</b>
+<div class="meta"><span class="tag">Aristocrat</span><span class="tag ">經典延伸</span></div>
+<span class="cp">主期待點</span><span class="cp">記憶點</span>
+<div class="look"><b>看點：</b>Aristocrat 收集罐系列的代表作之一，2025 年再延伸出 Fo' Mo' Mummy。看角色化的罐子怎麼「活起來」。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>把我們一款主力遊戲截圖，畫面上有沒有任何東西在告訴玩家「再玩幾局可能有好事」？</div></div><div class="seg"><h3>3｜特色遊戲的故事包裝</h3>
+<p><b>對應檢查點：</b>Bonus/Feature 的敘事包裝讓玩家感覺是故事的展開　<b>我們的達成率：</b><span class="rate">—</span></p>
+<p>同樣是免費遊戲或 Hold & Spin，包裝成「故事的下一章」玩家感受完全不同。授權大作在這點特別值得看。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=gWCsGAJrLuc" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/gWCsGAJrLuc/hqdefault.jpg" alt="Monopoly Big Board Bucks" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Monopoly Big Board Bucks</b>
+<div class="meta"><span class="tag">Aristocrat</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">Bonus 敘事包裝</span><span class="cp">觸發/結算客製</span>
+<div class="look"><b>看點：</b>地產大亨的地產、骰子、經過起點領錢，全部變成特色遊戲的規則。玩家不用看說明就知道怎麼玩。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=jA6w42eqxIE" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/jA6w42eqxIE/hqdefault.jpg" alt="Willy Wonka Sweet Selection" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Willy Wonka Sweet Selection</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">Bonus 敘事包裝</span><span class="cp">UI/symbol 階層</span>
+<div class="look"><b>看點：</b>四個罐子＋「金鵝」Hold & Spin，五個特色都用電影裡的場景包裝（巧克力工廠、金券）。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們的特色遊戲轉場，有沒有交代「為什麼會進到這個獎勵」？還是只是換個背景？</div></div><div class="seg"><h3>4｜特殊或強勢玩法</h3>
+<p><b>對應檢查點：</b>特殊或強勢玩法　<b>我們的達成率：</b><span class="rate weak">6%</span></p>
+<p>我們最弱的一項。看這兩年的「強勢玩法」不是全新發明，而是把既有機制疊起來或串起來：獎勵裡還有獎勵、兩個特色同時觸發、系列作經典元素大集合。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=2BX92EBoMM8" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/2BX92EBoMM8/hqdefault.jpg" alt="Bull Blitz Rampage" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Bull Blitz Rampage</b>
+<div class="meta"><span class="tag">Konami</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">特殊或強勢玩法</span>
+<div class="look"><b>看點：</b>G2E 2026 主打的「巢狀獎勵」（獎勵裡面再開獎勵），看層層進入時玩家的期待怎麼一路往上推。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=SZygSKXA3PU" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/SZygSKXA3PU/hqdefault.jpg" alt="Lightning 10 Year Storm（官方影片）" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Lightning 10 Year Storm（官方影片）</b>
+<div class="meta"><span class="tag">Aristocrat</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">特殊或強勢玩法</span><span class="cp">記憶點</span>
+<div class="look"><b>看點：</b>Lightning Link 十週年作，把衍生作的元素組合在一起。學「系列化」怎麼做出強勢感。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們已有的機制（例如消除、Megaways、收集），有哪兩個可以疊在一起變成「我們的招牌玩法」？</div></div><div class="seg"><h3>5｜企劃怎麼把演出需求寫進規格</h3>
+<p><b>對應檢查點：</b>特色視覺演出讓玩家看懂機制／Near win/miss 有鋪陳／大獎張力和回饋成正比　<b>我們的達成率：</b><span class="rate weak">76%／—／39%</span></p>
+<p>這幾項看起來是美術的事，但「什麼時候演、演多大、差點中的時候要不要演」是企劃在規格書裡就要定義的。大獎張力那項只有 39%，問題常出在規格沒寫分級門檻。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=15jy9uANMR8" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/15jy9uANMR8/hqdefault.jpg" alt="Kong: Skull Island" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Kong: Skull Island</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag ">經典延伸</span></div>
+<span class="cp">大獎張力</span><span class="cp">Near win/miss 鋪陳</span>
+<div class="look"><b>看點：</b>倍數和轉盤的鋪陳：看轉盤減速、差一格停下時怎麼演，以及不同倍數的演出差異。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=ICDtD1mfMOY" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/ICDtD1mfMOY/hqdefault.jpg" alt="Huff N&#x27; Even More Puff 轉盤獎勵" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Huff N&#x27; Even More Puff 轉盤獎勵</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag ">經典延伸</span></div>
+<span class="cp">Near win/miss 鋪陳</span><span class="cp">大獎張力</span>
+<div class="look"><b>看點：</b>轉盤從開始到停下的節奏，以及停在不同格子的演出分級。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們規格書裡的大獎分級，是用「押注的幾倍」定義，還是只寫了 Big / Mega / Super 三個名字？</div></div><div class="seg"><h3>6｜場景設計與氛圍營造（補充章節，不列入評分）</h3>
+<p><b>對應檢查點：</b>（評分表沒有這一項）　<b>我們的達成率：</b><span class="rate">—</span></p>
+<p>實體機台用超大曲面螢幕、跟遊戲同步的燈條、整排機台串成 LED 牆來營造氛圍。<b>轉換到我們的手機遊戲</b>，對應的是：遊戲外框、背景的待機動態、大獎時的全螢幕演出、載入畫面、進入特色遊戲時的場景切換。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=vBd2u_KYyaQ" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/vBd2u_KYyaQ/hqdefault.jpg" alt="Inside G2E 2026 展場實況" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Inside G2E 2026 展場實況</b>
+<div class="meta"><span class="tag">—</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">氛圍營造</span>
+<div class="look"><b>看點：</b>整體展場氛圍，看各家攤位怎麼用機台群和燈光營造主題。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=AKceqxRRiYI" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/AKceqxRRiYI/hqdefault.jpg" alt="Light &amp; Wonder Supplier Showcase" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Light &amp; Wonder Supplier Showcase</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">氛圍營造</span>
+<div class="look"><b>看點：</b>L&W 攤位與新機台介紹，可對照 G2E 2026 的 Firebird 機台（火焰翅膀燈條＋3D 音效）。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=VlTrscjSZ0c" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/VlTrscjSZ0c/hqdefault.jpg" alt="Fantastic Dragons Fire" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Fantastic Dragons Fire</b>
+<div class="meta"><span class="tag">Aruze</span><span class="tag ">經典延伸</span></div>
+<span class="cp">氛圍營造</span><span class="cp">大獎張力</span>
+<div class="look"><b>看點：</b>Aruze 系列在 G2E 2025 推出 Reach 機台，把 LED 跟遊戲事件同步。看全螢幕寶珠時整台機器的演出。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=hNFB-KTx5EY" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/hNFB-KTx5EY/hqdefault.jpg" alt="G2E 2026 設計師訪談：The Wolfman" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">G2E 2026 設計師訪談：The Wolfman</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">氛圍營造</span><span class="cp">特殊主題</span>
+<div class="look"><b>看點：</b>L&W 設計師談經典恐怖片授權作的設計思路，適合當企劃場的收尾。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們的遊戲外框和背景，在「一般轉輪」「快觸發」「特色遊戲中」三種狀態，有沒有任何差異？</div></div>
+</section>
+
+<section id="s4">
+<h2><span class="n">4</span>場次二｜美術設計與動態效果面</h2>
+<p>涵蓋：UI 與符號層次、觸發結算的主題化、轉輪手感與節奏、大獎演出張力、音樂音效、特殊美術風格、細節巧思。</p>
+<div class="seg"><h3>1｜UI 與符號的層次感</h3>
+<p><b>對應檢查點：</b>UI、symbol 設計具階層感，且和世界觀呼應　<b>我們的達成率：</b><span class="rate strong">79%</span></p>
+<p>我們的強項，快速帶過。重點看高低階符號的差距是靠什麼拉開的：材質、外框、動態、尺寸。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=4XoLeJepUEY" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/4XoLeJepUEY/hqdefault.jpg" alt="Dragon Legacy（官方影片）" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Dragon Legacy（官方影片）</b>
+<div class="meta"><span class="tag">Ainsworth</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">UI/symbol 階層</span>
+<div class="look"><b>看點：</b>東方主題符號的高低階分層，五個收集罐的 UI 擺放與辨識度。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>拿我們一款遊戲的高階符號和低階符號並排，不看賠率，一眼分得出誰比較值錢嗎？</div></div><div class="seg"><h3>2｜觸發與結算的主題化</h3>
+<p><b>對應檢查點：</b>觸發/結算有客製化主題連結　<b>我們的達成率：</b><span class="rate">—</span></p>
+<p>觸發特色和結算獎金的那幾秒，是最能放主題的地方。授權作在這裡下最多工夫。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=ZEfv9vF1w6k" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/ZEfv9vF1w6k/hqdefault.jpg" alt="Wizard of Oz: I&#x27;ll Get You My Pretty" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Wizard of Oz: I&#x27;ll Get You My Pretty</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag ">經典延伸</span></div>
+<span class="cp">觸發/結算客製</span>
+<div class="look"><b>看點：</b>四個角色各自有專屬觸發演出。G2E 2026 又推出新的 Wizard of Oz 系列，可以對照看。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=2PvXG85c7MU" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/2PvXG85c7MU/hqdefault.jpg" alt="Rakin&#x27; Bacon 撲滿爆開" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Rakin&#x27; Bacon 撲滿爆開</b>
+<div class="meta"><span class="tag">AGS</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">觸發/結算客製</span><span class="cp">記憶點</span>
+<div class="look"><b>看點：</b>撲滿裝滿爆開的瞬間，是整款遊戲最有記憶點的畫面。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們的結算畫面如果換掉背景，玩家還認得出是哪一款遊戲嗎？</div></div><div class="seg"><h3>3｜轉輪手感與節奏</h3>
+<p><b>對應檢查點：</b>流程連貫且 spin 順暢（停輪節奏、連消節奏、掉落重力感、音效堆疊、跑分）　<b>我們的達成率：</b><span class="rate ">70%</span></p>
+<p>這段建議用<b>現場自己錄的影片逐格拆時間軸</b>，比 YouTube 影片準。量：按下到停輪幾秒、每輪停輪間隔、慢停延長幾秒、小獎跑分幾秒。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=SZygSKXA3PU" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/SZygSKXA3PU/hqdefault.jpg" alt="Lightning 10 Year Storm（官方影片）" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Lightning 10 Year Storm（官方影片）</b>
+<div class="meta"><span class="tag">Aristocrat</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">spin 順暢</span>
+<div class="look"><b>看點：</b>官方錄製、沒有玩家剪輯，最適合拿來量停輪與跑分的秒數。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=yhtalwvIp0w" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/yhtalwvIp0w/hqdefault.jpg" alt="Bomberman Blast" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Bomberman Blast</b>
+<div class="meta"><span class="tag">Konami</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">spin 順暢</span><span class="cp">音效堆疊</span>
+<div class="look"><b>看點：</b>炸彈落下、引線音效一輪一輪堆疊的節奏。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>用同一套量測方式量我們的遊戲，哪一段明顯比較慢或比較拖？</div></div><div class="seg"><h3>4｜大獎演出張力</h3>
+<p><b>對應檢查點：</b>大獎表演張力和回饋成正比，無誤導性演出　<b>我們的達成率：</b><span class="rate weak">39%</span></p>
+<p>我們偏弱的一項。看大獎演出是怎麼「一階一階」升上去的，以及演出長度跟獎金大小是不是對得上。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=3-BfFDwqd6Y" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/3-BfFDwqd6Y/hqdefault.jpg" alt="Monopoly Big Board Bucks 三罐同爆" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Monopoly Big Board Bucks 三罐同爆</b>
+<div class="meta"><span class="tag">Aristocrat</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">大獎張力</span>
+<div class="look"><b>看點：</b>三個收集罐同時觸發時的演出疊加，看層級怎麼區分。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=H3j_XV8is30" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/H3j_XV8is30/hqdefault.jpg" alt="Railroad Riches Major Jackpot" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Railroad Riches Major Jackpot</b>
+<div class="meta"><span class="tag">Sega Sammy</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">大獎張力</span><span class="cp">觸發/結算客製</span>
+<div class="look"><b>看點：</b>最後一轉三道閘門全開到 Major 彩金，看演出的推進節奏。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們小獎、中獎、大獎的演出長度各是幾秒？玩家會不會因為演出太長，反而覺得「贏不多還要等」？</div></div><div class="seg"><h3>5｜音樂音效</h3>
+<p><b>對應檢查點：</b>音樂音效呈現具沉浸感且適配　<b>我們的達成率：</b><span class="rate ">70%</span></p>
+<p>G2E 2026 L&W 的 Firebird 機台主打 3D 音效，Bluberi 的機台也做聲光同步。看音效怎麼跟主題風格和演出節奏綁在一起。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=HybUQzQq2pY" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/HybUQzQq2pY/hqdefault.jpg" alt="Sir Mix-A-Lot 世界首發" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Sir Mix-A-Lot 世界首發</b>
+<div class="meta"><span class="tag">Bluberi</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">音樂音效</span><span class="cp">特殊主題</span>
+<div class="look"><b>看點：</b>整款遊戲用嘻哈音樂撐起風格，音樂就是主題本身。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>把我們的遊戲關掉畫面只聽聲音，聽得出是什麼主題嗎？</div></div><div class="seg"><h3>6｜特殊主題與美術風格</h3>
+<p><b>對應檢查點：</b>特殊主題、美術風格　<b>我們的達成率：</b><span class="rate weak">21%</span></p>
+<p>我們第二弱的一項。這兩年少見但辨識度很高的方向：黑白電影風格（Gaming Arts Showtime Hollywood，G2E 2026）、90 年代嘻哈、經典恐怖片授權（Creature from the Black Lagoon、Wolf Man、Gremlins，G2E 2026）。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=IqwLjuXpQfY" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/IqwLjuXpQfY/hqdefault.jpg" alt="Sir Mix-A-Lot：90 年代復古風" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Sir Mix-A-Lot：90 年代復古風</b>
+<div class="meta"><span class="tag">Bluberi</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">特殊主題</span>
+<div class="look"><b>看點：</b>整體美術走 90 年代嘻哈復古風，跟一般 slot 的金光閃閃完全不同。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=hNFB-KTx5EY" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/hNFB-KTx5EY/hqdefault.jpg" alt="The Wolfman 設計師訪談" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">The Wolfman 設計師訪談</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr26">G2E 2026</span></div>
+<span class="cp">特殊主題</span>
+<div class="look"><b>看點：</b>經典恐怖片授權怎麼轉成 slot 美術。</div></div></div><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=jA6w42eqxIE" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/jA6w42eqxIE/hqdefault.jpg" alt="Willy Wonka Sweet Selection" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Willy Wonka Sweet Selection</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">特殊主題</span><span class="cp">UI/symbol 階層</span>
+<div class="look"><b>看點：</b>糖果奇幻風，但用電影的色調和道具做出跟一般糖果主題的差異。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>我們現有的主題清單裡，哪一個可以用「不一樣的畫風」重新做一次？</div></div><div class="seg"><h3>7｜細節巧思與彩蛋</h3>
+<p><b>對應檢查點：</b>有至少 1 處提升體驗的細節設計／彩蛋／巧思　<b>我們的達成率：</b><span class="rate weak">24%</span></p>
+<p>我們第三弱的一項。這段請每位去過的同仁各帶 1 個「現場讓我會心一笑」的小細節（自己的照片或影片優先）。</p>
+<div class="cases"><div class="case">
+<a class="thumb" href="https://www.youtube.com/watch?v=FyYoPXU5ARc" target="_blank" rel="noopener">
+<span class="ph">點擊開啟 YouTube 影片</span>
+<img src="https://i.ytimg.com/vi/FyYoPXU5ARc/hqdefault.jpg" alt="Huff N&#x27; Puff More Money Mansion" loading="lazy" onerror="this.style.display='none'">
+<span class="play">▶</span></a>
+<div class="bd"><b class="nm">Huff N&#x27; Puff More Money Mansion</b>
+<div class="meta"><span class="tag">Light &amp; Wonder</span><span class="tag yr25">G2E 2025</span></div>
+<span class="cp">記憶點</span><span class="cp">細節巧思</span>
+<div class="look"><b>看點：</b>神秘白色豪宅、小大野狼（Little Bad Wolf）這類系列作才有的小驚喜，老玩家會特別有感。</div></div></div></div>
+<div class="disc"><b>💬 討論題：</b>每個人說一個「我們可以花一天就加上去」的小細節。</div></div>
+</section>
+
+<section id="s5">
+<h2><span class="n">5</span>現場練習：用評分表評一次</h2>
+<p>每人挑<b>一款 G2E 機台</b>（上面任一案例或自己現場看到的）和<b>一款我們的遊戲</b>，用 13 項各評一次。重點不是分數，是最後一欄「差在哪、我們可以怎麼做」。</p>
+<div class="tw"><table><thead><tr><th>#</th><th>檢查點</th><th class="num">G2E 機台（0/1）</th><th class="num">我們的遊戲（0/1）</th><th>差在哪、我們可以怎麼做</th></tr></thead><tbody><tr><td>1</td><td>核心機制呼應主題</td><td></td><td></td><td></td></tr><tr><td>2</td><td>UI、symbol 階層與世界觀</td><td></td><td></td><td></td></tr><tr><td>3</td><td>明確的主期待點</td><td></td><td></td><td></td></tr><tr><td>4</td><td>Bonus 像故事展開</td><td></td><td></td><td></td></tr><tr><td>5</td><td>看畫面就懂機制</td><td></td><td></td><td></td></tr><tr><td>6</td><td>Near win/miss 鋪陳</td><td></td><td></td><td></td></tr><tr><td>7</td><td>觸發/結算主題連結</td><td></td><td></td><td></td></tr><tr><td>8</td><td>流程連貫、spin 順暢</td><td></td><td></td><td></td></tr><tr><td>9</td><td>大獎張力與回饋成正比</td><td></td><td></td><td></td></tr><tr><td>10</td><td>音樂音效沉浸感</td><td></td><td></td><td></td></tr><tr><td>11</td><td>細節設計／彩蛋</td><td></td><td></td><td></td></tr><tr><td>12</td><td>特殊或強勢玩法</td><td></td><td></td><td></td></tr><tr><td>13</td><td>特殊主題、美術風格</td><td></td><td></td><td></td></tr><tr><td></td><td><b>合計（滿分 13）</b></td><td></td><td></td><td style="color:var(--fg3)">精品 ≥11／標準 6–10／優化預備役 1–5</td></tr></tbody></table></div>
+<div class="note g"><b>✅ 練習完要做的事</b><br>大家的分數攤開比對：同一款遊戲，企劃和美術的評分差最多的是哪幾項？那幾項就是我們對 Sense 還沒有共同認知的地方，下次分享優先處理。</div>
+</section>
+
+<section id="s6">
+<h2><span class="n">6</span>準備事項</h2>
+<ul class="chk">
+<li class="hot"><b>每段案例影片先看過一次</b>，標出要播放的時間點（例如「3:20 開始看觸發」），避免現場拉進度條。</li>
+<li class="hot"><b>用現場自己拍的影片替換</b>：有拍到同款或類似機台的，優先換成自己的。</li>
+<li>場次二第 3 段（轉輪手感）需要<b>逐格看時間軸</b>，請美術先拆好 1–2 段。</li>
+<li>場次二第 7 段（細節巧思）請每位去過的同仁<b>各帶 1 個</b>小細節。</li>
+<li>收尾練習表印出或做成線上表單，每人一份。</li>
+</ul>
+</section>
+
+<footer>Sense 教育訓練｜G2E Las Vegas 遊戲演出分享 v1.0 · 2026-10-19 · 評分基準：《Slot Game 產品發展規劃》精品評級表<br>
+案例資料參考：<a href="https://sccgmanagement.com/sccg-articles/2026/10/17/g2e-2026-slot-preview-details-new-cabinets-and-collection-pot-features-from-key-suppliers/" target="_blank">SCCG G2E 2026 Slot Preview</a>、<a href="https://ggbmagazine.com/articles/slot-parade-at-g2e-2025/" target="_blank">GGB Slot Parade at G2E 2025</a>、<a href="https://tgandh.com/news/light-wonder-puts-iconic-brands-and-powerhouse-franchises-center-stage-at-g2e-2026/" target="_blank">TG&amp;H L&amp;W at G2E 2026</a>、<a href="https://g3newswire.com/konamis-g2e-showing-sees-major-launches-like-bull-blitz-rampage-and-dragons-law-super-fortune/" target="_blank">G3 Konami at G2E 2026</a>；影片版權屬原上傳者。</footer>
+</main></div>
+<script>
+(function(){
+  var b=document.getElementById('tt');
+  var s=null; try{s=localStorage.getItem('g2e-sense-theme')}catch(e){}
+  if(s){document.documentElement.setAttribute('data-theme',s)}
+  b.addEventListener('click',function(){
+    var c=document.documentElement.getAttribute('data-theme');
+    var n;
+    if(c){ n = c==='dark' ? 'light' : 'dark'; }
+    else { n = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'; }
+    document.documentElement.setAttribute('data-theme',n);
+    try{localStorage.setItem('g2e-sense-theme',n)}catch(e){}
+  });
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  function up(){
+    var y=window.scrollY+120, cur=links[0];
+    secs.forEach(function(sc,i){ if(sc.offsetTop<=y) cur=links[i]; });
+    links.forEach(function(a){a.classList.toggle('active',a===cur)});
+  }
+  window.addEventListener('scroll',up,{passive:true}); up();
+})();
+</script>
+</body>
+</html>
