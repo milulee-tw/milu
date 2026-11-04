@@ -291,7 +291,7 @@
 <div class="info-card" style="border-color:var(--red-line-strong);">
 <div class="info-card-icon">🗂️</div>
 <div class="info-card-title">⑤ FS 逐局注單過濾 ＋ 歷程 API 統一輸出  </div>
-<div class="info-card-desc">FS 卡的每一局以「免費轉注單狀態」<strong>寫在注單表</strong>（見 09-A 注單機制），<strong>一般注單檢視與報表須濾掉這個狀態</strong>；同時<strong>遊戲歷程 API 須調整為「同一份資料輸出」</strong>——一般注單與 FS 歷程<strong>吃同一份來源</strong>，不得兩處各自維護。<br/><strong>沒先做會卡什麼：</strong><a href="free_spin_spec_V2.0.html#sec-04-A">04 玩家端遊戲歷程</a> 的四層畫面<strong>全部沒有資料可撈</strong>，玩家與客服都查不到 FS 的任何一局；兩處各自維護則必然出現「背包顯示的 score 與歷程列出的局加總對不起來」的對帳爭議。<br/><strong>連動範圍：</strong>此項同時連動 RTP 判斷、對帳與活動數據統計，<strong>不宜與 CRM 功能開發搶同一批後端人力</strong>。</div>
+<div class="info-card-desc">FS 卡的每一局以「免費轉注單狀態」<strong>寫在注單表</strong>（見 09-A 注單機制），<strong>一般注單檢視與報表須濾掉這個狀態</strong>；後台投注資料查詢的注單類型「一般注單」不得出現任何 FS 卡注單（逐局與結算皆不出現），結算注單歸「寶箱免費卡」；同時<strong>遊戲歷程 API 須調整為「同一份資料輸出」</strong>——一般注單與 FS 歷程<strong>吃同一份來源</strong>，不得兩處各自維護。<br/><strong>沒先做會卡什麼：</strong><a href="free_spin_spec_V2.0.html#sec-04-A">04 玩家端遊戲歷程</a> 的四層畫面<strong>全部沒有資料可撈</strong>，玩家與客服都查不到 FS 的任何一局；兩處各自維護則必然出現「背包顯示的 score 與歷程列出的局加總對不起來」的對帳爭議。<br/><strong>連動範圍：</strong>此項同時連動 RTP 判斷、對帳與活動數據統計，<strong>不宜與 CRM 功能開發搶同一批後端人力</strong>。</div>
 </div>
 </div>
 
@@ -380,7 +380,7 @@
 <div class="sub-title">寶箱免費旋轉卡的注單機制</div>
 <div class="body-text">以免費轉 10 次為例：一共會有 <strong>10 張 <span class="mono">main_game</span> 注單</strong>（暫存每次免費轉的結果），結算時再多 <strong>1 張</strong>（寫真正的結果），<strong>共 11 張</strong>（以 combo 模式、或 awc 模式但沒轉到 <span class="mono">free_game</span> 為例；awc 每轉到一次 <span class="mono">free_game</span> 就多拆 1 張）。</div>
 <ul class="rd-list">
-<li>每轉 1 次 → 寫 1 張 <span class="mono">main_game</span> 注單，暫存這一轉的結果；這些逐局注單停在「免費轉注單狀態」，<strong>一般注單檢視與營收報表一律濾掉</strong>，玩家與營運在一般注單只看得到結算那一筆，逐局內容由「活動 › FREE SPIN 卡」歷程呈現</li>
+<li>每轉 1 次 → 寫 1 張 <span class="mono">main_game</span> 注單，暫存這一轉的結果；這些逐局注單停在「免費轉注單狀態」，<strong>一般注單檢視與營收報表一律濾掉</strong>，玩家在一般注單只看得到結算那一筆；後台投注資料查詢中結算那一筆的注單類型為「寶箱免費卡」（選「一般注單」查不到，選「全部」查得到），逐局內容由「活動 › FREE SPIN 卡」歷程呈現</li>
 <li>若這一轉有轉到 <span class="mono">free_game</span>：<strong>awc</strong> 要拆成 <span class="mono">main_game</span>、<span class="mono">free_game</span> 兩張單；<strong>combo</strong> 仍合在同一張單</li>
 <li><strong>下注次數未達最大次數</strong> → <span class="mono">order_state</span> 改成新狀態「免費轉注單狀態」，<strong>掛在這個狀態就不會被結算</strong>，繼續轉下一次</li>
 <li><strong>已達最大次數</strong>、<strong>卡片到期</strong>或<strong>玩家封頂後按 SETTLE NOW</strong> → 才真正寫結算注單（多 1 張）</li>
@@ -463,7 +463,7 @@
 <tr><td class="mono">H3</td><td>遊戲端</td><td>新增卡片清單層（L3）：以 <span class="mono">reference_id</span> 為分組主鍵，可展開；含日期篩選器</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H4</td><td>遊戲端</td><td>局歷程列表（L4）沿用既有注單列表元件，欄位口徑依本章調整</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H5</td><td>遊戲端</td><td>盤面頁（L5）沿用既有元件，僅置換頂部 Balance 區塊為 <span class="mono">reference_id</span>、調整 Bet／Win 顯示口徑</td><td class="dim">遊戲前端</td></tr>
-<tr><td class="mono">H6</td><td><strong>基礎建設</strong></td><td>FS 逐局注單（免費轉注單狀態）在一般注單檢視濾掉 ＋ 歷程 API 統一輸出（同一份注單資料同時餵一般注單與 FS 歷程，避免兩處各自維護）</td><td class="dim">後端</td></tr>
+<tr><td class="mono">H6</td><td><strong>基礎建設</strong></td><td>FS 逐局注單（免費轉注單狀態）在一般注單檢視濾掉；後台注單類型「一般注單」不出現任何 FS 卡注單、結算注單歸「寶箱免費卡」 ＋ 歷程 API 統一輸出（同一份注單資料同時餵一般注單與 FS 歷程，避免兩處各自維護）</td><td class="dim">後端</td></tr>
 <tr><td class="mono">H7</td><td>數據</td><td>確認 FS 局的 bet／win <strong>不計入單一遊戲收入</strong>的統計口徑（避免遊戲營收被卡片面額灌水）</td><td class="dim">數據組</td></tr>
 </tbody>
 </table>
@@ -705,7 +705,7 @@
 <tr><td class="mono">H-12</td><td>日期篩選器選一個起訖區間</td><td>L3 列出有效期間與區間有重疊的卡；<strong>展開後仍顯示該卡全部局</strong>（不被日期裁切）</td></tr>
 <tr><td class="mono">H-13</td><td>日期篩選器選一個沒有任何卡符合的區間</td><td>顯示「該期間無使用紀錄」，非空白畫面</td></tr>
 <tr><td class="mono">H-14</td><td>複製 <span class="mono">reference_id</span></td><td>取得的是<strong>完整值</strong>（非畫面上的短碼），與背包卡片明細的卡號一致</td></tr>
-<tr><td class="mono">H-15</td><td>與一般注單交叉比對</td><td>FS 的每一局<strong>不出現在一般注單檢視</strong>（逐局注單停在免費轉注單狀態、被濾掉）；一般注單只有結算那一筆，金額與 L3 的 SETTLEMENT 一致</td></tr>
+<tr><td class="mono">H-15</td><td>與一般注單交叉比對</td><td>FS 的每一局<strong>不出現在一般注單檢視</strong>（逐局注單停在免費轉注單狀態、被濾掉）；玩家端一般注單只有結算那一筆，金額與 L3 的 SETTLEMENT 一致。後台投注資料查詢：選「一般注單」查不到任何 FS 卡注單；選「寶箱免費卡」只查得到結算那一筆、金額同上</td></tr>
 </tbody>
 </table><div class="sub-title">跨模組驗收與上線前必過檢查清單</div><div class="callout success"><strong>怎麼用這一章</strong>：QA 與企劃可以<strong>照表逐項驗</strong>。本章只放「涉及兩頁以上、或跨系統結算」的整體情境；單靠一頁就能驗的情境已放進各頁面章（01-A 發放卡列表／01-B 建卡與複製表單／02 玩家端背包）。</div>
 <div class="sub-title">跨頁驗收情境</div>
@@ -753,8 +753,8 @@
 <tr><td class="mono">8</td><td>遊戲數量上限（8 款）</td><td class="dim">後台選滿 8 款後，<strong>第 9 款起選項押灰不可點</strong>（計數顯示 8 / 8），不會把超量的清單送出去</td></tr>
 <tr><td class="mono">9</td><td>指定啟用</td><td class="dim">同一款遊戲持兩張卡，從甲卡進場<strong>只扣甲卡</strong>；續玩仍是甲卡、<strong>不開新卡</strong></td></tr>
 <tr><td class="mono">10</td><td>有效期換算</td><td class="dim">卡模板 N=7、發卡日為第 1 天 → 到期時間為<strong>第 7 天 23:59:59（GMT+8）</strong>；發卡當下換算成絕對時間再對外通知</td></tr>
-<tr><td class="mono">11</td><td>FS 歷程分類</td><td class="dim">用卡玩數局後查注單：每局 FREE SPIN 歷程<strong>不出現在一般注單檢視</strong>（逐局注單停在免費轉注單狀態、被濾掉），出現在「<strong>活動 › FREE SPIN 卡</strong>」分類，且每局贏分只累加在 score</td></tr>
-<tr><td class="mono">12</td><td>結算注單入帳</td><td class="dim">結算後查一般注單與 Balance：一般注單<strong>多一筆「下注 0／派彩 final」</strong>、Balance 增加金額＝<strong>min(score, max_bonus)</strong>，且與平台／集成商的資產同步一致</td></tr>
+<tr><td class="mono">11</td><td>FS 歷程分類</td><td class="dim">用卡玩數局後查注單：每局 FREE SPIN 歷程<strong>不出現在一般注單檢視</strong>（逐局注單停在免費轉注單狀態、被濾掉），出現在「<strong>活動 › FREE SPIN 卡</strong>」分類，且每局贏分只累加在 score；後台投注資料查詢選「一般注單」查不到任何 FS 卡注單</td></tr>
+<tr><td class="mono">12</td><td>結算注單入帳</td><td class="dim">結算後查注單與 Balance：玩家端一般注單<strong>多一筆「下注 0／派彩 final」</strong>；後台投注資料查詢選「<strong>寶箱免費卡</strong>」查得到這一筆（選「一般注單」查不到、選「全部」查得到）、Balance 增加金額＝<strong>min(score, max_bonus)</strong>，且與平台／集成商的資產同步一致</td></tr>
 </tbody>
 </table>
 </section>

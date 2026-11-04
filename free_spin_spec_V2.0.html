@@ -317,6 +317,7 @@
 <tr><td><strong>發放卡</strong></td><td>營運在後台建立的「卡片款式」。一張發放卡可以被多檔抽寶箱活動選用，每位中獎玩家各拿到一張自己的 FREE SPIN 卡。發放卡名稱只給營運看，玩家看不到。</td></tr>
 <tr><td><strong>獎勵道具 ID</strong></td><td>發放卡的編號，格式 <span class="mono">RWD_FS_xxxx</span>。按「建立發放卡」並確認後才產生。</td></tr>
 <tr><td><strong>卡序號</strong>（Card No.）</td><td>每一張發到玩家手上的卡各自的唯一編號，格式 <span class="mono">RWD_FS_{發放卡編號}_{隨機碼}</span>，例：RWD_FS_1016_KQJE1KKCV2。客服查單、玩家回報問題時用它對照。</td></tr>
+<tr><td><strong>注單類型</strong></td><td>後台「投注資料查詢」的篩選條件，共四種：<b>一般注單</b>（玩家自己押注的局）、<b>AWC 免費卡</b>（集成商發放的免費旋轉）、<b>寶箱現金</b>（抽寶箱現金獎）、<b>寶箱免費卡</b>（FREE SPIN 卡的結算注單）。FREE SPIN 卡的注單不會出現在「一般注單」。</td></tr>
 <tr><td><strong>活動 ID</strong></td><td>這張卡是哪一檔抽寶箱活動發出的，對帳與追查來源用。玩家端不顯示。</td></tr>
 <tr><td><strong>星級</strong>（1★–5★）</td><td>卡片的價值等級，也就是押注階段。星級越高，每轉押注越大；卡面材質也跟著變（銅、銀、金、白金、彩鑽）。</td></tr>
 <tr><td><strong>每轉押注</strong>（Bet Amount）</td><td>這張卡每轉一次的固定押注金額。營運在「道具基礎值」依幣別、星級填寫；玩家不能調整。</td></tr>
@@ -357,7 +358,7 @@
 </div></div>
 <div class="sub-title">畫面導覽</div>
 <div class="shot-frame"><img alt="畫面導覽流程圖" src="design_assets/fs_v200/fs_art_01_flow.png"/><div class="shot-cap">從打開背包到進入遊戲、開始免費旋轉的路徑。實線是正常路徑；虛線與紅色路徑分別是取消與到期。點圖放大。</div></div>
-<div class="callout info"><strong>玩家在哪裡查得到</strong>：免費局的每一局不會出現在一般注單裡，只在「遊戲歷程 › 活動 › FREE SPIN 卡」查得到；一般注單只會看到最後結算的那一筆。結算金額不算進該款遊戲的營收。</div>
+<div class="callout info"><strong>玩家在哪裡查得到</strong>：免費局的每一局不會出現在玩家的一般注單裡，只在「遊戲歷程 › 活動 › FREE SPIN 卡」查得到；玩家的一般注單只會看到最後結算的那一筆。結算金額不算進該款遊戲的營收。<br/><strong>營運在後台怎麼查</strong>：後台「投注資料查詢」的「注單類型」選<b>一般注單</b>時，<b>不會出現任何 FREE SPIN 卡注單</b>；要選<b>寶箱免費卡</b>才查得到，列出的是每張卡最後結算的那一筆。注單類型選「全部」時，結算注單也會出現。</div>
 
 </section>
 <section class="section" id="pagemap"><span id="sec-00-C"></span><div class="section-head"><span class="section-num">03</span><h2>頁面地圖</h2></div><p class="section-dek">這個功能用到哪些畫面、誰在用、在本文件哪一頁。</p>
@@ -391,7 +392,7 @@
 <tr><td><strong>到期時人在遊戲中</strong></td><td>手上那一局照常玩完，結束後直接結算，不再開新局。</td></tr>
 <tr><td><strong>到期時人不在遊戲中</strong></td><td>到期後 15 分鐘內完成結算入帳；玩家下次打開背包在「已過期」分頁看到結算金額。</td></tr>
 <tr><td><strong>從未使用就到期</strong></td><td>不結算，卡片轉入「已過期」。只要轉過至少一次，就算贏分是 0 也照常結算（金額顯示 0）。</td></tr>
-<tr><td><strong>入帳方式</strong></td><td>主錢包真金，沒有流水、沒有提領限制。一般注單只出現結算那一筆，不算進該款遊戲的營收。</td></tr>
+<tr><td><strong>入帳方式</strong></td><td>主錢包真金，沒有流水、沒有提領限制。每張卡只產生一筆結算注單，不算進該款遊戲的營收。玩家的一般注單只看得到這一筆；後台投注資料查詢中，這筆注單的注單類型是<b>寶箱免費卡</b>（選「一般注單」查不到）。</td></tr>
 <tr><td><strong>入帳失敗</strong></td><td>系統自動重試直到成功，不會重複入帳；玩家暫時看不到結算結果，但卡片與累積獎金都還在。</td></tr>
 <tr><td><strong>防止多發</strong></td><td>結算上限由系統強制套用，任何情況下入帳都不超過上限。</td></tr>
 </tbody></table></div>
@@ -845,7 +846,7 @@
 <div><div class="rd-label">限制與規則</div><ul class="rd-list">
 <li><strong>顯示條件（三個同時成立才顯示）</strong>：① <span class="mono">累積贏分 ≥ 結算上限</span>（已達上限封頂）② 卡片仍有<strong>剩餘次數</strong> ③ 卡片<strong>未過期</strong>。<strong>未封頂一律不顯示</strong>（不是灰化，是整個按鈕不存在）</li>
 <li><strong>行為</strong>：點擊 → 跳<strong>二次確認彈窗</strong>「已達最大獎金上限。提前結算將放棄剩餘 {n} 次免費旋轉，獎金 {amount} 立即入帳。」</li>
-<li><strong>確認</strong> → 觸發結算：金額＝結算上限，走 <a href="#sec-00-B">運作流程</a>（bet=0 的結算注單入<strong>一般注單與 Balance</strong>）</li>
+<li><strong>確認</strong> → 觸發結算：金額＝結算上限，走 <a href="#sec-00-B">運作流程</a>（以一筆「下注 0／派彩」的結算注單入帳、Balance 同時增加；後台注單類型為<strong>寶箱免費卡</strong>）</li>
 <li>結算後<strong>先顯示 COMPLETED 完成畫面</strong>（見下方截圖），玩家按 <strong>CONFIRM</strong> 才關窗，此時<strong>卡片轉入「已過期」分頁</strong>，顯示結算獎金與最終已用次數——<strong>與到期結算走同一條路徑，不新增任何狀態</strong></li>
 <li><strong>取消</strong> → 關閉彈窗，一切不變（不扣次、不結算、卡片留在原分頁）</li>
 <li><strong>後果說明</strong>（放棄的剩餘局數與入帳金額）放在<strong>二次確認彈窗</strong>內（見 <a href="#sec-02-D">提前結算</a> 結算確認彈窗 #4），按鈕下方不另加提示文字</li>
@@ -1869,7 +1870,7 @@
 <div class="revlog-title">📌 修改紀錄 · REVISION LOG</div>
 <table>
 <thead><tr><th style="width:110px;">修改日期</th><th style="width:96px;">版號</th><th style="width:160px;">修改章節</th><th>修改摘要</th></tr></thead>
-<tbody><tr class="hl-row"><td>2026-11-04</td><td><strong>V2.0</strong></td><td>全文</td><td>改為分頁版型（參考排行榜規格書）：首頁＋總覽／名詞與規則／後台發放卡／玩家背包／遊戲內與結算／遊戲歷程／事件紀錄／文案／修改紀錄。①新增 Story（玩家／系統／營運人員）；②本文件只寫功能需求，<b>串接方式、系統狀態值、注單機制、開發前置條件、QA 驗收情境、待確認事項、待補追蹤</b>移到〈開發附錄〉；③各模組的錯誤處理改為各分頁的「異常狀態」；④美術需求拆進各畫面分頁；⑤內文的欄位名改為白話名詞（對照見名詞定義）；⑥移除內文的版本標記（歷史版本見本表）；⑦圖片改放 design_assets/fs_v200/。功能規則以 V1.23 為準，內容語義不變。</td></tr>
+<tbody><tr class="hl-row"><td>2026-11-04</td><td><strong>V2.0 修訂</strong></td><td>名詞與規則（名詞定義、運作流程、卡片規則）／玩家背包 Ⓓ／開發附錄 A1、A2、A4、A5</td><td>依實際後台修正注單歸類：後台「投注資料查詢」注單類型選<b>一般注單</b>時不會出現任何 FREE SPIN 卡注單；FS 卡結算注單的注單類型為<b>寶箱免費卡</b>（只列每張卡結算那一筆），選「全部」時也會出現。名詞定義新增「注單類型」。玩家端一般注單只看得到結算那一筆的規則不變。</td></tr><tr><td>2026-11-04</td><td><strong>V2.0</strong></td><td>全文</td><td>改為分頁版型（參考排行榜規格書）：首頁＋總覽／名詞與規則／後台發放卡／玩家背包／遊戲內與結算／遊戲歷程／事件紀錄／文案／修改紀錄。①新增 Story（玩家／系統／營運人員）；②本文件只寫功能需求，<b>串接方式、系統狀態值、注單機制、開發前置條件、QA 驗收情境、待確認事項、待補追蹤</b>移到〈開發附錄〉；③各模組的錯誤處理改為各分頁的「異常狀態」；④美術需求拆進各畫面分頁；⑤內文的欄位名改為白話名詞（對照見名詞定義）；⑥移除內文的版本標記（歷史版本見本表）；⑦圖片改放 design_assets/fs_v200/。功能規則以 V1.23 為準，內容語義不變。</td></tr>
 <tr><td>2026-10-28～11-02</td><td><strong>DEV V1.23</strong></td><td>02／03／04／05／09 多處</td><td>依實機與 QA 回饋修訂 29 項，重點：①封頂標籤改「Max」、累積獎金標籤改「Current Wins/Total Wins」；②移除玩家分群與黑名單（屬抽寶箱設定）；③多國語系表與畫面同步（背包標題與分頁維持英文、補 ru 欄與缺漏 key）；④「即將到期」可使用、「待啟動」唯讀；⑤FS 模式 AUTO 鎖定；遊戲自身 FREE GAME 期間 FREE SPIN 暫停、不顯示剩餘局數，FREE GAME 贏分仍計入；⑥移除 COMING SOON 分頁與橫式舊版面描述；已過期卡直式不可展開、橫式唯讀；⑦已發卡不補發新卡；⑧卡序號格式改為 RWD_FS_{發放卡編號}_{隨機碼}、發放卡編號 RWD_FS_xxxx；⑨MAX 徽章改紅底實心；⑩CRM icon 顯示條件改為「有任一 CRM 功能可用就顯示」；⑪進場彈窗補 Maximum Payout Amount、結算彈窗按鈕為 CONFIRM 並顯示卡序號；⑫大金額完整顯示不縮寫；⑬遊戲中跨過到期時間：該局結束後直接結算；結算為 0 照常寫結算紀錄；結算紀錄不算進遊戲營收；⑭歷程 L4 移除結算收尾列；⑮CRM 選單 History 項目本版不上線；⑯15 張線框換成 Figma 新版。</td></tr>
 <tr><td>2026-10-16</td><td><strong>DEV V1.22</strong></td><td>02-C（刪除）／02-D／04-C／全文截圖</td><td><strong>整合 Shaun 整理版（FS_DEV_V1.21）：</strong><strong>①刪除 02-C「選卡與進入遊戲（橫式版面）」整節</strong>——含側邊欄連結與橫式選取對照圖（fs_art_06），02-D 兩處指向「橫式選取前後對照」的說明一併移除。<strong>②04-C 遊戲歷程 FS 卡清單 Ⓑ 改版</strong>——由「一張卡一列」改為直向堆疊的卡片區塊：標頭列＝卡名＋狀態徽章＋展開 chevron，明細區＝CARD ID／VALID PERIOD／USED / TOTAL／TOTAL WIN／SETTLEMENT；補註 CARD ID 一律顯示 reference_id、截圖「RWD…」僅為示意。<strong>③04-C Ⓒ 日期篩選改為起訖區間</strong>——預設近 7 天（含今天），只列區間內有使用紀錄的卡；移除「清除篩選」；開始日不可晚於結束日。<strong>④文件內跳轉</strong>——側邊欄、內文連結與區域表標題（data-goto）點擊後跳到對應段落並短暫標示外框。<strong>⑤截圖更新</strong>——31 張 FS 卡截圖改放 <span class="mono">design_assets/fs_v200/</span>（遊戲歷程改為實機截圖、背包卡名改為「{N}★ FREE SPIN」），舊版文件引用的 design_assets 原圖不動。</td></tr>
 <tr><td>2026-10-14</td><td><strong>DEV V1.21</strong></td><td>00-C／01-A／01-B／01-C／01-D／01-T／09-A／09-B／09-E／09-G／09-I</td><td><strong>依 QA 測試結果（Testing Hub 回報 6 項）與企劃拍板修正後台建卡規格：</strong><strong>①建卡後整張卡不可修改</strong>——列表操作欄改為「複製・刪除」，移除「修改／編輯」與編輯模式（含「儲存」鈕、編輯模式表單頂部顯示 reward_id 的做法）；01-B 改名「建卡與複製表單」。<strong>②新增「複製」</strong>：預填原卡星級、可玩遊戲、次數、封頂倍數、有效期，全部可改；名稱清空必填；各幣值押注依目前的道具基礎值；建立時產生新的 reward_id。01-A Ⓓ 補「調整既有卡」四步順序（複製→建立→活動改引用→舊卡無未結束引用後手動刪除）。<strong>③道具基礎值只影響之後新建（含複製）的卡</strong>——每張卡建卡當下就存下各幣值押注；01-D、09-A、09-B #6 同步。<strong>④次數與封頂倍數不在基礎值</strong>（QA 疑問三選 C）：維持逐卡填寫、兩欄無預設值，刪除 01-C「可逐段調整、預設 10 次 ×10」，01-C 範例表的次數、face_value、max_bonus 改標為示意值。<strong>⑤數值合法範圍</strong>：次數＝大於 0 的整數；封頂倍數 ≥ 1、最多 1 位小數、無上限；max_bonus 最多保留到小數點後 2 位；不合法時欄位下方顯示原因並擋下，不開確認視窗；倍數 ≥ 1 時上限一定不低於票面，<strong>刪除「結算上限低於票面價值跳警示」</strong>（01-B、01-D、09-I）。<strong>⑥確認視窗摘要</strong>改為星級／免費旋轉次數／有效期／封頂倍數／遊戲數，<strong>不列各幣值上限金額</strong>（幣值太多、視窗放不下）。<strong>⑦選單與頁名對齊現行後台</strong>：線路管理／遊戲管理／模板管理／CRM活動（活動管理、抽寶箱模板管理、FREE SPIN卡、活動審查）／資料查詢；頁名「FREE SPIN卡／FREE SPIN Cards」。<strong>⑧刪除兩條無法發生的防呆</strong>：01-D 必填清單拿掉「各幣值押注」（基礎值不允許空值）；01-T 刪除「二次確認時發現缺漏」（必填與數值不合法在表單就擋下）。01-T 驗收新增 5 條（建卡後不可修改／複製發放卡／封頂倍數合法範圍／次數合法範圍／確認視窗摘要），快照凍結情境改寫。<strong>⑨多國語系</strong>：09-I 後台文案新增複製、兩句防呆、確認摘要，替換選單與頁名；新增〈玩家端錯誤文案 · 多國語系（14 語系）〉，補齊 V1.19 錯誤文案其餘 12 語系，09-G 表加 key 欄，<strong>關閉待確認 ⑬</strong>。</td></tr>
