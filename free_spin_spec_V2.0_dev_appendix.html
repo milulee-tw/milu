@@ -387,6 +387,8 @@
 </ul>
 <div class="callout"><strong>結算觸發的判斷（combo 與 awc 共用）</strong>：卡片<strong>已過使用期限</strong> → 直接結算所有已轉的 free spin；<strong>尚未過期</strong>則看旋轉是否已用完——用完才結算，沒用完就<strong>不結算</strong>，等用完或過期；<strong>唯一例外是玩家於封頂後主動按 SETTLE NOW</strong>（見 02-D 提前結算），此時立即結算。</div>
 
+<div class="sub-title">每轉押注的後端驗證（允許下注額清單）</div>
+<div class="callout warn">道具基礎值儲存、以及建立發放卡時，後端都要檢查每個幣別每個星級的 <span class="mono">bet</span> 是否在該幣別的允許下注額清單內（清單見主文件〈後台發放卡 › 允許下注額清單〉）；不在清單內一律回傳 4xx 驗證錯誤並指出是哪個幣別、哪個星級，<strong>不得寫入</strong>。清單要和前端共用同一份設定，不要前後端各寫一份。</div>
 <div class="sub-title">結算時的 max_bonus 上限</div>
 <div class="body-text">結算時若有設置 <span class="mono">max_bonus</span>，派彩<strong>以 <span class="mono">max_bonus</span> 為上限</strong>：<span class="mono">total_win</span> 大於 <span class="mono">max_bonus</span> 時<strong>只發放 <span class="mono">max_bonus</span></strong>（例：玩家贏 100 萬、<span class="mono">max_bonus</span> ＝ 1000，最後只結算 1000 元）；未大於就直接送 <span class="mono">total_win</span>。本卡的 <span class="mono">max_bonus</span> 由系統依 bet × 次數 × 封頂倍數算出，<strong>一律有值，不存在「未設置」的情況</strong>；萬一讀到空值視為資料異常——<strong>擋下結算並告警，不得改以實際贏分直接派彩</strong>。封頂一律由我方結算層套用。</div>
 <div class="callout"><strong>上限欄位一律稱 <span class="mono">max_bonus</span></strong>：本文件原本使用的 <span class="mono">max_conversion</span> 與流程圖的 <span class="mono">max_bonus</span> 是同一個上限，DEV V1.19 起<strong>全文統一為 <span class="mono">max_bonus</span></strong>；修改紀錄與歷史版本說明保留舊名以便追溯。</div><div class="callout info"><strong>對帳單純化</strong>：入帳只有一種目標（主錢包），對帳時用 <span class="mono">campaign_id</span> 與卡序號把每筆中獎歸到正確的活動 / 卡片即可，不需要再區分錢包別。</div>
@@ -472,6 +474,24 @@
 <div class="sub-title">後台發放卡</div><table class="spec-table">
 <thead><tr><th style="width:140px;">情境名稱</th><th style="width:250px;">前提（測試前先準備好什麼）</th><th style="width:210px;">動作（做什麼）</th><th>預期結果（應該看到什麼）</th></tr></thead>
 <tbody>
+<tr>
+<td><strong>押注清單外（前端）</strong></td>
+<td class="dim">道具基礎值 PHP 1★ 目前為 1</td>
+<td class="dim">改成 0.3（不在允許清單內）後按「完成」</td>
+<td class="dim">該格標紅框、下方顯示「此押注額不在允許的下注額清單內」，無法儲存；改回 0.5 或 1 等清單內的值才能儲存</td>
+</tr>
+<tr>
+<td><strong>押注清單外（後端）</strong></td>
+<td class="dim">同上</td>
+<td class="dim">直接呼叫道具基礎值儲存，或以建立發放卡的介面送出 PHP 押注 0.3</td>
+<td class="dim">後端回傳驗證錯誤（4xx）、不寫入；資料庫內原值不變</td>
+</tr>
+<tr>
+<td><strong>既有不合法值</strong></td>
+<td class="dim">道具基礎值中已存在清單外的值（例：USD 3★ 0.5）</td>
+<td class="dim">打開道具基礎值頁</td>
+<td class="dim">該格一打開就標紅框；不修正不能按「完成」；已用舊值建立的卡、已發出的卡維持原樣</td>
+</tr>
 <tr>
 <td><strong>刪除引用中的卡</strong><br/></td>
 <td class="dim">某張卡被 1 檔<strong>未結束</strong>活動引用（進行中或尚未開始皆算）</td>
