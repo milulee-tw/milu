@@ -462,7 +462,7 @@
 <tr><td class="mono">H2</td><td>遊戲端</td><td>活動分類頁（L2）新增「FREE SPIN 卡」入口卡，與既有「抽寶箱」並列</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H3</td><td>遊戲端</td><td>新增卡片清單層（L3）：以 <span class="mono">reference_id</span> 為分組主鍵，可展開；含日期篩選器</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H4</td><td>遊戲端</td><td>局歷程列表（L4）沿用既有注單列表元件，欄位口徑依本章調整</td><td class="dim">遊戲前端</td></tr>
-<tr><td class="mono">H5</td><td>遊戲端</td><td>盤面頁（L5）沿用既有元件，僅置換頂部 Balance 區塊為 <span class="mono">reference_id</span>、調整 Bet／Win 顯示口徑</td><td class="dim">遊戲前端</td></tr>
+<tr><td class="mono">H5</td><td>遊戲端</td><td>盤面頁（L5）沿用既有元件；頂部只留注單號、Bet（標註 Free Spin）、Win（不帶幣值），隱藏 Balance 前後值</td><td class="dim">遊戲前端</td></tr>
 <tr><td class="mono">H6</td><td><strong>基礎建設</strong></td><td>FS 逐局注單（免費轉注單狀態）在一般注單檢視濾掉；後台注單類型「一般注單」不出現任何 FS 卡注單、結算注單歸「寶箱免費卡」 ＋ 歷程 API 統一輸出（同一份注單資料同時餵一般注單與 FS 歷程，避免兩處各自維護）</td><td class="dim">後端</td></tr>
 <tr><td class="mono">H7</td><td>數據</td><td>確認 FS 局的 bet／win <strong>不計入單一遊戲收入</strong>的統計口徑（避免遊戲營收被卡片面額灌水）</td><td class="dim">數據組</td></tr>
 </tbody>
@@ -695,12 +695,12 @@
 <tr><td class="mono">H-01c</td><td>本版（History 尚未上線）</td><td>CRM 選單中<strong>不顯示 History 項目</strong></td></tr>
 <tr><td class="mono">H-02</td><td>未持任何 FS 卡、有其他可用 CRM 功能的玩家點 History（History 上線後）</td><td>History 項目<strong>仍顯示且可點</strong>（不隱藏、不置灰）；L2 的 FREE SPIN 卡入口卡<strong>仍顯示</strong>；點進 L3 顯示空狀態文案而非空白畫面</td></tr>
 <tr><td class="mono">H-03</td><td>L2 兩張入口卡</td><td>兩張卡<strong>皆無</strong> TOTAL BETS／Net Win/Lose 統計列</td></tr>
-<tr><td class="mono">H-04</td><td>同一張卡跨兩款遊戲各玩數局</td><td>L3 只出現<strong>一列</strong>（一張卡）；展開後兩款遊戲的局<strong>時間倒序混排</strong>，Time 欄第二行分別標出遊戲名</td></tr>
+<tr><td class="mono">H-04</td><td>同一張卡跨兩款遊戲各玩數局</td><td>L3 只出現<strong>一列</strong>（一張卡）；展開後兩款遊戲的局<strong>時間倒序混排</strong>，Time 欄第二行分別標出遊戲名；只玩過一款遊戲的卡，每一列也照樣顯示遊戲名</td></tr>
 <tr><td class="mono">H-05</td><td>檢查 L4 是否有單日統計</td><td><strong>不存在</strong> Single Day Bet Amount／Single Day Net Win Loss 兩個數字</td></tr>
 <tr><td class="mono">H-06</td><td>已結算的卡</td><td>L3 該列結算欄顯示<strong>帶幣值</strong>的實付金額</td></tr>
 <tr><td class="mono">H-07</td><td>使用中（未結算）的卡</td><td>L3 結算欄顯示「進行中」；<strong>畫面上不出現任何預估金額</strong></td></tr>
 <tr><td class="mono">H-08</td><td>score 超過 max_bonus 的卡</td><td>L3 TOTAL WIN 顯示<strong>實際 score</strong>＋小字「已封頂，結算以上限為準」；SETTLEMENT＝<span class="mono">max_bonus</span></td></tr>
-<tr><td class="mono">H-10</td><td>點單局進 L5</td><td>頂部<strong>只有</strong> <span class="mono">reference_id</span> 單行，<strong>沒有 Balance 前後值</strong>；Bet 帶幣值＋「卡片面額 · 未實際扣款」小字；Win <strong>不帶幣值</strong></td></tr>
+<tr><td class="mono">H-10</td><td>點單局進 L5</td><td>頂部由左到右只有 <strong>注單號｜Bet｜Win</strong>，<strong>沒有 Balance 前後值</strong>；Bet 帶幣值並標註「(Free Spin)」；Win <strong>不帶幣值</strong></td></tr>
 <tr><td class="mono">H-11</td><td>L5 按 ←</td><td>回到<strong>該卡仍為展開狀態</strong>的 L4</td></tr>
 <tr><td class="mono">H-12</td><td>日期篩選器選一個起訖區間</td><td>L3 列出有效期間與區間有重疊的卡；<strong>展開後仍顯示該卡全部局</strong>（不被日期裁切）</td></tr>
 <tr><td class="mono">H-13</td><td>日期篩選器選一個沒有任何卡符合的區間</td><td>顯示「該期間無使用紀錄」，非空白畫面</td></tr>
