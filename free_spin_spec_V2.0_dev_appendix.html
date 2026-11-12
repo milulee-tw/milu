@@ -276,7 +276,7 @@
 <div class="info-card" style="border-color:var(--red-line-strong);">
 <div class="info-card-icon">⏰</div>
 <div class="info-card-title">② 過期卡登入結算</div>
-<div class="info-card-desc"><strong>不設掃描排程。</strong>玩家<strong>登入時</strong>，伺服器檢查該玩家「已到期、未結算」的卡並觸發整卡結算與狀態轉換；玩家正在遊戲中時到期，當下那一局照常結束，結束後直接結算（<strong>次數用完的結算由最後一局結束時即時觸發</strong>）。<br/><strong>沒先做會卡什麼：</strong>到期卡不會被結算、玩家拿不到錢；過期卡也不會轉唯讀，客訴必然發生。</div>
+<div class="info-card-desc"><strong>不設掃描排程。</strong>玩家<strong>登入時</strong>，伺服器檢查該玩家「已到期、未結算」的卡並觸發整卡結算與狀態轉換（無感結算，不跳彈窗，金額直接加進餘額），<strong>結算完成後才讀取餘額、背包與遊戲歷程資料</strong>，避免玩家看到「已過期但仍使用中／進行中」；玩家正在遊戲中時到期，當下那一局照常結束，結束後直接結算（<strong>次數用完的結算由最後一局結束時即時觸發</strong>）。<br/><strong>沒先做會卡什麼：</strong>到期卡不會被結算、玩家拿不到錢；過期卡也不會轉唯讀，客訴必然發生。</div>
 </div>
 <div class="info-card" style="border-color:var(--red-line-strong);">
 <div class="info-card-icon">🎫</div>
@@ -766,7 +766,7 @@
 <tr><td class="mono">1</td><td>結算封頂</td><td class="dim">分別測「累積贏分剛好等於上限 / 差 1 / 超過 1」三種情況，最後給的金額都等於<strong>累積贏分與上限中較小的那一個</strong></td></tr>
 <tr><td class="mono">2</td><td>局數池共用</td><td class="dim">交替玩 A、B 兩款遊戲，扣的是<strong>同一個池</strong>；池歸零後再開一局<strong>會被擋下</strong></td></tr>
 <tr><td class="mono">3</td><td>不中途結算</td><td class="dim">切換遊戲、登出再登入之後，<strong>查不到任何結算入帳紀錄</strong>、Balance 無任何變動（贏分只在 score）</td></tr>
-<tr><td class="mono">4</td><td>過期判定與到期結算</td><td class="dim">到期前 1 秒還能轉；到期後：玩家在遊戲中時，當下那一局照常結束，結束後直接結算；不在遊戲中時<strong>於玩家下次登入時結算入帳</strong>（不設掃描排程）；付累積贏分並套用上限，<strong>剩餘次數不補</strong>（時間基準 GMT+8）</td></tr>
+<tr><td class="mono">4</td><td>過期判定與到期結算</td><td class="dim">到期前 1 秒還能轉；到期後：玩家在遊戲中時，當下那一局照常結束，結束後直接結算；不在遊戲中時<strong>於玩家下次登入時結算入帳</strong>（不設掃描排程、無感結算）；<strong>登入結算完成後才讀取餘額、背包與歷程</strong>，背包已過期分頁與歷程 L3 只會看到已結算狀態；付累積贏分並套用上限，<strong>剩餘次數不補</strong>（時間基準 GMT+8）</td></tr>
 <tr><td class="mono">5</td><td>卡序號不重複發卡</td><td class="dim">用同一個序號重送發卡通知，玩家背包<strong>仍然只有一張卡</strong></td></tr>
 <tr><td class="mono">6</td><td>快照凍結</td><td class="dim">發卡後到後台改道具基礎值、或複製新卡並改次數 / 倍數 / 遊戲列表，<strong>已發出的卡各項數值完全不變</strong></td></tr>
 <tr><td class="mono">7</td><td>結算入帳與歸戶</td><td class="dim">結算會產生一筆<strong>「下注 0 / 派彩 final」</strong>的紀錄，且<strong>查得到活動 ID 與卡序號</strong>；金額確實進到<strong>主錢包</strong></td></tr>
