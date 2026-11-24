@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM 功能藍圖 · V1.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#E92B0D; --accent-text:#C42109; --accent-soft:#F0876F;
+  --bg:#FFFFFF; --bg-3:#FAFAFA; --bg-4:#F0F0F0; --bg-5:#E4E4E4;
+  --border:#D6D6D6; --border-bright:#ADADAD;
+  --text-primary:#1A1A1A; --text-secondary:#434343; --text-dim:#8F8F8F;
+  --teal:#0F766E; --blue:#2563EB; --green:#1F8A4C; --purple:#7C3AED; --orange:#D97706;
+  --accent-fill:rgba(233,43,13,0.10); --accent-fill-faint:rgba(233,43,13,0.06);
+  --green-bright:#17693C; --blue-bright:#1D4ED8; --purple-bright:#6D28D9; --teal-bright:#0D5F58;
+  --green-fill:rgba(31,138,76,0.10); --green-line:rgba(31,138,76,0.35);
+  --blue-fill:rgba(37,99,235,0.09); --blue-line:rgba(37,99,235,0.35);
+  --purple-fill:rgba(124,58,237,0.09); --purple-line:rgba(124,58,237,0.35);
+  --orange-fill:rgba(217,119,6,0.10); --orange-line:rgba(217,119,6,0.35);
+  --teal-fill:rgba(15,118,110,0.09); --teal-line:rgba(15,118,110,0.35);
+  --overlay-row:rgba(0,0,0,0.07); --shadow:rgba(0,0,0,0.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --accent:#F04E30; --accent-text:#FF7A5C; --accent-soft:#A63A24;
+    --bg:#111112; --bg-3:#1A1A1C; --bg-4:#202023; --bg-5:#2A2A2E;
+    --border:#2A2A2E; --border-bright:#3D3D42;
+    --text-primary:#F2F2F0; --text-secondary:#B4B4B2; --text-dim:#707070;
+    --teal:#4FD1C5; --blue:#7BA5F5; --green:#5FD08A; --purple:#B392F7; --orange:#F0A94E;
+    --accent-fill:rgba(240,78,48,0.14); --accent-fill-faint:rgba(240,78,48,0.07);
+    --green-bright:#7EE0A4; --blue-bright:#9DBCFF; --purple-bright:#C7ADFF; --teal-bright:#6FE3D8;
+    --green-fill:rgba(95,208,138,0.12); --green-line:rgba(95,208,138,0.32);
+    --blue-fill:rgba(123,165,245,0.12); --blue-line:rgba(123,165,245,0.32);
+    --purple-fill:rgba(179,146,247,0.12); --purple-line:rgba(179,146,247,0.32);
+    --orange-fill:rgba(240,169,78,0.12); --orange-line:rgba(240,169,78,0.32);
+    --teal-fill:rgba(79,209,197,0.12); --teal-line:rgba(79,209,197,0.32);
+    --overlay-row:rgba(255,255,255,0.07); --shadow:rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --accent:#F04E30; --accent-text:#FF7A5C; --accent-soft:#A63A24;
+  --bg:#111112; --bg-3:#1A1A1C; --bg-4:#202023; --bg-5:#2A2A2E;
+  --border:#2A2A2E; --border-bright:#3D3D42;
+  --text-primary:#F2F2F0; --text-secondary:#B4B4B2; --text-dim:#707070;
+  --teal:#4FD1C5; --blue:#7BA5F5; --green:#5FD08A; --purple:#B392F7; --orange:#F0A94E;
+  --accent-fill:rgba(240,78,48,0.14); --accent-fill-faint:rgba(240,78,48,0.07);
+  --green-bright:#7EE0A4; --blue-bright:#9DBCFF; --purple-bright:#C7ADFF; --teal-bright:#6FE3D8;
+  --green-fill:rgba(95,208,138,0.12); --green-line:rgba(95,208,138,0.32);
+  --blue-fill:rgba(123,165,245,0.12); --blue-line:rgba(123,165,245,0.32);
+  --purple-fill:rgba(179,146,247,0.12); --purple-line:rgba(179,146,247,0.32);
+  --orange-fill:rgba(240,169,78,0.12); --orange-line:rgba(240,169,78,0.32);
+  --teal-fill:rgba(79,209,197,0.12); --teal-line:rgba(79,209,197,0.32);
+  --overlay-row:rgba(255,255,255,0.07); --shadow:rgba(0,0,0,0.5);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans','Noto Sans TC',-apple-system,sans-serif;background:var(--bg);color:var(--text-primary);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px 100px;}
+.theme-toggle{position:fixed;right:24px;bottom:24px;z-index:100;width:46px;height:46px;border-radius:50%;background:var(--bg-3);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;font-size:18px;box-shadow:0 2px 12px var(--shadow);}
+@media print{.theme-toggle,.toc{display:none!important;}}
+.hero{padding:88px 0 52px;border-bottom:1px solid var(--border);margin-bottom:40px;}
+.hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;color:var(--accent-text);background:var(--accent-fill-faint);border:1px solid var(--accent-fill);border-radius:50px;padding:6px 16px;display:inline-block;margin-bottom:24px;}
+.hero h1{font-size:clamp(30px,5.2vw,48px);line-height:1.2;font-weight:700;letter-spacing:-0.02em;margin-bottom:18px;}
+.hero h1 span{color:var(--accent);}
+.hero-lead{font-size:18px;line-height:1.7;color:var(--text-secondary);max-width:760px;}
+.hero-lead strong{color:var(--text-primary);}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;}
+.pill{font-size:13px;color:var(--text-secondary);background:var(--bg-3);border:1px solid var(--border);border-radius:50px;padding:6px 16px;}
+.pill strong{color:var(--text-primary);font-weight:500;}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 64px;}
+.toc a{font-size:13px;color:var(--text-secondary);text-decoration:none;border:1px solid var(--border);border-radius:50px;padding:5px 14px;background:var(--bg);}
+.toc a:hover{border-color:var(--accent);color:var(--accent-text);}
+.blk{margin-bottom:76px;scroll-margin-top:24px;}
+.blk-num{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;color:var(--accent-text);margin-bottom:12px;}
+.blk h2{font-size:clamp(24px,3.6vw,32px);line-height:1.3;font-weight:700;letter-spacing:-0.01em;margin-bottom:16px;}
+.blk h3{font-size:18px;font-weight:700;margin:34px 0 10px;}
+.blk p{color:var(--text-secondary);margin-bottom:14px;}
+.blk p strong{color:var(--text-primary);}
+.punch{border-left:4px solid var(--accent);padding:18px 0 18px 22px;margin:28px 0;font-size:clamp(18px,2.6vw,22px);line-height:1.5;font-weight:700;}
+.punch small{display:block;font-size:15px;font-weight:400;line-height:1.7;color:var(--text-dim);margin-top:8px;}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0;}
+.cards.four{grid-template-columns:repeat(4,1fr);}
+.card{background:var(--bg-3);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.card-big{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--accent);line-height:1.2;margin-bottom:8px;letter-spacing:-0.02em;}
+.card-t{font-size:15px;font-weight:700;margin-bottom:4px;}
+.card-d{font-size:14px;color:var(--text-secondary);line-height:1.65;}
+.note{background:var(--bg-3);border:1px solid var(--border);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 14px 14px 0;margin:22px 0;font-size:15px;color:var(--text-secondary);line-height:1.7;}
+.note strong{color:var(--text-primary);}
+.note.warn{border-left-color:var(--orange);}
+.note.warn strong:first-child{color:var(--orange);}
+.note.ok{border-left-color:var(--green);}
+.tbl-wrap{overflow-x:auto;margin:22px 0;}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:640px;}
+.tbl th{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:var(--text-dim);font-weight:400;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--bg-3);white-space:nowrap;}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--overlay-row);vertical-align:top;color:var(--text-secondary);line-height:1.6;}
+.tbl td:first-child{color:var(--text-primary);font-weight:500;}
+.tbl td.c{text-align:center;}
+.tbl td.num,.tbl th.num{font-family:'DM Mono',monospace;text-align:right;white-space:nowrap;}
+.tbl tr.sum td{background:var(--bg-4);color:var(--text-primary);font-weight:700;}
+.tbl tr.grp td{background:var(--bg-3);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--text-dim);font-weight:400;}
+.dot{color:var(--accent);font-weight:700;}
+.tag{display:inline-block;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:0.04em;padding:2px 8px;border-radius:4px;white-space:nowrap;vertical-align:middle;}
+.tag.live{background:var(--green-fill);color:var(--green-bright);}
+.tag.dev{background:var(--blue-fill);color:var(--blue-bright);}
+.tag.plan{background:var(--bg-4);color:var(--text-secondary);border:1px solid var(--border);}
+.tag.infra{background:var(--orange-fill);color:var(--orange);}
+.tag.hide{background:var(--purple-fill);color:var(--purple-bright);}
+.tag.tbd{background:var(--bg-4);color:var(--text-dim);border:1px dashed var(--border-bright);}
+/* 流程 */
+.flow-v{display:flex;flex-direction:column;align-items:center;gap:0;margin:26px 0;}
+.flow-step{width:100%;max-width:640px;background:var(--bg-3);border:1px solid var(--border);border-radius:14px;padding:14px 18px;}
+.flow-step.hl{border-color:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-fill-faint);}
+.flow-step .fs-t{font-weight:700;font-size:15px;}
+.flow-step .fs-t small{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent-text);margin-right:8px;letter-spacing:0.1em;}
+.flow-step .fs-d{font-size:14px;color:var(--text-secondary);margin-top:4px;}
+.flow-arrow{color:var(--text-dim);font-size:18px;line-height:1;padding:6px 0;}
+.layer{width:100%;max-width:640px;margin-top:14px;border:1px dashed var(--border-bright);border-radius:14px;padding:12px 18px;font-size:14px;color:var(--text-secondary);}
+.layer strong{color:var(--text-primary);}
+/* 功能卡 */
+.grp-title{display:flex;align-items:baseline;gap:12px;margin:44px 0 6px;flex-wrap:wrap;}
+.grp-title h3{margin:0;}
+.grp-title span{font-size:14px;color:var(--text-dim);}
+.feat{border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin:16px 0;background:var(--bg);scroll-margin-top:20px;}
+.feat-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.feat-no{font-family:'DM Mono',monospace;font-size:13px;color:#fff;background:var(--accent);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;flex:none;}
+.feat-name{font-size:19px;font-weight:700;}
+.feat-goal{background:var(--accent-fill-faint);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 14px;font-size:15px;color:var(--text-primary);margin-bottom:14px;}
+.feat-goal b{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:var(--accent-text);margin-right:10px;font-weight:500;}
+.lbl{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:var(--text-dim);margin:12px 0 6px;}
+ol.stories{list-style:none;counter-reset:s;display:grid;gap:6px;}
+ol.stories li{counter-increment:s;position:relative;padding-left:30px;font-size:15px;color:var(--text-secondary);line-height:1.65;}
+ol.stories li::before{content:counter(s);position:absolute;left:0;top:2px;font-family:'DM Mono',monospace;font-size:11px;width:20px;height:20px;border-radius:5px;background:var(--bg-4);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;}
+ol.stories li strong{color:var(--text-primary);}
+.aside{font-size:13px;color:var(--text-dim);line-height:1.7;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);}
+.aside b{color:var(--text-secondary);font-weight:500;}
+.kpis{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.kpi{font-size:13px;border-radius:50px;padding:3px 12px;background:var(--green-fill);color:var(--green-bright);border:1px solid var(--green-line);}
+.kpi.none{background:var(--bg-4);color:var(--text-dim);border-color:var(--border);}
+.kpi.tbd{background:var(--bg);color:var(--text-dim);border:1px dashed var(--border-bright);}
+.mvp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.mvp div{font-size:13.5px;background:var(--bg-3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text-secondary);}
+.mvp div em{font-style:normal;display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.14em;color:var(--text-dim);margin-bottom:2px;}
+/* 甘特 */
+.gantt{margin:24px 0;border:1px solid var(--border);border-radius:14px;overflow-x:auto;background:var(--bg-3);}
+.gin{min-width:860px;}
+.grow{display:grid;grid-template-columns:190px repeat(8,1fr);border-bottom:1px solid var(--overlay-row);align-items:center;min-height:40px;}
+.grow:last-child{border-bottom:none;}
+.grow.head{background:var(--bg-4);font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);}
+.grow.head div{padding:9px 6px;text-align:center;}
+.grow.head div:first-child{text-align:left;padding-left:14px;}
+.grow.sep{background:var(--bg-4);min-height:28px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:var(--text-dim);}
+.grow.sep div{padding-left:14px;grid-column:1 / -1;}
+.glabel{padding:6px 8px 6px 14px;font-size:13px;font-weight:700;line-height:1.35;}
+.bar{margin:5px 3px;border-radius:6px;padding:4px 8px;font-size:11.5px;line-height:1.3;border:1px solid;}
+.bar.a{background:var(--accent-fill);border-color:var(--accent-soft);color:var(--accent-text);}
+.bar.b{background:var(--blue-fill);border-color:var(--blue-line);color:var(--blue-bright);}
+.bar.p{background:var(--purple-fill);border-color:var(--purple-line);color:var(--purple-bright);}
+.bar.g{background:var(--green-fill);border-color:var(--green-line);color:var(--green-bright);}
+.bar.o{background:var(--orange-fill);border-color:var(--orange-line);color:var(--orange);}
+.bar.x{background:var(--bg-4);border-color:var(--border);color:var(--text-dim);}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--text-secondary);margin-top:-8px;}
+.legend span::before{content:'';display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid;}
+.legend .a::before{background:var(--accent-fill);border-color:var(--accent-soft);}
+.legend .b::before{background:var(--blue-fill);border-color:var(--blue-line);}
+.legend .p::before{background:var(--purple-fill);border-color:var(--purple-line);}
+.legend .o::before{background:var(--orange-fill);border-color:var(--orange-line);}
+.legend .g::before{background:var(--green-fill);border-color:var(--green-line);}
+.legend .x::before{background:var(--bg-4);border-color:var(--border);}
+.foot{border-top:1px solid var(--border);margin-top:70px;padding-top:36px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--text-dim);line-height:2.1;text-align:center;}
+@media(max-width:760px){
+  body{font-size:15px;} .wrap{padding:0 16px 70px;}
+  .cards,.cards.four,.mvp{grid-template-columns:1fr;}
+  .hero{padding:64px 0 40px;}
+  .feat{padding:18px 16px;}
+}
+
+/* 分頁版型 */
+.head{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
+.topstrip{max-width:1200px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.topstrip .dn{font-weight:700;font-size:15px;color:var(--text-primary);text-decoration:none;}
+.topstrip .ver{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent-text);border:1px solid var(--accent-fill);background:var(--accent-fill-faint);border-radius:50px;padding:2px 10px;}
+.topstrip .who{font-size:12px;color:var(--text-dim);margin-left:auto;}
+.tabbar{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tabbar a{flex:none;font-size:14px;color:var(--text-secondary);text-decoration:none;padding:10px 12px;border-bottom:2px solid transparent;white-space:nowrap;}
+.tabbar a:hover{color:var(--text-primary);}
+.tabbar a.on{color:var(--accent-text);border-bottom-color:var(--accent);font-weight:700;}
+.wrap{max-width:1200px;}
+.page{display:none;padding-top:36px;}
+.page.on{display:block;}
+.pg{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px;}
+.rail{position:sticky;top:110px;align-self:start;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 130px);overflow-y:auto;}
+.rail a{font-size:13px;color:var(--text-secondary);text-decoration:none;padding:6px 10px;border-left:2px solid var(--border);line-height:1.45;}
+.rail a:hover{color:var(--accent-text);border-left-color:var(--accent);}
+.rail a b{font-family:'DM Mono',monospace;font-weight:500;color:var(--text-dim);margin-right:6px;}
+#home .hero{padding:56px 0 36px;margin-bottom:28px;}
+.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:8px 0 56px;}
+.lcard{display:flex;flex-direction:column;gap:4px;border:1px solid var(--border);border-radius:14px;padding:14px 16px;text-decoration:none;background:var(--bg-3);}
+.lcard:hover{border-color:var(--accent);}
+.lc-n{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent-text);letter-spacing:0.12em;}
+.lc-t{font-size:15px;font-weight:700;color:var(--text-primary);}
+.lc-d{font-size:13px;color:var(--text-secondary);line-height:1.55;}
+.sec-t{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;color:var(--accent-text);margin:0 0 6px;}
+.home-h2{font-size:clamp(22px,3.2vw,28px);font-weight:700;margin-bottom:6px;}
+.ogrp{margin:26px 0 8px;}
+.ogrp-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:12px;}
+.ogrp-h h3{font-size:17px;}
+.ogrp-h a{font-size:13px;color:var(--accent-text);text-decoration:none;}
+.ogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.ocard{display:flex;flex-direction:column;gap:8px;border:1px solid var(--border);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;background:var(--bg);}
+.ocard:hover{border-color:var(--accent);box-shadow:0 2px 12px var(--shadow);}
+.oc-h{display:flex;align-items:center;gap:10px;}
+.oc-h .feat-no{width:24px;height:24px;font-size:12px;}
+.oc-n{font-size:15.5px;font-weight:700;color:var(--text-primary);line-height:1.35;}
+.oc-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.oc-g{font-size:13.5px;color:var(--text-secondary);line-height:1.6;}
+.oc-k{font-size:12.5px;color:var(--green-bright);line-height:1.55;}
+.oc-k b{font-family:'DM Mono',monospace;font-weight:500;font-size:10.5px;letter-spacing:0.12em;color:var(--text-dim);margin-right:6px;}
+@media(max-width:900px){.pg{grid-template-columns:1fr;}.rail{display:none;}.ogrid{grid-template-columns:1fr 1fr;}.lcards{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.ogrid,.lcards{grid-template-columns:1fr;}.topstrip .who{display:none;}}
+@media print{.head,.rail{display:none!important;}.page{display:block!important;}}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換亮／暗主題" title="切換亮／暗主題">◐</button>
+<header class="head"><div class="topstrip"><a class="dn" href="#home">CRM × 市場遊戲組 功能藍圖</a><span class="ver">V1.2</span><span class="who">Milu · 2026-11-24</span></div><nav class="tabbar" aria-label="章節"><a href="#home" data-tab="home">⌂ 首頁</a><a href="#p-now-top" data-tab="p-now">現況與目標</a><a href="#p-map-top" data-tab="p-map">旅程與指標</a><a href="#p-a-top" data-tab="p-a">A 玩家功能</a><a href="#p-b-top" data-tab="p-b">B 機率照顧</a><a href="#p-c-top" data-tab="p-c">C 後台與風控</a><a href="#p-plan-top" data-tab="p-plan">介面・時程・工時</a><a href="#p-kpi-top" data-tab="p-kpi">成效與方案</a><a href="#p-open-top" data-tab="p-open">待確認</a></nav></header>
+<div class="wrap">
+<div class="page" id="home">
+<div class="hero">
+  <div class="hero-tag">CMB · CRM 組 × 市場遊戲組 · 功能藍圖 · 2026.11 – 2027.06</div>
+  <h1>讓玩家在 Combo <span>待得久、玩得廣、願意再回來</span></h1>
+  <div class="hero-lead">
+    CRM 不負責讓遊戲變好玩——那是遊戲本身的機率與節奏要解決的事。CRM 負責的是：讓<strong>已經可以接受的遊戲</strong>被玩得更多局、更多款，並給玩家<strong>下次再來的理由</strong>，同時把活動的成本控制在可算、可停的範圍內。
+  </div>
+  <div class="hero-pills">
+    <div class="pill"><strong>市場</strong> 泰國、菲律賓</div>
+    <div class="pill"><strong>主要合作</strong> UFA（UFA SLOT 專屬廳館）、PB（同集團）</div>
+    <div class="pill"><strong>功能數</strong> 17 項</div>
+    <div class="pill"><strong>版本</strong> V1.2 · 2026-11-24</div>
+    <div class="pill"><strong>作者</strong> Milu</div>
+  </div>
+</div>
+<p class="sec-t">章節</p>
+<div class="lcards"><a class="lcard" href="#p-now-top"><span class="lc-n">01</span><span class="lc-t">現況與目標</span><span class="lc-d">玩家留不住的原因、和 YB 等競品的差距、CRM 的三個目標</span></a><a class="lcard" href="#p-map-top"><span class="lc-n">02</span><span class="lc-t">旅程與指標</span><span class="lc-d">玩家旅程四段，17 項功能各自負責的成功指標</span></a><a class="lcard" href="#p-a-top"><span class="lc-n">03-A</span><span class="lc-t">玩家看得到的活動與道具</span><span class="lc-d">①-A ①-B ②③⑥⑦⑧⑰ 的目的與 Story</span></a><a class="lcard" href="#p-b-top"><span class="lc-n">03-B</span><span class="lc-t">玩家看不到的機率照顧</span><span class="lc-d">④⑤⑯ 的目的與 Story</span></a><a class="lcard" href="#p-c-top"><span class="lc-n">03-C</span><span class="lc-t">後台與風控工具</span><span class="lc-d">⑩–⑮ 的目的與 Story</span></a><a class="lcard" href="#p-plan-top"><span class="lc-n">04–06</span><span class="lc-t">介面・時程・工時</span><span class="lc-d">入口位置、建議甘特、各職能人週</span></a><a class="lcard" href="#p-kpi-top"><span class="lc-n">07–08</span><span class="lc-t">成效與方案</span><span class="lc-d">追上 YB 的目標值、最小 vs 完整方案</span></a><a class="lcard" href="#p-open-top"><span class="lc-n">09</span><span class="lc-t">待確認</span><span class="lc-d">還沒定的事與負責人</span></a></div>
+<p class="sec-t">總覽 · 17 項提案</p>
+<h2 class="home-h2">所有提案一覽</h2>
+<p style="color:var(--text-secondary);font-size:15px;">點任一張卡片，直接跳到該功能的目的與 Story。</p>
+<div class="ogrp"><div class="ogrp-h"><h3>A · 玩家看得到的活動與道具</h3><a href="#p-a-top">看這組 →</a></div><div class="ogrid"><a class="ocard" href="#f01"><div class="oc-h"><span class="feat-no">1A</span><span class="oc-n">抽寶箱</span></div><div class="oc-tags"><span class="tag live">已上線</span></div><div class="oc-g">讓玩家當天有一個「再押一點就開」的短期目標，延長單日遊玩。</div><div class="oc-k"><b>指標</b>押注量、押注局數</div></a><a class="ocard" href="#f01b"><div class="oc-h"><span class="feat-no">1B</span><span class="oc-n">抽寶箱（彩池版）</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">押一段就能抽一次，用看得到的彩池和別人中大獎的紀錄，給玩家持續押注的動機。</div><div class="oc-k"><b>指標</b>押注量、押注局數</div></a><a class="ocard" href="#f02"><div class="oc-h"><span class="feat-no">2</span><span class="oc-n">FREE SPIN 卡</span></div><div class="oc-tags"><span class="tag dev">修復中</span></div><div class="oc-g">讓玩家不花自己的錢就能試其他款遊戲，並給他隔天回來的理由。</div><div class="oc-k"><b>指標</b>押注量、押注局數、遊玩款數、次日留存</div></a><a class="ocard" href="#f03"><div class="oc-h"><span class="feat-no">3</span><span class="oc-n">排行榜與大獎回放</span></div><div class="oc-tags"><span class="tag dev">開發中 · 12/10</span></div><div class="oc-g">讓玩家看到 Combo 的遊戲真的會開大獎，帶他去玩那一款。</div><div class="oc-k"><b>指標</b>遊玩款數</div></a><a class="ocard" href="#f06"><div class="oc-h"><span class="feat-no">6</span><span class="oc-n">我的最愛</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">讓玩家快速回到喜歡的遊戲，少一個找不到遊戲而離開的理由。</div><div class="oc-k"><b>指標</b>遊玩款數、從我的最愛選遊戲的玩家次日留存</div></a><a class="ocard" href="#f07"><div class="oc-h"><span class="feat-no">7</span><span class="oc-n">攔截頁</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">在玩家要離開時，給他下一款想玩的遊戲。</div><div class="oc-k"><b>指標</b>遊玩款數、押注量、押注局數</div></a><a class="ocard" href="#f08"><div class="oc-h"><span class="feat-no">8</span><span class="oc-n">任務（每日任務＋週積分）</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">每天給玩家玩指定遊戲的目標，推動換款，也建立每天回來的習慣。</div><div class="oc-k"><b>指標</b>押注量、押注局數、遊玩款數、次日留存</div></a><a class="ocard" href="#f17"><div class="oc-h"><span class="feat-no">17</span><span class="oc-n">FREE GAME 卡（指定遊戲卡）</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">讓玩家不花錢就直接體驗遊戲最精彩的免費遊戲段落。</div><div class="oc-k"><b>指標</b>遊玩款數（提案值）、押注量（提案值）</div></a></div></div>
+<div class="ogrp"><div class="ogrp-h"><h3>B · 玩家看不到的機率照顧</h3><a href="#p-b-top">看這組 →</a></div><div class="ogrid"><a class="ocard" href="#f04"><div class="oc-h"><span class="feat-no">4</span><span class="oc-n">新手腳本（新手白池）</span></div><div class="oc-tags"><span class="tag live">腳本已上線</span><span class="tag hide">玩家看不到</span></div><div class="oc-g">讓新手撐過前 50 局的去留判斷期。</div><div class="oc-k"><b>指標</b>押注局數</div></a><a class="ocard" href="#f05"><div class="oc-h"><span class="feat-no">5</span><span class="oc-n">黑白池</span></div><div class="oc-tags"><span class="tag dev">開發中</span><span class="tag hide">玩家看不到</span></div><div class="oc-g">依玩家狀況調整遊玩感受——該照顧的照顧、該收的收。</div><div class="oc-k"><b>指標</b>押注局數</div></a><a class="ocard" href="#f16"><div class="oc-h"><span class="feat-no">16</span><span class="oc-n">個人水池</span></div><div class="oc-tags"><span class="tag plan">規劃</span><span class="tag hide">玩家看不到</span></div><div class="oc-g">個別玩家運氣太差時，用他身上的獎勵池拉回來，避免他因為一直輸而離開。</div><div class="oc-k"><b>指標</b>押注局數（提案值）</div></a></div></div>
+<div class="ogrp"><div class="ogrp-h"><h3>C · 後台與風控工具</h3><a href="#p-c-top">看這組 →</a></div><div class="ogrid"><a class="ocard" href="#f10"><div class="oc-h"><span class="feat-no">10</span><span class="oc-n">動態 RTP</span></div><div class="oc-tags"><span class="tag infra">基礎建設</span></div><div class="oc-g">讓多個活動可以一起辦，同時確保線路不虧損。</div><div class="oc-k"><b>指標</b>活動期間總 RTP 維持低於 100%</div></a><a class="ocard" href="#f11"><div class="oc-h"><span class="feat-no">11</span><span class="oc-n">AWC Free Spin 每月獲獎上限</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">AWC 發放的 Free Spin 不在我們控管內，用每月上限把這筆成本鎖住。</div><div class="oc-k"><b>指標</b>每條線路每月 AWC Free Spin 獲獎金額不超過上限</div></a><a class="ocard" href="#f12"><div class="oc-h"><span class="feat-no">12</span><span class="oc-n">遊戲 → 線路開關</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">AM 上下架一款遊戲時，一次管理所有受影響的線路，不用一條一條點進去。</div><div class="oc-k"><b>指標</b>AM 上下架一款遊戲的操作步驟與時間減少</div></a><a class="ocard" href="#f13"><div class="oc-h"><span class="feat-no">13</span><span class="oc-n">防爆水池自動重置</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">每月要人工設定的數字其實算得出來，改成系統自動算，不用排人管。</div><div class="oc-k"><b>指標</b>每月人工設定次數＝0、自動算出的值與公式一致</div></a><a class="ocard" href="#f14"><div class="oc-h"><span class="feat-no">14</span><span class="oc-n">後台帳號權限管理</span></div><div class="oc-tags"><span class="tag infra">基礎建設</span></div><div class="oc-g">不再共用 admin 帳號，每個操作都查得到是誰做的，也降低帳密外流的風險。</div><div class="oc-k"><b>指標</b>每筆後台設定修改都查得到操作人</div></a><a class="ocard" href="#f15"><div class="oc-h"><span class="feat-no">15</span><span class="oc-n">貨幣清單管理</span></div><div class="oc-tags"><span class="tag plan">規劃</span></div><div class="oc-g">新增貨幣不必再等後端工程師手動加。</div><div class="oc-k"><b>指標</b>不設成效指標（目的是減少後端工作）</div></a></div></div>
+
+</div>
+<div class="page" id="p-now"><span id="p-now-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" id="s01">
+  <div class="blk-num">01 · 現況與目的</div>
+  <h2>玩家玩沒幾局就走，也沒有忠誠度</h2>
+  <p>我們希望有足夠的信心推廣遊戲，但現在的遊戲調性讓玩家<strong>遊玩局數少、黏著度低</strong>，進來沒玩幾局就離開，也很難對 Combo 產生忠誠度（這和市場本身的玩家習慣也有關）。</p>
+
+  <div class="cards">
+    <div class="card"><div class="card-t">第 40–50 局就決定去留</div><div class="card-d">新手腳本的數據顯示，玩家大約在 40–50 局決定要不要繼續玩。前 40 局體驗差的人幾乎都走了。</div></div>
+    <div class="card"><div class="card-t">有閒錢才玩，用完就走</div><div class="card-d">這個市場多為週薪或雙週薪，玩家回來的節奏跟發薪日有關，不一定是每天。</div></div>
+    <div class="card"><div class="card-t">押注成長靠版位</div><div class="card-d">10 月押注成長有 95% 來自 UFA SLOT 的阿茲特克版位，版位撤掉就回落。</div></div>
+  </div>
+
+  <h3>基準數字（UFA Slot · 2026 年 10 月）</h3>
+  <div class="cards four">
+    <div class="card"><div class="card-big">81 局</div><div class="card-t">玩家局數中位數</div><div class="card-d">人均局數（平均）194 局，被少數重度玩家拉高，目標以中位數為準。</div></div>
+    <div class="card"><div class="card-big">1.5 款</div><div class="card-t">人均遊玩款數</div><div class="card-d">多數玩家只玩一款。（此項不在 UFA Slot 資料內，先沿用）</div></div>
+    <div class="card"><div class="card-big">20.3%</div><div class="card-t">次日留存</div><div class="card-d">供應商拿不到平台的推播與拉新，只能靠遊戲內的理由。</div></div>
+    <div class="card"><div class="card-big">1,563</div><div class="card-t">人均押注（THB／日）</div><div class="card-d">Combo 5 款日均玩家合計約 13,200 人。</div></div>
+  </div>
+
+  <h3>和同廳館競品比</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>指標（UFA Slot · 10 月）</th><th class="num">Combo（5 款）</th><th class="num">YB（2 款）</th><th class="num">其他廠商（17 款）</th><th class="num">JILI（5 款）</th></tr></thead>
+    <tbody>
+      <tr><td>玩家局數中位數</td><td class="num">81</td><td class="num">111</td><td class="num">107</td><td class="num">131</td></tr>
+      <tr><td>新玩家局數中位數</td><td class="num">67</td><td class="num">80</td><td class="num">76</td><td class="num">86</td></tr>
+      <tr><td>人均局數（平均）</td><td class="num">194</td><td class="num">399</td><td class="num">321</td><td class="num">410</td></tr>
+      <tr><td>次日留存</td><td class="num">20.3%</td><td class="num">29.5%</td><td class="num">26.1%</td><td class="num">29.6%</td></tr>
+      <tr><td>新玩家次日留存</td><td class="num">8.5%</td><td class="num">9.6%</td><td class="num">10.2%</td><td class="num">10.2%</td></tr>
+      <tr><td>人均押注（THB／日）</td><td class="num">1,563</td><td class="num">2,882</td><td class="num">2,302</td><td class="num">2,836</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><strong>看到的事：</strong>新玩家局數只落後其他廠商 12%，全體玩家落後 24%，人均局數落後 39%——差距主要在「留下來的玩家玩不深、隔天不回來」，正是 CRM 要處理的範圍。Combo 5 款在 22 款中依局數中位數排第 11（阿茲特克）到第 20（Golden West 西部牛仔）。<br><small style="color:var(--text-dim)">資料：UFA Slot 2026/10/01–10/31（UTC+7），各款日均數字，依日均玩家數加權。競品老遊戲累積的老玩家較多，差距有一部分來自上線時間長短。</small></div>
+
+  <div class="punch">CRM 的三個目標
+    <small>① 優先提升玩家押注次數（局數）　② 提升玩家遊玩 Combo 遊戲的款數　③ 提升次日回流率</small>
+  </div>
+
+  <div class="note"><strong>兩個合作夥伴的角色：</strong>UFA——我們是 UFA SLOT 專屬廳館的站長，版位比較好控，有免費曝光機會；PB——同集團的合作夥伴，比較好做推廣機制，屬灰色市場。兩者都拿不到玩家流向等外部資料，成效一律用自家注單判讀。</div>
+</div>
+</div></div></div>
+<div class="page" id="p-map"><span id="p-map-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" id="s02">
+  <div class="blk-num">02 · 玩家旅程與功能地圖</div>
+  <h2>每個功能負責旅程中的一段</h2>
+  <p>玩家從進入遊戲到離開、再回來，可以分成四段。每一段要解決的問題不同，由不同的功能負責；後台與風控工具在底層支撐。</p>
+
+  <div class="flow-v">
+    <div class="flow-step hl"><div class="fs-t"><small>STAGE 1</small>前 50 局：正在決定要不要留</div><div class="fs-d">④ 新手腳本（新手白池）、⑤ 黑白池、⑯ 個人水池——玩家看不到，從機率端讓前段手感變好。</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="fs-t"><small>STAGE 2</small>今天玩久一點</div><div class="fs-d">①-A 抽寶箱、①-B 抽寶箱（彩池版）（同線路擇一舉辦）——押一段就有東西拿。</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="fs-t"><small>STAGE 3</small>去玩別款</div><div class="fs-d">② FREE SPIN 卡、⑰ FREE GAME 卡、③ 排行榜與大獎回放、⑥ 我的最愛、⑦ 攔截頁、⑧ 任務——帶玩家試其他 Combo 遊戲。</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="fs-t"><small>STAGE 4</small>下次再來</div><div class="fs-d">以 ② FREE SPIN 卡（隔日才能啟用）和 ⑧ 任務（每日任務＋週積分）為主。</div></div>
+    <div class="layer"><strong>底層 · 後台與風控工具：</strong>⑩ 動態 RTP、⑪ AWC Free Spin 每月獲獎上限、⑫ 遊戲 → 線路開關、⑬ 防爆水池自動重置、⑭ 後台帳號權限管理、⑮ 貨幣清單管理</div>
+  </div>
+
+  <h3>功能 × 成功指標</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>功能</th><th>狀態</th><th class="c">押注量</th><th class="c">押注局數</th><th class="c">遊玩款數</th><th class="c">次日留存</th><th>其他指標</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="7">A · 玩家看得到的活動與道具</td></tr>
+      <tr><td>①-A 抽寶箱</td><td><span class="tag live">已上線</span></td><td class="c dot">●</td><td class="c dot">●</td><td></td><td></td><td></td></tr>
+      <tr><td>② FREE SPIN 卡</td><td><span class="tag dev">修復中</span></td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td></td></tr>
+      <tr><td>③ 排行榜與大獎回放</td><td><span class="tag dev">開發中</span></td><td></td><td></td><td class="c dot">●</td><td></td><td></td></tr>
+      <tr><td>⑥ 我的最愛</td><td><span class="tag plan">規劃</span></td><td></td><td></td><td class="c dot">●</td><td class="c dot">●</td><td>從我的最愛選遊戲的玩家次日留存</td></tr>
+      <tr><td>⑦ 攔截頁</td><td><span class="tag plan">規劃</span></td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td></td><td></td></tr>
+      <tr><td>⑧ 任務</td><td><span class="tag plan">規劃</span></td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td></td></tr>
+      <tr><td>①-B 抽寶箱（彩池版）</td><td><span class="tag plan">規劃</span></td><td class="c dot">●</td><td class="c dot">●</td><td></td><td></td><td></td></tr>
+      <tr><td>⑰ FREE GAME 卡</td><td><span class="tag plan">規劃</span></td><td class="c">○</td><td></td><td class="c">○</td><td></td><td>○＝提案值，待確認</td></tr>
+      <tr class="grp"><td colspan="7">B · 玩家看不到的機率照顧</td></tr>
+      <tr><td>④ 新手腳本（新手白池）</td><td><span class="tag live">腳本已上線</span></td><td></td><td class="c dot">●</td><td></td><td></td><td></td></tr>
+      <tr><td>⑤ 黑白池</td><td><span class="tag dev">開發中</span></td><td></td><td class="c dot">●</td><td></td><td></td><td></td></tr>
+      <tr><td>⑯ 個人水池</td><td><span class="tag plan">規劃</span></td><td></td><td class="c">○</td><td></td><td></td><td>○＝提案值，待確認</td></tr>
+      <tr class="grp"><td colspan="7">C · 後台與風控工具</td></tr>
+      <tr><td>⑩ 動態 RTP</td><td><span class="tag infra">基礎建設</span></td><td></td><td></td><td></td><td></td><td>活動期間總 RTP 維持低於 100%</td></tr>
+      <tr><td>⑪ AWC Free Spin 每月獲獎上限</td><td><span class="tag plan">規劃</span></td><td></td><td></td><td></td><td></td><td>每線路每月獲獎金額不超過上限</td></tr>
+      <tr><td>⑫ 遊戲 → 線路開關</td><td><span class="tag plan">規劃</span></td><td></td><td></td><td></td><td></td><td>AM 上下架操作步驟與時間減少</td></tr>
+      <tr><td>⑬ 防爆水池自動重置</td><td><span class="tag plan">規劃</span></td><td></td><td></td><td></td><td></td><td>每月人工設定次數＝0</td></tr>
+      <tr><td>⑭ 後台帳號權限管理</td><td><span class="tag infra">基礎建設</span></td><td></td><td></td><td></td><td></td><td>每筆後台設定修改都查得到操作人</td></tr>
+      <tr><td>⑮ 貨幣清單管理</td><td><span class="tag plan">規劃</span></td><td></td><td></td><td></td><td></td><td>不設成效指標（減少後端工作）</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</div></div></div>
+<div class="page" id="p-a"><span id="p-a-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" style="margin-bottom:8px"><div class="blk-num">03-A · 功能說明</div><h2>A · 玩家看得到的活動與道具</h2><p>每個功能用「身為 X，我可以 Y，以便於 Z」寫出範圍；灰色小字是策略與後續操作的補充。詳細規則以各功能的開發規格書為準。</p></div>
+  <div class="feat" id="f01">
+    <div class="feat-head"><span class="feat-no">1A</span><span class="feat-name">抽寶箱</span><span class="tag live">已上線</span></div>
+    <div class="feat-goal"><b>目的</b>讓玩家當天有一個「再押一點就開」的短期目標，延長單日遊玩。</div>
+    <ol class="stories">
+      <li>身為玩家，我可以累積押注開寶箱，以便於在 <strong>9 抽內</strong>拿到最大獎。</li>
+      <li>身為玩家，我可以隨時看到寶箱進度，以便於知道再押多少能開下一格。</li>
+      <li>身為系統，我<strong>依活動設定的指定時間</strong>重置，並依小／中／大客套不同的門檻和獎項。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">押注量</span><span class="kpi">押注局數</span></div>
+    <div class="aside"><b>補充：</b>單日活動，不跨天累積；同一條線路與 ①-B 彩池版只能擇一舉辦；營運人員可換主題、調權重、一鍵暫停（對全體立即生效）。</div>
+  </div>
+  <div class="feat" id="f01b">
+    <div class="feat-head"><span class="feat-no">1B</span><span class="feat-name">抽寶箱（彩池版）</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>押一段就能抽一次，用看得到的彩池和別人中大獎的紀錄，給玩家持續押注的動機。</div>
+    <ol class="stories">
+      <li>身為玩家，我每次累積押注達門檻就得到一次抽獎機會，機會<strong>可以累計到活動結束</strong>，以便於我想抽的時候再抽。</li>
+      <li>身為玩家，我翻開一格拿到獎項後，會先看到<strong>其他格子原本是什麼</strong>，再全部蓋回重新抽。</li>
+      <li>身為玩家，我可以看到目前的<strong>彩池金額</strong>，以及其他玩家抽到大獎的<strong>跑馬燈</strong>，以便於相信大獎真的會開出來。</li>
+      <li>身為系統，我先放入一筆<strong>基礎獎金</strong>，之後<strong>每一筆押注的 1%</strong> 灌入彩池。</li>
+      <li>身為系統，我依權重表抽出獎項：銘謝惠顧（0 元）、固定獎項、FREE SPIN 卡，以及少數「彩池 × n%」獎；<strong>最大獎＝當下彩池的 30%</strong>。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">押注量</span><span class="kpi">押注局數</span></div>
+    <div class="aside"><b>補充：</b>舊版抽寶箱（①-A）保留，兩版在同一條線路不能同時開；彩池＝每條線路 × 每個幣別各一個；跑馬燈帳號遮蔽方式同排行榜（前二碼、後二碼，中間以 * 代替）；結果在翻牌前由系統決定，其他格子是依權重表另外產生的畫面；同時有人抽中彩池獎時，依先後順序計算。幸運輪暫緩，機制併入本功能。⚠ 每筆押注的 1% 約等於線路 RTP 多出 1 個百分點，需在 ⑩ 動態 RTP 設定對應的「砍 RTP」比例。</div>
+  </div>
+
+  <div class="feat" id="f02">
+    <div class="feat-head"><span class="feat-no">2</span><span class="feat-name">FREE SPIN 卡</span><span class="tag dev">修復中</span></div>
+    <div class="feat-goal"><b>目的</b>讓玩家不花自己的錢就能試其他款遊戲，並給他隔天回來的理由。</div>
+    <ol class="stories">
+      <li>身為玩家，我可以在背包查看持有的卡、適用遊戲和到期日，以便於決定什麼時候使用。</li>
+      <li>身為玩家，我可以用卡在指定遊戲玩免費旋轉，<strong>用完才一次結算</strong>，以便於不花錢就能試新遊戲。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">押注量</span><span class="kpi">押注局數</span><span class="kpi">遊玩款數</span><span class="kpi">次日留存</span></div>
+    <div class="aside"><b>補充：</b>營運人員建卡時設定星級、次數、封頂倍數、效期、指定遊戲（<b>最多 8 款</b>）；建卡後不能修改，只能複製新卡。</div>
+  </div>
+
+  <div class="feat" id="f03">
+    <div class="feat-head"><span class="feat-no">3</span><span class="feat-name">排行榜與大獎回放</span><span class="tag dev">開發中 · 12/10</span></div>
+    <div class="feat-goal"><b>目的</b>讓玩家看到 Combo 的遊戲真的會開大獎，帶他去玩那一款。</div>
+    <ol class="stories">
+      <li>身為玩家，我可以查看榜上的大獎紀錄並重看那一局，以便於知道哪款遊戲會開大獎。</li>
+      <li>身為玩家，我可以從回放直接進入那款遊戲，以便於馬上去玩。</li>
+      <li>身為從外部連結進來的訪客，我可以看回放；點「遊戲試玩」會開啟<strong>試玩 demo 網頁</strong>，不會進入平台。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">遊玩款數</span></div>
+    <div class="aside"><b>補充：</b>玩家自己沒上榜時，看不到自己的大獎紀錄；只放同專線、同幣別的紀錄，共線不開；入選門檻由 Server 調整，不需要前端發版。</div>
+  </div>
+
+  <div class="feat" id="f06">
+    <div class="feat-head"><span class="feat-no">6</span><span class="feat-name">我的最愛</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>讓玩家快速回到喜歡的遊戲，少一個找不到遊戲而離開的理由。</div>
+    <ol class="stories">
+      <li>身為玩家，我可以把遊戲加進或移出我的最愛，以便於留下喜歡的遊戲。</li>
+      <li>身為玩家，我可以從<strong>浮動 icon 選單</strong>打開我的最愛，點了直接開遊戲。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">遊玩款數</span><span class="kpi">從我的最愛選遊戲的玩家次日留存</span></div>
+    <div class="aside"><b>補充：</b>最愛清單依標籤彙整後，提供給 ⑦ 攔截頁做推薦。</div>
+  </div>
+
+  <div class="feat" id="f07">
+    <div class="feat-head"><span class="feat-no">7</span><span class="feat-name">攔截頁</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>在玩家要離開時，給他下一款想玩的遊戲。</div>
+    <ol class="stories">
+      <li>身為玩家，我離開遊戲時會看到 <strong>3 款</strong>推薦遊戲，點了直接開，以便於不用離開就能換一款玩。</li>
+      <li>身為系統，我依<strong>市場 × 玩家標籤</strong>（小／中／大客）推薦，並<strong>排除玩家正要離開的那一款</strong>。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">遊玩款數</span><span class="kpi">押注量</span><span class="kpi">押注局數</span></div>
+    <div class="aside"><b>補充：</b>推薦分數＝同標籤玩家的最愛 : 同標籤玩家平均局數排名＝6 : 4；我的最愛上線前只用標籤判定；不需要營運人員手動推薦；可依線路與幣別開關；觀察攔截頁與我的最愛的使用狀況，以及款數和總局數是否一起增加。⚠ 遊戲嵌在平台頁面裡，只能在玩家點我們自己的離開按鈕時跳出；玩家直接關分頁或按瀏覽器上一頁攔不到。</div>
+  </div>
+
+  <div class="feat" id="f08">
+    <div class="feat-head"><span class="feat-no">8</span><span class="feat-name">任務（每日任務＋週積分）</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>每天給玩家玩指定遊戲的目標，推動換款，也建立每天回來的習慣。</div>
+    <ol class="stories">
+      <li>身為玩家，我每天會拿到 <strong>3 個</strong>指定遊戲的任務（<strong>週末 5 個</strong>），以便於有明確的遊玩目標。</li>
+      <li>身為玩家，我不想玩某個任務指定的遊戲時，可以單獨重抽那一個任務，<strong>每天 2 次</strong>。</li>
+      <li>身為玩家，我完成任務可以拿到獎勵和週積分，積分累積可開週寶箱，以便於拿到更有價值的獎勵。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">押注量</span><span class="kpi">押注局數</span><span class="kpi">遊玩款數</span><span class="kpi">次日留存</span></div>
+    <div class="aside"><b>補充：</b>任務門檻與獎勵依玩家標籤設定，在任務啟動時決定，整個週期內不變，下一期才套用新標籤；任務由系統從列表隨機挑選，營運人員不用每天設定；不同任務與目標給的積分不同；週寶箱獎勵有 FREE SPIN 卡、現金、FREE GAME 卡，開箱畫面沿用抽寶箱；重置時間由活動自行設定。</div>
+  </div>
+
+
+  <div class="feat" id="f17">
+    <div class="feat-head"><span class="feat-no">17</span><span class="feat-name">FREE GAME 卡（指定遊戲卡）</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>讓玩家不花錢就直接體驗遊戲最精彩的免費遊戲段落。</div>
+    <ol class="stories">
+      <li>身為玩家，我可以用 FREE GAME 卡<strong>直接進入指定遊戲的免費遊戲</strong>，以便於不花錢就體驗精彩段落。</li>
+      <li>身為營運人員，我建卡時<strong>只能選 1 款有 Buy Bonus 的遊戲</strong>。</li>
+      <li>身為系統，我用該遊戲的 Buy FG 成本計算這張卡的價值，並套用<strong>結算上限</strong>。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi tbd">遊玩款數（提案值）</span><span class="kpi tbd">押注量（提案值）</span></div>
+    <div class="aside"><b>補充：</b>一張卡只對應 1 款遊戲，避免不同遊戲 Buy FG 成本不同的問題；其他規則比照 FREE SPIN 卡（押注依星級與幣值、有效期、建卡後不能修改只能複製、背包共用）。</div>
+  </div>
+
+</div></div></div>
+<div class="page" id="p-b"><span id="p-b-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" style="margin-bottom:8px"><div class="blk-num">03-B · 功能說明</div><h2>B · 玩家看不到的機率照顧</h2><p>三種池子同時符合時，順序為新手 → 個人 → 白池。</p></div>
+  <div class="feat" id="f04">
+    <div class="feat-head"><span class="feat-no">4</span><span class="feat-name">新手腳本（新手白池）</span><span class="tag live">腳本已上線</span><span class="tag hide">玩家看不到</span></div>
+    <div class="feat-goal"><b>目的</b>讓新手撐過前 50 局的去留判斷期。</div>
+    <ol class="stories">
+      <li>身為系統，我在玩家符合某款遊戲的新手條件時，立即標上該款的新手標籤，以便於不需要名單就能照顧新手。</li>
+      <li>身為系統，我用 Big Win 以上的獎項，以及 scatter ×2 的預中聽牌效果（瞇牌），以便於提高新手的手感、讓他願意繼續玩。</li>
+      <li>身為系統，我每次給聽牌畫面都<strong>留一筆紀錄</strong>，以便於事後確認玩家有看到 near win 畫面。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">押注局數</span></div>
+    <div class="aside"><b>補充：</b>新手＝玩家 × 每款遊戲；新手標籤優先於其他標籤，押注段高於設定值的玩家不給；新手白池預算和一般白池分開；「聽牌」紀錄目前不存在，需先補上。</div>
+  </div>
+
+  <div class="feat" id="f05">
+    <div class="feat-head"><span class="feat-no">5</span><span class="feat-name">黑白池</span><span class="tag dev">開發中</span><span class="tag hide">玩家看不到</span></div>
+    <div class="feat-goal"><b>目的</b>依玩家狀況調整遊玩感受——該照顧的照顧、該收的收。</div>
+    <ol class="stories">
+      <li>身為系統，我在玩家符合條件時，即時把他放進白池或黑池，以便於不必等人工處理。</li>
+      <li>身為系統，我用 Big Win／Mega Win 拉高白池玩家的 RTP，直接調低黑池玩家的 RTP。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">押注局數</span></div>
+    <div class="aside"><b>補充：</b>每個池子有獨立預算；同時符合兩個池子時白池優先；白池玩家又參加活動時，先加白池、再扣活動；營運人員設定進池條件與預算，可看到各池人數與已花費；理論（國清）與試算後台已完成，與現有防爆水池完全分開。</div>
+  </div>
+
+  <div class="feat" id="f16">
+    <div class="feat-head"><span class="feat-no">16</span><span class="feat-name">個人水池</span><span class="tag plan">規劃</span><span class="tag hide">玩家看不到</span></div>
+    <div class="feat-goal"><b>目的</b>個別玩家運氣太差時，用他身上的獎勵池拉回來，避免他因為一直輸而離開。</div>
+    <ol class="stories">
+      <li>身為 AM，我可以指定玩家並撥入照顧金額，以便於照顧特定玩家。</li>
+      <li>身為系統，玩家<strong>最近 N 局</strong>的 RTP 低於設定值時，我動用他的個人獎勵池發獎。</li>
+      <li>身為系統，玩家同時在白池時，我<strong>先用個人獎勵池，再用白池</strong>的獎勵池。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi tbd">押注局數（提案值）</span></div>
+    <div class="aside"><b>補充：</b>撥入的是額外的錢，和玩家自己的押注無關；一個玩家只有一個池，和遊戲無關。</div>
+  </div>
+
+</div></div></div>
+<div class="page" id="p-c"><span id="p-c-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" style="margin-bottom:8px"><div class="blk-num">03-C · 功能說明</div><h2>C · 後台與風控工具</h2><p>支撐所有活動的底層工具與成本控管。</p></div>
+  <div class="feat" id="f10">
+    <div class="feat-head"><span class="feat-no">10</span><span class="feat-name">動態 RTP</span><span class="tag infra">基礎建設</span></div>
+    <div class="feat-goal"><b>目的</b>讓多個活動可以一起辦，同時確保線路不虧損。</div>
+    <ol class="stories">
+      <li>身為營運人員，我可以在總表看到並設定每條線路的預設 RTP、各活動砍了多少、進行中活動的 RTP 佔比，以便於掌握每條線路的利潤空間。</li>
+      <li>身為營運人員，我可以在每個活動設定「<strong>開啟本活動時，砍該線路多少 % RTP</strong>」。</li>
+      <li>身為系統，我只對<strong>符合資格、還沒完成活動</strong>的玩家扣活動的 RTP。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">活動期間總 RTP 維持低於 100%</span></div>
+    <div class="aside"><b>補充：</b>總表算式範例：（預設）96.7% −（活動砍）1% ＋（活動獎勵）2% ＝（最終）97.7%；遊戲本身的 RTP 到達 92% 時加標示（只提醒、不擋）；白池玩家又參加活動時，先加白池、再扣活動。</div>
+  </div>
+
+  <div class="feat" id="f11">
+    <div class="feat-head"><span class="feat-no">11</span><span class="feat-name">AWC Free Spin 每月獲獎上限</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>AWC 發放的 Free Spin 不在我們控管內，用每月上限把這筆成本鎖住。</div>
+    <ol class="stories">
+      <li>身為營運人員，我可以設定<strong>每條線路</strong>每月 AWC Free Spin 可獲獎的金額上限，以便於控制這筆成本。</li>
+      <li>身為系統，當月到達上限後，之後的 AWC Free Spin 結果一律 <strong>no win</strong>（跨過上限的那一局也是 no win）。</li>
+      <li>身為 AM，累計到上限的 <strong>80%</strong> 時我會收到通知。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">每條線路每月 AWC Free Spin 獲獎金額不超過上限</span></div>
+    <div class="aside"><b>補充：</b>每月 1 日重置；名稱與 Combo 自家的 FREE SPIN 卡分開。</div>
+  </div>
+
+  <div class="feat" id="f12">
+    <div class="feat-head"><span class="feat-no">12</span><span class="feat-name">遊戲 → 線路開關</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>AM 上下架一款遊戲時，一次管理所有受影響的線路，不用一條一條點進去。</div>
+    <ol class="stories">
+      <li>身為 AM，我可以點進一款遊戲，看到所有線路的開關狀態並<strong>批次開關</strong>，以便於減少操作步驟。</li>
+      <li>身為 AM，我調整完<strong>點擊確認後才會生效</strong>。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">AM 上下架一款遊戲的操作步驟與時間減少</span></div>
+    <div class="aside"><b>補充：</b>原本「線路 → 遊戲」的管理頁保留；關閉後，正在玩的玩家會被踢出。</div>
+  </div>
+
+  <div class="feat" id="f13">
+    <div class="feat-head"><span class="feat-no">13</span><span class="feat-name">防爆水池自動重置</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>每月要人工設定的數字其實算得出來，改成系統自動算，不用排人管。</div>
+    <ol class="stories">
+      <li>身為系統，我每月 <strong>15 日</strong>用<strong>前一個月 GGR 的 20%</strong> 算出每條線路的新基底值並自動設定；低於最低值（約 500 USD）時用最低值。</li>
+      <li>身為系統，15 日當天 GGR 報表還沒出來時，我<strong>沿用舊值並通知負責人</strong>。</li>
+      <li>身為營運人員，我可以看到每次重置的紀錄，並在自動重置後<strong>手動覆寫</strong>。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">每月人工設定次數＝0</span><span class="kpi">自動算出的值與公式一致</span></div>
+  </div>
+
+  <div class="feat" id="f14">
+    <div class="feat-head"><span class="feat-no">14</span><span class="feat-name">後台帳號權限管理</span><span class="tag infra">基礎建設</span></div>
+    <div class="feat-goal"><b>目的</b>不再共用 admin 帳號，每個操作都查得到是誰做的，也降低帳密外流的風險。</div>
+    <ol class="stories">
+      <li>身為 admin，我可以建立、停用、刪除 operator 與 platform 帳號，以便於有人離職時直接刪掉他的帳號。</li>
+      <li>身為使用者，我登入後只看得到<strong>我的角色能用的頁面</strong>。</li>
+      <li>身為 admin，我可以建立 platform 帳號（例如 AWC 用的帳號），並<strong>指定它能看哪些線路的資料</strong>。</li>
+      <li>身為 admin，我可以查看<strong>所有後台設定</strong>的操作紀錄：誰、什麼時間、改了什麼。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi">每筆後台設定修改都查得到操作人</span></div>
+    <div class="aside"><b>補充：</b>admin 帳號只能由 Server 提供；權限只到頁面這一層，同一頁裡不再細分按鈕。</div>
+  </div>
+
+  <div class="feat" id="f15">
+    <div class="feat-head"><span class="feat-no">15</span><span class="feat-name">貨幣清單管理</span><span class="tag plan">規劃</span></div>
+    <div class="feat-goal"><b>目的</b>新增貨幣不必再等後端工程師手動加。</div>
+    <ol class="stories">
+      <li>身為 admin，我可以在後台新增貨幣，並編輯代碼、名稱、小數位數、對 USD 的換算，以便於新市場上線時自己處理。</li>
+      <li>身為 admin，已經在使用中的貨幣<strong>只能停用、不能刪除</strong>。</li>
+    </ol>
+    <div class="lbl">成功指標</div><div class="kpis"><span class="kpi none">不設成效指標（目的是減少後端工作）</span></div>
+  </div>
+</div></div></div>
+<div class="page" id="p-plan"><span id="p-plan-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" id="s04">
+  <div class="blk-num">04 · 介面入口</div>
+  <h2>每個功能出現在哪裡</h2>
+  <p>這裡只列入口位置，畫面細節在各功能開規格書時補上 UI 示意。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:24%">介面位置</th><th style="width:34%">功能</th><th>玩家或使用者在這裡做什麼</th></tr></thead>
+    <tbody>
+      <tr><td>遊戲內浮動 icon 選單</td><td>①-A 抽寶箱、③ 排行榜與大獎回放、⑥ 我的最愛、背包（②⑰）</td><td>看活動進度、看大獎回放、開我的最愛、查看與使用道具卡</td></tr>
+      <tr><td>離開遊戲時</td><td>⑦ 攔截頁</td><td>看到 3 款推薦遊戲，點了直接開；或繼續離開</td></tr>
+      <tr><td>外部連結</td><td>③ 大獎回放</td><td>看回放；點「遊戲試玩」開啟試玩 demo 網頁</td></tr>
+      <tr><td>待定</td><td>⑧ 任務、①-B 抽寶箱（彩池版）</td><td><span class="tag tbd">入口待定</span> 見 09 待確認</td></tr>
+      <tr><td>玩家看不到</td><td>④ 新手白池、⑤ 黑白池、⑯ 個人水池</td><td>只影響機率結果與盤面演出</td></tr>
+      <tr><td>CMB 後台</td><td>①②⑤⑦⑧⑰ 的活動與道具設定、⑩–⑮ 全部</td><td>營運人員、AM 設定活動、道具、線路、水池、帳號與貨幣</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="blk" id="s05">
+  <div class="blk-num">05 · 時程</div>
+  <h2>建議排程：先補地基，再上新玩法</h2>
+  <p>原則：①②③ 先收尾；Q1 先做「依玩家調 RTP」的底層與帳號權限，因為後面很多功能都靠它們；Q2 再上任務、抽寶箱（彩池版）、攔截頁這類新玩法。<strong>此排程尚未經工程確認</strong>，工時見 06。</p>
+
+  <div class="gantt"><div class="gin">
+    <div class="grow head"><div>功能</div><div>2026/11</div><div>12</div><div>2027/01</div><div>02</div><div>03</div><div>04</div><div>05</div><div>06</div></div>
+    <div class="grow sep"><div>收尾與持續營運</div></div>
+    <div class="grow"><div class="glabel">①-A 抽寶箱</div><div class="bar x" style="grid-column:2 / 10">持續調參數、換節慶主題，穩定後轉每日固定活動</div></div>
+    <div class="grow"><div class="glabel">② FREE SPIN 卡</div><div class="bar g" style="grid-column:2 / 3">修復上線</div></div>
+    <div class="grow"><div class="glabel">③ 排行榜與大獎回放</div><div class="bar g" style="grid-column:3 / 4">12/10 上線</div></div>
+    <div class="grow sep"><div>地基（基礎建設與風控）</div></div>
+    <div class="grow"><div class="glabel">⑪ AWC Free Spin 上限</div><div class="bar o" style="grid-column:3 / 5">成本無上限，優先處理</div></div>
+    <div class="grow"><div class="glabel">⑬ 防爆水池自動重置</div><div class="bar o" style="grid-column:3 / 4">小項</div></div>
+    <div class="grow"><div class="glabel">⑭ 帳號權限管理 🔧</div><div class="bar o" style="grid-column:3 / 6">帳號、頁面權限、操作紀錄</div></div>
+    <div class="grow"><div class="glabel">🔧 依玩家調 RTP 底層＋⑤ 黑白池</div><div class="bar p" style="grid-column:4 / 6">④⑤⑩⑯ 共用</div></div>
+    <div class="grow"><div class="glabel">⑩ 動態 RTP 🔧</div><div class="bar o" style="grid-column:5 / 7">總表＋活動砍 RTP 欄位</div></div>
+    <div class="grow"><div class="glabel">⑫ 遊戲 → 線路開關</div><div class="bar o" style="grid-column:4 / 5">小項</div></div>
+    <div class="grow"><div class="glabel">⑮ 貨幣清單管理</div><div class="bar o" style="grid-column:6 / 7">小項</div></div>
+    <div class="grow sep"><div>玩家功能</div></div>
+    <div class="grow"><div class="glabel">④ 新手白池＋聽牌紀錄</div><div class="bar p" style="grid-column:5 / 8">依遊戲逐款接入</div></div>
+    <div class="grow"><div class="glabel">⑥ 我的最愛</div><div class="bar b" style="grid-column:5 / 7">先累積最愛資料</div></div>
+    <div class="grow"><div class="glabel">⑰ FREE GAME 卡</div><div class="bar b" style="grid-column:6 / 8">有 Buy Bonus 的遊戲</div></div>
+    <div class="grow"><div class="glabel">⑦ 攔截頁</div><div class="bar b" style="grid-column:7 / 9">先用標籤推薦</div></div>
+    <div class="grow"><div class="glabel">①-B 抽寶箱（彩池版）</div><div class="bar a" style="grid-column:7 / 9">需要 ⑩ 先完成</div></div>
+    <div class="grow"><div class="glabel">⑯ 個人水池</div><div class="bar p" style="grid-column:7 / 9">沿用 RTP 底層</div></div>
+    <div class="grow"><div class="glabel">⑧ 任務</div><div class="bar a" style="grid-column:7 / 10">先上累積押注任務</div></div>
+  </div></div>
+  <div class="legend"><span class="g">收尾上線</span><span class="o">基礎建設與風控</span><span class="p">機率照顧</span><span class="b">換款類玩家功能</span><span class="a">押注類玩家功能</span><span class="x">持續營運</span></div>
+
+  <div class="note warn"><strong>相依關係：</strong>①-B 抽寶箱（彩池版）要等 ⑩ 動態 RTP 的「活動砍 RTP」欄位；④⑤⑩⑯ 共用「依玩家調 RTP」底層，只做一套；⑦ 攔截頁的 6:4 推薦要等 ⑥ 我的最愛累積資料；⑧ 任務週寶箱的 FREE GAME 卡要等 ⑰；④ 的 near win 效果要先補「聽牌」紀錄才驗證得了。</div>
+</div>
+<div class="blk" id="s06">
+  <div class="blk-num">06 · Task 與職能工時</div>
+  <h2>各職能要做多久</h2>
+  <p>單位：人週（1 人做 1 週）。表內是工程估時，<strong>尚未乘緩衝</strong>；排程時依慣例乘 1.5 倍當基準、乘 2 倍當悲觀。<span class="tag tbd">待 Kurt／Wayne／美術主管校正</span></p>
+
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>功能</th><th class="num">企劃&amp;PM</th><th class="num">後端</th><th class="num">前端</th><th class="num">美術</th><th class="num">機率</th><th class="num">QA</th><th class="num">數據</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="9">收尾與持續營運</td></tr>
+      <tr><td>①-A 抽寶箱</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">—</td><td class="num">0.5</td><td class="num">0.5</td><td>美術為每檔主題</td></tr>
+      <tr><td>② FREE SPIN 卡</td><td class="num">—</td><td class="num">修 bug</td><td class="num">修 bug</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">0.5</td><td>修復中</td></tr>
+      <tr><td>③ 排行榜與大獎回放</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">0.5</td><td>美術 11/6 已交件</td></tr>
+      <tr class="grp"><td colspan="9">新開發</td></tr>
+      <tr><td>④ 新手白池</td><td class="num">1</td><td class="num">3</td><td class="num">—</td><td class="num">0.5</td><td class="num">2</td><td class="num">1.5</td><td class="num">1</td><td><span class="tag infra">基礎建設</span> 每款遊戲另加 0.5（接入＋聽牌紀錄）</td></tr>
+      <tr><td>⑤ 黑白池</td><td class="num">0.5</td><td class="num">3</td><td class="num">1</td><td class="num">—</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td><span class="tag infra">基礎建設</span> 含依玩家調 RTP 底層</td></tr>
+      <tr><td>⑥ 我的最愛</td><td class="num">0.5</td><td class="num">1</td><td class="num">1.5</td><td class="num">0.5</td><td class="num">—</td><td class="num">0.5</td><td class="num">—</td><td></td></tr>
+      <tr><td>⑦ 攔截頁</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">—</td><td class="num">1</td><td class="num">1</td><td>推薦算法要數據一起驗</td></tr>
+      <tr><td>⑧ 任務</td><td class="num">2</td><td class="num">4</td><td class="num">4</td><td class="num">1.5</td><td class="num">—</td><td class="num">2</td><td class="num">0.5</td><td>週寶箱沿用抽寶箱畫面</td></tr>
+      <tr><td>①-B 抽寶箱（彩池版）</td><td class="num">1</td><td class="num">3</td><td class="num">2.5</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">0.5</td><td>沿用舊版抽寶箱的畫面與後端架構</td></tr>
+      <tr><td>⑩ 動態 RTP</td><td class="num">1</td><td class="num">4</td><td class="num">2</td><td class="num">—</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td><span class="tag infra">基礎建設</span></td></tr>
+      <tr><td>⑪ AWC Free Spin 上限</td><td class="num">0.5</td><td class="num">2</td><td class="num">1</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">0.5</td><td></td></tr>
+      <tr><td>⑫ 遊戲 → 線路開關</td><td class="num">0.5</td><td class="num">1</td><td class="num">1.5</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">—</td><td></td></tr>
+      <tr><td>⑬ 防爆水池自動重置</td><td class="num">0.5</td><td class="num">1.5</td><td class="num">0.5</td><td class="num">—</td><td class="num">—</td><td class="num">0.5</td><td class="num">0.5</td><td></td></tr>
+      <tr><td>⑭ 帳號權限管理</td><td class="num">1</td><td class="num">3</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td class="num">2</td><td class="num">—</td><td><span class="tag infra">基礎建設</span> 之後所有後台功能都靠它留操作紀錄</td></tr>
+      <tr><td>⑮ 貨幣清單管理</td><td class="num">0.5</td><td class="num">1.5</td><td class="num">1</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">—</td><td></td></tr>
+      <tr><td>⑯ 個人水池</td><td class="num">1</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td>沿用依玩家調 RTP 底層</td></tr>
+      <tr><td>⑰ FREE GAME 卡</td><td class="num">1</td><td class="num">2.5</td><td class="num">2</td><td class="num">1</td><td class="num">—</td><td class="num">2</td><td class="num">0.5</td><td>背包沿用 FREE SPIN 卡；每款遊戲接入另加 0.5</td></tr>
+      <tr class="sum"><td>新開發合計</td><td class="num">12</td><td class="num">34.5</td><td class="num">22</td><td class="num">5.5</td><td class="num">7</td><td class="num">20.5</td><td class="num">7.5</td><td>不含每款遊戲接入</td></tr>
+      <tr class="sum"><td>× 1.5 基準</td><td class="num">18</td><td class="num">51.75</td><td class="num">33</td><td class="num">8.25</td><td class="num">10.5</td><td class="num">30.75</td><td class="num">11.25</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note warn"><strong>基礎建設（要先做，否則後面會卡住）：</strong>① <b>依玩家調 RTP 的底層</b>——④⑤⑩⑯ 都要依每個玩家即時切換 RTP，只做一套；沒先做，四個功能都無法上線。② <b>帳號權限與操作紀錄</b>——沒先做，後台每一項新設定都查不到是誰改的。③ <b>「聽牌」紀錄</b>——沒先補，near win 的效果無法驗證。</div>
+</div>
+</div></div></div>
+<div class="page" id="p-kpi"><span id="p-kpi-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" id="s07">
+  <div class="blk-num">07 · 成效目標</div>
+  <h2>給合庭看的成效數字</h2>
+  <p>目標值先<strong>追上 YB</strong>——YB 在 UFA SLOT 新館排名第 3，是我們最直接要搶的對手。每個功能上線前，先講清楚看哪個指標、基準值多少、希望提升多少；上線後依觀察期回報，決定擴大、調整或收掉。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:15%">目標</th><th style="width:20%">指標</th><th class="num">基準（Combo）</th><th class="num">目標（YB）</th><th class="num">差距</th><th>主要推動的功能</th></tr></thead>
+    <tbody>
+      <tr><td>押注次數</td><td>玩家局數<strong>中位數</strong></td><td class="num">81 局</td><td class="num">111 局</td><td class="num">+37%</td><td>①-A ①-B ② ④ ⑤ ⑦ ⑧ ⑯</td></tr>
+      <tr><td>新手局數</td><td>新玩家局數中位數</td><td class="num">67 局</td><td class="num">80 局</td><td class="num">+19%</td><td>④ ⑤ ⑯</td></tr>
+      <tr><td>押注量</td><td>人均押注（THB／日）</td><td class="num">1,563</td><td class="num">2,882</td><td class="num">+84%</td><td>①-A ①-B ② ⑦ ⑧ ⑰</td></tr>
+      <tr><td>遊玩款數</td><td>人均遊玩款數</td><td class="num">1.5 款</td><td class="num"><span class="tag tbd">待訂</span></td><td class="num">—</td><td>② ③ ⑥ ⑦ ⑧ ⑰</td></tr>
+      <tr><td>次日回流</td><td>次日留存</td><td class="num">20.3%</td><td class="num">29.5%</td><td class="num">+9.2 個百分點</td><td>② ⑥ ⑧（以 ② ⑧ 為主）</td></tr>
+      <tr><td>新手回流</td><td>新玩家次日留存</td><td class="num">8.5%</td><td class="num">9.6%</td><td class="num">+1.1 個百分點</td><td>② ④ ⑧</td></tr>
+      <tr><td>成本控制</td><td>活動期間線路總 RTP</td><td class="num">—</td><td class="num">&lt; 100%</td><td class="num">—</td><td>⑩ ⑪ ⑬</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><strong>判讀原則：</strong>基準與目標都用 UFA Slot 10 月資料（依日均玩家數加權）；局數用中位數，不用平均（Combo 平均 194 局，被少數重度玩家拉高）；同時上線的功能要分開看，避免成效互相混在一起。人均遊玩款數不在 UFA Slot 逐款資料裡，目標待另外取得資料後訂定。</div>
+  <div class="note warn"><strong>差距最大的兩項：</strong>人均押注要 +84%、次日留存要 +9.2 個百分點，單靠 CRM 很難達成，需要遊戲本身的機率調整與版位一起推。</div>
+</div>
+<div class="blk" id="s08">
+  <div class="blk-num">08 · 最小方案 vs 完整方案</div>
+  <h2>可以先上什麼、之後再補什麼</h2>
+  <p>只列已經講定「先上、後補」的功能；沒有拆分的功能為同一版。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:20%">功能</th><th style="width:40%">最小方案（先上）</th><th>完整方案（之後補）</th></tr></thead>
+    <tbody>
+      <tr><td>①-A 抽寶箱</td><td>單日活動、三客群門檻、9 抽必中最大獎</td><td>穩定後轉每日固定活動，固定時間換主題</td></tr>
+      <tr><td>④ 新手腳本</td><td>現行新手腳本（事先產生好的腳本組）</td><td>新手白池：即時標籤＋Big Win 以上獎項＋聽牌效果與紀錄</td></tr>
+      <tr><td>⑤ 黑白池</td><td>名單手動匯入（CSV）</td><td>符合條件即時標籤、即時進池</td></tr>
+      <tr><td>⑦ 攔截頁</td><td>只用同標籤平均局數排名推薦</td><td>加入同標籤玩家的最愛，比重 6 : 4</td></tr>
+      <tr><td>⑧ 任務</td><td>每日任務只有「累積押注」；週寶箱獎勵為 FREE SPIN 卡、現金</td><td>加「指定金額以上的 Mega Win」「指定金額以上的 Free Game」任務；週寶箱加 FREE GAME 卡</td></tr>
+      <tr><td>其餘功能</td><td colspan="2">同一版上線</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</div></div></div>
+<div class="page" id="p-open"><span id="p-open-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
+<div class="blk" id="s09">
+  <div class="blk-num">09 · 待確認</div>
+  <h2>還沒定的事</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:6%">#</th><th>事項</th><th style="width:22%">誰決定／提供</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>⑧ 任務、①-B 抽寶箱（彩池版）的玩家入口位置（是否也放浮動 icon 選單）</td><td>Milu</td></tr>
+      <tr><td>2</td><td>人均遊玩款數的正式基準與目標值（目前沿用 1.5）</td><td>數據提供資料後，Milu 訂定</td></tr>
+      <tr><td>3</td><td>④ 新手條件與排除押注段門檻；⑯ 個人水池「最近 N 局」的 N 與 RTP 門檻</td><td>Milu＋國清</td></tr>
+      <tr><td>4</td><td>⑯ 個人水池、⑰ FREE GAME 卡的成功指標（目前為提案值）</td><td>Milu</td></tr>
+      <tr><td>5</td><td>工時與排程校正；Q2 後端負荷偏高（後端 51.75 人週 ÷ 約 30 週 ≈ 1.7 人全職）</td><td>Kurt／Wayne／美術主管</td></tr>
+      <tr><td>6</td><td>①-B 抽寶箱（彩池版）的獎項內容、權重表、基礎獎金金額</td><td>數值</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="foot">CMB · CRM 組 × 市場遊戲組 · 功能藍圖 V1.2<br>2026-11-24 · Milu · 內部文件</div>
+</div></div></div>
+</div>
+<script>
+(function(){
+  var pages=[].slice.call(document.querySelectorAll('.page'));
+  // 建 rail
+  pages.forEach(function(p){
+    var rail=p.querySelector('.rail'); if(!rail) return;
+    var items=p.querySelectorAll('.main > .feat, .main > .blk');
+    [].forEach.call(items,function(el){
+      if(!el.id) return;
+      var a=document.createElement('a'); a.href='#'+el.id;
+      var no=el.querySelector('.feat-no'), nm=el.querySelector('.feat-name'), bn=el.querySelector('.blk-num'), h=el.querySelector('h2');
+      if(no&&nm){a.innerHTML='<b>'+no.textContent+'</b>'+nm.textContent;}
+      else if(h){a.innerHTML='<b>'+(bn?bn.textContent.split('·')[0].trim():'')+'</b>'+h.textContent;}
+      else return;
+      rail.appendChild(a);
+    });
+  });
+  var tabs=[].slice.call(document.querySelectorAll('.tabbar a'));
+  function show(id){
+    var el=id?document.getElementById(id):null;
+    var pg=el?(el.classList.contains('page')?el:el.closest('.page')):null;
+    if(!pg){pg=document.getElementById('home');el=null;}
+    pages.forEach(function(p){p.classList.toggle('on',p===pg);});
+    tabs.forEach(function(t){t.classList.toggle('on',t.getAttribute('data-tab')===pg.id);});
+    var cur=document.querySelector('.tabbar a.on'); if(cur&&cur.scrollIntoView){try{cur.scrollIntoView({block:'nearest',inline:'nearest'});}catch(e){}}
+    if(el&&el!==pg&&!/-top$/.test(id)){var y=el.getBoundingClientRect().top+window.pageYOffset-104;window.scrollTo(0,y);}else{window.scrollTo(0,0);}
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]'); if(!a) return;
+    var id=a.getAttribute('href').slice(1); e.preventDefault();
+    try{history.replaceState(null,'','#'+id);}catch(err){}
+    show(id);
+  });
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1));});
+  show(location.hash.slice(1));
+})();
+</script>
+<script>
+(function(){
+  var KEY='spec-theme', root=document.documentElement;
+  function get(){try{return localStorage.getItem(KEY);}catch(e){return null;}}
+  function set(v){try{localStorage.setItem(KEY,v);}catch(e){}}
+  var saved=get();
+  if(saved==='dark'||saved==='light'){root.setAttribute('data-theme',saved);}
+  document.getElementById('theme-toggle').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    if(!cur){cur=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next); set(next);
+  });
+})();
+</script>
+</body>
+</html>
