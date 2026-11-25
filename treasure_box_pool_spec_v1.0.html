@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抽寶箱（彩池版）規格書 V1.0 初版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F7F6; --surface:#FFFFFF; --surface-2:#F4F4F3;
+    --ink:#1A1A1A; --ink-soft:#434343; --ink-faint:#7A7A7A;
+    --line:#E4E4E2; --line-strong:#D6D6D6;
+    --accent:#E92B0D; --accent-ink:#B8220A; --accent-soft:#FDECE8;
+    --warn:#B42318; --warn-soft:#FBEAE8;
+    --good:#1F7A4D; --good-soft:#E3F2EA;
+    --info:#2F5FB3; --info-soft:#E8EEF8;
+    --shadow: rgba(20,20,20,0.06);
+    --rail-w: 240px; --head-h: 92px;
+    --red-badge:#E5484D;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111112; --surface:#18181A; --surface-2:#1F1F22;
+      --ink:#F2F2F2; --ink-soft:#BDBDBD; --ink-faint:#8A8A8A;
+      --line:rgba(255,255,255,0.09); --line-strong:rgba(255,255,255,0.18);
+      --accent:#FF5A3C; --accent-ink:#FF8A70; --accent-soft:rgba(255,90,60,0.14);
+      --warn:#FF7A6B; --warn-soft:rgba(255,122,107,0.13);
+      --good:#5CC48E; --good-soft:rgba(92,196,142,0.13);
+      --info:#7FA8EE; --info-soft:rgba(127,168,238,0.13);
+      --shadow: rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111112; --surface:#18181A; --surface-2:#1F1F22;
+    --ink:#F2F2F2; --ink-soft:#BDBDBD; --ink-faint:#8A8A8A;
+    --line:rgba(255,255,255,0.09); --line-strong:rgba(255,255,255,0.18);
+    --accent:#FF5A3C; --accent-ink:#FF8A70; --accent-soft:rgba(255,90,60,0.14);
+    --warn:#FF7A6B; --warn-soft:rgba(255,122,107,0.13);
+    --good:#5CC48E; --good-soft:rgba(92,196,142,0.13);
+    --info:#7FA8EE; --info-soft:rgba(127,168,238,0.13);
+    --shadow: rgba(0,0,0,0.4);
+  }
+  /* 舊版內文殘留的 inline 變數 → 對應新色票 */
+  :root{
+    --gold:var(--accent); --gold-light:var(--accent-ink); --gold-dim:var(--ink-faint);
+    --border:var(--line); --border-bright:var(--line-strong);
+    --text-primary:var(--ink); --text-secondary:var(--ink-soft); --text-dim:var(--ink-faint);
+    --dark:var(--bg); --dark-2:var(--surface-2); --dark-3:var(--surface-2); --dark-4:var(--surface-2); --dark-5:var(--line);
+    --red:var(--warn); --green:var(--good); --blue:var(--info); --teal:var(--good); --purple:#7C5CC4; --orange:#C2620A;
+    --red-line-strong:var(--warn); --red-line:var(--warn-soft); --red-fill:var(--warn-soft); --red-fill-faint:var(--warn-soft);
+    --green-line:var(--good-soft); --green-line-strong:var(--good); --green-fill:var(--good-soft); --green-fill-faint:var(--good-soft);
+    --blue-fill:var(--info-soft); --blue-line-strong:var(--info); --purple-fill:var(--info-soft); --purple-line:var(--line-strong);
+    --gold-fill:var(--accent-soft); --gold-fill-faint:var(--accent-soft); --gold-fill-weak:var(--accent-soft);
+    --green-bright:var(--good); --red-bright:var(--warn); --blue-bright:var(--info); --orange-bright:#C2620A; --purple-bright:#7C5CC4; --teal-bright:var(--good);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{ background:var(--bg); }
+  body{ margin:0; color:var(--ink);
+    font-family:'DM Sans','Noto Sans TC', system-ui, sans-serif;
+    font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ font-family:'DM Sans','Noto Sans TC',sans-serif; font-weight:700; color:var(--ink); text-wrap:balance; margin:0; }
+  a{ color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line-strong); }
+  a:hover{ color:var(--accent); border-bottom-color:var(--accent); }
+  .mono, code{ font-family:'DM Mono','IBM Plex Mono',monospace; font-size:0.88em; }
+  code{ background:var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:0 4px; color:var(--ink-soft); }
+  img{ max-width:100%; }
+
+  /* ───── header + tabs ───── */
+  .head{ position:sticky; top:0; z-index:30; background:var(--surface); border-bottom:1px solid var(--line); }
+  .topstrip{ display:flex; align-items:center; gap:12px; padding:10px 28px 4px; }
+  .topstrip-name{ font-weight:700; font-size:16px; color:var(--ink); border-bottom:none; }
+  .topstrip-name:hover{ color:var(--accent); }
+  .topstrip-sep{ color:var(--line-strong); }
+  .topstrip-ver{ font-family:'DM Mono',monospace; font-size:12px; color:var(--accent-ink); background:var(--accent-soft); border-radius:999px; padding:1px 10px; }
+  .topstrip-date{ margin-left:auto; color:var(--ink-faint); font-size:13px; font-family:'DM Mono',monospace; }
+  .theme-btn{ border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); border-radius:999px; padding:3px 12px; font-size:12px; cursor:pointer; font-family:inherit; }
+  .tabbar{ display:flex; gap:2px; overflow-x:auto; padding:0 20px; scrollbar-width:none; }
+  .tabbar::-webkit-scrollbar{ display:none; }
+  .tab{ flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; padding:10px 14px 9px; border-bottom:2px solid transparent; color:var(--ink-soft); font-size:14px; white-space:nowrap; }
+  .tab:hover{ color:var(--ink); border-bottom-color:var(--line-strong); }
+  .tab.on{ color:var(--ink); font-weight:700; border-bottom-color:var(--accent); }
+  .tab-home{ color:var(--ink-faint); }
+  body.at-home .tabbar{ display:none; }
+  body.at-home{ --head-h:49px; }
+
+  .page{ display:flex; max-width:1320px; margin:0 auto; }
+  .page[hidden]{ display:none; }
+  .rail{ width:var(--rail-w); flex:0 0 auto; position:sticky; top:var(--head-h); align-self:flex-start; max-height:calc(100vh - var(--head-h)); overflow-y:auto; padding:28px 10px 40px 24px; }
+  .rail a{ display:flex; gap:10px; align-items:baseline; padding:6px 10px; border-radius:8px; border-bottom:none; color:var(--ink-soft); font-size:13.5px; }
+  .rail a:hover{ background:var(--surface-2); color:var(--ink); }
+  .rail a .n{ font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-faint); flex:0 0 26px; }
+  .rail a.lv2{ padding-left:22px; font-size:12.5px; }
+  .main{ flex:1 1 auto; min-width:0; padding:36px 40px 100px; max-width:1040px; }
+  .section{ margin:0 0 72px; scroll-margin-top:calc(var(--head-h) + 16px); }
+  .section-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; padding-top:4px; }
+  .section-num{ font-family:'DM Mono',monospace; color:var(--accent); font-size:14px; font-weight:600; }
+  .section h2{ font-size:24px; }
+  .section-dek{ color:var(--ink-soft); font-size:15px; margin:6px 0 22px; max-width:760px; border-left:3px solid var(--accent); padding-left:12px; }
+  [id]{ scroll-margin-top:calc(var(--head-h) + 16px); }
+  p{ margin:0 0 14px; max-width:780px; }
+  .mini-h{ font-size:16px; color:var(--ink); margin:30px 0 10px; }
+
+  /* ───── landing ───── */
+  .page.landing{ display:block; }
+  .page.landing[hidden]{ display:none; }
+  .lmain{ padding:48px 40px 100px; }
+  .cover{ margin-bottom:40px; max-width:860px; }
+  .cover-tag{ font-family:'DM Mono',monospace; font-size:12px; color:var(--accent-ink); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+  .cover h1{ font-size:36px; line-height:1.2; margin-bottom:14px; }
+  .cover-purpose{ font-size:16.5px; color:var(--ink-soft); max-width:760px; margin-bottom:18px; }
+  .meta{ display:flex; flex-wrap:wrap; gap:6px 22px; font-size:13px; color:var(--ink); margin:0 0 12px; }
+  .meta span{ color:var(--ink-faint); margin-right:6px; }
+  .lcards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px; align-items:start; }
+  .lcard{ background:var(--surface); border:1px solid var(--line-strong); border-radius:12px; padding:18px 20px 18px; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease; }
+  .lcard:hover{ transform:translateY(-2px); box-shadow:0 10px 24px var(--shadow); }
+  .lcard-h{ display:flex; align-items:center; gap:10px; font-size:19px; font-weight:700; color:var(--ink); border-bottom:none; margin-bottom:6px; }
+  .lcard-h .ln{ font-family:'DM Mono',monospace; font-size:16px; color:var(--accent); }
+  .ldesc{ font-size:13px; color:var(--ink-soft); margin:0 0 8px; line-height:1.6; }
+  .lcard ul{ margin:0; padding-left:18px; }
+  .lcard li{ font-size:13.5px; line-height:1.85; color:var(--ink-faint); }
+  .lcard li a{ color:var(--ink-soft); border-bottom:none; }
+  .lcard li a:hover{ color:var(--accent); }
+  .lcard.appendix{ border-style:dashed; }
+
+  /* ───── overview blocks ───── */
+  .objective{ border:1px solid var(--line-strong); border-radius:12px; background:var(--surface); padding:14px 18px; margin:0 0 18px; max-width:820px; }
+  .obj-lbl{ font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--accent-ink); margin-bottom:4px; }
+  .obj-text{ font-size:16.5px; color:var(--ink); }
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0 0 22px; max-width:820px; }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:13.5px; color:var(--ink-soft); }
+  .card b{ display:block; color:var(--ink); font-size:14.5px; margin:2px 0 4px; }
+  .card-ic{ font-size:20px; }
+  .sub-head{ font-size:15px; font-weight:700; color:var(--ink); margin:30px 0 10px; display:flex; align-items:center; gap:8px; }
+  .sub-num{ font-family:'DM Mono',monospace; font-size:11px; font-weight:600; color:var(--accent-ink); background:var(--accent-soft); border-radius:999px; padding:2px 8px; }
+  ol.stories{ list-style:none; padding:0; margin:4px 0 8px; max-width:820px; }
+  ol.stories li{ display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--line); font-size:14.5px; }
+  ol.stories .sn{ flex:0 0 24px; height:24px; display:inline-grid; place-items:center; border-radius:50%; background:var(--accent-soft); color:var(--accent-ink); font-family:'DM Mono',monospace; font-size:11px; font-weight:700; margin-top:1px; }
+  .scope{ display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:900px; }
+  .scope > div{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 18px; }
+  .scope h4{ font-size:14.5px; margin-bottom:6px; }
+  .scope ul{ margin:0; padding-left:18px; font-size:14px; color:var(--ink-soft); }
+  .scope li{ margin:4px 0; }
+  @media (max-width:760px){ .scope{ grid-template-columns:1fr; } }
+
+  /* ───── tables ───── */
+  table{ border-collapse:collapse; }
+  .spec-table, .revlog table, .tbl{ width:100%; border-collapse:collapse; font-size:13.5px; margin:10px 0 18px; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .spec-table th, .revlog th, .tbl th{ text-align:left; font-size:12px; font-weight:600; color:var(--ink-faint); background:var(--surface-2); padding:9px 12px; border-bottom:1px solid var(--line-strong); vertical-align:bottom; }
+  .spec-table td, .revlog td, .tbl td{ padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-soft); }
+  .spec-table tr:last-child td, .tbl tr:last-child td{ border-bottom:none; }
+  .spec-table td strong, .tbl td strong{ color:var(--ink); }
+  .dim{ color:var(--ink-soft); }
+  .table-scroll, .tscroll{ overflow-x:auto; margin:10px 0 18px; }
+  .table-scroll .spec-table, .tscroll .spec-table{ margin:0; }
+  .region-td{ display:inline-grid; place-items:center; min-width:22px; height:22px; padding:0 4px; border-radius:11px; background:var(--red-badge); color:#fff; font-size:11.5px; font-weight:700; font-family:'DM Mono',monospace; }
+  td.region-td{ display:table-cell; background:none; color:var(--red-badge); text-align:center; }
+  .check{ color:var(--good); font-weight:700; } .cross{ color:var(--warn); font-weight:700; }
+  .ccy-pills{ display:flex; flex-wrap:wrap; gap:4px; margin:6px 0 10px; }
+  .ccy-pill{ font-family:'DM Mono',monospace; font-size:11px; border:1px solid var(--line-strong); border-radius:999px; padding:0 8px; color:var(--ink-soft); background:var(--surface); }
+
+  /* ───── text blocks ───── */
+  .sub-title{ font-size:16px; font-weight:700; color:var(--ink); margin:28px 0 10px; }
+  .body-text{ font-size:14.5px; color:var(--ink-soft); margin:0 0 12px; max-width:860px; }
+  .callout{ border-left:3px solid var(--line-strong); background:var(--surface-2); border-radius:0 10px 10px 0; padding:10px 14px; margin:10px 0 16px; font-size:14px; color:var(--ink-soft); line-height:1.7; max-width:900px; }
+  .callout strong{ color:var(--ink); }
+  .callout.info{ border-left-color:var(--info); background:var(--info-soft); }
+  .callout.warn{ border-left-color:#C2620A; background:#FCF1E4; }
+  .callout.danger{ border-left-color:var(--warn); background:var(--warn-soft); }
+  .callout.success{ border-left-color:var(--good); background:var(--good-soft); }
+  :root[data-theme="dark"] .callout.warn{ background:rgba(194,98,10,0.14); }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .callout.warn{ background:rgba(194,98,10,0.14); } }
+  .hypo-block{ border:1px solid var(--line-strong); border-radius:12px; padding:12px 16px; margin:10px 0 16px; background:var(--surface); }
+  .hypo-label{ font-family:'DM Mono',monospace; font-size:11px; color:var(--accent-ink); letter-spacing:.05em; margin-bottom:4px; }
+  .hypo-text{ font-size:15px; color:var(--ink); }
+  .info-grid-2, .info-grid-3{ display:grid; gap:12px; margin:10px 0 18px; }
+  .info-grid-2{ grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+  .info-grid-3{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  .info-card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .info-card-icon{ font-size:20px; }
+  .info-card-title{ font-weight:700; color:var(--ink); font-size:14px; margin:2px 0 4px; }
+  .info-card-desc{ font-size:13.5px; color:var(--ink-soft); }
+  .note-src{ font-size:12px; color:var(--ink-faint); margin:-6px 0 14px; }
+
+  /* ───── flows ───── */
+  .flow-wrap{ margin:10px 0 18px; }
+  .flow-v{ display:flex; flex-direction:column; align-items:flex-start; gap:0; }
+  .flow-step{ background:var(--surface); border:1px solid var(--line-strong); border-radius:12px; padding:10px 14px; width:100%; max-width:620px; min-width:0 !important; }
+  .flow-step.highlight{ border-color:var(--accent); }
+  .flow-step.success{ border-color:var(--good); }
+  .flow-step.warn{ border-color:var(--warn); }
+  .flow-step-num{ font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-faint); }
+  .flow-step-title{ font-weight:700; color:var(--ink); font-size:14.5px; }
+  .flow-step-desc{ font-size:13.5px; color:var(--ink-soft); }
+  .flow-arrow-down{ color:var(--ink-faint); padding:2px 0 2px 24px; font-size:15px; }
+  .flow-mini{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:6px 0 6px; }
+  .flow-mini-step{ display:inline-flex; gap:6px; align-items:baseline; border:1px solid var(--line-strong); border-radius:999px; padding:3px 12px; background:var(--surface); font-size:13px; }
+  .flow-mini-step span{ font-family:'DM Mono',monospace; font-size:11px; color:var(--accent-ink); }
+  .flow-mini-arrow{ color:var(--ink-faint); }
+  .flow-mini-note{ font-size:12.5px; color:var(--ink-faint); margin-bottom:12px; }
+  .inline-walkthrough{ margin:0 0 10px; }
+
+  /* ───── screenshot + region detail ───── */
+  .shot-map{ display:grid; grid-template-columns:minmax(0,7fr) minmax(0,3fr); gap:18px; align-items:start; margin:10px 0 18px; }
+  .shot-map.narrow{ grid-template-columns:minmax(0,6fr) minmax(0,4fr); }
+  .shot-map > .sub-title{ grid-column:1 / -1; margin:0; font-size:12px; color:var(--ink-faint); font-weight:600; letter-spacing:.04em; }
+  @media (max-width:860px){ .shot-map, .shot-map.narrow{ grid-template-columns:1fr; } }
+  .shot-frame{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px; margin:6px 0 14px; }
+  .shot-frame img{ display:block; width:100%; height:auto; border-radius:8px; cursor:zoom-in; }
+  .shot-ph{ display:none; padding:40px 12px; text-align:center; color:var(--ink-faint); font-size:13px; border:1px dashed var(--line-strong); border-radius:8px; }
+  .shot-cap{ font-size:12.5px; color:var(--ink-faint); margin-top:8px; line-height:1.55; }
+  .region-index-note{ font-size:12px; color:var(--ink-faint); }
+  .region-detail{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 16px; margin:0 0 12px; }
+  .region-detail h4{ font-size:15px; display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:8px; }
+  .rd-func{ font-weight:400; font-size:13.5px; color:var(--ink-soft); }
+  .rd-cols{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:760px){ .rd-cols{ grid-template-columns:1fr; } }
+  .rd-label{ font-size:12px; font-weight:700; color:var(--ink-faint); margin-bottom:4px; letter-spacing:.03em; }
+  .rd-list{ margin:0; padding-left:18px; font-size:13.5px; color:var(--ink-soft); }
+  .rd-list li{ margin:3px 0; }
+
+  /* currency tabs (後台數值表) */
+  .tab-bar{ display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px; }
+  .tab-btn{ border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); border-radius:999px; padding:4px 14px; font-size:13px; cursor:pointer; font-family:inherit; }
+  .tab-btn.active{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+  .tab-content{ display:none; } .tab-content.active{ display:block; }
+
+  /* events */
+  .ev{ display:grid; grid-template-columns:200px 1fr; gap:12px; padding:10px 14px; border-bottom:1px solid var(--line); font-size:14px; }
+  .ev:last-child{ border-bottom:none; }
+  .ev-name{ font-family:'DM Mono',monospace; font-size:12.5px; color:var(--accent-ink); }
+  .ev-box{ background:var(--surface); border:1px solid var(--line); border-radius:12px; margin:10px 0 18px; }
+  @media (max-width:700px){ .ev{ grid-template-columns:1fr; gap:2px; } }
+
+  /* changelog */
+  .revlog{ margin:10px 0; }
+  .revlog-title{ display:none; }
+  .revlog-note{ font-size:12.5px; color:var(--ink-faint); }
+  .revlog td:nth-child(1), .revlog td:nth-child(2){ white-space:nowrap; }
+  tr.hl-row td{ background:var(--accent-soft); }
+
+  /* lightbox */
+  .lb-overlay{ position:fixed; inset:0; z-index:999; background:rgba(0,0,0,.82); display:none; align-items:center; justify-content:center; }
+  .lb-overlay.on{ display:flex; }
+  .lb-img{ max-width:min(1680px,94vw); max-height:92vh; border-radius:8px; }
+  .lb-close{ position:absolute; top:16px; right:18px; background:#fff; color:#111; border:none; border-radius:999px; width:36px; height:36px; font-size:16px; cursor:pointer; }
+  .lb-hint{ position:absolute; bottom:14px; left:0; right:0; text-align:center; color:#ddd; font-size:12px; }
+
+  @media (max-width:900px){
+    :root{ --head-h:96px; }
+    .rail{ display:none; }
+    .main{ padding:26px 16px 80px; }
+    .lmain{ padding:28px 16px 80px; }
+    .topstrip{ padding:10px 16px 4px; }
+    .tabbar{ padding:0 8px; }
+    .topstrip-sep, .topstrip-date{ display:none; }
+    .cover h1{ font-size:28px; }
+  }
+  @media print{ .head{ position:static; } .page[hidden]{ display:flex; } .rail{ display:none; } .lb-overlay{ display:none !important; } }
+
+</style>
+<style>
+  .tbd,.prop{ display:inline-block; font-size:11px; font-weight:700; border-radius:999px; padding:0 8px; margin:0 2px; line-height:1.7; vertical-align:1px; white-space:nowrap; }
+  .tbd{ background:var(--warn-soft); color:var(--warn); border:1px solid var(--warn); }
+  .prop{ background:var(--info-soft); color:var(--info); border:1px solid var(--info); }
+  .tag{ display:inline-block; font-size:11.5px; border-radius:999px; padding:0 8px; margin:1px 3px 1px 0; border:1px solid var(--line-strong); background:var(--surface-2); color:var(--ink-soft); white-space:nowrap; }
+  .tag-req{ border-color:var(--accent); color:var(--accent-ink); background:var(--accent-soft); font-weight:700; }
+  .mock{ background:#16151c; color:#f4f1e8; border-radius:16px; padding:14px; max-width:380px; width:100%; font-size:13px; position:relative; border:1px solid var(--line-strong); }
+  .mock > div{ position:relative; }
+  .mock-head{ display:flex; justify-content:space-between; font-weight:700; margin-bottom:10px; }
+  .mock-pool{ text-align:center; background:linear-gradient(180deg,#3a2a10,#1f1608); border:1px solid #c9a24a; border-radius:12px; padding:10px; margin-bottom:8px; }
+  .mock-lbl{ font-size:11px; color:#d8c08a; letter-spacing:.08em; }
+  .mock-num{ font-size:24px; font-weight:700; color:#ffd36b; font-family:'DM Mono',monospace; }
+  .mock-marq{ background:#24222c; border-radius:999px; padding:4px 12px 4px 30px; font-size:11.5px; margin-bottom:8px; color:#e9e4d6; }
+  .mq-t{ display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mock-chance{ padding:6px 4px 8px 30px; }
+  .mock-bar{ height:6px; background:#33303c; border-radius:999px; margin:4px 0; overflow:hidden; }
+  .mock-bar i{ display:block; height:100%; background:#E92B0D; }
+  .mock-small{ font-size:11px; color:#b9b3a3; }
+  .mock-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:8px; background:#201e27; border-radius:12px; }
+  .mock-grid > div{ aspect-ratio:1/1; display:grid; place-items:center; background:linear-gradient(160deg,#7a4e1d,#4a2d0e); border:1px solid #c9a24a; border-radius:10px; font-size:20px; color:#ffd36b; font-weight:700; }
+  .mock-foot{ text-align:center; font-size:11.5px; color:#b9b3a3; margin-top:8px; }
+  .mbadge{ position:absolute; left:-6px; top:-6px; z-index:2; width:20px; height:20px; border-radius:50%; background:var(--red-badge); color:#fff; font-size:11px; font-weight:700; display:grid; place-items:center; font-family:'DM Mono',monospace; }
+  .mock-grid > .mbadge{ position:absolute; aspect-ratio:auto; background:var(--red-badge); border:none; font-size:11px; color:#fff; }
+  .mock-pool, .mock-grid{ position:relative; }
+  .shot-map > *{ min-width:0; }
+  @media (max-width:600px){ .spec-table{ display:block; overflow-x:auto; } .mock{ max-width:100%; } .mock-marq{ max-width:100%; } }
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="topstrip"><a class="topstrip-name" href="#home">抽寶箱（彩池版）規格書</a><span class="topstrip-ver">V1.0 初版</span><span class="topstrip-sep">·</span><span style="color:var(--ink-faint);font-size:13px;">Milu（初版）／Shaun（補齊）</span><span class="topstrip-date">2026-11-24</span><button class="theme-btn" id="theme-btn" type="button">亮／暗</button></div>
+  <nav class="tabbar" role="tablist"><a class="tab tab-home" href="#home" data-tab="home">⌂ 首頁</a><a class="tab" href="#overview" data-tab="overview">總覽</a><a class="tab" href="#rules" data-tab="rules">名詞與規則</a><a class="tab" href="#player" data-tab="player">玩家畫面</a><a class="tab" href="#server" data-tab="server">Server 設定</a><a class="tab" href="#tasks" data-tab="tasks">開發 Task 與成本</a><a class="tab" href="#kpi" data-tab="kpi">成效指標</a><a class="tab" href="#plans" data-tab="plans">最小 vs 完整</a><a class="tab" href="#events" data-tab="events">事件紀錄</a><a class="tab" href="#openq" data-tab="openq">待確認</a><a class="tab" href="#log" data-tab="log">修改紀錄</a></nav>
+</header>
+
+<!-- ═════════ 首頁 ═════════ -->
+<div class="page landing" id="home" data-tab="home"><main class="lmain">
+<div class="cover"><div class="cover-tag">CRM · 抽寶箱（彩池版）· ①-B</div><h1>抽寶箱（彩池版）</h1>
+<p class="cover-purpose">押一段就能抽一次，用看得到的彩池和別人中大獎的紀錄，給玩家持續押注的動機。玩家每累積押注達門檻就得到一次抽獎機會，可以留到活動結束再抽；每一筆押注的 1% 灌入彩池，最大獎是當下彩池的 30%。首發上 MPS（PHP、MMK）。</p>
+<div class="meta"><div><span>類型</span>CRM 玩家端活動（第一版無操作後台）</div><div><span>版本</span>V1.0 初版（草稿）</div><div><span>日期</span>2026-11-24</div><div><span>作者</span>Milu（初版）· Shaun（補齊）</div><div><span>平台</span>Force / Combo Gaming</div><div><span>依據</span>CRM 市場遊戲組功能藍圖 V1.2 ①-B、D-086、D-087、D-088</div></div>
+</div>
+<div class="callout warn" style="max-width:860px;margin-bottom:28px;"><strong>給 Shaun：</strong>規則已全部拍板（D-088）。剩下標 <span class="tbd">待補</span> 的是數值（機率組後續提供）、畫面原型、文案與開發附錄，清單見 <a href="#shaun-todo">待確認 › 補齊清單</a>。</div>
+<div class="lcards">
+<div class="lcard" data-go="overview"><a class="lcard-h" href="#overview"><span class="ln">01</span>總覽</a><p class="ldesc">開發目的、背景、Story、本版做與不做。</p><ul><li><a href="#purpose">目的與背景</a></li><li><a href="#stories">Story</a></li><li><a href="#scope">做／不做</a></li></ul></div>
+<div class="lcard" data-go="rules"><a class="lcard-h" href="#rules"><span class="ln">02</span>名詞與規則</a><p class="ldesc">名詞、運作流程圖、彩池與抽獎規則、暫停、異常狀態。</p><ul><li><a href="#glossary">名詞定義</a></li><li><a href="#sysflow">運作流程</a></li><li><a href="#pool-rules">彩池規則</a></li><li><a href="#draw-rules">抽獎規則</a></li><li><a href="#pause-rules">暫停</a></li><li><a href="#edge">異常狀態</a></li></ul></div>
+<div class="lcard" data-go="player"><a class="lcard-h" href="#player"><span class="ln">03</span>玩家畫面</a><p class="ldesc">選單外顯彩池、抽獎面板、翻牌演出、跑馬燈。</p><ul><li><a href="#ui-entry">入口與外顯彩池</a></li><li><a href="#ui-panel">抽獎面板</a></li><li><a href="#ui-reveal">翻牌演出順序</a></li></ul></div>
+<div class="lcard" data-go="server"><a class="lcard-h" href="#server"><span class="ln">04</span>Server 設定</a><p class="ldesc">第一版沒有操作後台，所有參數寫在 server，由後端修改。</p><ul><li><a href="#srv-params">活動參數</a></li><li><a href="#srv-prize">獎項與權重</a></li><li><a href="#srv-ops">營運操作方式</a></li></ul></div>
+<div class="lcard" data-go="tasks"><a class="lcard-h" href="#tasks"><span class="ln">05</span>開發 Task 與成本</a><p class="ldesc">各職能工作項目（基礎建設另外標示）、人力與金錢成本。</p><ul><li><a href="#task-list">Task 列表</a></li><li><a href="#cost">成本評估</a></li></ul></div>
+<div class="lcard" data-go="kpi"><a class="lcard-h" href="#kpi"><span class="ln">06</span>成效指標</a><p class="ldesc">怎樣算成功：硬性與軟性指標。</p><ul><li><a href="#kpi-main">指標</a></li></ul></div>
+<div class="lcard" data-go="plans"><a class="lcard-h" href="#plans"><span class="ln">07</span>最小 vs 完整</a><p class="ldesc">本版（最小）與後續完整版的功能對照。</p><ul><li><a href="#compare">功能對照</a></li></ul></div>
+<div class="lcard" data-go="events"><a class="lcard-h" href="#events"><span class="ln">08</span>事件紀錄</a><p class="ldesc">要留哪些紀錄、回答什麼問題。</p><ul><li><a href="#ev-list">事件清單</a></li></ul></div>
+<div class="lcard" data-go="openq"><a class="lcard-h" href="#openq"><span class="ln">09</span>待確認</a><p class="ldesc">還沒提供的資料與 Shaun 的補齊清單。</p><ul><li><a href="#oq-list">待確認事項</a></li><li><a href="#shaun-todo">補齊清單</a></li></ul></div>
+<div class="lcard" data-go="log"><a class="lcard-h" href="#log"><span class="ln">10</span>修改紀錄</a><p class="ldesc">各版本修改摘要。</p><ul><li><a href="#revlog">修改紀錄</a></li></ul></div>
+<div class="lcard appendix"><span class="lcard-h"><span class="ln">＋</span>開發附錄 <span class="tbd">待補</span></span><p class="ldesc">給工程與 QA：API、資料表、彩池扣款的併發處理、server 設定格式、驗收情境。另開檔案。</p></div>
+</div></main></div>
+
+<!-- ═════════ 01 總覽 ═════════ -->
+<div class="page" id="overview" data-tab="overview"><nav class="rail"><a href="#purpose"><span class="n">01</span>目的與背景</a><a href="#stories"><span class="n">02</span>Story</a><a href="#scope"><span class="n">03</span>做／不做</a></nav><main class="main">
+<section class="section" id="purpose"><div class="section-head"><span class="section-num">01</span><h2>開發目的與背景</h2></div><p class="section-dek">為什麼在舊版抽寶箱之外，再做一個彩池版。</p>
+<div class="objective"><div class="obj-lbl">目的 · OBJECTIVE</div><div class="obj-text">押一段就能抽一次，用<b>看得到的彩池</b>和<b>別人中大獎的紀錄</b>，給玩家持續押注的動機。</div></div>
+<div class="cards">
+<div class="card"><div class="card-ic">💰</div><b>獎金看得到、會長大</b><div>彩池金額隨所有人押注一起增加，選單沒點開也看得到數字在漲。</div></div>
+<div class="card"><div class="card-ic">📣</div><b>別人真的有中</b><div>跑馬燈重播最近 10 筆大獎，讓玩家相信大獎會開出來。</div></div>
+<div class="card"><div class="card-ic">⏳</div><b>機會可以留著</b><div>抽獎機會累計到活動結束，玩家可以等彩池變大再抽。</div></div>
+</div>
+<div class="sub-title">背景：為什麼要做</div>
+<ul class="rd-list" style="max-width:860px;font-size:14.5px;">
+<li>CRM 三個目標的第一項是<b>提升押注局數</b>。UFA Slot 2026 年 10 月，Combo 玩家局數中位數 81 局，YB 是 111 局（差 37%）；人均押注 1,563 vs 2,882 THB／日。</li>
+<li>舊版抽寶箱（①-A）是<b>單日活動</b>，每天重置、獎池固定，適合「今天再玩一下」，但玩家看不到更大的目標。</li>
+<li>原本規劃的幸運輪暫緩（D-086），機制併入本功能；灰色市場的合作方向偏「彩池」。</li>
+<li>D-087 定下核心規則；D-088 定下成本、入口、跑馬燈、暫停、首發 MPS 與第一版不做操作後台。</li>
+</ul>
+<div class="sub-title">決策關係人</div>
+<table class="spec-table"><thead><tr><th>角色</th><th>人</th><th>在這個功能裡</th></tr></thead><tbody>
+<tr><td>決策者</td><td>Milu</td><td>規則、範圍、獎項方向拍板</td></tr>
+<tr><td>影響決策</td><td>曉陽（CEO）、合庭（COO）</td><td>曉陽看策略與 Story；合庭看成效數字與成本</td></tr>
+<tr><td>規格補齊</td><td>Shaun</td><td>補完畫面、文案、server 設定格式與開發附錄</td></tr>
+<tr><td>數值</td><td>機率組</td><td>獎項、權重表、基礎獎金、門檻、大獎金額（PHP、MMK）</td></tr>
+<tr><td>實作評估</td><td>Wayne／Tina／Eric（後端）、坤佑／Greene（Web 前端）、千又（美術）</td><td>工時重估、技術可行性</td></tr>
+<tr><td>首發平台</td><td>MPS（Marc）</td><td>上線時程與測試配合</td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="stories"><div class="section-head"><span class="section-num">02</span><h2>Story</h2></div><p class="section-dek">功能範圍以這些 Story 為準，驗收時逐條對照。</p>
+<div class="sub-head"><span class="sub-num">02.1</span>身為玩家</div>
+<ol class="stories">
+<li><span class="sn">1</span><span>身為玩家，我每次累積押注達門檻就得到一次抽獎機會，機會<b>可以累計到活動結束</b>，以便於我想抽的時候再抽。</span></li>
+<li><span class="sn">2</span><span>身為玩家，我翻開一格拿到獎項後，會先看到<b>其他格子原本是什麼</b>，再全部蓋回重新抽。</span></li>
+<li><span class="sn">3</span><span>身為玩家，我可以看到目前的<b>彩池金額</b>，以及其他玩家抽到大獎的<b>跑馬燈</b>，以便於相信大獎真的會開出來。</span></li>
+<li><span class="sn">4</span><span>身為玩家，選單沒點開時，我也能在浮動 icon 旁看到<b>目前彩池金額</b>往上跳，以便於知道彩池在變大。</span></li>
+<li><span class="sn">5</span><span>身為玩家，我可以看到自己還剩幾次可抽、再押多少能得到下一次，以便於決定要不要繼續押。</span></li>
+<li><span class="sn">6</span><span>身為玩家，我抽到的現金直接進主錢包、FREE SPIN 卡進背包，以便於馬上使用。</span></li>
+</ol>
+<div class="sub-head"><span class="sub-num">02.2</span>身為系統</div>
+<ol class="stories">
+<li><span class="sn">7</span><span>身為系統，我先放入一筆<b>基礎獎金</b>，之後<b>每一筆押注的 1%</b> 灌入彩池；FREE SPIN 卡局、FREE GAME、取消的注單都不算。</span></li>
+<li><span class="sn">8</span><span>身為系統，我依權重表抽出獎項：銘謝惠顧（0 元）、固定獎項、FREE SPIN 卡，以及少數「彩池 × n%」獎；<b>最大獎＝當下彩池的 30%</b>。只有彩池獎從彩池扣。</span></li>
+<li><span class="sn">9</span><span>身為系統，我在玩家點格子之前就決定結果；其他格子是依權重表另外產生的畫面。</span></li>
+<li><span class="sn">10</span><span>身為系統，同時有多人抽中彩池獎時，我依先後順序計算，每一筆都以扣完前一筆後的彩池金額為準。</span></li>
+<li><span class="sn">11</span><span>身為系統，同一條線路已經有舊版抽寶箱（①-A）在進行時，我不讓彩池版上線，反之亦然。</span></li>
+<li><span class="sn">12</span><span>身為系統，活動結束時我把玩家還沒用的抽獎機會作廢，並回收剩餘彩池。</span></li>
+</ol>
+<div class="sub-head"><span class="sub-num">02.3</span>身為營運人員</div>
+<ol class="stories">
+<li><span class="sn">13</span><span>身為營運人員，我把活動參數（線路、幣別、期間、基礎獎金、門檻、獎項與權重、大獎金額）交給後端寫進 server，以便於第一版不等後台就能上線。</span></li>
+<li><span class="sn">14</span><span>身為營運人員，我可以請後端暫停活動；暫停期間不灌入彩池、玩家不能抽、不累積進度，已得到的機會保留。</span></li>
+</ol>
+</section>
+
+<section class="section" id="scope"><div class="section-head"><span class="section-num">03</span><h2>本版做什麼 · 不做什麼</h2></div><p class="section-dek">範圍邊界。右欄的項目日後要做時另開規格。</p>
+<div class="scope">
+<div><h4>✔ 本版要做</h4><ul>
+<li>彩池：每條線路 × 每個幣別各一個，基礎獎金＋押注 1% 灌入</li>
+<li>抽獎機會：累積押注達門檻 +1 次，累計到活動結束</li>
+<li>浮動 icon 旁外顯彩池金額（選單未展開也看得到）</li>
+<li>抽獎面板：彩池金額、跑馬燈、剩餘次數、9 格翻牌、揭示其他格、蓋回重抽</li>
+<li>獎項：銘謝惠顧、固定獎項、FREE SPIN 卡、彩池 × n%（最高 30%）</li>
+<li>跑馬燈：超過指定金額的大獎，保留 10 筆循環重播，帳號遮蔽同排行榜</li>
+<li>活動參數寫在 server；暫停由後端改設定</li>
+<li>新舊版同線路互斥檢查</li>
+</ul></div>
+<div><h4>✘ 本版不做</h4><ul>
+<li>操作後台（活動設定、權重表、彩池監控），之後補</li>
+<li>⑩ 動態 RTP 串接（來不及，先不接）</li>
+<li>每日重置</li>
+<li>小中大客分群</li>
+<li>公開各獎項機率</li>
+<li>跑馬燈在遊戲畫面中顯示（只在面板內）</li>
+<li>舊版抽寶箱（①-A）與 FREE SPIN 卡本身的修改</li>
+</ul></div>
+</div>
+<div class="callout danger"><strong>風險：</strong>本版不接 ⑩ 動態 RTP，沒有機制把活動發出去的錢從遊戲 RTP 扣回來。活動期間線路實際多發的金額＝<b>彩池獎派出總額＋固定獎項＋FREE SPIN 卡</b>，會直接反映在 MPS 線路的 RTP 上。試算方式見 <a href="#cost">成本評估</a>。</div>
+</section>
+</main></div>
+
+<!-- ═════════ 02 名詞與規則 ═════════ -->
+<div class="page" id="rules" data-tab="rules"><nav class="rail"><a href="#glossary"><span class="n">01</span>名詞定義</a><a href="#sysflow"><span class="n">02</span>運作流程</a><a href="#pool-rules"><span class="n">03</span>彩池規則</a><a href="#draw-rules"><span class="n">04</span>抽獎規則</a><a href="#pause-rules"><span class="n">05</span>暫停</a><a href="#edge"><span class="n">06</span>異常狀態</a></nav><main class="main">
+<section class="section" id="glossary"><div class="section-head"><span class="section-num">01</span><h2>名詞定義</h2></div><p class="section-dek">全文用語。</p>
+<table class="spec-table"><thead><tr><th style="width:150px">名詞</th><th>意思</th></tr></thead><tbody>
+<tr><td><strong>彩池</strong></td><td>這檔活動的獎金池。每條線路 × 每個幣別各一個（例：MPS 線路的 PHP 與 MMK 是兩個彩池）。</td></tr>
+<tr><td><strong>基礎獎金</strong></td><td>活動開始時系統先放進彩池的金額。每個幣別各一個。</td></tr>
+<tr><td><strong>灌入</strong></td><td>玩家每押一筆，系統把押注金額的 1% 加進彩池。</td></tr>
+<tr><td><strong>抽獎機會</strong></td><td>玩家累積押注達門檻得到的抽獎次數。可累計，活動結束時作廢。</td></tr>
+<tr><td><strong>門檻</strong></td><td>每得到一次抽獎機會需要的累積押注金額，每個幣別各一個 <span class="tbd">金額待補</span>。</td></tr>
+<tr><td><strong>彩池獎</strong></td><td>獎金＝抽中當下彩池金額 × n% 的獎項，n 最大 30。抽中後從彩池扣掉。</td></tr>
+<tr><td><strong>固定獎項</strong></td><td>固定金額的現金獎。成本另外算，不從彩池扣。</td></tr>
+<tr><td><strong>大獎金額</strong></td><td>上跑馬燈的門檻：單抽獎金超過這個金額就算大獎。每個幣別各一個 <span class="tbd">金額待補</span>。</td></tr>
+<tr><td><strong>跑馬燈</strong></td><td>面板上方循環播放最近 10 筆大獎，帳號遮蔽同排行榜（前二碼、後二碼，中間以 * 代替，例：<code>ab***cd</code>）。</td></tr>
+<tr><td><strong>外顯彩池</strong></td><td>浮動 icon 選單沒點開時，在 icon 旁顯示的目前彩池金額。</td></tr>
+<tr><td><strong>①-A／①-B</strong></td><td>①-A＝舊版抽寶箱（單日、固定獎池）；①-B＝本功能（彩池版）。</td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="sysflow"><div class="section-head"><span class="section-num">02</span><h2>運作流程</h2></div><p class="section-dek">從玩家押注到抽獎、派獎、跑馬燈、活動結束的完整流程。</p>
+<div class="flow-v">
+<div class="flow-step"><div class="flow-step-num">STEP 1</div><div class="flow-step-title">玩家在活動線路上押注一局</div><div class="flow-step-desc">只算活動期間、活動線路、活動幣別的一般押注。FREE SPIN 卡局、FREE GAME、取消的注單都不算。活動暫停中也不算。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step highlight"><div class="flow-step-num">STEP 2</div><div class="flow-step-title">同時做兩件事</div><div class="flow-step-desc">① 押注 × 1% 灌入該線路 × 幣別的彩池　② 累積到玩家的「距離下一次抽獎」進度</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step"><div class="flow-step-num">STEP 3</div><div class="flow-step-title">累積押注達門檻 → 抽獎機會 +1</div><div class="flow-step-desc">超過門檻的部分帶到下一次；機會可一直累計到活動結束。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step"><div class="flow-step-num">STEP 4</div><div class="flow-step-title">玩家從浮動 icon 選單打開抽獎面板，點一格</div><div class="flow-step-desc">看到彩池金額、跑馬燈、剩餘次數。沒有機會或暫停中時格子不能點。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step highlight"><div class="flow-step-num">STEP 5</div><div class="flow-step-title">系統依權重表決定結果（扣 1 次機會）</div><div class="flow-step-desc">抽中彩池獎時，以「判定當下」的彩池金額 × n% 計算並立即從彩池扣除；多人同時抽中依先後順序。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step success"><div class="flow-step-num">STEP 6</div><div class="flow-step-title">派獎</div><div class="flow-step-desc">現金（固定獎項、彩池獎）→ 主錢包；FREE SPIN 卡 → 背包；銘謝惠顧不派。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step"><div class="flow-step-num">STEP 7</div><div class="flow-step-title">畫面：翻開所選格 → 揭示其他 8 格 → 全部蓋回洗牌</div><div class="flow-step-desc">回到可抽狀態，玩家可以繼續抽下一次。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step"><div class="flow-step-num">STEP 8</div><div class="flow-step-title">獎金超過大獎金額 → 加進跑馬燈</div><div class="flow-step-desc">同線路 × 同幣別的玩家在面板內看得到；跑馬燈只保留最新 10 筆。</div></div>
+<div class="flow-arrow-down">↓</div>
+<div class="flow-step warn"><div class="flow-step-num">活動結束</div><div class="flow-step-title">停止灌入與累積；未用機會作廢；剩餘彩池回收</div><div class="flow-step-desc">結束前已送出的那一抽照常完成。</div></div>
+</div>
+</section>
+
+<section class="section" id="pool-rules"><div class="section-head"><span class="section-num">03</span><h2>彩池規則</h2></div><p class="section-dek">彩池金額怎麼進、怎麼出。</p>
+<table class="spec-table"><thead><tr><th style="width:170px">規則</th><th>內容</th><th style="width:90px">依據</th></tr></thead><tbody>
+<tr><td>彩池單位</td><td>每條線路 × 每個幣別各一個，彼此獨立，不換匯、不合併。</td><td>D-087</td></tr>
+<tr><td>開始金額</td><td>活動開始時＝基礎獎金。</td><td>D-086</td></tr>
+<tr><td>灌入比例</td><td>每筆押注的 1%，寫在 server。</td><td>D-087</td></tr>
+<tr><td>不算灌入的押注</td><td>FREE SPIN 卡局、FREE GAME、取消的注單；暫停期間的押注。</td><td>D-088</td></tr>
+<tr><td>從彩池扣的獎項</td><td>只有彩池獎。固定獎項與 FREE SPIN 卡的成本另外算。</td><td>D-088</td></tr>
+<tr><td>扣除方式</td><td>彩池獎抽中當下立即扣除；同一時間只讓一筆改動彩池數字，避免兩人同時扣錯。彩池不可變負數。</td><td>D-087</td></tr>
+<tr><td>低於基礎獎金時</td><td>不自動補回，繼續靠押注灌入回升。</td><td>D-088</td></tr>
+<tr><td>活動結束時</td><td>剩餘彩池回收。</td><td>D-088</td></tr>
+<tr><td>小數</td><td>彩池內部以幣別最小單位累積；派獎金額小數第二位以下無條件捨去。</td><td>D-088</td></tr>
+<tr><td>畫面更新</td><td>前端每 15 秒向後端取實際彩池金額；兩次之間畫面往上累加顯示。新數字比畫面上小（有人抽走彩池獎）時，直接跳到新數字。</td><td>D-088</td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="draw-rules"><div class="section-head"><span class="section-num">04</span><h2>抽獎規則</h2></div><p class="section-dek">機會怎麼來、結果怎麼決定。</p>
+<table class="spec-table"><thead><tr><th style="width:170px">規則</th><th>內容</th><th style="width:90px">依據</th></tr></thead><tbody>
+<tr><td>取得機會</td><td>累積押注每達門檻一次 +1 次機會；超過門檻的部分帶到下一次。</td><td>D-086／D-088</td></tr>
+<tr><td>機會期限</td><td>累計到活動結束；結束時未用的作廢。</td><td>D-087／D-088</td></tr>
+<tr><td>門檻金額</td><td>每個幣別一個（不分小中大客）<span class="tbd">金額待補</span></td><td>D-088</td></tr>
+<tr><td>格數</td><td>9 格（3 × 3），沿用 ①-A。</td><td>D-088</td></tr>
+<tr><td>結果決定時間</td><td>玩家點格子之前由系統決定；點哪一格不影響結果。</td><td>D-087</td></tr>
+<tr><td>其他格子</td><td>依同一張權重表另外產生的畫面，只是展示，不派獎。</td><td>D-087</td></tr>
+<tr><td>翻完之後</td><td>不是 9 格抽完；每抽一次都全部蓋回重新抽。</td><td>D-086</td></tr>
+<tr><td>獎項種類</td><td>銘謝惠顧（0 元）、固定獎項、FREE SPIN 卡、彩池 × n%。</td><td>D-086</td></tr>
+<tr><td>彩池獎上限</td><td>n 最大 30（最大獎＝當下彩池 30%）。server 設定超過 30 時不得啟動活動。</td><td>D-086／D-088</td></tr>
+<tr><td>機率公開</td><td>不公開各獎項機率。</td><td>D-088</td></tr>
+<tr><td>同時抽中彩池獎</td><td>依系統判定的先後順序；後一筆用扣完前一筆的彩池計算。</td><td>D-087</td></tr>
+<tr><td>新舊版互斥</td><td>同一條線路 ①-A 與 ①-B 不能同時進行；活動啟動時 server 檢查，衝突就不啟動並記錄。</td><td>D-087／D-088</td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="pause-rules"><div class="section-head"><span class="section-num">05</span><h2>暫停</h2></div><p class="section-dek">第一版沒有後台，暫停由後端修改 server 設定。</p>
+<table class="spec-table"><thead><tr><th style="width:170px">項目</th><th>暫停期間</th></tr></thead><tbody>
+<tr><td>灌入彩池</td><td>不灌入</td></tr>
+<tr><td>門檻進度</td><td>不累積</td></tr>
+<tr><td>已得到的機會</td><td>保留，恢復後可以用</td></tr>
+<tr><td>抽獎</td><td>不能抽；格子不能點，面板顯示「活動暫停中」</td></tr>
+<tr><td>外顯彩池與面板彩池</td><td>顯示暫停當下的金額，不再往上累加</td></tr>
+<tr><td>暫停前已送出的那一抽</td><td>照常完成並派獎</td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="edge"><div class="section-head"><span class="section-num">06</span><h2>異常狀態</h2></div><p class="section-dek">細部處理方式由 Shaun 與後端確認後補進開發附錄。</p>
+<table class="spec-table"><thead><tr><th style="width:36px">#</th><th>情況</th><th>處理方式</th></tr></thead><tbody>
+<tr><td>1</td><td>玩家點格子後斷線</td><td>結果已決定、獎已派；重新連線後顯示結果。斷線判定與重連沿用 ①-A（DEV V1.30）。</td></tr>
+<tr><td>2</td><td>兩位玩家同一瞬間抽中彩池獎</td><td>依先後順序計算，兩筆都要能從事件紀錄查到扣款前後的彩池金額。</td></tr>
+<tr><td>3</td><td>灌入與彩池獎扣款同時發生</td><td>同一時間只讓一筆改動彩池數字；不可出現彩池變負數。</td></tr>
+<tr><td>4</td><td>注單取消或退款</td><td>不算押注：若已先灌入或已累積進度，要扣回 <span class="tbd">扣回時點待後端確認</span></td></tr>
+<tr><td>5</td><td>FREE SPIN 卡局、遊戲內 FREE GAME</td><td>不灌入、不累積門檻。</td></tr>
+<tr><td>6</td><td>活動結束當下，玩家正在翻牌</td><td>結束前已送出的那一抽照常完成；之後格子不能點，顯示「活動已結束」。</td></tr>
+<tr><td>7</td><td>活動暫停</td><td>見 <a href="#pause-rules">暫停</a>。</td></tr>
+<tr><td>8</td><td>派獎失敗（主錢包或背包寫入失敗）</td><td>自動重試，不重複派、不消失；沿用 ①-A 派獎逾時與失敗的處理（DEV V1.16）。</td></tr>
+<tr><td>9</td><td>同線路要開 ①-B，但 ①-A 還在進行</td><td>server 不啟動活動並記錄；後端通知營運。</td></tr>
+<tr><td>10</td><td>同帳號有多個幣別</td><td>各幣別的彩池、門檻進度、機會分開計算。</td></tr>
+<tr><td>11</td><td>15 秒取數字失敗</td><td>外顯與面板保留上一次的數字、停止往上累加，不顯示 0；下一次成功再更新。</td></tr>
+</tbody></table>
+</section>
+</main></div>
+
+<!-- ═════════ 03 玩家畫面 ═════════ -->
+<div class="page" id="player" data-tab="player"><nav class="rail"><a href="#ui-entry"><span class="n">01</span>入口與外顯彩池</a><a href="#ui-panel"><span class="n">02</span>抽獎面板</a><a href="#ui-reveal"><span class="n">03</span>翻牌演出順序</a></nav><main class="main">
+<section class="section" id="ui-entry"><div class="section-head"><span class="section-num">01</span><h2>入口與外顯彩池</h2></div><p class="section-dek">入口在浮動 icon 選單內；選單沒點開時，icon 旁也要外顯目前彩池金額。原型與美術稿 <span class="tbd">待補</span></p>
+<div class="info-grid-2">
+<div class="info-card">
+<div class="mock" style="max-width:300px;">
+  <div style="display:flex;align-items:center;gap:8px;"><span class="mbadge" style="position:static;">F</span><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(160deg,#7a4e1d,#4a2d0e);border:1px solid #c9a24a;display:grid;place-items:center;font-size:20px;">🎁</div><div style="background:#24222c;border:1px solid #c9a24a;border-radius:999px;padding:3px 12px;font-family:'DM Mono',monospace;color:#ffd36b;font-weight:700;">₱ 128,450.37</div></div>
+  <div class="mock-small" style="margin-top:10px;">選單未展開：icon 旁外顯彩池</div>
+</div>
+</div>
+<div class="info-card"><div class="info-card-title">Ⓕ 外顯彩池</div><div class="info-card-desc">
+<ul class="rd-list"><li>只在有進行中（或暫停中）的彩池版活動時顯示。</li><li>顯示玩家目前幣別對應的彩池。</li><li>更新：每 15 秒向後端取實際數字，中間往上累加；新數字較小時直接跳。</li><li>點 icon 展開選單，從選單進入抽獎面板。</li><li>不和 ①-A 同時出現（同線路互斥）。</li></ul></div></div>
+</div>
+</section>
+
+<section class="section" id="ui-panel"><div class="section-head"><span class="section-num">02</span><h2>抽獎面板（示意）</h2></div><p class="section-dek">以下是排版示意，不是美術稿；實際畫面沿用 ①-A 面板，加上彩池與跑馬燈。原型與截圖 <span class="tbd">待補</span></p>
+<div class="shot-map narrow">
+<div class="mock">
+  <div class="mock-head"><span>抽寶箱（彩池版）</span><span>✕</span></div>
+  <div class="mock-pool"><span class="mbadge">A</span><div class="mock-lbl">目前彩池</div><div class="mock-num">₱ 128,450.37</div></div>
+  <div class="mock-marq"><span class="mbadge">B</span><span class="mq-t">🎉 ab***cd 抽中 彩池 30% · ₱ 38,535.11　｜　ke***09 抽中 ₱ 5,000</span></div>
+  <div class="mock-chance"><span class="mbadge">C</span><div>可抽次數 <b>3</b> 次</div><div class="mock-bar"><i style="width:62%"></i></div><div class="mock-small">再押 ₱ 38 得到下一次</div></div>
+  <div class="mock-grid"><span class="mbadge">D</span><div>?</div><div>?</div><div>?</div><div>?</div><div>?</div><div>?</div><div>?</div><div>?</div><div>?</div></div>
+  <div class="mock-foot"><span class="mbadge">E</span>點任一格開始抽獎　·　ⓘ 玩法說明</div>
+</div>
+<div><div class="region-index-note">區域索引</div>
+<table class="spec-table"><tbody>
+<tr><td class="region-td">A</td><td><a href="#ui-a">彩池金額</a></td></tr>
+<tr><td class="region-td">B</td><td><a href="#ui-b">跑馬燈</a></td></tr>
+<tr><td class="region-td">C</td><td><a href="#ui-c">抽獎機會與進度</a></td></tr>
+<tr><td class="region-td">D</td><td><a href="#ui-d">格子區</a></td></tr>
+<tr><td class="region-td">E</td><td><a href="#ui-e">操作提示與玩法說明</a></td></tr>
+<tr><td class="region-td">F</td><td><a href="#ui-entry">外顯彩池（選單外）</a></td></tr>
+</tbody></table></div>
+</div>
+
+<div class="region-detail" id="ui-a"><h4><span class="region-td">A</span>彩池金額<span class="rd-func">讓玩家看到獎金在長大</span></h4><div class="rd-cols">
+<div><div class="rd-label">規則</div><ul class="rd-list"><li>顯示玩家目前幣別對應的彩池，小數第二位、千分位。</li><li>每 15 秒向後端取實際數字，中間往上累加。</li><li>新數字比畫面上小（有人抽走彩池獎）時直接跳到新數字。</li></ul></div>
+<div><div class="rd-label">異常</div><ul class="rd-list"><li>取數字失敗：保留上一次的數字、停止累加，不顯示 0。</li><li>暫停中：停在暫停當下的數字。</li><li>活動結束：改顯示「活動已結束」。</li></ul></div></div></div>
+
+<div class="region-detail" id="ui-b"><h4><span class="region-td">B</span>跑馬燈<span class="rd-func">讓玩家相信大獎真的會開</span></h4><div class="rd-cols">
+<div><div class="rd-label">規則</div><ul class="rd-list"><li>單抽獎金超過大獎金額（每幣別各一個，寫在 server）才上跑馬燈，不論獎項類型。</li><li>內容：遮蔽後帳號＋獎項＋金額；遮蔽同排行榜。</li><li>範圍：同線路 × 同幣別；只在面板內顯示。</li><li>保留最新 10 筆，循環重播；有新大獎時擠掉最舊一筆。</li></ul></div>
+<div><div class="rd-label">異常</div><ul class="rd-list"><li>還沒有任何大獎：顯示活動標語 <span class="tbd">文案待補</span>。</li></ul></div></div></div>
+
+<div class="region-detail" id="ui-c"><h4><span class="region-td">C</span>抽獎機會與進度<span class="rd-func">告訴玩家還能抽幾次、再押多少</span></h4><div class="rd-cols">
+<div><div class="rd-label">規則</div><ul class="rd-list"><li>顯示目前可抽次數。</li><li>進度條＋「再押 X 得到下一次」。</li><li>顯示活動剩餘時間。</li></ul></div>
+<div><div class="rd-label">異常</div><ul class="rd-list"><li>次數 0：格子不能點，提示「再押 X 就能抽」。</li><li>暫停中：顯示「活動暫停中」，次數照常顯示。</li></ul></div></div></div>
+
+<div class="region-detail" id="ui-d"><h4><span class="region-td">D</span>格子區<span class="rd-func">點一格抽一次</span></h4><div class="rd-cols">
+<div><div class="rd-label">規則</div><ul class="rd-list"><li>9 格（3 × 3）。</li><li>點一格扣 1 次機會，演出順序見 <a href="#ui-reveal">03</a>。</li><li>演出期間不能點其他格。</li></ul></div>
+<div><div class="rd-label">異常</div><ul class="rd-list"><li>連點：只送出第一次。</li><li>斷線：見 <a href="#edge">異常狀態 #1</a>。</li></ul></div></div></div>
+
+<div class="region-detail" id="ui-e"><h4><span class="region-td">E</span>操作提示與玩法說明<span class="rd-func">說明玩法與獎項種類</span></h4><div class="rd-cols">
+<div><div class="rd-label">規則</div><ul class="rd-list"><li>點 ⓘ 開玩法說明彈窗：獎項種類、彩池獎最高 30%、機會累計到活動結束、活動結束未用機會作廢。</li><li>不公開各獎項機率。</li></ul></div>
+<div><div class="rd-label">文案</div><ul class="rd-list"><li>多國語系文案 <span class="tbd">待補</span></li></ul></div></div></div>
+</section>
+
+<section class="section" id="ui-reveal"><div class="section-head"><span class="section-num">03</span><h2>翻牌演出順序</h2></div><p class="section-dek">每抽一次的畫面順序。各段秒數與音效 <span class="tbd">待補</span></p>
+<div class="flow-mini"><span class="flow-mini-step"><span>1</span>點選一格</span><span class="flow-mini-arrow">→</span><span class="flow-mini-step"><span>2</span>翻開，顯示獎項</span><span class="flow-mini-arrow">→</span><span class="flow-mini-step"><span>3</span>其他 8 格一起翻開</span><span class="flow-mini-arrow">→</span><span class="flow-mini-step"><span>4</span>全部蓋回、洗牌</span><span class="flow-mini-arrow">→</span><span class="flow-mini-step"><span>5</span>回到可抽</span></div>
+<div class="callout info">第 3 步讓玩家看到「差一點就抽到大獎」，是彩池版刺激再抽的關鍵；其他格的內容由系統依權重表另外產生，只是展示。</div>
+</section>
+</main></div>
+
+<!-- ═════════ 04 Server 設定 ═════════ -->
+<div class="page" id="server" data-tab="server"><nav class="rail"><a href="#srv-params"><span class="n">01</span>活動參數</a><a href="#srv-prize"><span class="n">02</span>獎項與權重</a><a href="#srv-ops"><span class="n">03</span>營運操作方式</a></nav><main class="main">
+<section class="section" id="srv-params"><div class="section-head"><span class="section-num">01</span><h2>活動參數</h2></div><p class="section-dek">第一版沒有操作後台，以下參數由後端寫在 server。設定格式 <span class="tbd">待後端提供，寫進開發附錄</span></p>
+<table class="spec-table"><thead><tr><th style="width:150px">參數</th><th>說明</th><th style="width:130px">首檔值</th></tr></thead><tbody>
+<tr><td>線路</td><td>單一線路；啟動時檢查同線路是否有 ①-A 進行中。</td><td>MPS <span class="tbd">線路代碼待補</span></td></tr>
+<tr><td>幣別</td><td>每個幣別一個彩池。</td><td>PHP、MMK</td></tr>
+<tr><td>活動期間</td><td>開始、結束時間（UTC+8）；沒有每日重置。</td><td><span class="tbd">待補</span></td></tr>
+<tr><td>活動狀態</td><td>進行中／暫停；暫停規則見 <a href="#pause-rules">暫停</a>。</td><td>—</td></tr>
+<tr><td>基礎獎金</td><td>每個幣別一個。</td><td><span class="tbd">待補</span></td></tr>
+<tr><td>灌入比例</td><td>1%。</td><td>1%</td></tr>
+<tr><td>抽獎門檻</td><td>每個幣別一個。</td><td><span class="tbd">待補</span></td></tr>
+<tr><td>大獎金額</td><td>跑馬燈門檻，每個幣別一個。</td><td><span class="tbd">待補</span></td></tr>
+<tr><td>獎項與權重表</td><td>每個幣別一張，見 <a href="#srv-prize">02</a>。</td><td><span class="tbd">待補</span></td></tr>
+<tr><td>主題</td><td>沿用 ①-A 主題素材。</td><td><span class="tbd">待補</span></td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="srv-prize"><div class="section-head"><span class="section-num">02</span><h2>獎項與權重表</h2></div><p class="section-dek">PHP、MMK 各一張，數值由機率組後續提供 <span class="tbd">待補</span>。下表只示範欄位，數字都是假的。</p>
+<table class="spec-table"><thead><tr><th>獎項類型</th><th>內容</th><th>權重</th><th>成本來源</th></tr></thead><tbody>
+<tr><td>銘謝惠顧</td><td>0 元</td><td class="mono">（示意）6000</td><td>—</td></tr>
+<tr><td>固定獎項</td><td>₱ 10</td><td class="mono">（示意）2500</td><td>活動成本另計</td></tr>
+<tr><td>固定獎項</td><td>₱ 5,000</td><td class="mono">（示意）20</td><td>活動成本另計</td></tr>
+<tr><td>FREE SPIN 卡</td><td>指定一張已建立的卡</td><td class="mono">（示意）1200</td><td>活動成本另計</td></tr>
+<tr><td>彩池獎</td><td>彩池 × 5%</td><td class="mono">（示意）90</td><td>彩池</td></tr>
+<tr><td>彩池獎</td><td>彩池 × 30%（最大獎）</td><td class="mono">（示意）10</td><td>彩池</td></tr>
+</tbody></table>
+<div class="callout">server 啟動活動前檢查：彩池 n% 不超過 30、權重不全為 0、FREE SPIN 卡是已建立且未刪除的卡。不通過就不啟動並記錄。</div>
+</section>
+
+<section class="section" id="srv-ops"><div class="section-head"><span class="section-num">03</span><h2>營運操作方式（第一版）</h2></div><p class="section-dek">沒有後台時，營運要做的事都經過後端。</p>
+<table class="spec-table"><thead><tr><th>要做的事</th><th>方式</th></tr></thead><tbody>
+<tr><td>開新活動、改數值</td><td>營運交參數給後端，後端改 server 設定</td></tr>
+<tr><td>暫停／恢復</td><td>請後端改活動狀態</td></tr>
+<tr><td>查彩池目前金額、累計灌入、累計派出</td><td>請後端或數據組從事件紀錄查詢</td></tr>
+<tr><td>確認同線路沒有 ①-A 進行中</td><td>server 啟動時自動檢查；開活動前營運也先自行確認</td></tr>
+</tbody></table>
+</section>
+</main></div>
+
+<!-- ═════════ 05 Task 與成本 ═════════ -->
+<div class="page" id="tasks" data-tab="tasks"><nav class="rail"><a href="#task-list"><span class="n">01</span>Task 列表</a><a href="#cost"><span class="n">02</span>成本評估</a></nav><main class="main">
+<section class="section" id="task-list"><div class="section-head"><span class="section-num">01</span><h2>Task 列表與職能</h2></div><p class="section-dek">標 <span class="tag tag-req">🏗 基礎建設</span> 的是其他工作的前置，要先做。單項工時 <span class="tbd">待各職能評估</span>。</p>
+<div class="table-scroll"><table class="spec-table"><thead><tr><th style="width:36px">#</th><th>Task</th><th style="width:150px">職能</th><th>備註</th></tr></thead><tbody>
+<tr><td>1</td><td>彩池帳戶：每線路 × 幣別一個，含基礎獎金、目前金額、累計灌入／派出</td><td><span class="tag tag-eng">⚙ 後端</span><span class="tag tag-req">🏗 基礎建設</span></td><td>日後其他彩池類活動可共用</td></tr>
+<tr><td>2</td><td>押注灌入 1%：排除 FREE SPIN 卡局、FREE GAME、取消注單；同一時間只讓一筆改動彩池</td><td><span class="tag tag-eng">⚙ 後端</span><span class="tag tag-req">🏗 基礎建設</span></td><td>押注量大，需評估寫入壓力</td></tr>
+<tr><td>3</td><td>活動參數 server 設定（含暫停狀態、啟動前檢查、①-A／①-B 互斥）</td><td><span class="tag tag-eng">⚙ 後端</span><span class="tag tag-req">🏗 基礎建設</span></td><td>取代第一版後台</td></tr>
+<tr><td>4</td><td>抽獎機會累計（門檻、進度、跨天保留、暫停不累積、活動結束作廢）</td><td><span class="tag tag-eng">⚙ 後端</span></td><td>可沿用 ①-A 累積押注</td></tr>
+<tr><td>5</td><td>抽獎判定：權重抽獎、彩池獎計算與扣款、先後順序、產生其他 8 格畫面</td><td><span class="tag tag-eng">⚙ 後端</span></td><td></td></tr>
+<tr><td>6</td><td>派獎：現金入主錢包、FREE SPIN 卡入背包、失敗重試</td><td><span class="tag tag-eng">⚙ 後端</span></td><td>沿用 ①-A 派獎</td></tr>
+<tr><td>7</td><td>彩池金額查詢（15 秒）、跑馬燈資料（大獎金額門檻、最新 10 筆、帳號遮蔽）</td><td><span class="tag tag-eng">⚙ 後端</span></td><td>遮蔽規則沿用排行榜</td></tr>
+<tr><td>8</td><td>外顯彩池：浮動 icon 旁金額、往上累加、變小直接跳</td><td><span class="tag tag-opt">🖥 Web 前端</span><span class="tag tag-design">🎨 美術</span></td><td>D-088 新增</td></tr>
+<tr><td>9</td><td>玩家面板：彩池金額、跑馬燈循環、機會與進度、暫停狀態、9 格翻牌→揭示→蓋回洗牌</td><td><span class="tag tag-opt">🖥 Web 前端</span></td><td>沿用 ①-A 面板</td></tr>
+<tr><td>10</td><td>美術：彩池顯示元件、跑馬燈條、面板改版、獎項圖示</td><td><span class="tag tag-design">🎨 美術</span></td><td></td></tr>
+<tr><td>11</td><td>PHP、MMK 的獎項、權重、基礎獎金、門檻、大獎金額試算</td><td><span class="tag tag-prob">🎲 機率組</span><span class="tag tag-pm">📋 企劃&amp;PM</span></td><td></td></tr>
+<tr><td>12</td><td>規格補齊、多國語系文案、原型</td><td><span class="tag tag-pm">📋 企劃&amp;PM</span></td><td>Shaun</td></tr>
+<tr><td>13</td><td>測試：併發扣款、斷線、互斥、暫停、派獎、活動結束、15 秒更新</td><td><span class="tag tag-qa">✅ QA</span></td><td></td></tr>
+<tr><td>14</td><td>事件紀錄、彩池查詢與成效報表</td><td><span class="tag tag-data">📊 數據組</span><span class="tag tag-eng">⚙ 後端</span></td><td>沒有監控頁，靠報表查</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="section" id="cost"><div class="section-head"><span class="section-num">02</span><h2>成本評估</h2></div><p class="section-dek">人力為藍圖 V1.2 的估算（已含 1.5 倍緩衝），當時含操作後台、不含外顯彩池，<b>需要重新估</b>。</p>
+<div class="sub-title">人力（人週）</div>
+<div class="table-scroll"><table class="spec-table"><thead><tr><th>項目</th><th>企劃&amp;PM</th><th>後端</th><th>Web 前端</th><th>美術</th><th>機率</th><th>QA</th><th>數據</th><th>合計</th></tr></thead><tbody>
+<tr><td><strong>①-B（藍圖 V1.2 估算）</strong></td><td>1</td><td>3</td><td>2.5</td><td>1</td><td>1</td><td>2</td><td>0.5</td><td><strong>11</strong></td></tr>
+<tr><td>本版調整方向</td><td>—</td><td>拿掉後台 ↓</td><td>拿掉後台 ↓、加外顯 ↑</td><td>加外顯 ↑</td><td>—</td><td>—</td><td>—</td><td><span class="tbd">待重估</span></td></tr>
+</tbody></table></div>
+<div class="sub-title">金錢（每檔活動）</div>
+<table class="spec-table"><tbody>
+<tr><td style="width:180px"><strong>彩池獎</strong></td><td>實際派出的彩池獎總額。上限＝基礎獎金＋活動期間押注 × 1%；剩餘彩池回收，不算成本。</td></tr>
+<tr><td><strong>固定獎項、FREE SPIN 卡</strong></td><td>另外算，依權重表的期望值 × 抽獎次數估算 <span class="tbd">待數值</span>。</td></tr>
+<tr><td><strong>試算公式</strong></td><td>活動多發金額 ＝ 彩池獎派出 ＋ 固定獎項 ＋ FREE SPIN 卡<br>對線路 RTP 的影響 ≈ 活動多發金額 ÷ 活動期間總押注</td></tr>
+<tr><td><strong>舉例</strong></td><td>MPS PHP 7 天總押注 ₱10,000,000、基礎獎金 ₱20,000 → 彩池獎最多派 ₱120,000（RTP 約 +1.2 個百分點）；固定獎項與 FREE SPIN 卡另加。數字為範例，非預測。</td></tr>
+<tr><td><strong>控制方式</strong></td><td>本版不接 ⑩ 動態 RTP，只能靠基礎獎金、彩池獎權重與固定獎項金額控制；上線後由數據組追蹤線路 RTP。</td></tr>
+</tbody></table>
+</section>
+</main></div>
+
+<!-- ═════════ 06 KPI ═════════ -->
+<div class="page" id="kpi" data-tab="kpi"><nav class="rail"><a href="#kpi-main"><span class="n">01</span>指標</a></nav><main class="main">
+<section class="section" id="kpi-main"><div class="section-head"><span class="section-num">01</span><h2>怎樣算成功</h2></div><p class="section-dek">成功指標為押注量與押注局數（D-087）；首發 MPS，基準取 MPS 的 PHP、MMK 數據。</p>
+<div class="sub-title">硬性指標（可量化）</div>
+<table class="spec-table"><thead><tr><th>指標</th><th>計算方式</th><th>基準</th><th>目標</th></tr></thead><tbody>
+<tr><td><strong>押注量</strong></td><td>MPS 各幣別人均每日押注</td><td><span class="tbd">待填</span></td><td><span class="tbd">待填</span></td></tr>
+<tr><td><strong>押注局數</strong></td><td>MPS 各幣別玩家每日局數中位數</td><td><span class="tbd">待填</span></td><td><span class="tbd">待填</span></td></tr>
+<tr><td>成本守門</td><td>活動期間 MPS 線路總 RTP 低於 100%</td><td>—</td><td>&lt; 100%</td></tr>
+</tbody></table>
+<div class="sub-title">軟性指標（觀察用）</div>
+<ul class="rd-list" style="max-width:860px;">
+<li>抽獎機會使用率：拿到的機會有多少真的被抽掉——太低代表玩家不在意。</li>
+<li>跑馬燈出現大獎後，同線路接下來一段時間的押注是否上升——驗證「看到別人中獎」有沒有效。</li>
+<li>客服是否收到「彩池是假的」「抽不到」類型的反應。</li>
+</ul>
+<div class="sub-title">比較方式 <span class="tbd">待補</span></div>
+<p class="body-text">活動期間 vs 活動前同天數；觀察期長度待定。</p>
+</section>
+</main></div>
+
+<!-- ═════════ 07 最小 vs 完整 ═════════ -->
+<div class="page" id="plans" data-tab="plans"><nav class="rail"><a href="#compare"><span class="n">01</span>功能對照</a></nav><main class="main">
+<section class="section" id="compare"><div class="section-head"><span class="section-num">01</span><h2>最小方案（本版）vs 完整方案</h2></div><p class="section-dek">本版依 D-088 為最小方案；完整方案是之後可以補的項目，要做時再由 Milu 決定。</p>
+<div class="table-scroll"><table class="spec-table"><thead><tr><th>功能</th><th style="width:120px">最小（本版）</th><th style="width:120px">完整</th></tr></thead><tbody>
+<tr><td>彩池（線路 × 幣別）＋基礎獎金＋1% 灌入</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>抽獎機會累計到活動結束</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>9 格翻牌 → 揭示其他格 → 蓋回重抽</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>四種獎項、彩池獎最高 30%</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>外顯彩池（每 15 秒更新＋往上累加）</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>跑馬燈（面板內、10 筆循環）</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>互斥檢查、暫停、事件紀錄</td><td class="check">✔</td><td class="check">✔</td></tr>
+<tr><td>活動參數設定</td><td>寫在 server</td><td>操作後台</td></tr>
+<tr><td>彩池監控</td><td>事件紀錄查詢</td><td>後台監控頁</td></tr>
+<tr><td>⑩ 動態 RTP 扣回活動成本</td><td class="cross">✘</td><td class="check">✔</td></tr>
+<tr><td>小中大客不同門檻與權重</td><td class="cross">✘</td><td class="check">✔</td></tr>
+<tr><td>抽中彩池獎的全螢幕特效</td><td class="cross">✘</td><td class="check">✔</td></tr>
+<tr><td>跑馬燈在遊戲畫面中也顯示</td><td class="cross">✘</td><td class="check">✔</td></tr>
+</tbody></table></div>
+</section>
+</main></div>
+
+<!-- ═════════ 08 事件紀錄 ═════════ -->
+<div class="page" id="events" data-tab="events"><nav class="rail"><a href="#ev-list"><span class="n">01</span>事件清單</a></nav><main class="main">
+<section class="section" id="ev-list"><div class="section-head"><span class="section-num">01</span><h2>事件紀錄</h2></div><p class="section-dek">本版沒有後台，彩池金額、派出與成本都要靠這些紀錄查。欄位 <span class="tbd">待補</span></p>
+<div class="ev-box">
+<div class="ev"><div class="ev-name">pool_contribute</div><div>彩池灌入（依分鐘彙總，單筆可從注單回推）。回答：彩池為什麼漲到這個數字、累計灌入多少。</div></div>
+<div class="ev"><div class="ev-name">chance_earned</div><div>玩家得到一次抽獎機會。回答：玩家說押夠了卻沒有機會。</div></div>
+<div class="ev"><div class="ev-name">draw_result</div><div>每一抽的結果、所選格子、其他 8 格畫面。回答：玩家質疑抽獎結果；計算固定獎項與 FREE SPIN 卡成本。</div></div>
+<div class="ev"><div class="ev-name">pool_payout</div><div>彩池獎扣款：扣款前金額、n%、獎金、扣款後金額、先後順序。回答：同時抽中時誰先誰後、累計派出多少。</div></div>
+<div class="ev"><div class="ev-name">prize_delivered</div><div>派獎結果（主錢包／背包）、失敗重試。回答：抽中了卻沒收到。</div></div>
+<div class="ev"><div class="ev-name">marquee_added</div><div>加進跑馬燈的大獎。回答：跑馬燈上的中獎是不是真的。</div></div>
+<div class="ev"><div class="ev-name">activity_state_changed</div><div>活動啟動、暫停、恢復、結束，與當下彩池金額。回答：暫停期間為什麼不能抽、結束回收了多少。</div></div>
+<div class="ev"><div class="ev-name">chance_expired</div><div>活動結束作廢的機會數。回答：玩家問機會去哪了。</div></div>
+<div class="ev"><div class="ev-name">activity_start_blocked</div><div>啟動前檢查不通過（互斥、彩池 n% 超過 30 等）。回答：活動為什麼沒開。</div></div>
+</div>
+</section>
+</main></div>
+
+<!-- ═════════ 09 待確認 ═════════ -->
+<div class="page" id="openq" data-tab="openq"><nav class="rail"><a href="#oq-list"><span class="n">01</span>待確認事項</a><a href="#shaun-todo"><span class="n">02</span>補齊清單</a></nav><main class="main">
+<section class="section" id="oq-list"><div class="section-head"><span class="section-num">01</span><h2>待確認事項</h2></div><p class="section-dek">規則已全部拍板（D-088），剩下的是要提供的資料。</p>
+<table class="spec-table"><thead><tr><th style="width:36px">#</th><th>事項</th><th style="width:150px">誰提供</th></tr></thead><tbody>
+<tr><td>1</td><td>PHP、MMK 的獎項、權重表、基礎獎金、門檻、大獎金額</td><td>機率組／Milu</td></tr>
+<tr><td>2</td><td>MPS 線路代碼、首檔活動期間</td><td>Milu</td></tr>
+<tr><td>3</td><td>server 設定格式；注單取消時扣回灌入與進度的時點</td><td>後端</td></tr>
+<tr><td>4</td><td>工時重估（拿掉後台、加外顯彩池）</td><td>後端（Wayne／Tina／Eric）、前端（坤佑／Greene）、美術</td></tr>
+<tr><td>5</td><td>MPS 的押注量與局數基準、目標值、觀察期</td><td>數據組／Milu</td></tr>
+</tbody></table>
+</section>
+
+<section class="section" id="shaun-todo"><div class="section-head"><span class="section-num">02</span><h2>Shaun 補齊清單</h2></div><p class="section-dek">依序補齊。</p>
+<table class="spec-table"><thead><tr><th style="width:36px">#</th><th>要補的內容</th><th>位置</th></tr></thead><tbody>
+<tr><td>1</td><td>外顯彩池與抽獎面板原型、截圖（紅框標號 Ⓐ–Ⓕ 對照）、翻牌演出秒數與音效</td><td><a href="#player">玩家畫面</a></td></tr>
+<tr><td>2</td><td>數值：機率組給的 PHP、MMK 獎項表與參數</td><td><a href="#srv-prize">獎項與權重</a></td></tr>
+<tr><td>3</td><td>server 設定格式、異常狀態細節（與後端確認）</td><td>開發附錄</td></tr>
+<tr><td>4</td><td>多國語系文案（面板、玩法說明、暫停／結束提示、跑馬燈句型、無大獎時標語）</td><td>新增「文案」分頁</td></tr>
+<tr><td>5</td><td>事件紀錄欄位</td><td><a href="#ev-list">事件紀錄</a></td></tr>
+<tr><td>6</td><td>KPI 基準與目標值、觀察期</td><td><a href="#kpi-main">成效指標</a></td></tr>
+<tr><td>7</td><td>開發附錄（API、資料表、彩池併發處理、驗收情境），另開 <code>treasure_box_pool_spec_v1.0_dev_appendix.html</code></td><td>另開檔案</td></tr>
+</tbody></table>
+</section>
+</main></div>
+
+<!-- ═════════ 10 修改紀錄 ═════════ -->
+<div class="page" id="log" data-tab="log"><nav class="rail"><a href="#revlog"><span class="n">01</span>修改紀錄</a></nav><main class="main">
+<section class="section" id="revlog"><div class="section-head"><span class="section-num">01</span><h2>修改紀錄</h2></div>
+<div class="revlog"><table><thead><tr><th>版本</th><th>日期</th><th>修改者</th><th>內容</th></tr></thead><tbody>
+<tr class="hl-row"><td>V1.0 初版</td><td>2026-11-24</td><td>Milu</td><td>依功能藍圖 V1.2 ①-B、D-086、D-087 建立骨架；同日依 D-088 定案：成本另計、不補回、結束回收、不接動態 RTP、入口在選單內並外顯彩池、跑馬燈規則、9 格不公開機率、第一版無後台改寫在 server、暫停規則、15 秒更新、首發 MPS（PHP、MMK）。交 Shaun 補齊。</td></tr>
+</tbody></table></div>
+</section>
+</main></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  try{ var th=localStorage.getItem('spec-theme'); if(th) root.setAttribute('data-theme',th); }catch(e){}
+  var tb=document.getElementById('theme-btn');
+  if(tb) tb.addEventListener('click',function(){
+    var dark = root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = dark?'light':'dark'; root.setAttribute('data-theme',next);
+    try{ localStorage.setItem('spec-theme',next); }catch(e){}
+  });
+  var pages=[].slice.call(document.querySelectorAll('.page'));
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function show(tid){
+    pages.forEach(function(p){ p.hidden = p.dataset.tab !== tid; });
+    tabs.forEach(function(t){ t.classList.toggle('on', t.dataset.tab === tid); });
+    document.body.classList.toggle('at-home', tid === 'home');
+    var on=document.querySelector('.tab.on'); if(on&&on.parentNode) on.parentNode.scrollLeft=Math.max(0,on.offsetLeft-40);
+  }
+  function go(id,push){
+    var el = id ? document.getElementById(id) : null;
+    if(!el){ show(document.getElementById('home')?'home':pages[0].dataset.tab); window.scrollTo(0,0); return; }
+    if(el.classList.contains('page')){ show(id); window.scrollTo(0,0); }
+    else{
+      var pg=el.closest('.page'); if(pg) show(pg.dataset.tab);
+      var d=el.closest('details'); if(d) d.open=true;
+      requestAnimationFrame(function(){ el.scrollIntoView({block:'start'}); });
+    }
+    if(push){ try{ history.replaceState(null,'','#'+id); }catch(e){} }
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');
+    if(!a){ var card=e.target.closest&&e.target.closest('[data-go]'); if(card) go(card.dataset.go,true); return; }
+    e.preventDefault(); go(decodeURIComponent(a.getAttribute('href').slice(1)),true);
+  });
+  window.addEventListener('hashchange',function(){ var h=''; try{ h=decodeURIComponent(location.hash.slice(1)); }catch(e){} go(h,false); });
+  var start=''; try{ start=decodeURIComponent(location.hash.slice(1)); }catch(e){} go(start,false);
+  // 幣別頁籤（後台數值表）
+  window.switchTab=function(btn,id){
+    var bar=btn.closest('.tab-bar'); bar.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active'); var c=bar.parentElement;
+    c.querySelectorAll(':scope > .tab-content').forEach(function(x){x.classList.remove('active');});
+    var t=document.getElementById('tab-'+id); if(t) t.classList.add('active');
+  };
+  // 點圖放大
+  var ov=document.createElement('div'); ov.className='lb-overlay';
+  ov.innerHTML='<button class="lb-close" aria-label="關閉">✕</button><img class="lb-img" alt=""><div class="lb-hint">點背景或 ✕ 關閉 · ESC 也可關閉</div>';
+  document.body.appendChild(ov); var img=ov.querySelector('.lb-img');
+  function close(){ ov.classList.remove('on'); }
+  ov.addEventListener('click',function(e){ if(e.target!==img) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+  document.querySelectorAll('.shot-frame img').forEach(function(el){ el.addEventListener('click',function(){ img.src=el.src; img.alt=el.alt||''; ov.classList.add('on'); }); });
+})();
+</script>
+</body>
+</html>
