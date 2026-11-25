@@ -6,6 +6,8 @@
 <title>FREE SPIN 卡 開發附錄</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+.opt-tag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;line-height:1.6;color:#b45309;background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.45);text-decoration:none;white-space:nowrap;vertical-align:middle}.opt-tag:hover{text-decoration:underline}
+
   :root{
     --bg:#F7F7F6; --surface:#FFFFFF; --surface-2:#F4F4F3;
     --ink:#1A1A1A; --ink-soft:#434343; --ink-faint:#7A7A7A;
@@ -541,11 +543,11 @@
 <td class="dim">某張 3★ 卡（次數 10）已被活動發出若干張</td>
 <td class="dim">到道具基礎值把 3★ 的 bet 改掉；再把該卡「複製」一張、次數改 20、重填名稱後建立</td>
 <td class="dim">① 原卡與已發出的卡 bet 與次數<strong>完全不變</strong>；② 新卡帶入<strong>新的 bet</strong>、次數 20，並產生<strong>新的 reward_id</strong>；③ 原卡仍可被活動引用，直到營運手動刪除</td>
-</tr><tr>
-<td><strong>建卡後不可修改</strong><br/></td>
-<td class="dim">列表中有任一張已建立的卡</td>
-<td class="dim">檢視該列操作欄</td>
-<td class="dim">① 操作欄只有「<strong>複製</strong>」與「<strong>刪除</strong>」；② 找不到「修改」「編輯」或任何能改這張卡的入口</td>
+</tr><tr id="t-edit-name">
+<td><strong>建卡後只可改名稱</strong><a class="opt-tag" href="https://app.clickup.com/t/9018324368/z90hj389cz" target="_blank" rel="noopener">[優化]後台-FREE SPIN卡可修改發放卡名稱</a><br/></td>
+<td class="dim">列表中有任一張已建立的卡（含已被活動引用的卡）</td>
+<td class="dim">檢視該列操作欄，按「編輯」改名稱後按 Enter；再按一次「編輯」、清空名稱後按 Enter；再按一次「編輯」、改字後按 Esc</td>
+<td class="dim">① 操作欄為「<strong>編輯</strong>」「<strong>複製</strong>」「<strong>刪除</strong>」；② 編輯時只有名稱欄變成輸入框，星級、各幣值押注、可玩遊戲、次數、封頂倍數、有效期都不能改；③ 儲存後名稱更新、獎勵道具 ID 不變，引用活動與已發出的卡不受影響，玩家端仍顯示「{n}★ FREE SPIN」；④ 名稱清空時不能儲存；⑤ 按 Esc 恢復原名稱</td>
 </tr><tr>
 <td><strong>複製發放卡</strong><br/></td>
 <td class="dim">某張卡：3★、遊戲 8 款、次數 10、倍數 10、發卡 +7 天</td>
