@@ -177,6 +177,19 @@ ol.stories li strong{color:var(--text-primary);}
   .feat{padding:18px 16px;}
 }
 
+
+.eco-wrap{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:center;margin:26px 0 8px;}
+.eco{width:100%;height:auto;}
+.eco .e-out{fill:var(--bg-3);stroke:var(--border-bright);stroke-width:2;stroke-dasharray:9 7;}
+.eco .e-mid{fill:var(--bg-4);stroke:var(--text-dim);stroke-width:2;}
+.eco .e-core{fill:var(--accent);}
+.eco text{text-anchor:middle;font-family:'Noto Sans TC','DM Sans',sans-serif;fill:var(--text-primary);}
+.eco .e-t1{font-size:26px;font-weight:700;}
+.eco .e-t2{font-size:19px;font-weight:500;fill:var(--text-secondary);}
+.eco .e-t3{font-size:18px;font-weight:500;fill:var(--text-secondary);}
+.eco .e-c1{font-size:27px;font-weight:700;fill:#FFFFFC;}
+.eco .e-c2{font-size:17px;font-weight:500;fill:#FFFFFC;}
+@media(max-width:900px){.eco-wrap{grid-template-columns:minmax(0,1fr);}.eco{max-width:420px;margin:0 auto;}}
 /* 分頁版型 */
 .head{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
 .topstrip{max-width:1200px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
@@ -219,14 +232,14 @@ ol.stories li strong{color:var(--text-primary);}
 .oc-g{font-size:13.5px;color:var(--text-secondary);line-height:1.6;}
 .oc-k{font-size:12.5px;color:var(--green-bright);line-height:1.55;}
 .oc-k b{font-family:'DM Mono',monospace;font-weight:500;font-size:10.5px;letter-spacing:0.12em;color:var(--text-dim);margin-right:6px;}
-@media(max-width:900px){.pg{grid-template-columns:1fr;}.rail{display:none;}.ogrid{grid-template-columns:1fr 1fr;}.lcards{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){.pg{grid-template-columns:minmax(0,1fr);}.rail{display:none;}.ogrid{grid-template-columns:1fr 1fr;}.lcards{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.ogrid,.lcards{grid-template-columns:1fr;}.topstrip .who{display:none;}}
 @media print{.head,.rail{display:none!important;}.page{display:block!important;}}
 </style>
 </head>
 <body>
 <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換亮／暗主題" title="切換亮／暗主題">◐</button>
-<header class="head"><div class="topstrip"><a class="dn" href="#home">CRM × 市場遊戲組 功能藍圖</a><span class="ver">V1.2</span><span class="who">Milu · 2026-11-24</span></div><nav class="tabbar" aria-label="章節"><a href="#home" data-tab="home">⌂ 首頁</a><a href="#p-now-top" data-tab="p-now">現況與目標</a><a href="#p-map-top" data-tab="p-map">旅程與指標</a><a href="#p-a-top" data-tab="p-a">A 玩家功能</a><a href="#p-b-top" data-tab="p-b">B 機率照顧</a><a href="#p-c-top" data-tab="p-c">C 後台與風控</a><a href="#p-plan-top" data-tab="p-plan">介面・時程・工時</a><a href="#p-kpi-top" data-tab="p-kpi">成效與方案</a><a href="#p-open-top" data-tab="p-open">待確認</a></nav></header>
+<header class="head"><div class="topstrip"><a class="dn" href="#home">CRM × 市場遊戲組 功能藍圖</a><span class="ver">V1.2</span><span class="who">Milu · 2026-11-24</span></div><nav class="tabbar" aria-label="章節"><a href="#home" data-tab="home">⌂ 首頁</a><a href="#p-now-top" data-tab="p-now">現況與目標</a><a href="#p-map-top" data-tab="p-map">生態與旅程</a><a href="#p-a-top" data-tab="p-a">A 玩家功能</a><a href="#p-b-top" data-tab="p-b">B 機率照顧</a><a href="#p-c-top" data-tab="p-c">C 後台與風控</a><a href="#p-plan-top" data-tab="p-plan">介面・時程・工時</a><a href="#p-kpi-top" data-tab="p-kpi">成效與方案</a><a href="#p-open-top" data-tab="p-open">待確認</a></nav></header>
 <div class="wrap">
 <div class="page" id="home">
 <div class="hero">
@@ -244,7 +257,7 @@ ol.stories li strong{color:var(--text-primary);}
   </div>
 </div>
 <p class="sec-t">章節</p>
-<div class="lcards"><a class="lcard" href="#p-now-top"><span class="lc-n">01</span><span class="lc-t">現況與目標</span><span class="lc-d">玩家留不住的原因、和 YB 等競品的差距、CRM 的三個目標</span></a><a class="lcard" href="#p-map-top"><span class="lc-n">02</span><span class="lc-t">旅程與指標</span><span class="lc-d">玩家旅程四段，17 項功能各自負責的成功指標</span></a><a class="lcard" href="#p-a-top"><span class="lc-n">03-A</span><span class="lc-t">玩家看得到的活動與道具</span><span class="lc-d">①-A ①-B ②③⑥⑦⑧⑰ 的目的與 Story</span></a><a class="lcard" href="#p-b-top"><span class="lc-n">03-B</span><span class="lc-t">玩家看不到的機率照顧</span><span class="lc-d">④⑤⑯ 的目的與 Story</span></a><a class="lcard" href="#p-c-top"><span class="lc-n">03-C</span><span class="lc-t">後台與風控工具</span><span class="lc-d">⑩–⑮ 的目的與 Story</span></a><a class="lcard" href="#p-plan-top"><span class="lc-n">04–06</span><span class="lc-t">介面・時程・工時</span><span class="lc-d">入口位置、建議甘特、各職能人週</span></a><a class="lcard" href="#p-kpi-top"><span class="lc-n">07–08</span><span class="lc-t">成效與方案</span><span class="lc-d">追上 YB 的目標值、最小 vs 完整方案</span></a><a class="lcard" href="#p-open-top"><span class="lc-n">09</span><span class="lc-t">待確認</span><span class="lc-d">還沒定的事與負責人</span></a></div>
+<div class="lcards"><a class="lcard" href="#p-now-top"><span class="lc-n">01</span><span class="lc-t">現況與目標</span><span class="lc-d">玩家留不住的原因、和 YB 等競品的差距、CRM 的三個目標</span></a><a class="lcard" href="#p-map-top"><span class="lc-n">02</span><span class="lc-t">生態與旅程</span><span class="lc-d">以遊戲為核心的娛樂生態、玩家旅程四段、各功能的成功指標</span></a><a class="lcard" href="#p-a-top"><span class="lc-n">03-A</span><span class="lc-t">玩家看得到的活動與道具</span><span class="lc-d">①-A ①-B ②③⑥⑦⑧⑰ 的目的與 Story</span></a><a class="lcard" href="#p-b-top"><span class="lc-n">03-B</span><span class="lc-t">玩家看不到的機率照顧</span><span class="lc-d">④⑤⑯ 的目的與 Story</span></a><a class="lcard" href="#p-c-top"><span class="lc-n">03-C</span><span class="lc-t">後台與風控工具</span><span class="lc-d">⑩–⑮ 的目的與 Story</span></a><a class="lcard" href="#p-plan-top"><span class="lc-n">04–06</span><span class="lc-t">介面・時程・工時</span><span class="lc-d">入口位置、建議甘特、各職能人週</span></a><a class="lcard" href="#p-kpi-top"><span class="lc-n">07–08</span><span class="lc-t">成效與方案</span><span class="lc-d">追上 YB 的目標值、最小 vs 完整方案</span></a><a class="lcard" href="#p-open-top"><span class="lc-n">09</span><span class="lc-t">待確認</span><span class="lc-d">還沒定的事與負責人</span></a></div>
 <p class="sec-t">總覽 · 17 項提案</p>
 <h2 class="home-h2">所有提案一覽</h2>
 <p style="color:var(--text-secondary);font-size:15px;">點任一張卡片，直接跳到該功能的目的與 Story。</p>
@@ -296,8 +309,39 @@ ol.stories li strong{color:var(--text-primary);}
 </div></div></div>
 <div class="page" id="p-map"><span id="p-map-top"></span><div class="pg"><nav class="rail" aria-label="本頁目錄"></nav><div class="main">
 <div class="blk" id="s02">
-  <div class="blk-num">02 · 玩家旅程與功能地圖</div>
-  <h2>每個功能負責旅程中的一段</h2>
+  <div class="blk-num">02 · 娛樂生態與玩家旅程</div>
+  <h2>以遊戲為核心，創造更完整的娛樂體驗</h2>
+  <p>我們的目標，不只是打造一款好玩的老虎機遊戲，而是<strong>以遊戲為核心，創造一個更完整的娛樂體驗</strong>。透過 CRM 機制、創新活動、跨遊戲互動及個人化服務，突破傳統老虎機的體驗框架，讓玩家除了遊戲本身帶來的樂趣之外，也能感受到更多元的娛樂價值。</p>
+  <p>我們希望創造的，不只是遊戲與遊戲之間的差異，而是<strong>整體娛樂體驗的差異</strong>，並在<strong>可衡量、可控管、可持續</strong>的營運模式下，建立品牌的長期競爭力。</p>
+  <div class="eco-wrap">
+  <svg class="eco" viewBox="0 0 520 520" role="img" aria-label="同心圓：核心為 Slot Game 核心遊戲體驗；中圈為機率、節奏、視聽與遊戲設計；外圈為 CRM 延伸體驗，包含創新機制、多元活動、跨遊戲體驗、個人化服務，構成品牌娛樂生態">
+  <circle cx="260" cy="260" r="248" class="e-out"/>
+  <circle cx="260" cy="260" r="150" class="e-mid"/>
+  <circle cx="260" cy="260" r="82" class="e-core"/>
+  <text x="260" y="62" class="e-t1">CRM 延伸體驗</text>
+  <text x="260" y="478" class="e-t1">品牌娛樂生態</text>
+  <text x="74" y="172" class="e-t2">創新機制</text>
+  <text x="446" y="172" class="e-t2">多元活動</text>
+  <text x="74" y="356" class="e-t2">跨遊戲體驗</text>
+  <text x="446" y="356" class="e-t2">個人化服務</text>
+  <text x="260" y="150" class="e-t3">機率・節奏・視聽</text>
+  <text x="260" y="384" class="e-t3">遊戲設計</text>
+  <text x="260" y="256" class="e-c1">Slot Game</text>
+  <text x="260" y="286" class="e-c2">核心遊戲體驗</text>
+</svg>
+  <div class="tbl-wrap" style="margin:0"><table class="tbl" style="min-width:0">
+    <thead><tr><th>圈層</th><th>涵蓋的功能</th><th>主要指標</th></tr></thead>
+    <tbody>
+      <tr><td>核心 · Slot Game</td><td>機率、節奏、視聽、遊戲設計，由遊戲開發組與機率負責；CRM 不改遊戲本身</td><td>—</td></tr>
+      <tr><td>創新機制</td><td>①-B 抽寶箱（彩池版）</td><td>押注量、局數</td></tr>
+      <tr><td>多元活動</td><td>①-A 抽寶箱、⑧ 任務</td><td>押注量、局數、次日留存</td></tr>
+      <tr><td>跨遊戲體驗</td><td>② FREE SPIN 卡、⑰ FREE GAME 卡、③ 大獎回放、⑥ 我的最愛、⑦ 攔截頁</td><td>遊玩款數</td></tr>
+      <tr><td>個人化服務</td><td>④ 新手白池、⑤ 黑白池、⑯ 個人水池；⑦ 依標籤推薦、⑧ 依標籤設門檻</td><td>局數</td></tr>
+      <tr><td>可衡量・可控管・可持續</td><td>⑩ 動態 RTP、⑪ AWC 上限、⑫ 遊戲 → 線路開關、⑬ 防爆水池、⑭ 帳號權限、⑮ 貨幣清單</td><td>總 RTP &lt; 100%</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+  <h3>玩家旅程：每個功能負責一段</h3>
   <p>玩家從進入遊戲到離開、再回來，可以分成四段。每一段要解決的問題不同，由不同的功能負責；後台與風控工具在底層支撐。</p>
 
   <div class="flow-v">
